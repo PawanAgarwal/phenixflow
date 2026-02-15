@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:58:12Z_
+_Last updated: 2026-02-15T07:59:21Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -177,6 +177,8 @@ _Last updated: 2026-02-15T07:58:12Z_
   - Produce actionable retro action items with owners and target dates
   - Update `AGENTS.md` communication/runtime notes as needed
 
+## Review
+
 - ID: PF-013
   Title: Add graceful shutdown handling for SIGINT/SIGTERM
   Role: dev-backend
@@ -184,13 +186,17 @@ _Last updated: 2026-02-15T07:58:12Z_
   Owner: dev-backend
   StartedAt: 2026-02-15T07:58:12Z
   Branch: agent/dev-backend/PF-013-graceful-shutdown-handling
+  ReadyForReviewAt: 2026-02-15T07:59:21Z
   DependsOn: PF-001
   Acceptance:
   - Server handles SIGINT/SIGTERM and closes listener cleanly
   - Shutdown path logs start/finish and returns non-zero on shutdown error
   - Tests cover shutdown helper behavior
-
-## Review
+  Evidence:
+  - Added graceful shutdown helpers in `src/gracefulShutdown.js` with start/finish logging and non-zero exit code on close errors.
+  - Updated `src/server.js` to register SIGINT/SIGTERM handlers and close the listener cleanly before process exit.
+  - Added `test/gracefulShutdown.test.js` coverage for success/error shutdown paths and signal registration behavior.
+  - Verified locally: `npm run lint` and `npm test`.
 
 - ID: PF-006
   Title: Add centralized error handler and 404 fallback
