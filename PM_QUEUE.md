@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T20:03:02Z_
+_Last updated: 2026-02-15T20:05:48Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -118,23 +118,6 @@ _Last updated: 2026-02-15T20:03:02Z_
 
 ## In Progress
 
-- ID: MON-77
-  Title: E9-W7 Execute shadow-mode rollout and diff validation for 3 sessions
-  Role: dev-backend
-  Priority: P1
-  Owner: dev-backend
-  StartedAt: 2026-02-15T20:03:02Z
-  Branch: pawanagarwal/mon-77-e9-w7-execute-shadow-mode-rollout-and-diff-validation-for-3
-  DependsOn: none
-  Acceptance:
-  - Shadow mode runs for at least 3 market sessions.
-  - Diff report compares old vs new filter outputs.
-  - Sign-off criteria documented and approved.
-  EvidenceRequired:
-  - Dev: PR link, key commits, test outputs, diff validation artifacts.
-  - QA: test logs/screenshots and verification notes.
-  - PM: Slack message IDs for each transition and final merge commit.
-
 - ID: PF-007
   Title: Add request-id middleware with response header propagation
   Role: dev-backend
@@ -206,7 +189,24 @@ _Last updated: 2026-02-15T20:03:02Z_
 
 ## Review
 
-- (none)
+- ID: MON-77
+  Title: E9-W7 Execute shadow-mode rollout and diff validation for 3 sessions
+  Role: qa
+  Priority: P1
+  Owner: qa
+  StartedAt: 2026-02-15T20:03:02Z
+  DevCompletedAt: 2026-02-15T20:05:48Z
+  Branch: pawanagarwal/mon-77-e9-w7-execute-shadow-mode-rollout-and-diff-validation-for-3
+  PR: https://github.com/PawanAgarwal/phenixflow/pull/3
+  DevSession: agent:dev-backend:subagent:68473a72-e7da-46a9-8143-2f0afb9beb58
+  Acceptance:
+  - Shadow mode runs for at least 3 market sessions.
+  - Diff report compares old vs new filter outputs.
+  - Sign-off criteria documented and approved.
+  Evidence:
+  - Dev commits: 1d1a3c5, 64af60d, e74ff94
+  - Validation: npm run lint (pass), npm test (pass), node scripts/mon77-shadow-rollout.js (pass)
+
 
 ## Blocked
 
