@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:10:55Z_
+_Last updated: 2026-02-15T07:06:43Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -19,17 +19,6 @@ _Last updated: 2026-02-15T07:10:55Z_
   - `CONTRIBUTING.md` defines branch naming, claim flow, and handoff expectations aligned with `AGENT_PROTOCOL.md`
   - `CODING_STANDARDS.md` documents lint/test requirements and commit hygiene
   - Includes a short “CI notes” section marked provisional until PF-002 is merged to main
-
-- ID: PF-005
-  Title: Add request logging middleware + test coverage
-  Role: dev-backend
-  Priority: P1
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Middleware logs method + path for incoming requests
-  - Logging is enabled in app bootstrap without breaking tests
-  - Test coverage validates middleware execution on at least one route
 
 - ID: PF-006
   Title: Add centralized error handler and 404 fallback
@@ -88,7 +77,19 @@ _Last updated: 2026-02-15T07:10:55Z_
 
 ## In Progress
 
-- (none)
+- ID: PF-005
+  Title: Add request logging middleware + test coverage
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T07:06:43Z
+  Branch: agent/dev-backend/PF-005-request-logging-middleware
+  DependsOn: PF-001
+  Acceptance:
+  - Middleware logs method + path for incoming requests
+  - Logging is enabled in app bootstrap without breaking tests
+  - Test coverage validates middleware execution on at least one route
+
 
 ## Review
 
