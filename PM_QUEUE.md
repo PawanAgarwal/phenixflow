@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:25:00Z_
+_Last updated: 2026-02-15T07:51:25Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -42,16 +42,6 @@ _Last updated: 2026-02-15T07:25:00Z_
   - Shutdown path logs start/finish and returns non-zero on shutdown error
   - Tests cover shutdown helper behavior
 
-- ID: PF-014
-  Title: Add config module with typed env parsing and defaults
-  Role: dev-backend
-  Priority: P1
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Create centralized config loader for `PORT`, `NODE_ENV`, and app metadata
-  - Invalid env values return clear startup errors
-  - Tests validate defaulting and error paths
 
 - ID: PF-015
   Title: Add structured logger utility with request context support
@@ -120,6 +110,19 @@ _Last updated: 2026-02-15T07:25:00Z_
   - Include note marking settings as repository-admin applied
 
 ## In Progress
+
+- ID: PF-014
+  Title: Add config module with typed env parsing and defaults
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T07:51:16Z
+  Branch: agent/dev-backend/PF-014-config-module-typed-env-parsing-defaults
+  DependsOn: PF-001
+  Acceptance:
+  - Create centralized config loader for `PORT`, `NODE_ENV`, and app metadata
+  - Invalid env values return clear startup errors
+  - Tests validate defaulting and error paths
 
 - ID: PF-003
   Title: Define coding standards and contribution guide
