@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-14T22:50:05-08:00_
+_Last updated: 2026-02-15T06:57:26Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -20,17 +20,6 @@ _Last updated: 2026-02-14T22:50:05-08:00_
   - Workflow fails on lint/test errors
   - README includes CI status badge
 
-- ID: PF-004
-  Title: Add healthcheck endpoint with test coverage
-  Role: dev-backend
-  Priority: P1
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Add `/healthz` endpoint returning 200 with service status payload
-  - Add test coverage for success response
-  - Document endpoint in README
-
 - ID: PF-005
   Title: Add request logging middleware + test coverage
   Role: dev-backend
@@ -44,7 +33,18 @@ _Last updated: 2026-02-14T22:50:05-08:00_
 
 ## In Progress
 
-- (none)
+- ID: PF-004
+  Title: Add healthcheck endpoint with test coverage
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T06:57:26Z
+  Branch: agent/dev-backend/PF-004-healthcheck-endpoint
+  DependsOn: PF-001
+  Acceptance:
+  - Add `/healthz` endpoint returning 200 with service status payload
+  - Add test coverage for success response
+  - Document endpoint in README
 
 ## Review
 
