@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T06:58:59Z_
+_Last updated: 2026-02-15T07:04:22Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -8,17 +8,6 @@ _Last updated: 2026-02-15T06:58:59Z_
 - Every state change must be committed and pushed.
 
 ## Ready
-
-- ID: PF-002
-  Title: Add CI workflow for lint + test
-  Role: dev-infra
-  Priority: P0
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - GitHub Actions workflow runs lint + tests on push/PR
-  - Workflow fails on lint/test errors
-  - README includes CI status badge
 
 - ID: PF-005
   Title: Add request logging middleware + test coverage
@@ -33,7 +22,18 @@ _Last updated: 2026-02-15T06:58:59Z_
 
 ## In Progress
 
-- (none)
+- ID: PF-002
+  Title: Add CI workflow for lint + test
+  Role: dev-infra
+  Priority: P0
+  Owner: dev-infra
+  StartedAt: 2026-02-15T07:04:22Z
+  Branch: agent/dev-infra/PF-002-ci-workflow-lint-test
+  DependsOn: PF-001
+  Acceptance:
+  - GitHub Actions workflow runs lint + tests on push/PR
+  - Workflow fails on lint/test errors
+  - README includes CI status badge
 
 ## Review
 
