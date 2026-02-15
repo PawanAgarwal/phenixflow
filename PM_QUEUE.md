@@ -97,17 +97,6 @@ _Last updated: 2026-02-15T08:01:40Z_
   - Document recommended branch protection settings in docs
   - Include note marking settings as repository-admin applied
 
-- ID: PF-021
-  Title: Add /ready endpoint exposing service readiness metadata
-  Role: dev-backend
-  Priority: P2
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Add `GET /ready` endpoint returning readiness status and app version metadata
-  - Endpoint returns non-200 only when required startup prerequisites are unavailable
-  - Add tests for success and unavailable scenarios
-
 - ID: PF-022
   Title: Add npm script for mutation-safe test reruns (`npm run test:watch:ci`)
   Role: dev-infra
@@ -142,6 +131,19 @@ _Last updated: 2026-02-15T08:01:40Z_
   - Link playbook from CONTRIBUTING or README
 
 ## In Progress
+
+- ID: PF-021
+  Title: Add /ready endpoint exposing service readiness metadata
+  Role: dev-backend
+  Priority: P2
+  Owner: dev-backend
+  StartedAt: 2026-02-15T08:40:08Z
+  Branch: agent/dev-backend/PF-021-ready-endpoint-readiness-metadata
+  DependsOn: PF-001
+  Acceptance:
+  - Add `GET /ready` endpoint returning readiness status and app version metadata
+  - Endpoint returns non-200 only when required startup prerequisites are unavailable
+  - Add tests for success and unavailable scenarios
 
 - ID: PF-014
   Title: Add config module with typed env parsing and defaults
