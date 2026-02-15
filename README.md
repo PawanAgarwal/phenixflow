@@ -83,6 +83,10 @@ Default port: `3000` (override with `PORT`).
 npm test
 ```
 
+Contract coverage is currently verified in `test/app.test.js` for:
+- `GET /health` status/body contract
+- `GET /api/flow` query contract, response schema, pagination, and regression behavior
+
 ### Lint
 
 ```bash
