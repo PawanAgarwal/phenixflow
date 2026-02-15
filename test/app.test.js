@@ -157,6 +157,77 @@ describe('API contracts', () => {
     expect(v1Detail.body).toEqual(v2Detail.body);
   });
 
+  it('creates new presets/alerts with query DSL v2 payloads', async () => {
+    const app = createApp();
+
+    const presetResponse = await request(app)
+      .post('/api/flow/presets')
+      .send({
+        name: 'Open AAPL',
+        payload: {
+          symbol: 'AAPL',
+          status: 'open',
+        },
+      });
+
+    expect(presetResponse.statusCode).toBe(201);
+    expect(presetResponse.body.data.payloadVersion).toBe('v2');
+    expect(presetResponse.body.data.payload).toEqual({
+      version: 2,
+      combinator: 'and',
+      clauses: [
+        { field: 'symbol', op: 'eq', value: 'AAPL' },
+        { field: 'status', op: 'eq', value: 'open' },
+      ],
+    });
+
+    const alertResponse = await request(app)
+      .post('/api/flow/alerts')
+      .send({
+        name: 'High volume',
+        payload: {
+          version: 2,
+          combinator: 'and',
+          clauses: [{ field: 'volume', op: 'gte', value: 1000 }],
+        },
+      });
+
+    expect(alertResponse.statusCode).toBe(201);
+    expect(alertResponse.body.data.payloadVersion).toBe('v2');
+    expect(alertResponse.body.data.payload).toEqual({
+      version: 2,
+      combinator: 'and',
+      clauses: [{ field: 'volume', op: 'gte', value: 1000 }],
+    });
+  });
+
+  it('loads saved presets in legacy format through compatibility mode', async () => {
+    const app = createApp();
+
+    const createResponse = await request(app)
+      .post('/api/flow/presets')
+      .send({ name: 'Legacy compat', payload: { symbol: 'TSLA', minPnl: 5 } });
+
+    const id = createResponse.body.data.id;
+
+    const v2Read = await request(app).get(`/api/flow/presets/${id}`);
+    expect(v2Read.statusCode).toBe(200);
+    expect(v2Read.body.data.payloadVersion).toBe('v2');
+    expect(v2Read.body.data.payload).toEqual({
+      version: 2,
+      combinator: 'and',
+      clauses: [
+        { field: 'symbol', op: 'eq', value: 'TSLA' },
+        { field: 'pnl', op: 'gte', value: 5 },
+      ],
+    });
+
+    const v1Read = await request(app).get(`/api/v1/flow/presets/${id}`);
+    expect(v1Read.statusCode).toBe(200);
+    expect(v1Read.body.data.payloadVersion).toBe('legacy');
+    expect(v1Read.body.data.payload).toEqual({ symbol: 'TSLA', minPnl: 5 });
+  });
+
   it('POST /api/flow is rejected because endpoint contract is GET-only', async () => {
     const app = createApp();
 
