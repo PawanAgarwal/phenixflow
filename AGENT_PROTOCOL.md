@@ -27,6 +27,13 @@ Before starting any task:
 
 Only one owner may hold a task in **In Progress**.
 
+## Role-Match Rule
+- `dev-backend` may claim only tasks with `Role: dev-backend`.
+- `dev-data` may claim only tasks with `Role: dev-data`.
+- `dev-infra` may claim only tasks with `Role: dev-infra`.
+- `qa` pulls only from **Review**.
+- Exceptions must be explicitly assigned by PM by setting `Owner` before claim.
+
 ## Execution Flow
 - Dev claims task -> implements on task branch -> updates queue status.
 - On completion, dev moves task to **Review** with evidence.
