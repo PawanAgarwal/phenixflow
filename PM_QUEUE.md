@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:07:31Z_
+_Last updated: 2026-02-15T07:10:30Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -82,48 +82,7 @@ _Last updated: 2026-02-15T07:07:31Z_
 
 ## Review
 
-- ID: PF-005
-  Title: Add request logging middleware + test coverage
-  Role: dev-backend
-  Priority: P1
-  Owner: dev-backend
-  StartedAt: 2026-02-15T07:06:43Z
-  CompletedAt: 2026-02-15T07:07:31Z
-  Branch: agent/dev-backend/PF-005-request-logging-middleware
-  Evidence:
-  - Added `requestLogger` middleware in `src/app.js` that logs `${req.method} ${req.path}` via `console.info` and wired it with `app.use(requestLogger)`.
-  - Added test coverage in `test/app.test.js` asserting request logging executes for `GET /health`.
-  - Updated `README.md` scaffold section to document request logging middleware.
-  - Verified locally: `npm test` and `npm run lint` passed on task branch.
-
-- ID: PF-002
-  Title: Add CI workflow for lint + test
-  Role: dev-infra
-  Priority: P0
-  Owner: dev-infra
-  StartedAt: 2026-02-15T07:04:22Z
-  CompletedAt: 2026-02-15T07:05:08Z
-  Branch: agent/dev-infra/PF-002-ci-workflow-lint-test
-  Evidence:
-  - Added GitHub Actions workflow `.github/workflows/ci.yml` running `npm run lint` and `npm test` on `push` to `main` and on all `pull_request` events.
-  - Workflow uses `actions/setup-node@v4` with Node 20 and `npm` cache; uses `npm ci` for reproducible installs.
-  - Added CI status badge to `README.md` linked to `actions/workflows/ci.yml`.
-  - Verified locally: `npm run lint` passed and `npm test` passed.
-  - Ops/rollback: no runtime service path changes; rollback is safe by reverting workflow + README badge commit.
-
-- ID: PF-004
-  Title: Add healthcheck endpoint with test coverage
-  Role: dev-backend
-  Priority: P1
-  Owner: dev-backend
-  StartedAt: 2026-02-15T06:57:26Z
-  CompletedAt: 2026-02-15T06:58:12Z
-  Branch: agent/dev-backend/PF-004-healthcheck-endpoint
-  Evidence:
-  - Added `/healthz` endpoint in `src/app.js` returning `{"status":"ok","service":"phenixflow"}`
-  - Added test coverage in `test/app.test.js` for `GET /healthz` success response
-  - Documented endpoint in `README.md`
-  - Verified: `npm test` (2 tests passed), `npm run lint` passed
+- (none)
 
 ## Blocked
 
@@ -142,3 +101,39 @@ _Last updated: 2026-02-15T07:07:31Z_
   - Added lint config (`eslint.config.js`)
   - Updated README and npm scripts
   - Verified: `npm test` and `npm run lint` pass
+
+- ID: PF-002
+  Title: Add CI workflow for lint + test
+  Role: dev-infra
+  Owner: dev-infra
+  CompletedAt: 2026-02-15T07:05:08Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T07:10:30Z
+  Evidence:
+  - Validation on `origin/agent/dev-infra/PF-002-ci-workflow-lint-test` confirmed `.github/workflows/ci.yml` runs lint + test on push/PR with Node 20 and `npm ci`.
+  - README includes CI status badge linked to Actions workflow.
+  - QA reran `npm run lint` and `npm test` in isolated worktree; both passed.
+
+- ID: PF-004
+  Title: Add healthcheck endpoint with test coverage
+  Role: dev-backend
+  Owner: dev-backend
+  CompletedAt: 2026-02-15T06:58:12Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T07:10:30Z
+  Evidence:
+  - Validation on `origin/agent/dev-backend/PF-004-healthcheck-endpoint` confirmed `/healthz` endpoint response payload and README documentation.
+  - Test coverage includes `GET /healthz` success path.
+  - QA reran `npm run lint` and `npm test` in isolated worktree; both passed.
+
+- ID: PF-005
+  Title: Add request logging middleware + test coverage
+  Role: dev-backend
+  Owner: dev-backend
+  CompletedAt: 2026-02-15T07:07:31Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T07:10:30Z
+  Evidence:
+  - Validation on `origin/agent/dev-backend/PF-005-request-logging-middleware` confirmed request logger middleware logs method + path and is wired in app bootstrap.
+  - Test coverage asserts logging middleware execution on a route.
+  - QA reran `npm run lint` and `npm test` in isolated worktree; both passed.
