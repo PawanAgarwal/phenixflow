@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T14:08:10Z_
+_Last updated: 2026-02-15T14:57:00Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -8,17 +8,6 @@ _Last updated: 2026-02-15T14:08:10Z_
 - Every state change must be committed and pushed.
 
 ## Ready
-
-- ID: PF-009
-  Title: Add Dockerfile and .dockerignore for local containerized runs
-  Role: dev-infra
-  Priority: P2
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Multi-stage (or minimal) Dockerfile builds runnable app image
-  - `.dockerignore` excludes node_modules/test artifacts appropriately
-  - README includes build + run commands
 
 - ID: PF-010
   Title: Add API smoke test script for /health endpoint
@@ -31,6 +20,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Script is runnable via npm script (`npm run smoke`)
   - README includes usage notes
 
+
 - ID: PF-016
   Title: Add repository contract docs and example in src/data/README.md
   Role: dev-data
@@ -41,6 +31,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Document repository interfaces, expected return/error contract, and extension pattern
   - Include one concrete example repository stub aligned with contract
   - Lint/test continue to pass
+
 
 - ID: PF-017
   Title: Add seed data fixture strategy for future integration tests
@@ -53,6 +44,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Provide sample fixture and usage docs for tests
   - Add at least one unit test for fixture loader
 
+
 - ID: PF-018
   Title: Add QA checklist template for Review -> Done gate
   Role: qa
@@ -63,6 +55,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Add reusable QA checklist template covering lint, tests, acceptance criteria, and docs
   - Document defect routing rules (Ready vs Blocked)
   - Link checklist from README or CONTRIBUTING
+
 
 - ID: PF-019
   Title: Add Makefile shortcuts for common local workflows
@@ -75,6 +68,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Targets call existing npm scripts without duplicating logic
   - README includes quickstart with Make targets
 
+
 - ID: PF-020
   Title: Add CODEOWNERS and branch protection guidance docs
   Role: pm
@@ -85,6 +79,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Add `.github/CODEOWNERS` draft aligned to current roles
   - Document recommended branch protection settings in docs
   - Include note marking settings as repository-admin applied
+
 
 - ID: PF-022
   Title: Add npm script for mutation-safe test reruns (`npm run test:watch:ci`)
@@ -97,6 +92,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Document when to use `test` vs `test:watch:ci`
   - Lint/test remain green
 
+
 - ID: PF-023
   Title: Add repository error taxonomy doc and typed error helpers
   Role: dev-data
@@ -107,6 +103,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Add typed data-layer errors (e.g., NotFound, Conflict, Validation)
   - Document mapping from data-layer errors to app-layer behavior
   - Add unit tests for error helper creation/shape
+
 
 - ID: PF-024
   Title: Build QA triage playbook for flaky test detection and routing
@@ -133,6 +130,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Each request has an id generated or propagated from `x-request-id`
   - Response always returns `x-request-id` header
   - Tests validate generation + propagation behavior
+
 
 - ID: PF-003
   Title: Define coding standards and contribution guide
@@ -161,6 +159,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - README documents “before push” command sequence
   - Commands run cleanly on main branch
 
+
 - ID: PF-011
   Title: Add data layer bootstrap for app-layer dependencies
   Role: dev-data
@@ -173,6 +172,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Add `src/data/` module boundary with typed placeholder repository/contracts for future data entities
   - Export a minimal repository factory and error wrapper used by future handlers
   - Add/extend tests showing the module shape and expected return contract
+
 
 - ID: PF-012
   Title: Conduct sprint-0 retrospective and define process improvements
@@ -189,14 +189,44 @@ _Last updated: 2026-02-15T14:08:10Z_
 
 ## Review
 
+- (none)
+
+## Blocked
+
+- (none)
+
+## Done
+
+- ID: PF-009
+  Title: Add Dockerfile and .dockerignore for local containerized runs
+  Role: dev-infra
+  Priority: P2
+  Owner: dev-infra
+  CompletedAt: 2026-02-15T14:57:00Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T14:57:00Z
+  DependsOn: PF-001
+  Acceptance:
+  - Multi-stage (or minimal) Dockerfile builds runnable app image
+  - `.dockerignore` excludes node_modules/test artifacts appropriately
+  - README includes build + run commands
+  Evidence:
+  - Dockerfile uses multi-stage pattern (`deps` + runtime) on Node 20 Alpine with production dependency install (`npm ci --omit=dev`).
+  - `.dockerignore` excludes `node_modules`, git metadata, coverage/test artifacts, and local noise files.
+  - README documents container workflow with `docker build -t phenixflow:local .` and `docker run --rm -p 3000:3000 -e PORT=3000 phenixflow:local`.
+  - QA validation: acceptance criteria checked and `npm run lint` + `npm test` rerun (pass). Docker CLI unavailable in this environment, so image build/run execution could not be performed here.
+
+
 - ID: PF-021
   Title: Add /ready endpoint exposing service readiness metadata
   Role: dev-backend
   Priority: P2
   Owner: dev-backend
+  CompletedAt: 2026-02-15T14:57:00Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T14:57:00Z
   StartedAt: 2026-02-15T14:16:41Z
   Branch: agent/dev-backend/PF-021-ready-endpoint-exposing-service-readiness-metadata-20260215c
-  ReadyForReviewAt: 2026-02-15T14:17:24Z
   DependsOn: PF-001
   Acceptance:
   - Add `GET /ready` endpoint returning readiness status and app version metadata
@@ -213,17 +243,19 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Extended `test/app.test.js` with `/ready` success and unavailable scenario coverage.
   - Updated `README.md` scaffold section to document `/ready` endpoint behavior.
   - Verified locally: `npm run lint` and `npm test`.
+  - QA validation: checked branch acceptance criteria and reran `npm run lint` + `npm test` (pass).
+
 
 - ID: PF-014
   Title: Add config module with typed env parsing and defaults
   Role: dev-backend
   Priority: P1
   Owner: dev-backend
+  CompletedAt: 2026-02-15T14:57:00Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T14:57:00Z
   StartedAt: 2026-02-15T07:51:16Z
   Branch: agent/dev-backend/PF-014-config-module-typed-env-parsing-defaults
-  ReadyForReviewAt: 2026-02-15T10:46:25Z
-  QAOwner: qa
-  QAStartedAt: 2026-02-15T14:08:10Z
   DependsOn: PF-001
   Acceptance:
   - Create centralized config loader for `PORT`, `NODE_ENV`, and app metadata
@@ -234,15 +266,19 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Updated `src/server.js` to boot from `loadConfig()` and use validated config values for startup logging and port binding.
   - Added `test/config.test.js` coverage for defaulting, env overrides, invalid `PORT`, and invalid `NODE_ENV` error paths.
   - Verified locally: `npm run lint` and `npm test`.
+  - QA validation: checked branch acceptance criteria and reran `npm run lint` + `npm test` (pass).
+
 
 - ID: PF-015
   Title: Add structured logger utility with request context support
   Role: dev-backend
   Priority: P2
   Owner: dev-backend
+  CompletedAt: 2026-02-15T14:57:00Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T14:57:00Z
   StartedAt: 2026-02-15T09:22:11Z
   Branch: agent/dev-backend/PF-015-structured-logger-request-context-support-20260215
-  ReadyForReviewAt: 2026-02-15T09:23:44Z
   DependsOn: PF-007
   Acceptance:
   - Logger utility supports level + JSON output
@@ -254,17 +290,19 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Updated `src/app.js` to use request logging middleware for all routes.
   - Added tests in `test/logger.test.js` and extended `test/app.test.js` for request-id log context behavior.
   - Verified locally: `npm run lint` and `npm test`.
+  - QA validation: checked branch acceptance criteria and reran `npm run lint` + `npm test` (pass).
+
 
 - ID: PF-013
   Title: Add graceful shutdown handling for SIGINT/SIGTERM
   Role: dev-backend
   Priority: P1
   Owner: dev-backend
+  CompletedAt: 2026-02-15T14:57:00Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T14:57:00Z
   StartedAt: 2026-02-15T07:58:12Z
   Branch: agent/dev-backend/PF-013-graceful-shutdown-handling
-  ReadyForReviewAt: 2026-02-15T07:59:21Z
-  QAOwner: qa
-  QAStartedAt: 2026-02-15T14:08:10Z
   DependsOn: PF-001
   Acceptance:
   - Server handles SIGINT/SIGTERM and closes listener cleanly
@@ -275,28 +313,25 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Updated `src/server.js` to register SIGINT/SIGTERM handlers and close the listener cleanly before process exit.
   - Added `test/gracefulShutdown.test.js` coverage for success/error shutdown paths and signal registration behavior.
   - Verified locally: `npm run lint` and `npm test`.
+  - QA validation: checked branch acceptance criteria and reran `npm run lint` + `npm test` (pass).
+
 
 - ID: PF-006
   Title: Add centralized error handler and 404 fallback
   Role: dev-backend
   Priority: P1
   Owner: dev-backend
+  CompletedAt: 2026-02-15T14:57:00Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T14:57:00Z
   StartedAt: 2026-02-15T07:16:08Z
   Branch: agent/dev-backend/PF-006-centralized-error-handler-404-fallback
-  ReadyForReviewAt: 2026-02-15T07:16:57Z
-  QAOwner: qa
-  QAStartedAt: 2026-02-15T07:25:00Z
   Evidence:
   - Added app-level 404 fallback and 500 error middleware with structured JSON payloads in `src/app.js`.
   - Added tests for unknown-route 404 and thrown-error 500 paths in `test/app.test.js`.
   - Verified locally: `npm run lint` and `npm test`.
+  - QA validation: checked branch acceptance criteria and reran `npm run lint` + `npm test` (pass).
 
-
-## Blocked
-
-- (none)
-
-## Done
 
 - ID: PF-001
   Title: Scaffold baseline app + test harness
@@ -310,6 +345,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Updated README and npm scripts
   - Verified: `npm test` and `npm run lint` pass
 
+
 - ID: PF-002
   Title: Add CI workflow for lint + test
   Role: dev-infra
@@ -321,6 +357,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Validation on `origin/agent/dev-infra/PF-002-ci-workflow-lint-test` confirmed `.github/workflows/ci.yml` runs lint + test on push/PR with Node 20 and `npm ci`.
   - README includes CI status badge linked to Actions workflow.
   - QA reran `npm run lint` and `npm test` in isolated worktree; both passed.
+
 
 - ID: PF-004
   Title: Add healthcheck endpoint with test coverage
@@ -334,6 +371,7 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Test coverage includes `GET /healthz` success path.
   - QA reran `npm run lint` and `npm test` in isolated worktree; both passed.
 
+
 - ID: PF-005
   Title: Add request logging middleware + test coverage
   Role: dev-backend
@@ -345,3 +383,4 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Validation on `origin/agent/dev-backend/PF-005-request-logging-middleware` confirmed request logger middleware logs method + path and is wired in app bootstrap.
   - Test coverage asserts logging middleware execution on a route.
   - QA reran `npm run lint` and `npm test` in isolated worktree; both passed.
+
