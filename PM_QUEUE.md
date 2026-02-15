@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:05:08Z_
+_Last updated: 2026-02-15T07:10:55Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -8,6 +8,17 @@ _Last updated: 2026-02-15T07:05:08Z_
 - Every state change must be committed and pushed.
 
 ## Ready
+
+- ID: PF-003
+  Title: Define coding standards and contribution guide
+  Role: pm
+  Priority: P1
+  Owner: unassigned
+  DependsOn: none
+  Acceptance:
+  - `CONTRIBUTING.md` defines branch naming, claim flow, and handoff expectations aligned with `AGENT_PROTOCOL.md`
+  - `CODING_STANDARDS.md` documents lint/test requirements and commit hygiene
+  - Includes a short “CI notes” section marked provisional until PF-002 is merged to main
 
 - ID: PF-005
   Title: Add request logging middleware + test coverage
@@ -19,6 +30,61 @@ _Last updated: 2026-02-15T07:05:08Z_
   - Middleware logs method + path for incoming requests
   - Logging is enabled in app bootstrap without breaking tests
   - Test coverage validates middleware execution on at least one route
+
+- ID: PF-006
+  Title: Add centralized error handler and 404 fallback
+  Role: dev-backend
+  Priority: P1
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Unmatched routes return structured JSON 404 response
+  - App-level error middleware returns structured JSON 500 response without leaking stack traces
+  - Tests cover both 404 and 500 paths
+
+- ID: PF-007
+  Title: Add request-id middleware with response header propagation
+  Role: dev-backend
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Each request has an id generated or propagated from `x-request-id`
+  - Response always returns `x-request-id` header
+  - Tests validate generation + propagation behavior
+
+- ID: PF-008
+  Title: Add npm script for CI parity and document local verification flow
+  Role: dev-infra
+  Priority: P1
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Add `npm run verify` script that runs lint + test in CI-like order
+  - README documents “before push” command sequence
+  - Commands run cleanly on main branch
+
+- ID: PF-009
+  Title: Add Dockerfile and .dockerignore for local containerized runs
+  Role: dev-infra
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Multi-stage (or minimal) Dockerfile builds runnable app image
+  - `.dockerignore` excludes node_modules/test artifacts appropriately
+  - README includes build + run commands
+
+- ID: PF-010
+  Title: Add API smoke test script for /health endpoint
+  Role: dev-infra
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Add script (shell or node) to hit `/health` and assert 200 with expected payload shape
+  - Script is runnable via npm script (`npm run smoke`)
+  - README includes usage notes
 
 ## In Progress
 
@@ -57,13 +123,7 @@ _Last updated: 2026-02-15T07:05:08Z_
 
 ## Blocked
 
-- ID: PF-003
-  Title: Define coding standards and contribution guide
-  Role: pm
-  Priority: P1
-  Owner: pm
-  Blocker: Depends on PF-002 CI conventions and badge details.
-  NextAction: PM watchdog moves this to Ready immediately after PF-002 is marked Done and CI badge conventions are confirmed.
+- (none)
 
 ## Done
 
