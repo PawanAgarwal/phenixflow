@@ -1,13 +1,14 @@
 # AGENT_PROTOCOL.md
 
 ## Purpose
-Coordinate a persistent PM/engineering/QA/retro team that claims and executes work continuously from Linear with PM_QUEUE.md as the executable handoff ledger.
+Coordinate a PM-led team where PM dispatches all work through subagents from Linear with PM_QUEUE.md as the executable handoff ledger.
 
 ## Source of Truth
 1. `CURRENT_CONTEXT.md` in each workspace defines active project and execution workspace.
-2. Linear is the discovery source for available work (`team MON`, `project phoenixflow`).
+2. Linear is the source and single source of required work (`team MON`, `project phoenixflow`).
 3. `PM_QUEUE.md` in the repo is the execution ledger and evidence log.
-4. Git history is the immutable audit trail for claims, handoffs, and completion.
+4. Slack is the operations audit for actions taken by PM and workers.
+5. Git history is the immutable audit trail for claims, handoffs, and completion.
 
 ## State Model
 Use these states consistently:
@@ -19,31 +20,48 @@ Use these states consistently:
 
 When any ambiguity appears, PM owns resolution.
 
-## Agent Work Discovery and Claiming
-All agents run a cycle in this order:
-1. Read `CURRENT_CONTEXT.md`.
-2. Query Linear for open tickets in `phoenixflow` and update PM_QUEUE quickly:
-   - Use team project `phoenixflow`.
-   - Confirm ticket ownership and state before claiming.
-3. Claim only from entries in PM_QUEUE where:
-   - `Role` matches the agent role,
-   - `State` is `Backlog` (or equivalent ready state),
-   - `Owner` is unassigned.
-4. Before starting implementation:
-   - `git pull --rebase origin main`
-   - Set lock fields in PM_QUEUE (`Owner`, `StartedAt`, `Branch`).
-5. Immediately move linear issue state to `progress`.
-6. Implement and test.
-7. On passing validation, move to `review` in Linear and PM_QUEUE.
-8. QA resolves to `done` or `blocked` after validation.
+## PM Orchestration Model
+1. PM runs on cron and is the only process that picks fresh work.
+2. PM queries Linear and PM_QUEUE, then dispatches work only to subagents listed in openclaw subagent allowlist (`pm.subagents.allowAgents`).
+3. PM keeps at most `subagents.maxConcurrent` in-flight tasks at any time.
+4. PM balances with completion events in the same cycle: when a worker finishes, PM updates state and may immediately dispatch the next task.
+5. PM owns all state transitions: `Backlog`/`In Progress`/`In Review`/`Blocked`/`Done`.
 
-If PM_QUEUE has no eligible entry for a relevant Linear issue, PM creates/normalizes it in PM_QUEUE with owner `unassigned` and state `Backlog`.
+## Dispatch and Handoff Rules (PM -> Subagent)
+- PM must only dispatch from tasks that exist in Linear and are reflected in PM_QUEUE.
+- Every dispatch message must include:
+  - Linear ID
+  - PM_QUEUE identifier
+  - `Role`, priority, and acceptance criteria
+  - Expected deliverables + timeout budget
+  - Branch naming convention
+- On dispatch, PM must post to Slack and set PM_QUEUE owner+state+started timestamp.
+- PM should never leave a dispatch unrepresented in PM_QUEUE.
+
+## Subagent Execution Rules
+- Subagents execute only tasks sent by PM; they do not scan Linear directly.
+- Subagents may process one task at a time.
+- Subagents should push a completion report with:
+  - status (`done`, `blocked`, `needs-replan`)
+  - key outcomes / test results
+  - commit hashes and changed files
+  - evidence links where applicable
+- On finishing, PM updates Linear and PM_QUEUE based on that report.
 
 ## Locking Rules
 - Only one owner may hold a task in `In Progress`.
-- Claiming is valid only after PM_QUEUE and Linear state update are committed together.
+- If no owner is assigned or owner is stale, PM can reassign.
+- Claiming is valid only after PM_QUEUE and Linear state update are aligned.
 - If `git push` fails, rebase and retry.
-- If an agent cannot claim within 2 minutes due contention or locks, post status in Slack and retry in the next loop.
+- If a subagent check-in is missing due contention/lock, PM posts in Slack and retries.
+
+## Timeout and Recovery
+- Each dispatched subagent task has a hard max runtime (`SUBAGENT_TASK_TIMEOUT_MINUTES`, default 90).
+- On timeout:
+  - PM marks task as `Blocked` with `Owner: pm-requeue`.
+  - PM terminates the stuck subagent session.
+  - PM posts Slack notification with reason + evidence.
+  - PM immediately reassigns the task to another available subagent and updates PM_QUEUE + Linear.
 
 ## Role Match Rules
 - `dev-backend` works only `Role: dev-backend`.
@@ -53,20 +71,25 @@ If PM_QUEUE has no eligible entry for a relevant Linear issue, PM creates/normal
 - `pm` and `retro` can touch any role only for orchestration/improvements.
 
 ## Escalation & Error Handling
-- If blocked more than 10 minutes, include `Blocker`, `Owner`, and `NextAction`, move to `Blocked`, and post in blocker channel.
+- If blocked more than 10 minutes (non-timeout), include `Blocker`, `Owner`, and `NextAction`, move to `Blocked`, and post in blocker channel.
+- For timeout recovery, include the exact timeout event, kill action, and reassignment details.
 - PM should reassess and resequence backlog immediately on blockers.
 
-## Idle Rule
-If a role has no eligible Linear/PM_QUEUE work after a full scan:
-- post one slack message for that cycle in its channel:
+## Idle and PM Status Rule
+If PM_queue has no runnable work after a full scan:
+- post one slack message for that cycle in orchestration channel:
   - `🟡 Idle | <agent-name>`
   - `No matching open work found for role`
   - `Checked Linear + PM_QUEUE in this cycle`
   - `Will retry on next scheduled loop`
 - Do not create duplicate idle posts in the same cycle.
 
+## Worker Reporting to PM
+- Workers do not update backlog selection; they only report completion/blocked outcomes.
+- PM is responsible for creating follow-on tasks in Linear when decomposition is needed.
+
 ## Heartbeat / Loop Cadence
-- PM watchdog: every 3 minutes.
-- Dev/QA loops: every ~7 minutes.
-- Retro/retroactive cadence remains PM driven by sprint windows.
-- Agents are expected to continue working autonomously when loops fire.
+- PM watchdog: every 3 minutes. If PM already running, do not create a duplicate PM run.
+- PM runs are the sole source of task assignment.
+- Retro cadence remains PM/ sprint-window driven.
+- Subagents are event-driven under PM dispatch and are not cron-dispatched.
