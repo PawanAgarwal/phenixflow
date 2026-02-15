@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T09:58:30Z_
+_Last updated: 2026-02-15T10:31:00Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -119,20 +119,33 @@ _Last updated: 2026-02-15T09:58:30Z_
   - Define retry limits and escalation paths
   - Link playbook from CONTRIBUTING or README
 
-## In Progress
 
 - ID: PF-021
   Title: Add /ready endpoint exposing service readiness metadata
   Role: dev-backend
   Priority: P2
-  Owner: dev-backend
-  StartedAt: 2026-02-15T08:40:08Z
-  Branch: agent/dev-backend/PF-021-ready-endpoint-readiness-metadata
+  Owner: unassigned
+  Note: Re-queued by PM watchdog due to single-owner WIP limit (one In Progress task per owner).
   DependsOn: PF-001
   Acceptance:
   - Add `GET /ready` endpoint returning readiness status and app version metadata
   - Endpoint returns non-200 only when required startup prerequisites are unavailable
   - Add tests for success and unavailable scenarios
+
+- ID: PF-007
+  Title: Add request-id middleware with response header propagation
+  Role: dev-backend
+  Priority: P2
+  Owner: unassigned
+  Note: Re-queued by PM watchdog due to single-owner WIP limit (one In Progress task per owner).
+  DependsOn: PF-001
+  Acceptance:
+  - Each request has an id generated or propagated from `x-request-id`
+  - Response always returns `x-request-id` header
+  - Tests validate generation + propagation behavior
+
+## In Progress
+
 
 - ID: PF-014
   Title: Add config module with typed env parsing and defaults
@@ -160,18 +173,6 @@ _Last updated: 2026-02-15T09:58:30Z_
   - `CODING_STANDARDS.md` documents lint/test requirements and commit hygiene
   - Includes a short “CI notes” section marked provisional until PF-002 is merged to main
 
-- ID: PF-007
-  Title: Add request-id middleware with response header propagation
-  Role: dev-backend
-  Priority: P2
-  Owner: dev-backend
-  StartedAt: 2026-02-15T07:19:00Z
-  Branch: agent/dev-backend/PF-007-request-id-middleware
-  DependsOn: PF-001
-  Acceptance:
-  - Each request has an id generated or propagated from `x-request-id`
-  - Response always returns `x-request-id` header
-  - Tests validate generation + propagation behavior
 
 - ID: PF-008
   Title: Add npm script for CI parity and document local verification flow
