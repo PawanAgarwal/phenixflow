@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T08:01:40Z_
+_Last updated: 2026-02-15T09:58:30Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -121,19 +121,6 @@ _Last updated: 2026-02-15T08:01:40Z_
 
 ## In Progress
 
-- ID: PF-015
-  Title: Add structured logger utility with request context support
-  Role: dev-backend
-  Priority: P2
-  Owner: dev-backend
-  StartedAt: 2026-02-15T09:57:17Z
-  Branch: agent/dev-backend/PF-015-structured-logger-request-context-support-20260215
-  DependsOn: PF-007
-  Acceptance:
-  - Logger utility supports level + JSON output
-  - Request logs include request-id when present
-  - Existing middleware updated to use shared logger
-
 - ID: PF-021
   Title: Add /ready endpoint exposing service readiness metadata
   Role: dev-backend
@@ -226,6 +213,26 @@ _Last updated: 2026-02-15T08:01:40Z_
   - Update `AGENTS.md` communication/runtime notes as needed
 
 ## Review
+
+- ID: PF-015
+  Title: Add structured logger utility with request context support
+  Role: dev-backend
+  Priority: P2
+  Owner: dev-backend
+  StartedAt: 2026-02-15T09:22:11Z
+  Branch: agent/dev-backend/PF-015-structured-logger-request-context-support-20260215
+  ReadyForReviewAt: 2026-02-15T09:23:44Z
+  DependsOn: PF-007
+  Acceptance:
+  - Logger utility supports level + JSON output
+  - Request logs include request-id when present
+  - Existing middleware updated to use shared logger
+  Evidence:
+  - Added shared structured logger utility in `src/logger.js` with level filtering, JSON output, and child context support.
+  - Added `src/requestLogger.js` middleware using shared logger and including `requestId` when `x-request-id` is present.
+  - Updated `src/app.js` to use request logging middleware for all routes.
+  - Added tests in `test/logger.test.js` and extended `test/app.test.js` for request-id log context behavior.
+  - Verified locally: `npm run lint` and `npm test`.
 
 - ID: PF-013
   Title: Add graceful shutdown handling for SIGINT/SIGTERM
