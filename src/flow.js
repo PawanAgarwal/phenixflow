@@ -1,3 +1,10 @@
+const {
+  buildNormalizedQueryFingerprint,
+  hashNormalizedQuery,
+  getCachedEventIds,
+  setCachedEventIds,
+} = require('./query-cache');
+
 const FLOW_FIXTURES = [
   { id: 'flow_001', symbol: 'AAPL', strategy: 'breakout', status: 'open', timeframe: '1h', pnl: 120.5, volume: 1250, createdAt: '2026-01-05T14:30:00.000Z', updatedAt: '2026-01-06T09:15:00.000Z' },
   { id: 'flow_002', symbol: 'TSLA', strategy: 'mean-reversion', status: 'closed', timeframe: '4h', pnl: -45, volume: 980, createdAt: '2026-01-04T12:00:00.000Z', updatedAt: '2026-01-05T08:10:00.000Z' },
@@ -100,6 +107,31 @@ function buildFilters(rawQuery, filterVersion) {
   };
 }
 
+function emitMetric(options, name, payload) {
+  if (typeof options.emitMetric === 'function') {
+    options.emitMetric(name, payload);
+  }
+}
+
+function resolveMatchingEventIds(rawQuery, filterVersion, options = {}) {
+  const filters = buildFilters(rawQuery, filterVersion);
+  const normalizedQuery = buildNormalizedQueryFingerprint(filters, filterVersion);
+  const queryHash = hashNormalizedQuery(normalizedQuery);
+
+  const cachedIds = getCachedEventIds(queryHash);
+  if (cachedIds) {
+    emitMetric(options, 'cache-hit', { queryHash, size: cachedIds.size });
+    return { filters, queryHash, matchingIds: cachedIds };
+  }
+
+  const filtered = filterFlows(FLOW_FIXTURES, filters, filterVersion);
+  const eventIds = new Set(filtered.map((flow) => flow.id));
+  setCachedEventIds(queryHash, eventIds);
+  emitMetric(options, 'cache-miss', { queryHash, size: eventIds.size });
+
+  return { filters, queryHash, matchingIds: eventIds };
+}
+
 function queryFlow(rawQuery, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
   const sortBy = ALLOWED_SORT_FIELDS.has(rawQuery.sortBy) ? rawQuery.sortBy : 'createdAt';
@@ -107,8 +139,8 @@ function queryFlow(rawQuery, options = {}) {
   const limitValue = parseNumber(rawQuery.limit);
   const limit = limitValue && limitValue >= 1 ? Math.min(100, limitValue) : 25;
 
-  const filters = buildFilters(rawQuery, filterVersion);
-  const sorted = filterFlows(FLOW_FIXTURES, filters, filterVersion).sort(buildComparator(sortBy, sortOrder));
+  const { matchingIds } = resolveMatchingEventIds(rawQuery, filterVersion, options);
+  const sorted = FLOW_FIXTURES.filter((flow) => matchingIds.has(flow.id)).sort(buildComparator(sortBy, sortOrder));
 
   let startIndex = 0;
   if (rawQuery.cursor) {
@@ -134,8 +166,8 @@ function queryFlow(rawQuery, options = {}) {
 
 function buildFlowFacets(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
-  const filters = buildFilters(query, filterVersion);
-  const filtered = filterFlows(FLOW_FIXTURES, filters, filterVersion);
+  const { matchingIds } = resolveMatchingEventIds(query, filterVersion, options);
+  const filtered = FLOW_FIXTURES.filter((flow) => matchingIds.has(flow.id));
 
   const bySymbol = {};
   const byStatus = {};

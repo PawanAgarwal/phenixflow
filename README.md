@@ -45,3 +45,15 @@ npm test
 ```bash
 npm run lint
 ```
+
+## Query Result Cache (MON-56)
+
+`GET /api/flow` and `GET /api/flow/facets` now share an in-memory cache keyed by a deterministic normalized query hash.
+
+- Normalization is based on effective filter inputs + `filterVersion` only.
+- Hashing uses SHA-256 over normalized JSON.
+- Cache values are event-id sets (matching `flow.id` values).
+- Cache metrics can be emitted via the optional `emitMetric(name, payload)` function in service-layer options:
+  - `cache-miss`
+  - `cache-hit`
+
