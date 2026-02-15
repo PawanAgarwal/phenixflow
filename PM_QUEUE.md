@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T06:57:26Z_
+_Last updated: 2026-02-15T06:58:59Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -33,22 +33,23 @@ _Last updated: 2026-02-15T06:57:26Z_
 
 ## In Progress
 
+- (none)
+
+## Review
+
 - ID: PF-004
   Title: Add healthcheck endpoint with test coverage
   Role: dev-backend
   Priority: P1
   Owner: dev-backend
   StartedAt: 2026-02-15T06:57:26Z
+  CompletedAt: 2026-02-15T06:58:12Z
   Branch: agent/dev-backend/PF-004-healthcheck-endpoint
-  DependsOn: PF-001
-  Acceptance:
-  - Add `/healthz` endpoint returning 200 with service status payload
-  - Add test coverage for success response
-  - Document endpoint in README
-
-## Review
-
-- (none)
+  Evidence:
+  - Added `/healthz` endpoint in `src/app.js` returning `{"status":"ok","service":"phenixflow"}`
+  - Added test coverage in `test/app.test.js` for `GET /healthz` success response
+  - Documented endpoint in `README.md`
+  - Verified: `npm test` (2 tests passed), `npm run lint` passed
 
 ## Blocked
 
