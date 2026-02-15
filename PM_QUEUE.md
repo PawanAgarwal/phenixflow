@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T13:41:09Z_
+_Last updated: 2026-02-15T14:08:10Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -212,6 +212,8 @@ _Last updated: 2026-02-15T13:41:09Z_
   StartedAt: 2026-02-15T07:51:16Z
   Branch: agent/dev-backend/PF-014-config-module-typed-env-parsing-defaults
   ReadyForReviewAt: 2026-02-15T10:46:25Z
+  QAOwner: qa
+  QAStartedAt: 2026-02-15T14:08:10Z
   DependsOn: PF-001
   Acceptance:
   - Create centralized config loader for `PORT`, `NODE_ENV`, and app metadata
@@ -251,6 +253,8 @@ _Last updated: 2026-02-15T13:41:09Z_
   StartedAt: 2026-02-15T07:58:12Z
   Branch: agent/dev-backend/PF-013-graceful-shutdown-handling
   ReadyForReviewAt: 2026-02-15T07:59:21Z
+  QAOwner: qa
+  QAStartedAt: 2026-02-15T14:08:10Z
   DependsOn: PF-001
   Acceptance:
   - Server handles SIGINT/SIGTERM and closes listener cleanly
