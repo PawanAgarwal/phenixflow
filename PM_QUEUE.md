@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:10:30Z_
+_Last updated: 2026-02-15T07:30:00Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -8,50 +8,6 @@ _Last updated: 2026-02-15T07:10:30Z_
 - Every state change must be committed and pushed.
 
 ## Ready
-
-- ID: PF-003
-  Title: Define coding standards and contribution guide
-  Role: pm
-  Priority: P1
-  Owner: unassigned
-  DependsOn: none
-  Acceptance:
-  - `CONTRIBUTING.md` defines branch naming, claim flow, and handoff expectations aligned with `AGENT_PROTOCOL.md`
-  - `CODING_STANDARDS.md` documents lint/test requirements and commit hygiene
-  - Includes a short “CI notes” section marked provisional until PF-002 is merged to main
-
-- ID: PF-006
-  Title: Add centralized error handler and 404 fallback
-  Role: dev-backend
-  Priority: P1
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Unmatched routes return structured JSON 404 response
-  - App-level error middleware returns structured JSON 500 response without leaking stack traces
-  - Tests cover both 404 and 500 paths
-
-- ID: PF-007
-  Title: Add request-id middleware with response header propagation
-  Role: dev-backend
-  Priority: P2
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Each request has an id generated or propagated from `x-request-id`
-  - Response always returns `x-request-id` header
-  - Tests validate generation + propagation behavior
-
-- ID: PF-008
-  Title: Add npm script for CI parity and document local verification flow
-  Role: dev-infra
-  Priority: P1
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Add `npm run verify` script that runs lint + test in CI-like order
-  - README documents “before push” command sequence
-  - Commands run cleanly on main branch
 
 - ID: PF-009
   Title: Add Dockerfile and .dockerignore for local containerized runs
@@ -77,12 +33,88 @@ _Last updated: 2026-02-15T07:10:30Z_
 
 ## In Progress
 
-- (none)
+- ID: PF-003
+  Title: Define coding standards and contribution guide
+  Role: pm
+  Priority: P1
+  Owner: pm
+  StartedAt: 2026-02-15T07:18:00Z
+  Branch: agent/pm/PF-003-coding-standards-and-contribution-guide
+  DependsOn: none
+  Acceptance:
+  - `CONTRIBUTING.md` defines branch naming, claim flow, and handoff expectations aligned with `AGENT_PROTOCOL.md`
+  - `CODING_STANDARDS.md` documents lint/test requirements and commit hygiene
+  - Includes a short “CI notes” section marked provisional until PF-002 is merged to main
 
+- ID: PF-007
+  Title: Add request-id middleware with response header propagation
+  Role: dev-backend
+  Priority: P2
+  Owner: dev-backend
+  StartedAt: 2026-02-15T07:19:00Z
+  Branch: agent/dev-backend/PF-007-request-id-middleware
+  DependsOn: PF-001
+  Acceptance:
+  - Each request has an id generated or propagated from `x-request-id`
+  - Response always returns `x-request-id` header
+  - Tests validate generation + propagation behavior
+
+- ID: PF-008
+  Title: Add npm script for CI parity and document local verification flow
+  Role: dev-infra
+  Priority: P1
+  Owner: dev-infra
+  StartedAt: 2026-02-15T07:20:00Z
+  Branch: agent/dev-infra/PF-008-npm-verify-script-docs
+  DependsOn: PF-001
+  Acceptance:
+  - Add `npm run verify` script that runs lint + test in CI-like order
+  - README documents “before push” command sequence
+  - Commands run cleanly on main branch
+
+- ID: PF-011
+  Title: Add data layer bootstrap for app-layer dependencies
+  Role: dev-data
+  Priority: P2
+  Owner: dev-data
+  StartedAt: 2026-02-15T07:22:00Z
+  Branch: agent/dev-data/PF-011-data-layer-bootstrap
+  DependsOn: PF-001
+  Acceptance:
+  - Add `src/data/` module boundary with typed placeholder repository/contracts for future data entities
+  - Export a minimal repository factory and error wrapper used by future handlers
+  - Add/extend tests showing the module shape and expected return contract
+
+- ID: PF-012
+  Title: Conduct sprint-0 retrospective and define process improvements
+  Role: retro
+  Priority: P2
+  Owner: retro
+  StartedAt: 2026-02-15T07:23:00Z
+  Branch: agent/retro/PF-012-sprint-retro-process
+  DependsOn: none
+  Acceptance:
+  - Identify at least 3 process blockers from first sprint run and proposed mitigations
+  - Produce actionable retro action items with owners and target dates
+  - Update `AGENTS.md` communication/runtime notes as needed
 
 ## Review
 
-- (none)
+- ID: PF-006
+  Title: Add centralized error handler and 404 fallback
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T07:16:08Z
+  Branch: agent/dev-backend/PF-006-centralized-error-handler-404-fallback
+  ReadyForReviewAt: 2026-02-15T07:16:57Z
+  QAOwner: qa
+  QAStartedAt: 2026-02-15T07:25:00Z
+  Evidence:
+  - Added app-level 404 fallback and 500 error middleware with structured JSON payloads in `src/app.js`.
+  - Added tests for unknown-route 404 and thrown-error 500 paths in `test/app.test.js`.
+  - Verified locally: `npm run lint` and `npm test`.
+
 
 ## Blocked
 
