@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T10:31:00Z_
+_Last updated: 2026-02-15T10:53:12Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -135,9 +135,9 @@ _Last updated: 2026-02-15T10:31:00Z_
 - ID: PF-007
   Title: Add request-id middleware with response header propagation
   Role: dev-backend
-  Priority: P2
+  Priority: P1
   Owner: unassigned
-  Note: Re-queued by PM watchdog due to single-owner WIP limit (one In Progress task per owner).
+  Note: Re-queued by PM watchdog due to single-owner WIP limit (one In Progress task per owner); elevated to P1 because PF-015 review depends on this task.
   DependsOn: PF-001
   Acceptance:
   - Each request has an id generated or propagated from `x-request-id`
