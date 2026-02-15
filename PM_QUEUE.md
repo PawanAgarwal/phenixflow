@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T20:07:33Z_
+_Last updated: 2026-02-15T20:10:01Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -117,6 +117,23 @@ _Last updated: 2026-02-15T20:07:33Z_
   - Link playbook from CONTRIBUTING or README
 
 ## In Progress
+
+- ID: MON-62
+  Title: E8-W1 Add test framework (Vitest) and isolated SQLite test harness
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T20:10:01Z
+  Branch: pawanagarwal/mon-62-e8-w1-add-test-framework-vitest-and-isolated-sqlite-test
+  DependsOn: none
+  Acceptance:
+  - Vitest configured for API/core packages.
+  - Test harness creates isolated temporary DB per suite.
+  - CI command runs tests headlessly.
+  EvidenceRequired:
+  - Dev: PR link, key commits, `npm run lint`, `npm test` output.
+  - QA: verification logs + pass/fail recommendation.
+  - PM: Slack message IDs for each transition and merged commit hash.
 
 - ID: PF-007
   Title: Add request-id middleware with response header propagation
