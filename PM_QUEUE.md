@@ -120,17 +120,6 @@ _Last updated: 2026-02-15T10:53:12Z_
   - Link playbook from CONTRIBUTING or README
 
 
-- ID: PF-021
-  Title: Add /ready endpoint exposing service readiness metadata
-  Role: dev-backend
-  Priority: P2
-  Owner: unassigned
-  Note: Re-queued by PM watchdog due to single-owner WIP limit (one In Progress task per owner).
-  DependsOn: PF-001
-  Acceptance:
-  - Add `GET /ready` endpoint returning readiness status and app version metadata
-  - Endpoint returns non-200 only when required startup prerequisites are unavailable
-  - Add tests for success and unavailable scenarios
 
 - ID: PF-007
   Title: Add request-id middleware with response header propagation
@@ -145,6 +134,19 @@ _Last updated: 2026-02-15T10:53:12Z_
   - Tests validate generation + propagation behavior
 
 ## In Progress
+
+- ID: PF-021
+  Title: Add /ready endpoint exposing service readiness metadata
+  Role: dev-backend
+  Priority: P2
+  Owner: dev-backend
+  StartedAt: 2026-02-15T11:28:28Z
+  Branch: agent/dev-backend/PF-021-ready-endpoint-readiness-metadata
+  DependsOn: PF-001
+  Acceptance:
+  - Add `GET /ready` endpoint returning readiness status and app version metadata
+  - Endpoint returns non-200 only when required startup prerequisites are unavailable
+  - Add tests for success and unavailable scenarios
 
 
 - ID: PF-014
