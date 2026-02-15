@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:59:21Z_
+_Last updated: 2026-02-15T08:01:40Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -96,6 +96,50 @@ _Last updated: 2026-02-15T07:59:21Z_
   - Add `.github/CODEOWNERS` draft aligned to current roles
   - Document recommended branch protection settings in docs
   - Include note marking settings as repository-admin applied
+
+- ID: PF-021
+  Title: Add /ready endpoint exposing service readiness metadata
+  Role: dev-backend
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Add `GET /ready` endpoint returning readiness status and app version metadata
+  - Endpoint returns non-200 only when required startup prerequisites are unavailable
+  - Add tests for success and unavailable scenarios
+
+- ID: PF-022
+  Title: Add npm script for mutation-safe test reruns (`npm run test:watch:ci`)
+  Role: dev-infra
+  Priority: P3
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Add a deterministic watch/changed-file CI-safe test rerun script
+  - Document when to use `test` vs `test:watch:ci`
+  - Lint/test remain green
+
+- ID: PF-023
+  Title: Add repository error taxonomy doc and typed error helpers
+  Role: dev-data
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Add typed data-layer errors (e.g., NotFound, Conflict, Validation)
+  - Document mapping from data-layer errors to app-layer behavior
+  - Add unit tests for error helper creation/shape
+
+- ID: PF-024
+  Title: Build QA triage playbook for flaky test detection and routing
+  Role: qa
+  Priority: P2
+  Owner: unassigned
+  DependsOn: none
+  Acceptance:
+  - Add a QA playbook section for identifying flaky failures vs product defects
+  - Define retry limits and escalation paths
+  - Link playbook from CONTRIBUTING or README
 
 ## In Progress
 
