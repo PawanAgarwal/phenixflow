@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-14T22:31:00-08:00_
+_Last updated: 2026-02-14T22:37:00-08:00_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -20,16 +20,16 @@ _Last updated: 2026-02-14T22:31:00-08:00_
   - Workflow fails on lint/test errors
   - README includes CI status badge
 
-- ID: PF-003
-  Title: Define coding standards and contribution guide
-  Role: pm
+- ID: PF-004
+  Title: Add healthcheck endpoint with test coverage
+  Role: dev-backend
   Priority: P1
   Owner: unassigned
-  DependsOn: PF-002
+  DependsOn: PF-001
   Acceptance:
-  - Add `CONTRIBUTING.md`
-  - Define branch/PR conventions
-  - Include commit and review rules
+  - Add `/healthz` endpoint returning 200 with service status payload
+  - Add test coverage for success response
+  - Document endpoint in README
 
 ## In Progress
 
@@ -41,7 +41,13 @@ _Last updated: 2026-02-14T22:31:00-08:00_
 
 ## Blocked
 
-- (none)
+- ID: PF-003
+  Title: Define coding standards and contribution guide
+  Role: pm
+  Priority: P1
+  Owner: pm
+  Blocker: Depends on PF-002 CI conventions and badge details.
+  NextAction: Move back to Ready immediately after PF-002 reaches Done.
 
 ## Done
 
