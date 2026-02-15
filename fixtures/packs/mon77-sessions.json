@@ -1,0 +1,29 @@
+[
+  {
+    "sessionId": "2026-02-10-NYSE",
+    "marketDate": "2026-02-10",
+    "symbols": [
+      { "ticker": "AAPL", "volume": 250000, "price": 192, "volatility": 0.03 },
+      { "ticker": "PENNY1", "volume": 95000, "price": 1.2, "volatility": 0.09 },
+      { "ticker": "TSLA", "volume": 500000, "price": 241, "volatility": 0.05 }
+    ]
+  },
+  {
+    "sessionId": "2026-02-11-NYSE",
+    "marketDate": "2026-02-11",
+    "symbols": [
+      { "ticker": "MSFT", "volume": 300000, "price": 410, "volatility": 0.02 },
+      { "ticker": "SMALL2", "volume": 45000, "price": 12, "volatility": 0.04 },
+      { "ticker": "GME", "volume": 800000, "price": 21, "volatility": 0.12 }
+    ]
+  },
+  {
+    "sessionId": "2026-02-12-NYSE",
+    "marketDate": "2026-02-12",
+    "symbols": [
+      { "ticker": "AMZN", "volume": 420000, "price": 180, "volatility": 0.03 },
+      { "ticker": "CHEAP3", "volume": 200000, "price": 2.4, "volatility": 0.02 },
+      { "ticker": "NVDA", "volume": 510000, "price": 880, "volatility": 0.06 }
+    ]
+  }
+]

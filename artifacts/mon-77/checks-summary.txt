@@ -1,0 +1,15 @@
+MON-77 checks executed on 2026-02-15 (America/Los_Angeles)
+
+Commands:
+1) npm run lint
+   Result: PASS
+   Raw log: artifacts/mon-77/lint.log (gitignored)
+
+2) npm run test
+   Result: PASS (2 files, 4 tests)
+   Raw log: artifacts/mon-77/test.log (gitignored)
+
+3) node scripts/mon77-shadow-rollout.js
+   Result: PASS (Sessions processed: 3)
+   Raw log: artifacts/mon-77/rollout.log (gitignored)
+   Report: artifacts/mon-77/shadow-diff-report.json

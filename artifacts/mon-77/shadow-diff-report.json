@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-02-15T19:18:28.534Z",
+  "mode": "shadow",
+  "summary": {
+    "totalSessions": 3,
+    "totalOld": 9,
+    "totalNew": 5,
+    "totalRemoved": 4,
+    "totalAdded": 0
+  },
+  "sessions": [
+    {
+      "sessionId": "2026-02-10-NYSE",
+      "marketDate": "2026-02-10",
+      "oldOutput": [
+        "AAPL",
+        "PENNY1",
+        "TSLA"
+      ],
+      "newOutput": [
+        "AAPL",
+        "TSLA"
+      ],
+      "diff": {
+        "removedByNew": [
+          "PENNY1"
+        ],
+        "addedByNew": []
+      },
+      "oldCount": 3,
+      "newCount": 2,
+      "removedCount": 1,
+      "addedCount": 0
+    },
+    {
+      "sessionId": "2026-02-11-NYSE",
+      "marketDate": "2026-02-11",
+      "oldOutput": [
+        "MSFT",
+        "SMALL2",
+        "GME"
+      ],
+      "newOutput": [
+        "MSFT"
+      ],
+      "diff": {
+        "removedByNew": [
+          "SMALL2",
+          "GME"
+        ],
+        "addedByNew": []
+      },
+      "oldCount": 3,
+      "newCount": 1,
+      "removedCount": 2,
+      "addedCount": 0
+    },
+    {
+      "sessionId": "2026-02-12-NYSE",
+      "marketDate": "2026-02-12",
+      "oldOutput": [
+        "AMZN",
+        "CHEAP3",
+        "NVDA"
+      ],
+      "newOutput": [
+        "AMZN",
+        "NVDA"
+      ],
+      "diff": {
+        "removedByNew": [
+          "CHEAP3"
+        ],
+        "addedByNew": []
+      },
+      "oldCount": 3,
+      "newCount": 2,
+      "removedCount": 1,
+      "addedCount": 0
+    }
+  ]
+}
