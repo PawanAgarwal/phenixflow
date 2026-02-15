@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-14T22:37:00-08:00_
+_Last updated: 2026-02-14T22:50:05-08:00_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -31,6 +31,17 @@ _Last updated: 2026-02-14T22:37:00-08:00_
   - Add test coverage for success response
   - Document endpoint in README
 
+- ID: PF-005
+  Title: Add request logging middleware + test coverage
+  Role: dev-backend
+  Priority: P1
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Middleware logs method + path for incoming requests
+  - Logging is enabled in app bootstrap without breaking tests
+  - Test coverage validates middleware execution on at least one route
+
 ## In Progress
 
 - (none)
@@ -47,7 +58,7 @@ _Last updated: 2026-02-14T22:37:00-08:00_
   Priority: P1
   Owner: pm
   Blocker: Depends on PF-002 CI conventions and badge details.
-  NextAction: Move back to Ready immediately after PF-002 reaches Done.
+  NextAction: PM watchdog moves this to Ready immediately after PF-002 is marked Done and CI badge conventions are confirmed.
 
 ## Done
 
