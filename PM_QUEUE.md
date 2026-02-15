@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:04:22Z_
+_Last updated: 2026-02-15T07:05:08Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -22,20 +22,24 @@ _Last updated: 2026-02-15T07:04:22Z_
 
 ## In Progress
 
+- (none)
+
+## Review
+
 - ID: PF-002
   Title: Add CI workflow for lint + test
   Role: dev-infra
   Priority: P0
   Owner: dev-infra
   StartedAt: 2026-02-15T07:04:22Z
+  CompletedAt: 2026-02-15T07:05:08Z
   Branch: agent/dev-infra/PF-002-ci-workflow-lint-test
-  DependsOn: PF-001
-  Acceptance:
-  - GitHub Actions workflow runs lint + tests on push/PR
-  - Workflow fails on lint/test errors
-  - README includes CI status badge
-
-## Review
+  Evidence:
+  - Added GitHub Actions workflow `.github/workflows/ci.yml` running `npm run lint` and `npm test` on `push` to `main` and on all `pull_request` events.
+  - Workflow uses `actions/setup-node@v4` with Node 20 and `npm` cache; uses `npm ci` for reproducible installs.
+  - Added CI status badge to `README.md` linked to `actions/workflows/ci.yml`.
+  - Verified locally: `npm run lint` passed and `npm test` passed.
+  - Ops/rollback: no runtime service path changes; rollback is safe by reverting workflow + README badge commit.
 
 - ID: PF-004
   Title: Add healthcheck endpoint with test coverage
