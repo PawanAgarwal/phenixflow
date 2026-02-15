@@ -40,6 +40,18 @@ Default port: `3000` (override with `PORT`).
 npm test
 ```
 
+Vitest is split into two test packages/configs:
+- `api`: endpoint/contract tests (`test/api/**`) via `npm run test:api`
+- `core`: domain + harness tests (`test/core/**`, `test/shadow/**`) via `npm run test:core`
+
+### CI / headless test run
+
+```bash
+npm run test:ci
+```
+
+`test:ci` runs Vitest in non-watch/headless mode with a compact reporter for CI logs.
+
 ### Lint
 
 ```bash
