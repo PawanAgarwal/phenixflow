@@ -8,6 +8,7 @@ This repository currently includes a minimal Express-based service scaffold with
 - `GET /health` endpoint
 - `GET /api/flow` endpoint with cursor pagination, sorting, and filters
 - unit tests with Vitest + Supertest
+- isolated SQLite test harness for deterministic DB-level tests
 - linting with ESLint
 
 ## API
@@ -87,8 +88,16 @@ Contract coverage is currently verified in `test/app.test.js` for:
 - `GET /health` status/body contract
 - `GET /api/flow` query contract, response schema, pagination, and regression behavior
 
+SQLite harness behavior is verified in `test/sqlite-harness.test.js`.
+
 ### Lint
 
 ```bash
 npm run lint
+```
+
+### Verify (CI/local parity)
+
+```bash
+npm run verify
 ```

@@ -1,0 +1,32 @@
+{
+  "packType": "trades",
+  "version": 1,
+  "seed": "MON-63-trades-v1",
+  "generatedAt": "2026-02-15T00:00:00.000Z",
+  "rows": [
+    {
+      "symbol": "BTC-USD",
+      "ts": "2026-02-10T15:30:00.000Z",
+      "price": 96123.5,
+      "size": 0.42,
+      "side": "buy",
+      "tradeId": "T-BTC-0001"
+    },
+    {
+      "symbol": "BTC-USD",
+      "ts": "2026-02-10T15:30:01.000Z",
+      "price": 96120.25,
+      "size": 0.11,
+      "side": "sell",
+      "tradeId": "T-BTC-0002"
+    },
+    {
+      "symbol": "ETH-USD",
+      "ts": "2026-02-10T15:30:00.500Z",
+      "price": 5211.75,
+      "size": 3.5,
+      "side": "buy",
+      "tradeId": "T-ETH-0001"
+    }
+  ]
+}
