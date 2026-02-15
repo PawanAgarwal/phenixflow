@@ -26,8 +26,12 @@ Returns flow records with query-based filtering and cursor pagination.
   - `sortOrder`: `asc|desc` (default `desc`)
 - Filters
   - exact: `id`, `symbol`, `strategy`, `status`, `timeframe`
-  - range/date: `minPnl`, `maxPnl`, `minVolume`, `maxVolume`, `createdFrom`, `createdTo` (aliases: `from`, `to`), `updatedFrom`, `updatedTo`
+  - range/date: `minPnl`, `maxPnl`, `minVolume`, `maxVolume`, `createdFrom`, `createdTo`, `updatedFrom`, `updatedTo`
+  - aliases: `from`→`createdFrom`, `to`→`createdTo`, `pnlMin`→`minPnl`, `pnlMax`→`maxPnl`, `volumeMin`→`minVolume`, `volumeMax`→`maxVolume`
   - text: `search` (case-insensitive contains across id/symbol/strategy/status/timeframe)
+  - `quickFilters`: comma-separated list of `openOnly|closedOnly|winners|losers|highVolume|recentlyUpdated`
+
+Response rows are enriched with computed fields (`isProfitable`, `pnlDirection`, epoch timestamps, and `ageHours`) and include a top-level `meta` object describing applied filters.
 
 Validation errors return `400` with `{ "error": "..." }`.
 

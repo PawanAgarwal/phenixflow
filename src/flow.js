@@ -11,7 +11,21 @@ const FLOW_FIXTURES = [
   { id: 'flow_010', symbol: 'NVDA', strategy: 'breakout', status: 'open', timeframe: '4h', pnl: 300, volume: 1800, createdAt: '2025-12-26T07:15:00.000Z', updatedAt: '2026-01-06T12:05:00.000Z' },
 ];
 
+const REFERENCE_NOW_ISO = '2026-01-07T00:00:00.000Z';
+const REFERENCE_NOW_MS = Date.parse(REFERENCE_NOW_ISO);
+
 const ALLOWED_SORT_FIELDS = new Set(['id', 'symbol', 'strategy', 'status', 'timeframe', 'pnl', 'volume', 'createdAt', 'updatedAt']);
+const ALLOWED_QUICK_FILTERS = new Set(['openOnly', 'closedOnly', 'winners', 'losers', 'highVolume', 'recentlyUpdated']);
+
+const FILTER_ALIASES = {
+  createdFrom: ['from'],
+  createdTo: ['to'],
+  minPnl: ['pnlMin'],
+  maxPnl: ['pnlMax'],
+  minVolume: ['volumeMin'],
+  maxVolume: ['volumeMax'],
+};
+
 class FlowQueryValidationError extends Error {}
 
 function encodeCursor(payload) {
@@ -47,6 +61,39 @@ function parseLimit(value) {
   return Math.min(parsed, 100);
 }
 
+function parseQuickFilters(rawQuickFilters) {
+  if (rawQuickFilters === undefined) return [];
+
+  const values = Array.isArray(rawQuickFilters)
+    ? rawQuickFilters
+    : String(rawQuickFilters)
+      .split(',')
+      .map((token) => token.trim())
+      .filter(Boolean);
+
+  const unique = [...new Set(values)];
+  for (const filter of unique) {
+    if (!ALLOWED_QUICK_FILTERS.has(filter)) {
+      throw new FlowQueryValidationError(`quickFilters contains unsupported value: ${filter}.`);
+    }
+  }
+
+  if (unique.includes('openOnly') && unique.includes('closedOnly')) {
+    throw new FlowQueryValidationError('quickFilters cannot include both openOnly and closedOnly.');
+  }
+
+  return unique;
+}
+
+function getCanonicalQueryValue(rawQuery, key) {
+  if (rawQuery[key] !== undefined) return rawQuery[key];
+  const aliases = FILTER_ALIASES[key] ?? [];
+  for (const alias of aliases) {
+    if (rawQuery[alias] !== undefined) return rawQuery[alias];
+  }
+  return undefined;
+}
+
 function parseQuery(rawQuery) {
   const sortBy = rawQuery.sortBy ?? 'createdAt';
   const sortOrder = rawQuery.sortOrder ?? 'desc';
@@ -54,27 +101,44 @@ function parseQuery(rawQuery) {
   if (!ALLOWED_SORT_FIELDS.has(sortBy)) throw new FlowQueryValidationError(`sortBy must be one of: ${[...ALLOWED_SORT_FIELDS].join(', ')}`);
   if (!['asc', 'desc'].includes(sortOrder)) throw new FlowQueryValidationError('sortOrder must be asc or desc.');
 
-  const filters = {
+  const canonical = {
     id: rawQuery.id,
     symbol: rawQuery.symbol,
     strategy: rawQuery.strategy,
     status: rawQuery.status,
     timeframe: rawQuery.timeframe,
     search: rawQuery.search,
-    createdFrom: parseDate(rawQuery.createdFrom ?? rawQuery.from, 'createdFrom'),
-    createdTo: parseDate(rawQuery.createdTo ?? rawQuery.to, 'createdTo'),
+    createdFrom: parseDate(getCanonicalQueryValue(rawQuery, 'createdFrom'), 'createdFrom'),
+    createdTo: parseDate(getCanonicalQueryValue(rawQuery, 'createdTo'), 'createdTo'),
     updatedFrom: parseDate(rawQuery.updatedFrom, 'updatedFrom'),
     updatedTo: parseDate(rawQuery.updatedTo, 'updatedTo'),
-    minPnl: parseNumber(rawQuery.minPnl, 'minPnl'),
-    maxPnl: parseNumber(rawQuery.maxPnl, 'maxPnl'),
-    minVolume: parseNumber(rawQuery.minVolume, 'minVolume'),
-    maxVolume: parseNumber(rawQuery.maxVolume, 'maxVolume'),
+    minPnl: parseNumber(getCanonicalQueryValue(rawQuery, 'minPnl'), 'minPnl'),
+    maxPnl: parseNumber(getCanonicalQueryValue(rawQuery, 'maxPnl'), 'maxPnl'),
+    minVolume: parseNumber(getCanonicalQueryValue(rawQuery, 'minVolume'), 'minVolume'),
+    maxVolume: parseNumber(getCanonicalQueryValue(rawQuery, 'maxVolume'), 'maxVolume'),
   };
 
-  return { sortBy, sortOrder, limit: parseLimit(rawQuery.limit), filters, cursor: rawQuery.cursor };
+  return {
+    sortBy,
+    sortOrder,
+    limit: parseLimit(rawQuery.limit),
+    filters: canonical,
+    quickFilters: parseQuickFilters(rawQuery.quickFilters),
+    cursor: rawQuery.cursor,
+  };
 }
 
-function filterFlows(flows, filters) {
+function applyQuickFilters(flow, quickFilters) {
+  if (quickFilters.includes('openOnly') && flow.status !== 'open') return false;
+  if (quickFilters.includes('closedOnly') && flow.status !== 'closed') return false;
+  if (quickFilters.includes('winners') && flow.pnl <= 0) return false;
+  if (quickFilters.includes('losers') && flow.pnl >= 0) return false;
+  if (quickFilters.includes('highVolume') && flow.volume < 1500) return false;
+  if (quickFilters.includes('recentlyUpdated') && flow.updatedAt < '2026-01-06T00:00:00.000Z') return false;
+  return true;
+}
+
+function filterFlows(flows, filters, quickFilters) {
   return flows.filter((flow) => {
     if (filters.id && flow.id !== filters.id) return false;
     if (filters.symbol && flow.symbol !== filters.symbol) return false;
@@ -91,9 +155,10 @@ function filterFlows(flows, filters) {
     if (filters.maxVolume !== undefined && flow.volume > filters.maxVolume) return false;
     if (filters.search) {
       const haystack = `${flow.id} ${flow.symbol} ${flow.strategy} ${flow.status} ${flow.timeframe}`.toLowerCase();
-      return haystack.includes(filters.search.toLowerCase());
+      if (!haystack.includes(filters.search.toLowerCase())) return false;
     }
-    return true;
+
+    return applyQuickFilters(flow, quickFilters);
   });
 }
 
@@ -111,11 +176,28 @@ function compareCursorRecord(record, cursorRecord, sortBy, sortOrder) {
   return record[sortBy] > cursorRecord.value ? direction : -direction;
 }
 
+function enrichRow(flow) {
+  const createdAtMs = Date.parse(flow.createdAt);
+  const updatedAtMs = Date.parse(flow.updatedAt);
+  return {
+    ...flow,
+    isProfitable: flow.pnl > 0,
+    pnlDirection: flow.pnl > 0 ? 'up' : flow.pnl < 0 ? 'down' : 'flat',
+    createdAtEpochMs: createdAtMs,
+    updatedAtEpochMs: updatedAtMs,
+    ageHours: Math.floor((REFERENCE_NOW_MS - createdAtMs) / 3_600_000),
+  };
+}
+
+function buildCursorFingerprint(query) {
+  return JSON.stringify({ filters: query.filters, quickFilters: query.quickFilters });
+}
+
 function queryFlow(rawQuery) {
   const query = parseQuery(rawQuery);
-  const sorted = filterFlows(FLOW_FIXTURES, query.filters).sort(buildComparator(query.sortBy, query.sortOrder));
+  const sorted = filterFlows(FLOW_FIXTURES, query.filters, query.quickFilters).sort(buildComparator(query.sortBy, query.sortOrder));
 
-  const fingerprint = JSON.stringify(query.filters);
+  const fingerprint = buildCursorFingerprint(query);
   let startIndex = 0;
 
   if (query.cursor) {
@@ -128,7 +210,7 @@ function queryFlow(rawQuery) {
     startIndex = idx === -1 ? sorted.length : idx;
   }
 
-  const data = sorted.slice(startIndex, startIndex + query.limit);
+  const data = sorted.slice(startIndex, startIndex + query.limit).map(enrichRow);
   const hasMore = startIndex + query.limit < sorted.length;
   const nextCursor = hasMore
     ? encodeCursor({
@@ -140,7 +222,24 @@ function queryFlow(rawQuery) {
     })
     : null;
 
-  return { data, page: { limit: query.limit, hasMore, nextCursor, sortBy: query.sortBy, sortOrder: query.sortOrder, total: sorted.length } };
+  return {
+    data,
+    page: {
+      limit: query.limit,
+      hasMore,
+      nextCursor,
+      sortBy: query.sortBy,
+      sortOrder: query.sortOrder,
+      total: sorted.length,
+    },
+    meta: {
+      appliedFilters: query.filters,
+      appliedQuickFilters: query.quickFilters,
+      returnedCount: data.length,
+      cursorRequested: Boolean(query.cursor),
+      referenceNow: REFERENCE_NOW_ISO,
+    },
+  };
 }
 
 module.exports = { queryFlow, FlowQueryValidationError };
