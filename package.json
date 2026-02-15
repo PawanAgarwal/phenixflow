@@ -9,7 +9,8 @@
     "start": "node src/server.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "mon79:thetadata:smoke": "node scripts/mon79-thetadata-smoke.js"
   },
   "engines": {
     "node": ">=20"
