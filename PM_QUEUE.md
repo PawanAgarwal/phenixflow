@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T10:53:12Z_
+_Last updated: 2026-02-15T13:41:09Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -119,6 +119,18 @@ _Last updated: 2026-02-15T10:53:12Z_
   - Define retry limits and escalation paths
   - Link playbook from CONTRIBUTING or README
 
+- ID: PF-021
+  Title: Add /ready endpoint exposing service readiness metadata
+  Role: dev-backend
+  Priority: P2
+  Owner: unassigned
+  Note: Re-queued by PM watchdog to enforce single-owner WIP limit and keep dependency sequencing clean.
+  DependsOn: PF-001
+  Acceptance:
+  - Add `GET /ready` endpoint returning readiness status and app version metadata
+  - Endpoint returns non-200 only when required startup prerequisites are unavailable
+  - Add tests for success and unavailable scenarios
+
 
 
 
@@ -136,33 +148,6 @@ _Last updated: 2026-02-15T10:53:12Z_
   - Each request has an id generated or propagated from `x-request-id`
   - Response always returns `x-request-id` header
   - Tests validate generation + propagation behavior
-
-- ID: PF-021
-  Title: Add /ready endpoint exposing service readiness metadata
-  Role: dev-backend
-  Priority: P2
-  Owner: dev-backend
-  StartedAt: 2026-02-15T11:28:28Z
-  Branch: agent/dev-backend/PF-021-ready-endpoint-readiness-metadata
-  DependsOn: PF-001
-  Acceptance:
-  - Add `GET /ready` endpoint returning readiness status and app version metadata
-  - Endpoint returns non-200 only when required startup prerequisites are unavailable
-  - Add tests for success and unavailable scenarios
-
-
-- ID: PF-014
-  Title: Add config module with typed env parsing and defaults
-  Role: dev-backend
-  Priority: P1
-  Owner: dev-backend
-  StartedAt: 2026-02-15T07:51:16Z
-  Branch: agent/dev-backend/PF-014-config-module-typed-env-parsing-defaults
-  DependsOn: PF-001
-  Acceptance:
-  - Create centralized config loader for `PORT`, `NODE_ENV`, and app metadata
-  - Invalid env values return clear startup errors
-  - Tests validate defaulting and error paths
 
 - ID: PF-003
   Title: Define coding standards and contribution guide
@@ -218,6 +203,25 @@ _Last updated: 2026-02-15T10:53:12Z_
   - Update `AGENTS.md` communication/runtime notes as needed
 
 ## Review
+
+- ID: PF-014
+  Title: Add config module with typed env parsing and defaults
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T07:51:16Z
+  Branch: agent/dev-backend/PF-014-config-module-typed-env-parsing-defaults
+  ReadyForReviewAt: 2026-02-15T10:46:25Z
+  DependsOn: PF-001
+  Acceptance:
+  - Create centralized config loader for `PORT`, `NODE_ENV`, and app metadata
+  - Invalid env values return clear startup errors
+  - Tests validate defaulting and error paths
+  Evidence:
+  - Added centralized config loader in `src/config.js` parsing `PORT`, `NODE_ENV`, and app metadata with defaults.
+  - Updated `src/server.js` to boot from `loadConfig()` and use validated config values for startup logging and port binding.
+  - Added `test/config.test.js` coverage for defaulting, env overrides, invalid `PORT`, and invalid `NODE_ENV` error paths.
+  - Verified locally: `npm run lint` and `npm test`.
 
 - ID: PF-015
   Title: Add structured logger utility with request context support
