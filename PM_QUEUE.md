@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:06:43Z_
+_Last updated: 2026-02-15T07:07:31Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -77,21 +77,24 @@ _Last updated: 2026-02-15T07:06:43Z_
 
 ## In Progress
 
+- (none)
+
+
+## Review
+
 - ID: PF-005
   Title: Add request logging middleware + test coverage
   Role: dev-backend
   Priority: P1
   Owner: dev-backend
   StartedAt: 2026-02-15T07:06:43Z
+  CompletedAt: 2026-02-15T07:07:31Z
   Branch: agent/dev-backend/PF-005-request-logging-middleware
-  DependsOn: PF-001
-  Acceptance:
-  - Middleware logs method + path for incoming requests
-  - Logging is enabled in app bootstrap without breaking tests
-  - Test coverage validates middleware execution on at least one route
-
-
-## Review
+  Evidence:
+  - Added `requestLogger` middleware in `src/app.js` that logs `${req.method} ${req.path}` via `console.info` and wired it with `app.use(requestLogger)`.
+  - Added test coverage in `test/app.test.js` asserting request logging executes for `GET /health`.
+  - Updated `README.md` scaffold section to document request logging middleware.
+  - Verified locally: `npm test` and `npm run lint` passed on task branch.
 
 - ID: PF-002
   Title: Add CI workflow for lint + test
