@@ -45,3 +45,24 @@ npm test
 ```bash
 npm run lint
 ```
+
+## MON-79 ThetaData smoke workflow
+
+Run:
+
+```bash
+THETADATA_BASE_URL="https://<thetadata-host>" \
+THETADATA_DOWNLOAD_PATH="/v2/<real-download-endpoint>?<query>" \
+THETADATA_ENTITLEMENT_PATH="/v2/system/entitlements" \
+THETADATA_API_KEY="<token>" \
+npm run mon79:thetadata:smoke
+```
+
+Notes:
+- `THETADATA_DOWNLOAD_PATH` is required and must point to a **real** downloadable dataset endpoint.
+- Auth options: either `THETADATA_API_KEY` or `THETADATA_USERNAME` + `THETADATA_PASSWORD`.
+- Artifacts are written under `artifacts/mon-79/` with a report JSON containing:
+  - endpoint statuses/attempt counts
+  - retry/backoff policy and timeout taxonomy
+  - artifact path, byte count, sha256, and row count (when JSON shape allows)
+
