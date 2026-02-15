@@ -119,12 +119,15 @@ _Last updated: 2026-02-15T14:08:10Z_
   - Define retry limits and escalation paths
   - Link playbook from CONTRIBUTING or README
 
+## In Progress
+
 - ID: PF-021
   Title: Add /ready endpoint exposing service readiness metadata
   Role: dev-backend
   Priority: P2
-  Owner: unassigned
-  Note: Re-queued by PM watchdog to enforce single-owner WIP limit and keep dependency sequencing clean.
+  Owner: dev-backend
+  StartedAt: 2026-02-15T14:16:41Z
+  Branch: agent/dev-backend/PF-021-ready-endpoint-exposing-service-readiness-metadata-20260215c
   DependsOn: PF-001
   Acceptance:
   - Add `GET /ready` endpoint returning readiness status and app version metadata
@@ -134,7 +137,6 @@ _Last updated: 2026-02-15T14:08:10Z_
 
 
 
-## In Progress
 
 - ID: PF-007
   Title: Add request-id middleware with response header propagation
