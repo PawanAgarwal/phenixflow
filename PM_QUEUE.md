@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T20:05:48Z_
+_Last updated: 2026-02-15T20:07:33Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -189,23 +189,7 @@ _Last updated: 2026-02-15T20:05:48Z_
 
 ## Review
 
-- ID: MON-77
-  Title: E9-W7 Execute shadow-mode rollout and diff validation for 3 sessions
-  Role: qa
-  Priority: P1
-  Owner: qa
-  StartedAt: 2026-02-15T20:03:02Z
-  DevCompletedAt: 2026-02-15T20:05:48Z
-  Branch: pawanagarwal/mon-77-e9-w7-execute-shadow-mode-rollout-and-diff-validation-for-3
-  PR: https://github.com/PawanAgarwal/phenixflow/pull/3
-  DevSession: agent:dev-backend:subagent:68473a72-e7da-46a9-8143-2f0afb9beb58
-  Acceptance:
-  - Shadow mode runs for at least 3 market sessions.
-  - Diff report compares old vs new filter outputs.
-  - Sign-off criteria documented and approved.
-  Evidence:
-  - Dev commits: 1d1a3c5, 64af60d, e74ff94
-  - Validation: npm run lint (pass), npm test (pass), node scripts/mon77-shadow-rollout.js (pass)
+- (none)
 
 
 ## Blocked
@@ -213,6 +197,29 @@ _Last updated: 2026-02-15T20:05:48Z_
 - (none)
 
 ## Done
+
+- ID: MON-77
+  Title: E9-W7 Execute shadow-mode rollout and diff validation for 3 sessions
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T20:03:02Z
+  CompletedAt: 2026-02-15T20:07:33Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T20:07:33Z
+  Branch: pawanagarwal/mon-77-e9-w7-execute-shadow-mode-rollout-and-diff-validation-for-3
+  DependsOn: none
+  Acceptance:
+  - Shadow mode runs for at least 3 market sessions.
+  - Diff report compares old vs new filter outputs.
+  - Sign-off criteria documented and approved.
+  Evidence:
+  - Dev session: agent:dev-backend:subagent:68473a72-e7da-46a9-8143-2f0afb9beb58
+  - QA session: agent:qa:subagent:af2c929f-2529-4240-8467-9979f30a9754 (pass, recommendation=merge)
+  - PR: https://github.com/PawanAgarwal/phenixflow/pull/3
+  - Merge commit on main: f17b5a0c1b760c7ae856c2416745910cd84e74ed
+  - Validation: npm test pass (10/10)
+  - Slack message ids: C0AEN968ZM5/1771185807.891359,1771185985.938979,1771185986.463399,1771186095.076469,1771186095.603149; C0AEN943UVD/1771185808.154959,1771185986.198399,1771185986.921059,1771186095.338519,1771186095.860329
 
 - ID: MON-68
   Title: E8-W7 Add API contract tests for all new endpoints
