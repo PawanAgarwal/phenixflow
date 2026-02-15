@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T14:57:00Z_
+_Last updated: 2026-02-15T20:00:54Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -196,6 +196,29 @@ _Last updated: 2026-02-15T14:57:00Z_
 - (none)
 
 ## Done
+
+- ID: MON-68
+  Title: E8-W7 Add API contract tests for all new endpoints
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T19:57:33Z
+  CompletedAt: 2026-02-15T20:00:54Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-15T20:00:54Z
+  Branch: pawanagarwal/mon-68-e8-w7-add-api-contract-tests-for-all-new-endpoints
+  DependsOn: none
+  Acceptance:
+  - Contract tests cover status codes and response schemas.
+  - Pagination/facets/stream/detail endpoints included.
+  - Backward-compat paths are validated.
+  Evidence:
+  - Dev session: agent:dev-backend:subagent:16b3357b-f876-4b3d-a3f4-46f2e957855e
+  - QA session: agent:qa:subagent:65d8d6c0-77a8-47a7-bd75-9adba243045f (pass, recommendation=merge)
+  - PR: https://github.com/PawanAgarwal/phenixflow/pull/4
+  - Merge commit on main: 0707782b0b4f3fdb0e14b1ee5971ca5cde725cd6
+  - Validation: `npm run lint` pass, `npm test` pass (7/7)
+  - Slack message ids: C0AEN968ZM5/1771185472.636189, 1771185564.332419, 1771185570.522119; C0AEN943UVD/1771185472.902889, 1771185564.594049, 1771185570.780039
 
 - ID: PF-009
   Title: Add Dockerfile and .dockerignore for local containerized runs
