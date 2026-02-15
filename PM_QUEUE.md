@@ -31,17 +31,6 @@ _Last updated: 2026-02-15T08:01:40Z_
   - Script is runnable via npm script (`npm run smoke`)
   - README includes usage notes
 
-- ID: PF-015
-  Title: Add structured logger utility with request context support
-  Role: dev-backend
-  Priority: P2
-  Owner: unassigned
-  DependsOn: PF-007
-  Acceptance:
-  - Logger utility supports level + JSON output
-  - Request logs include request-id when present
-  - Existing middleware updated to use shared logger
-
 - ID: PF-016
   Title: Add repository contract docs and example in src/data/README.md
   Role: dev-data
@@ -131,6 +120,19 @@ _Last updated: 2026-02-15T08:01:40Z_
   - Link playbook from CONTRIBUTING or README
 
 ## In Progress
+
+- ID: PF-015
+  Title: Add structured logger utility with request context support
+  Role: dev-backend
+  Priority: P2
+  Owner: dev-backend
+  StartedAt: 2026-02-15T09:57:17Z
+  Branch: agent/dev-backend/PF-015-structured-logger-request-context-support-20260215
+  DependsOn: PF-007
+  Acceptance:
+  - Logger utility supports level + JSON output
+  - Request logs include request-id when present
+  - Existing middleware updated to use shared logger
 
 - ID: PF-021
   Title: Add /ready endpoint exposing service readiness metadata
