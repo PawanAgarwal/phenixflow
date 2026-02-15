@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:30:00Z_
+_Last updated: 2026-02-15T07:25:00Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -30,6 +30,94 @@ _Last updated: 2026-02-15T07:30:00Z_
   - Add script (shell or node) to hit `/health` and assert 200 with expected payload shape
   - Script is runnable via npm script (`npm run smoke`)
   - README includes usage notes
+
+- ID: PF-013
+  Title: Add graceful shutdown handling for SIGINT/SIGTERM
+  Role: dev-backend
+  Priority: P1
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Server handles SIGINT/SIGTERM and closes listener cleanly
+  - Shutdown path logs start/finish and returns non-zero on shutdown error
+  - Tests cover shutdown helper behavior
+
+- ID: PF-014
+  Title: Add config module with typed env parsing and defaults
+  Role: dev-backend
+  Priority: P1
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Create centralized config loader for `PORT`, `NODE_ENV`, and app metadata
+  - Invalid env values return clear startup errors
+  - Tests validate defaulting and error paths
+
+- ID: PF-015
+  Title: Add structured logger utility with request context support
+  Role: dev-backend
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-007
+  Acceptance:
+  - Logger utility supports level + JSON output
+  - Request logs include request-id when present
+  - Existing middleware updated to use shared logger
+
+- ID: PF-016
+  Title: Add repository contract docs and example in src/data/README.md
+  Role: dev-data
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-011
+  Acceptance:
+  - Document repository interfaces, expected return/error contract, and extension pattern
+  - Include one concrete example repository stub aligned with contract
+  - Lint/test continue to pass
+
+- ID: PF-017
+  Title: Add seed data fixture strategy for future integration tests
+  Role: dev-data
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-011
+  Acceptance:
+  - Add fixture directory structure and loader helper
+  - Provide sample fixture and usage docs for tests
+  - Add at least one unit test for fixture loader
+
+- ID: PF-018
+  Title: Add QA checklist template for Review -> Done gate
+  Role: qa
+  Priority: P1
+  Owner: unassigned
+  DependsOn: none
+  Acceptance:
+  - Add reusable QA checklist template covering lint, tests, acceptance criteria, and docs
+  - Document defect routing rules (Ready vs Blocked)
+  - Link checklist from README or CONTRIBUTING
+
+- ID: PF-019
+  Title: Add Makefile shortcuts for common local workflows
+  Role: dev-infra
+  Priority: P3
+  Owner: unassigned
+  DependsOn: PF-001
+  Acceptance:
+  - Add `make lint`, `make test`, `make verify`, and `make run`
+  - Targets call existing npm scripts without duplicating logic
+  - README includes quickstart with Make targets
+
+- ID: PF-020
+  Title: Add CODEOWNERS and branch protection guidance docs
+  Role: pm
+  Priority: P2
+  Owner: unassigned
+  DependsOn: PF-003
+  Acceptance:
+  - Add `.github/CODEOWNERS` draft aligned to current roles
+  - Document recommended branch protection settings in docs
+  - Include note marking settings as repository-admin applied
 
 ## In Progress
 
