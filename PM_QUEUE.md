@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T07:51:25Z_
+_Last updated: 2026-02-15T07:58:12Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -30,18 +30,6 @@ _Last updated: 2026-02-15T07:51:25Z_
   - Add script (shell or node) to hit `/health` and assert 200 with expected payload shape
   - Script is runnable via npm script (`npm run smoke`)
   - README includes usage notes
-
-- ID: PF-013
-  Title: Add graceful shutdown handling for SIGINT/SIGTERM
-  Role: dev-backend
-  Priority: P1
-  Owner: unassigned
-  DependsOn: PF-001
-  Acceptance:
-  - Server handles SIGINT/SIGTERM and closes listener cleanly
-  - Shutdown path logs start/finish and returns non-zero on shutdown error
-  - Tests cover shutdown helper behavior
-
 
 - ID: PF-015
   Title: Add structured logger utility with request context support
@@ -188,6 +176,19 @@ _Last updated: 2026-02-15T07:51:25Z_
   - Identify at least 3 process blockers from first sprint run and proposed mitigations
   - Produce actionable retro action items with owners and target dates
   - Update `AGENTS.md` communication/runtime notes as needed
+
+- ID: PF-013
+  Title: Add graceful shutdown handling for SIGINT/SIGTERM
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T07:58:12Z
+  Branch: agent/dev-backend/PF-013-graceful-shutdown-handling
+  DependsOn: PF-001
+  Acceptance:
+  - Server handles SIGINT/SIGTERM and closes listener cleanly
+  - Shutdown path logs start/finish and returns non-zero on shutdown error
+  - Tests cover shutdown helper behavior
 
 ## Review
 
