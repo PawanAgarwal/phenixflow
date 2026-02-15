@@ -1,6 +1,6 @@
 # PM_QUEUE.md
 
-_Last updated: 2026-02-15T20:00:54Z_
+_Last updated: 2026-02-15T20:03:02Z_
 
 ## Queue Rules
 - Claim tasks only using `AGENT_PROTOCOL.md` locking flow.
@@ -117,6 +117,23 @@ _Last updated: 2026-02-15T20:00:54Z_
   - Link playbook from CONTRIBUTING or README
 
 ## In Progress
+
+- ID: MON-77
+  Title: E9-W7 Execute shadow-mode rollout and diff validation for 3 sessions
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-15T20:03:02Z
+  Branch: pawanagarwal/mon-77-e9-w7-execute-shadow-mode-rollout-and-diff-validation-for-3
+  DependsOn: none
+  Acceptance:
+  - Shadow mode runs for at least 3 market sessions.
+  - Diff report compares old vs new filter outputs.
+  - Sign-off criteria documented and approved.
+  EvidenceRequired:
+  - Dev: PR link, key commits, test outputs, diff validation artifacts.
+  - QA: test logs/screenshots and verification notes.
+  - PM: Slack message IDs for each transition and final merge commit.
 
 - ID: PF-007
   Title: Add request-id middleware with response header propagation
