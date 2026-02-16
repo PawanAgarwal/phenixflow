@@ -118,23 +118,6 @@ _Last updated: 2026-02-15T20:10:01Z_
 
 ## In Progress
 
-- ID: MON-63
-  Title: E8-W2 Build deterministic fixture packs for trades/quotes/OI/spot
-  Role: dev-backend
-  Priority: P1
-  Owner: dev-backend
-  StartedAt: 2026-02-16T16:19:10Z
-  Branch: pawanagarwal/mon-63-e8-w2-deterministic-fixture-packs
-  DependsOn: MON-62
-  Acceptance:
-  - Fixture packs cover representative and edge-case market scenarios.
-  - Fixtures are versioned and reusable across suites.
-  - Data loading utilities are documented.
-  EvidenceRequired:
-  - Dev: PR link, key commits, `npm run lint`, `npm test` output.
-  - QA: verification logs + pass/fail recommendation.
-  - PM: Slack message IDs for each transition and merged commit hash.
-
 - ID: PF-007
   Title: Add request-id middleware with response header propagation
   Role: dev-backend
@@ -214,6 +197,27 @@ _Last updated: 2026-02-15T20:10:01Z_
 - (none)
 
 ## Done
+
+- ID: MON-63
+  Title: E8-W2 Build deterministic fixture packs for trades/quotes/OI/spot
+  Role: dev-backend
+  Priority: P1
+  Owner: dev-backend
+  StartedAt: 2026-02-16T16:19:10Z
+  CompletedAt: 2026-02-16T17:34:00Z
+  QAValidatedBy: qa
+  QAValidatedAt: 2026-02-16T17:34:00Z
+  Branch: feature/mon-63-deterministic-fixture-packs
+  DependsOn: MON-62
+  Acceptance:
+  - Fixture packs cover representative and edge-case market scenarios.
+  - Fixtures are versioned and reusable across suites.
+  - Data loading utilities are documented.
+  Evidence:
+  - Dev subagent run: mon-63-impl (done)
+  - QA subagent run: mon-63-qa-validation (pass, recommendation=merge)
+  - Key commits: 905f383 (fixture packs+loader), 86ab4ec (contract compatibility)
+  - Validation: npm run -s lint, npm test (47/47 passing)
 
 - ID: MON-77
   Title: E9-W7 Execute shadow-mode rollout and diff validation for 3 sessions

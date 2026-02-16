@@ -1,0 +1,32 @@
+
+> phenixflow@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.4 /Users/pawanagarwal/github/phenixflow
+
+ ✓ test/activity/filters.test.js (3 tests) 2ms
+ ✓ test/saved-filters-alerts.test.js (4 tests) 4ms
+ ✓ test/flow-live.test.js (3 tests) 2ms
+ ✓ test/flow-real-ingest-parser.test.js (8 tests) 7ms
+ ✓ test/historical-flow.unit.test.js (2 tests) 4ms
+ ✓ test/fixtures/market-fixture-pack.test.js (3 tests) 4ms
+ ✓ test/flow-execution-filters.test.js (14 tests) 33ms
+ ❯ test/flow-historical-api.test.js (5 tests | 4 failed) 39ms
+   × historical flow API > downloads from Theta on cache miss, persists into sqlite, and filters by symbol 17ms
+     → expected 503 to be 200 // Object.is equality
+   × historical flow API > skips Theta call on cache hit for same day/symbol 5ms
+     → expected 503 to be 200 // Object.is equality
+   × historical flow API > marks day cache partial when Theta sync fails and retries next call 8ms
+     → expected 503 to be 502 // Object.is equality
+   ✓ historical flow API > returns validation error for missing required params 1ms
+   × historical flow API > marks cache partial for explicit limit request, then upgrades to full on no-limit sync 5ms
+     → expected 503 to be 200 // Object.is equality
+ ✓ test/app.test.js (9 tests) 77ms
+ ✓ test/shadow/rollout.test.js (3 tests) 2ms
+
+ Test Files  1 failed | 9 passed (10)
+      Tests  4 failed | 50 passed (54)
+   Start at  10:07:06
+   Duration  534ms (transform 146ms, setup 0ms, collect 530ms, tests 175ms, environment 1ms, prepare 581ms)
+

@@ -1,0 +1,5 @@
+command	exit_code	log
+npm run lint	0	/Users/pawanagarwal/github/phenixflow/artifacts/qa/e8-retro-a/lint.log
+npm test	1	/Users/pawanagarwal/github/phenixflow/artifacts/qa/e8-retro-a/test.log
+npx vitest run test/flow-historical-api.test.js	1	/Users/pawanagarwal/github/phenixflow/artifacts/qa/e8-retro-a/vitest_flow_historical_api.log
+(performance suite)	NOT_PRESENT	/Users/pawanagarwal/github/phenixflow/artifacts/qa/e8-retro-a/perf.log

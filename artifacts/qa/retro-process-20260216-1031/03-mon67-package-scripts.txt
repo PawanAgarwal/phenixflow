@@ -1,0 +1,33 @@
+# mon-67 package scripts
+{
+  "name": "phenixflow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Backend service scaffold for Project phoenixflow",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "perf:report": "node scripts/performance-report.js",
+    "db:create": "python3 scripts/db/create_db.py",
+    "db:tables": "python3 scripts/db/create_tables.py",
+    "db:seed": "python3 scripts/db/init_tables.py",
+    "db:init": "python3 scripts/db/init_db.py",
+    "db:reset": "python3 scripts/db/reset_db.py"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "eslint": "^9.20.1",
+    "globals": "^15.15.0",
+    "supertest": "^7.0.0",
+    "vitest": "^3.0.5"
+  }
+}

@@ -1,0 +1,22 @@
+MON-69 QA validation evidence
+Timestamp (local): 2026-02-16 11:06:59 PST
+Evidence dir: artifacts/performance/20260216-110659
+
+Commands executed:
+1) mkdir -p artifacts/performance/20260216-110659
+2) npm run -s perf:report > artifacts/performance/20260216-110659/perf-report.log 2>&1 ; echo $? > artifacts/performance/20260216-110659/perf-report.exitcode
+3) npm run perf:report > artifacts/performance/20260216-110659/perf-report-verbose.log 2>&1 ; echo $? > artifacts/performance/20260216-110659/perf-report-verbose.exitcode
+4) node artifacts/qa/e8-retro-b/perf-check.js > artifacts/performance/20260216-110659/perf-check.raw.log 2>&1 ; echo $? > artifacts/performance/20260216-110659/perf-check.exitcode
+5) (extract JSON tail from perf-check.raw.log) -> artifacts/performance/20260216-110659/perf-check.summary.json
+6) node -e "const s=require('./artifacts/performance/20260216-110659/perf-check.summary.json'); const thr=0.10; if(!(s.p95_ms<=thr)){console.error('FAIL gate: p95_ms='+s.p95_ms+' > '+thr); process.exit(1)}; console.log('PASS gate: p95_ms='+s.p95_ms+' <= '+thr)" > artifacts/performance/20260216-110659/strict-threshold-negative.log 2>&1 ; echo $? > artifacts/performance/20260216-110659/strict-threshold-negative.exitcode
+
+Result files:
+- artifacts/performance/20260216-110659/perf-report.exitcode
+- artifacts/performance/20260216-110659/perf-report.log
+- artifacts/performance/20260216-110659/perf-report-verbose.exitcode
+- artifacts/performance/20260216-110659/perf-report-verbose.log
+- artifacts/performance/20260216-110659/perf-check.exitcode
+- artifacts/performance/20260216-110659/perf-check.raw.log
+- artifacts/performance/20260216-110659/perf-check.summary.json
+- artifacts/performance/20260216-110659/strict-threshold-negative.exitcode
+- artifacts/performance/20260216-110659/strict-threshold-negative.log

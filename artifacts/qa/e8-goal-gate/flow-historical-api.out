@@ -1,0 +1,19 @@
+
+ RUN  v3.2.4 /Users/pawanagarwal/github/phenixflow
+
+ ❯ test/flow-historical-api.test.js (5 tests | 4 failed) 21ms
+   × historical flow API > downloads from Theta on cache miss, persists into sqlite, and filters by symbol 12ms
+     → expected 503 to be 200 // Object.is equality
+   × historical flow API > skips Theta call on cache hit for same day/symbol 3ms
+     → expected 503 to be 200 // Object.is equality
+   × historical flow API > marks day cache partial when Theta sync fails and retries next call 2ms
+     → expected 503 to be 502 // Object.is equality
+   ✓ historical flow API > returns validation error for missing required params 1ms
+   × historical flow API > marks cache partial for explicit limit request, then upgrades to full on no-limit sync 2ms
+     → expected 503 to be 200 // Object.is equality
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 1 passed (5)
+   Start at  10:08:33
+   Duration  242ms (transform 10ms, setup 0ms, collect 33ms, tests 21ms, environment 0ms, prepare 30ms)
+
