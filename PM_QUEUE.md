@@ -118,18 +118,18 @@ _Last updated: 2026-02-15T20:10:01Z_
 
 ## In Progress
 
-- ID: MON-62
-  Title: E8-W1 Add test framework (Vitest) and isolated SQLite test harness
+- ID: MON-63
+  Title: E8-W2 Build deterministic fixture packs for trades/quotes/OI/spot
   Role: dev-backend
   Priority: P1
   Owner: dev-backend
-  StartedAt: 2026-02-15T20:10:01Z
-  Branch: pawanagarwal/mon-62-e8-w1-add-test-framework-vitest-and-isolated-sqlite-test
-  DependsOn: none
+  StartedAt: 2026-02-16T16:19:10Z
+  Branch: pawanagarwal/mon-63-e8-w2-deterministic-fixture-packs
+  DependsOn: MON-62
   Acceptance:
-  - Vitest configured for API/core packages.
-  - Test harness creates isolated temporary DB per suite.
-  - CI command runs tests headlessly.
+  - Fixture packs cover representative and edge-case market scenarios.
+  - Fixtures are versioned and reusable across suites.
+  - Data loading utilities are documented.
   EvidenceRequired:
   - Dev: PR link, key commits, `npm run lint`, `npm test` output.
   - QA: verification logs + pass/fail recommendation.
