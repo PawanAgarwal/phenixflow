@@ -124,6 +124,16 @@ describe('historical flow API', () => {
     expect(fetchCalls.length).toBe(1);
   });
 
+  it('reports full filtered total even when page limit truncates rows', async () => {
+    const response = await request(app)
+      .get('/api/flow/historical')
+      .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'IBM', limit: 1 });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.data).toHaveLength(1);
+    expect(response.body.meta.total).toBe(2);
+  });
+
   it('marks day cache partial when Theta sync fails and retries next call', async () => {
     let failNextMsftFetch = true;
     global.fetch = async (url) => {

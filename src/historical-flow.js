@@ -1740,7 +1740,7 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
           side: filters.side,
           sentiment: filters.sentiment,
         },
-        total: data.length,
+        total: filteredRows.length,
         sync,
         enrichment: {
           synced: enrichment.synced,
