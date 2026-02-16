@@ -298,6 +298,35 @@ describe('API contracts', () => {
     }
   });
 
+  it('GET /api/flow/filters/catalog returns chip dictionary and thresholds', async () => {
+    const app = createApp();
+
+    const response = await request(app).get('/api/flow/filters/catalog');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['content-type']).toContain('application/json');
+    expect(response.body.meta).toEqual({ filterVersion: 'legacy' });
+    expect(response.body.data.ruleVersion).toBe('historical-v1');
+    expect(response.body.data.thresholds).toMatchObject({
+      premium100kMin: 100000,
+      premiumSizableMin: 250000,
+      premiumWhalesMin: 500000,
+      sizeLargeMin: 1000,
+      repeatFlowMin: 20,
+      highSigMin: 0.9,
+    });
+
+    const chipIds = response.body.data.chips.map((chip) => chip.id);
+    expect(chipIds).toContain('calls');
+    expect(chipIds).toContain('sweeps');
+    expect(chipIds).toContain('high-sig');
+    expect(response.body.data.enums).toEqual({
+      right: ['CALL', 'PUT'],
+      sentiment: ['bullish', 'bearish', 'neutral'],
+      side: ['BID', 'ASK', 'AA', 'OTHER'],
+    });
+  });
+
   it('GET /api/flow/stream returns stream event contract with pagination', async () => {
     const app = createApp();
 
@@ -375,6 +404,14 @@ describe('API contracts', () => {
 
     expect(v1Summary.statusCode).toBe(200);
     expect(v1Summary.body).toEqual(v2Summary.body);
+
+    const [v2Catalog, v1Catalog] = await Promise.all([
+      request(app).get('/api/flow/filters/catalog'),
+      request(app).get('/api/v1/flow/filters/catalog'),
+    ]);
+
+    expect(v1Catalog.statusCode).toBe(200);
+    expect(v1Catalog.body).toEqual(v2Catalog.body);
 
     const [v2Stream, v1Stream] = await Promise.all([
       request(app).get('/api/flow/stream').query({ limit: 2 }),

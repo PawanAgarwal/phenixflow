@@ -6,6 +6,7 @@ const {
   findThresholdDefinition,
 } = require('./flow-filter-definitions');
 const { computeSentiment } = require('./historical-formulas');
+const { CHIP_DEFINITIONS, getThresholds } = require('./historical-filter-definitions');
 
 const FLOW_FIXTURES = [
   { id: 'flow_001', symbol: 'AAPL', strategy: 'breakout', status: 'open', timeframe: '1h', pnl: 120.5, volume: 1250, createdAt: '2026-01-05T14:30:00.000Z', updatedAt: '2026-01-06T09:15:00.000Z' },
@@ -25,6 +26,56 @@ const EXECUTION_FILTERS = new Set(['calls', 'puts', 'bid', 'ask', 'aa', 'sweeps'
 const THRESHOLD_FILTER_KEYS = new Set(THRESHOLD_FILTER_DEFINITIONS.map((definition) => definition.key));
 const SUMMARY_DEFAULT_TOP_SYMBOLS_LIMIT = 10;
 const SUMMARY_MAX_TOP_SYMBOLS_LIMIT = 50;
+const CHIP_CATEGORY_BY_ID = Object.freeze({
+  calls: 'execution',
+  puts: 'execution',
+  bid: 'execution',
+  ask: 'execution',
+  aa: 'execution',
+  '100k+': 'threshold',
+  sizable: 'threshold',
+  whales: 'threshold',
+  'large-size': 'threshold',
+  leaps: 'advanced',
+  weeklies: 'advanced',
+  'repeat-flow': 'advanced',
+  otm: 'advanced',
+  'vol>oi': 'advanced',
+  'rising-vol': 'advanced',
+  'am-spike': 'advanced',
+  bullflow: 'advanced',
+  'high-sig': 'advanced',
+  unusual: 'advanced',
+  urgent: 'advanced',
+  'position-builders': 'advanced',
+  grenade: 'advanced',
+  sweeps: 'execution',
+});
+const CHIP_RULE_BY_ID = Object.freeze({
+  calls: 'right = CALL',
+  puts: 'right = PUT',
+  bid: 'price <= bid',
+  ask: 'price >= ask and not AA',
+  aa: 'price >= ask + max(0.01, 0.10 * (ask - bid))',
+  sweeps: 'legacy sweep marker',
+  '100k+': 'value >= 100000',
+  sizable: 'value >= 250000',
+  whales: 'value >= 500000',
+  'large-size': 'size >= 1000',
+  leaps: 'dte >= 365',
+  weeklies: 'expiration is not standard monthly third-Friday',
+  'repeat-flow': 'repeat3m >= 20',
+  otm: 'otmPct > 0',
+  'vol>oi': 'volOiRatio > 1.0',
+  'rising-vol': 'symbolVol1m >= 2.5 * symbolVolBaseline15m',
+  'am-spike': '09:30-10:30 ET and symbolVol1m >= 3.0 * openWindowBaseline',
+  bullflow: 'bullishRatio15m >= 0.65 and sentiment = bullish',
+  'high-sig': 'sigScore >= 0.90',
+  unusual: 'value >= 100000 and volOiRatio >= 2.0',
+  urgent: 'repeat3m >= 20 or (value >= 250000 and dte <= 14 and volOiRatio >= 2.5)',
+  'position-builders': '21<=dte<=180 and abs(otmPct)<=15 and size>=250 and side in (ASK,AA)',
+  grenade: 'dte<=7 and otmPct>=5 and value>=100000',
+});
 
 function parseNumber(value) {
   if (value === undefined) return undefined;
@@ -268,6 +319,10 @@ function parseTopSymbolsLimit(rawValue) {
   const parsed = Number(rawValue);
   if (!Number.isFinite(parsed) || parsed < 1) return SUMMARY_DEFAULT_TOP_SYMBOLS_LIMIT;
   return Math.min(SUMMARY_MAX_TOP_SYMBOLS_LIMIT, Math.trunc(parsed));
+}
+
+function parseIncludeDisabled(rawValue) {
+  return parseBoolean(rawValue);
 }
 
 function parseRealIngestRows(rawContent) {
@@ -528,6 +583,53 @@ function buildFlowSummary(query = {}, options = {}) {
   };
 }
 
+function buildFlowFiltersCatalog(query = {}, options = {}) {
+  const filterVersion = normalizeFilterVersion(options.filterVersion);
+  const includeDisabled = parseIncludeDisabled(query.includeDisabled);
+  const thresholds = getThresholds(process.env);
+
+  const chips = CHIP_DEFINITIONS.map((definition) => ({
+    id: definition.id,
+    label: definition.label,
+    aliases: definition.aliases,
+    category: CHIP_CATEGORY_BY_ID[definition.id] || 'advanced',
+    requiredMetrics: definition.requiredMetrics,
+    rule: CHIP_RULE_BY_ID[definition.id] || 'n/a',
+    disabled: false,
+  }));
+
+  chips.push({
+    id: 'sweeps',
+    label: 'Sweeps',
+    aliases: ['sweeps', 'sweep'],
+    category: 'execution',
+    requiredMetrics: ['execution'],
+    rule: CHIP_RULE_BY_ID.sweeps,
+    disabled: false,
+  });
+
+  const filteredChips = includeDisabled ? chips : chips.filter((chip) => chip.disabled !== true);
+
+  return {
+    data: {
+      ruleVersion: 'historical-v1',
+      thresholds,
+      chips: filteredChips,
+      enums: {
+        right: ['CALL', 'PUT'],
+        sentiment: ['bullish', 'bearish', 'neutral'],
+        side: ['BID', 'ASK', 'AA', 'OTHER'],
+      },
+      ranges: {
+        sigScore: { min: 0, max: 1 },
+        dte: { min: -30, max: 3650 },
+        otmPct: { min: -100, max: 1000 },
+      },
+    },
+    meta: { filterVersion },
+  };
+}
+
 function buildFlowStream(query = {}, options = {}) {
   const base = queryFlow(query, options);
   return {
@@ -549,6 +651,7 @@ module.exports = {
   queryFlow,
   buildFlowFacets,
   buildFlowSummary,
+  buildFlowFiltersCatalog,
   buildFlowStream,
   getFlowDetail,
   __private: {

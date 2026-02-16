@@ -3,6 +3,7 @@ const {
   queryFlow,
   buildFlowFacets,
   buildFlowSummary,
+  buildFlowFiltersCatalog,
   buildFlowStream,
   getFlowDetail,
 } = require('./flow');
@@ -44,6 +45,10 @@ function createApp() {
     res.status(200).json(buildFlowSummary(req.query, { filterVersion: req.query.filterVersion }));
   };
 
+  const filtersCatalogHandler = (req, res) => {
+    res.status(200).json(buildFlowFiltersCatalog(req.query, { filterVersion: req.query.filterVersion }));
+  };
+
   const detailFlowHandler = (req, res) => {
     const flow = getFlowDetail(req.params.id);
     if (!flow) {
@@ -77,6 +82,7 @@ function createApp() {
   app.get('/api/flow', listFlowHandler);
   app.get('/api/flow/facets', facetsFlowHandler);
   app.get('/api/flow/summary', summaryFlowHandler);
+  app.get('/api/flow/filters/catalog', filtersCatalogHandler);
   app.get('/api/flow/stream', streamFlowHandler);
   app.get('/api/flow/historical', historicalFlowHandler);
   app.get('/api/flow/:id', detailFlowHandler);
@@ -89,6 +95,7 @@ function createApp() {
   app.get('/api/v1/flow', listFlowHandler);
   app.get('/api/v1/flow/facets', facetsFlowHandler);
   app.get('/api/v1/flow/summary', summaryFlowHandler);
+  app.get('/api/v1/flow/filters/catalog', filtersCatalogHandler);
   app.get('/api/v1/flow/stream', streamFlowHandler);
   app.get('/api/v1/flow/historical', historicalFlowHandler);
   app.get('/api/v1/flow/:id', detailFlowHandler);
