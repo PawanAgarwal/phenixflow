@@ -1,3 +1,8 @@
+const {
+  THRESHOLD_FILTER_DEFINITIONS,
+  getThresholdFilterSettings,
+} = require('./flow-filter-definitions');
+
 const OPERATOR_BY_LEGACY_KEY = {
   id: { field: 'id', op: 'eq' },
   symbol: { field: 'symbol', op: 'eq' },
@@ -11,11 +16,27 @@ const OPERATOR_BY_LEGACY_KEY = {
   minVolume: { field: 'volume', op: 'gte' },
   maxVolume: { field: 'volume', op: 'lte' },
   search: { field: 'fullText', op: 'contains' },
+  calls: { field: 'execution.calls', op: 'eq' },
+  puts: { field: 'execution.puts', op: 'eq' },
+  bid: { field: 'execution.bid', op: 'eq' },
+  ask: { field: 'execution.ask', op: 'eq' },
+  aa: { field: 'execution.aa', op: 'eq' },
+  sweeps: { field: 'execution.sweeps', op: 'eq' },
 };
+
+THRESHOLD_FILTER_DEFINITIONS.forEach((definition) => {
+  OPERATOR_BY_LEGACY_KEY[definition.key] = {
+    field: definition.clauseField,
+    op: 'gte',
+    thresholdKey: definition.key,
+  };
+});
 
 const LEGACY_KEY_BY_OPERATOR = Object.entries(OPERATOR_BY_LEGACY_KEY)
   .reduce((acc, [legacyKey, descriptor]) => {
-    acc[`${descriptor.field}:${descriptor.op}`] = legacyKey;
+    if (!descriptor.thresholdKey) {
+      acc[`${descriptor.field}:${descriptor.op}`] = legacyKey;
+    }
     return acc;
   }, {});
 
@@ -41,13 +62,21 @@ function toDslV2(payload = {}) {
     };
   }
 
+  const thresholdSettings = getThresholdFilterSettings(process.env);
   const clauses = [];
 
   Object.entries(OPERATOR_BY_LEGACY_KEY).forEach(([legacyKey, descriptor]) => {
     const value = payload[legacyKey];
-    if (value !== undefined && value !== null && value !== '') {
-      clauses.push({ field: descriptor.field, op: descriptor.op, value });
+    if (value === undefined || value === null || value === '') return;
+
+    if (descriptor.thresholdKey) {
+      if (value === true || value === 'true' || value === 1 || value === '1') {
+        clauses.push({ field: descriptor.field, op: descriptor.op, value: thresholdSettings[descriptor.thresholdKey] });
+      }
+      return;
     }
+
+    clauses.push({ field: descriptor.field, op: descriptor.op, value });
   });
 
   return {
@@ -64,7 +93,20 @@ function toLegacyPayload(dslV2 = {}) {
     return legacy;
   }
 
+  const thresholdSettings = getThresholdFilterSettings(process.env);
+
   dslV2.clauses.forEach((clause) => {
+    const matchedThreshold = THRESHOLD_FILTER_DEFINITIONS.find((definition) => (
+      clause.field === definition.clauseField
+      && clause.op === 'gte'
+      && Number(clause.value) === Number(thresholdSettings[definition.key])
+    ));
+
+    if (matchedThreshold) {
+      legacy[matchedThreshold.key] = true;
+      return;
+    }
+
     const key = LEGACY_KEY_BY_OPERATOR[`${clause.field}:${clause.op}`];
     if (key) {
       legacy[key] = clause.value;
