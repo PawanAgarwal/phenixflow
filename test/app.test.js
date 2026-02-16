@@ -578,6 +578,24 @@ describe('API contracts', () => {
     });
   });
 
+  it('accepts direct top-level v2 DSL body for saved presets', async () => {
+    const app = createApp();
+    const response = await request(app)
+      .post('/api/flow/presets')
+      .send({
+        version: 2,
+        combinator: 'or',
+        clauses: [{ field: 'symbol', op: 'eq', value: 'MSFT' }],
+      });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.data.payload).toEqual({
+      version: 2,
+      combinator: 'or',
+      clauses: [{ field: 'symbol', op: 'eq', value: 'MSFT' }],
+    });
+  });
+
   it('loads saved presets in legacy format through compatibility mode', async () => {
     const app = createApp();
 
@@ -603,6 +621,35 @@ describe('API contracts', () => {
     expect(v1Read.statusCode).toBe(200);
     expect(v1Read.body.data.payloadVersion).toBe('legacy');
     expect(v1Read.body.data.payload).toEqual({ symbol: 'TSLA', minPnl: 5 });
+  });
+
+  it('persists saved presets in sqlite across app instances', async () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'saved-persistence-'));
+    const dbPath = path.join(tempDir, 'saved.sqlite');
+
+    try {
+      await withEnv({ PHENIX_DB_PATH: dbPath }, async () => {
+        const app1 = createApp();
+        const created = await request(app1)
+          .post('/api/flow/presets')
+          .send({ name: 'Persisted', payload: { symbol: 'NVDA' } });
+
+        expect(created.statusCode).toBe(201);
+        const savedId = created.body.data.id;
+
+        const app2 = createApp();
+        const read = await request(app2).get(`/api/flow/presets/${savedId}`);
+        expect(read.statusCode).toBe(200);
+        expect(read.body.data.name).toBe('Persisted');
+        expect(read.body.data.payload).toEqual({
+          version: 2,
+          combinator: 'and',
+          clauses: [{ field: 'symbol', op: 'eq', value: 'NVDA' }],
+        });
+      });
+    } finally {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
   });
 
   it('POST /api/flow is rejected because endpoint contract is GET-only', async () => {

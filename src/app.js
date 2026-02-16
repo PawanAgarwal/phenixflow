@@ -66,14 +66,42 @@ function createApp() {
   };
 
   const createSavedHandler = (kind) => (req, res) => {
-    const record = createSaved(kind, req.body || {});
-    res.status(201).json({ data: serializeRecord(record, 'v2') });
+    try {
+      const record = createSaved(kind, req.body || {});
+      res.status(201).json({ data: serializeRecord(record, 'v2') });
+    } catch (error) {
+      res.status(503).json({
+        error: {
+          code: 'db_unavailable',
+          message: error.message,
+          details: [],
+        },
+      });
+    }
   };
 
   const getSavedHandler = (kind, defaultVersion) => (req, res) => {
-    const record = getSaved(kind, req.params.id);
+    let record;
+    try {
+      record = getSaved(kind, req.params.id);
+    } catch (error) {
+      return res.status(503).json({
+        error: {
+          code: 'db_unavailable',
+          message: error.message,
+          details: [],
+        },
+      });
+    }
+
     if (!record) {
-      return res.status(404).json({ error: { code: 'not_found', message: `${kind.slice(0, -1)} not found` } });
+      return res.status(404).json({
+        error: {
+          code: 'not_found',
+          message: `${kind.slice(0, -1)} not found`,
+          details: [],
+        },
+      });
     }
     const payloadVersion = resolvePayloadVersion(req.query.payloadVersion, defaultVersion);
     return res.status(200).json({ data: serializeRecord(record, payloadVersion) });
