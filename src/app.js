@@ -1,5 +1,6 @@
 const express = require('express');
 const { queryFlow, buildFlowFacets, buildFlowStream, getFlowDetail } = require('./flow');
+const { queryHistoricalFlow } = require('./historical-flow');
 const {
   createSaved,
   getSaved,
@@ -35,6 +36,14 @@ function createApp() {
     return res.status(200).json({ data: flow });
   };
 
+  const historicalFlowHandler = async (req, res) => {
+    const result = await queryHistoricalFlow(req.query);
+    if (result.error) {
+      return res.status(result.status || 500).json({ error: result.error });
+    }
+    return res.status(200).json(result);
+  };
+
   const createSavedHandler = (kind) => (req, res) => {
     const record = createSaved(kind, req.body || {});
     res.status(201).json({ data: serializeRecord(record, 'v2') });
@@ -52,6 +61,7 @@ function createApp() {
   app.get('/api/flow', listFlowHandler);
   app.get('/api/flow/facets', facetsFlowHandler);
   app.get('/api/flow/stream', streamFlowHandler);
+  app.get('/api/flow/historical', historicalFlowHandler);
   app.get('/api/flow/:id', detailFlowHandler);
   app.post('/api/flow/presets', createSavedHandler('presets'));
   app.get('/api/flow/presets/:id', getSavedHandler('presets', 'v2'));
@@ -62,6 +72,7 @@ function createApp() {
   app.get('/api/v1/flow', listFlowHandler);
   app.get('/api/v1/flow/facets', facetsFlowHandler);
   app.get('/api/v1/flow/stream', streamFlowHandler);
+  app.get('/api/v1/flow/historical', historicalFlowHandler);
   app.get('/api/v1/flow/:id', detailFlowHandler);
   app.post('/api/v1/flow/presets', createSavedHandler('presets'));
   app.get('/api/v1/flow/presets/:id', getSavedHandler('presets', 'legacy'));
