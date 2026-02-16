@@ -50,7 +50,7 @@ function createApp() {
   };
 
   const detailFlowHandler = (req, res) => {
-    const flow = getFlowDetail(req.params.id);
+    const flow = getFlowDetail(req.params.id, req.query || {});
     if (!flow) {
       return res.status(404).json({ error: { code: 'not_found', message: 'Flow not found' } });
     }

@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const Database = require('better-sqlite3');
 const {
   THRESHOLD_FILTER_DEFINITIONS,
   getThresholdFilterSettings,
@@ -98,7 +99,7 @@ const CHIP_RULE_BY_ID = Object.freeze({
 });
 
 function parseNumber(value) {
-  if (value === undefined) return undefined;
+  if (value === undefined || value === null || value === '') return undefined;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : undefined;
 }
@@ -594,60 +595,240 @@ function parseRealIngestRows(rawContent) {
   throw new Error('artifact_missing_rows');
 }
 
-function resolveSourceData(rawQuery) {
-  if (rawQuery.source !== 'real-ingest') {
-    return {
-      flows: FLOW_FIXTURES,
-      observability: {
-        source: 'fixtures',
-        artifactPath: null,
-        rowCount: FLOW_FIXTURES.length,
-        fallbackReason: null,
-      },
-    };
-  }
+function resolveDbPath(env = process.env) {
+  const configuredPath = env.PHENIX_DB_PATH || path.resolve(__dirname, '..', 'data', 'phenixflow.sqlite');
+  return path.resolve(configuredPath);
+}
 
-  const configuredPath = rawQuery.artifactPath || process.env.FLOW_INGEST_ARTIFACT_PATH;
-  if (!configuredPath) {
-    return {
-      flows: FLOW_FIXTURES,
-      observability: {
-        source: 'fixtures',
-        artifactPath: null,
-        rowCount: FLOW_FIXTURES.length,
-        fallbackReason: 'artifact_path_missing',
-      },
-    };
+function parseJsonArray(rawValue, fallback = []) {
+  try {
+    const parsed = JSON.parse(rawValue || '[]');
+    return Array.isArray(parsed) ? parsed : fallback;
+  } catch {
+    return fallback;
   }
+}
 
-  const artifactPath = path.resolve(configuredPath);
+function toFlowRowV2(row = {}) {
+  const tradeTsUtc = row.tradeTsUtc || row.createdAt;
+  const right = normalizeRight(row.right) || undefined;
+  const chips = Array.isArray(row.chips) ? row.chips : parseJsonArray(row.chipsJson, []);
+  const normalizedSweepFlag = row.isSweep === true
+    || row.sweep === true
+    || row.is_sweep === true
+    || chips.some((chip) => String(chip).toLowerCase() === 'sweeps');
+
+  return {
+    id: row.id,
+    tradeTsUtc,
+    symbol: row.symbol,
+    expiration: row.expiration,
+    strike: row.strike ?? null,
+    right: right || null,
+    price: row.price ?? null,
+    size: row.size ?? null,
+    bid: row.bid ?? null,
+    ask: row.ask ?? null,
+    conditionCode: row.conditionCode ?? null,
+    exchange: row.exchange ?? null,
+    value: row.value ?? row.premium ?? row.optionPremium ?? row.totalPremium ?? null,
+    dte: row.dte ?? null,
+    spot: row.spot ?? null,
+    otmPct: row.otmPct ?? null,
+    dayVolume: row.dayVolume ?? null,
+    oi: row.oi ?? null,
+    volOiRatio: row.volOiRatio ?? null,
+    repeat3m: row.repeat3m ?? null,
+    sigScore: row.sigScore ?? null,
+    sentiment: row.sentiment ?? getCanonicalSentiment(row),
+    chips,
+
+    // Backward-compatible fields still consumed in existing tests/clients.
+    strategy: row.strategy || 'options-flow',
+    status: row.status || 'open',
+    timeframe: row.timeframe || '1m',
+    pnl: toNumber(row.pnl, 0),
+    volume: toNumber(row.volume, row.size ?? 0),
+    createdAt: row.createdAt || tradeTsUtc,
+    updatedAt: row.updatedAt || row.enrichedAtUtc || tradeTsUtc,
+
+    // Internal helpers used by filter computations.
+    executionSide: row.executionSide,
+    symbolVol1m: row.symbolVol1m,
+    symbolVolBaseline15m: row.symbolVolBaseline15m,
+    openWindowBaseline: row.openWindowBaseline,
+    bullishRatio15m: row.bullishRatio15m,
+
+    // Preserve artifact-level flags used by compatibility filters.
+    isSweep: normalizedSweepFlag,
+    sweep: normalizedSweepFlag,
+    premium: row.premium ?? row.optionPremium ?? row.totalPremium,
+  };
+}
+
+function loadSqliteRows(rawQuery = {}, env = process.env) {
+  const dbPath = resolveDbPath(env);
+  let db;
 
   try {
-    const rows = parseRealIngestRows(fs.readFileSync(artifactPath, 'utf8'));
+    db = new Database(dbPath, { readonly: true });
+    db.pragma('query_only = ON');
+
+    const where = [];
+    const params = {};
+
+    if (typeof rawQuery.symbol === 'string' && rawQuery.symbol.trim()) {
+      where.push('t.symbol = @symbol');
+      params.symbol = rawQuery.symbol.trim().toUpperCase();
+    }
+
+    if (typeof rawQuery.from === 'string' && rawQuery.from.trim()) {
+      where.push('t.trade_ts_utc >= @from');
+      params.from = rawQuery.from.trim();
+    }
+
+    if (typeof rawQuery.to === 'string' && rawQuery.to.trim()) {
+      where.push('t.trade_ts_utc <= @to');
+      params.to = rawQuery.to.trim();
+    }
+
+    const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
+
+    const rows = db.prepare(`
+      SELECT
+        t.trade_id AS id,
+        t.trade_ts_utc AS tradeTsUtc,
+        t.symbol,
+        t.expiration,
+        t.strike,
+        t.option_right AS right,
+        t.price,
+        t.size,
+        t.bid,
+        t.ask,
+        t.condition_code AS conditionCode,
+        t.exchange,
+        e.value,
+        e.dte,
+        e.spot,
+        e.otm_pct AS otmPct,
+        e.day_volume AS dayVolume,
+        e.oi,
+        e.vol_oi_ratio AS volOiRatio,
+        e.repeat3m,
+        e.sig_score AS sigScore,
+        e.sentiment,
+        e.execution_side AS executionSide,
+        e.symbol_vol_1m AS symbolVol1m,
+        e.symbol_vol_baseline_15m AS symbolVolBaseline15m,
+        e.open_window_baseline AS openWindowBaseline,
+        e.bullish_ratio_15m AS bullishRatio15m,
+        e.chips_json AS chipsJson,
+        e.enriched_at_utc AS enrichedAtUtc
+      FROM option_trades t
+      LEFT JOIN option_trade_enriched e ON e.trade_id = t.trade_id
+      ${whereSql}
+      ORDER BY t.trade_ts_utc DESC, t.trade_id DESC
+    `).all(params);
+
     return {
-      flows: rows,
+      rows: rows.map((row) => toFlowRowV2(row)),
       observability: {
-        source: 'real-ingest',
-        artifactPath,
+        source: 'sqlite',
+        artifactPath: dbPath,
         rowCount: rows.length,
         fallbackReason: null,
       },
     };
   } catch (error) {
-    const fallbackReason = error.message === 'artifact_missing_rows'
-      ? 'artifact_rows_missing'
-      : 'artifact_read_error';
-
     return {
-      flows: FLOW_FIXTURES,
+      rows: [],
+      observability: {
+        source: 'sqlite',
+        artifactPath: dbPath,
+        rowCount: 0,
+        fallbackReason: `db_unavailable:${error.message}`,
+      },
+    };
+  } finally {
+    if (db) db.close();
+  }
+}
+
+function resolveSourceData(rawQuery) {
+  if (rawQuery.source === 'fixtures') {
+    return {
+      flows: FLOW_FIXTURES.map((row) => toFlowRowV2(row)),
       observability: {
         source: 'fixtures',
-        artifactPath,
+        artifactPath: null,
         rowCount: FLOW_FIXTURES.length,
-        fallbackReason,
+        fallbackReason: null,
       },
     };
   }
+
+  if (rawQuery.source === 'real-ingest') {
+    const configuredPath = rawQuery.artifactPath || process.env.FLOW_INGEST_ARTIFACT_PATH;
+    if (!configuredPath) {
+      return {
+        flows: FLOW_FIXTURES.map((row) => toFlowRowV2(row)),
+        observability: {
+          source: 'fixtures',
+          artifactPath: null,
+          rowCount: FLOW_FIXTURES.length,
+          fallbackReason: 'artifact_path_missing',
+        },
+      };
+    }
+
+    const artifactPath = path.resolve(configuredPath);
+
+    try {
+      const rows = parseRealIngestRows(fs.readFileSync(artifactPath, 'utf8')).map((row) => toFlowRowV2(row));
+      return {
+        flows: rows,
+        observability: {
+          source: 'real-ingest',
+          artifactPath,
+          rowCount: rows.length,
+          fallbackReason: null,
+        },
+      };
+    } catch (error) {
+      const fallbackReason = error.message === 'artifact_missing_rows'
+        ? 'artifact_rows_missing'
+        : 'artifact_read_error';
+
+      return {
+        flows: FLOW_FIXTURES.map((row) => toFlowRowV2(row)),
+        observability: {
+          source: 'fixtures',
+          artifactPath,
+          rowCount: FLOW_FIXTURES.length,
+          fallbackReason,
+        },
+      };
+    }
+  }
+
+  const sqliteResult = loadSqliteRows(rawQuery, process.env);
+  if (sqliteResult.rows.length > 0) {
+    return {
+      flows: sqliteResult.rows,
+      observability: sqliteResult.observability,
+    };
+  }
+
+  return {
+    flows: FLOW_FIXTURES.map((row) => toFlowRowV2(row)),
+    observability: {
+      source: 'fixtures',
+      artifactPath: sqliteResult.observability.artifactPath,
+      rowCount: FLOW_FIXTURES.length,
+      fallbackReason: sqliteResult.observability.fallbackReason || 'sqlite_empty_fallback',
+    },
+  };
 }
 
 function filterFlows(flows, filters, filterVersion) {
@@ -979,8 +1160,9 @@ function buildFlowStream(query = {}, options = {}) {
   };
 }
 
-function getFlowDetail(id) {
-  return FLOW_FIXTURES.find((item) => item.id === id) || null;
+function getFlowDetail(id, rawQuery = {}) {
+  const sourceData = resolveSourceData(rawQuery);
+  return sourceData.flows.find((item) => item.id === id) || null;
 }
 
 module.exports = {

@@ -6,7 +6,7 @@ const request = require('supertest');
 const { createApp } = require('../src/app');
 
 function expectFlowRecordContract(record) {
-  expect(record).toEqual({
+  expect(record).toEqual(expect.objectContaining({
     id: expect.any(String),
     symbol: expect.any(String),
     strategy: expect.any(String),
@@ -16,7 +16,7 @@ function expectFlowRecordContract(record) {
     volume: expect.any(Number),
     createdAt: expect.any(String),
     updatedAt: expect.any(String),
-  });
+  }));
 }
 
 async function withEnv(overrides, callback) {
@@ -64,6 +64,160 @@ function createReadyTestDb({ backlogCount = 0 } = {}) {
   for (let index = 0; index < backlogCount; index += 1) {
     insertTrade.run(`trade_backlog_${index}`);
   }
+
+  db.close();
+
+  return {
+    dbPath,
+    cleanup: () => fs.rmSync(tempDir, { recursive: true, force: true }),
+  };
+}
+
+function createFlowReadTestDb() {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'flow-read-db-'));
+  const dbPath = path.join(tempDir, 'flow.sqlite');
+  const db = new Database(dbPath);
+
+  db.exec(`
+    CREATE TABLE option_trades (
+      trade_id TEXT PRIMARY KEY,
+      trade_ts_utc TEXT NOT NULL,
+      symbol TEXT NOT NULL,
+      expiration TEXT,
+      strike REAL,
+      option_right TEXT,
+      price REAL,
+      size INTEGER,
+      bid REAL,
+      ask REAL,
+      condition_code TEXT,
+      exchange TEXT
+    );
+    CREATE TABLE option_trade_enriched (
+      trade_id TEXT PRIMARY KEY,
+      value REAL,
+      dte INTEGER,
+      spot REAL,
+      otm_pct REAL,
+      day_volume INTEGER,
+      oi INTEGER,
+      vol_oi_ratio REAL,
+      repeat3m INTEGER,
+      sig_score REAL,
+      sentiment TEXT,
+      execution_side TEXT,
+      symbol_vol_1m REAL,
+      symbol_vol_baseline_15m REAL,
+      open_window_baseline REAL,
+      bullish_ratio_15m REAL,
+      chips_json TEXT,
+      enriched_at_utc TEXT
+    );
+  `);
+
+  db.prepare(`
+    INSERT INTO option_trades (
+      trade_id,
+      trade_ts_utc,
+      symbol,
+      expiration,
+      strike,
+      option_right,
+      price,
+      size,
+      bid,
+      ask,
+      condition_code,
+      exchange
+    ) VALUES (
+      @tradeId,
+      @tradeTsUtc,
+      @symbol,
+      @expiration,
+      @strike,
+      @right,
+      @price,
+      @size,
+      @bid,
+      @ask,
+      @conditionCode,
+      @exchange
+    )
+  `).run({
+    tradeId: 'sqlite_trade_1',
+    tradeTsUtc: '2026-02-13T15:59:59.863Z',
+    symbol: 'AAPL',
+    expiration: '2026-02-13',
+    strike: 255,
+    right: 'PUT',
+    price: 0.06,
+    size: 4,
+    bid: 0.05,
+    ask: 0.07,
+    conditionCode: '125',
+    exchange: '9',
+  });
+
+  db.prepare(`
+    INSERT INTO option_trade_enriched (
+      trade_id,
+      value,
+      dte,
+      spot,
+      otm_pct,
+      day_volume,
+      oi,
+      vol_oi_ratio,
+      repeat3m,
+      sig_score,
+      sentiment,
+      execution_side,
+      symbol_vol_1m,
+      symbol_vol_baseline_15m,
+      open_window_baseline,
+      bullish_ratio_15m,
+      chips_json,
+      enriched_at_utc
+    ) VALUES (
+      @tradeId,
+      @value,
+      @dte,
+      @spot,
+      @otmPct,
+      @dayVolume,
+      @oi,
+      @volOiRatio,
+      @repeat3m,
+      @sigScore,
+      @sentiment,
+      @executionSide,
+      @symbolVol1m,
+      @symbolVolBaseline15m,
+      @openWindowBaseline,
+      @bullishRatio15m,
+      @chipsJson,
+      @enrichedAtUtc
+    )
+  `).run({
+    tradeId: 'sqlite_trade_1',
+    value: 24,
+    dte: 1,
+    spot: 252,
+    otmPct: 1.19,
+    dayVolume: 95278,
+    oi: 100000,
+    volOiRatio: 0.95,
+    repeat3m: 3,
+    sigScore: 0.055,
+    sentiment: 'neutral',
+    executionSide: 'OTHER',
+    symbolVol1m: 9756,
+    symbolVolBaseline15m: 5255.066,
+    openWindowBaseline: 0,
+    bullishRatio15m: 0.468,
+    chipsJson: JSON.stringify(['puts', 'weeklies']),
+    enrichedAtUtc: '2026-02-16T20:22:34.679Z',
+  });
 
   db.close();
 
@@ -147,7 +301,7 @@ describe('API contracts', () => {
   it('GET /api/flow returns pagination contract and data schema', async () => {
     const app = createApp();
 
-    const response = await request(app).get('/api/flow?limit=3');
+    const response = await request(app).get('/api/flow?limit=3&source=fixtures');
 
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toContain('application/json');
@@ -164,10 +318,45 @@ describe('API contracts', () => {
     response.body.data.forEach(expectFlowRecordContract);
   });
 
+  it('GET /api/flow reads from sqlite by default when local rows exist', async () => {
+    const app = createApp();
+    const flowDb = createFlowReadTestDb();
+
+    try {
+      await withEnv({ PHENIX_DB_PATH: flowDb.dbPath }, async () => {
+        const response = await request(app).get('/api/flow').query({ symbol: 'AAPL', limit: 1 });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.page).toMatchObject({
+          limit: 1,
+          hasMore: false,
+          sortBy: 'createdAt',
+          sortOrder: 'desc',
+          total: 1,
+        });
+        expect(response.body.meta.observability).toMatchObject({
+          source: 'sqlite',
+          artifactPath: path.resolve(flowDb.dbPath),
+          rowCount: 1,
+          fallbackReason: null,
+        });
+        expect(response.body.data).toHaveLength(1);
+        expect(response.body.data[0]).toMatchObject({
+          id: 'sqlite_trade_1',
+          symbol: 'AAPL',
+          right: 'PUT',
+          value: 24,
+        });
+      });
+    } finally {
+      flowDb.cleanup();
+    }
+  });
+
   it('GET /api/flow/facets returns facets schema contract', async () => {
     const app = createApp();
 
-    const response = await request(app).get('/api/flow/facets').query({ status: 'open' });
+    const response = await request(app).get('/api/flow/facets').query({ status: 'open', source: 'fixtures' });
 
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toContain('application/json');
@@ -434,7 +623,7 @@ describe('API contracts', () => {
   it('GET /api/flow/stream returns stream event contract with pagination', async () => {
     const app = createApp();
 
-    const response = await request(app).get('/api/flow/stream?limit=2&sortBy=pnl&sortOrder=desc');
+    const response = await request(app).get('/api/flow/stream?limit=2&sortBy=pnl&sortOrder=desc&source=fixtures');
 
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toContain('application/json');
@@ -461,9 +650,9 @@ describe('API contracts', () => {
   it('GET /api/flow/:id returns detail contract and handles not found', async () => {
     const app = createApp();
 
-    const detail = await request(app).get('/api/flow/flow_003');
+    const detail = await request(app).get('/api/flow/flow_003?source=fixtures');
     expect(detail.statusCode).toBe(200);
-    expect(detail.body).toEqual({
+    expect(detail.body).toMatchObject({
       data: {
         id: 'flow_003',
         symbol: 'NVDA',
@@ -477,7 +666,7 @@ describe('API contracts', () => {
       },
     });
 
-    const missing = await request(app).get('/api/flow/flow_999');
+    const missing = await request(app).get('/api/flow/flow_999?source=fixtures');
     expect(missing.statusCode).toBe(404);
     expect(missing.body).toEqual({ error: { code: 'not_found', message: 'Flow not found' } });
   });
@@ -486,24 +675,24 @@ describe('API contracts', () => {
     const app = createApp();
 
     const [v2List, v1List] = await Promise.all([
-      request(app).get('/api/flow').query({ symbol: 'AAPL', limit: 2 }),
-      request(app).get('/api/v1/flow').query({ symbol: 'AAPL', limit: 2 }),
+      request(app).get('/api/flow').query({ symbol: 'AAPL', limit: 2, source: 'fixtures' }),
+      request(app).get('/api/v1/flow').query({ symbol: 'AAPL', limit: 2, source: 'fixtures' }),
     ]);
 
     expect(v1List.statusCode).toBe(200);
     expect(v1List.body).toEqual(v2List.body);
 
     const [v2Facets, v1Facets] = await Promise.all([
-      request(app).get('/api/flow/facets').query({ status: 'closed' }),
-      request(app).get('/api/v1/flow/facets').query({ status: 'closed' }),
+      request(app).get('/api/flow/facets').query({ status: 'closed', source: 'fixtures' }),
+      request(app).get('/api/v1/flow/facets').query({ status: 'closed', source: 'fixtures' }),
     ]);
 
     expect(v1Facets.statusCode).toBe(200);
     expect(v1Facets.body).toEqual(v2Facets.body);
 
     const [v2Summary, v1Summary] = await Promise.all([
-      request(app).get('/api/flow/summary').query({ status: 'closed' }),
-      request(app).get('/api/v1/flow/summary').query({ status: 'closed' }),
+      request(app).get('/api/flow/summary').query({ status: 'closed', source: 'fixtures' }),
+      request(app).get('/api/v1/flow/summary').query({ status: 'closed', source: 'fixtures' }),
     ]);
 
     expect(v1Summary.statusCode).toBe(200);
@@ -518,16 +707,16 @@ describe('API contracts', () => {
     expect(v1Catalog.body).toEqual(v2Catalog.body);
 
     const [v2Stream, v1Stream] = await Promise.all([
-      request(app).get('/api/flow/stream').query({ limit: 2 }),
-      request(app).get('/api/v1/flow/stream').query({ limit: 2 }),
+      request(app).get('/api/flow/stream').query({ limit: 2, source: 'fixtures' }),
+      request(app).get('/api/v1/flow/stream').query({ limit: 2, source: 'fixtures' }),
     ]);
 
     expect(v1Stream.statusCode).toBe(200);
     expect(v1Stream.body).toEqual(v2Stream.body);
 
     const [v2Detail, v1Detail] = await Promise.all([
-      request(app).get('/api/flow/flow_001'),
-      request(app).get('/api/v1/flow/flow_001'),
+      request(app).get('/api/flow/flow_001').query({ source: 'fixtures' }),
+      request(app).get('/api/v1/flow/flow_001').query({ source: 'fixtures' }),
     ]);
 
     expect(v1Detail.statusCode).toBe(200);
