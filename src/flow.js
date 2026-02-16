@@ -5,6 +5,7 @@ const {
   getThresholdFilterSettings,
   findThresholdDefinition,
 } = require('./flow-filter-definitions');
+const { computeSentiment } = require('./historical-formulas');
 
 const FLOW_FIXTURES = [
   { id: 'flow_001', symbol: 'AAPL', strategy: 'breakout', status: 'open', timeframe: '1h', pnl: 120.5, volume: 1250, createdAt: '2026-01-05T14:30:00.000Z', updatedAt: '2026-01-06T09:15:00.000Z' },
@@ -22,11 +23,18 @@ const FLOW_FIXTURES = [
 const ALLOWED_SORT_FIELDS = new Set(['id', 'symbol', 'strategy', 'status', 'timeframe', 'pnl', 'volume', 'createdAt', 'updatedAt']);
 const EXECUTION_FILTERS = new Set(['calls', 'puts', 'bid', 'ask', 'aa', 'sweeps']);
 const THRESHOLD_FILTER_KEYS = new Set(THRESHOLD_FILTER_DEFINITIONS.map((definition) => definition.key));
+const SUMMARY_DEFAULT_TOP_SYMBOLS_LIMIT = 10;
+const SUMMARY_MAX_TOP_SYMBOLS_LIMIT = 50;
 
 function parseNumber(value) {
   if (value === undefined) return undefined;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function toNumber(value, fallback = null) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function parseBoolean(value) {
@@ -136,6 +144,47 @@ function getCanonicalSize(flow = {}) {
   return parseNumber(flow.size ?? flow.contractSize ?? flow.contracts ?? flow.qty ?? flow.quantity);
 }
 
+function getCanonicalDayVolume(flow = {}) {
+  return parseNumber(flow.dayVolume ?? flow.day_volume ?? flow.dailyVolume ?? flow.daily_volume);
+}
+
+function getCanonicalOi(flow = {}) {
+  return parseNumber(flow.oi ?? flow.openInterest ?? flow.open_interest);
+}
+
+function getCanonicalVolOiRatio(flow = {}) {
+  const explicit = parseNumber(flow.volOiRatio ?? flow.vol_oi_ratio ?? flow.voloi);
+  if (explicit !== undefined) return explicit;
+
+  const volume = getCanonicalDayVolume(flow);
+  const oi = getCanonicalOi(flow);
+  if (volume === undefined || oi === undefined) return undefined;
+  return volume / Math.max(oi, 1);
+}
+
+function getCanonicalSigScore(flow = {}) {
+  return parseNumber(flow.sigScore ?? flow.sig_score);
+}
+
+function getCanonicalSentiment(flow = {}) {
+  if (typeof flow.sentiment === 'string') {
+    const normalized = flow.sentiment.trim().toLowerCase();
+    if (normalized === 'bullish' || normalized === 'bearish' || normalized === 'neutral') return normalized;
+  }
+
+  const executionFlags = buildExecutionFlags(flow);
+  return computeSentiment({
+    right: flow.right,
+    executionSide: executionFlags.executionSide,
+  });
+}
+
+function getSummaryContracts(flow = {}) {
+  const size = getCanonicalSize(flow);
+  if (size !== undefined) return size;
+  return toNumber(flow.volume, 0);
+}
+
 function buildExecutionFlags(flow = {}) {
   const right = normalizeRight(flow.right);
   const price = parseNumber(flow.price);
@@ -157,6 +206,7 @@ function buildExecutionFlags(flow = {}) {
     ask: isAsk,
     aa: isAA,
     sweeps: normalizeSweepFlag(flow),
+    executionSide: isAA ? 'AA' : (isAsk ? 'ASK' : (isBid ? 'BID' : 'OTHER')),
   };
 }
 
@@ -212,6 +262,12 @@ function compareCursorRecord(record, cursorRecord, sortBy, sortOrder) {
 
 function normalizeFilterVersion(rawVersion) {
   return rawVersion === 'candidate' ? 'candidate' : 'legacy';
+}
+
+function parseTopSymbolsLimit(rawValue) {
+  const parsed = Number(rawValue);
+  if (!Number.isFinite(parsed) || parsed < 1) return SUMMARY_DEFAULT_TOP_SYMBOLS_LIMIT;
+  return Math.min(SUMMARY_MAX_TOP_SYMBOLS_LIMIT, Math.trunc(parsed));
 }
 
 function parseRealIngestRows(rawContent) {
@@ -396,6 +452,82 @@ function buildFlowFacets(query = {}, options = {}) {
   };
 }
 
+function buildFlowSummary(query = {}, options = {}) {
+  const filterVersion = normalizeFilterVersion(options.filterVersion);
+  const filters = buildFilters(query, filterVersion);
+  const sourceData = resolveSourceData(query);
+  const filtered = filterFlows(sourceData.flows, filters, filterVersion);
+  const topSymbolsLimit = parseTopSymbolsLimit(query.topSymbolsLimit);
+
+  const thresholdSettings = getThresholdFilterSettings(process.env);
+  const configuredHighSigMin = parseNumber(process.env.FLOW_FILTER_HIGH_SIG_MIN);
+  const highSigMin = configuredHighSigMin === undefined ? 0.9 : configuredHighSigMin;
+
+  const totals = {
+    rows: filtered.length,
+    contracts: 0,
+    premium: 0,
+    bullish: 0,
+    bearish: 0,
+    neutral: 0,
+  };
+
+  const symbolSummary = new Map();
+  let highSig = 0;
+  let unusual = 0;
+
+  filtered.forEach((flow) => {
+    const premium = getCanonicalPremium(flow) || 0;
+    const sentiment = getCanonicalSentiment(flow);
+    const sigScore = getCanonicalSigScore(flow);
+    const volOiRatio = getCanonicalVolOiRatio(flow);
+    const contracts = getSummaryContracts(flow) || 0;
+
+    totals.contracts += contracts;
+    totals.premium += premium;
+
+    if (sentiment === 'bullish') totals.bullish += 1;
+    else if (sentiment === 'bearish') totals.bearish += 1;
+    else totals.neutral += 1;
+
+    if (sigScore !== undefined && sigScore >= highSigMin) highSig += 1;
+    if (premium >= thresholdSettings['100k'] && volOiRatio !== undefined && volOiRatio >= 2) unusual += 1;
+
+    const symbol = typeof flow.symbol === 'string' ? flow.symbol : 'UNKNOWN';
+    const current = symbolSummary.get(symbol) || { symbol, rows: 0, premium: 0 };
+    current.rows += 1;
+    current.premium += premium;
+    symbolSummary.set(symbol, current);
+  });
+
+  const rowsCount = totals.rows || 1;
+  const ratios = {
+    bullishRatio: totals.rows ? totals.bullish / rowsCount : 0,
+    highSigRatio: totals.rows ? highSig / rowsCount : 0,
+    unusualRatio: totals.rows ? unusual / rowsCount : 0,
+  };
+
+  const topSymbols = Array.from(symbolSummary.values())
+    .sort((left, right) => {
+      if (right.rows === left.rows) return right.premium - left.premium;
+      return right.rows - left.rows;
+    })
+    .slice(0, topSymbolsLimit);
+
+  return {
+    data: {
+      totals,
+      ratios,
+      topSymbols,
+    },
+    meta: {
+      filterVersion,
+      ruleVersion: 'historical-v1',
+      observability: sourceData.observability,
+    },
+  };
+}
+
 function buildFlowStream(query = {}, options = {}) {
   const base = queryFlow(query, options);
   return {
@@ -416,6 +548,7 @@ function getFlowDetail(id) {
 module.exports = {
   queryFlow,
   buildFlowFacets,
+  buildFlowSummary,
   buildFlowStream,
   getFlowDetail,
   __private: {

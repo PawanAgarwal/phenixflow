@@ -188,6 +188,116 @@ describe('API contracts', () => {
     });
   });
 
+  it('GET /api/flow/summary returns aggregate totals, ratios, and top symbols', async () => {
+    const app = createApp();
+    const artifactDir = fs.mkdtempSync(path.join(os.tmpdir(), 'flow-summary-'));
+    const artifactPath = path.join(artifactDir, 'flow-read.json');
+
+    fs.writeFileSync(artifactPath, JSON.stringify({
+      rows: [
+        {
+          id: 'sum_1',
+          symbol: 'AAPL',
+          strategy: 'breakout',
+          status: 'open',
+          timeframe: '1m',
+          pnl: 1,
+          volume: 10,
+          createdAt: '2026-02-15T16:00:00.000Z',
+          updatedAt: '2026-02-15T16:00:01.000Z',
+          right: 'CALL',
+          price: 5,
+          size: 300,
+          bid: 4.9,
+          ask: 5,
+          dayVolume: 300,
+          oi: 100,
+          sigScore: 0.95,
+        },
+        {
+          id: 'sum_2',
+          symbol: 'TSLA',
+          strategy: 'breakout',
+          status: 'open',
+          timeframe: '1m',
+          pnl: 2,
+          volume: 20,
+          createdAt: '2026-02-15T16:00:02.000Z',
+          updatedAt: '2026-02-15T16:00:03.000Z',
+          right: 'PUT',
+          price: 5,
+          size: 100,
+          bid: 4.9,
+          ask: 5,
+          dayVolume: 100,
+          oi: 100,
+          sigScore: 0.5,
+        },
+        {
+          id: 'sum_3',
+          symbol: 'AAPL',
+          strategy: 'mean-reversion',
+          status: 'open',
+          timeframe: '1m',
+          pnl: 3,
+          volume: 20,
+          createdAt: '2026-02-15T16:00:04.000Z',
+          updatedAt: '2026-02-15T16:00:05.000Z',
+          price: 2,
+          size: 100,
+          bid: 1.9,
+          ask: 2.1,
+          dayVolume: 20,
+          oi: 100,
+          sigScore: 0.1,
+        },
+      ],
+    }), 'utf8');
+
+    try {
+      const response = await request(app).get('/api/flow/summary').query({
+        source: 'real-ingest',
+        artifactPath,
+        topSymbolsLimit: 1,
+      });
+
+      expect(response.statusCode).toBe(200);
+      expect(response.headers['content-type']).toContain('application/json');
+      expect(response.body).toEqual({
+        data: {
+          totals: {
+            rows: 3,
+            contracts: 500,
+            premium: 220000,
+            bullish: 1,
+            bearish: 1,
+            neutral: 1,
+          },
+          ratios: {
+            bullishRatio: 1 / 3,
+            highSigRatio: 1 / 3,
+            unusualRatio: 1 / 3,
+          },
+          topSymbols: [
+            { symbol: 'AAPL', rows: 2, premium: 170000 },
+          ],
+        },
+        meta: {
+          filterVersion: 'legacy',
+          ruleVersion: 'historical-v1',
+          observability: {
+            source: 'real-ingest',
+            artifactPath: path.resolve(artifactPath),
+            rowCount: 3,
+            fallbackReason: null,
+          },
+        },
+      });
+    } finally {
+      fs.rmSync(artifactDir, { recursive: true, force: true });
+    }
+  });
+
   it('GET /api/flow/stream returns stream event contract with pagination', async () => {
     const app = createApp();
 
@@ -257,6 +367,14 @@ describe('API contracts', () => {
 
     expect(v1Facets.statusCode).toBe(200);
     expect(v1Facets.body).toEqual(v2Facets.body);
+
+    const [v2Summary, v1Summary] = await Promise.all([
+      request(app).get('/api/flow/summary').query({ status: 'closed' }),
+      request(app).get('/api/v1/flow/summary').query({ status: 'closed' }),
+    ]);
+
+    expect(v1Summary.statusCode).toBe(200);
+    expect(v1Summary.body).toEqual(v2Summary.body);
 
     const [v2Stream, v1Stream] = await Promise.all([
       request(app).get('/api/flow/stream').query({ limit: 2 }),
