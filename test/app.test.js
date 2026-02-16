@@ -1,3 +1,7 @@
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const Database = require('better-sqlite3');
 const request = require('supertest');
 const { createApp } = require('../src/app');
 
@@ -15,6 +19,60 @@ function expectFlowRecordContract(record) {
   });
 }
 
+async function withEnv(overrides, callback) {
+  const previous = {};
+  Object.keys(overrides).forEach((key) => {
+    previous[key] = process.env[key];
+    const nextValue = overrides[key];
+    if (nextValue === undefined || nextValue === null) {
+      delete process.env[key];
+    } else {
+      process.env[key] = String(nextValue);
+    }
+  });
+
+  try {
+    return await callback();
+  } finally {
+    Object.entries(previous).forEach(([key, value]) => {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    });
+  }
+}
+
+function createReadyTestDb({ backlogCount = 0 } = {}) {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ready-db-'));
+  const dbPath = path.join(tempDir, 'ready.sqlite');
+  const db = new Database(dbPath);
+
+  db.exec(`
+    CREATE TABLE option_trades (
+      trade_id TEXT PRIMARY KEY
+    );
+    CREATE TABLE option_trade_enriched (
+      trade_id TEXT PRIMARY KEY
+    );
+  `);
+
+  const insertTrade = db.prepare('INSERT INTO option_trades (trade_id) VALUES (?)');
+  const insertEnriched = db.prepare('INSERT INTO option_trade_enriched (trade_id) VALUES (?)');
+
+  insertTrade.run('trade_covered');
+  insertEnriched.run('trade_covered');
+
+  for (let index = 0; index < backlogCount; index += 1) {
+    insertTrade.run(`trade_backlog_${index}`);
+  }
+
+  db.close();
+
+  return {
+    dbPath,
+    cleanup: () => fs.rmSync(tempDir, { recursive: true, force: true }),
+  };
+}
+
 describe('API contracts', () => {
   it('GET /health returns the expected status contract', async () => {
     const app = createApp();
@@ -24,6 +82,66 @@ describe('API contracts', () => {
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toContain('application/json');
     expect(response.body).toEqual({ status: 'ok' });
+  });
+
+  it('GET /ready returns not_ready when ThetaData is not configured', async () => {
+    const app = createApp();
+    const readyDb = createReadyTestDb();
+
+    try {
+      await withEnv({
+        PHENIX_DB_PATH: readyDb.dbPath,
+        THETADATA_BASE_URL: undefined,
+      }, async () => {
+        const response = await request(app).get('/ready');
+
+        expect(response.statusCode).toBe(503);
+        expect(response.body).toEqual({
+          status: 'not_ready',
+          checks: {
+            db: 'ok',
+            thetadata: 'fail',
+            enrichmentBacklog: 'ok',
+          },
+          reason: 'thetadata_not_configured',
+        });
+      });
+    } finally {
+      readyDb.cleanup();
+    }
+  });
+
+  it('GET /ready returns ready when db/thetadata/backlog checks pass', async () => {
+    const app = createApp();
+    const readyDb = createReadyTestDb();
+    const originalFetch = global.fetch;
+
+    global.fetch = vi.fn(async () => ({ ok: true, status: 200 }));
+
+    try {
+      await withEnv({
+        PHENIX_DB_PATH: readyDb.dbPath,
+        THETADATA_BASE_URL: 'http://127.0.0.1:25503',
+        THETADATA_HEALTH_PATH: '/',
+        PHENIX_ENRICHMENT_BACKLOG_MAX: '0',
+      }, async () => {
+        const response = await request(app).get('/ready');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({
+          status: 'ready',
+          checks: {
+            db: 'ok',
+            thetadata: 'ok',
+            enrichmentBacklog: 'ok',
+          },
+          version: '0.1.0',
+        });
+      });
+    } finally {
+      global.fetch = originalFetch;
+      readyDb.cleanup();
+    }
   });
 
   it('GET /api/flow returns pagination contract and data schema', async () => {

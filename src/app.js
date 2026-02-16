@@ -1,6 +1,7 @@
 const express = require('express');
 const { queryFlow, buildFlowFacets, buildFlowStream, getFlowDetail } = require('./flow');
 const { queryHistoricalFlow } = require('./historical-flow');
+const { getReadiness } = require('./readiness');
 const {
   createSaved,
   getSaved,
@@ -14,6 +15,11 @@ function createApp() {
 
   app.get('/health', (_req, res) => {
     res.status(200).json({ status: 'ok' });
+  });
+
+  app.get('/ready', async (_req, res) => {
+    const readiness = await getReadiness(process.env);
+    res.status(readiness.statusCode).json(readiness.body);
   });
 
   const listFlowHandler = (req, res) => {
