@@ -182,10 +182,114 @@ describe('API contracts', () => {
         status: {
           open: 5,
         },
+        sentiment: {
+          neutral: 5,
+        },
+        chips: {},
       },
       total: 5,
-      meta: { filterVersion: 'legacy' },
+      meta: {
+        filterVersion: 'legacy',
+        ruleVersion: 'historical-v1',
+        observability: {
+          source: 'fixtures',
+          artifactPath: null,
+          rowCount: 10,
+          fallbackReason: null,
+        },
+      },
     });
+  });
+
+  it('GET /api/flow/facets includes sentiment and chip counts for enriched rows', async () => {
+    const app = createApp();
+    const artifactDir = fs.mkdtempSync(path.join(os.tmpdir(), 'flow-facets-enriched-'));
+    const artifactPath = path.join(artifactDir, 'flow-read.json');
+
+    fs.writeFileSync(artifactPath, JSON.stringify({
+      rows: [
+        {
+          id: 'facet_1',
+          symbol: 'AAPL',
+          strategy: 'breakout',
+          status: 'open',
+          timeframe: '1m',
+          pnl: 1,
+          volume: 10,
+          createdAt: '2026-02-15T15:00:00.000Z',
+          updatedAt: '2026-02-15T15:00:01.000Z',
+          right: 'CALL',
+          price: 5,
+          size: 300,
+          bid: 4.9,
+          ask: 5,
+          strike: 110,
+          spot: 100,
+          expiration: '2027-03-19',
+          dayVolume: 300,
+          oi: 100,
+          repeat3m: 25,
+          sigScore: 0.95,
+        },
+        {
+          id: 'facet_2',
+          symbol: 'TSLA',
+          strategy: 'breakout',
+          status: 'open',
+          timeframe: '1m',
+          pnl: 2,
+          volume: 20,
+          createdAt: '2026-02-15T16:00:00.000Z',
+          updatedAt: '2026-02-15T16:00:01.000Z',
+          right: 'PUT',
+          price: 2.1,
+          size: 1200,
+          bid: 2.0,
+          ask: 2.1,
+          strike: 90,
+          spot: 100,
+          expiration: '2026-02-20',
+          dayVolume: 50,
+          oi: 100,
+          repeat3m: 5,
+          sigScore: 0.4,
+        },
+      ],
+    }), 'utf8');
+
+    try {
+      const response = await request(app).get('/api/flow/facets').query({
+        source: 'real-ingest',
+        artifactPath,
+      });
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body.total).toBe(2);
+      expect(response.body.facets.sentiment).toEqual({
+        bullish: 1,
+        bearish: 1,
+      });
+      expect(response.body.facets.chips).toMatchObject({
+        calls: 1,
+        puts: 1,
+        ask: 2,
+        '100k+': 2,
+        unusual: 1,
+        grenade: 1,
+      });
+      expect(response.body.meta).toMatchObject({
+        filterVersion: 'legacy',
+        ruleVersion: 'historical-v1',
+        observability: {
+          source: 'real-ingest',
+          artifactPath: path.resolve(artifactPath),
+          rowCount: 2,
+          fallbackReason: null,
+        },
+      });
+    } finally {
+      fs.rmSync(artifactDir, { recursive: true, force: true });
+    }
   });
 
   it('GET /api/flow/summary returns aggregate totals, ratios, and top symbols', async () => {

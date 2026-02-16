@@ -805,23 +805,41 @@ function queryFlow(rawQuery, options = {}) {
 function buildFlowFacets(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
   const filters = buildFilters(query, filterVersion);
-  const filtered = filterFlows(FLOW_FIXTURES, filters, filterVersion);
+  const sourceData = resolveSourceData(query);
+  const filtered = filterFlows(sourceData.flows, filters, filterVersion);
 
   const bySymbol = {};
   const byStatus = {};
+  const bySentiment = {};
+  const byChips = {};
 
   filtered.forEach((flow) => {
-    bySymbol[flow.symbol] = (bySymbol[flow.symbol] || 0) + 1;
-    byStatus[flow.status] = (byStatus[flow.status] || 0) + 1;
+    const symbol = flow.symbol || 'UNKNOWN';
+    const status = flow.status || 'UNKNOWN';
+    const sentiment = getCanonicalSentiment(flow);
+    const chipSet = buildChipSet(flow, {
+      thresholdSettings: filters.thresholdSettings,
+      advancedThresholds: filters.advancedThresholds,
+    });
+
+    bySymbol[symbol] = (bySymbol[symbol] || 0) + 1;
+    byStatus[status] = (byStatus[status] || 0) + 1;
+    bySentiment[sentiment] = (bySentiment[sentiment] || 0) + 1;
+
+    chipSet.forEach((chipId) => {
+      byChips[chipId] = (byChips[chipId] || 0) + 1;
+    });
   });
 
   return {
     facets: {
       symbol: bySymbol,
       status: byStatus,
+      sentiment: bySentiment,
+      chips: byChips,
     },
     total: filtered.length,
-    meta: { filterVersion },
+    meta: { filterVersion, ruleVersion: 'historical-v1', observability: sourceData.observability },
   };
 }
 
