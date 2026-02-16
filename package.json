@@ -7,6 +7,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node src/server.js",
+    "ingest:start": "node scripts/ingest-worker.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint ."
