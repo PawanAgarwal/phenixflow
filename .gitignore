@@ -7,3 +7,6 @@ dist/
 build/
 .pytest_cache/
 __pycache__/
+data/*.sqlite
+data/*.sqlite-wal
+data/*.sqlite-shm
