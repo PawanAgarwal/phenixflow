@@ -8,6 +8,7 @@ const {
 } = require('./flow-filter-definitions');
 const { computeSentiment, isStandardMonthly, isAmSpikeWindow } = require('./historical-formulas');
 const { CHIP_DEFINITIONS, getThresholds, parseChipList } = require('./historical-filter-definitions');
+const { buildShadowComparison } = require('./shadow/live-compare');
 
 const FLOW_FIXTURES = [
   { id: 'flow_001', symbol: 'AAPL', strategy: 'breakout', status: 'open', timeframe: '1h', pnl: 120.5, volume: 1250, createdAt: '2026-01-05T14:30:00.000Z', updatedAt: '2026-01-06T09:15:00.000Z' },
@@ -114,6 +115,11 @@ function parseBoolean(value) {
   if (typeof value !== 'string') return false;
   const normalized = value.trim().toLowerCase();
   return normalized === '1' || normalized === 'true' || normalized === 'yes' || normalized === 'on';
+}
+
+function shouldRunShadowCompare(rawQuery = {}, env = process.env) {
+  if (parseBoolean(rawQuery.shadow) || parseBoolean(rawQuery.shadowCompare)) return true;
+  return parseBoolean(env.FLOW_SHADOW_MODE);
 }
 
 function normalizeExecutionToken(value) {
@@ -960,6 +966,7 @@ function queryFlow(rawQuery, options = {}) {
   const filters = buildFilters(rawQuery, filterVersion);
   const sourceData = resolveSourceData(rawQuery);
   const sorted = filterFlows(sourceData.flows, filters, filterVersion).sort(buildComparator(sortBy, sortOrder));
+  const includeShadowComparison = shouldRunShadowCompare(rawQuery, process.env);
 
   let startIndex = 0;
   if (rawQuery.cursor) {
@@ -976,10 +983,27 @@ function queryFlow(rawQuery, options = {}) {
     ? encodeCursor({ sortBy, sortOrder, value: data[data.length - 1][sortBy], id: data[data.length - 1].id })
     : null;
 
+  let shadowMeta;
+  if (includeShadowComparison) {
+    const shadowVersion = filterVersion === 'candidate' ? 'legacy' : 'candidate';
+    const shadowFilters = buildFilters(rawQuery, shadowVersion);
+    const shadowSorted = filterFlows(sourceData.flows, shadowFilters, shadowVersion).sort(buildComparator(sortBy, sortOrder));
+    shadowMeta = buildShadowComparison({
+      activeVersion: filterVersion,
+      shadowVersion,
+      activeRows: sorted,
+      shadowRows: shadowSorted,
+    });
+  }
+
   return {
     data,
     page: { limit, hasMore, nextCursor, sortBy, sortOrder, total: sorted.length },
-    meta: { filterVersion, observability: sourceData.observability },
+    meta: {
+      filterVersion,
+      observability: sourceData.observability,
+      ...(shadowMeta ? { shadow: shadowMeta } : {}),
+    },
   };
 }
 
