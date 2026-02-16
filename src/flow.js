@@ -421,6 +421,7 @@ module.exports = {
   __private: {
     parseExecutionFilterSet,
     parseThresholdFilterSet,
+    parseRealIngestRows,
     buildExecutionFlags,
     buildThresholdFlags,
     getCanonicalPremium,
