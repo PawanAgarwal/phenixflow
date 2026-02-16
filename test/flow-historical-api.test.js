@@ -178,6 +178,53 @@ describe('historical flow API', () => {
     expect(response.body.error.code).toBe('invalid_query');
   });
 
+  it('filters by historical chips and right query params', async () => {
+    global.fetch = async (url) => {
+      fetchCalls.push(String(url));
+      return {
+        ok: true,
+        status: 200,
+        text: async () => JSON.stringify({
+          symbol: ['NFLX', 'NFLX', 'NFLX'],
+          trade_timestamp: ['2026-02-13T14:35:00.000Z', '2026-02-13T14:36:00.000Z', '2026-02-13T14:37:00.000Z'],
+          expiration: ['2026-02-20', '2026-02-20', '2026-02-20'],
+          strike: [1000, 1000, 1000],
+          right: ['CALL', 'PUT', 'CALL'],
+          price: [10, 9.5, 10.2],
+          size: [100, 100, 1500],
+          bid: [10, 9.5, 10],
+          ask: [10.1, 9.6, 10.1],
+          condition: [18, 18, 18],
+          exchange: ['OPRA', 'OPRA', 'OPRA'],
+        }),
+      };
+    };
+
+    const callsOnly = await request(app)
+      .get('/api/flow/historical')
+      .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'NFLX', chips: 'calls' });
+
+    expect(callsOnly.statusCode).toBe(200);
+    expect(callsOnly.body.data.every((row) => row.right === 'CALL')).toBe(true);
+
+    const bidOnly = await request(app)
+      .get('/api/flow/historical')
+      .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'NFLX', chips: 'bid' });
+
+    expect(bidOnly.statusCode).toBe(200);
+    expect(bidOnly.body.data).toHaveLength(2);
+    expect(bidOnly.body.data.every((row) => Array.isArray(row.chips) && row.chips.includes('bid'))).toBe(true);
+  });
+
+  it('returns metric_unavailable for filters that require unavailable metrics', async () => {
+    const response = await request(app)
+      .get('/api/flow/historical')
+      .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'AAPL', chips: 'otm' });
+
+    expect(response.statusCode).toBe(422);
+    expect(response.body.error.code).toBe('metric_unavailable');
+  });
+
   it('marks cache partial for explicit limit request, then upgrades to full on no-limit sync', async () => {
     global.fetch = async (url) => {
       fetchCalls.push(String(url));

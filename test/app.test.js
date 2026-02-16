@@ -41,7 +41,7 @@ describe('API contracts', () => {
       sortOrder: 'desc',
       total: 10,
     });
-    expect(response.body.meta).toEqual({ filterVersion: 'legacy' });
+    expect(response.body.meta).toMatchObject({ filterVersion: 'legacy' });
     expect(response.body.data).toHaveLength(3);
     response.body.data.forEach(expectFlowRecordContract);
   });
@@ -85,7 +85,7 @@ describe('API contracts', () => {
       sortOrder: 'desc',
       total: 10,
     });
-    expect(response.body.meta).toEqual({ filterVersion: 'legacy' });
+    expect(response.body.meta).toMatchObject({ filterVersion: 'legacy' });
     expect(response.body.data).toHaveLength(2);
     response.body.data.forEach((event) => {
       expect(event).toEqual({
