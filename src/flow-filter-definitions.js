@@ -13,7 +13,7 @@ const THRESHOLD_FILTER_DEFINITIONS = Object.freeze([
     aliases: ['sizable'],
     metric: 'premium',
     envVar: 'FLOW_FILTER_PREMIUM_SIZABLE_MIN',
-    defaultThreshold: 25000,
+    defaultThreshold: 250000,
     clauseField: 'canonical.premium',
     label: 'Sizable',
   },

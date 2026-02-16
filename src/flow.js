@@ -5,8 +5,8 @@ const {
   getThresholdFilterSettings,
   findThresholdDefinition,
 } = require('./flow-filter-definitions');
-const { computeSentiment } = require('./historical-formulas');
-const { CHIP_DEFINITIONS, getThresholds } = require('./historical-filter-definitions');
+const { computeSentiment, isStandardMonthly, isAmSpikeWindow } = require('./historical-formulas');
+const { CHIP_DEFINITIONS, getThresholds, parseChipList } = require('./historical-filter-definitions');
 
 const FLOW_FIXTURES = [
   { id: 'flow_001', symbol: 'AAPL', strategy: 'breakout', status: 'open', timeframe: '1h', pnl: 120.5, volume: 1250, createdAt: '2026-01-05T14:30:00.000Z', updatedAt: '2026-01-06T09:15:00.000Z' },
@@ -21,9 +21,29 @@ const FLOW_FIXTURES = [
   { id: 'flow_010', symbol: 'NVDA', strategy: 'breakout', status: 'open', timeframe: '4h', pnl: 300, volume: 1800, createdAt: '2025-12-26T07:15:00.000Z', updatedAt: '2026-01-06T12:05:00.000Z' },
 ];
 
-const ALLOWED_SORT_FIELDS = new Set(['id', 'symbol', 'strategy', 'status', 'timeframe', 'pnl', 'volume', 'createdAt', 'updatedAt']);
+const ALLOWED_SORT_FIELDS = new Set([
+  'id',
+  'symbol',
+  'strategy',
+  'status',
+  'timeframe',
+  'pnl',
+  'volume',
+  'createdAt',
+  'updatedAt',
+  'tradeTsUtc',
+  'value',
+  'size',
+  'dte',
+  'otmPct',
+  'volOiRatio',
+  'repeat3m',
+  'sigScore',
+]);
 const EXECUTION_FILTERS = new Set(['calls', 'puts', 'bid', 'ask', 'aa', 'sweeps']);
 const THRESHOLD_FILTER_KEYS = new Set(THRESHOLD_FILTER_DEFINITIONS.map((definition) => definition.key));
+const EXECUTION_CHIP_IDS = new Set(['calls', 'puts', 'bid', 'ask', 'aa', 'sweeps']);
+const THRESHOLD_CHIP_IDS = new Set(['100k+', 'sizable', 'whales', 'large-size']);
 const SUMMARY_DEFAULT_TOP_SYMBOLS_LIMIT = 10;
 const SUMMARY_MAX_TOP_SYMBOLS_LIMIT = 50;
 const CHIP_CATEGORY_BY_ID = Object.freeze({
@@ -195,6 +215,73 @@ function getCanonicalSize(flow = {}) {
   return parseNumber(flow.size ?? flow.contractSize ?? flow.contracts ?? flow.qty ?? flow.quantity);
 }
 
+function getCanonicalExpiration(flow = {}) {
+  const raw = flow.expiration ?? flow.expirationDate ?? flow.expiry;
+  if (raw === undefined || raw === null) return undefined;
+  const normalized = String(raw).trim();
+  if (!normalized) return undefined;
+  if (/^\d{4}-\d{2}-\d{2}/.test(normalized)) return normalized.slice(0, 10);
+  const parsed = new Date(normalized);
+  if (Number.isNaN(parsed.getTime())) return undefined;
+  return parsed.toISOString().slice(0, 10);
+}
+
+function parseIsoMs(value) {
+  if (!value) return null;
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function getCanonicalTradeTs(flow = {}) {
+  const raw = flow.tradeTsUtc ?? flow.tradeTs ?? flow.tradeTimestamp ?? flow.timestamp ?? flow.createdAt;
+  if (typeof raw !== 'string' || !raw.trim()) return undefined;
+  const parsed = new Date(raw);
+  if (Number.isNaN(parsed.getTime())) return undefined;
+  return parsed.toISOString();
+}
+
+function getCanonicalDte(flow = {}) {
+  const explicit = parseNumber(flow.dte ?? flow.daysToExpiration);
+  if (explicit !== undefined) return explicit;
+
+  const expiration = getCanonicalExpiration(flow);
+  const tradeTs = getCanonicalTradeTs(flow);
+  if (!expiration || !tradeTs) return undefined;
+
+  const expirationMs = parseIsoMs(`${expiration}T21:00:00.000Z`);
+  const tradeMs = parseIsoMs(tradeTs);
+  if (expirationMs === null || tradeMs === null) return undefined;
+
+  return Math.ceil((expirationMs - tradeMs) / 86400000);
+}
+
+function getCanonicalSpot(flow = {}) {
+  return parseNumber(
+    flow.spot
+      ?? flow.underlyingPrice
+      ?? flow.underlying_price
+      ?? flow.underlying
+      ?? flow.stockPrice
+      ?? flow.stock_price,
+  );
+}
+
+function getCanonicalOtmPct(flow = {}) {
+  const explicit = parseNumber(flow.otmPct ?? flow.otm_pct ?? flow.otmPercent);
+  if (explicit !== undefined) return explicit;
+
+  const strike = parseNumber(flow.strike);
+  const spot = getCanonicalSpot(flow);
+  const right = normalizeRight(flow.right);
+  if (strike === undefined || spot === undefined || !right || spot === 0) return undefined;
+
+  if (right === 'CALL') {
+    return ((strike - spot) / spot) * 100;
+  }
+
+  return ((spot - strike) / spot) * 100;
+}
+
 function getCanonicalDayVolume(flow = {}) {
   return parseNumber(flow.dayVolume ?? flow.day_volume ?? flow.dailyVolume ?? flow.daily_volume);
 }
@@ -215,6 +302,33 @@ function getCanonicalVolOiRatio(flow = {}) {
 
 function getCanonicalSigScore(flow = {}) {
   return parseNumber(flow.sigScore ?? flow.sig_score);
+}
+
+function getCanonicalRepeat3m(flow = {}) {
+  return parseNumber(flow.repeat3m ?? flow.repeat_3m ?? flow.repeatFlow3m ?? flow.repeat_flow_3m);
+}
+
+function getCanonicalSide(flow = {}) {
+  if (typeof flow.executionSide === 'string') return flow.executionSide.toUpperCase();
+  if (typeof flow.execution_side === 'string') return flow.execution_side.toUpperCase();
+  const executionFlags = buildExecutionFlags(flow);
+  return executionFlags.executionSide;
+}
+
+function getCanonicalBullishRatio15m(flow = {}) {
+  return parseNumber(flow.bullishRatio15m ?? flow.bullish_ratio_15m);
+}
+
+function getCanonicalSymbolVol1m(flow = {}) {
+  return parseNumber(flow.symbolVol1m ?? flow.symbol_vol_1m ?? flow.vol1m ?? flow.vol_1m);
+}
+
+function getCanonicalSymbolVolBaseline15m(flow = {}) {
+  return parseNumber(flow.symbolVolBaseline15m ?? flow.symbol_vol_baseline_15m ?? flow.volBaseline15m);
+}
+
+function getCanonicalOpenWindowBaseline(flow = {}) {
+  return parseNumber(flow.openWindowBaseline ?? flow.open_window_baseline);
 }
 
 function getCanonicalSentiment(flow = {}) {
@@ -259,6 +373,20 @@ function buildExecutionFlags(flow = {}) {
     sweeps: normalizeSweepFlag(flow),
     executionSide: isAA ? 'AA' : (isAsk ? 'ASK' : (isBid ? 'BID' : 'OTHER')),
   };
+}
+
+function parseSide(rawValue) {
+  if (typeof rawValue !== 'string') return undefined;
+  const normalized = rawValue.trim().toUpperCase();
+  if (normalized === 'BID' || normalized === 'ASK' || normalized === 'AA' || normalized === 'OTHER') return normalized;
+  return undefined;
+}
+
+function parseSentiment(rawValue) {
+  if (typeof rawValue !== 'string') return undefined;
+  const normalized = rawValue.trim().toLowerCase();
+  if (normalized === 'bullish' || normalized === 'bearish' || normalized === 'neutral') return normalized;
+  return undefined;
 }
 
 function buildThresholdFlags(flow = {}, thresholdSettings = {}) {
@@ -323,6 +451,139 @@ function parseTopSymbolsLimit(rawValue) {
 
 function parseIncludeDisabled(rawValue) {
   return parseBoolean(rawValue);
+}
+
+function parseAdvancedChipFilters(rawQuery = {}) {
+  const selected = parseChipList(rawQuery.chips);
+  return selected.filter((chipId) => !EXECUTION_CHIP_IDS.has(chipId) && !THRESHOLD_CHIP_IDS.has(chipId));
+}
+
+function passesRange(value, minValue, maxValue) {
+  if (minValue !== undefined && (value === undefined || value < minValue)) return false;
+  if (maxValue !== undefined && (value === undefined || value > maxValue)) return false;
+  return true;
+}
+
+function buildChipSet(flow = {}, settings = {}) {
+  const chips = new Set();
+  const executionFlags = buildExecutionFlags(flow);
+  const thresholdSettings = settings.thresholdSettings || getThresholdFilterSettings(process.env);
+  const advancedThresholds = settings.advancedThresholds || getThresholds(process.env);
+
+  const rowChips = Array.isArray(flow.chips) ? flow.chips : [];
+  rowChips.forEach((chip) => {
+    parseChipList(String(chip)).forEach((normalizedChip) => chips.add(normalizedChip));
+  });
+
+  if (executionFlags.calls) chips.add('calls');
+  if (executionFlags.puts) chips.add('puts');
+  if (executionFlags.bid) chips.add('bid');
+  if (executionFlags.ask) chips.add('ask');
+  if (executionFlags.aa) chips.add('aa');
+  if (executionFlags.sweeps) chips.add('sweeps');
+
+  const value = getCanonicalPremium(flow);
+  const size = getCanonicalSize(flow);
+  const dte = getCanonicalDte(flow);
+  const expiration = getCanonicalExpiration(flow);
+  const otmPct = getCanonicalOtmPct(flow);
+  const volOiRatio = getCanonicalVolOiRatio(flow);
+  const repeat3m = getCanonicalRepeat3m(flow);
+  const sigScore = getCanonicalSigScore(flow);
+  const sentiment = getCanonicalSentiment(flow);
+  const side = getCanonicalSide(flow);
+  const bullishRatio15m = getCanonicalBullishRatio15m(flow);
+  const symbolVol1m = getCanonicalSymbolVol1m(flow);
+  const symbolVolBaseline15m = getCanonicalSymbolVolBaseline15m(flow);
+  const openWindowBaseline = getCanonicalOpenWindowBaseline(flow);
+  const tradeTs = getCanonicalTradeTs(flow);
+
+  if (value !== undefined && value >= thresholdSettings['100k']) chips.add('100k+');
+  if (value !== undefined && value >= thresholdSettings.sizable) chips.add('sizable');
+  if (value !== undefined && value >= thresholdSettings.whales) chips.add('whales');
+  if (size !== undefined && size >= thresholdSettings.largeSize) chips.add('large-size');
+
+  if (dte !== undefined && dte >= 365) chips.add('leaps');
+  if (expiration && !isStandardMonthly(expiration)) chips.add('weeklies');
+  if (repeat3m !== undefined && repeat3m >= advancedThresholds.repeatFlowMin) chips.add('repeat-flow');
+  if (otmPct !== undefined && otmPct > 0) chips.add('otm');
+  if (volOiRatio !== undefined && volOiRatio > advancedThresholds.volOiMin) chips.add('vol>oi');
+
+  if (
+    symbolVol1m !== undefined
+    && symbolVolBaseline15m !== undefined
+    && symbolVol1m >= 2.5 * symbolVolBaseline15m
+  ) {
+    chips.add('rising-vol');
+  }
+
+  if (
+    tradeTs
+    && symbolVol1m !== undefined
+    && openWindowBaseline !== undefined
+    && isAmSpikeWindow(tradeTs)
+    && symbolVol1m >= 3.0 * openWindowBaseline
+  ) {
+    chips.add('am-spike');
+  }
+
+  if (
+    bullishRatio15m !== undefined
+    && bullishRatio15m >= advancedThresholds.bullflowRatioMin
+    && sentiment === 'bullish'
+  ) {
+    chips.add('bullflow');
+  }
+
+  if (sigScore !== undefined && sigScore >= advancedThresholds.highSigMin) chips.add('high-sig');
+  if (
+    value !== undefined
+    && value >= advancedThresholds.premium100kMin
+    && volOiRatio !== undefined
+    && volOiRatio >= advancedThresholds.unusualVolOiMin
+  ) {
+    chips.add('unusual');
+  }
+
+  if (
+    (repeat3m !== undefined && repeat3m >= advancedThresholds.repeatFlowMin)
+    || (
+      value !== undefined
+      && value >= advancedThresholds.premiumSizableMin
+      && dte !== undefined
+      && dte <= 14
+      && volOiRatio !== undefined
+      && volOiRatio >= advancedThresholds.urgentVolOiMin
+    )
+  ) {
+    chips.add('urgent');
+  }
+
+  if (
+    dte !== undefined
+    && dte >= 21
+    && dte <= 180
+    && otmPct !== undefined
+    && Math.abs(otmPct) <= 15
+    && size !== undefined
+    && size >= 250
+    && (side === 'ASK' || side === 'AA')
+  ) {
+    chips.add('position-builders');
+  }
+
+  if (
+    dte !== undefined
+    && dte <= 7
+    && otmPct !== undefined
+    && otmPct >= 5
+    && value !== undefined
+    && value >= advancedThresholds.premium100kMin
+  ) {
+    chips.add('grenade');
+  }
+
+  return chips;
 }
 
 function parseRealIngestRows(rawContent) {
@@ -420,6 +681,41 @@ function filterFlows(flows, filters, filterVersion) {
       const haystack = `${flow.id} ${flow.symbol} ${flow.strategy} ${flow.status} ${flow.timeframe}`.toLowerCase();
       return haystack.includes(filters.search);
     }
+
+    const right = normalizeRight(flow.right);
+    const expiration = getCanonicalExpiration(flow);
+    const side = getCanonicalSide(flow);
+    const sentiment = getCanonicalSentiment(flow);
+    const value = getCanonicalPremium(flow);
+    const size = getCanonicalSize(flow);
+    const dte = getCanonicalDte(flow);
+    const otmPct = getCanonicalOtmPct(flow);
+    const volOiRatio = getCanonicalVolOiRatio(flow);
+    const repeat3m = getCanonicalRepeat3m(flow);
+    const sigScore = getCanonicalSigScore(flow);
+
+    if (filters.right && right !== filters.right) return false;
+    if (filters.expiration && expiration !== filters.expiration) return false;
+    if (filters.side && side !== filters.side) return false;
+    if (filters.sentiment && sentiment !== filters.sentiment) return false;
+
+    if (!passesRange(value, filters.minValue, filters.maxValue)) return false;
+    if (!passesRange(size, filters.minSize, filters.maxSize)) return false;
+    if (!passesRange(dte, filters.minDte, filters.maxDte)) return false;
+    if (!passesRange(otmPct, filters.minOtmPct, filters.maxOtmPct)) return false;
+    if (!passesRange(sigScore, filters.minSigScore, filters.maxSigScore)) return false;
+    if (!passesRange(volOiRatio, filters.minVolOi, filters.maxVolOi)) return false;
+    if (filters.minRepeat3m !== undefined && (repeat3m === undefined || repeat3m < filters.minRepeat3m)) return false;
+
+    if (filters.advancedChips.length) {
+      const chipSet = buildChipSet(flow, {
+        thresholdSettings: filters.thresholdSettings,
+        advancedThresholds: filters.advancedThresholds,
+      });
+      const allMatch = filters.advancedChips.every((chipId) => chipSet.has(chipId));
+      if (!allMatch) return false;
+    }
+
     return true;
   });
 }
@@ -431,6 +727,9 @@ function buildFilters(rawQuery, filterVersion) {
 
   const thresholdSettings = getThresholdFilterSettings(process.env);
   const thresholds = parseThresholdFilterSet(rawQuery);
+  const advancedThresholds = getThresholds(process.env);
+  const rightFromType = normalizeRight(rawQuery.type);
+  const right = normalizeRight(rawQuery.right) || rightFromType || undefined;
 
   return {
     id: normalizeExact(rawQuery.id),
@@ -445,9 +744,28 @@ function buildFilters(rawQuery, filterVersion) {
     maxPnl: parseNumber(rawQuery.maxPnl),
     minVolume: parseNumber(rawQuery.minVolume),
     maxVolume: parseNumber(rawQuery.maxVolume),
+    right,
+    expiration: getCanonicalExpiration({ expiration: rawQuery.expiration }),
+    side: parseSide(rawQuery.side),
+    sentiment: parseSentiment(rawQuery.sentiment),
+    minValue: parseNumber(rawQuery.minValue),
+    maxValue: parseNumber(rawQuery.maxValue),
+    minSize: parseNumber(rawQuery.minSize),
+    maxSize: parseNumber(rawQuery.maxSize),
+    minDte: parseNumber(rawQuery.minDte),
+    maxDte: parseNumber(rawQuery.maxDte),
+    minOtmPct: parseNumber(rawQuery.minOtmPct),
+    maxOtmPct: parseNumber(rawQuery.maxOtmPct),
+    minVolOi: parseNumber(rawQuery.minVolOi),
+    maxVolOi: parseNumber(rawQuery.maxVolOi),
+    minRepeat3m: parseNumber(rawQuery.minRepeat3m),
+    minSigScore: parseNumber(rawQuery.minSigScore),
+    maxSigScore: parseNumber(rawQuery.maxSigScore),
     execution: parseExecutionFilterSet(rawQuery),
     thresholds,
     thresholdSettings,
+    advancedThresholds,
+    advancedChips: parseAdvancedChipFilters(rawQuery),
   };
 }
 
