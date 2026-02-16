@@ -20,6 +20,28 @@ function createApp() {
   const app = express();
   app.use(express.json());
 
+  const wantsSseStream = (req) => {
+    if (typeof req.query.transport === 'string' && req.query.transport.trim().toLowerCase() === 'sse') {
+      return true;
+    }
+
+    const acceptHeader = typeof req.headers.accept === 'string' ? req.headers.accept : '';
+    return acceptHeader.toLowerCase().includes('text/event-stream');
+  };
+
+  const buildSseWatermark = (baseWatermark, offset) => {
+    if (baseWatermark === undefined || baseWatermark === null || baseWatermark === '') {
+      return String(offset);
+    }
+
+    const parsedNumber = Number(baseWatermark);
+    if (Number.isFinite(parsedNumber)) {
+      return String(parsedNumber + offset);
+    }
+
+    return `${String(baseWatermark)}:${offset}`;
+  };
+
   app.get('/health', (_req, res) => {
     res.status(200).json({ status: 'ok' });
   });
@@ -38,7 +60,46 @@ function createApp() {
   };
 
   const streamFlowHandler = (req, res) => {
-    res.status(200).json(buildFlowStream(req.query, { filterVersion: req.query.filterVersion }));
+    const streamPayload = buildFlowStream(req.query, { filterVersion: req.query.filterVersion });
+
+    if (!wantsSseStream(req)) {
+      return res.status(200).json(streamPayload);
+    }
+
+    res.status(200);
+    res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    if (typeof res.flushHeaders === 'function') {
+      res.flushHeaders();
+    }
+
+    const baseWatermark = req.query.watermark;
+    streamPayload.data.forEach((event, index) => {
+      const sequence = event.sequence;
+      const watermark = buildSseWatermark(baseWatermark, index + 1);
+      const payload = {
+        sequence,
+        watermark,
+        eventType: 'flow.updated',
+        flow: event.flow,
+      };
+
+      res.write('event: flow.updated\n');
+      res.write(`data: ${JSON.stringify(payload)}\n\n`);
+    });
+
+    const keepaliveSequence = streamPayload.data.length + 1;
+    const keepalivePayload = {
+      sequence: keepaliveSequence,
+      watermark: buildSseWatermark(baseWatermark, keepaliveSequence),
+      eventType: 'keepalive',
+    };
+
+    res.write('event: keepalive\n');
+    res.write(`data: ${JSON.stringify(keepalivePayload)}\n\n`);
+    res.end();
+    return undefined;
   };
 
   const summaryFlowHandler = (req, res) => {

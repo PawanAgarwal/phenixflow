@@ -19,6 +19,25 @@ function expectFlowRecordContract(record) {
   }));
 }
 
+function parseSseEvents(rawText) {
+  if (typeof rawText !== 'string') return [];
+
+  return rawText
+    .split('\n\n')
+    .map((chunk) => chunk.trim())
+    .filter(Boolean)
+    .map((chunk) => {
+      const eventLine = chunk.split('\n').find((line) => line.startsWith('event:'));
+      const dataLine = chunk.split('\n').find((line) => line.startsWith('data:'));
+      if (!eventLine || !dataLine) return null;
+
+      const event = eventLine.slice('event:'.length).trim();
+      const payload = JSON.parse(dataLine.slice('data:'.length).trim());
+      return { event, payload };
+    })
+    .filter(Boolean);
+}
+
 async function withEnv(overrides, callback) {
   const previous = {};
   Object.keys(overrides).forEach((key) => {
@@ -644,6 +663,53 @@ describe('API contracts', () => {
         flow: expect.any(Object),
       });
       expectFlowRecordContract(event.flow);
+    });
+  });
+
+  it('GET /api/flow/stream supports SSE transport contract', async () => {
+    const app = createApp();
+
+    const response = await request(app)
+      .get('/api/flow/stream')
+      .query({
+        transport: 'sse',
+        source: 'fixtures',
+        limit: 2,
+        watermark: '10',
+      });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['content-type']).toContain('text/event-stream');
+
+    const events = parseSseEvents(response.text);
+    expect(events).toHaveLength(3);
+
+    expect(events[0]).toMatchObject({
+      event: 'flow.updated',
+      payload: {
+        sequence: 1,
+        watermark: '11',
+        eventType: 'flow.updated',
+      },
+    });
+    expectFlowRecordContract(events[0].payload.flow);
+
+    expect(events[1]).toMatchObject({
+      event: 'flow.updated',
+      payload: {
+        sequence: 2,
+        watermark: '12',
+        eventType: 'flow.updated',
+      },
+    });
+
+    expect(events[2]).toEqual({
+      event: 'keepalive',
+      payload: {
+        sequence: 3,
+        watermark: '13',
+        eventType: 'keepalive',
+      },
     });
   });
 
