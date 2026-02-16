@@ -1520,6 +1520,8 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
           symbol,
           chips: filters.chips,
           right: filters.right,
+          expiration: filters.expiration,
+          side: filters.side,
           sentiment: filters.sentiment,
         },
         total: data.length,

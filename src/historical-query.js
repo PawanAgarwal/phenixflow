@@ -17,13 +17,33 @@ function parseSentiment(rawValue) {
   return undefined;
 }
 
+function parseSide(rawValue) {
+  if (typeof rawValue !== 'string') return undefined;
+  const normalized = rawValue.trim().toUpperCase();
+  if (normalized === 'BID' || normalized === 'ASK' || normalized === 'AA' || normalized === 'OTHER') return normalized;
+  return undefined;
+}
+
+function parseExpiration(rawValue) {
+  if (typeof rawValue !== 'string') return undefined;
+  const normalized = rawValue.trim();
+  if (!normalized) return undefined;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(normalized)) return normalized;
+
+  const parsed = new Date(normalized);
+  if (Number.isNaN(parsed.getTime())) return undefined;
+  return parsed.toISOString().slice(0, 10);
+}
+
 function parseHistoricalFilters(rawQuery = {}) {
   const chips = parseChipList(rawQuery.chips);
-  const right = normalizeRight(rawQuery.right) || undefined;
+  const right = normalizeRight(rawQuery.right) || normalizeRight(rawQuery.type) || undefined;
 
   return {
     chips,
     right,
+    expiration: parseExpiration(rawQuery.expiration),
+    side: parseSide(rawQuery.side),
     sentiment: parseSentiment(rawQuery.sentiment),
     minValue: parseNumber(rawQuery.minValue),
     maxValue: parseNumber(rawQuery.maxValue),
@@ -34,6 +54,7 @@ function parseHistoricalFilters(rawQuery = {}) {
     minOtmPct: parseNumber(rawQuery.minOtmPct),
     maxOtmPct: parseNumber(rawQuery.maxOtmPct),
     minVolOi: parseNumber(rawQuery.minVolOi),
+    maxVolOi: parseNumber(rawQuery.maxVolOi),
     minRepeat3m: parseNumber(rawQuery.minRepeat3m),
     minSigScore: parseNumber(rawQuery.minSigScore),
     maxSigScore: parseNumber(rawQuery.maxSigScore),
@@ -47,11 +68,12 @@ function getRequiredMetricsForQuery(filters) {
   if (filters.minSize !== undefined || filters.maxSize !== undefined) required.add('size');
   if (filters.minDte !== undefined || filters.maxDte !== undefined) required.add('dte');
   if (filters.minOtmPct !== undefined || filters.maxOtmPct !== undefined) required.add('otmPct');
-  if (filters.minVolOi !== undefined) required.add('volOiRatio');
+  if (filters.minVolOi !== undefined || filters.maxVolOi !== undefined) required.add('volOiRatio');
   if (filters.minRepeat3m !== undefined) required.add('repeat3m');
   if (filters.minSigScore !== undefined || filters.maxSigScore !== undefined) required.add('sigScore');
   if (filters.sentiment !== undefined) required.add('sentiment');
   if (filters.right !== undefined) required.add('execution');
+  if (filters.side !== undefined) required.add('execution');
 
   return Array.from(required);
 }
@@ -70,6 +92,8 @@ function passesRange(value, minValue, maxValue) {
 function applyHistoricalFilters(rows, filters) {
   return rows.filter((row) => {
     if (filters.right && row.right !== filters.right) return false;
+    if (filters.expiration && row.expiration !== filters.expiration) return false;
+    if (filters.side && row.executionSide !== filters.side) return false;
     if (filters.sentiment && row.sentiment !== filters.sentiment) return false;
 
     if (!passesRange(row.value, filters.minValue, filters.maxValue)) return false;
@@ -78,7 +102,7 @@ function applyHistoricalFilters(rows, filters) {
     if (!passesRange(row.otmPct, filters.minOtmPct, filters.maxOtmPct)) return false;
     if (!passesRange(row.sigScore, filters.minSigScore, filters.maxSigScore)) return false;
 
-    if (filters.minVolOi !== undefined && (row.volOiRatio === null || row.volOiRatio === undefined || row.volOiRatio < filters.minVolOi)) {
+    if (!passesRange(row.volOiRatio, filters.minVolOi, filters.maxVolOi)) {
       return false;
     }
 

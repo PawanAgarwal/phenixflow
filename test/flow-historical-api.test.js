@@ -214,6 +214,24 @@ describe('historical flow API', () => {
     expect(bidOnly.statusCode).toBe(200);
     expect(bidOnly.body.data).toHaveLength(2);
     expect(bidOnly.body.data.every((row) => Array.isArray(row.chips) && row.chips.includes('bid'))).toBe(true);
+
+    const putAskOnly = await request(app)
+      .get('/api/flow/historical')
+      .query({
+        from: FRIDAY_FROM,
+        to: FRIDAY_TO,
+        symbol: 'NFLX',
+        type: 'put',
+        side: 'BID',
+        expiration: '2026-02-20',
+      });
+
+    expect(putAskOnly.statusCode).toBe(200);
+    expect(putAskOnly.body.data).toHaveLength(1);
+    expect(putAskOnly.body.data[0]).toMatchObject({
+      right: 'PUT',
+      expiration: '2026-02-20',
+    });
   });
 
   it('returns metric_unavailable for filters that require unavailable metrics', async () => {
