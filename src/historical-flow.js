@@ -31,6 +31,9 @@ const DEFAULT_LIMIT = 100;
 const MAX_LIMIT = 1000;
 const DAY_CACHE_STATUS_FULL = 'full';
 const DAY_CACHE_STATUS_PARTIAL = 'partial';
+const DEFAULT_HISTORICAL_OPTION_PATH = '/v3/option/history/trade_quote';
+const DEFAULT_SPOT_PATH = '/v3/stock/snapshot/quote';
+const DEFAULT_OI_PATH = '/v3/option/open_interest';
 
 const METRIC_NAMES = Object.freeze([
   'enrichedRows',
@@ -395,7 +398,7 @@ function resolveThetaEndpoint(symbol, yyyymmdd, env = process.env) {
   const baseUrl = (env.THETADATA_BASE_URL || '').trim();
   if (!baseUrl) return null;
 
-  const configuredPath = (env.THETADATA_HISTORICAL_OPTION_PATH || '/v3/option/history/trade_quote').trim();
+  const configuredPath = (env.THETADATA_HISTORICAL_OPTION_PATH || DEFAULT_HISTORICAL_OPTION_PATH).trim();
   const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const normalizedPath = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
 
@@ -405,6 +408,104 @@ function resolveThetaEndpoint(symbol, yyyymmdd, env = process.env) {
   url.searchParams.set('date', yyyymmdd);
   url.searchParams.set('format', 'json');
   return url.toString();
+}
+
+function resolveThetaSpotEndpoint(symbol, dayIso, env = process.env) {
+  const baseUrl = (env.THETADATA_BASE_URL || '').trim();
+  const configuredPath = (env.THETADATA_SPOT_PATH || DEFAULT_SPOT_PATH).trim();
+  if (!baseUrl || !configuredPath) return null;
+
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const normalizedPath = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
+  const url = new URL(`${normalizedBase}${normalizedPath}`);
+
+  url.searchParams.set('symbol', symbol);
+  url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
+  url.searchParams.set('format', 'json');
+  return url.toString();
+}
+
+function resolveThetaOiEndpoint(row, dayIso, env = process.env) {
+  const baseUrl = (env.THETADATA_BASE_URL || '').trim();
+  const configuredPath = (env.THETADATA_OI_PATH || DEFAULT_OI_PATH).trim();
+  if (!baseUrl || !configuredPath) return null;
+
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const normalizedPath = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
+  const url = new URL(`${normalizedBase}${normalizedPath}`);
+
+  url.searchParams.set('symbol', row.symbol);
+  url.searchParams.set('expiration', row.expiration);
+  url.searchParams.set('strike', String(row.strike));
+  url.searchParams.set('right', row.right);
+  url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
+  url.searchParams.set('format', 'json');
+  return url.toString();
+}
+
+function extractFirstNumericValue(rawValue, candidateKeys) {
+  if (!rawValue || typeof rawValue !== 'object') return null;
+  for (const key of candidateKeys) {
+    const value = toFiniteNumber(rawValue[key]);
+    if (value !== null) return value;
+  }
+  return null;
+}
+
+function extractMetricFromResponse(rawBody, candidateKeys) {
+  const parsedRows = parseJsonRows(rawBody);
+  for (const row of parsedRows) {
+    const value = extractFirstNumericValue(row, candidateKeys);
+    if (value !== null) return value;
+  }
+
+  try {
+    const parsed = JSON.parse(rawBody);
+    if (Array.isArray(parsed)) {
+      for (const row of parsed) {
+        const value = extractFirstNumericValue(row, candidateKeys);
+        if (value !== null) return value;
+      }
+      return null;
+    }
+
+    if (parsed && typeof parsed === 'object') {
+      const direct = extractFirstNumericValue(parsed, candidateKeys);
+      if (direct !== null) return direct;
+
+      const nestedCandidates = ['quote', 'data', 'response', 'result'];
+      for (const key of nestedCandidates) {
+        const nested = parsed[key];
+        if (Array.isArray(nested)) {
+          for (const row of nested) {
+            const nestedValue = extractFirstNumericValue(row, candidateKeys);
+            if (nestedValue !== null) return nestedValue;
+          }
+        } else {
+          const nestedValue = extractFirstNumericValue(nested, candidateKeys);
+          if (nestedValue !== null) return nestedValue;
+        }
+      }
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+async function fetchThetaMetricNumber(url, candidateKeys) {
+  if (!url) return null;
+
+  try {
+    const response = await fetch(url);
+    const body = await response.text();
+    if (!response.ok) return null;
+
+    return extractMetricFromResponse(body, candidateKeys);
+  } catch {
+    return null;
+  }
 }
 
 function upsertDayCache(db, {
@@ -1067,7 +1168,106 @@ function extractOi(rawPayload) {
   return null;
 }
 
-function buildEnrichedRows(rawRows, thresholds) {
+function loadContractOiFromStats(db, { symbol, dayIso }) {
+  const rows = db.prepare(`
+    SELECT
+      symbol,
+      expiration,
+      strike,
+      option_right AS right,
+      oi
+    FROM contract_stats_intraday
+    WHERE symbol = @symbol
+      AND session_date = @dayIso
+  `).all({ symbol, dayIso });
+
+  const byContract = new Map();
+  rows.forEach((row) => {
+    const oi = toFiniteNumber(row.oi);
+    if (oi === null || oi <= 0) return;
+    byContract.set(buildContractKey(row), Math.trunc(oi));
+  });
+  return byContract;
+}
+
+async function buildSupplementalMetricLookup({
+  db,
+  symbol,
+  dayIso,
+  rawRows,
+  env = process.env,
+}) {
+  const spotBySymbol = new Map();
+  const oiByContract = loadContractOiFromStats(db, { symbol, dayIso });
+
+  rawRows.forEach((row) => {
+    const payload = parsePayload(row.rawPayloadJson);
+    const spot = computeSpot(payload);
+    if (spot !== null && !spotBySymbol.has(row.symbol)) {
+      spotBySymbol.set(row.symbol, spot);
+    }
+
+    const oi = extractOi(payload);
+    if (oi !== null) {
+      oiByContract.set(buildContractKey(row), oi);
+    }
+  });
+
+  if ((env.THETADATA_BASE_URL || '').trim()) {
+    const shouldFetchSpot = typeof env.THETADATA_SPOT_PATH === 'string' && env.THETADATA_SPOT_PATH.trim().length > 0;
+    const shouldFetchOi = typeof env.THETADATA_OI_PATH === 'string' && env.THETADATA_OI_PATH.trim().length > 0;
+
+    if (shouldFetchSpot) {
+      const symbolsMissingSpot = Array.from(new Set(rawRows.map((row) => row.symbol)))
+        .filter((rowSymbol) => !spotBySymbol.has(rowSymbol));
+
+      for (const rowSymbol of symbolsMissingSpot) {
+        const spotEndpoint = resolveThetaSpotEndpoint(rowSymbol, dayIso, env);
+        const spot = await fetchThetaMetricNumber(spotEndpoint, [
+          'spot',
+          'underlying_price',
+          'underlyingPrice',
+          'price',
+          'last',
+          'mark',
+          'mid',
+        ]);
+        if (spot !== null) {
+          spotBySymbol.set(rowSymbol, spot);
+        }
+      }
+    }
+
+    if (shouldFetchOi) {
+      const seenContracts = new Set();
+      const contractsMissingOi = [];
+      rawRows.forEach((row) => {
+        const contractKey = buildContractKey(row);
+        if (seenContracts.has(contractKey)) return;
+        seenContracts.add(contractKey);
+        if (!oiByContract.has(contractKey)) contractsMissingOi.push(row);
+      });
+
+      for (const row of contractsMissingOi) {
+        const oiEndpoint = resolveThetaOiEndpoint(row, dayIso, env);
+        const oi = await fetchThetaMetricNumber(oiEndpoint, [
+          'oi',
+          'open_interest',
+          'openInterest',
+        ]);
+        if (oi !== null) {
+          oiByContract.set(buildContractKey(row), Math.trunc(oi));
+        }
+      }
+    }
+  }
+
+  return { spotBySymbol, oiByContract };
+}
+
+function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
+  const spotBySymbol = supplementalMetrics.spotBySymbol || new Map();
+  const oiByContract = supplementalMetrics.oiByContract || new Map();
   const statsByMinute = buildMinuteStats(rawRows);
 
   const contractDayVolume = new Map();
@@ -1116,11 +1316,11 @@ function buildEnrichedRows(rawRows, thresholds) {
     const repeat3m = sideWindow.length;
 
     const payload = parsePayload(row.rawPayloadJson);
-    const spot = computeSpot(payload);
+    const spot = computeSpot(payload) ?? spotBySymbol.get(row.symbol) ?? null;
     const otmPct = computeOtmPct({ right: row.right, strike: row.strike, spot });
     const value = computeValue(row.price, row.size);
     const dte = computeDte(row.tradeTsUtc, row.expiration);
-    const oi = extractOi(payload);
+    const oi = extractOi(payload) ?? oiByContract.get(contractKey) ?? null;
     const volOiRatio = oi === null ? null : (dayVolume / Math.max(oi, 1));
 
     const valuePctile = value === null || maxValue === minValue
@@ -1218,7 +1418,15 @@ function hasFullMetricCache(metricCacheMap, metricName) {
   return Boolean(cache && cache.cacheStatus === DAY_CACHE_STATUS_FULL);
 }
 
-function ensureEnrichedForDay({ db, symbol, dayIso, forceRecompute = false, markPartial = false, thresholds }) {
+async function ensureEnrichedForDay({
+  db,
+  symbol,
+  dayIso,
+  forceRecompute = false,
+  markPartial = false,
+  thresholds,
+  env = process.env,
+}) {
   const metricCacheMap = getMetricCacheMap(db, { symbol, dayIso });
   const rawRows = getRawTradesForDay(db, { symbol, dayIso });
 
@@ -1231,7 +1439,14 @@ function ensureEnrichedForDay({ db, symbol, dayIso, forceRecompute = false, mark
     };
   }
 
-  const built = buildEnrichedRows(rawRows, thresholds);
+  const supplementalMetrics = await buildSupplementalMetricLookup({
+    db,
+    symbol,
+    dayIso,
+    rawRows,
+    env,
+  });
+  const built = buildEnrichedRows(rawRows, thresholds, supplementalMetrics);
 
   const upsertPayload = built.rows.map((row) => ({
     ...row,
@@ -1442,13 +1657,14 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
 
   let enrichment;
   try {
-    enrichment = ensureEnrichedForDay({
+    enrichment = await ensureEnrichedForDay({
       db: readDb,
       symbol,
       dayIso: fromDay,
       forceRecompute: sync.synced,
       markPartial: hasExplicitLimit,
       thresholds,
+      env,
     });
   } catch (error) {
     METRIC_NAMES.forEach((metricName) => {
@@ -1556,6 +1772,11 @@ module.exports = {
     parseJsonRows,
     normalizeThetaRows,
     resolveThetaEndpoint,
+    resolveThetaSpotEndpoint,
+    resolveThetaOiEndpoint,
+    extractMetricFromResponse,
+    fetchThetaMetricNumber,
+    buildSupplementalMetricLookup,
     countCachedRows,
     upsertDayCache,
     getDayCache,

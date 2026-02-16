@@ -19,12 +19,16 @@ describe('historical flow API', () => {
   let dbPath;
   let previousDbPath;
   let previousThetaBaseUrl;
+  let previousThetaSpotPath;
+  let previousThetaOiPath;
   let previousFetch;
   let fetchCalls;
 
   beforeAll(() => {
     previousDbPath = process.env.PHENIX_DB_PATH;
     previousThetaBaseUrl = process.env.THETADATA_BASE_URL;
+    previousThetaSpotPath = process.env.THETADATA_SPOT_PATH;
+    previousThetaOiPath = process.env.THETADATA_OI_PATH;
     previousFetch = global.fetch;
 
     ({ tempDir, dbPath } = makeTempDbPath());
@@ -63,6 +67,12 @@ describe('historical flow API', () => {
 
     if (previousThetaBaseUrl === undefined) delete process.env.THETADATA_BASE_URL;
     else process.env.THETADATA_BASE_URL = previousThetaBaseUrl;
+
+    if (previousThetaSpotPath === undefined) delete process.env.THETADATA_SPOT_PATH;
+    else process.env.THETADATA_SPOT_PATH = previousThetaSpotPath;
+
+    if (previousThetaOiPath === undefined) delete process.env.THETADATA_OI_PATH;
+    else process.env.THETADATA_OI_PATH = previousThetaOiPath;
 
     global.fetch = previousFetch;
 
@@ -241,6 +251,84 @@ describe('historical flow API', () => {
 
     expect(response.statusCode).toBe(422);
     expect(response.body.error.code).toBe('metric_unavailable');
+  });
+
+  it('hydrates spot and oi from Theta endpoints when configured', async () => {
+    const priorSpotPath = process.env.THETADATA_SPOT_PATH;
+    const priorOiPath = process.env.THETADATA_OI_PATH;
+
+    process.env.THETADATA_SPOT_PATH = '/v3/stock/snapshot/quote';
+    process.env.THETADATA_OI_PATH = '/v3/option/open_interest';
+
+    try {
+      global.fetch = async (url) => {
+        const endpoint = String(url);
+        fetchCalls.push(endpoint);
+
+        if (endpoint.includes('/v3/option/history/trade_quote')) {
+          return {
+            ok: true,
+            status: 200,
+            text: async () => JSON.stringify({
+              symbol: ['QQQ'],
+              trade_timestamp: ['2026-02-13T14:35:00.000Z'],
+              expiration: ['2026-02-20'],
+              strike: [500],
+              right: ['CALL'],
+              price: [2.5],
+              size: [100],
+              bid: [2.45],
+              ask: [2.55],
+              condition: [18],
+              exchange: ['OPRA'],
+            }),
+          };
+        }
+
+        if (endpoint.includes('/v3/stock/snapshot/quote')) {
+          return {
+            ok: true,
+            status: 200,
+            text: async () => JSON.stringify({ symbol: 'QQQ', last: 490 }),
+          };
+        }
+
+        if (endpoint.includes('/v3/option/open_interest')) {
+          return {
+            ok: true,
+            status: 200,
+            text: async () => JSON.stringify({ oi: 20 }),
+          };
+        }
+
+        return {
+          ok: false,
+          status: 404,
+          text: async () => JSON.stringify({ error: 'not_found' }),
+        };
+      };
+
+      const response = await request(app)
+        .get('/api/flow/historical')
+        .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'QQQ', chips: 'otm,vol>oi' });
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body.data).toHaveLength(1);
+      expect(response.body.data[0]).toMatchObject({
+        symbol: 'QQQ',
+        spot: 490,
+        oi: 20,
+      });
+      expect(response.body.data[0].chips).toEqual(expect.arrayContaining(['otm', 'vol>oi']));
+      expect(fetchCalls.some((url) => url.includes('/v3/stock/snapshot/quote'))).toBe(true);
+      expect(fetchCalls.some((url) => url.includes('/v3/option/open_interest'))).toBe(true);
+    } finally {
+      if (priorSpotPath === undefined) delete process.env.THETADATA_SPOT_PATH;
+      else process.env.THETADATA_SPOT_PATH = priorSpotPath;
+
+      if (priorOiPath === undefined) delete process.env.THETADATA_OI_PATH;
+      else process.env.THETADATA_OI_PATH = priorOiPath;
+    }
   });
 
   it('marks cache partial for explicit limit request, then upgrades to full on no-limit sync', async () => {
