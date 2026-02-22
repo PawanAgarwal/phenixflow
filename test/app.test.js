@@ -907,6 +907,99 @@ describe('API contracts', () => {
     }
   });
 
+  it('supports gov OI sync, query, and source listing endpoints', async () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gov-oi-api-'));
+    const dbPath = path.join(tempDir, 'gov-oi.sqlite');
+    const app = createApp();
+    const previousFetch = global.fetch;
+
+    global.fetch = async () => ({
+      ok: true,
+      status: 200,
+      text: async () => [
+        'symbol,expiration,strike,right,oi,as_of_date',
+        'NVDA,2026-02-20,140,C,4200,2026-02-13',
+      ].join('\n'),
+    });
+
+    try {
+      await withEnv({ PHENIX_DB_PATH: dbPath }, async () => {
+        const syncResponse = await request(app)
+          .post('/api/flow/oi/sync')
+          .send({
+            source: 'FINRA',
+            sourceUrl: 'https://example.gov/oi.csv',
+          });
+
+        expect(syncResponse.statusCode).toBe(200);
+        expect(syncResponse.body.data).toMatchObject({
+          source: 'FINRA',
+          acceptedRows: 1,
+          rejectedRows: 0,
+        });
+
+        const queryResponse = await request(app)
+          .get('/api/flow/oi')
+          .query({ symbol: 'NVDA', asOfDate: '2026-02-13' });
+
+        expect(queryResponse.statusCode).toBe(200);
+        expect(queryResponse.body.data).toHaveLength(1);
+        expect(queryResponse.body.data[0]).toMatchObject({
+          source: 'FINRA',
+          symbol: 'NVDA',
+          expiration: '2026-02-20',
+          strike: 140,
+          right: 'CALL',
+          oi: 4200,
+        });
+
+        const sourcesResponse = await request(app).get('/api/flow/oi/sources');
+        expect(sourcesResponse.statusCode).toBe(200);
+        expect(sourcesResponse.body.data[0]).toMatchObject({
+          source: 'FINRA',
+          asOfDate: '2026-02-13',
+          rows: 1,
+        });
+      });
+    } finally {
+      global.fetch = previousFetch;
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
+  it('returns upstream payload error for OI sync when response has no usable rows', async () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gov-oi-api-empty-'));
+    const dbPath = path.join(tempDir, 'gov-oi.sqlite');
+    const app = createApp();
+    const previousFetch = global.fetch;
+
+    global.fetch = async () => ({
+      ok: true,
+      status: 200,
+      text: async () => '{}',
+    });
+
+    try {
+      await withEnv({ PHENIX_DB_PATH: dbPath }, async () => {
+        const syncResponse = await request(app)
+          .post('/api/flow/oi/sync')
+          .send({
+            source: 'FINRA',
+            sourceUrl: 'https://example.gov/oi.csv',
+          });
+
+        expect(syncResponse.statusCode).toBe(502);
+        expect(syncResponse.body.error).toMatchObject({
+          code: 'gov_source_payload_invalid',
+          message: 'source_payload_empty',
+        });
+      });
+    } finally {
+      global.fetch = previousFetch;
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    }
+  });
+
   it('POST /api/flow is rejected because endpoint contract is GET-only', async () => {
     const app = createApp();
 

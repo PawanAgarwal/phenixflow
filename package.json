@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node src/server.js",
     "ingest:start": "node scripts/ingest-worker.js",
+    "oi:sync": "node scripts/oi/sync-gov-oi.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint ."

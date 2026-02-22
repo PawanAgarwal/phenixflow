@@ -15,6 +15,11 @@ const {
   serializeRecord,
   resolvePayloadVersion,
 } = require('./saved-filters-alerts');
+const {
+  queryOptionOi,
+  listOptionOiSources,
+  syncOptionOiFromGov,
+} = require('./oi-gov');
 
 function createApp() {
   const app = express();
@@ -110,6 +115,86 @@ function createApp() {
     res.status(200).json(buildFlowFiltersCatalog(req.query, { filterVersion: req.query.filterVersion }));
   };
 
+  const listOiHandler = (req, res) => {
+    try {
+      res.status(200).json(queryOptionOi(req.query, process.env));
+    } catch (error) {
+      res.status(503).json({
+        error: {
+          code: 'db_unavailable',
+          message: error.message,
+          details: [],
+        },
+      });
+    }
+  };
+
+  const listOiSourcesHandler = (_req, res) => {
+    try {
+      res.status(200).json(listOptionOiSources(process.env));
+    } catch (error) {
+      res.status(503).json({
+        error: {
+          code: 'db_unavailable',
+          message: error.message,
+          details: [],
+        },
+      });
+    }
+  };
+
+  const syncOiHandler = async (req, res) => {
+    const payload = req.body || {};
+    try {
+      const result = await syncOptionOiFromGov({
+        source: payload.source,
+        sourceUrl: payload.sourceUrl,
+        asOfDate: payload.asOfDate,
+        env: process.env,
+      });
+
+      return res.status(200).json({ data: result });
+    } catch (error) {
+      if (error.message === 'source_required' || error.message === 'source_url_required') {
+        return res.status(400).json({
+          error: {
+            code: 'invalid_query',
+            message: error.message,
+            details: [],
+          },
+        });
+      }
+
+      if (error.message.startsWith('source_fetch_failed:')) {
+        return res.status(502).json({
+          error: {
+            code: 'gov_source_fetch_failed',
+            message: error.message,
+            details: [],
+          },
+        });
+      }
+
+      if (error.message === 'source_payload_empty' || error.message === 'source_payload_unusable') {
+        return res.status(502).json({
+          error: {
+            code: 'gov_source_payload_invalid',
+            message: error.message,
+            details: [],
+          },
+        });
+      }
+
+      return res.status(500).json({
+        error: {
+          code: 'gov_oi_sync_failed',
+          message: error.message,
+          details: [],
+        },
+      });
+    }
+  };
+
   const detailFlowHandler = (req, res) => {
     const flow = getFlowDetail(req.params.id, req.query || {});
     if (!flow) {
@@ -173,6 +258,9 @@ function createApp() {
   app.get('/api/flow/summary', summaryFlowHandler);
   app.get('/api/flow/filters/catalog', filtersCatalogHandler);
   app.get('/api/flow/stream', streamFlowHandler);
+  app.get('/api/flow/oi', listOiHandler);
+  app.get('/api/flow/oi/sources', listOiSourcesHandler);
+  app.post('/api/flow/oi/sync', syncOiHandler);
   app.get('/api/flow/historical', historicalFlowHandler);
   app.get('/api/flow/:id', detailFlowHandler);
   app.post('/api/flow/presets', createSavedHandler('presets'));
@@ -186,6 +274,9 @@ function createApp() {
   app.get('/api/v1/flow/summary', summaryFlowHandler);
   app.get('/api/v1/flow/filters/catalog', filtersCatalogHandler);
   app.get('/api/v1/flow/stream', streamFlowHandler);
+  app.get('/api/v1/flow/oi', listOiHandler);
+  app.get('/api/v1/flow/oi/sources', listOiSourcesHandler);
+  app.post('/api/v1/flow/oi/sync', syncOiHandler);
   app.get('/api/v1/flow/historical', historicalFlowHandler);
   app.get('/api/v1/flow/:id', detailFlowHandler);
   app.post('/api/v1/flow/presets', createSavedHandler('presets'));

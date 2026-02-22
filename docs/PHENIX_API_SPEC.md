@@ -141,6 +141,50 @@ Fields required for full V1 functionality:
 - `position-builders`: `21 <= dte <= 180`, `abs(otmPct) <= 15`, `size >= 250`, side in `ASK|AA`
 - `grenade`: `dte <= 7`, `otmPct >= 5`, `value >= 100000`
 
+### 5.4 Filter-Term Definitions and Dependency Table
+This table defines terms used by chips and enriched filters. If a term is direct-from-feed, `Direct Source` is listed.
+
+| Term | Definition / Formula | Depends On | Direct Source |
+|---|---|---|---|
+| `tradeTsUtc` | Trade timestamp in UTC. | none | ThetaData historical option trades (`trade_timestamp`/equivalent). |
+| `symbol` | Underlying/root symbol (normalized uppercase). | none | ThetaData historical option trades (`symbol`/`root`). |
+| `expiration` | Option expiration date (`YYYY-MM-DD`). | none | ThetaData historical option trades (`expiration`/`exp`). |
+| `strike` | Option strike price. | none | ThetaData historical option trades (`strike`). |
+| `right` | Contract side (`CALL`/`PUT`). | none | ThetaData historical option trades (`right`/`option_right`). |
+| `price` | Trade price. | none | ThetaData historical option trades (`price`/`trade_price`). |
+| `size` | Trade size (contracts). | none | ThetaData historical option trades (`size`/`trade_size`/`quantity`). |
+| `bid` | Bid at trade time (when provided). | none | ThetaData historical option trades (`bid`). |
+| `ask` | Ask at trade time (when provided). | none | ThetaData historical option trades (`ask`). |
+| `conditionCode` | Trade condition/sale condition code. | none | ThetaData historical option trades (`condition_code`/`condition`). |
+| `exchange` | Exchange identifier/code. | none | ThetaData historical option trades (`exchange`). |
+| `sweeps` | Legacy sweep flag from configured condition-code mapping. | `conditionCode` | ThetaData `conditionCode` + Phenix rule config. |
+| `value` | `price * size * 100` (premium notional). | `price`, `size` | Derived (from ThetaData trade fields). |
+| `dte` | `ceil((expiration@21:00:00Z - tradeTsUtc) / 86400000)`. | `expiration`, `tradeTsUtc` | Derived (from ThetaData trade fields). |
+| `spot` | Underlying spot/quote near trade time. | `symbol`, `tradeTsUtc` | ThetaData underlying quote endpoint class (candidate path: stock quote/snapshot). |
+| `otmPct` | CALL: `((strike - spot)/spot)*100`; PUT: `((spot - strike)/spot)*100`. | `right`, `strike`, `spot` | Derived (requires `spot`). |
+| `executionSide` (`side`) | `AA` if `price >= ask + max(0.01,0.10*(ask-bid))`; else `ASK` if `price >= ask`; else `BID` if `price <= bid`; else `OTHER`. | `price`, `bid`, `ask` | Derived (from ThetaData trade+quote-at-trade fields). |
+| `sentiment` | `bullish` if (`CALL` and `ASK|AA`) or (`PUT` and `BID`); `bearish` if (`PUT` and `ASK|AA`) or (`CALL` and `BID`); else `neutral`. | `right`, `executionSide` | Derived. |
+| `dayVolume` | Running contract-day volume for `(symbol,expiration,strike,right,trade_day_utc)`. | `symbol`, `expiration`, `strike`, `right`, `size`, `tradeTsUtc` | Derived (from ThetaData trades). |
+| `oi` | Open interest for contract/day reference. | `symbol`, `expiration`, `strike`, `right`, `trade_day_utc` | ThetaData `/v3/option/history/open_interest` (`symbol`,`expiration`,`strike`,`right`,`date`). |
+| `volOiRatio` | `dayVolume / max(oi,1)`. | `dayVolume`, `oi` | Derived (depends on ThetaData historical OI). |
+| `repeat3m` | Count of same `(symbol,expiration,strike,right,executionSide)` in trailing 180s window. | `symbol`, `expiration`, `strike`, `right`, `executionSide`, `tradeTsUtc` | Derived. |
+| `symbolVol1m` | Per-symbol 1-minute contract volume sum. | `symbol`, `size`, `tradeTsUtc` | Derived. |
+| `symbolVolBaseline15m` | Mean of prior rolling 15 one-minute `symbolVol1m` buckets. | `symbolVol1m`, `tradeTsUtc` | Derived. |
+| `openWindowBaseline` | Baseline `symbolVol1m` in ET open window context (09:30-10:30). | `symbolVol1m`, `tradeTsUtc` | Derived. |
+| `bullishRatio15m` | Rolling 15-minute `bullish / (bullish + bearish)` directional ratio. | `sentiment`, `tradeTsUtc`, `symbol` | Derived. |
+| `valuePctile` | Normalized percentile-like value of `value` within current enrichment scope/day. | `value`, enrichment cohort | Derived. |
+| `volOiNorm` | Normalized `volOiRatio` input used by scoring (`clamp(volOiRatio/5,0,1)`). | `volOiRatio` | Derived. |
+| `repeatNorm` | Normalized repeat input (`clamp(repeat3m/repeatFlowMin,0,1)`). | `repeat3m` | Derived. |
+| `otmNorm` | Normalized moneyness input (`clamp(abs(otmPct)/25,0,1)`). | `otmPct` | Derived. |
+| `sideConfidence` | Confidence weight from execution side (`AA=1`, `ASK=0.85`, `BID=0.7`, `OTHER=0.25`). | `executionSide` | Derived (rule constant). |
+| `sigScore` | `0.35*valuePctile + 0.25*volOiNorm + 0.20*repeatNorm + 0.10*otmNorm + 0.10*sideConfidence` (clamped to `[0,1]`). | `valuePctile`, `volOiNorm`, `repeatNorm`, `otmNorm`, `sideConfidence` | Derived. |
+| `standardMonthlyThirdFriday` | Boolean calendar helper: expiration date is Friday and day-of-month in `[15..21]`. | `expiration` | Derived. |
+
+Notes:
+- Terms depending on `oi` (especially `volOiRatio`, `unusual`, parts of `urgent`) depend on successful Theta OI hydration for the requested day/contract; when unavailable, API returns `metric_unavailable`.
+- `/api/flow/oi*` remains a reference override/fallback store and does not replace Theta as the primary OI source for historical enrichment.
+- `side` filter parameter maps to `executionSide` in implementation and this spec.
+
 ## 6. Public Endpoint Matrix
 
 | Method | Path | Mode | Purpose |
@@ -152,6 +196,9 @@ Fields required for full V1 functionality:
 | GET | `/api/flow/facets` | Real-time | Facet counts |
 | GET | `/api/flow/summary` | Real-time | Top tiles and summary ratios |
 | GET | `/api/flow/filters/catalog` | Real-time | Filter catalog, thresholds, ranges |
+| GET | `/api/flow/oi` | Reference data | Query reference/fallback option OI cache |
+| GET | `/api/flow/oi/sources` | Reference data | List OI source/date coverage in local cache |
+| POST | `/api/flow/oi/sync` | Reference data | Fetch and upsert OI rows from configured external source URL |
 | GET | `/api/flow/:id` | Real-time | Row detail |
 | GET | `/api/flow/historical` | Historical | Day-bound query with sync + enrichment |
 | POST | `/api/flow/presets` | Saved queries | Create preset |
@@ -411,6 +458,40 @@ Get a single flow row by identifier.
 - `200` with `{ "data": FlowRow }`
 - `404` with `not_found`
 
+### 7.7 `GET /api/flow/oi`
+Query cached external OI rows (source-tagged).
+
+Query params:
+- `symbol` (optional)
+- `asOfDate` or `date` (`YYYY-MM-DD`, optional)
+- `expiration` (`YYYY-MM-DD`, optional)
+- `right` (`CALL|PUT|C|P`, optional)
+- `strike` (optional)
+- `source` (optional)
+- `limit` (optional, default `100`, max `2000`)
+
+Response:
+- `200` with `{ data: OIRow[], meta }`
+
+### 7.8 `GET /api/flow/oi/sources`
+List source/date coverage currently cached in SQLite.
+
+Response:
+- `200` with grouped source/date rows and counts.
+
+### 7.9 `POST /api/flow/oi/sync`
+Fetch and upsert OI rows from configured government/regulatory source URL.
+
+Request body:
+- `source: string` (required, e.g., `FINRA`, `CFTC`, `CME`)
+- `sourceUrl: string` (optional if env mapping exists for `source`)
+- `asOfDate: YYYY-MM-DD` (optional default for rows missing date fields)
+
+Response:
+- `200` with sync result (`fetchedRows`, `acceptedRows`, `rejectedRows`, `upsertedRows`)
+- `400 invalid_query` for missing source/url
+- `502 gov_source_fetch_failed` for upstream fetch failures
+
 ## 8. Historical API
 
 ### 8.1 `GET /api/flow/historical`
@@ -625,13 +706,13 @@ These are not Phenix public endpoints; they are required upstream APIs.
   - `format=json`
 
 ### 11.4 Open Interest (required for `oi`, `volOiRatio`)
-- Path env: `THETADATA_OI_PATH`
+- Path default: `/v3/option/history/open_interest`
+- Path env override: `THETADATA_OI_PATH`
 - Required params:
   - `symbol`
-  - `expiration`
-  - `strike`
-  - `right`
-  - session date/time reference
+  - `date` (`YYYYMMDD`)
+  - `expiration` (`*` for bulk hydration or explicit contract expiration)
+  - `strike` and `right` (required for per-contract fallback request)
   - `format=json`
 
 ### 11.5 Universe/Reference Endpoints (supported in current entitlement guide)
@@ -648,7 +729,10 @@ These are not Phenix public endpoints; they are required upstream APIs.
 | 422 | `metric_unavailable` | Required metric cache not full for requested filters |
 | 500 | `query_failed` | Query execution failure |
 | 500 | `enrichment_failed` | Derived-metric pipeline failed |
+| 500 | `gov_oi_sync_failed` | OI sync/parsing failed before successful upsert |
 | 502 | `thetadata_sync_failed` | Upstream Theta sync failed |
+| 502 | `gov_source_fetch_failed` | Upstream gov/reg source fetch failed |
+| 502 | `gov_source_payload_invalid` | OI source payload was empty or had no usable OI rows |
 | 503 | `db_unavailable` | SQLite unavailable or schema bootstrap failed |
 | 503 | `thetadata_not_configured` | Missing `THETADATA_BASE_URL` |
 
@@ -670,4 +754,4 @@ These are not Phenix public endpoints; they are required upstream APIs.
 - Implement `/api/flow/summary`.
 - Implement `/api/flow/filters/catalog`.
 - Implement readiness endpoint `/ready` with Theta + DB + backlog checks.
-- Complete Theta integrations for spot/OI so `metric_unavailable` no longer blocks advanced chips on full sync days.
+- Complete Theta spot integration so `metric_unavailable` for `otm`/spot-dependent chips is eliminated on full sync days.

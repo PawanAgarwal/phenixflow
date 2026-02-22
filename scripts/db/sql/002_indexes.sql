@@ -36,3 +36,21 @@ CREATE INDEX IF NOT EXISTS idx_contract_stats_symbol_date
 
 CREATE INDEX IF NOT EXISTS idx_symbol_stats_symbol_bucket
   ON symbol_stats_intraday(symbol, minute_bucket_et DESC);
+
+CREATE INDEX IF NOT EXISTS idx_option_symbol_minute_derived_symbol_date
+  ON option_symbol_minute_derived(symbol, trade_date_utc DESC, minute_bucket_utc DESC);
+
+CREATE INDEX IF NOT EXISTS idx_option_symbol_minute_derived_sig
+  ON option_symbol_minute_derived(symbol, trade_date_utc DESC, max_sig_score DESC);
+
+CREATE INDEX IF NOT EXISTS idx_option_contract_minute_derived_symbol_date
+  ON option_contract_minute_derived(symbol, trade_date_utc DESC, minute_bucket_utc DESC);
+
+CREATE INDEX IF NOT EXISTS idx_option_contract_minute_derived_contract_date
+  ON option_contract_minute_derived(symbol, expiration, strike, option_right, trade_date_utc DESC, minute_bucket_utc DESC);
+
+CREATE INDEX IF NOT EXISTS idx_option_oi_reference_symbol_asof
+  ON option_open_interest_reference(symbol, as_of_date DESC);
+
+CREATE INDEX IF NOT EXISTS idx_option_oi_reference_source_asof
+  ON option_open_interest_reference(source, as_of_date DESC);

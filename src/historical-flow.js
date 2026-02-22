@@ -26,14 +26,16 @@ const {
   toMinuteBucketUtc,
   isAmSpikeWindow,
 } = require('./historical-formulas');
+const { loadReferenceOiMap } = require('./oi-gov');
 
 const DEFAULT_LIMIT = 100;
 const MAX_LIMIT = 1000;
 const DAY_CACHE_STATUS_FULL = 'full';
 const DAY_CACHE_STATUS_PARTIAL = 'partial';
 const DEFAULT_HISTORICAL_OPTION_PATH = '/v3/option/history/trade_quote';
-const DEFAULT_SPOT_PATH = '/v3/stock/snapshot/quote';
-const DEFAULT_OI_PATH = '/v3/option/open_interest';
+const DEFAULT_SPOT_PATH = '/v3/stock/history/ohlc';
+const DEFAULT_OI_PATH = '/v3/option/history/open_interest';
+const DEFAULT_THETADATA_TIMEOUT_MS = 15000;
 
 const METRIC_NAMES = Object.freeze([
   'enrichedRows',
@@ -169,6 +171,57 @@ function ensureSchema(db) {
       PRIMARY KEY (symbol, minute_bucket_et)
     );
 
+    CREATE TABLE IF NOT EXISTS option_symbol_minute_derived (
+      symbol TEXT NOT NULL,
+      trade_date_utc TEXT NOT NULL,
+      minute_bucket_utc TEXT NOT NULL,
+      trade_count INTEGER NOT NULL DEFAULT 0,
+      contract_count INTEGER NOT NULL DEFAULT 0,
+      total_size INTEGER NOT NULL DEFAULT 0,
+      total_value REAL NOT NULL DEFAULT 0,
+      call_size INTEGER NOT NULL DEFAULT 0,
+      put_size INTEGER NOT NULL DEFAULT 0,
+      bullish_count INTEGER NOT NULL DEFAULT 0,
+      bearish_count INTEGER NOT NULL DEFAULT 0,
+      neutral_count INTEGER NOT NULL DEFAULT 0,
+      avg_sig_score REAL,
+      max_sig_score REAL,
+      avg_vol_oi_ratio REAL,
+      max_vol_oi_ratio REAL,
+      max_repeat3m INTEGER,
+      oi_sum INTEGER NOT NULL DEFAULT 0,
+      day_volume_sum INTEGER NOT NULL DEFAULT 0,
+      chip_hits_json TEXT NOT NULL DEFAULT '{}',
+      updated_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+      PRIMARY KEY (symbol, trade_date_utc, minute_bucket_utc)
+    );
+
+    CREATE TABLE IF NOT EXISTS option_contract_minute_derived (
+      symbol TEXT NOT NULL,
+      expiration TEXT NOT NULL,
+      strike REAL NOT NULL,
+      option_right TEXT NOT NULL CHECK (option_right IN ('CALL', 'PUT')),
+      trade_date_utc TEXT NOT NULL,
+      minute_bucket_utc TEXT NOT NULL,
+      trade_count INTEGER NOT NULL DEFAULT 0,
+      size_sum INTEGER NOT NULL DEFAULT 0,
+      value_sum REAL NOT NULL DEFAULT 0,
+      avg_price REAL,
+      last_price REAL,
+      day_volume INTEGER,
+      oi INTEGER,
+      vol_oi_ratio REAL,
+      avg_sig_score REAL,
+      max_sig_score REAL,
+      max_repeat3m INTEGER,
+      bullish_count INTEGER NOT NULL DEFAULT 0,
+      bearish_count INTEGER NOT NULL DEFAULT 0,
+      neutral_count INTEGER NOT NULL DEFAULT 0,
+      chip_hits_json TEXT NOT NULL DEFAULT '{}',
+      updated_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+      PRIMARY KEY (symbol, expiration, strike, option_right, trade_date_utc, minute_bucket_utc)
+    );
+
     CREATE TABLE IF NOT EXISTS filter_rule_versions (
       version_id TEXT PRIMARY KEY,
       config_json TEXT NOT NULL,
@@ -193,6 +246,18 @@ function ensureSchema(db) {
       created_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
       updated_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
     );
+
+    CREATE INDEX IF NOT EXISTS idx_option_symbol_minute_derived_symbol_date
+      ON option_symbol_minute_derived(symbol, trade_date_utc DESC, minute_bucket_utc DESC);
+
+    CREATE INDEX IF NOT EXISTS idx_option_symbol_minute_derived_sig
+      ON option_symbol_minute_derived(symbol, trade_date_utc DESC, max_sig_score DESC);
+
+    CREATE INDEX IF NOT EXISTS idx_option_contract_minute_derived_symbol_date
+      ON option_contract_minute_derived(symbol, trade_date_utc DESC, minute_bucket_utc DESC);
+
+    CREATE INDEX IF NOT EXISTS idx_option_contract_minute_derived_contract_date
+      ON option_contract_minute_derived(symbol, expiration, strike, option_right, trade_date_utc DESC, minute_bucket_utc DESC);
   `);
 
   ensureSchemaMigrations(db);
@@ -239,6 +304,22 @@ function normalizeIsoTimestamp(rawValue) {
   const parsed = new Date(rawValue);
   if (Number.isNaN(parsed.getTime())) return null;
   return parsed.toISOString();
+}
+
+function normalizeIsoDate(rawValue) {
+  if (typeof rawValue === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(rawValue.trim())) {
+    return rawValue.trim();
+  }
+
+  if (typeof rawValue === 'string' && /^\d{8}$/.test(rawValue.trim())) {
+    const value = rawValue.trim();
+    return `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}`;
+  }
+
+  if (rawValue === null || rawValue === undefined) return null;
+  const parsed = new Date(rawValue);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toISOString().slice(0, 10);
 }
 
 function normalizeSymbol(rawValue) {
@@ -421,6 +502,9 @@ function resolveThetaSpotEndpoint(symbol, dayIso, env = process.env) {
 
   url.searchParams.set('symbol', symbol);
   url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
+  if (normalizedPath.includes('/history/ohlc')) {
+    url.searchParams.set('interval', '1m');
+  }
   url.searchParams.set('format', 'json');
   return url.toString();
 }
@@ -435,9 +519,25 @@ function resolveThetaOiEndpoint(row, dayIso, env = process.env) {
   const url = new URL(`${normalizedBase}${normalizedPath}`);
 
   url.searchParams.set('symbol', row.symbol);
-  url.searchParams.set('expiration', row.expiration);
+  url.searchParams.set('expiration', toYyyymmdd(`${row.expiration}T00:00:00.000Z`));
   url.searchParams.set('strike', String(row.strike));
   url.searchParams.set('right', row.right);
+  url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
+  url.searchParams.set('format', 'json');
+  return url.toString();
+}
+
+function resolveThetaOiBulkEndpoint(symbol, dayIso, env = process.env) {
+  const baseUrl = (env.THETADATA_BASE_URL || '').trim();
+  const configuredPath = (env.THETADATA_OI_PATH || DEFAULT_OI_PATH).trim();
+  if (!baseUrl || !configuredPath) return null;
+
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const normalizedPath = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
+  const url = new URL(`${normalizedBase}${normalizedPath}`);
+
+  url.searchParams.set('symbol', symbol);
+  url.searchParams.set('expiration', '*');
   url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
   url.searchParams.set('format', 'json');
   return url.toString();
@@ -494,17 +594,186 @@ function extractMetricFromResponse(rawBody, candidateKeys) {
   return null;
 }
 
+function parseTimeoutMs(env = process.env) {
+  const parsed = Number(env.THETADATA_TIMEOUT_MS);
+  if (Number.isFinite(parsed) && parsed >= 1000) {
+    return Math.trunc(parsed);
+  }
+  return DEFAULT_THETADATA_TIMEOUT_MS;
+}
+
+function shouldTraceThetaDownloads(env = process.env) {
+  return String(env.THETADATA_DOWNLOAD_TRACE || '1') !== '0';
+}
+
+function inferThetaApiName(url) {
+  try {
+    const parsed = new URL(url);
+    const path = parsed.pathname || '';
+    if (path.includes('/option/history/trade_quote')) return 'option_history_trade_quote';
+    if (path.includes('/option/history/trade')) return 'option_history_trade';
+    if (path.includes('/option/history/open_interest')) return 'option_history_open_interest';
+    if (path.includes('/stock/history/ohlc')) return 'stock_history_ohlc';
+    return path || 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
+
+function thetaLogContext(url) {
+  try {
+    const parsed = new URL(url);
+    return {
+      symbol: parsed.searchParams.get('symbol') || null,
+      date: parsed.searchParams.get('date') || null,
+      expiration: parsed.searchParams.get('expiration') || null,
+      strike: parsed.searchParams.get('strike') || null,
+      right: parsed.searchParams.get('right') || null,
+      format: parsed.searchParams.get('format') || null,
+    };
+  } catch {
+    return {
+      symbol: null,
+      date: null,
+      expiration: null,
+      strike: null,
+      right: null,
+      format: null,
+    };
+  }
+}
+
+function logThetaDownload({
+  env = process.env,
+  url,
+  durationMs,
+  status,
+  ok,
+  rows = null,
+  error = null,
+}) {
+  if (!shouldTraceThetaDownloads(env)) return;
+  const api = inferThetaApiName(url);
+  const context = thetaLogContext(url);
+  console.log('[THETA_DOWNLOAD]', JSON.stringify({
+    api,
+    url,
+    symbol: context.symbol,
+    date: context.date,
+    expiration: context.expiration,
+    strike: context.strike,
+    right: context.right,
+    format: context.format,
+    durationMs,
+    status,
+    ok,
+    rows,
+    error,
+  }));
+}
+
+async function fetchTextWithTimeout(url, {
+  env = process.env,
+  timeoutMs = parseTimeoutMs(env),
+} = {}) {
+  if (!url) {
+    throw new Error('thetadata_endpoint_missing');
+  }
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const startedAt = Date.now();
+
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    const body = await response.text();
+    const durationMs = Date.now() - startedAt;
+    return { response, body, durationMs };
+  } catch (error) {
+    const durationMs = Date.now() - startedAt;
+    if (error && error.name === 'AbortError') {
+      logThetaDownload({
+        env,
+        url,
+        durationMs,
+        status: 0,
+        ok: false,
+        rows: 0,
+        error: `thetadata_request_timeout:${timeoutMs}`,
+      });
+      throw new Error(`thetadata_request_timeout:${timeoutMs}`);
+    }
+    logThetaDownload({
+      env,
+      url,
+      durationMs,
+      status: 0,
+      ok: false,
+      rows: 0,
+      error: error.message || 'request_failed',
+    });
+    throw error;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function fetchThetaMetricNumber(url, candidateKeys) {
   if (!url) return null;
 
   try {
-    const response = await fetch(url);
-    const body = await response.text();
-    if (!response.ok) return null;
-
-    return extractMetricFromResponse(body, candidateKeys);
-  } catch {
+    const { response, body, durationMs } = await fetchTextWithTimeout(url);
+    const rows = response.ok ? parseJsonRows(body).length : 0;
+    const value = response.ok ? extractMetricFromResponse(body, candidateKeys) : null;
+    logThetaDownload({
+      url,
+      durationMs,
+      status: response.status,
+      ok: response.ok,
+      rows,
+      error: response.ok ? null : `http_${response.status}`,
+    });
+    return value;
+  } catch (error) {
+    logThetaDownload({
+      url,
+      durationMs: null,
+      status: 0,
+      ok: false,
+      rows: 0,
+      error: error.message || 'request_failed',
+    });
     return null;
+  }
+}
+
+async function fetchThetaRows(url, { env = process.env } = {}) {
+  if (!url) return [];
+
+  try {
+    const { response, body, durationMs } = await fetchTextWithTimeout(url, { env });
+    const rows = response.ok ? parseJsonRows(body) : [];
+    logThetaDownload({
+      env,
+      url,
+      durationMs,
+      status: response.status,
+      ok: response.ok,
+      rows: rows.length,
+      error: response.ok ? null : `http_${response.status}`,
+    });
+    return rows;
+  } catch (error) {
+    logThetaDownload({
+      env,
+      url,
+      durationMs: null,
+      status: 0,
+      ok: false,
+      rows: 0,
+      error: error.message || 'request_failed',
+    });
+    return [];
   }
 }
 
@@ -614,6 +883,24 @@ function getMetricCacheMap(db, { symbol, dayIso }) {
   }, {});
 }
 
+function hasMinuteDerivedRows(db, { symbol, dayIso }) {
+  const symbolMinute = db.prepare(`
+    SELECT COUNT(*) AS count
+    FROM option_symbol_minute_derived
+    WHERE symbol = @symbol
+      AND trade_date_utc = @dayIso
+  `).get({ symbol, dayIso });
+
+  const contractMinute = db.prepare(`
+    SELECT COUNT(*) AS count
+    FROM option_contract_minute_derived
+    WHERE symbol = @symbol
+      AND trade_date_utc = @dayIso
+  `).get({ symbol, dayIso });
+
+  return Number(symbolMinute?.count || 0) > 0 && Number(contractMinute?.count || 0) > 0;
+}
+
 async function syncThetaTradesToSqlite({
   symbol,
   dayIso,
@@ -626,15 +913,32 @@ async function syncThetaTradesToSqlite({
     return { synced: false, reason: 'thetadata_base_url_missing', fetchedRows: 0, upsertedRows: 0, cachedRows: 0 };
   }
 
-  const response = await fetch(endpoint);
-  const body = await response.text();
+  const { response, body, durationMs } = await fetchTextWithTimeout(endpoint, { env });
 
   if (!response.ok) {
+    logThetaDownload({
+      env,
+      url: endpoint,
+      durationMs,
+      status: response.status,
+      ok: false,
+      rows: 0,
+      error: `http_${response.status}`,
+    });
     throw new Error(`thetadata_request_failed:${response.status}`);
   }
 
   const parsedRows = parseJsonRows(body);
   const normalizedRows = normalizeThetaRows(parsedRows, symbol, dayIso);
+  logThetaDownload({
+    env,
+    url: endpoint,
+    durationMs,
+    status: response.status,
+    ok: true,
+    rows: normalizedRows.length,
+    error: null,
+  });
   const dbPath = resolveDbPath(env);
   const writeDb = db || new Database(dbPath);
 
@@ -1159,6 +1463,356 @@ function upsertSymbolStats(db, symbol, statsByMinute) {
   txn(rows);
 }
 
+function buildMinuteDerivedRollups(rows, dayIso) {
+  const symbolMinute = new Map();
+  const contractMinute = new Map();
+
+  rows.forEach((row) => {
+    const minuteBucket = toMinuteBucketUtc(row.tradeTsUtc);
+    if (!minuteBucket) return;
+
+    const contractKey = buildContractKey(row);
+    const symbolKey = `${row.symbol}|${minuteBucket}`;
+    const contractMinuteKey = `${row.symbol}|${row.expiration}|${row.strike}|${row.right}|${minuteBucket}`;
+
+    const symbolAgg = symbolMinute.get(symbolKey) || {
+      symbol: row.symbol,
+      tradeDateUtc: dayIso,
+      minuteBucketUtc: minuteBucket,
+      tradeCount: 0,
+      contractSet: new Set(),
+      totalSize: 0,
+      totalValue: 0,
+      callSize: 0,
+      putSize: 0,
+      bullishCount: 0,
+      bearishCount: 0,
+      neutralCount: 0,
+      sigScoreSum: 0,
+      sigScoreCount: 0,
+      maxSigScore: null,
+      volOiSum: 0,
+      volOiCount: 0,
+      maxVolOiRatio: null,
+      maxRepeat3m: null,
+      oiSum: 0,
+      dayVolumeSum: 0,
+      chipHits: {},
+    };
+
+    symbolAgg.tradeCount += 1;
+    symbolAgg.contractSet.add(contractKey);
+    symbolAgg.totalSize += Math.trunc(toFiniteNumber(row.size) || 0);
+    symbolAgg.totalValue += toFiniteNumber(row.value) || 0;
+    if (row.right === 'CALL') symbolAgg.callSize += Math.trunc(toFiniteNumber(row.size) || 0);
+    if (row.right === 'PUT') symbolAgg.putSize += Math.trunc(toFiniteNumber(row.size) || 0);
+    if (row.sentiment === 'bullish') symbolAgg.bullishCount += 1;
+    else if (row.sentiment === 'bearish') symbolAgg.bearishCount += 1;
+    else symbolAgg.neutralCount += 1;
+
+    const sigScore = toFiniteNumber(row.sigScore);
+    if (sigScore !== null) {
+      symbolAgg.sigScoreSum += sigScore;
+      symbolAgg.sigScoreCount += 1;
+      symbolAgg.maxSigScore = symbolAgg.maxSigScore === null ? sigScore : Math.max(symbolAgg.maxSigScore, sigScore);
+    }
+
+    const volOiRatio = toFiniteNumber(row.volOiRatio);
+    if (volOiRatio !== null) {
+      symbolAgg.volOiSum += volOiRatio;
+      symbolAgg.volOiCount += 1;
+      symbolAgg.maxVolOiRatio = symbolAgg.maxVolOiRatio === null ? volOiRatio : Math.max(symbolAgg.maxVolOiRatio, volOiRatio);
+    }
+
+    const repeat3m = toFiniteNumber(row.repeat3m);
+    if (repeat3m !== null) {
+      symbolAgg.maxRepeat3m = symbolAgg.maxRepeat3m === null ? Math.trunc(repeat3m) : Math.max(symbolAgg.maxRepeat3m, Math.trunc(repeat3m));
+    }
+
+    symbolAgg.oiSum += Math.trunc(toFiniteNumber(row.oi) || 0);
+    symbolAgg.dayVolumeSum += Math.trunc(toFiniteNumber(row.dayVolume) || 0);
+
+    if (Array.isArray(row.chips)) {
+      row.chips.forEach((chipId) => {
+        symbolAgg.chipHits[chipId] = (symbolAgg.chipHits[chipId] || 0) + 1;
+      });
+    }
+
+    symbolMinute.set(symbolKey, symbolAgg);
+
+    const contractAgg = contractMinute.get(contractMinuteKey) || {
+      symbol: row.symbol,
+      expiration: row.expiration,
+      strike: row.strike,
+      right: row.right,
+      tradeDateUtc: dayIso,
+      minuteBucketUtc: minuteBucket,
+      tradeCount: 0,
+      sizeSum: 0,
+      valueSum: 0,
+      priceSum: 0,
+      priceCount: 0,
+      lastPrice: null,
+      dayVolume: null,
+      oi: null,
+      volOiRatio: null,
+      sigScoreSum: 0,
+      sigScoreCount: 0,
+      maxSigScore: null,
+      maxRepeat3m: null,
+      bullishCount: 0,
+      bearishCount: 0,
+      neutralCount: 0,
+      chipHits: {},
+    };
+
+    const size = Math.trunc(toFiniteNumber(row.size) || 0);
+    const value = toFiniteNumber(row.value) || 0;
+    const price = toFiniteNumber(row.price);
+    const contractSigScore = toFiniteNumber(row.sigScore);
+    const contractRepeat3m = toFiniteNumber(row.repeat3m);
+
+    contractAgg.tradeCount += 1;
+    contractAgg.sizeSum += size;
+    contractAgg.valueSum += value;
+    if (price !== null) {
+      contractAgg.priceSum += price;
+      contractAgg.priceCount += 1;
+      contractAgg.lastPrice = price;
+    }
+    contractAgg.dayVolume = Math.trunc(toFiniteNumber(row.dayVolume) || 0);
+    contractAgg.oi = Math.trunc(toFiniteNumber(row.oi) || 0);
+    contractAgg.volOiRatio = toFiniteNumber(row.volOiRatio);
+
+    if (contractSigScore !== null) {
+      contractAgg.sigScoreSum += contractSigScore;
+      contractAgg.sigScoreCount += 1;
+      contractAgg.maxSigScore = contractAgg.maxSigScore === null
+        ? contractSigScore
+        : Math.max(contractAgg.maxSigScore, contractSigScore);
+    }
+
+    if (contractRepeat3m !== null) {
+      const repeatValue = Math.trunc(contractRepeat3m);
+      contractAgg.maxRepeat3m = contractAgg.maxRepeat3m === null
+        ? repeatValue
+        : Math.max(contractAgg.maxRepeat3m, repeatValue);
+    }
+
+    if (row.sentiment === 'bullish') contractAgg.bullishCount += 1;
+    else if (row.sentiment === 'bearish') contractAgg.bearishCount += 1;
+    else contractAgg.neutralCount += 1;
+
+    if (Array.isArray(row.chips)) {
+      row.chips.forEach((chipId) => {
+        contractAgg.chipHits[chipId] = (contractAgg.chipHits[chipId] || 0) + 1;
+      });
+    }
+
+    contractMinute.set(contractMinuteKey, contractAgg);
+  });
+
+  const symbolMinuteRows = Array.from(symbolMinute.values()).map((row) => ({
+    symbol: row.symbol,
+    tradeDateUtc: row.tradeDateUtc,
+    minuteBucketUtc: row.minuteBucketUtc,
+    tradeCount: row.tradeCount,
+    contractCount: row.contractSet.size,
+    totalSize: row.totalSize,
+    totalValue: row.totalValue,
+    callSize: row.callSize,
+    putSize: row.putSize,
+    bullishCount: row.bullishCount,
+    bearishCount: row.bearishCount,
+    neutralCount: row.neutralCount,
+    avgSigScore: row.sigScoreCount ? (row.sigScoreSum / row.sigScoreCount) : null,
+    maxSigScore: row.maxSigScore,
+    avgVolOiRatio: row.volOiCount ? (row.volOiSum / row.volOiCount) : null,
+    maxVolOiRatio: row.maxVolOiRatio,
+    maxRepeat3m: row.maxRepeat3m,
+    oiSum: row.oiSum,
+    dayVolumeSum: row.dayVolumeSum,
+    chipHitsJson: JSON.stringify(row.chipHits),
+  }));
+
+  const contractMinuteRows = Array.from(contractMinute.values()).map((row) => ({
+    symbol: row.symbol,
+    expiration: row.expiration,
+    strike: row.strike,
+    right: row.right,
+    tradeDateUtc: row.tradeDateUtc,
+    minuteBucketUtc: row.minuteBucketUtc,
+    tradeCount: row.tradeCount,
+    sizeSum: row.sizeSum,
+    valueSum: row.valueSum,
+    avgPrice: row.priceCount ? (row.priceSum / row.priceCount) : null,
+    lastPrice: row.lastPrice,
+    dayVolume: row.dayVolume,
+    oi: row.oi,
+    volOiRatio: row.volOiRatio,
+    avgSigScore: row.sigScoreCount ? (row.sigScoreSum / row.sigScoreCount) : null,
+    maxSigScore: row.maxSigScore,
+    maxRepeat3m: row.maxRepeat3m,
+    bullishCount: row.bullishCount,
+    bearishCount: row.bearishCount,
+    neutralCount: row.neutralCount,
+    chipHitsJson: JSON.stringify(row.chipHits),
+  }));
+
+  return {
+    symbolMinuteRows,
+    contractMinuteRows,
+  };
+}
+
+function upsertSymbolMinuteDerived(db, rows) {
+  const upsert = db.prepare(`
+    INSERT INTO option_symbol_minute_derived (
+      symbol,
+      trade_date_utc,
+      minute_bucket_utc,
+      trade_count,
+      contract_count,
+      total_size,
+      total_value,
+      call_size,
+      put_size,
+      bullish_count,
+      bearish_count,
+      neutral_count,
+      avg_sig_score,
+      max_sig_score,
+      avg_vol_oi_ratio,
+      max_vol_oi_ratio,
+      max_repeat3m,
+      oi_sum,
+      day_volume_sum,
+      chip_hits_json,
+      updated_at_utc
+    ) VALUES (
+      @symbol,
+      @tradeDateUtc,
+      @minuteBucketUtc,
+      @tradeCount,
+      @contractCount,
+      @totalSize,
+      @totalValue,
+      @callSize,
+      @putSize,
+      @bullishCount,
+      @bearishCount,
+      @neutralCount,
+      @avgSigScore,
+      @maxSigScore,
+      @avgVolOiRatio,
+      @maxVolOiRatio,
+      @maxRepeat3m,
+      @oiSum,
+      @dayVolumeSum,
+      @chipHitsJson,
+      strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+    )
+    ON CONFLICT(symbol, trade_date_utc, minute_bucket_utc) DO UPDATE SET
+      trade_count = excluded.trade_count,
+      contract_count = excluded.contract_count,
+      total_size = excluded.total_size,
+      total_value = excluded.total_value,
+      call_size = excluded.call_size,
+      put_size = excluded.put_size,
+      bullish_count = excluded.bullish_count,
+      bearish_count = excluded.bearish_count,
+      neutral_count = excluded.neutral_count,
+      avg_sig_score = excluded.avg_sig_score,
+      max_sig_score = excluded.max_sig_score,
+      avg_vol_oi_ratio = excluded.avg_vol_oi_ratio,
+      max_vol_oi_ratio = excluded.max_vol_oi_ratio,
+      max_repeat3m = excluded.max_repeat3m,
+      oi_sum = excluded.oi_sum,
+      day_volume_sum = excluded.day_volume_sum,
+      chip_hits_json = excluded.chip_hits_json,
+      updated_at_utc = excluded.updated_at_utc
+  `);
+
+  const txn = db.transaction((items) => {
+    items.forEach((row) => upsert.run(row));
+  });
+  txn(rows);
+}
+
+function upsertContractMinuteDerived(db, rows) {
+  const upsert = db.prepare(`
+    INSERT INTO option_contract_minute_derived (
+      symbol,
+      expiration,
+      strike,
+      option_right,
+      trade_date_utc,
+      minute_bucket_utc,
+      trade_count,
+      size_sum,
+      value_sum,
+      avg_price,
+      last_price,
+      day_volume,
+      oi,
+      vol_oi_ratio,
+      avg_sig_score,
+      max_sig_score,
+      max_repeat3m,
+      bullish_count,
+      bearish_count,
+      neutral_count,
+      chip_hits_json,
+      updated_at_utc
+    ) VALUES (
+      @symbol,
+      @expiration,
+      @strike,
+      @right,
+      @tradeDateUtc,
+      @minuteBucketUtc,
+      @tradeCount,
+      @sizeSum,
+      @valueSum,
+      @avgPrice,
+      @lastPrice,
+      @dayVolume,
+      @oi,
+      @volOiRatio,
+      @avgSigScore,
+      @maxSigScore,
+      @maxRepeat3m,
+      @bullishCount,
+      @bearishCount,
+      @neutralCount,
+      @chipHitsJson,
+      strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+    )
+    ON CONFLICT(symbol, expiration, strike, option_right, trade_date_utc, minute_bucket_utc) DO UPDATE SET
+      trade_count = excluded.trade_count,
+      size_sum = excluded.size_sum,
+      value_sum = excluded.value_sum,
+      avg_price = excluded.avg_price,
+      last_price = excluded.last_price,
+      day_volume = excluded.day_volume,
+      oi = excluded.oi,
+      vol_oi_ratio = excluded.vol_oi_ratio,
+      avg_sig_score = excluded.avg_sig_score,
+      max_sig_score = excluded.max_sig_score,
+      max_repeat3m = excluded.max_repeat3m,
+      bullish_count = excluded.bullish_count,
+      bearish_count = excluded.bearish_count,
+      neutral_count = excluded.neutral_count,
+      chip_hits_json = excluded.chip_hits_json,
+      updated_at_utc = excluded.updated_at_utc
+  `);
+
+  const txn = db.transaction((items) => {
+    items.forEach((row) => upsert.run(row));
+  });
+  txn(rows);
+}
+
 function extractOi(rawPayload) {
   const oiKeys = ['oi', 'open_interest', 'openInterest'];
   for (const key of oiKeys) {
@@ -1196,9 +1850,18 @@ async function buildSupplementalMetricLookup({
   dayIso,
   rawRows,
   env = process.env,
+  requiredMetrics = [],
 }) {
   const spotBySymbol = new Map();
   const oiByContract = loadContractOiFromStats(db, { symbol, dayIso });
+  let oiDefaultsToZero = false;
+  const referenceOiByContract = loadReferenceOiMap(db, { symbol, asOfDate: dayIso });
+
+  referenceOiByContract.forEach((oiValue, contractKey) => {
+    if (oiValue !== null && oiValue !== undefined && !oiByContract.has(contractKey)) {
+      oiByContract.set(contractKey, oiValue);
+    }
+  });
 
   rawRows.forEach((row) => {
     const payload = parsePayload(row.rawPayloadJson);
@@ -1213,11 +1876,15 @@ async function buildSupplementalMetricLookup({
     }
   });
 
-  if ((env.THETADATA_BASE_URL || '').trim()) {
-    const shouldFetchSpot = typeof env.THETADATA_SPOT_PATH === 'string' && env.THETADATA_SPOT_PATH.trim().length > 0;
-    const shouldFetchOi = typeof env.THETADATA_OI_PATH === 'string' && env.THETADATA_OI_PATH.trim().length > 0;
+  const requiredMetricSet = new Set(Array.isArray(requiredMetrics) ? requiredMetrics : []);
+  const requiresSpot = requiredMetricSet.has('spot') || requiredMetricSet.has('otmPct');
+  const requiresOi = requiredMetricSet.has('oi') || requiredMetricSet.has('volOiRatio');
 
-    if (shouldFetchSpot) {
+  if ((env.THETADATA_BASE_URL || '').trim()) {
+    const shouldFetchSpot = Boolean((env.THETADATA_SPOT_PATH || DEFAULT_SPOT_PATH || '').trim());
+    const shouldFetchOi = Boolean((env.THETADATA_OI_PATH || DEFAULT_OI_PATH || '').trim());
+
+    if (shouldFetchSpot && requiresSpot) {
       const symbolsMissingSpot = Array.from(new Set(rawRows.map((row) => row.symbol)))
         .filter((rowSymbol) => !spotBySymbol.has(rowSymbol));
 
@@ -1229,6 +1896,10 @@ async function buildSupplementalMetricLookup({
           'underlyingPrice',
           'price',
           'last',
+          'close',
+          'open',
+          'high',
+          'low',
           'mark',
           'mid',
         ]);
@@ -1238,7 +1909,7 @@ async function buildSupplementalMetricLookup({
       }
     }
 
-    if (shouldFetchOi) {
+    if (shouldFetchOi && requiresOi) {
       const seenContracts = new Set();
       const contractsMissingOi = [];
       rawRows.forEach((row) => {
@@ -1248,7 +1919,65 @@ async function buildSupplementalMetricLookup({
         if (!oiByContract.has(contractKey)) contractsMissingOi.push(row);
       });
 
+      if (contractsMissingOi.length > 0) {
+        const bulkOiEndpoint = resolveThetaOiBulkEndpoint(symbol, dayIso, env);
+        try {
+          const { response, body, durationMs } = await fetchTextWithTimeout(bulkOiEndpoint, { env });
+          if (response.ok) {
+            oiDefaultsToZero = true;
+            const oiRows = parseJsonRows(body);
+            logThetaDownload({
+              env,
+              url: bulkOiEndpoint,
+              durationMs,
+              status: response.status,
+              ok: true,
+              rows: oiRows.length,
+              error: null,
+            });
+            oiRows.forEach((oiRow) => {
+              const rowSymbol = normalizeSymbol(oiRow.symbol);
+              const expiration = normalizeIsoDate(oiRow.expiration);
+              const strike = toFiniteNumber(oiRow.strike);
+              const right = normalizeRight(oiRow.right);
+              const oi = toFiniteNumber(oiRow.open_interest ?? oiRow.oi ?? oiRow.openInterest);
+
+              if (!rowSymbol || !expiration || strike === null || !right || oi === null) return;
+              oiByContract.set(buildContractKey({
+                symbol: rowSymbol,
+                expiration,
+                strike,
+                right,
+              }), Math.trunc(oi));
+            });
+          } else {
+            logThetaDownload({
+              env,
+              url: bulkOiEndpoint,
+              durationMs,
+              status: response.status,
+              ok: false,
+              rows: 0,
+              error: `http_${response.status}`,
+            });
+          }
+        } catch (error) {
+          logThetaDownload({
+            env,
+            url: bulkOiEndpoint,
+            durationMs: null,
+            status: 0,
+            ok: false,
+            rows: 0,
+            error: error.message || 'request_failed',
+          });
+          oiDefaultsToZero = false;
+        }
+      }
+
       for (const row of contractsMissingOi) {
+        const contractKey = buildContractKey(row);
+        if (oiByContract.has(contractKey)) continue;
         const oiEndpoint = resolveThetaOiEndpoint(row, dayIso, env);
         const oi = await fetchThetaMetricNumber(oiEndpoint, [
           'oi',
@@ -1256,18 +1985,19 @@ async function buildSupplementalMetricLookup({
           'openInterest',
         ]);
         if (oi !== null) {
-          oiByContract.set(buildContractKey(row), Math.trunc(oi));
+          oiByContract.set(contractKey, Math.trunc(oi));
         }
       }
     }
   }
 
-  return { spotBySymbol, oiByContract };
+  return { spotBySymbol, oiByContract, oiDefaultsToZero };
 }
 
 function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
   const spotBySymbol = supplementalMetrics.spotBySymbol || new Map();
   const oiByContract = supplementalMetrics.oiByContract || new Map();
+  const oiDefaultsToZero = Boolean(supplementalMetrics.oiDefaultsToZero);
   const statsByMinute = buildMinuteStats(rawRows);
 
   const contractDayVolume = new Map();
@@ -1320,7 +2050,8 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
     const otmPct = computeOtmPct({ right: row.right, strike: row.strike, spot });
     const value = computeValue(row.price, row.size);
     const dte = computeDte(row.tradeTsUtc, row.expiration);
-    const oi = extractOi(payload) ?? oiByContract.get(contractKey) ?? null;
+    const oiCandidate = extractOi(payload) ?? oiByContract.get(contractKey) ?? null;
+    const oi = (oiCandidate === null && oiDefaultsToZero) ? 0 : oiCandidate;
     const volOiRatio = oi === null ? null : (dayVolume / Math.max(oi, 1));
 
     const valuePctile = value === null || maxValue === minValue
@@ -1413,11 +2144,6 @@ function ensureMetricCacheRows(db, { symbol, dayIso, rows, metricStatuses, markP
   });
 }
 
-function hasFullMetricCache(metricCacheMap, metricName) {
-  const cache = metricCacheMap[metricName];
-  return Boolean(cache && cache.cacheStatus === DAY_CACHE_STATUS_FULL);
-}
-
 async function ensureEnrichedForDay({
   db,
   symbol,
@@ -1426,18 +2152,30 @@ async function ensureEnrichedForDay({
   markPartial = false,
   thresholds,
   env = process.env,
+  requiredMetrics = [],
 }) {
   const metricCacheMap = getMetricCacheMap(db, { symbol, dayIso });
-  const rawRows = getRawTradesForDay(db, { symbol, dayIso });
+  const enrichedRowsCache = metricCacheMap.enrichedRows;
 
-  if (!forceRecompute && hasFullMetricCache(metricCacheMap, 'enrichedRows')) {
+  if (!forceRecompute && enrichedRowsCache) {
+    if (!hasMinuteDerivedRows(db, { symbol, dayIso })) {
+      const enrichedRows = readEnrichedRows(db, { symbol, dayIso });
+      const minuteRollups = buildMinuteDerivedRollups(enrichedRows, dayIso);
+      upsertSymbolMinuteDerived(db, minuteRollups.symbolMinuteRows);
+      upsertContractMinuteDerived(db, minuteRollups.contractMinuteRows);
+    }
+
     return {
       synced: false,
-      reason: 'metric_cache_full',
-      rowCount: rawRows.length,
+      reason: enrichedRowsCache.cacheStatus === DAY_CACHE_STATUS_FULL
+        ? 'metric_cache_full'
+        : 'metric_cache_partial',
+      rowCount: enrichedRowsCache.rowCount || 0,
       metricCacheMap,
     };
   }
+
+  const rawRows = getRawTradesForDay(db, { symbol, dayIso });
 
   const supplementalMetrics = await buildSupplementalMetricLookup({
     db,
@@ -1445,6 +2183,7 @@ async function ensureEnrichedForDay({
     dayIso,
     rawRows,
     env,
+    requiredMetrics,
   });
   const built = buildEnrichedRows(rawRows, thresholds, supplementalMetrics);
 
@@ -1456,6 +2195,9 @@ async function ensureEnrichedForDay({
   upsertEnrichedRows(db, upsertPayload);
   upsertContractStats(db, built.contractStatsMap, dayIso);
   upsertSymbolStats(db, symbol, built.statsByMinute);
+  const minuteRollups = buildMinuteDerivedRollups(built.rows, dayIso);
+  upsertSymbolMinuteDerived(db, minuteRollups.symbolMinuteRows);
+  upsertContractMinuteDerived(db, minuteRollups.contractMinuteRows);
 
   const metricStatuses = calculateMetricStatuses(built.rows, markPartial);
   ensureMetricCacheRows(db, {
@@ -1611,7 +2353,7 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
   };
 
   const dayCache = getDayCache(readDb, { symbol, dayIso: fromDay });
-  const cachedRows = countCachedRows(readDb, { from, to, symbol });
+  const cachedRows = dayCache ? dayCache.rowCount : countCachedRows(readDb, { from, to, symbol });
   sync.cachedRows = cachedRows;
 
   if (!dayCache || dayCache.cacheStatus !== DAY_CACHE_STATUS_FULL) {
@@ -1665,6 +2407,7 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
       markPartial: hasExplicitLimit,
       thresholds,
       env,
+      requiredMetrics,
     });
   } catch (error) {
     METRIC_NAMES.forEach((metricName) => {
@@ -1687,8 +2430,28 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
     };
   }
 
-  const metricCacheMap = enrichment.metricCacheMap || getMetricCacheMap(readDb, { symbol, dayIso: fromDay });
-  const metricUnavailable = buildMetricUnavailableError(requiredMetrics, metricCacheMap);
+  let metricCacheMap = enrichment.metricCacheMap || getMetricCacheMap(readDb, { symbol, dayIso: fromDay });
+  let metricUnavailable = buildMetricUnavailableError(requiredMetrics, metricCacheMap);
+  if (
+    metricUnavailable
+    && requiredMetrics.length > 0
+    && !enrichment.synced
+    && enrichment.reason !== 'metric_cache_partial'
+  ) {
+    enrichment = await ensureEnrichedForDay({
+      db: readDb,
+      symbol,
+      dayIso: fromDay,
+      forceRecompute: true,
+      markPartial: hasExplicitLimit,
+      thresholds,
+      env,
+      requiredMetrics,
+    });
+    metricCacheMap = enrichment.metricCacheMap || getMetricCacheMap(readDb, { symbol, dayIso: fromDay });
+    metricUnavailable = buildMetricUnavailableError(requiredMetrics, metricCacheMap);
+  }
+
   if (metricUnavailable) {
     readDb.close();
     return metricUnavailable;
@@ -1774,8 +2537,10 @@ module.exports = {
     resolveThetaEndpoint,
     resolveThetaSpotEndpoint,
     resolveThetaOiEndpoint,
+    resolveThetaOiBulkEndpoint,
     extractMetricFromResponse,
     fetchThetaMetricNumber,
+    fetchThetaRows,
     buildSupplementalMetricLookup,
     countCachedRows,
     upsertDayCache,
@@ -1785,6 +2550,9 @@ module.exports = {
     ensureEnrichedForDay,
     buildEnrichedRows,
     buildMinuteStats,
+    buildMinuteDerivedRollups,
+    upsertSymbolMinuteDerived,
+    upsertContractMinuteDerived,
     evaluateChips,
     DAY_CACHE_STATUS_FULL,
     DAY_CACHE_STATUS_PARTIAL,

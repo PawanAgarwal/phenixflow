@@ -97,12 +97,24 @@ describe('historical flow API', () => {
 
     const db = new Database(dbPath, { readonly: true });
     const count = db.prepare('SELECT COUNT(*) AS c FROM option_trades WHERE symbol = ?').get('AAPL').c;
+    const symbolMinuteCount = db.prepare(`
+      SELECT COUNT(*) AS c
+      FROM option_symbol_minute_derived
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).get('AAPL', '2026-02-13').c;
+    const contractMinuteCount = db.prepare(`
+      SELECT COUNT(*) AS c
+      FROM option_contract_minute_derived
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).get('AAPL', '2026-02-13').c;
     const dayCache = db
       .prepare('SELECT cache_status AS cacheStatus, row_count AS rowCount FROM option_trade_day_cache WHERE symbol = ? AND trade_date_utc = ?')
       .get('AAPL', '2026-02-13');
     db.close();
 
     expect(count).toBe(2);
+    expect(symbolMinuteCount).toBeGreaterThan(0);
+    expect(contractMinuteCount).toBeGreaterThan(0);
     expect(dayCache).toMatchObject({ cacheStatus: 'full', rowCount: 2 });
     expect(fetchCalls.length).toBe(1);
   });
@@ -255,12 +267,118 @@ describe('historical flow API', () => {
   });
 
   it('returns metric_unavailable for filters that require unavailable metrics', async () => {
+    const priorFetch = global.fetch;
+    const priorSpotPath = process.env.THETADATA_SPOT_PATH;
+    process.env.THETADATA_SPOT_PATH = '/v3/stock/history/ohlc';
+
+    try {
+      const db = new Database(dbPath);
+      db.prepare('DELETE FROM option_trade_metric_day_cache WHERE symbol = ? AND trade_date_utc = ?')
+        .run('AAPL', '2026-02-13');
+      db.close();
+
+      global.fetch = async (url) => {
+        const endpoint = String(url);
+        if (endpoint.includes('/v3/option/history/trade_quote')) {
+          return {
+            ok: true,
+            status: 200,
+            text: async () => JSON.stringify({
+              symbol: ['AAPL'],
+              trade_timestamp: ['2026-02-13T14:35:00.000Z'],
+              expiration: ['2026-02-20'],
+              strike: [212.5],
+              right: ['CALL'],
+              price: [1.87],
+              size: [200],
+              bid: [1.84],
+              ask: [1.88],
+              condition: [18],
+              exchange: ['OPRA'],
+            }),
+          };
+        }
+
+        return {
+          ok: false,
+          status: 404,
+          text: async () => JSON.stringify({ error: 'not_found' }),
+        };
+      };
+
+      const response = await request(app)
+        .get('/api/flow/historical')
+        .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'AAPL', chips: 'otm' });
+
+      expect(response.statusCode).toBe(422);
+      expect(response.body.error.code).toBe('metric_unavailable');
+    } finally {
+      global.fetch = priorFetch;
+      if (priorSpotPath === undefined) delete process.env.THETADATA_SPOT_PATH;
+      else process.env.THETADATA_SPOT_PATH = priorSpotPath;
+    }
+  });
+
+  it('uses gov OI reference rows as fallback so vol>oi filter can run without Theta OI endpoint', async () => {
+    const db = new Database(dbPath);
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS option_open_interest_reference (
+        source TEXT NOT NULL,
+        source_url TEXT,
+        as_of_date TEXT NOT NULL,
+        symbol TEXT NOT NULL,
+        expiration TEXT NOT NULL,
+        strike REAL NOT NULL,
+        option_right TEXT NOT NULL CHECK (option_right IN ('CALL', 'PUT')),
+        oi INTEGER NOT NULL CHECK (oi >= 0),
+        raw_payload_json TEXT,
+        ingested_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+        PRIMARY KEY (source, as_of_date, symbol, expiration, strike, option_right)
+      );
+    `);
+    db.prepare(`
+      INSERT INTO option_open_interest_reference (
+        source,
+        source_url,
+        as_of_date,
+        symbol,
+        expiration,
+        strike,
+        option_right,
+        oi,
+        raw_payload_json
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(source, as_of_date, symbol, expiration, strike, option_right) DO UPDATE SET
+        oi = excluded.oi,
+        raw_payload_json = excluded.raw_payload_json,
+        ingested_at_utc = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+    `).run('FINRA', 'https://example.gov/oi.csv', '2026-02-13', 'AAPL', '2026-02-20', 212.5, 'CALL', 10, '{}');
+    db.prepare(`
+      INSERT INTO option_open_interest_reference (
+        source,
+        source_url,
+        as_of_date,
+        symbol,
+        expiration,
+        strike,
+        option_right,
+        oi,
+        raw_payload_json
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(source, as_of_date, symbol, expiration, strike, option_right) DO UPDATE SET
+        oi = excluded.oi,
+        raw_payload_json = excluded.raw_payload_json,
+        ingested_at_utc = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+    `).run('FINRA', 'https://example.gov/oi.csv', '2026-02-13', 'AAPL', '2026-02-27', 215, 'CALL', 10, '{}');
+    db.close();
+
     const response = await request(app)
       .get('/api/flow/historical')
-      .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'AAPL', chips: 'otm' });
+      .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'AAPL', chips: 'vol>oi' });
 
-    expect(response.statusCode).toBe(422);
-    expect(response.body.error.code).toBe('metric_unavailable');
+    expect(response.statusCode).toBe(200);
+    expect(response.body.data.length).toBeGreaterThan(0);
+    expect(response.body.data.every((row) => Array.isArray(row.chips) && row.chips.includes('vol>oi'))).toBe(true);
   });
 
   it('hydrates spot and oi from Theta endpoints when configured', async () => {
@@ -268,7 +386,7 @@ describe('historical flow API', () => {
     const priorOiPath = process.env.THETADATA_OI_PATH;
 
     process.env.THETADATA_SPOT_PATH = '/v3/stock/snapshot/quote';
-    process.env.THETADATA_OI_PATH = '/v3/option/open_interest';
+    process.env.THETADATA_OI_PATH = '/v3/option/history/open_interest';
 
     try {
       global.fetch = async (url) => {
@@ -303,7 +421,7 @@ describe('historical flow API', () => {
           };
         }
 
-        if (endpoint.includes('/v3/option/open_interest')) {
+        if (endpoint.includes('/v3/option/history/open_interest')) {
           return {
             ok: true,
             status: 200,
@@ -331,11 +449,84 @@ describe('historical flow API', () => {
       });
       expect(response.body.data[0].chips).toEqual(expect.arrayContaining(['otm', 'vol>oi']));
       expect(fetchCalls.some((url) => url.includes('/v3/stock/snapshot/quote'))).toBe(true);
-      expect(fetchCalls.some((url) => url.includes('/v3/option/open_interest'))).toBe(true);
+      expect(fetchCalls.some((url) => url.includes('/v3/option/history/open_interest'))).toBe(true);
     } finally {
       if (priorSpotPath === undefined) delete process.env.THETADATA_SPOT_PATH;
       else process.env.THETADATA_SPOT_PATH = priorSpotPath;
 
+      if (priorOiPath === undefined) delete process.env.THETADATA_OI_PATH;
+      else process.env.THETADATA_OI_PATH = priorOiPath;
+    }
+  });
+
+  it('treats missing contracts from successful Theta bulk OI response as zero and marks volOi cache full', async () => {
+    const priorOiPath = process.env.THETADATA_OI_PATH;
+    process.env.THETADATA_OI_PATH = '/v3/option/history/open_interest';
+
+    try {
+      global.fetch = async (url) => {
+        const endpoint = String(url);
+        fetchCalls.push(endpoint);
+
+        if (endpoint.includes('/v3/option/history/trade_quote')) {
+          return {
+            ok: true,
+            status: 200,
+            text: async () => JSON.stringify({
+              symbol: ['NFLX', 'NFLX'],
+              trade_timestamp: ['2026-02-13T14:35:00.000Z', '2026-02-13T14:36:00.000Z'],
+              expiration: ['2026-02-20', '2026-02-27'],
+              strike: [500, 505],
+              right: ['CALL', 'CALL'],
+              price: [2, 2],
+              size: [100, 100],
+              bid: [1.9, 1.9],
+              ask: [2.1, 2.1],
+              condition: [18, 18],
+              exchange: ['OPRA', 'OPRA'],
+            }),
+          };
+        }
+
+        if (endpoint.includes('/v3/option/history/open_interest') && endpoint.includes('expiration=*')) {
+          return {
+            ok: true,
+            status: 200,
+            text: async () => JSON.stringify({
+              symbol: ['NFLX'],
+              expiration: ['2026-02-20'],
+              strike: [500],
+              right: ['CALL'],
+              open_interest: [10],
+              timestamp: ['2026-02-13T06:30:00'],
+            }),
+          };
+        }
+
+        return {
+          ok: false,
+          status: 404,
+          text: async () => JSON.stringify({ error: 'not_found' }),
+        };
+      };
+
+      const response = await request(app)
+        .get('/api/flow/historical')
+        .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'NFLX', chips: 'vol>oi' });
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body.data.length).toBeGreaterThanOrEqual(2);
+
+      const db = new Database(dbPath, { readonly: true });
+      const volOiCache = db.prepare(`
+        SELECT cache_status AS cacheStatus
+        FROM option_trade_metric_day_cache
+        WHERE symbol = ? AND trade_date_utc = ? AND metric_name = ?
+      `).get('NFLX', '2026-02-13', 'volOiRatio');
+      db.close();
+
+      expect(volOiCache).toMatchObject({ cacheStatus: 'full' });
+    } finally {
       if (priorOiPath === undefined) delete process.env.THETADATA_OI_PATH;
       else process.env.THETADATA_OI_PATH = priorOiPath;
     }
