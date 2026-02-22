@@ -297,6 +297,18 @@ function ensureSchemaMigrations(db) {
     CREATE INDEX IF NOT EXISTS idx_option_trade_enriched_symbol_ts
       ON option_trade_enriched(symbol, trade_ts_utc);
   `);
+
+  const symbolMinuteDerivedColumns = [
+    ['spot', 'REAL'],
+    ['avg_sig_score_bullish', 'REAL'],
+    ['avg_sig_score_bearish', 'REAL'],
+    ['net_sig_score', 'REAL'],
+    ['value_weighted_sig_score', 'REAL'],
+  ];
+
+  symbolMinuteDerivedColumns.forEach(([columnName, columnDefinition]) => {
+    ensureColumn(db, 'option_symbol_minute_derived', columnName, columnDefinition);
+  });
 }
 
 function normalizeIsoTimestamp(rawValue) {
@@ -1491,6 +1503,13 @@ function buildMinuteDerivedRollups(rows, dayIso) {
       sigScoreSum: 0,
       sigScoreCount: 0,
       maxSigScore: null,
+      sigScoreBullishSum: 0,
+      sigScoreBullishCount: 0,
+      sigScoreBearishSum: 0,
+      sigScoreBearishCount: 0,
+      valueSigScoreSum: 0,
+      valueSigScoreWeight: 0,
+      lastSpot: null,
       volOiSum: 0,
       volOiCount: 0,
       maxVolOiRatio: null,
@@ -1515,6 +1534,25 @@ function buildMinuteDerivedRollups(rows, dayIso) {
       symbolAgg.sigScoreSum += sigScore;
       symbolAgg.sigScoreCount += 1;
       symbolAgg.maxSigScore = symbolAgg.maxSigScore === null ? sigScore : Math.max(symbolAgg.maxSigScore, sigScore);
+
+      if (row.sentiment === 'bullish') {
+        symbolAgg.sigScoreBullishSum += sigScore;
+        symbolAgg.sigScoreBullishCount += 1;
+      } else if (row.sentiment === 'bearish') {
+        symbolAgg.sigScoreBearishSum += sigScore;
+        symbolAgg.sigScoreBearishCount += 1;
+      }
+
+      const tradeValue = toFiniteNumber(row.value);
+      if (tradeValue !== null && tradeValue > 0) {
+        symbolAgg.valueSigScoreSum += sigScore * tradeValue;
+        symbolAgg.valueSigScoreWeight += tradeValue;
+      }
+    }
+
+    const spotValue = toFiniteNumber(row.spot);
+    if (spotValue !== null) {
+      symbolAgg.lastSpot = spotValue;
     }
 
     const volOiRatio = toFiniteNumber(row.volOiRatio);
@@ -1627,6 +1665,14 @@ function buildMinuteDerivedRollups(rows, dayIso) {
     neutralCount: row.neutralCount,
     avgSigScore: row.sigScoreCount ? (row.sigScoreSum / row.sigScoreCount) : null,
     maxSigScore: row.maxSigScore,
+    avgSigScoreBullish: row.sigScoreBullishCount ? (row.sigScoreBullishSum / row.sigScoreBullishCount) : null,
+    avgSigScoreBearish: row.sigScoreBearishCount ? (row.sigScoreBearishSum / row.sigScoreBearishCount) : null,
+    netSigScore: (row.sigScoreBullishCount || row.sigScoreBearishCount)
+      ? ((row.sigScoreBullishCount ? (row.sigScoreBullishSum / row.sigScoreBullishCount) : 0)
+        - (row.sigScoreBearishCount ? (row.sigScoreBearishSum / row.sigScoreBearishCount) : 0))
+      : null,
+    valueWeightedSigScore: row.valueSigScoreWeight > 0 ? (row.valueSigScoreSum / row.valueSigScoreWeight) : null,
+    spot: row.lastSpot,
     avgVolOiRatio: row.volOiCount ? (row.volOiSum / row.volOiCount) : null,
     maxVolOiRatio: row.maxVolOiRatio,
     maxRepeat3m: row.maxRepeat3m,
@@ -1682,6 +1728,11 @@ function upsertSymbolMinuteDerived(db, rows) {
       neutral_count,
       avg_sig_score,
       max_sig_score,
+      avg_sig_score_bullish,
+      avg_sig_score_bearish,
+      net_sig_score,
+      value_weighted_sig_score,
+      spot,
       avg_vol_oi_ratio,
       max_vol_oi_ratio,
       max_repeat3m,
@@ -1704,6 +1755,11 @@ function upsertSymbolMinuteDerived(db, rows) {
       @neutralCount,
       @avgSigScore,
       @maxSigScore,
+      @avgSigScoreBullish,
+      @avgSigScoreBearish,
+      @netSigScore,
+      @valueWeightedSigScore,
+      @spot,
       @avgVolOiRatio,
       @maxVolOiRatio,
       @maxRepeat3m,
@@ -1724,6 +1780,11 @@ function upsertSymbolMinuteDerived(db, rows) {
       neutral_count = excluded.neutral_count,
       avg_sig_score = excluded.avg_sig_score,
       max_sig_score = excluded.max_sig_score,
+      avg_sig_score_bullish = excluded.avg_sig_score_bullish,
+      avg_sig_score_bearish = excluded.avg_sig_score_bearish,
+      net_sig_score = excluded.net_sig_score,
+      value_weighted_sig_score = excluded.value_weighted_sig_score,
+      spot = excluded.spot,
       avg_vol_oi_ratio = excluded.avg_vol_oi_ratio,
       max_vol_oi_ratio = excluded.max_vol_oi_ratio,
       max_repeat3m = excluded.max_repeat3m,
@@ -2059,7 +2120,11 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
 
     const volOiNorm = volOiRatio === null ? 0 : clamp01(volOiRatio / 5);
     const repeatNorm = clamp01(repeat3m / Math.max(1, thresholds.repeatFlowMin));
-    const otmNorm = otmPct === null ? 0 : clamp01(Math.abs(otmPct) / 25);
+    const otmNorm = otmPct === null ? 0 : clamp01(Math.max(0, otmPct) / 25);
+    const dteNorm = dte === null ? 0 : clamp01(1 - dte / 60);
+    const spreadNorm = (row.bid !== null && row.ask !== null && row.ask > row.bid)
+      ? clamp01(((row.ask - row.bid) / ((row.ask + row.bid) / 2)) * 100 / 10)
+      : 0;
 
     const sigScore = computeSigScore({
       valuePctile,
@@ -2067,6 +2132,8 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
       repeatNorm,
       otmNorm,
       sideConfidence: sideConfidence(execution.executionSide),
+      dteNorm,
+      spreadNorm,
     });
 
     const enriched = {
@@ -2099,7 +2166,7 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
       openWindowBaseline: minuteStats.openWindowBaseline,
       bullishRatio15m: minuteStats.bullishRatio15m,
       chips: [],
-      ruleVersion: 'historical-v1',
+      ruleVersion: 'historical-v2',
     };
 
     enriched.chips = evaluateChips(enriched, thresholds);

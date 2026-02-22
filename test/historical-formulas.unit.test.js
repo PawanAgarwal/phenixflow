@@ -34,9 +34,14 @@ describe('historical formulas', () => {
     expect(computeValue(1.25, 100)).toBe(12500);
     expect(computeDte('2026-02-13T14:35:00.000Z', '2026-02-20')).toBeGreaterThanOrEqual(6);
 
-    const score = computeSigScore({ valuePctile: 0.8, volOiNorm: 0.5, repeatNorm: 1, otmNorm: 0.2, sideConfidence: 0.9 });
-    expect(score).toBeGreaterThan(0.7);
+    const score = computeSigScore({ valuePctile: 0.8, volOiNorm: 0.5, repeatNorm: 1, otmNorm: 0.2, sideConfidence: 0.9, dteNorm: 0.5, spreadNorm: 0.3 });
+    expect(score).toBeGreaterThan(0.5);
     expect(score).toBeLessThan(1);
+
+    // Verify new components contribute to score
+    const scoreWithoutNew = computeSigScore({ valuePctile: 0.8, volOiNorm: 0.5, repeatNorm: 1, otmNorm: 0.2, sideConfidence: 0.9, dteNorm: 0, spreadNorm: 0 });
+    const scoreWithNew = computeSigScore({ valuePctile: 0.8, volOiNorm: 0.5, repeatNorm: 1, otmNorm: 0.2, sideConfidence: 0.9, dteNorm: 1, spreadNorm: 1 });
+    expect(scoreWithNew).toBeGreaterThan(scoreWithoutNew);
   });
 
   it('detects AM spike window in ET', () => {

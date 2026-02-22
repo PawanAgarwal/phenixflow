@@ -129,14 +129,16 @@ function computeOtmPct({ right, strike, spot }) {
   return ((sp - s) / sp) * 100;
 }
 
-function computeSigScore({ valuePctile, volOiNorm, repeatNorm, otmNorm, sideConfidence }) {
+function computeSigScore({ valuePctile, volOiNorm, repeatNorm, otmNorm, sideConfidence, dteNorm, spreadNorm }) {
   const vp = Math.min(1, Math.max(0, valuePctile || 0));
   const vo = Math.min(1, Math.max(0, volOiNorm || 0));
   const rp = Math.min(1, Math.max(0, repeatNorm || 0));
   const op = Math.min(1, Math.max(0, otmNorm || 0));
   const sc = Math.min(1, Math.max(0, sideConfidence || 0));
+  const dn = Math.min(1, Math.max(0, dteNorm || 0));
+  const sn = Math.min(1, Math.max(0, spreadNorm || 0));
 
-  const score = (0.35 * vp) + (0.25 * vo) + (0.20 * rp) + (0.10 * op) + (0.10 * sc);
+  const score = (0.30 * vp) + (0.25 * vo) + (0.15 * rp) + (0.10 * op) + (0.10 * sc) + (0.05 * dn) + (0.05 * sn);
   return Number(score.toFixed(6));
 }
 
