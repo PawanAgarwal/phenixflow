@@ -25,6 +25,12 @@ const {
   computeSigScore,
   toMinuteBucketUtc,
   isAmSpikeWindow,
+  isSweep,
+  isMultilegByCode,
+  computeOtmNormBellCurve,
+  computeMinuteOfDayEt,
+  computeTimeNorm,
+  computeIvSkewNorm,
 } = require('./historical-formulas');
 const { loadReferenceOiMap } = require('./oi-gov');
 
@@ -35,6 +41,7 @@ const DAY_CACHE_STATUS_PARTIAL = 'partial';
 const DEFAULT_HISTORICAL_OPTION_PATH = '/v3/option/history/trade_quote';
 const DEFAULT_SPOT_PATH = '/v3/stock/history/ohlc';
 const DEFAULT_OI_PATH = '/v3/option/history/open_interest';
+const DEFAULT_GREEKS_PATH = '/v3/option/history/greeks/first_order';
 const DEFAULT_THETADATA_TIMEOUT_MS = 15000;
 
 const METRIC_NAMES = Object.freeze([
@@ -298,12 +305,49 @@ function ensureSchemaMigrations(db) {
       ON option_trade_enriched(symbol, trade_ts_utc);
   `);
 
+  const enrichedV3Columns = [
+    ['is_sweep', 'INTEGER DEFAULT 0'],
+    ['is_multileg', 'INTEGER DEFAULT 0'],
+    ['minute_of_day_et', 'INTEGER'],
+    ['delta', 'REAL'],
+    ['implied_vol', 'REAL'],
+    ['time_norm', 'REAL'],
+    ['delta_norm', 'REAL'],
+    ['iv_skew_norm', 'REAL'],
+  ];
+
+  enrichedV3Columns.forEach(([columnName, columnDefinition]) => {
+    ensureColumn(db, 'option_trade_enriched', columnName, columnDefinition);
+  });
+
   const symbolMinuteDerivedColumns = [
     ['spot', 'REAL'],
     ['avg_sig_score_bullish', 'REAL'],
     ['avg_sig_score_bearish', 'REAL'],
     ['net_sig_score', 'REAL'],
     ['value_weighted_sig_score', 'REAL'],
+    ['sweep_count', 'INTEGER DEFAULT 0'],
+    ['sweep_value_ratio', 'REAL'],
+    ['multileg_count', 'INTEGER DEFAULT 0'],
+    ['multileg_pct', 'REAL'],
+    ['avg_minute_of_day_et', 'REAL'],
+    ['avg_iv', 'REAL'],
+    ['call_iv_avg', 'REAL'],
+    ['put_iv_avg', 'REAL'],
+    ['iv_spread', 'REAL'],
+    ['net_delta_dollars', 'REAL'],
+    ['avg_value_pctile', 'REAL'],
+    ['avg_vol_oi_norm', 'REAL'],
+    ['avg_repeat_norm', 'REAL'],
+    ['avg_otm_norm', 'REAL'],
+    ['avg_side_confidence', 'REAL'],
+    ['avg_dte_norm', 'REAL'],
+    ['avg_spread_norm', 'REAL'],
+    ['avg_sweep_norm', 'REAL'],
+    ['avg_multileg_norm', 'REAL'],
+    ['avg_time_norm', 'REAL'],
+    ['avg_delta_norm', 'REAL'],
+    ['avg_iv_skew_norm', 'REAL'],
   ];
 
   symbolMinuteDerivedColumns.forEach(([columnName, columnDefinition]) => {
@@ -551,6 +595,23 @@ function resolveThetaOiBulkEndpoint(symbol, dayIso, env = process.env) {
   url.searchParams.set('symbol', symbol);
   url.searchParams.set('expiration', '*');
   url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
+  url.searchParams.set('format', 'json');
+  return url.toString();
+}
+
+function resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env = process.env) {
+  const baseUrl = (env.THETADATA_BASE_URL || '').trim();
+  if (!baseUrl) return null;
+
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const url = new URL(`${normalizedBase}${DEFAULT_GREEKS_PATH}`);
+
+  url.searchParams.set('symbol', symbol);
+  url.searchParams.set('expiration', toYyyymmdd(`${expiration}T00:00:00.000Z`));
+  url.searchParams.set('strike', '*');
+  url.searchParams.set('right', 'both');
+  url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
+  url.searchParams.set('interval', '1m');
   url.searchParams.set('format', 'json');
   return url.toString();
 }
@@ -1178,6 +1239,38 @@ function buildContractKey(row) {
   return [row.symbol, row.expiration, row.strike, row.right].join('|');
 }
 
+function detectHeuristicMultilegs(rawRows) {
+  const multilegIndices = new Set();
+  const bySecondBucket = new Map();
+
+  rawRows.forEach((row, rowIndex) => {
+    const ts = row.tradeTsUtc;
+    if (!ts) return;
+    const secondBucket = ts.slice(0, 19);
+    const key = `${row.symbol}|${secondBucket}`;
+    const group = bySecondBucket.get(key) || [];
+    group.push({ rowIndex, contractKey: buildContractKey(row), size: toFiniteNumber(row.size) || 0 });
+    bySecondBucket.set(key, group);
+  });
+
+  bySecondBucket.forEach((group) => {
+    if (group.length < 2) return;
+    const contracts = new Set(group.map((g) => g.contractKey));
+    if (contracts.size < 2) return;
+
+    const sizes = group.map((g) => g.size).filter((s) => s > 0);
+    if (sizes.length < 2) return;
+
+    const minSize = Math.min(...sizes);
+    const maxSize = Math.max(...sizes);
+    if (minSize > 0 && maxSize / minSize <= 3) {
+      group.forEach((g) => multilegIndices.add(g.rowIndex));
+    }
+  });
+
+  return multilegIndices;
+}
+
 function buildSideKey(row, executionSide) {
   return [row.symbol, row.expiration, row.strike, row.right, executionSide].join('|');
 }
@@ -1324,6 +1417,14 @@ function upsertEnrichedRows(db, rows) {
       bullish_ratio_15m,
       chips_json,
       rule_version,
+      is_sweep,
+      is_multileg,
+      minute_of_day_et,
+      delta,
+      implied_vol,
+      time_norm,
+      delta_norm,
+      iv_skew_norm,
       enriched_at_utc
     ) VALUES (
       @tradeId,
@@ -1355,6 +1456,14 @@ function upsertEnrichedRows(db, rows) {
       @bullishRatio15m,
       @chipsJson,
       @ruleVersion,
+      @isSweep,
+      @isMultileg,
+      @minuteOfDayEt,
+      @delta,
+      @impliedVol,
+      @timeNorm,
+      @deltaNorm,
+      @ivSkewNorm,
       strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
     )
     ON CONFLICT(trade_id) DO UPDATE SET
@@ -1375,6 +1484,14 @@ function upsertEnrichedRows(db, rows) {
       bullish_ratio_15m = excluded.bullish_ratio_15m,
       chips_json = excluded.chips_json,
       rule_version = excluded.rule_version,
+      is_sweep = excluded.is_sweep,
+      is_multileg = excluded.is_multileg,
+      minute_of_day_et = excluded.minute_of_day_et,
+      delta = excluded.delta,
+      implied_vol = excluded.implied_vol,
+      time_norm = excluded.time_norm,
+      delta_norm = excluded.delta_norm,
+      iv_skew_norm = excluded.iv_skew_norm,
       enriched_at_utc = excluded.enriched_at_utc
   `);
 
@@ -1517,6 +1634,31 @@ function buildMinuteDerivedRollups(rows, dayIso) {
       oiSum: 0,
       dayVolumeSum: 0,
       chipHits: {},
+      sweepCount: 0,
+      sweepValueSum: 0,
+      multilegCount: 0,
+      ivSum: 0,
+      ivCount: 0,
+      callIvSum: 0,
+      callIvCount: 0,
+      putIvSum: 0,
+      putIvCount: 0,
+      netDeltaDollars: 0,
+      minuteOfDayEtSum: 0,
+      minuteOfDayEtCount: 0,
+      valuePctileSum: 0,
+      volOiNormSum: 0,
+      repeatNormSum: 0,
+      otmNormSum: 0,
+      sideConfidenceSum: 0,
+      dteNormSum: 0,
+      spreadNormSum: 0,
+      sweepNormSum: 0,
+      multilegNormSum: 0,
+      timeNormSum: 0,
+      deltaNormSum: 0,
+      ivSkewNormSum: 0,
+      componentCount: 0,
     };
 
     symbolAgg.tradeCount += 1;
@@ -1575,6 +1717,61 @@ function buildMinuteDerivedRollups(rows, dayIso) {
         symbolAgg.chipHits[chipId] = (symbolAgg.chipHits[chipId] || 0) + 1;
       });
     }
+
+    // Sweep accumulation
+    if (row.isSweep) {
+      symbolAgg.sweepCount += 1;
+      symbolAgg.sweepValueSum += toFiniteNumber(row.value) || 0;
+    }
+
+    // Multileg accumulation
+    if (row.isMultileg) {
+      symbolAgg.multilegCount += 1;
+    }
+
+    // IV accumulation
+    const iv = toFiniteNumber(row.impliedVol);
+    if (iv !== null) {
+      symbolAgg.ivSum += iv;
+      symbolAgg.ivCount += 1;
+      if (row.right === 'CALL') {
+        symbolAgg.callIvSum += iv;
+        symbolAgg.callIvCount += 1;
+      } else if (row.right === 'PUT') {
+        symbolAgg.putIvSum += iv;
+        symbolAgg.putIvCount += 1;
+      }
+    }
+
+    // Delta accumulation
+    const delta = toFiniteNumber(row.delta);
+    const tradeValue = toFiniteNumber(row.value);
+    if (delta !== null && tradeValue !== null) {
+      const directionSign = row.sentiment === 'bullish' ? 1 : (row.sentiment === 'bearish' ? -1 : 0);
+      symbolAgg.netDeltaDollars += delta * tradeValue * directionSign;
+    }
+
+    // Time accumulation
+    const minuteOfDayEt = toFiniteNumber(row.minuteOfDayEt);
+    if (minuteOfDayEt !== null) {
+      symbolAgg.minuteOfDayEtSum += minuteOfDayEt;
+      symbolAgg.minuteOfDayEtCount += 1;
+    }
+
+    // Per-component accumulation for sigScore decomposition
+    symbolAgg.valuePctileSum += toFiniteNumber(row.valuePctile) || 0;
+    symbolAgg.volOiNormSum += toFiniteNumber(row.volOiNorm) || 0;
+    symbolAgg.repeatNormSum += toFiniteNumber(row.repeatNorm) || 0;
+    symbolAgg.otmNormSum += toFiniteNumber(row.otmNorm) || 0;
+    symbolAgg.sideConfidenceSum += toFiniteNumber(row.sideConfidenceVal) || 0;
+    symbolAgg.dteNormSum += toFiniteNumber(row.dteNorm) || 0;
+    symbolAgg.spreadNormSum += toFiniteNumber(row.spreadNorm) || 0;
+    symbolAgg.sweepNormSum += toFiniteNumber(row.sweepNorm) || 0;
+    symbolAgg.multilegNormSum += toFiniteNumber(row.multilegNorm) || 0;
+    symbolAgg.timeNormSum += toFiniteNumber(row.timeNorm) || 0;
+    symbolAgg.deltaNormSum += toFiniteNumber(row.deltaNorm) || 0;
+    symbolAgg.ivSkewNormSum += toFiniteNumber(row.ivSkewNorm) || 0;
+    symbolAgg.componentCount += 1;
 
     symbolMinute.set(symbolKey, symbolAgg);
 
@@ -1679,6 +1876,30 @@ function buildMinuteDerivedRollups(rows, dayIso) {
     oiSum: row.oiSum,
     dayVolumeSum: row.dayVolumeSum,
     chipHitsJson: JSON.stringify(row.chipHits),
+    sweepCount: row.sweepCount,
+    sweepValueRatio: row.totalValue > 0 ? (row.sweepValueSum / row.totalValue) : null,
+    multilegCount: row.multilegCount,
+    multilegPct: row.tradeCount > 0 ? (row.multilegCount / row.tradeCount) : null,
+    avgMinuteOfDayEt: row.minuteOfDayEtCount > 0 ? (row.minuteOfDayEtSum / row.minuteOfDayEtCount) : null,
+    avgIv: row.ivCount > 0 ? (row.ivSum / row.ivCount) : null,
+    callIvAvg: row.callIvCount > 0 ? (row.callIvSum / row.callIvCount) : null,
+    putIvAvg: row.putIvCount > 0 ? (row.putIvSum / row.putIvCount) : null,
+    ivSpread: (row.callIvCount > 0 && row.putIvCount > 0)
+      ? ((row.callIvSum / row.callIvCount) - (row.putIvSum / row.putIvCount))
+      : null,
+    netDeltaDollars: row.netDeltaDollars,
+    avgValuePctile: row.componentCount > 0 ? (row.valuePctileSum / row.componentCount) : null,
+    avgVolOiNorm: row.componentCount > 0 ? (row.volOiNormSum / row.componentCount) : null,
+    avgRepeatNorm: row.componentCount > 0 ? (row.repeatNormSum / row.componentCount) : null,
+    avgOtmNorm: row.componentCount > 0 ? (row.otmNormSum / row.componentCount) : null,
+    avgSideConfidence: row.componentCount > 0 ? (row.sideConfidenceSum / row.componentCount) : null,
+    avgDteNorm: row.componentCount > 0 ? (row.dteNormSum / row.componentCount) : null,
+    avgSpreadNorm: row.componentCount > 0 ? (row.spreadNormSum / row.componentCount) : null,
+    avgSweepNorm: row.componentCount > 0 ? (row.sweepNormSum / row.componentCount) : null,
+    avgMultilegNorm: row.componentCount > 0 ? (row.multilegNormSum / row.componentCount) : null,
+    avgTimeNorm: row.componentCount > 0 ? (row.timeNormSum / row.componentCount) : null,
+    avgDeltaNorm: row.componentCount > 0 ? (row.deltaNormSum / row.componentCount) : null,
+    avgIvSkewNorm: row.componentCount > 0 ? (row.ivSkewNormSum / row.componentCount) : null,
   }));
 
   const contractMinuteRows = Array.from(contractMinute.values()).map((row) => ({
@@ -1739,6 +1960,28 @@ function upsertSymbolMinuteDerived(db, rows) {
       oi_sum,
       day_volume_sum,
       chip_hits_json,
+      sweep_count,
+      sweep_value_ratio,
+      multileg_count,
+      multileg_pct,
+      avg_minute_of_day_et,
+      avg_iv,
+      call_iv_avg,
+      put_iv_avg,
+      iv_spread,
+      net_delta_dollars,
+      avg_value_pctile,
+      avg_vol_oi_norm,
+      avg_repeat_norm,
+      avg_otm_norm,
+      avg_side_confidence,
+      avg_dte_norm,
+      avg_spread_norm,
+      avg_sweep_norm,
+      avg_multileg_norm,
+      avg_time_norm,
+      avg_delta_norm,
+      avg_iv_skew_norm,
       updated_at_utc
     ) VALUES (
       @symbol,
@@ -1766,6 +2009,28 @@ function upsertSymbolMinuteDerived(db, rows) {
       @oiSum,
       @dayVolumeSum,
       @chipHitsJson,
+      @sweepCount,
+      @sweepValueRatio,
+      @multilegCount,
+      @multilegPct,
+      @avgMinuteOfDayEt,
+      @avgIv,
+      @callIvAvg,
+      @putIvAvg,
+      @ivSpread,
+      @netDeltaDollars,
+      @avgValuePctile,
+      @avgVolOiNorm,
+      @avgRepeatNorm,
+      @avgOtmNorm,
+      @avgSideConfidence,
+      @avgDteNorm,
+      @avgSpreadNorm,
+      @avgSweepNorm,
+      @avgMultilegNorm,
+      @avgTimeNorm,
+      @avgDeltaNorm,
+      @avgIvSkewNorm,
       strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
     )
     ON CONFLICT(symbol, trade_date_utc, minute_bucket_utc) DO UPDATE SET
@@ -1791,6 +2056,28 @@ function upsertSymbolMinuteDerived(db, rows) {
       oi_sum = excluded.oi_sum,
       day_volume_sum = excluded.day_volume_sum,
       chip_hits_json = excluded.chip_hits_json,
+      sweep_count = excluded.sweep_count,
+      sweep_value_ratio = excluded.sweep_value_ratio,
+      multileg_count = excluded.multileg_count,
+      multileg_pct = excluded.multileg_pct,
+      avg_minute_of_day_et = excluded.avg_minute_of_day_et,
+      avg_iv = excluded.avg_iv,
+      call_iv_avg = excluded.call_iv_avg,
+      put_iv_avg = excluded.put_iv_avg,
+      iv_spread = excluded.iv_spread,
+      net_delta_dollars = excluded.net_delta_dollars,
+      avg_value_pctile = excluded.avg_value_pctile,
+      avg_vol_oi_norm = excluded.avg_vol_oi_norm,
+      avg_repeat_norm = excluded.avg_repeat_norm,
+      avg_otm_norm = excluded.avg_otm_norm,
+      avg_side_confidence = excluded.avg_side_confidence,
+      avg_dte_norm = excluded.avg_dte_norm,
+      avg_spread_norm = excluded.avg_spread_norm,
+      avg_sweep_norm = excluded.avg_sweep_norm,
+      avg_multileg_norm = excluded.avg_multileg_norm,
+      avg_time_norm = excluded.avg_time_norm,
+      avg_delta_norm = excluded.avg_delta_norm,
+      avg_iv_skew_norm = excluded.avg_iv_skew_norm,
       updated_at_utc = excluded.updated_at_utc
   `);
 
@@ -1872,6 +2159,43 @@ function upsertContractMinuteDerived(db, rows) {
     items.forEach((row) => upsert.run(row));
   });
   txn(rows);
+}
+
+async function buildGreeksLookup({ symbol, dayIso, rawRows, env = process.env }) {
+  const greeksByContractMinute = new Map();
+  const baseUrl = (env.THETADATA_BASE_URL || '').trim();
+  if (!baseUrl) return greeksByContractMinute;
+
+  const expirations = [...new Set(rawRows.map((r) => r.expiration).filter(Boolean))];
+
+  for (const expiration of expirations) {
+    const endpoint = resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env);
+    if (!endpoint) continue;
+
+    try {
+      const greeksRows = await fetchThetaRows(endpoint, { env });
+      greeksRows.forEach((gr) => {
+        const strike = toFiniteNumber(gr.strike);
+        const right = normalizeRight(gr.right);
+        const ts = gr.timestamp || gr.trade_timestamp || gr.datetime;
+        if (strike === null || !right || !ts) return;
+
+        const minuteBucket = toMinuteBucketUtc(ts);
+        if (!minuteBucket) return;
+
+        const contractKey = buildContractKey({ symbol, expiration, strike, right });
+        const lookupKey = `${contractKey}|${minuteBucket}`;
+        greeksByContractMinute.set(lookupKey, {
+          delta: toFiniteNumber(gr.delta),
+          impliedVol: toFiniteNumber(gr.implied_vol ?? gr.impliedVol ?? gr.iv),
+        });
+      });
+    } catch {
+      // Graceful degradation — greeks endpoint may not be available
+    }
+  }
+
+  return greeksByContractMinute;
 }
 
 function extractOi(rawPayload) {
@@ -2051,18 +2375,25 @@ async function buildSupplementalMetricLookup({
     }
   }
 
-  return { spotBySymbol, oiByContract, oiDefaultsToZero };
+  const greeksByContractMinute = await buildGreeksLookup({ symbol, dayIso, rawRows, env });
+
+  return { spotBySymbol, oiByContract, oiDefaultsToZero, greeksByContractMinute };
 }
 
 function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
   const spotBySymbol = supplementalMetrics.spotBySymbol || new Map();
   const oiByContract = supplementalMetrics.oiByContract || new Map();
   const oiDefaultsToZero = Boolean(supplementalMetrics.oiDefaultsToZero);
+  const greeksByContractMinute = supplementalMetrics.greeksByContractMinute || new Map();
   const statsByMinute = buildMinuteStats(rawRows);
+
+  const multilegIndices = detectHeuristicMultilegs(rawRows);
 
   const contractDayVolume = new Map();
   const contractStatsMap = new Map();
   const sideWindows = new Map();
+  const runningCallIv = new Map();
+  const runningPutIv = new Map();
 
   const valueSamples = rawRows
     .map((row) => computeValue(row.price, row.size))
@@ -2074,7 +2405,7 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
 
   const enrichedRows = [];
 
-  rawRows.forEach((row) => {
+  rawRows.forEach((row, rowIndex) => {
     const execution = computeExecutionFlags(row);
     const sentiment = computeSentiment({ right: row.right, executionSide: execution.executionSide });
 
@@ -2114,26 +2445,69 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
     const oi = (oiCandidate === null && oiDefaultsToZero) ? 0 : oiCandidate;
     const volOiRatio = oi === null ? null : (dayVolume / Math.max(oi, 1));
 
+    // Sweep detection
+    const sweepFlag = isSweep(row.conditionCode);
+    const sweepNorm = sweepFlag ? 1 : 0;
+
+    // Multi-leg detection (code-based OR heuristic)
+    const multilegFlag = isMultilegByCode(row.conditionCode) || multilegIndices.has(rowIndex);
+    const multilegNorm = multilegFlag ? 1 : 0;
+
+    // Time-of-day feature
+    const minuteOfDayEt = computeMinuteOfDayEt(row.tradeTsUtc);
+
+    // OTM bell curve (replaces linear otmNorm)
+    const otmNorm = computeOtmNormBellCurve(otmPct);
+
+    // Greeks lookup
+    const greeksKey = `${contractKey}|${minuteBucket}`;
+    const greeks = greeksByContractMinute.get(greeksKey) || { delta: null, impliedVol: null };
+
+    // Delta norm — |delta| is already 0-1
+    const deltaNorm = greeks.delta !== null ? Math.abs(greeks.delta) : 0;
+
+    // Time norm
+    const timeNorm = computeTimeNorm(minuteOfDayEt);
+
+    // IV skew norm — running call/put IV averages
+    const iv = greeks.impliedVol;
+    if (iv !== null) {
+      const ivMap = row.right === 'CALL' ? runningCallIv : runningPutIv;
+      const acc = ivMap.get(row.symbol) || { sum: 0, count: 0 };
+      acc.sum += iv; acc.count += 1;
+      ivMap.set(row.symbol, acc);
+    }
+    const callAcc = runningCallIv.get(row.symbol);
+    const putAcc = runningPutIv.get(row.symbol);
+    const runningCallAvg = callAcc && callAcc.count > 0 ? callAcc.sum / callAcc.count : null;
+    const runningPutAvg = putAcc && putAcc.count > 0 ? putAcc.sum / putAcc.count : null;
+    const ivSkewNorm = computeIvSkewNorm(runningCallAvg, runningPutAvg);
+
     const valuePctile = value === null || maxValue === minValue
       ? (value === null ? 0 : 1)
       : ((value - minValue) / (maxValue - minValue));
 
     const volOiNorm = volOiRatio === null ? 0 : clamp01(volOiRatio / 5);
     const repeatNorm = clamp01(repeat3m / Math.max(1, thresholds.repeatFlowMin));
-    const otmNorm = otmPct === null ? 0 : clamp01(Math.max(0, otmPct) / 25);
     const dteNorm = dte === null ? 0 : clamp01(1 - dte / 60);
     const spreadNorm = (row.bid !== null && row.ask !== null && row.ask > row.bid)
       ? clamp01(((row.ask - row.bid) / ((row.ask + row.bid) / 2)) * 100 / 10)
       : 0;
+    const sideConfidenceVal = sideConfidence(execution.executionSide);
 
     const sigScore = computeSigScore({
       valuePctile,
       volOiNorm,
       repeatNorm,
       otmNorm,
-      sideConfidence: sideConfidence(execution.executionSide),
+      sideConfidence: sideConfidenceVal,
       dteNorm,
       spreadNorm,
+      sweepNorm,
+      multilegNorm,
+      timeNorm,
+      deltaNorm,
+      ivSkewNorm,
     });
 
     const enriched = {
@@ -2165,8 +2539,25 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
       symbolVolBaseline15m: minuteStats.symbolVolBaseline15m,
       openWindowBaseline: minuteStats.openWindowBaseline,
       bullishRatio15m: minuteStats.bullishRatio15m,
+      isSweep: sweepFlag ? 1 : 0,
+      isMultileg: multilegFlag ? 1 : 0,
+      minuteOfDayEt,
+      delta: greeks.delta,
+      impliedVol: greeks.impliedVol,
+      timeNorm,
+      deltaNorm,
+      ivSkewNorm,
+      valuePctile,
+      volOiNorm,
+      repeatNorm,
+      otmNorm,
+      sideConfidenceVal,
+      dteNorm,
+      spreadNorm,
+      sweepNorm,
+      multilegNorm,
       chips: [],
-      ruleVersion: 'historical-v2',
+      ruleVersion: 'historical-v4',
     };
 
     enriched.chips = evaluateChips(enriched, thresholds);
@@ -2339,6 +2730,14 @@ function readEnrichedRows(db, { symbol, dayIso }) {
       symbol_vol_baseline_15m AS symbolVolBaseline15m,
       open_window_baseline AS openWindowBaseline,
       bullish_ratio_15m AS bullishRatio15m,
+      is_sweep AS isSweep,
+      is_multileg AS isMultileg,
+      minute_of_day_et AS minuteOfDayEt,
+      delta,
+      implied_vol AS impliedVol,
+      time_norm AS timeNorm,
+      delta_norm AS deltaNorm,
+      iv_skew_norm AS ivSkewNorm,
       chips_json AS chipsJson
     FROM option_trade_enriched
     WHERE symbol = @symbol

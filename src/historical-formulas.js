@@ -129,7 +129,53 @@ function computeOtmPct({ right, strike, spot }) {
   return ((sp - s) / sp) * 100;
 }
 
-function computeSigScore({ valuePctile, volOiNorm, repeatNorm, otmNorm, sideConfidence, dteNorm, spreadNorm }) {
+const SWEEP_CODES = new Set(['95', '126', '128']);
+
+function isSweep(conditionCode) {
+  if (conditionCode === null || conditionCode === undefined) return false;
+  return SWEEP_CODES.has(String(conditionCode).trim());
+}
+
+function isMultilegByCode(conditionCode) {
+  if (conditionCode === null || conditionCode === undefined) return false;
+  const code = Number(String(conditionCode).trim());
+  return Number.isFinite(code) && code >= 130 && code <= 143;
+}
+
+function computeOtmNormBellCurve(otmPct) {
+  if (otmPct === null || otmPct === undefined || !Number.isFinite(otmPct)) return 0;
+  if (otmPct <= 0) return 0;
+  return Math.exp(-Math.pow((otmPct - 10) / 10, 2));
+}
+
+function computeMinuteOfDayEt(isoTs) {
+  if (isoTs === null || isoTs === undefined) return null;
+  const et = getEtClock(isoTs);
+  if (!et) return null;
+  return (et.hour * 60) + et.minute;
+}
+
+function computeTimeNorm(minuteOfDayEt) {
+  if (minuteOfDayEt === null || minuteOfDayEt === undefined || !Number.isFinite(minuteOfDayEt)) return 0;
+  const marketOpen = 570;  // 9:30 ET
+  const marketClose = 960; // 16:00 ET
+  if (minuteOfDayEt < marketOpen || minuteOfDayEt > marketClose) return 0;
+  const peak = 645; // 10:45 ET
+  const sigma = 45;
+  return Math.exp(-Math.pow((minuteOfDayEt - peak) / sigma, 2));
+}
+
+function computeIvSkewNorm(callIv, putIv) {
+  if (callIv === null || callIv === undefined || putIv === null || putIv === undefined) return 0;
+  const c = toFiniteNumber(callIv);
+  const p = toFiniteNumber(putIv);
+  if (c === null || p === null) return 0;
+  const avg = (c + p) / 2;
+  if (avg <= 0) return 0;
+  return Math.min(1, Math.abs(c - p) / avg);
+}
+
+function computeSigScore({ valuePctile, volOiNorm, repeatNorm, otmNorm, sideConfidence, dteNorm, spreadNorm, sweepNorm, multilegNorm, timeNorm, deltaNorm, ivSkewNorm }) {
   const vp = Math.min(1, Math.max(0, valuePctile || 0));
   const vo = Math.min(1, Math.max(0, volOiNorm || 0));
   const rp = Math.min(1, Math.max(0, repeatNorm || 0));
@@ -137,9 +183,16 @@ function computeSigScore({ valuePctile, volOiNorm, repeatNorm, otmNorm, sideConf
   const sc = Math.min(1, Math.max(0, sideConfidence || 0));
   const dn = Math.min(1, Math.max(0, dteNorm || 0));
   const sn = Math.min(1, Math.max(0, spreadNorm || 0));
+  const sw = Math.min(1, Math.max(0, sweepNorm || 0));
+  const ml = Math.min(1, Math.max(0, multilegNorm || 0));
+  const tn = Math.min(1, Math.max(0, timeNorm || 0));
+  const dl = Math.min(1, Math.max(0, deltaNorm || 0));
+  const iv = Math.min(1, Math.max(0, ivSkewNorm || 0));
 
-  const score = (0.30 * vp) + (0.25 * vo) + (0.15 * rp) + (0.10 * op) + (0.10 * sc) + (0.05 * dn) + (0.05 * sn);
-  return Number(score.toFixed(6));
+  const score = (0.18 * vp) + (0.15 * vo) + (0.08 * rp) + (0.08 * op) + (0.06 * sc) + (0.04 * dn) + (0.04 * sn)
+    + (0.12 * sw) - (0.12 * ml)
+    + (0.07 * tn) + (0.08 * dl) + (0.06 * iv);
+  return Number(Math.min(1, Math.max(0, score)).toFixed(6));
 }
 
 function toMinuteBucketUtc(isoTs) {
@@ -204,4 +257,10 @@ module.exports = {
   toMinuteBucketUtc,
   getEtClock,
   isAmSpikeWindow,
+  isSweep,
+  isMultilegByCode,
+  computeOtmNormBellCurve,
+  computeMinuteOfDayEt,
+  computeTimeNorm,
+  computeIvSkewNorm,
 };

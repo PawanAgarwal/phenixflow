@@ -116,8 +116,8 @@ describe('historical flow API', () => {
     expect(symbolMinuteCount).toBeGreaterThan(0);
     expect(contractMinuteCount).toBeGreaterThan(0);
     expect(dayCache).toMatchObject({ cacheStatus: 'full', rowCount: 2 });
-    // 1 trade_quote + 1 spot OHLC + 1 bulk OI + 2 per-contract OI = 5
-    expect(fetchCalls.length).toBe(5);
+    // 1 trade_quote + 1 spot OHLC + 1 bulk OI + 2 per-contract OI + 2 greeks = 7
+    expect(fetchCalls.length).toBe(7);
   });
 
   it('skips Theta call on cache hit for same day/symbol', async () => {
@@ -134,8 +134,8 @@ describe('historical flow API', () => {
       cachedRows: 2,
     });
 
-    // No new fetch calls on cache hit — count stays at 5 from the first test
-    expect(fetchCalls.length).toBe(5);
+    // No new fetch calls on cache hit — count stays at 7 from the first test
+    expect(fetchCalls.length).toBe(7);
   });
 
   it('reports full filtered total even when page limit truncates rows', async () => {
