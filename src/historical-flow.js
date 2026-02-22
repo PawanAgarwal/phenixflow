@@ -1876,9 +1876,8 @@ async function buildSupplementalMetricLookup({
     }
   });
 
-  const requiredMetricSet = new Set(Array.isArray(requiredMetrics) ? requiredMetrics : []);
-  const requiresSpot = requiredMetricSet.has('spot') || requiredMetricSet.has('otmPct');
-  const requiresOi = requiredMetricSet.has('oi') || requiredMetricSet.has('volOiRatio');
+  const requiresSpot = true;
+  const requiresOi = true;
 
   if ((env.THETADATA_BASE_URL || '').trim()) {
     const shouldFetchSpot = Boolean((env.THETADATA_SPOT_PATH || DEFAULT_SPOT_PATH || '').trim());
@@ -2528,6 +2527,7 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
 module.exports = {
   queryHistoricalFlow,
   __private: {
+    ensureSchema,
     resolveDbPath,
     normalizeIsoTimestamp,
     normalizeSymbol,

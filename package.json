@@ -11,7 +11,9 @@
     "oi:sync": "node scripts/oi/sync-gov-oi.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "backfill:option-trade-quote": "node scripts/backfill/backfill-option-trade-quote.js",
+    "enrich:option-trades": "node scripts/backfill/enrich-option-trades.js"
   },
   "engines": {
     "node": ">=20"
