@@ -2161,6 +2161,32 @@ function upsertContractMinuteDerived(db, rows) {
   txn(rows);
 }
 
+function interpretThetaTimestampAsEt(rawTs) {
+  if (!rawTs || typeof rawTs !== 'string') return null;
+  const hasOffset = /[zZ]|[+-]\d\d:\d\d$/.test(rawTs);
+  if (hasOffset) return rawTs;
+  // ThetaData returns bare timestamps in US/Eastern — determine EST/EDT offset
+  // Parse as UTC to get the date, then use Intl to find the actual ET offset
+  const asUtc = new Date(`${rawTs}Z`);
+  if (Number.isNaN(asUtc.getTime())) return null;
+  // Format in ET and compare to get offset
+  const etParts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    hour12: false,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit',
+  }).formatToParts(asUtc);
+  const byType = {};
+  etParts.forEach((p) => { byType[p.type] = p.value; });
+  const etHour = Number(byType.hour);
+  const utcHour = asUtc.getUTCHours();
+  let diff = utcHour - etHour;
+  if (diff < 0) diff += 24;
+  if (diff > 12) diff -= 24;
+  const offset = diff === 5 ? '-05:00' : '-04:00';
+  return `${rawTs}${offset}`;
+}
+
 async function buildGreeksLookup({ symbol, dayIso, rawRows, env = process.env }) {
   const greeksByContractMinute = new Map();
   const baseUrl = (env.THETADATA_BASE_URL || '').trim();
@@ -2177,10 +2203,11 @@ async function buildGreeksLookup({ symbol, dayIso, rawRows, env = process.env })
       greeksRows.forEach((gr) => {
         const strike = toFiniteNumber(gr.strike);
         const right = normalizeRight(gr.right);
-        const ts = gr.timestamp || gr.trade_timestamp || gr.datetime;
-        if (strike === null || !right || !ts) return;
+        const rawTs = gr.timestamp || gr.trade_timestamp || gr.datetime;
+        if (strike === null || !right || !rawTs) return;
 
-        const minuteBucket = toMinuteBucketUtc(ts);
+        const etTagged = interpretThetaTimestampAsEt(rawTs);
+        const minuteBucket = toMinuteBucketUtc(etTagged);
         if (!minuteBucket) return;
 
         const contractKey = buildContractKey({ symbol, expiration, strike, right });
