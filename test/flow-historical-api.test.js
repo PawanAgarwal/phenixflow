@@ -138,6 +138,76 @@ describe('historical flow API', () => {
     expect(fetchCalls.length).toBe(7);
   });
 
+  it('stores per-minute sigScore component averages in option_symbol_minute_derived', async () => {
+    // AAPL data was already synced+enriched by the first test — query the DB directly
+    const db = new Database(dbPath, { readonly: true });
+    const rows = db.prepare(`
+      SELECT
+        avg_value_pctile AS avgValuePctile,
+        avg_vol_oi_norm AS avgVolOiNorm,
+        avg_repeat_norm AS avgRepeatNorm,
+        avg_otm_norm AS avgOtmNorm,
+        avg_side_confidence AS avgSideConfidence,
+        avg_dte_norm AS avgDteNorm,
+        avg_spread_norm AS avgSpreadNorm,
+        avg_sweep_norm AS avgSweepNorm,
+        avg_multileg_norm AS avgMultilegNorm,
+        avg_time_norm AS avgTimeNorm,
+        avg_delta_norm AS avgDeltaNorm,
+        avg_iv_skew_norm AS avgIvSkewNorm,
+        avg_sig_score AS avgSigScore
+      FROM option_symbol_minute_derived
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).all('AAPL', '2026-02-13');
+
+    const enrichedRows = db.prepare(`
+      SELECT
+        time_norm AS timeNorm,
+        delta_norm AS deltaNorm,
+        iv_skew_norm AS ivSkewNorm,
+        rule_version AS ruleVersion
+      FROM option_trade_enriched
+      WHERE symbol = ? AND trade_ts_utc >= ? AND trade_ts_utc <= ?
+    `).all('AAPL', FRIDAY_FROM, FRIDAY_TO);
+    db.close();
+
+    expect(rows.length).toBeGreaterThan(0);
+
+    // All 12 component averages should be non-null numbers
+    rows.forEach((row) => {
+      expect(typeof row.avgValuePctile).toBe('number');
+      expect(typeof row.avgVolOiNorm).toBe('number');
+      expect(typeof row.avgRepeatNorm).toBe('number');
+      expect(typeof row.avgOtmNorm).toBe('number');
+      expect(typeof row.avgSideConfidence).toBe('number');
+      expect(typeof row.avgDteNorm).toBe('number');
+      expect(typeof row.avgSpreadNorm).toBe('number');
+      expect(typeof row.avgSweepNorm).toBe('number');
+      expect(typeof row.avgMultilegNorm).toBe('number');
+      expect(typeof row.avgTimeNorm).toBe('number');
+      expect(typeof row.avgDeltaNorm).toBe('number');
+      expect(typeof row.avgIvSkewNorm).toBe('number');
+      expect(typeof row.avgSigScore).toBe('number');
+
+      // Components are in [0, 1]
+      expect(row.avgValuePctile).toBeGreaterThanOrEqual(0);
+      expect(row.avgValuePctile).toBeLessThanOrEqual(1);
+      expect(row.avgSideConfidence).toBeGreaterThanOrEqual(0);
+      expect(row.avgSideConfidence).toBeLessThanOrEqual(1);
+      expect(row.avgTimeNorm).toBeGreaterThanOrEqual(0);
+      expect(row.avgTimeNorm).toBeLessThanOrEqual(1);
+    });
+
+    // Per-trade enriched rows should have the new norm columns and v4 rule version
+    expect(enrichedRows.length).toBeGreaterThan(0);
+    enrichedRows.forEach((row) => {
+      expect(typeof row.timeNorm).toBe('number');
+      expect(typeof row.deltaNorm).toBe('number');
+      expect(typeof row.ivSkewNorm).toBe('number');
+      expect(row.ruleVersion).toBe('historical-v4');
+    });
+  });
+
   it('reports full filtered total even when page limit truncates rows', async () => {
     const response = await request(app)
       .get('/api/flow/historical')
