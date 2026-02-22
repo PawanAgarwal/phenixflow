@@ -1072,14 +1072,19 @@ async function syncThetaTradesToSqlite({
     const dayEnd = `${dayIso}T23:59:59.999Z`;
     const rowCount = countCachedRows(writeDb, { from: dayStart, to: dayEnd, symbol });
 
-    const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
+    // Only mark as 'full' if we actually have rows. A successful HTTP response
+    // with 0 parsed rows may indicate a malformed response — mark 'partial'
+    // so it gets retried on the next run.
+    const cacheStatus = markPartial || rowCount === 0
+      ? DAY_CACHE_STATUS_PARTIAL
+      : DAY_CACHE_STATUS_FULL;
 
     upsertDayCache(writeDb, {
       symbol,
       dayIso,
       cacheStatus,
       rowCount,
-      lastError: null,
+      lastError: rowCount === 0 ? 'empty_response' : null,
       sourceEndpoint: endpoint,
     });
 

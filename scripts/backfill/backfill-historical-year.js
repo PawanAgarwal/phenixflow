@@ -15,7 +15,7 @@ const MODE = (process.env.BACKFILL_MODE || 'base').trim().toLowerCase();
 const HEARTBEAT_EVERY = Number(process.env.BACKFILL_HEARTBEAT_EVERY || 25);
 const PROBE_FILTERS_IN_BASE = String(process.env.BACKFILL_PROBE_FILTERS || '0') === '1';
 const CONCURRENCY = Math.max(1, Number(process.env.BACKFILL_CONCURRENCY || 1));
-const SKIP_CALENDAR_CHECK = String(process.env.BACKFILL_SKIP_CALENDAR_CHECK || '1') === '1';
+const SKIP_CALENDAR_CHECK = String(process.env.BACKFILL_SKIP_CALENDAR_CHECK || '0') === '1';
 const LOCAL_CACHE_CHECK = String(process.env.BACKFILL_LOCAL_CACHE_CHECK || '0') === '1';
 const OUTPUT_PATH = process.env.BACKFILL_REPORT_PATH
   || path.resolve(process.cwd(), 'artifacts', 'reports', 'historical-backfill-year.json');
