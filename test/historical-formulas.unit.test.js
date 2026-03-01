@@ -25,6 +25,42 @@ describe('historical formulas', () => {
     expect(bid).toMatchObject({ aa: false, ask: false, bid: true, puts: true });
   });
 
+  it('infers inside-spread side using midpoint and tick rule', () => {
+    const midAbove = computeExecutionFlags({
+      right: 'CALL',
+      price: 1.06,
+      bid: 1.0,
+      ask: 1.1,
+    });
+    const midBelow = computeExecutionFlags({
+      right: 'CALL',
+      price: 1.04,
+      bid: 1.0,
+      ask: 1.1,
+    });
+    const midTieTickUp = computeExecutionFlags({
+      right: 'CALL',
+      price: 1.05,
+      bid: 1.0,
+      ask: 1.1,
+      lastTradePrice: 1.04,
+      lastExecutionSide: 'BID',
+    });
+    const midTieTickFlat = computeExecutionFlags({
+      right: 'CALL',
+      price: 1.05,
+      bid: 1.0,
+      ask: 1.1,
+      lastTradePrice: 1.05,
+      lastExecutionSide: 'ASK',
+    });
+
+    expect(midAbove.executionSide).toBe('ASK');
+    expect(midBelow.executionSide).toBe('BID');
+    expect(midTieTickUp.executionSide).toBe('ASK');
+    expect(midTieTickFlat.executionSide).toBe('ASK');
+  });
+
   it('maps right + side to sentiment', () => {
     expect(computeSentiment({ right: 'CALL', executionSide: 'ASK' })).toBe('bullish');
     expect(computeSentiment({ right: 'PUT', executionSide: 'ASK' })).toBe('bearish');

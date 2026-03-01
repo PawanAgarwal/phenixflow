@@ -547,6 +547,7 @@ function buildChipSet(flow = {}, settings = {}) {
     || scoreQuality === 'complete'
     || (compatibilityMode && scoreQuality === null);
   const scoreDependentAllowed = settings.degraded !== true;
+  const directionalSignalEligible = sentiment === 'bullish' || sentiment === 'bearish';
 
   if (value !== undefined && value >= thresholdSettings['100k']) chips.add('100k+');
   if (value !== undefined && value >= thresholdSettings.sizable) chips.add('sizable');
@@ -585,10 +586,11 @@ function buildChipSet(flow = {}, settings = {}) {
     chips.add('bullflow');
   }
 
-  if (scoreDependentAllowed && scoreQualityEligible && sigScore !== undefined && sigScore >= advancedThresholds.highSigMin) chips.add('high-sig');
+  if (scoreDependentAllowed && scoreQualityEligible && directionalSignalEligible && sigScore !== undefined && sigScore >= advancedThresholds.highSigMin) chips.add('high-sig');
   if (
     scoreDependentAllowed
     && scoreQualityEligible
+    && directionalSignalEligible
     && value !== undefined
     && value >= advancedThresholds.premium100kMin
     && volOiRatio !== undefined
@@ -600,6 +602,7 @@ function buildChipSet(flow = {}, settings = {}) {
   if (
     scoreDependentAllowed
     && scoreQualityEligible
+    && directionalSignalEligible
     && ((repeat3m !== undefined && repeat3m >= advancedThresholds.repeatFlowMin)
     || (
       value !== undefined
@@ -656,6 +659,7 @@ function resolveDbPath(env = process.env) {
 function resolveDefaultScoringModel(env = process.env) {
   const model = typeof env.FLOW_SIGSCORE_MODEL === 'string' ? env.FLOW_SIGSCORE_MODEL.trim().toLowerCase() : '';
   if (model === 'v1' || model === 'baseline' || model === 'v1_baseline') return 'v1_baseline';
+  if (model === 'v5' || model === 'swing' || model === 'v5_swing') return 'v5_swing';
   return 'v4_expanded';
 }
 
@@ -674,13 +678,15 @@ function resolveRuntimeRuleConfig(env = process.env, options = {}) {
   const fallbackScoringModel = resolveDefaultScoringModel(env);
   const fallbackRuleVersion = fallbackScoringModel === 'v1_baseline'
     ? 'v1_baseline_default'
-    : 'v4_expanded_default';
+    : (fallbackScoringModel === 'v5_swing' ? 'v5_swing_default' : 'v4_expanded_default');
+  const fallbackTargetHorizon = fallbackScoringModel === 'v5_swing' ? 'swing_1_5d' : null;
   const useDb = options.useDb !== false;
 
   if (!useDb) {
     return {
       ruleVersion: fallbackRuleVersion,
       scoringModel: fallbackScoringModel,
+      targetHorizon: fallbackTargetHorizon,
       advancedThresholds: fallbackAdvancedThresholds,
       thresholdSettings: toThresholdFilterSettings(fallbackAdvancedThresholds, fallbackThresholdSettings),
     };
@@ -695,6 +701,7 @@ function resolveRuntimeRuleConfig(env = process.env, options = {}) {
     return {
       ruleVersion: activeRuleConfig.versionId || fallbackRuleVersion,
       scoringModel: activeRuleConfig.scoringModel || fallbackScoringModel,
+      targetHorizon: activeRuleConfig.targetSpec?.horizon || fallbackTargetHorizon,
       advancedThresholds: resolvedAdvancedThresholds,
       thresholdSettings: toThresholdFilterSettings(resolvedAdvancedThresholds, fallbackThresholdSettings),
     };
@@ -702,6 +709,7 @@ function resolveRuntimeRuleConfig(env = process.env, options = {}) {
     return {
       ruleVersion: fallbackRuleVersion,
       scoringModel: fallbackScoringModel,
+      targetHorizon: fallbackTargetHorizon,
       advancedThresholds: fallbackAdvancedThresholds,
       thresholdSettings: toThresholdFilterSettings(fallbackAdvancedThresholds, fallbackThresholdSettings),
     };
@@ -724,6 +732,16 @@ function parseJsonArray(rawValue, fallback = []) {
   }
 }
 
+function parseJsonObject(rawValue, fallback = {}) {
+  try {
+    const parsed = JSON.parse(rawValue || '{}');
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+    return fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function toFlowRowV2(row = {}) {
   const tradeTsUtc = row.tradeTsUtc || row.createdAt;
   const right = normalizeRight(row.right) || undefined;
@@ -731,6 +749,9 @@ function toFlowRowV2(row = {}) {
   const missingMetrics = Array.isArray(row.missingMetrics)
     ? row.missingMetrics
     : parseJsonArray(row.missingMetricsJson, []);
+  const sigScoreComponents = row.sigScoreComponents && typeof row.sigScoreComponents === 'object'
+    ? row.sigScoreComponents
+    : parseJsonObject(row.sigScoreComponentsJson, {});
   const normalizedSweepFlag = row.isSweep === true
     || row.sweep === true
     || row.is_sweep === true
@@ -758,10 +779,12 @@ function toFlowRowV2(row = {}) {
     volOiRatio: row.volOiRatio ?? null,
     repeat3m: row.repeat3m ?? null,
     sigScore: row.sigScore ?? null,
+    sigScoreComponents,
     sentiment: row.sentiment ?? getCanonicalSentiment(row),
     scoreQuality: row.scoreQuality ?? row.score_quality ?? undefined,
     missingMetrics,
     ruleVersion: row.ruleVersion || row.rule_version || null,
+    targetHorizon: row.targetHorizon || null,
     chips,
 
     // Backward-compatible fields still consumed in existing tests/clients.
@@ -794,6 +817,12 @@ function loadSqliteRows(rawQuery = {}, env = process.env) {
   try {
     db = new Database(dbPath, { readonly: true });
     db.pragma('query_only = ON');
+    const enrichedColumns = new Set(
+      db.prepare('PRAGMA table_info(option_trade_enriched)').all().map((row) => row.name),
+    );
+    const sigScoreComponentsSelect = enrichedColumns.has('sig_score_components_json')
+      ? 'e.sig_score_components_json AS sigScoreComponentsJson,'
+      : "'{}' AS sigScoreComponentsJson,";
 
     const where = [];
     const params = {};
@@ -842,6 +871,7 @@ function loadSqliteRows(rawQuery = {}, env = process.env) {
         e.rule_version AS ruleVersion,
         e.score_quality AS scoreQuality,
         e.missing_metrics_json AS missingMetricsJson,
+        ${sigScoreComponentsSelect}
         e.execution_side AS executionSide,
         e.symbol_vol_1m AS symbolVol1m,
         e.symbol_vol_baseline_15m AS symbolVolBaseline15m,
@@ -1091,6 +1121,7 @@ function buildFilters(rawQuery, filterVersion, runtime = {}) {
     compatibilityMode: runtime.compatibilityMode === true,
     ruleVersion: runtime.ruleVersion || null,
     scoringModel: runtime.scoringModel || null,
+    targetHorizon: runtime.targetHorizon || null,
   };
 }
 
@@ -1154,6 +1185,7 @@ function queryFlow(rawQuery, options = {}) {
       filterVersion,
       ruleVersion: runtimeRuleConfig.ruleVersion,
       scoringModel: runtimeRuleConfig.scoringModel,
+      ...(runtimeRuleConfig.targetHorizon ? { targetHorizon: runtimeRuleConfig.targetHorizon } : {}),
       observability: sourceData.observability,
       degraded: degradedMeta.degraded,
       degradedReason: degradedMeta.reasons,
@@ -1215,6 +1247,7 @@ function buildFlowFacets(query = {}, options = {}) {
       filterVersion,
       ruleVersion: runtimeRuleConfig.ruleVersion,
       scoringModel: runtimeRuleConfig.scoringModel,
+      ...(runtimeRuleConfig.targetHorizon ? { targetHorizon: runtimeRuleConfig.targetHorizon } : {}),
       observability: sourceData.observability,
       ...(degradedMeta.degraded ? { degraded: true, degradedReason: degradedMeta.reasons } : {}),
     },
@@ -1300,6 +1333,7 @@ function buildFlowSummary(query = {}, options = {}) {
       filterVersion,
       ruleVersion: runtimeRuleConfig.ruleVersion,
       scoringModel: runtimeRuleConfig.scoringModel,
+      ...(runtimeRuleConfig.targetHorizon ? { targetHorizon: runtimeRuleConfig.targetHorizon } : {}),
       observability: sourceData.observability,
       ...(degradedMeta.degraded ? { degraded: true, degradedReason: degradedMeta.reasons } : {}),
     },
@@ -1338,6 +1372,7 @@ function buildFlowFiltersCatalog(query = {}, options = {}) {
     data: {
       ruleVersion: runtimeRuleConfig.ruleVersion,
       scoringModel: runtimeRuleConfig.scoringModel,
+      ...(runtimeRuleConfig.targetHorizon ? { targetHorizon: runtimeRuleConfig.targetHorizon } : {}),
       thresholds,
       chips: filteredChips,
       enums: {

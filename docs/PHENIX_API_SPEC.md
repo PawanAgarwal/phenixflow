@@ -86,7 +86,12 @@ Fields required for full V1 functionality:
 - `volOiRatio: number | null`
 - `repeat3m: number | null`
 - `sigScore: number | null` (0 to 1)
+- `sigScoreComponents: object` (component-level explainability payload; may be empty)
 - `sentiment: "bullish" | "bearish" | "neutral"`
+- `scoreQuality: "complete" | "partial"`
+- `missingMetrics: string[]`
+- `ruleVersion: string | null`
+- `targetHorizon: string | null` (currently `swing_1_5d` for `v5_swing` configs)
 - `chips: string[]`
 
 ### 4.2 `PageMeta`
@@ -177,7 +182,7 @@ This table defines terms used by chips and enriched filters. If a term is direct
 | `repeatNorm` | Normalized repeat input (`clamp(repeat3m/repeatFlowMin,0,1)`). | `repeat3m` | Derived. |
 | `otmNorm` | Normalized moneyness input (`clamp(abs(otmPct)/25,0,1)`). | `otmPct` | Derived. |
 | `sideConfidence` | Confidence weight from execution side (`AA=1`, `ASK=0.85`, `BID=0.7`, `OTHER=0.25`). | `executionSide` | Derived (rule constant). |
-| `sigScore` | Versioned model in active `ruleVersion`: `v1_baseline` uses the 5-term weighted baseline; `v4_expanded` (default) adds `dteNorm`, `spreadNorm`, `sweepNorm`, `multilegNorm`, `timeNorm`, `deltaNorm`, `ivSkewNorm` (clamped to `[0,1]`). | `valuePctile`, `volOiNorm`, `repeatNorm`, `otmNorm`, `sideConfidence` (+ expanded terms for `v4_expanded`) | Derived. |
+| `sigScore` | Versioned model in active `ruleVersion`: `v1_baseline` uses the 5-term weighted baseline; `v4_expanded` adds `dteNorm`, `spreadNorm`, `sweepNorm`, `multilegNorm`, `timeNorm`, `deltaNorm`, `ivSkewNorm`; `v5_swing` uses swing-oriented components (`valueShockNorm`, `flowImbalanceNorm`, `deltaPressureNorm`, `cpOiPressureNorm`, `ivSkewSurfaceNorm`, `ivTermSlopeNorm`, `underlyingTrendConfirmNorm`, `liquidityQualityNorm`, etc.) with availability-aware weight renormalization. | model-specific normalized component set | Derived. |
 | `standardMonthlyThirdFriday` | Boolean calendar helper: expiration date is Friday and day-of-month in `[15..21]`. | `expiration` | Derived. |
 
 Notes:

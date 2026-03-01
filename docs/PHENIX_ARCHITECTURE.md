@@ -33,13 +33,17 @@ Primary outcomes:
   - rule-version persistence on enriched rows,
   - score-quality tracking (`score_quality`, `missing_metrics_json`),
   - minute-level derived rollups for score diagnostics.
-- Supplemental endpoint cache reuse for spot/OI/greeks with TTL.
+- Supplemental endpoint cache reuse for spot/OI/greeks/stock-1m with TTL.
+- Bounded supplemental fetch parallelism for Theta enrichment (`THETADATA_SUPPLEMENTAL_CONCURRENCY`, default `18`).
+- Score explainability persistence (`sig_score_components_json`) on enriched rows.
+- `v5_swing` scoring model support in rule resolution and enrichment runtime.
 - Ingestion worker reliability controls:
   - retry/backoff/jitter,
   - dead-letter capture,
   - bounded row buffering and dropped-row accounting.
 - Rule control-plane activation script: `scripts/rules/activate-rule-version.js`.
 - Offline score calibration script: `scripts/sigscore/calibrate-unusual.js`.
+- Swing calibration + candidate rule generation script: `scripts/sigscore/calibrate-swing.js`.
 
 ### 3.2 Gaps to close
 Mission-critical gap closure status (2026-03-01):
@@ -52,6 +56,7 @@ Remaining non-gating follow-ups:
 1. UI integration parity in frontend repository.
 2. p95 dashboard/alerting hardening.
 3. Feature-flag naming parity and rollout UX polish.
+4. Promote `v5_swing` from candidate/shadow to active after sufficient swing-calibration sample size.
 
 ## 4) Architecture Principles
 1. Deterministic first: metric/rule outcomes are reproducible from stored raw inputs.

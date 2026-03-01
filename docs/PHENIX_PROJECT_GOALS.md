@@ -64,6 +64,10 @@ Mission-critical closure update (2026-03-01):
 3. Strict score-quality gating is enforced on live score-dependent chips (with test/fixture compatibility carve-out only).
 4. Production score-bearing reads no longer silently fall back to fixtures.
 5. Rule activation now supports a calibration gate for promotion control.
+6. `v5_swing` scoring model is implemented in runtime formulas and rule-resolution path (shadow/candidate ready).
+7. Supplemental metric strategy now includes stock 1m cache reuse and bounded Theta supplemental parallelism (`THETADATA_SUPPLEMENTAL_CONCURRENCY`, default `18`).
+8. Enriched rows now persist score explainability payload (`sig_score_components_json`) and v5 component norms.
+9. Swing calibration tooling now exists for 1/3/5-day directional+magnitude labels (`scripts/sigscore/calibrate-swing.js`) with candidate rule artifact generation.
 
 De-prioritized (not blocking current mission completion):
 1. UI chip/drawer integration and UI-specific consistency tests.
@@ -124,7 +128,9 @@ De-prioritized (not blocking current mission completion):
    - neutral: otherwise
 10. `sigScore` in `[0..1]`:
    baseline (`v1_baseline`): `0.35*valuePctile + 0.25*volOiNorm + 0.20*repeatNorm + 0.10*otmNorm + 0.10*sideConfidence`.
-   expanded (`v4_expanded`, default): adds weighted contributions for `dteNorm`, `spreadNorm`, `sweepNorm`, `multilegNorm`, `timeNorm`, `deltaNorm`, `ivSkewNorm`.
+   expanded (`v4_expanded`): adds weighted contributions for `dteNorm`, `spreadNorm`, `sweepNorm`, `multilegNorm`, `timeNorm`, `deltaNorm`, `ivSkewNorm`.
+   swing (`v5_swing`, candidate): `valueShockNorm`, `volOiNorm`, `repeatNorm`, `otmNorm`, `dteSwingNorm`, `flowImbalanceNorm`, `deltaPressureNorm`, `cpOiPressureNorm`, `ivSkewSurfaceNorm`, `ivTermSlopeNorm`, `underlyingTrendConfirmNorm`, `liquidityQualityNorm`, `sweepNorm`, `multilegPenaltyNorm` with availability-aware weight renormalization.
+11. `scoreQuality`/`missingMetrics` must account for score-component availability; missing score components are surfaced explicitly.
 
 ## Program Setup (PM Tool)
 1. Project name: `Bullflow Filters - Core Quant V1`.

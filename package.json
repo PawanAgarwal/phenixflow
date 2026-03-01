@@ -11,6 +11,7 @@
     "oi:sync": "node scripts/oi/sync-gov-oi.js",
     "rules:activate": "node scripts/rules/activate-rule-version.js",
     "sigscore:calibrate": "node scripts/sigscore/calibrate-unusual.js",
+    "sigscore:calibrate:swing": "node scripts/sigscore/calibrate-swing.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",

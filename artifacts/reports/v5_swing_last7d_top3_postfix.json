@@ -1,0 +1,641 @@
+{
+  "generatedAtUtc": "2026-03-01T20:02:18.420Z",
+  "dbPath": "/Users/pawanagarwal/github/phenixflow/data/phenixflow.sqlite",
+  "symbols": [
+    "AAPL",
+    "MSFT",
+    "AMZN"
+  ],
+  "selectedDays": {
+    "AAPL": [
+      "2026-02-19",
+      "2026-02-20",
+      "2026-02-23",
+      "2026-02-24",
+      "2026-02-25",
+      "2026-02-26",
+      "2026-02-27"
+    ],
+    "MSFT": [
+      "2026-02-19",
+      "2026-02-20",
+      "2026-02-23",
+      "2026-02-24",
+      "2026-02-25",
+      "2026-02-26",
+      "2026-02-27"
+    ],
+    "AMZN": [
+      "2026-02-19",
+      "2026-02-20",
+      "2026-02-23",
+      "2026-02-24",
+      "2026-02-25",
+      "2026-02-26",
+      "2026-02-27"
+    ]
+  },
+  "totals": {
+    "totalRows": 2797200,
+    "sigGe90": 0,
+    "sigGe85": 0,
+    "maxSig": 0.74181,
+    "avgSig": 0.3377019172576147,
+    "completeRows": 2783340,
+    "partialRows": 13860,
+    "missingFlowImbalance": 0,
+    "missingDeltaPressure": 1,
+    "missingUnderlyingTrend": 0,
+    "missingDeltaNorm": 1
+  },
+  "perSymbol": [
+    {
+      "symbol": "AAPL",
+      "totalRows": 927175,
+      "maxSig": 0.660092,
+      "avgSig": 0.36342938619678056,
+      "sigGe90": 0,
+      "sigGe85": 0,
+      "completeRows": 922811,
+      "partialRows": 4364
+    },
+    {
+      "symbol": "AMZN",
+      "totalRows": 899297,
+      "maxSig": 0.721107,
+      "avgSig": 0.339116859234491,
+      "sigGe90": 0,
+      "sigGe85": 0,
+      "completeRows": 895221,
+      "partialRows": 4076
+    },
+    {
+      "symbol": "MSFT",
+      "totalRows": 970728,
+      "maxSig": 0.74181,
+      "avgSig": 0.31181792185555585,
+      "sigGe90": 0,
+      "sigGe85": 0,
+      "completeRows": 965308,
+      "partialRows": 5420
+    }
+  ],
+  "minuteCoverage": [
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-02-19",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-02-20",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-02-23",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-02-24",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-02-25",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-02-26",
+      "minuteRows": 391
+    },
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-02-27",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AMZN",
+      "dayIso": "2026-02-19",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AMZN",
+      "dayIso": "2026-02-20",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AMZN",
+      "dayIso": "2026-02-23",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AMZN",
+      "dayIso": "2026-02-24",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AMZN",
+      "dayIso": "2026-02-25",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AMZN",
+      "dayIso": "2026-02-26",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "AMZN",
+      "dayIso": "2026-02-27",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "MSFT",
+      "dayIso": "2026-02-19",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "MSFT",
+      "dayIso": "2026-02-20",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "MSFT",
+      "dayIso": "2026-02-23",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "MSFT",
+      "dayIso": "2026-02-24",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "MSFT",
+      "dayIso": "2026-02-25",
+      "minuteRows": 391
+    },
+    {
+      "symbol": "MSFT",
+      "dayIso": "2026-02-26",
+      "minuteRows": 390
+    },
+    {
+      "symbol": "MSFT",
+      "dayIso": "2026-02-27",
+      "minuteRows": 390
+    }
+  ],
+  "directional": {
+    "directionalRows": 2797200,
+    "missingFlowImbalance": 0,
+    "missingDeltaPressure": 1,
+    "missingUnderlyingTrend": 0,
+    "directionalOtherSide": 0,
+    "directionalNullDelta": 1
+  },
+  "directionalRates": {
+    "flowImbalanceMissingRate": 0,
+    "deltaPressureMissingRate": 3.575003575003575e-7,
+    "underlyingTrendMissingRate": 0
+  },
+  "topRows": [
+    {
+      "symbol": "MSFT",
+      "tradeTsUtc": "2026-02-26T14:23:08.057Z",
+      "sigScore": 0.74181,
+      "scoreQuality": "complete",
+      "sentiment": "bullish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.9532296420354157,
+          "weight": 0.12,
+          "weighted": 0.11438755704424988
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.9359029623965757,
+          "weight": 0.12,
+          "weighted": 0.11230835548758908
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9999999999868056,
+          "weight": 0.1,
+          "weighted": 0.09999999999868056
+        },
+        {
+          "component": "volOiNorm",
+          "value": 0.8652482269503545,
+          "weight": 0.1,
+          "weighted": 0.08652482269503546
+        },
+        {
+          "component": "liquidityQualityNorm",
+          "value": 0.8822619047619047,
+          "weight": 0.07,
+          "weighted": 0.06175833333333333
+        }
+      ]
+    },
+    {
+      "symbol": "MSFT",
+      "tradeTsUtc": "2026-02-26T14:21:41.214Z",
+      "sigScore": 0.734944,
+      "scoreQuality": "complete",
+      "sentiment": "bullish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.9539373013679947,
+          "weight": 0.12,
+          "weighted": 0.11447247616415936
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.937044365323877,
+          "weight": 0.12,
+          "weighted": 0.11244532383886524
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9999999999306066,
+          "weight": 0.1,
+          "weighted": 0.09999999999306067
+        },
+        {
+          "component": "valueShockNorm",
+          "value": 0.8526643126854725,
+          "weight": 0.1,
+          "weighted": 0.08526643126854726
+        },
+        {
+          "component": "liquidityQualityNorm",
+          "value": 0.9172590361445783,
+          "weight": 0.07,
+          "weighted": 0.06420813253012049
+        }
+      ]
+    },
+    {
+      "symbol": "MSFT",
+      "tradeTsUtc": "2026-02-26T14:18:02.142Z",
+      "sigScore": 0.724815,
+      "scoreQuality": "complete",
+      "sentiment": "bullish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.9558525964677316,
+          "weight": 0.12,
+          "weighted": 0.11470231157612779
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.9398548901315832,
+          "weight": 0.12,
+          "weighted": 0.11278258681578998
+        },
+        {
+          "component": "volOiNorm",
+          "value": 1,
+          "weight": 0.1,
+          "weighted": 0.1
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9999998542727087,
+          "weight": 0.1,
+          "weighted": 0.09999998542727087
+        },
+        {
+          "component": "valueShockNorm",
+          "value": 0.6527074373067628,
+          "weight": 0.1,
+          "weighted": 0.06527074373067629
+        }
+      ]
+    },
+    {
+      "symbol": "AMZN",
+      "tradeTsUtc": "2026-02-26T15:47:12.011Z",
+      "sigScore": 0.721107,
+      "scoreQuality": "complete",
+      "sentiment": "bearish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.8570726696372806,
+          "weight": 0.12,
+          "weighted": 0.10284872035647366
+        },
+        {
+          "component": "volOiNorm",
+          "value": 1,
+          "weight": 0.1,
+          "weighted": 0.1
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9877060502905017,
+          "weight": 0.1,
+          "weighted": 0.09877060502905018
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.8088634622492181,
+          "weight": 0.12,
+          "weighted": 0.09706361546990618
+        },
+        {
+          "component": "cpOiPressureNorm",
+          "value": 0.9657322219764812,
+          "weight": 0.08,
+          "weighted": 0.0772585777581185
+        }
+      ]
+    },
+    {
+      "symbol": "MSFT",
+      "tradeTsUtc": "2026-02-26T14:18:21.867Z",
+      "sigScore": 0.718311,
+      "scoreQuality": "complete",
+      "sentiment": "bullish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.9555386747052954,
+          "weight": 0.12,
+          "weighted": 0.11466464096463544
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.9394277867067214,
+          "weight": 0.12,
+          "weighted": 0.11273133440480657
+        },
+        {
+          "component": "volOiNorm",
+          "value": 1,
+          "weight": 0.1,
+          "weighted": 0.1
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9999998542727087,
+          "weight": 0.1,
+          "weighted": 0.09999998542727087
+        },
+        {
+          "component": "cpOiPressureNorm",
+          "value": 0.789771529416576,
+          "weight": 0.08,
+          "weighted": 0.06318172235332609
+        }
+      ]
+    },
+    {
+      "symbol": "AMZN",
+      "tradeTsUtc": "2026-02-26T15:39:07.098Z",
+      "sigScore": 0.716589,
+      "scoreQuality": "complete",
+      "sentiment": "bearish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.8696078139560734,
+          "weight": 0.12,
+          "weighted": 0.10435293767472881
+        },
+        {
+          "component": "volOiNorm",
+          "value": 1,
+          "weight": 0.1,
+          "weighted": 0.1
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.8275486139674272,
+          "weight": 0.12,
+          "weighted": 0.09930583367609126
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.986488797224461,
+          "weight": 0.1,
+          "weighted": 0.09864887972244611
+        },
+        {
+          "component": "cpOiPressureNorm",
+          "value": 0.9830330753253965,
+          "weight": 0.08,
+          "weighted": 0.07864264602603173
+        }
+      ]
+    },
+    {
+      "symbol": "AMZN",
+      "tradeTsUtc": "2026-02-26T15:47:14.514Z",
+      "sigScore": 0.712034,
+      "scoreQuality": "complete",
+      "sentiment": "bearish",
+      "executionSide": "BID",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.8570697811725836,
+          "weight": 0.12,
+          "weighted": 0.10284837374071003
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9877060502905017,
+          "weight": 0.1,
+          "weighted": 0.09877060502905018
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.8088565473862415,
+          "weight": 0.12,
+          "weighted": 0.09706278568634898
+        },
+        {
+          "component": "cpOiPressureNorm",
+          "value": 0.9657316860062869,
+          "weight": 0.08,
+          "weighted": 0.07725853488050295
+        },
+        {
+          "component": "liquidityQualityNorm",
+          "value": 0.9305516431924885,
+          "weight": 0.07,
+          "weighted": 0.0651386150234742
+        }
+      ]
+    },
+    {
+      "symbol": "AMZN",
+      "tradeTsUtc": "2026-02-19T15:46:26.196Z",
+      "sigScore": 0.703468,
+      "scoreQuality": "complete",
+      "sentiment": "bullish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.9122762707602123,
+          "weight": 0.12,
+          "weighted": 0.10947315249122548
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.8665692791613882,
+          "weight": 0.12,
+          "weighted": 0.10398831349936657
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9999999988831114,
+          "weight": 0.1,
+          "weighted": 0.09999999988831115
+        },
+        {
+          "component": "valueShockNorm",
+          "value": 0.7956892719106131,
+          "weight": 0.1,
+          "weighted": 0.07956892719106132
+        },
+        {
+          "component": "cpOiPressureNorm",
+          "value": 0.9814788570964698,
+          "weight": 0.08,
+          "weighted": 0.07851830856771758
+        }
+      ]
+    },
+    {
+      "symbol": "AMZN",
+      "tradeTsUtc": "2026-02-19T15:46:11.299Z",
+      "sigScore": 0.703251,
+      "scoreQuality": "complete",
+      "sentiment": "bullish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.9125707725897971,
+          "weight": 0.12,
+          "weighted": 0.10950849271077565
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.8664965863049121,
+          "weight": 0.12,
+          "weighted": 0.10397959035658945
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9999999988831114,
+          "weight": 0.1,
+          "weighted": 0.09999999988831115
+        },
+        {
+          "component": "cpOiPressureNorm",
+          "value": 0.9820637895541403,
+          "weight": 0.08,
+          "weighted": 0.07856510316433123
+        },
+        {
+          "component": "liquidityQualityNorm",
+          "value": 0.9045072992700738,
+          "weight": 0.07,
+          "weighted": 0.06331551094890517
+        }
+      ]
+    },
+    {
+      "symbol": "MSFT",
+      "tradeTsUtc": "2026-02-26T14:22:04.659Z",
+      "sigScore": 0.702879,
+      "scoreQuality": "complete",
+      "sentiment": "bullish",
+      "executionSide": "ASK",
+      "missingMetrics": [],
+      "unavailableComponents": [],
+      "topContributors": [
+        {
+          "component": "deltaPressureNorm",
+          "value": 0.9539142375097953,
+          "weight": 0.12,
+          "weighted": 0.11446970850117544
+        },
+        {
+          "component": "flowImbalanceNorm",
+          "value": 0.9369506283190231,
+          "weight": 0.12,
+          "weighted": 0.11243407539828276
+        },
+        {
+          "component": "underlyingTrendConfirmNorm",
+          "value": 0.9999999999195404,
+          "weight": 0.1,
+          "weighted": 0.09999999999195404
+        },
+        {
+          "component": "cpOiPressureNorm",
+          "value": 0.7537540842825282,
+          "weight": 0.08,
+          "weighted": 0.06030032674260226
+        },
+        {
+          "component": "liquidityQualityNorm",
+          "value": 0.8584523809523807,
+          "weight": 0.07,
+          "weighted": 0.06009166666666666
+        }
+      ]
+    }
+  ],
+  "baseline": {
+    "completeRows": 823631,
+    "partialRows": 1973569,
+    "missingDeltaPressureNorm": 1922578,
+    "missingUnderlyingTrendConfirmNorm": 1161621,
+    "missingFlowImbalanceNorm": 1074174,
+    "missingDeltaNorm": 1495756
+  },
+  "deltaVsBaseline": {
+    "completeRowsDelta": 1959709,
+    "partialRowsDelta": -1959709,
+    "missingFlowImbalanceDelta": -1074174,
+    "missingDeltaPressureDelta": -1922577,
+    "missingUnderlyingTrendDelta": -1161621,
+    "missingDeltaNormDelta": -1495755
+  }
+}

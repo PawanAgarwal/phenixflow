@@ -21,6 +21,23 @@ const DEFAULT_EXPANDED_WEIGHTS = Object.freeze({
   ivSkewNorm: 0.06,
 });
 
+const DEFAULT_SWING_WEIGHTS = Object.freeze({
+  valueShockNorm: 0.10,
+  volOiNorm: 0.10,
+  repeatNorm: 0.06,
+  otmNorm: 0.05,
+  dteSwingNorm: 0.06,
+  flowImbalanceNorm: 0.12,
+  deltaPressureNorm: 0.12,
+  cpOiPressureNorm: 0.08,
+  ivSkewSurfaceNorm: 0.08,
+  ivTermSlopeNorm: 0.06,
+  underlyingTrendConfirmNorm: 0.10,
+  liquidityQualityNorm: 0.07,
+  sweepNorm: 0.06,
+  multilegPenaltyNorm: -0.08,
+});
+
 function parseRuleJson(rawJson) {
   if (typeof rawJson !== 'string' || !rawJson.trim()) return null;
   try {
@@ -41,6 +58,7 @@ function normalizeModel(rawModel) {
   const normalized = rawModel.trim().toLowerCase();
   if (normalized === 'v1_baseline' || normalized === 'baseline' || normalized === 'v1') return 'v1_baseline';
   if (normalized === 'v4_expanded' || normalized === 'expanded' || normalized === 'v4') return 'v4_expanded';
+  if (normalized === 'v5_swing' || normalized === 'swing' || normalized === 'v5') return 'v5_swing';
   return 'v4_expanded';
 }
 
@@ -50,7 +68,9 @@ function pickScoringModel(ruleJson = {}, env = process.env) {
 }
 
 function mergeWeights(model, rawWeights = {}) {
-  const defaults = model === 'v1_baseline' ? DEFAULT_BASELINE_WEIGHTS : DEFAULT_EXPANDED_WEIGHTS;
+  const defaults = model === 'v1_baseline'
+    ? DEFAULT_BASELINE_WEIGHTS
+    : (model === 'v5_swing' ? DEFAULT_SWING_WEIGHTS : DEFAULT_EXPANDED_WEIGHTS);
   const merged = { ...defaults };
 
   Object.keys(defaults).forEach((key) => {
@@ -95,24 +115,45 @@ function resolveActiveRuleConfig(db, thresholds, env = process.env) {
 
   const ruleJson = parseRuleJson(row?.configJson) || {};
   const scoringModel = pickScoringModel(ruleJson, env);
-  const rawWeights = ruleJson?.sigScoreWeights && typeof ruleJson.sigScoreWeights === 'object'
-    ? ruleJson.sigScoreWeights
-    : (ruleJson?.scoring?.weights || {});
+  const ruleModel = normalizeModel(ruleJson?.sigScoreModel || ruleJson?.scoring?.model || '');
+  const hasEnvModelOverride = typeof env.FLOW_SIGSCORE_MODEL === 'string' && env.FLOW_SIGSCORE_MODEL.trim().length > 0;
+  const canUseRuleWeights = !hasEnvModelOverride || ruleModel === scoringModel;
+  const rawWeights = canUseRuleWeights
+    ? (ruleJson?.sigScoreWeights && typeof ruleJson.sigScoreWeights === 'object'
+      ? ruleJson.sigScoreWeights
+      : (ruleJson?.scoring?.weights || {}))
+    : {};
 
   const weights = mergeWeights(scoringModel, rawWeights);
   const resolvedThresholds = mapThresholdsFromRule(ruleJson, thresholds);
 
   return {
-    versionId: row?.versionId || (scoringModel === 'v1_baseline' ? 'v1_baseline_default' : 'v4_expanded_default'),
+    versionId: row?.versionId || (
+      scoringModel === 'v1_baseline'
+        ? 'v1_baseline_default'
+        : (scoringModel === 'v5_swing' ? 'v5_swing_default' : 'v4_expanded_default')
+    ),
     checksum: row?.checksum || null,
     scoringModel,
     weights,
     thresholds: resolvedThresholds,
+    targetSpec: ruleJson?.targetSpec && typeof ruleJson.targetSpec === 'object' ? ruleJson.targetSpec : null,
+    calibrationWindowDays: toFiniteNumber(
+      ruleJson?.calibrationWindowDays,
+      toFiniteNumber(ruleJson?.targetSpec?.calibrationWindowDays, null),
+    ),
+    weightBlend: ruleJson?.weightBlend && typeof ruleJson.weightBlend === 'object'
+      ? {
+        prior: toFiniteNumber(ruleJson.weightBlend.prior, null),
+        calibrated: toFiniteNumber(ruleJson.weightBlend.calibrated, null),
+      }
+      : null,
   };
 }
 
 module.exports = {
   DEFAULT_BASELINE_WEIGHTS,
   DEFAULT_EXPANDED_WEIGHTS,
+  DEFAULT_SWING_WEIGHTS,
   resolveActiveRuleConfig,
 };
