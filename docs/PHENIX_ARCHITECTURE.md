@@ -1,438 +1,96 @@
-# Phenix Core Quant V1 Architecture
+# Phenix Architecture (Current Implementation)
 
-## 1) Purpose and Scope
-This document defines the target architecture to deliver the Core Quant V1 goals in `docs/PHENIX_PROJECT_GOALS.md`, using ThetaData as the only market-data source and respecting the entitlement/runtime constraints in `docs/THETADATA_DEV_GUIDE.md`.
+Last updated: 2026-03-01
 
-Primary outcomes:
-- Real-time options flow ingestion + enrichment for top-200 symbols.
-- Deterministic chip/filter engine that drives backend score-bearing APIs.
-- Backward-compatible saved filters/alerts while expanding to V2 state.
-- Operational reliability for cache completeness, score quality, and graceful degradation.
+## 1. Architecture Purpose
+Support a cache-first, deterministic options-flow backend where `sigScore` is computed from versioned rules and enriched market context, with strict quality accounting and explainability.
 
-## 2) Inputs Used
-- Product goals and formulas: `docs/PHENIX_PROJECT_GOALS.md`
-- ThetaData entitlement/runtime constraints: `docs/THETADATA_DEV_GUIDE.md`
-- Current implementation baseline:
-  - API + flow query scaffold: `src/app.js`, `src/flow.js`
-  - Threshold/execution chips: `src/flow-filter-definitions.js`, `src/activity/filters.js`
-  - Saved filter compatibility: `src/saved-filters-alerts.js`
-  - Shadow rollout baseline: `src/shadow/*`, `scripts/mon77-shadow-rollout.js`
-  - Theta preflight/bootstrap tooling: `scripts/mon79_*`, `scripts/mon86_thetadata_bootstrap.py`
-
-## 3) Current State vs Target State
-
-### 3.1 What exists now
-- Express API scaffold for flow list/facets/stream/detail and saved presets/alerts.
-- Deterministic parsing for execution filters (`Calls`, `Puts`, `Bid`, `Ask`, `AA`, `Sweeps`).
-- Configurable threshold filters (`100k+`, `Sizable`, `Whales`, `Large Size`) via env vars.
-- In-memory + artifact-backed query mode (`source=real-ingest`) for integration-style tests.
-- Compatibility layer between legacy saved payloads and DSL V2 clauses.
-- Shadow diff workflow + artifacts for multi-session comparisons.
-- ThetaData config-check, smoke, and bootstrap preflight scripts.
-- Runtime historical enrichment pipeline with:
-  - rule-version persistence on enriched rows,
-  - score-quality tracking (`score_quality`, `missing_metrics_json`),
-  - minute-level derived rollups for score diagnostics.
-- Supplemental endpoint cache reuse for spot/OI/greeks/stock-1m with TTL.
-- Bounded supplemental fetch parallelism for Theta enrichment (`THETADATA_SUPPLEMENTAL_CONCURRENCY`, default `18`).
-- Score explainability persistence (`sig_score_components_json`) on enriched rows.
-- `v5_swing` scoring model support in rule resolution and enrichment runtime.
-- Ingestion worker reliability controls:
-  - retry/backoff/jitter,
-  - dead-letter capture,
-  - bounded row buffering and dropped-row accounting.
-- Rule control-plane activation script: `scripts/rules/activate-rule-version.js`.
-- Offline score calibration script: `scripts/sigscore/calibrate-unusual.js`.
-- Swing calibration + candidate rule generation script: `scripts/sigscore/calibrate-swing.js`.
-
-### 3.2 Gaps to close
-Mission-critical gap closure status (2026-03-01):
-1. sigScore contract drift (seed/spec/runtime): closed.
-2. Live `/api/flow` rule-version configuration drift: closed.
-3. Strict live score-quality gating gap: closed.
-4. Production fixture fallback in score-bearing reads: closed.
-
-Remaining non-gating follow-ups:
-1. UI integration parity in frontend repository.
-2. p95 dashboard/alerting hardening.
-3. Feature-flag naming parity and rollout UX polish.
-4. Promote `v5_swing` from candidate/shadow to active after sufficient swing-calibration sample size.
-
-## 4) Architecture Principles
-1. Deterministic first: metric/rule outcomes are reproducible from stored raw inputs.
-2. Config-driven rules: thresholds and chip formulas are versioned data, not hardcoded behavior.
-3. Read path isolation: query API never blocks on live Theta calls.
-4. Graceful degradation: if enrichment lags, API can serve explicit raw-mode status.
-5. Backward compatibility: legacy saved filters/alerts continue to read/write safely.
-6. Entitlement safety: endpoint use is bounded by Options Standard + Stocks Value access.
-
-## 5) Target System Architecture
-
+## 2. End-to-End Flow
 ```mermaid
 flowchart LR
-  A[ThetaTerminal v3<br/>local service] --> B[Theta Ingestion Worker]
-  B --> C[(option_trades raw)]
-  B --> D[(ingest checkpoints)]
-  C --> E[Enrichment + Metrics Engine]
-  E --> F[(option_trade_enriched)]
-  E --> G[(contract_stats_intraday)]
-  E --> H[(symbol_stats_intraday)]
-  E --> I[(filter_rule_versions)]
-  F --> J[Flow Query API]
-  G --> J
-  H --> J
-  I --> J
-  J --> K[/api/flow]
-  J --> L[/api/flow/summary]
-  J --> M[/api/flow/filters/catalog]
-  J --> N[/api/flow/stream]
-  O[Saved Presets/Alerts API] --> P[(saved_queries)]
-  P --> J
-  Q[Feature Flags + Shadow Comparator] --> J
-  R[Observability + Quality Metrics] --> B
-  R --> E
-  R --> J
+  A[Theta data and historical pulls] --> B[Raw option trades cache]
+  B --> C[Historical enrichment engine]
+  C --> D[Enriched rows and minute aggregates]
+  D --> E[Rule-resolved scoring and chip evaluation]
+  E --> F[/api/flow + /api/flow/historical + summary/facets/catalog]
 ```
 
-## 6) Component Design and Implementation Pieces
+## 3. Core Runtime Components
+1. **Raw trade persistence and day cache**
+   - Source rows are stored in `option_trades`.
+   - Symbol/day completeness is tracked in `option_trade_day_cache`.
+2. **Enrichment pipeline**
+   - `queryHistoricalFlow` ensures raw day availability, then calls `ensureEnrichedForDay`.
+   - Enrichment computes row-level features, score, quality, chips, and minute rollups.
+3. **Rule/config resolution**
+   - Active rule comes from `filter_rule_versions`.
+   - `FLOW_SIGSCORE_MODEL` can force model selection; mismatched active-rule weights are ignored to prevent cross-model pollution.
+4. **Flow API layer**
+   - Read APIs (`/api/flow`, `/api/flow/historical`, `/summary`, `/facets`, `/filters/catalog`) serve enriched/cached data.
+   - Score-dependent chips are quality- and direction-gated.
 
-### 6.1 Theta runtime and preflight layer
-Purpose: ensure local/hosted ThetaTerminal is reachable and configured before ingest or smoke.
+## 4. Scoring Architecture
+### 4.1 Models
+1. `v1_baseline`
+2. `v4_expanded`
+3. `v5_swing` (current mission model)
 
-Pieces to implement:
-- Promote MON-79/MON-86 scripts into a reusable runtime module for app startup checks.
-- Standard env contract:
-  - `THETADATA_BASE_URL`
-  - `THETADATA_DOWNLOAD_PATH`
-  - `THETADATA_INGEST_PATH` (explicit ingest endpoint)
-  - `THETADATA_HEALTH_PATH`
-  - timeout/retry vars
-- Failure taxonomy passthrough in logs and metrics:
-  - `MON86_ERR_MISSING_CREDS`, `MON86_ERR_PORT_IN_USE`, `MON86_ERR_DOWNLOAD_FAILED`, `MON86_ERR_HEALTH_TIMEOUT`, `MON86_ERR_CONFIG`
+### 4.2 `v5_swing` Components
+`valueShockNorm`, `volOiNorm`, `repeatNorm`, `otmNorm`, `dteSwingNorm`, `flowImbalanceNorm`, `deltaPressureNorm`, `cpOiPressureNorm`, `ivSkewSurfaceNorm`, `ivTermSlopeNorm`, `underlyingTrendConfirmNorm`, `liquidityQualityNorm`, `sweepNorm`, `multilegPenaltyNorm`.
 
-### 6.2 Ingestion worker
-Purpose: continuously pull/stream option flow events and persist immutable raw records.
+### 4.3 Availability-Aware Scoring
+1. Components missing for a row are excluded from weighted sum.
+2. Score is renormalized by sum of absolute weights of available components.
+3. Score details are persisted (`sig_score_components_json`) with unavailable-component list.
 
-Pieces to implement:
-- Worker process (`src/ingest/worker.js`) separate from request-serving process.
-- Theta connector client (`src/thetadata/client.js`) with:
-  - reconnect loop
-  - request timeout
-  - exponential retry with jitter
-  - watermark/checkpoint resume (similar semantics to `src/flow-live.js` watermark handling)
-- Event parser + normalizer (`src/ingest/normalize.js`) mapping Theta payloads to canonical raw schema.
-- Dedup/idempotency strategy:
-  - deterministic trade identity hash (`symbol+expiration+strike+right+ts+price+size+condition`)
-  - upsert-ignore semantics for replays
-- Dead-letter capture (`src/ingest/dead-letter.js`) for parse failures with reason code + raw snippet.
-- Backpressure controls:
-  - bounded in-memory queue
-  - batch flush to DB
-  - dropped-event counters if queue overflows
+## 5. Data Reuse and Caching Strategy
+1. **Raw day cache**: `option_trade_day_cache` prevents redundant historical trade downloads.
+2. **Metric day cache**: `option_trade_metric_day_cache` tracks per-metric enrichment completeness.
+3. **Supplemental cache**: `supplemental_metric_cache` stores stock 1m/OI/greeks responses for reuse.
+4. **Feature baseline cache**: `feature_baseline_intraday` stores rolling intraday normalization baselines.
+5. **Historical immutability**: past-day supplemental cache entries are effectively long-lived.
+6. **Parallel supplemental fetches**: bounded queue with `THETADATA_SUPPLEMENTAL_CONCURRENCY` (default `18`).
 
-### 6.3 Enrichment and metrics engine
-Purpose: compute all V1 derived fields and chip-relevant metrics from raw flow + reference data.
+## 6. Data Model (Implemented)
+Primary tables:
+1. `option_trades`
+2. `option_trade_day_cache`
+3. `option_trade_metric_day_cache`
+4. `option_trade_enriched`
+5. `contract_stats_intraday`
+6. `symbol_stats_intraday`
+7. `option_symbol_minute_derived`
+8. `option_contract_minute_derived`
+9. `filter_rule_versions`
+10. `supplemental_metric_cache`
+11. `feature_baseline_intraday`
+12. `saved_queries`
+13. `ingest_checkpoints`
 
-Pieces to implement:
-- Enrichment pipeline (`src/enrichment/pipeline.js`) triggered by new raw rows.
-- Quote/spot resolver (`src/enrichment/quote-join.js`): nearest underlying quote at/before trade time.
-- Contract/day stats updater (`src/enrichment/contract-stats.js`):
-  - `dayVolume`
-  - latest `oi` snapshot
-  - `volOiRatio`
-- Symbol/window stats updater (`src/enrichment/symbol-stats.js`):
-  - rolling 1m and 15m baselines
-  - open-window baseline for AM spike
-- Formula engine (`src/enrichment/formulas.js`) implementing project-goal formulas:
-  - `value = price * size * 100`
-  - `dte = ceil((expirationDateET - tradeTsET)/86400)`
-  - `otmPct` by right/strike/spot
-  - `repeat3m` trailing 180s same contract+side count
-  - sentiment map and `sigScore` weighted calculation
-- Timezone/session service (`src/market/session-clock.js`) pinned to `America/New_York`.
+## 7. Quality, Explainability, and Gating
+1. Each enriched row includes:
+   - `sig_score`
+   - `score_quality`
+   - `missing_metrics_json`
+   - `sig_score_components_json`
+2. Score-dependent chips (`high-sig`, `unusual`, `urgent`) require:
+   - non-degraded mode,
+   - quality eligibility,
+   - directional sentiment eligibility.
+3. API payloads expose score metadata so clients can avoid acting on low-quality signals.
 
-### 6.4 Rule/chip engine
-Purpose: evaluate deterministic chip flags with versioned thresholds/heuristics.
+## 8. API Contract (Current)
+1. `/api/flow` and `/api/flow/historical` return score, quality, missing metrics, rule version, and score components.
+2. `/api/flow/summary` and `/api/flow/facets` are computed from same enriched/rule-resolved logic.
+3. `/api/flow/filters/catalog` exposes active thresholds and scoring model context.
 
-Pieces to implement:
-- Rule registry (`src/rules/catalog.js`) listing all chips:
-  - Execution chips: `Calls`, `Puts`, `Bid`, `Ask`, `AA`
-  - Value/size chips: `100k+`, `Whales`, `Sizable`, `Large Size`
-  - Advanced chips: `OTM`, `LEAPS`, `Weeklies`, `Vol>OI`, `Repeat Flow`, `Rising Vol`, `AM Spike`, `High Sig`, `Unusual`, `Urgent`, `Bullflow`, `Position Builders`, `Grenade`
-- Rule evaluator (`src/rules/engine.js`) consuming enriched row + aggregate context.
-- Versioned config loader (`src/rules/config-store.js`):
-  - active version pointer
-  - checksum
-  - rollout metadata
-- Persist evaluated chip flags into enriched store for fast query filtering.
+## 9. Determinism and Reliability Controls
+1. Rule-versioned scoring for replay consistency.
+2. Explicit cache completeness states (`full`/`partial`) for day and metric caches.
+3. Retry/backoff on Theta pulls plus bounded concurrency.
+4. Readiness/health endpoints (`/ready`, `/health`).
 
-### 6.5 Query API layer
-Purpose: serve deterministic score-bearing rows and filters from enriched/cache-backed data.
-
-Pieces to implement:
-- Replace fixture-driven query path in `src/flow.js` with repository-backed execution.
-- Endpoint contracts:
-  - Extend `GET /api/flow` response fields:
-    - `spot`, `dte`, `otmPct`, `dayVolume`, `oi`, `volOiRatio`, `repeat3m`, `sigScore`, `sentiment`, `chips`
-  - Extend `GET /api/flow` query params:
-    - `chips`, `side`, `type`, `sentiment`, `minSigScore`, `maxSigScore`, `minDte`, `maxDte`, `minOtmPct`, `maxOtmPct`, `minVolOi`, `minRepeat3m`
-    - preserve existing `minValue`, `maxValue`, `right`, `expiration`, pagination
-  - Add `GET /api/flow/summary`
-  - Add `GET /api/flow/filters/catalog`
-- Query planning/index-aware filtering:
-  - pre-filter by high-selectivity columns
-  - cursor pagination stability on `(sort_key, id)` composite
-- Fallback mode contract:
-  - when enrichment lag > 30s or live data is unavailable, return explicit degraded metadata.
-  - fixture fallback is test-only and excluded from production score-bearing behavior.
-
-### 6.6 Live stream delivery
-Purpose: optional incremental updates for downstream consumers.
-
-Pieces to implement:
-- Server SSE endpoint (`/api/flow/stream`) backed by enriched row updates.
-- Sequence + watermark emitted in every payload for client dedupe/replay.
-- Reconnect behavior compatible with existing client controller in `src/flow-live.js`.
-
-### 6.7 Saved filters and alerts
-Purpose: maintain backward compatibility while adopting V2 DSL.
-
-Pieces to implement:
-- Persisted store (`saved_queries`) replacing in-memory maps.
-- Continue `legacy <-> queryDslV2` conversion path in `src/saved-filters-alerts.js`.
-- Add catalog-aware validation to reject unknown fields/chips at write time.
-
-### 6.8 Feature flags and shadow rollout
-Purpose: optional safe migration support (non-blocking for current mission completion).
-
-Pieces to implement:
-- Feature flag key(s): support existing runtime controls; naming parity is optional.
-- Shadow comparator job (`src/shadow/live-compare.js`):
-  - compute old/new chip outputs in parallel
-  - write per-session diff artifacts
-- Rollout phases are recommended but not mission-gating for score/cache quality.
-
-### 6.9 Observability and operations
-Purpose: detect score-quality and cache-health regressions quickly.
-
-Pieces to implement:
-- Metrics namespace:
-  - `ingest_events_total`, `ingest_parse_failures_total`, `ingest_dropped_total`
-  - score-quality mix (`complete`/`partial`) and missing-metric distribution
-  - supplemental cache hit/miss ratios (spot/OI/greeks)
-  - `filter_hits_total{chip=...}` for unusual-flow diagnostics
-- Structured logs with request id + watermark + filter version.
-- Health/readiness:
-  - `/health`: process alive
-  - `/ready`: Theta connectivity, DB ready, enrichment backlog below threshold
-- Alerting and dashboards are deferred hardening work, not mission gate.
-
-## 7) Data Model (Target)
-
-### 7.1 `option_trades` (raw source)
-Columns (minimum):
-- `trade_id` (PK, deterministic hash)
-- `trade_ts_utc`, `trade_ts_et`
-- `symbol`, `expiration`, `strike`, `right`
-- `price`, `size`, `bid`, `ask`
-- `condition_code`, `exchange`, `raw_payload_json`
-- `ingested_at_utc`, `watermark`
-
-Indexes:
-- `(trade_ts_utc DESC)`
-- `(symbol, trade_ts_utc DESC)`
-- `(symbol, expiration, strike, right, trade_ts_utc DESC)`
-
-### 7.2 `option_trade_enriched`
-Columns:
-- `trade_id` (PK/FK -> option_trades)
-- computed: `value`, `dte`, `spot`, `otm_pct`, `day_volume`, `oi`, `vol_oi_ratio`, `repeat3m`, `sig_score`, `sentiment`
-- chip booleans/materialized array
-- `rule_version`, `enriched_at_utc`
-
-Indexes:
-- `(enriched_at_utc DESC)`
-- `(symbol, enriched_at_utc DESC)`
-- `(sig_score DESC, trade_id)`
-- partial/composite indexes for common filter combinations (e.g. `vol_oi_ratio`, `repeat3m`, chip flags)
-
-### 7.3 `contract_stats_intraday`
-Key: `(symbol, expiration, strike, right, session_date)`
-
-Columns:
-- `day_volume`
-- `oi`
-- `last_trade_ts`
-- `updated_at`
-
-### 7.4 `symbol_stats_intraday`
-Key: `(symbol, minute_bucket_et)`
-
-Columns:
-- `vol_1m`
-- `vol_baseline_15m`
-- `open_window_baseline`
-- `bullish_ratio_15m`
-- `updated_at`
-
-### 7.5 `filter_rule_versions`
-Columns:
-- `version_id` (PK)
-- `config_json`
-- `checksum`
-- `is_active`
-- `created_at`, `activated_at`
-
-### 7.6 `ingest_checkpoints`
-Columns:
-- `stream_name` (PK)
-- `watermark`
-- `updated_at`
-
-### 7.7 `saved_queries`
-Columns:
-- `id` (PK)
-- `kind` (`preset|alert`)
-- `name`
-- `payload_version`
-- `query_dsl_v2_json`
-- `created_at`, `updated_at`
-
-## 8) ThetaData API Mapping (Entitlement-Aware)
-
-### 8.1 Confirmed safe endpoints from current guide
-- `/v3/stock/list/symbols?format=json`
-- `/v3/stock/snapshot/quote?symbol=...&format=json`
-- `/v3/option/list/roots?format=json`
-
-### 8.2 Endpoint classes to validate in M0 before implementation
-- Option trade ingestion endpoint(s) for live/historical flow used by worker.
-- OI/reference endpoint(s) needed for `oi` and `volOiRatio`.
-- Underlying quote lookup endpoint(s) for `spot` alignment at trade timestamp.
-
-Rule: each endpoint added to production path must pass the MON-79/MON-86 preflight checklist and be documented with:
-- exact URL shape
-- expected response contract
-- entitlement behavior (success vs permission error)
-
-### 8.3 Known likely entitlement boundaries
-Based on current guide, plan for failure/denial on higher-tier APIs (e.g., advanced greeks/NBBO/full tick history). The architecture must not depend on those for V1 critical path.
-
-## 9) Mission Reliability Design
-- Freshness and correctness first:
-  - async ingestion + bounded enrichment backlog
-  - avoid live Theta calls on score-bearing read path
-- Cache-first execution:
-  - full-day + metric cache states gate enrichment/read behavior
-  - supplemental cache reuse for spot/OI/greeks reduces re-download churn
-- Deterministic behavior:
-  - formula engine pure functions covered by high unit-test density
-  - version pinning for scoring/chip configs
-- Degradation mode:
-  - explicit degraded response when enrichment lag threshold breached or source unavailable
-
-## 10) Security and Configuration
-- Secrets are not embedded in app code; ThetaTerminal credentials remain in local creds file.
-- All Theta host/paths come from env parsing module with strict validation.
-- Request validation on API filters to prevent malformed/unbounded queries.
-- Limit/timeout guards for ingestion and API handlers.
-
-## 11) Test Strategy (Mapped to Goals)
-
-### 11.1 Unit
-- Metric formulas (`value`, `dte`, `otmPct`, `repeat3m`, sentiment, `sigScore`).
-- Rule boundaries (`AA` threshold, `Vol>OI`, `Urgent`, `Grenade`, etc.).
-- Saved payload compatibility (`legacy <-> v2`).
-
-### 11.2 Integration
-- fixture/replay ingest -> enrichment -> `/api/flow` expected IDs/chips.
-- repeat-flow `20 in 3 mins` scenario.
-- cursor pagination stability under sort/filter combinations.
-
-### 11.3 End-to-end and operational
-- Theta preflight + smoke (`MON-79`, `MON-86`) before runtime tests.
-- minute-rollup validation (`390` intraday buckets/day on full-market sessions for tracked symbols).
-- optional: top-200 stream performance simulation and shadow multi-session comparisons.
-
-## 12) Milestone Implementation Plan (M0-M5)
-
-### M0 Spec and contracts
-Deliver:
-- Endpoint matrix for Theta APIs actually used in V1.
-- Final chip dictionary + config schema.
-- Fixture data contract for deterministic tests.
-
-### M1 Ingestion and storage
-Deliver:
-- ingestion worker + checkpoint resume.
-- raw trade persistence.
-- aggregate tables and update jobs.
-
-### M2 Metrics and rule engine
-Deliver:
-- formula engine + enrichment pipeline.
-- configurable/versioned rule evaluator.
-- chip persistence on enriched rows.
-
-### M3 API and query layer
-Deliver:
-- upgraded `GET /api/flow` fields + params.
-- `GET /api/flow/summary`.
-- `GET /api/flow/filters/catalog`.
-
-### M4 Mission consistency hardening
-Deliver:
-- live and historical paths share active rule-version config for score/chip decisions.
-- strict score-quality gating semantics are consistent across read paths.
-- production score-bearing read paths remove fixture fallback.
-
-### M5 hardening (deferred/non-gating)
-Deliver:
-- replay/perf validation (optional mission follow-up).
-- observability dashboards and alerting.
-- rollout UX polish (including flag naming parity).
-
-## 13) Proposed Repository Structure Changes
-
-New backend modules:
-- `src/config/env.js`
-- `src/thetadata/client.js`
-- `src/ingest/worker.js`
-- `src/ingest/normalize.js`
-- `src/ingest/checkpoint-store.js`
-- `src/enrichment/pipeline.js`
-- `src/enrichment/formulas.js`
-- `src/enrichment/contract-stats.js`
-- `src/enrichment/symbol-stats.js`
-- `src/rules/catalog.js`
-- `src/rules/engine.js`
-- `src/rules/config-store.js`
-- `src/data/repositories/*`
-- `src/flow/queries.js`
-- `src/flow/summary.js`
-- `src/flow/catalog.js`
-- `src/shadow/live-compare.js`
-
-Operational scripts:
-- keep `scripts/mon79_*` and `scripts/mon86_thetadata_bootstrap.py` as preflight gates
-- optional: add `scripts/flow-replay-benchmark.js` for performance follow-up
-
-## 14) Definition of Done Checklist
-A release candidate is ready only when all are true:
-- scoring contract is explicit and consistent across seed/spec/runtime (`rule_version`, `scoring_model`, weights).
-- live and historical paths use the same active rule-version thresholds for score-bearing chips.
-- strict score-quality gating is enforced for unusual/high-sig/urgent decisions.
-- production score-bearing APIs do not rely on fixture fallback.
-- repeat-flow integration scenario passes.
-- fallback mode tested for enrichment lag breach.
-- minute-rollup integrity checks pass on full-market cached sessions.
-
-## 15) Open Decisions to Lock Early
-1. Exact Theta endpoint(s) and payload schema for live option trade ingest under current entitlement.
-2. Database baseline:
-   - local/dev: SQLite at `data/phenixflow.sqlite` (selected)
-   - production: engine selection remains open.
-3. Rule config storage authority (DB-backed only vs DB + file bootstrap).
-4. Whether `/api/flow/stream` is true SSE server push in V1 or poll-compatible transitional API.
-
-These decisions should be finalized in M0 to avoid rework in M1-M3.
+## 10. Current Architectural Focus
+1. Keep `v5_swing` deterministic and high-quality under real cache-reuse workloads.
+2. Promote calibrated rule versions only after walk-forward performance gates pass.
+3. Avoid architectural drift: docs/spec/runtime/seed must remain aligned to active scoring behavior.
