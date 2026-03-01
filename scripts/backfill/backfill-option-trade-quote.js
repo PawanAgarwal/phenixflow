@@ -449,8 +449,6 @@ async function run() {
   };
 
   let nextJobIndex = 0;
-  let done = 0;
-
   async function workerLoop() {
     while (true) {
       if (nextJobIndex >= jobs.length) return;
@@ -462,12 +460,10 @@ async function run() {
       if (isDayCached(db, job.symbol, job.dayIso)) {
         report.skippedJobs += 1;
         console.log(`${prefix} SKIP cached`);
-        done += 1;
         continue;
       }
 
       const result = await syncOneDay(db, upsertStmt, job);
-      done += 1;
 
       if (result.ok) {
         report.successJobs += 1;

@@ -7,6 +7,7 @@ const {
   CHIP_DEFINITIONS,
   getThresholds,
 } = require('./historical-filter-definitions');
+const { resolveActiveRuleConfig } = require('./scoring/rule-config');
 const {
   parseHistoricalFilters,
   getRequiredMetricsForQuery,
@@ -43,6 +44,7 @@ const DEFAULT_SPOT_PATH = '/v3/stock/history/ohlc';
 const DEFAULT_OI_PATH = '/v3/option/history/open_interest';
 const DEFAULT_GREEKS_PATH = '/v3/option/history/greeks/first_order';
 const DEFAULT_THETADATA_TIMEOUT_MS = 15000;
+const DEFAULT_SUPPLEMENTAL_CACHE_TTL_HOURS = 24;
 
 const METRIC_NAMES = Object.freeze([
   'enrichedRows',
@@ -150,6 +152,8 @@ function ensureSchema(db) {
       bullish_ratio_15m REAL,
       chips_json TEXT NOT NULL DEFAULT '[]',
       rule_version TEXT,
+      score_quality TEXT NOT NULL DEFAULT 'partial' CHECK (score_quality IN ('complete', 'partial')),
+      missing_metrics_json TEXT NOT NULL DEFAULT '[]',
       enriched_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
       FOREIGN KEY (trade_id) REFERENCES option_trades(trade_id) ON DELETE CASCADE
     );
@@ -238,6 +242,15 @@ function ensureSchema(db) {
       activated_at_utc TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS supplemental_metric_cache (
+      metric_kind TEXT NOT NULL,
+      cache_key TEXT NOT NULL,
+      value_json TEXT NOT NULL,
+      expires_at_utc TEXT NOT NULL,
+      updated_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+      PRIMARY KEY (metric_kind, cache_key)
+    );
+
     CREATE TABLE IF NOT EXISTS ingest_checkpoints (
       stream_name TEXT PRIMARY KEY,
       watermark TEXT,
@@ -314,6 +327,8 @@ function ensureSchemaMigrations(db) {
     ['time_norm', 'REAL'],
     ['delta_norm', 'REAL'],
     ['iv_skew_norm', 'REAL'],
+    ['score_quality', "TEXT NOT NULL DEFAULT 'partial'"],
+    ['missing_metrics_json', "TEXT NOT NULL DEFAULT '[]'"],
   ];
 
   enrichedV3Columns.forEach(([columnName, columnDefinition]) => {
@@ -850,6 +865,73 @@ async function fetchThetaRows(url, { env = process.env } = {}) {
   }
 }
 
+function parseIsoMs(value) {
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function parseJsonValue(rawValue, fallback = null) {
+  if (typeof rawValue !== 'string') return fallback;
+  try {
+    return JSON.parse(rawValue);
+  } catch {
+    return fallback;
+  }
+}
+
+function parseSupplementalCacheTtlHours(env = process.env) {
+  const parsed = Number(env.SUPPLEMENTAL_CACHE_TTL_HOURS);
+  if (!Number.isFinite(parsed) || parsed <= 0) return DEFAULT_SUPPLEMENTAL_CACHE_TTL_HOURS;
+  return Math.trunc(parsed);
+}
+
+function makeCacheExpiryIso(env = process.env) {
+  const ttlHours = parseSupplementalCacheTtlHours(env);
+  return new Date(Date.now() + (ttlHours * 3600 * 1000)).toISOString();
+}
+
+function getSupplementalCache(db, metricKind, cacheKey) {
+  const row = db.prepare(`
+    SELECT value_json AS valueJson, expires_at_utc AS expiresAtUtc
+    FROM supplemental_metric_cache
+    WHERE metric_kind = @metricKind
+      AND cache_key = @cacheKey
+    LIMIT 1
+  `).get({ metricKind, cacheKey });
+
+  if (!row) return null;
+  const expiresAtMs = parseIsoMs(row.expiresAtUtc);
+  if (expiresAtMs === null || expiresAtMs <= Date.now()) return null;
+  return parseJsonValue(row.valueJson, null);
+}
+
+function upsertSupplementalCache(db, metricKind, cacheKey, value, env = process.env) {
+  db.prepare(`
+    INSERT INTO supplemental_metric_cache (
+      metric_kind,
+      cache_key,
+      value_json,
+      expires_at_utc,
+      updated_at_utc
+    ) VALUES (
+      @metricKind,
+      @cacheKey,
+      @valueJson,
+      @expiresAtUtc,
+      strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+    )
+    ON CONFLICT(metric_kind, cache_key) DO UPDATE SET
+      value_json = excluded.value_json,
+      expires_at_utc = excluded.expires_at_utc,
+      updated_at_utc = excluded.updated_at_utc
+  `).run({
+    metricKind,
+    cacheKey,
+    valueJson: JSON.stringify(value),
+    expiresAtUtc: makeCacheExpiryIso(env),
+  });
+}
+
 function upsertDayCache(db, {
   symbol,
   dayIso,
@@ -1294,7 +1376,9 @@ function sideConfidence(executionSide) {
   return 0.25;
 }
 
-function evaluateChips(row, thresholds) {
+function evaluateChips(row, thresholds, options = {}) {
+  const strictScoreQuality = options.strictScoreQuality !== false;
+  const scoreQualityEligible = !strictScoreQuality || row.scoreQuality === 'complete';
   const chips = [];
 
   if (row.execution.calls) chips.push('calls');
@@ -1330,17 +1414,17 @@ function evaluateChips(row, thresholds) {
     chips.push('bullflow');
   }
 
-  if (row.sigScore !== null && row.sigScore >= thresholds.highSigMin) chips.push('high-sig');
+  if (scoreQualityEligible && row.sigScore !== null && row.sigScore >= thresholds.highSigMin) chips.push('high-sig');
 
-  if (row.value !== null && row.value >= thresholds.premium100kMin
+  if (scoreQualityEligible && row.value !== null && row.value >= thresholds.premium100kMin
     && row.volOiRatio !== null && row.volOiRatio >= thresholds.unusualVolOiMin) {
     chips.push('unusual');
   }
 
-  if ((row.repeat3m !== null && row.repeat3m >= thresholds.repeatFlowMin)
+  if (scoreQualityEligible && ((row.repeat3m !== null && row.repeat3m >= thresholds.repeatFlowMin)
     || (row.value !== null && row.value >= thresholds.premiumSizableMin
       && row.dte !== null && row.dte <= 14
-      && row.volOiRatio !== null && row.volOiRatio >= thresholds.urgentVolOiMin)) {
+      && row.volOiRatio !== null && row.volOiRatio >= thresholds.urgentVolOiMin))) {
     chips.push('urgent');
   }
 
@@ -1422,6 +1506,8 @@ function upsertEnrichedRows(db, rows) {
       bullish_ratio_15m,
       chips_json,
       rule_version,
+      score_quality,
+      missing_metrics_json,
       is_sweep,
       is_multileg,
       minute_of_day_et,
@@ -1461,6 +1547,8 @@ function upsertEnrichedRows(db, rows) {
       @bullishRatio15m,
       @chipsJson,
       @ruleVersion,
+      @scoreQuality,
+      @missingMetricsJson,
       @isSweep,
       @isMultileg,
       @minuteOfDayEt,
@@ -1489,6 +1577,8 @@ function upsertEnrichedRows(db, rows) {
       bullish_ratio_15m = excluded.bullish_ratio_15m,
       chips_json = excluded.chips_json,
       rule_version = excluded.rule_version,
+      score_quality = excluded.score_quality,
+      missing_metrics_json = excluded.missing_metrics_json,
       is_sweep = excluded.is_sweep,
       is_multileg = excluded.is_multileg,
       minute_of_day_et = excluded.minute_of_day_et,
@@ -2176,42 +2266,51 @@ function normalizeThetaTimestamp(rawTs) {
   return `${rawTs}Z`;
 }
 
-async function buildGreeksLookup({ symbol, dayIso, rawRows, env = process.env }) {
+async function buildGreeksLookup({ db, symbol, dayIso, rawRows, env = process.env }) {
   const greeksByContractMinute = new Map();
+  const cacheStats = { greeksHit: 0, greeksMiss: 0 };
   const baseUrl = (env.THETADATA_BASE_URL || '').trim();
-  if (!baseUrl) return greeksByContractMinute;
+  if (!baseUrl) return { greeksByContractMinute, cacheStats };
 
   const expirations = [...new Set(rawRows.map((r) => r.expiration).filter(Boolean))];
 
   for (const expiration of expirations) {
-    const endpoint = resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env);
-    if (!endpoint) continue;
-
-    try {
-      const greeksRows = await fetchThetaRows(endpoint, { env });
-      greeksRows.forEach((gr) => {
-        const strike = toFiniteNumber(gr.strike);
-        const right = normalizeRight(gr.right);
-        const rawTs = gr.timestamp || gr.trade_timestamp || gr.datetime;
-        if (strike === null || !right || !rawTs) return;
-
-        const normalizedTs = normalizeThetaTimestamp(rawTs);
-        const minuteBucket = toMinuteBucketUtc(normalizedTs);
-        if (!minuteBucket) return;
-
-        const contractKey = buildContractKey({ symbol, expiration, strike, right });
-        const lookupKey = `${contractKey}|${minuteBucket}`;
-        greeksByContractMinute.set(lookupKey, {
-          delta: toFiniteNumber(gr.delta),
-          impliedVol: toFiniteNumber(gr.implied_vol ?? gr.impliedVol ?? gr.iv),
-        });
-      });
-    } catch {
-      // Graceful degradation — greeks endpoint may not be available
+    const cacheKey = `${symbol}|${dayIso}|${expiration}`;
+    let greeksRows = getSupplementalCache(db, 'greeks_expiration_day', cacheKey);
+    if (Array.isArray(greeksRows)) {
+      cacheStats.greeksHit += 1;
+    } else {
+      cacheStats.greeksMiss += 1;
+      const endpoint = resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env);
+      if (!endpoint) continue;
+      try {
+        greeksRows = await fetchThetaRows(endpoint, { env });
+        upsertSupplementalCache(db, 'greeks_expiration_day', cacheKey, greeksRows, env);
+      } catch {
+        greeksRows = [];
+      }
     }
+
+    greeksRows.forEach((gr) => {
+      const strike = toFiniteNumber(gr.strike);
+      const right = normalizeRight(gr.right);
+      const rawTs = gr.timestamp || gr.trade_timestamp || gr.datetime;
+      if (strike === null || !right || !rawTs) return;
+
+      const normalizedTs = normalizeThetaTimestamp(rawTs);
+      const minuteBucket = toMinuteBucketUtc(normalizedTs);
+      if (!minuteBucket) return;
+
+      const contractKey = buildContractKey({ symbol, expiration, strike, right });
+      const lookupKey = `${contractKey}|${minuteBucket}`;
+      greeksByContractMinute.set(lookupKey, {
+        delta: toFiniteNumber(gr.delta),
+        impliedVol: toFiniteNumber(gr.implied_vol ?? gr.impliedVol ?? gr.iv),
+      });
+    });
   }
 
-  return greeksByContractMinute;
+  return { greeksByContractMinute, cacheStats };
 }
 
 function extractOi(rawPayload) {
@@ -2251,8 +2350,16 @@ async function buildSupplementalMetricLookup({
   dayIso,
   rawRows,
   env = process.env,
-  requiredMetrics = [],
+  requiredMetrics: _requiredMetrics = [],
 }) {
+  const cacheStats = {
+    spotHit: 0,
+    spotMiss: 0,
+    oiHit: 0,
+    oiMiss: 0,
+    greeksHit: 0,
+    greeksMiss: 0,
+  };
   const spotBySymbol = new Map();
   const oiByContract = loadContractOiFromStats(db, { symbol, dayIso });
   let oiDefaultsToZero = false;
@@ -2289,20 +2396,32 @@ async function buildSupplementalMetricLookup({
         .filter((rowSymbol) => !spotBySymbol.has(rowSymbol));
 
       for (const rowSymbol of symbolsMissingSpot) {
-        const spotEndpoint = resolveThetaSpotEndpoint(rowSymbol, dayIso, env);
-        const spot = await fetchThetaMetricNumber(spotEndpoint, [
-          'spot',
-          'underlying_price',
-          'underlyingPrice',
-          'price',
-          'last',
-          'close',
-          'open',
-          'high',
-          'low',
-          'mark',
-          'mid',
-        ]);
+        const spotCacheKey = `${rowSymbol}|${dayIso}`;
+        const cachedSpot = getSupplementalCache(db, 'spot_symbol_day', spotCacheKey);
+        let spot = toFiniteNumber(cachedSpot);
+        if (spot !== null && spot > 0) {
+          cacheStats.spotHit += 1;
+        } else {
+          spot = null;
+          cacheStats.spotMiss += 1;
+          const spotEndpoint = resolveThetaSpotEndpoint(rowSymbol, dayIso, env);
+          spot = await fetchThetaMetricNumber(spotEndpoint, [
+            'spot',
+            'underlying_price',
+            'underlyingPrice',
+            'price',
+            'last',
+            'close',
+            'open',
+            'high',
+            'low',
+            'mark',
+            'mid',
+          ]);
+          if (spot !== null) {
+            upsertSupplementalCache(db, 'spot_symbol_day', spotCacheKey, spot, env);
+          }
+        }
         if (spot !== null) {
           spotBySymbol.set(rowSymbol, spot);
         }
@@ -2343,6 +2462,8 @@ async function buildSupplementalMetricLookup({
               const oi = toFiniteNumber(oiRow.open_interest ?? oiRow.oi ?? oiRow.openInterest);
 
               if (!rowSymbol || !expiration || strike === null || !right || oi === null) return;
+              const oiCacheKey = `${rowSymbol}|${expiration}|${strike}|${right}|${dayIso}`;
+              upsertSupplementalCache(db, 'oi_contract_day', oiCacheKey, Math.trunc(oi), env);
               oiByContract.set(buildContractKey({
                 symbol: rowSymbol,
                 expiration,
@@ -2378,12 +2499,23 @@ async function buildSupplementalMetricLookup({
       for (const row of contractsMissingOi) {
         const contractKey = buildContractKey(row);
         if (oiByContract.has(contractKey)) continue;
-        const oiEndpoint = resolveThetaOiEndpoint(row, dayIso, env);
-        const oi = await fetchThetaMetricNumber(oiEndpoint, [
-          'oi',
-          'open_interest',
-          'openInterest',
-        ]);
+        const oiCacheKey = `${row.symbol}|${row.expiration}|${row.strike}|${row.right}|${dayIso}`;
+        const cachedOi = getSupplementalCache(db, 'oi_contract_day', oiCacheKey);
+        let oi = toFiniteNumber(cachedOi);
+        if (oi !== null) {
+          cacheStats.oiHit += 1;
+        } else {
+          cacheStats.oiMiss += 1;
+          const oiEndpoint = resolveThetaOiEndpoint(row, dayIso, env);
+          oi = await fetchThetaMetricNumber(oiEndpoint, [
+            'oi',
+            'open_interest',
+            'openInterest',
+          ]);
+          if (oi !== null) {
+            upsertSupplementalCache(db, 'oi_contract_day', oiCacheKey, oi, env);
+          }
+        }
         if (oi !== null) {
           oiByContract.set(contractKey, Math.trunc(oi));
         }
@@ -2391,16 +2523,25 @@ async function buildSupplementalMetricLookup({
     }
   }
 
-  const greeksByContractMinute = await buildGreeksLookup({ symbol, dayIso, rawRows, env });
+  const greeksResult = await buildGreeksLookup({ db, symbol, dayIso, rawRows, env });
+  cacheStats.greeksHit += greeksResult.cacheStats.greeksHit;
+  cacheStats.greeksMiss += greeksResult.cacheStats.greeksMiss;
 
-  return { spotBySymbol, oiByContract, oiDefaultsToZero, greeksByContractMinute };
+  return {
+    spotBySymbol,
+    oiByContract,
+    oiDefaultsToZero,
+    greeksByContractMinute: greeksResult.greeksByContractMinute,
+    cacheStats,
+  };
 }
 
-function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
+function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scoringConfig = {}) {
   const spotBySymbol = supplementalMetrics.spotBySymbol || new Map();
   const oiByContract = supplementalMetrics.oiByContract || new Map();
   const oiDefaultsToZero = Boolean(supplementalMetrics.oiDefaultsToZero);
   const greeksByContractMinute = supplementalMetrics.greeksByContractMinute || new Map();
+  const strictScoreQuality = String(process.env.FLOW_SCORE_QUALITY_STRICT || '1') !== '0';
   const statsByMinute = buildMinuteStats(rawRows);
 
   const multilegIndices = detectHeuristicMultilegs(rawRows);
@@ -2524,7 +2665,18 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
       timeNorm,
       deltaNorm,
       ivSkewNorm,
+      model: scoringConfig.scoringModel || 'v4_expanded',
+      weights: scoringConfig.weights || null,
     });
+
+    const missingMetrics = [];
+    if (value === null) missingMetrics.push('value');
+    if (dte === null) missingMetrics.push('dte');
+    if (otmPct === null) missingMetrics.push('otmPct');
+    if (repeat3m === null) missingMetrics.push('repeat3m');
+    if (oi === null) missingMetrics.push('oi');
+    if (volOiRatio === null) missingMetrics.push('volOiRatio');
+    const scoreQuality = missingMetrics.length ? 'partial' : 'complete';
 
     const enriched = {
       tradeId: row.tradeId,
@@ -2572,11 +2724,13 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}) {
       spreadNorm,
       sweepNorm,
       multilegNorm,
+      scoreQuality,
+      missingMetrics,
       chips: [],
-      ruleVersion: 'historical-v4',
+      ruleVersion: scoringConfig.versionId || 'v4_expanded_default',
     };
 
-    enriched.chips = evaluateChips(enriched, thresholds);
+    enriched.chips = evaluateChips(enriched, thresholds, { strictScoreQuality });
 
     enrichedRows.push(enriched);
 
@@ -2628,6 +2782,7 @@ async function ensureEnrichedForDay({
   requiredMetrics = [],
 }) {
   const metricCacheMap = getMetricCacheMap(db, { symbol, dayIso });
+  const activeRuleConfig = resolveActiveRuleConfig(db, thresholds, env);
   const enrichedRowsCache = metricCacheMap.enrichedRows;
 
   if (!forceRecompute && enrichedRowsCache) {
@@ -2644,6 +2799,9 @@ async function ensureEnrichedForDay({
         ? 'metric_cache_full'
         : 'metric_cache_partial',
       rowCount: enrichedRowsCache.rowCount || 0,
+      ruleVersion: activeRuleConfig.versionId,
+      scoringModel: activeRuleConfig.scoringModel,
+      supplementalCache: null,
       metricCacheMap,
     };
   }
@@ -2658,11 +2816,12 @@ async function ensureEnrichedForDay({
     env,
     requiredMetrics,
   });
-  const built = buildEnrichedRows(rawRows, thresholds, supplementalMetrics);
+  const built = buildEnrichedRows(rawRows, activeRuleConfig.thresholds, supplementalMetrics, activeRuleConfig);
 
   const upsertPayload = built.rows.map((row) => ({
     ...row,
     chipsJson: JSON.stringify(row.chips),
+    missingMetricsJson: JSON.stringify(row.missingMetrics || []),
   }));
 
   upsertEnrichedRows(db, upsertPayload);
@@ -2685,6 +2844,9 @@ async function ensureEnrichedForDay({
     synced: true,
     reason: null,
     rowCount: built.rows.length,
+    ruleVersion: activeRuleConfig.versionId,
+    scoringModel: activeRuleConfig.scoringModel,
+    supplementalCache: supplementalMetrics.cacheStats || null,
     metricCacheMap: getMetricCacheMap(db, { symbol, dayIso }),
   };
 }
@@ -2754,6 +2916,9 @@ function readEnrichedRows(db, { symbol, dayIso }) {
       time_norm AS timeNorm,
       delta_norm AS deltaNorm,
       iv_skew_norm AS ivSkewNorm,
+      rule_version AS ruleVersion,
+      score_quality AS scoreQuality,
+      missing_metrics_json AS missingMetricsJson,
       chips_json AS chipsJson
     FROM option_trade_enriched
     WHERE symbol = @symbol
@@ -2771,10 +2936,20 @@ function readEnrichedRows(db, { symbol, dayIso }) {
       chips = [];
     }
 
+    let missingMetrics = [];
+    try {
+      const parsedMissing = JSON.parse(row.missingMetricsJson || '[]');
+      missingMetrics = Array.isArray(parsedMissing) ? parsedMissing : [];
+    } catch {
+      missingMetrics = [];
+    }
+
     return {
       ...row,
       chips,
+      missingMetrics,
       chipsJson: undefined,
+      missingMetricsJson: undefined,
     };
   });
 }
@@ -2967,6 +3142,9 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
       repeat3m: row.repeat3m,
       sigScore: row.sigScore,
       sentiment: row.sentiment,
+      scoreQuality: row.scoreQuality || 'partial',
+      missingMetrics: Array.isArray(row.missingMetrics) ? row.missingMetrics : [],
+      ruleVersion: row.ruleVersion || enrichment.ruleVersion || null,
       chips: row.chips,
     }));
 
@@ -2990,6 +3168,9 @@ async function queryHistoricalFlow(rawQuery = {}, env = process.env) {
           synced: enrichment.synced,
           reason: enrichment.reason,
           rowCount: enrichment.rowCount,
+          ruleVersion: enrichment.ruleVersion || null,
+          scoringModel: enrichment.scoringModel || null,
+          supplementalCache: enrichment.supplementalCache || null,
         },
       },
     };

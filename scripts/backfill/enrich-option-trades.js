@@ -7,7 +7,6 @@ const {
   __private: {
     ensureSchema,
     resolveDbPath,
-    getDayCache,
     getMetricCacheMap,
     ensureEnrichedForDay,
     METRIC_NAMES,

@@ -130,6 +130,9 @@ function createFlowReadTestDb() {
       open_window_baseline REAL,
       bullish_ratio_15m REAL,
       chips_json TEXT,
+      rule_version TEXT,
+      score_quality TEXT,
+      missing_metrics_json TEXT,
       enriched_at_utc TEXT
     );
   `);
@@ -196,6 +199,9 @@ function createFlowReadTestDb() {
       open_window_baseline,
       bullish_ratio_15m,
       chips_json,
+      rule_version,
+      score_quality,
+      missing_metrics_json,
       enriched_at_utc
     ) VALUES (
       @tradeId,
@@ -215,6 +221,9 @@ function createFlowReadTestDb() {
       @openWindowBaseline,
       @bullishRatio15m,
       @chipsJson,
+      @ruleVersion,
+      @scoreQuality,
+      @missingMetricsJson,
       @enrichedAtUtc
     )
   `).run({
@@ -235,6 +244,9 @@ function createFlowReadTestDb() {
     openWindowBaseline: 0,
     bullishRatio15m: 0.468,
     chipsJson: JSON.stringify(['puts', 'weeklies']),
+    ruleVersion: 'v4_expanded_default',
+    scoreQuality: 'complete',
+    missingMetricsJson: '[]',
     enrichedAtUtc: '2026-02-16T20:22:34.679Z',
   });
 

@@ -29,14 +29,21 @@ Primary outcomes:
 - Compatibility layer between legacy saved payloads and DSL V2 clauses.
 - Shadow diff workflow + artifacts for multi-session comparisons.
 - ThetaData config-check, smoke, and bootstrap preflight scripts.
+- Runtime historical enrichment pipeline with:
+  - rule-version persistence on enriched rows,
+  - score-quality tracking (`score_quality`, `missing_metrics_json`),
+  - minute-level derived rollups for score diagnostics.
+- Supplemental endpoint cache reuse for spot/OI/greeks with TTL.
+- Ingestion worker reliability controls:
+  - retry/backoff/jitter,
+  - dead-letter capture,
+  - bounded row buffering and dropped-row accounting.
+- Rule control-plane activation script: `scripts/rules/activate-rule-version.js`.
+- Offline score calibration script: `scripts/sigscore/calibrate-unusual.js`.
 
 ### 3.2 Gaps to close
-- No production ingestion worker consuming Theta stream into durable storage.
-- No persistent data model for raw trades, enriched rows, or rolling aggregates.
-- No full metric engine (`dte`, `otmPct`, `volOiRatio`, `repeat3m`, `sigScore`) at runtime scale.
-- No V1 endpoints for `/api/flow/summary` and `/api/flow/filters/catalog`.
-- No full top-200 universe management, lag-aware fallback, or p95 observability pipeline.
-- No integrated feature-flag + shadow-mode reporting in live runtime.
+- Full p95/SLO benchmarking evidence and dashboard-backed alerting are still pending operational hardening tasks.
+- Feature-flag naming parity (`FLOW_FILTERS_V2`) is not yet wired; current runtime uses `FLOW_SHADOW_MODE` and query controls.
 
 ## 4) Architecture Principles
 1. Deterministic first: metric/rule outcomes are reproducible from stored raw inputs.

@@ -122,6 +122,38 @@ function shouldRunShadowCompare(rawQuery = {}, env = process.env) {
   return parseBoolean(env.FLOW_SHADOW_MODE);
 }
 
+function parseLagThresholdSeconds(env = process.env) {
+  const parsed = Number(env.FLOW_ENRICHMENT_LAG_MAX_SECONDS);
+  if (!Number.isFinite(parsed) || parsed <= 0) return 30;
+  return Math.trunc(parsed);
+}
+
+function parseCurrentLagSeconds(env = process.env) {
+  const parsed = Number(env.FLOW_ENRICHMENT_LAG_SECONDS);
+  if (!Number.isFinite(parsed) || parsed < 0) return null;
+  return parsed;
+}
+
+function buildDegradedMeta(observability = {}, env = process.env) {
+  const reasons = [];
+  if (observability.fallbackReason) reasons.push(observability.fallbackReason);
+  if (observability.rowCount === 0) reasons.push('no_live_data');
+
+  const lagSeconds = parseCurrentLagSeconds(env);
+  const lagThresholdSeconds = parseLagThresholdSeconds(env);
+  if (lagSeconds !== null && lagSeconds > lagThresholdSeconds) {
+    reasons.push('enrichment_lag_high');
+  }
+
+  const degraded = reasons.length > 0;
+  return {
+    degraded,
+    reasons,
+    lagSeconds,
+    lagThresholdSeconds,
+  };
+}
+
 function normalizeExecutionToken(value) {
   if (typeof value !== 'string') return null;
   const normalized = value.trim().toLowerCase();
@@ -504,6 +536,12 @@ function buildChipSet(flow = {}, settings = {}) {
   const symbolVolBaseline15m = getCanonicalSymbolVolBaseline15m(flow);
   const openWindowBaseline = getCanonicalOpenWindowBaseline(flow);
   const tradeTs = getCanonicalTradeTs(flow);
+  const scoreQuality = typeof flow.scoreQuality === 'string' ? flow.scoreQuality : 'partial';
+  const strictScoreQuality = String(process.env.FLOW_SCORE_QUALITY_STRICT || '1') !== '0';
+  const scoreQualityEligible = !strictScoreQuality
+    || scoreQuality === 'complete'
+    || flow.scoreQuality === undefined;
+  const scoreDependentAllowed = settings.degraded !== true;
 
   if (value !== undefined && value >= thresholdSettings['100k']) chips.add('100k+');
   if (value !== undefined && value >= thresholdSettings.sizable) chips.add('sizable');
@@ -542,9 +580,11 @@ function buildChipSet(flow = {}, settings = {}) {
     chips.add('bullflow');
   }
 
-  if (sigScore !== undefined && sigScore >= advancedThresholds.highSigMin) chips.add('high-sig');
+  if (scoreDependentAllowed && scoreQualityEligible && sigScore !== undefined && sigScore >= advancedThresholds.highSigMin) chips.add('high-sig');
   if (
-    value !== undefined
+    scoreDependentAllowed
+    && scoreQualityEligible
+    && value !== undefined
     && value >= advancedThresholds.premium100kMin
     && volOiRatio !== undefined
     && volOiRatio >= advancedThresholds.unusualVolOiMin
@@ -553,7 +593,9 @@ function buildChipSet(flow = {}, settings = {}) {
   }
 
   if (
-    (repeat3m !== undefined && repeat3m >= advancedThresholds.repeatFlowMin)
+    scoreDependentAllowed
+    && scoreQualityEligible
+    && ((repeat3m !== undefined && repeat3m >= advancedThresholds.repeatFlowMin)
     || (
       value !== undefined
       && value >= advancedThresholds.premiumSizableMin
@@ -561,7 +603,7 @@ function buildChipSet(flow = {}, settings = {}) {
       && dte <= 14
       && volOiRatio !== undefined
       && volOiRatio >= advancedThresholds.urgentVolOiMin
-    )
+    ))
   ) {
     chips.add('urgent');
   }
@@ -619,6 +661,9 @@ function toFlowRowV2(row = {}) {
   const tradeTsUtc = row.tradeTsUtc || row.createdAt;
   const right = normalizeRight(row.right) || undefined;
   const chips = Array.isArray(row.chips) ? row.chips : parseJsonArray(row.chipsJson, []);
+  const missingMetrics = Array.isArray(row.missingMetrics)
+    ? row.missingMetrics
+    : parseJsonArray(row.missingMetricsJson, []);
   const normalizedSweepFlag = row.isSweep === true
     || row.sweep === true
     || row.is_sweep === true
@@ -647,6 +692,9 @@ function toFlowRowV2(row = {}) {
     repeat3m: row.repeat3m ?? null,
     sigScore: row.sigScore ?? null,
     sentiment: row.sentiment ?? getCanonicalSentiment(row),
+    scoreQuality: row.scoreQuality ?? row.score_quality ?? undefined,
+    missingMetrics,
+    ruleVersion: row.ruleVersion || row.rule_version || null,
     chips,
 
     // Backward-compatible fields still consumed in existing tests/clients.
@@ -724,6 +772,9 @@ function loadSqliteRows(rawQuery = {}, env = process.env) {
         e.repeat3m,
         e.sig_score AS sigScore,
         e.sentiment,
+        e.rule_version AS ruleVersion,
+        e.score_quality AS scoreQuality,
+        e.missing_metrics_json AS missingMetricsJson,
         e.execution_side AS executionSide,
         e.symbol_vol_1m AS symbolVol1m,
         e.symbol_vol_baseline_15m AS symbolVolBaseline15m,
@@ -826,6 +877,19 @@ function resolveSourceData(rawQuery) {
     };
   }
 
+  const allowFixtureFallback = process.env.NODE_ENV === 'test' || parseBoolean(process.env.FLOW_FIXTURE_FALLBACK);
+  if (!allowFixtureFallback) {
+    return {
+      flows: [],
+      observability: {
+        source: 'sqlite',
+        artifactPath: sqliteResult.observability.artifactPath,
+        rowCount: 0,
+        fallbackReason: sqliteResult.observability.fallbackReason || 'no_live_data',
+      },
+    };
+  }
+
   return {
     flows: FLOW_FIXTURES.map((row) => toFlowRowV2(row)),
     observability: {
@@ -898,6 +962,7 @@ function filterFlows(flows, filters, filterVersion) {
       const chipSet = buildChipSet(flow, {
         thresholdSettings: filters.thresholdSettings,
         advancedThresholds: filters.advancedThresholds,
+        degraded: filters.degraded,
       });
       const allMatch = filters.advancedChips.every((chipId) => chipSet.has(chipId));
       if (!allMatch) return false;
@@ -907,7 +972,7 @@ function filterFlows(flows, filters, filterVersion) {
   });
 }
 
-function buildFilters(rawQuery, filterVersion) {
+function buildFilters(rawQuery, filterVersion, runtime = {}) {
   const normalizeExact = filterVersion === 'candidate'
     ? (value) => (typeof value === 'string' && value.trim().length ? value.trim().toLowerCase() : undefined)
     : (value) => value;
@@ -953,6 +1018,7 @@ function buildFilters(rawQuery, filterVersion) {
     thresholdSettings,
     advancedThresholds,
     advancedChips: parseAdvancedChipFilters(rawQuery),
+    degraded: runtime.degraded === true,
   };
 }
 
@@ -963,8 +1029,9 @@ function queryFlow(rawQuery, options = {}) {
   const limitValue = parseNumber(rawQuery.limit);
   const limit = limitValue && limitValue >= 1 ? Math.min(100, limitValue) : 25;
 
-  const filters = buildFilters(rawQuery, filterVersion);
   const sourceData = resolveSourceData(rawQuery);
+  const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
+  const filters = buildFilters(rawQuery, filterVersion, { degraded: degradedMeta.degraded });
   const sorted = filterFlows(sourceData.flows, filters, filterVersion).sort(buildComparator(sortBy, sortOrder));
   const includeShadowComparison = shouldRunShadowCompare(rawQuery, process.env);
 
@@ -1002,6 +1069,10 @@ function queryFlow(rawQuery, options = {}) {
     meta: {
       filterVersion,
       observability: sourceData.observability,
+      degraded: degradedMeta.degraded,
+      degradedReason: degradedMeta.reasons,
+      lagSeconds: degradedMeta.lagSeconds,
+      lagThresholdSeconds: degradedMeta.lagThresholdSeconds,
       ...(shadowMeta ? { shadow: shadowMeta } : {}),
     },
   };
@@ -1009,8 +1080,9 @@ function queryFlow(rawQuery, options = {}) {
 
 function buildFlowFacets(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
-  const filters = buildFilters(query, filterVersion);
   const sourceData = resolveSourceData(query);
+  const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
+  const filters = buildFilters(query, filterVersion, { degraded: degradedMeta.degraded });
   const filtered = filterFlows(sourceData.flows, filters, filterVersion);
 
   const bySymbol = {};
@@ -1025,6 +1097,7 @@ function buildFlowFacets(query = {}, options = {}) {
     const chipSet = buildChipSet(flow, {
       thresholdSettings: filters.thresholdSettings,
       advancedThresholds: filters.advancedThresholds,
+      degraded: filters.degraded,
     });
 
     bySymbol[symbol] = (bySymbol[symbol] || 0) + 1;
@@ -1044,14 +1117,20 @@ function buildFlowFacets(query = {}, options = {}) {
       chips: byChips,
     },
     total: filtered.length,
-    meta: { filterVersion, ruleVersion: 'historical-v1', observability: sourceData.observability },
+    meta: {
+      filterVersion,
+      ruleVersion: 'historical-v1',
+      observability: sourceData.observability,
+      ...(degradedMeta.degraded ? { degraded: true, degradedReason: degradedMeta.reasons } : {}),
+    },
   };
 }
 
 function buildFlowSummary(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
-  const filters = buildFilters(query, filterVersion);
   const sourceData = resolveSourceData(query);
+  const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
+  const filters = buildFilters(query, filterVersion, { degraded: degradedMeta.degraded });
   const filtered = filterFlows(sourceData.flows, filters, filterVersion);
   const topSymbolsLimit = parseTopSymbolsLimit(query.topSymbolsLimit);
 
@@ -1120,6 +1199,7 @@ function buildFlowSummary(query = {}, options = {}) {
       filterVersion,
       ruleVersion: 'historical-v1',
       observability: sourceData.observability,
+      ...(degradedMeta.degraded ? { degraded: true, degradedReason: degradedMeta.reasons } : {}),
     },
   };
 }

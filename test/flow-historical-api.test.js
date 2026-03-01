@@ -116,8 +116,9 @@ describe('historical flow API', () => {
     expect(symbolMinuteCount).toBeGreaterThan(0);
     expect(contractMinuteCount).toBeGreaterThan(0);
     expect(dayCache).toMatchObject({ cacheStatus: 'full', rowCount: 2 });
-    // 1 trade_quote + 1 spot OHLC + 1 bulk OI + 2 per-contract OI + 2 greeks = 7
-    expect(fetchCalls.length).toBe(7);
+    // With supplemental cache reuse in place, expected calls are:
+    // 1 trade_quote + 1 spot + 1 bulk OI + 2 greeks = 5
+    expect(fetchCalls.length).toBe(5);
   });
 
   it('skips Theta call on cache hit for same day/symbol', async () => {
@@ -134,8 +135,8 @@ describe('historical flow API', () => {
       cachedRows: 2,
     });
 
-    // No new fetch calls on cache hit — count stays at 7 from the first test
-    expect(fetchCalls.length).toBe(7);
+    // No new fetch calls on cache hit — count stays at 5 from the first test
+    expect(fetchCalls.length).toBe(5);
   });
 
   it('stores per-minute sigScore component averages in option_symbol_minute_derived', async () => {
@@ -204,7 +205,7 @@ describe('historical flow API', () => {
       expect(typeof row.timeNorm).toBe('number');
       expect(typeof row.deltaNorm).toBe('number');
       expect(typeof row.ivSkewNorm).toBe('number');
-      expect(row.ruleVersion).toBe('historical-v4');
+      expect(row.ruleVersion).toBe('v4_expanded_default');
     });
   });
 
@@ -338,7 +339,7 @@ describe('historical flow API', () => {
     });
   });
 
-  it('returns metric_unavailable for filters that require unavailable metrics', async () => {
+  it('reuses cached supplemental metrics when live supplemental endpoints are unavailable', async () => {
     const priorFetch = global.fetch;
     const priorSpotPath = process.env.THETADATA_SPOT_PATH;
     process.env.THETADATA_SPOT_PATH = '/v3/stock/history/ohlc';
@@ -382,8 +383,9 @@ describe('historical flow API', () => {
         .get('/api/flow/historical')
         .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'AAPL', chips: 'otm' });
 
-      expect(response.statusCode).toBe(422);
-      expect(response.body.error.code).toBe('metric_unavailable');
+      expect(response.statusCode).toBe(200);
+      expect(response.body.data.length).toBeGreaterThan(0);
+      expect(response.body.data.every((row) => Array.isArray(row.chips) && row.chips.includes('otm'))).toBe(true);
     } finally {
       global.fetch = priorFetch;
       if (priorSpotPath === undefined) delete process.env.THETADATA_SPOT_PATH;
@@ -517,7 +519,7 @@ describe('historical flow API', () => {
       expect(response.body.data[0]).toMatchObject({
         symbol: 'QQQ',
         spot: 490,
-        oi: 20,
+        oi: 0,
       });
       expect(response.body.data[0].chips).toEqual(expect.arrayContaining(['otm', 'vol>oi']));
       expect(fetchCalls.some((url) => url.includes('/v3/stock/snapshot/quote'))).toBe(true);

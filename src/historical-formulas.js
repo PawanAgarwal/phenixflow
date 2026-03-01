@@ -175,7 +175,22 @@ function computeIvSkewNorm(callIv, putIv) {
   return Math.min(1, Math.abs(c - p) / avg);
 }
 
-function computeSigScore({ valuePctile, volOiNorm, repeatNorm, otmNorm, sideConfidence, dteNorm, spreadNorm, sweepNorm, multilegNorm, timeNorm, deltaNorm, ivSkewNorm }) {
+function computeSigScore({
+  valuePctile,
+  volOiNorm,
+  repeatNorm,
+  otmNorm,
+  sideConfidence,
+  dteNorm,
+  spreadNorm,
+  sweepNorm,
+  multilegNorm,
+  timeNorm,
+  deltaNorm,
+  ivSkewNorm,
+  model = 'v4_expanded',
+  weights = null,
+}) {
   const vp = Math.min(1, Math.max(0, valuePctile || 0));
   const vo = Math.min(1, Math.max(0, volOiNorm || 0));
   const rp = Math.min(1, Math.max(0, repeatNorm || 0));
@@ -189,9 +204,52 @@ function computeSigScore({ valuePctile, volOiNorm, repeatNorm, otmNorm, sideConf
   const dl = Math.min(1, Math.max(0, deltaNorm || 0));
   const iv = Math.min(1, Math.max(0, ivSkewNorm || 0));
 
-  const score = (0.18 * vp) + (0.15 * vo) + (0.08 * rp) + (0.08 * op) + (0.06 * sc) + (0.04 * dn) + (0.04 * sn)
-    + (0.12 * sw) - (0.12 * ml)
-    + (0.07 * tn) + (0.08 * dl) + (0.06 * iv);
+  if (model === 'v1_baseline') {
+    const baseline = {
+      valuePctile: 0.35,
+      volOiNorm: 0.25,
+      repeatNorm: 0.20,
+      otmNorm: 0.10,
+      sideConfidence: 0.10,
+      ...(weights || {}),
+    };
+
+    const score = (baseline.valuePctile * vp)
+      + (baseline.volOiNorm * vo)
+      + (baseline.repeatNorm * rp)
+      + (baseline.otmNorm * op)
+      + (baseline.sideConfidence * sc);
+    return Number(Math.min(1, Math.max(0, score)).toFixed(6));
+  }
+
+  const expanded = {
+    valuePctile: 0.18,
+    volOiNorm: 0.15,
+    repeatNorm: 0.08,
+    otmNorm: 0.08,
+    sideConfidence: 0.06,
+    dteNorm: 0.04,
+    spreadNorm: 0.04,
+    sweepNorm: 0.12,
+    multilegNorm: -0.12,
+    timeNorm: 0.07,
+    deltaNorm: 0.08,
+    ivSkewNorm: 0.06,
+    ...(weights || {}),
+  };
+
+  const score = (expanded.valuePctile * vp)
+    + (expanded.volOiNorm * vo)
+    + (expanded.repeatNorm * rp)
+    + (expanded.otmNorm * op)
+    + (expanded.sideConfidence * sc)
+    + (expanded.dteNorm * dn)
+    + (expanded.spreadNorm * sn)
+    + (expanded.sweepNorm * sw)
+    + (expanded.multilegNorm * ml)
+    + (expanded.timeNorm * tn)
+    + (expanded.deltaNorm * dl)
+    + (expanded.ivSkewNorm * iv);
   return Number(Math.min(1, Math.max(0, score)).toFixed(6));
 }
 

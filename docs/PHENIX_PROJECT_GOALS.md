@@ -27,6 +27,34 @@ Locked decisions:
 4. Repeat-flow scenario (`20 repeats in 3 mins`) is detected in integration tests.
 5. UI chip toggles and drawer filters produce server-side consistent results.
 
+## Implementation Update (2026-02-28)
+Implemented in backend:
+1. Versioned sigScore contract with two models:
+   - `v1_baseline` (original 5-term weighting).
+   - `v4_expanded` (default; includes additional market-structure/greeks/time features).
+2. Runtime rule control-plane wired to active `filter_rule_versions` record:
+   - active version + checksum support,
+   - enriched rows persist `rule_version`,
+   - rule activation script: `scripts/rules/activate-rule-version.js`.
+3. Score-quality policy implemented:
+   - enriched rows persist `score_quality` and `missing_metrics_json`,
+   - strict gating enforced for score-dependent chips (`high-sig`, `unusual`, `urgent`) in enrichment path.
+4. Data freshness/degraded semantics for `/api/flow`:
+   - explicit degraded metadata when lag or source fallback conditions are present,
+   - score-dependent chip calculations are suppressed in degraded mode.
+5. Supplemental data cache reuse implemented:
+   - reusable cache for spot/OI/greeks endpoint results with TTL.
+6. Ingestion reliability hardening implemented:
+   - retry/backoff/jitter fetch strategy,
+   - dead-letter capture for unparseable rows,
+   - bounded buffering and dropped-row accounting,
+   - ingest worker counters.
+7. Calibration tooling added:
+   - `scripts/sigscore/calibrate-unusual.js` generates offline calibration report artifacts.
+8. Universe management baseline added:
+   - maintainable symbol universe file: `config/top200-universe.json`,
+   - worker supports `INGEST_SYMBOLS` / `INGEST_UNIVERSE_FILE`.
+
 ## Phase-1 Scope
 1. Implement calculable filters/chips and row-level computed metrics.
 2. Expose enriched fields and filter params in Flow API.
@@ -79,7 +107,8 @@ Locked decisions:
    - bearish: `(PUT and ASK/AA)` or `(CALL and BID)`
    - neutral: otherwise
 10. `sigScore` in `[0..1]`:
-   `0.35*valuePctile + 0.25*volOiNorm + 0.20*repeatNorm + 0.10*otmNorm + 0.10*sideConfidence`.
+   baseline (`v1_baseline`): `0.35*valuePctile + 0.25*volOiNorm + 0.20*repeatNorm + 0.10*otmNorm + 0.10*sideConfidence`.
+   expanded (`v4_expanded`, default): adds weighted contributions for `dteNorm`, `spreadNorm`, `sweepNorm`, `multilegNorm`, `timeNorm`, `deltaNorm`, `ivSkewNorm`.
 
 ## Program Setup (PM Tool)
 1. Project name: `Bullflow Filters - Core Quant V1`.

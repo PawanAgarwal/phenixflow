@@ -3,9 +3,10 @@ const {
   resolveDbPath,
   resolveIngestPollIntervalMs,
   resolveIngestSymbol,
+  resolveIngestSymbols,
 } = require('../config/env');
 const { ThetaDataClient } = require('../thetadata/client');
-const { normalizeIngestRows } = require('./normalize');
+const { normalizeIngestRow } = require('./normalize');
 const { ensureCheckpointSchema, getCheckpoint, setCheckpoint } = require('./checkpoint-store');
 
 function ensureIngestSchema(db) {
@@ -31,6 +32,20 @@ function ensureIngestSchema(db) {
 
     CREATE INDEX IF NOT EXISTS idx_option_trades_symbol_ts
       ON option_trades(symbol, trade_ts_utc);
+
+    CREATE TABLE IF NOT EXISTS ingest_dead_letter (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      stream_name TEXT NOT NULL,
+      reason TEXT NOT NULL,
+      raw_payload_json TEXT NOT NULL,
+      created_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS ingest_worker_stats (
+      stat_key TEXT PRIMARY KEY,
+      stat_value INTEGER NOT NULL DEFAULT 0,
+      updated_at_utc TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+    );
   `);
 
   ensureCheckpointSchema(db);
@@ -93,53 +108,169 @@ function upsertTrades(db, rows) {
   return txn(rows);
 }
 
+function recordDeadLetters(db, streamName, deadLetters = []) {
+  if (!deadLetters.length) return;
+
+  const insertDeadLetter = db.prepare(`
+    INSERT INTO ingest_dead_letter (
+      stream_name,
+      reason,
+      raw_payload_json
+    ) VALUES (
+      @streamName,
+      @reason,
+      @rawPayloadJson
+    )
+  `);
+
+  const txn = db.transaction((items) => {
+    items.forEach((item) => insertDeadLetter.run({
+      streamName,
+      reason: item.reason,
+      rawPayloadJson: JSON.stringify(item.rawRow || {}),
+    }));
+  });
+
+  txn(deadLetters);
+}
+
+function bumpStat(db, key, delta) {
+  if (!delta) return;
+  db.prepare(`
+    INSERT INTO ingest_worker_stats (
+      stat_key,
+      stat_value,
+      updated_at_utc
+    ) VALUES (
+      @key,
+      @delta,
+      strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+    )
+    ON CONFLICT(stat_key) DO UPDATE SET
+      stat_value = ingest_worker_stats.stat_value + excluded.stat_value,
+      updated_at_utc = excluded.updated_at_utc
+  `).run({
+    key,
+    delta: Math.trunc(delta),
+  });
+}
+
+function parseIntWithFallback(value, fallback) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.trunc(parsed) : fallback;
+}
+
 function createIngestWorker(options = {}) {
   const env = options.env || process.env;
   const dbPath = options.dbPath || resolveDbPath(env);
   const streamName = options.streamName || 'thetadata-options';
   const pollIntervalMs = options.pollIntervalMs || resolveIngestPollIntervalMs(env);
-  const ingestSymbol = options.symbol || resolveIngestSymbol(env);
+  const configuredSymbols = options.symbols
+    || (options.symbol ? [String(options.symbol).toUpperCase()] : resolveIngestSymbols(env));
+  const fallbackSymbol = resolveIngestSymbol(env);
+  const ingestSymbols = Array.isArray(configuredSymbols) && configuredSymbols.length
+    ? configuredSymbols
+    : (fallbackSymbol ? [fallbackSymbol] : []);
   const limit = options.limit;
 
   const client = options.client || new ThetaDataClient({ env, fetchImpl: options.fetchImpl });
   const databaseFactory = options.databaseFactory || ((targetPath) => new Database(targetPath));
   const setTimeoutFn = options.setTimeoutFn || setTimeout;
   const clearTimeoutFn = options.clearTimeoutFn || clearTimeout;
+  const maxAttempts = options.maxAttempts || parseIntWithFallback(env.INGEST_FETCH_MAX_ATTEMPTS, 3);
+  const retryBaseMs = options.retryBaseMs || parseIntWithFallback(env.INGEST_RETRY_BASE_MS, 200);
+  const maxBufferedRows = options.maxBufferedRows || parseIntWithFallback(env.INGEST_MAX_BUFFER_ROWS, 5000);
 
   let timer = null;
   let running = false;
+
+  const sleep = (ms) => new Promise((resolve) => {
+    setTimeoutFn(resolve, Math.max(0, ms));
+  });
+
+  async function fetchWithRetry({ symbol, watermark }) {
+    let attempt = 0;
+    let lastError = null;
+    while (attempt < maxAttempts) {
+      attempt += 1;
+      try {
+        const batch = await client.fetchIngestBatch({ symbol, watermark, limit });
+        return { batch, retryCount: attempt - 1 };
+      } catch (error) {
+        lastError = error;
+        if (attempt >= maxAttempts) break;
+        const jitter = Math.floor(Math.random() * retryBaseMs);
+        const backoffMs = retryBaseMs * (2 ** (attempt - 1)) + jitter;
+        await sleep(backoffMs);
+      }
+    }
+    throw lastError || new Error('ingest_fetch_failed');
+  }
 
   async function runOnce() {
     const db = databaseFactory(dbPath);
     try {
       ensureIngestSchema(db);
 
-      const checkpoint = getCheckpoint(db, streamName);
-      const batch = await client.fetchIngestBatch({
-        symbol: ingestSymbol,
-        watermark: checkpoint,
-        limit,
-      });
+      const deadLetters = [];
+      const normalizedRows = [];
+      let fetchedRows = 0;
+      let upsertedRows = 0;
+      let totalRetryCount = 0;
+      let firstWatermarkBefore = null;
+      let lastWatermarkAfter = null;
+      let endpoint = null;
 
-      const effectiveWatermark = batch.watermark || checkpoint;
-      const normalizedRows = normalizeIngestRows(batch.rows, {
-        fallbackSymbol: ingestSymbol,
-        watermark: effectiveWatermark,
-      });
+      for (const symbol of ingestSymbols) {
+        const checkpointKey = ingestSymbols.length === 1 ? streamName : `${streamName}:${symbol}`;
+        const checkpoint = getCheckpoint(db, checkpointKey);
+        if (firstWatermarkBefore === null) firstWatermarkBefore = checkpoint;
 
-      const upsertedRows = upsertTrades(db, normalizedRows);
+        const { batch, retryCount } = await fetchWithRetry({ symbol, watermark: checkpoint });
+        totalRetryCount += retryCount;
+        fetchedRows += batch.rows.length;
+        endpoint = batch.endpoint;
+        const effectiveWatermark = batch.watermark || checkpoint;
 
-      if (batch.watermark !== undefined && batch.watermark !== null && batch.watermark !== '') {
-        setCheckpoint(db, { streamName, watermark: batch.watermark });
+        batch.rows.forEach((rawRow) => {
+          const normalized = normalizeIngestRow(rawRow, {
+            fallbackSymbol: symbol,
+            watermark: effectiveWatermark,
+          });
+          if (normalized) normalizedRows.push(normalized);
+          else deadLetters.push({ reason: 'normalize_failed', rawRow });
+        });
+
+        if (batch.watermark !== undefined && batch.watermark !== null && batch.watermark !== '') {
+          setCheckpoint(db, { streamName: checkpointKey, watermark: batch.watermark });
+        }
+        lastWatermarkAfter = batch.watermark || checkpoint || null;
       }
 
+      let droppedRows = 0;
+      let normalizedRowsToWrite = normalizedRows;
+      if (normalizedRows.length > maxBufferedRows) {
+        droppedRows = normalizedRows.length - maxBufferedRows;
+        normalizedRowsToWrite = normalizedRows.slice(0, maxBufferedRows);
+      }
+
+      upsertedRows = upsertTrades(db, normalizedRowsToWrite);
+      recordDeadLetters(db, streamName, deadLetters);
+      bumpStat(db, 'ingest_events_total', fetchedRows);
+      bumpStat(db, 'ingest_parse_failures_total', deadLetters.length);
+      bumpStat(db, 'ingest_dropped_total', droppedRows);
+      bumpStat(db, 'ingest_retries_total', totalRetryCount);
+
       return {
-        fetchedRows: batch.rows.length,
-        normalizedRows: normalizedRows.length,
+        fetchedRows,
+        normalizedRows: normalizedRowsToWrite.length,
         upsertedRows,
-        watermarkBefore: checkpoint,
-        watermarkAfter: batch.watermark || checkpoint || null,
-        endpoint: batch.endpoint,
+        droppedRows,
+        parseFailures: deadLetters.length,
+        retryCount: totalRetryCount,
+        watermarkBefore: firstWatermarkBefore,
+        watermarkAfter: lastWatermarkAfter,
+        endpoint,
       };
     } finally {
       db.close();
@@ -177,12 +308,14 @@ function createIngestWorker(options = {}) {
         dbPath,
         streamName,
         pollIntervalMs,
-        symbol: ingestSymbol,
+        symbols: ingestSymbols,
       };
     },
     __private: {
       ensureIngestSchema,
       upsertTrades,
+      recordDeadLetters,
+      bumpStat,
     },
   };
 }
