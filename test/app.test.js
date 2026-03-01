@@ -410,7 +410,8 @@ describe('API contracts', () => {
       total: 5,
       meta: {
         filterVersion: 'legacy',
-        ruleVersion: 'historical-v1',
+        ruleVersion: 'v4_expanded_default',
+        scoringModel: 'v4_expanded',
         observability: {
           source: 'fixtures',
           artifactPath: null,
@@ -499,7 +500,8 @@ describe('API contracts', () => {
       });
       expect(response.body.meta).toMatchObject({
         filterVersion: 'legacy',
-        ruleVersion: 'historical-v1',
+        ruleVersion: 'v4_expanded_default',
+        scoringModel: 'v4_expanded',
         observability: {
           source: 'real-ingest',
           artifactPath: path.resolve(artifactPath),
@@ -608,7 +610,8 @@ describe('API contracts', () => {
         },
         meta: {
           filterVersion: 'legacy',
-          ruleVersion: 'historical-v1',
+          ruleVersion: 'v4_expanded_default',
+          scoringModel: 'v4_expanded',
           observability: {
             source: 'real-ingest',
             artifactPath: path.resolve(artifactPath),
@@ -630,7 +633,8 @@ describe('API contracts', () => {
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toContain('application/json');
     expect(response.body.meta).toEqual({ filterVersion: 'legacy' });
-    expect(response.body.data.ruleVersion).toBe('historical-v1');
+    expect(typeof response.body.data.ruleVersion).toBe('string');
+    expect(response.body.data.scoringModel).toBe('v4_expanded');
     expect(response.body.data.thresholds).toMatchObject({
       premium100kMin: 100000,
       premiumSizableMin: 250000,

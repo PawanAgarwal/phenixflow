@@ -5,7 +5,7 @@ BEGIN TRANSACTION;
 UPDATE filter_rule_versions
 SET is_active = 0,
     activated_at_utc = NULL
-WHERE version_id <> 'core_quant_v1_default' AND is_active = 1;
+WHERE version_id <> 'v4_expanded_default' AND is_active = 1;
 
 INSERT INTO filter_rule_versions (
   version_id,
@@ -15,9 +15,29 @@ INSERT INTO filter_rule_versions (
   activated_at_utc
 )
 VALUES (
-  'core_quant_v1_default',
-  '{"version":"core_quant_v1_default","chips":{"calls":{"enabled":true},"puts":{"enabled":true},"bid":{"enabled":true},"ask":{"enabled":true},"aa":{"enabled":true},"100k":{"threshold":100000},"sizable":{"threshold":250000},"whales":{"threshold":500000},"largeSize":{"threshold":1000}},"sigScoreWeights":{"valuePctile":0.35,"volOiNorm":0.25,"repeatNorm":0.20,"otmNorm":0.10,"sideConfidence":0.10}}',
-  'core_quant_v1_default_checksum',
+  'v1_baseline_default',
+  '{"version":"v1_baseline_default","sigScoreModel":"v1_baseline","chips":{"100k":{"threshold":100000},"sizable":{"threshold":250000},"whales":{"threshold":500000},"largeSize":{"threshold":1000},"repeatFlow":{"threshold":20},"volOi":{"threshold":1.0},"unusualVolOi":{"threshold":2.0},"urgentVolOi":{"threshold":2.5},"highSig":{"threshold":0.9},"bullflowRatio":{"threshold":0.65}},"sigScoreWeights":{"valuePctile":0.35,"volOiNorm":0.25,"repeatNorm":0.20,"otmNorm":0.10,"sideConfidence":0.10}}',
+  'v1_baseline_default_checksum',
+  0,
+  NULL
+)
+ON CONFLICT(version_id) DO UPDATE SET
+  config_json = excluded.config_json,
+  checksum = excluded.checksum,
+  is_active = 0,
+  activated_at_utc = NULL;
+
+INSERT INTO filter_rule_versions (
+  version_id,
+  config_json,
+  checksum,
+  is_active,
+  activated_at_utc
+)
+VALUES (
+  'v4_expanded_default',
+  '{"version":"v4_expanded_default","sigScoreModel":"v4_expanded","chips":{"100k":{"threshold":100000},"sizable":{"threshold":250000},"whales":{"threshold":500000},"largeSize":{"threshold":1000},"repeatFlow":{"threshold":20},"volOi":{"threshold":1.0},"unusualVolOi":{"threshold":2.0},"urgentVolOi":{"threshold":2.5},"highSig":{"threshold":0.9},"bullflowRatio":{"threshold":0.65}},"sigScoreWeights":{"valuePctile":0.18,"volOiNorm":0.15,"repeatNorm":0.08,"otmNorm":0.08,"sideConfidence":0.06,"dteNorm":0.04,"spreadNorm":0.04,"sweepNorm":0.12,"multilegNorm":-0.12,"timeNorm":0.07,"deltaNorm":0.08,"ivSkewNorm":0.06}}',
+  'v4_expanded_default_checksum',
   1,
   strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
 )

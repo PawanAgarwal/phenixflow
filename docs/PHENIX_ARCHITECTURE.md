@@ -5,9 +5,9 @@ This document defines the target architecture to deliver the Core Quant V1 goals
 
 Primary outcomes:
 - Real-time options flow ingestion + enrichment for top-200 symbols.
-- Deterministic chip/filter engine that drives API and UI behavior.
+- Deterministic chip/filter engine that drives backend score-bearing APIs.
 - Backward-compatible saved filters/alerts while expanding to V2 state.
-- Operational reliability for latency, shadow rollout, and graceful degradation.
+- Operational reliability for cache completeness, score quality, and graceful degradation.
 
 ## 2) Inputs Used
 - Product goals and formulas: `docs/PHENIX_PROJECT_GOALS.md`
@@ -42,8 +42,16 @@ Primary outcomes:
 - Offline score calibration script: `scripts/sigscore/calibrate-unusual.js`.
 
 ### 3.2 Gaps to close
-- Full p95/SLO benchmarking evidence and dashboard-backed alerting are still pending operational hardening tasks.
-- Feature-flag naming parity (`FLOW_FILTERS_V2`) is not yet wired; current runtime uses `FLOW_SHADOW_MODE` and query controls.
+Mission-critical gap closure status (2026-03-01):
+1. sigScore contract drift (seed/spec/runtime): closed.
+2. Live `/api/flow` rule-version configuration drift: closed.
+3. Strict live score-quality gating gap: closed.
+4. Production fixture fallback in score-bearing reads: closed.
+
+Remaining non-gating follow-ups:
+1. UI integration parity in frontend repository.
+2. p95 dashboard/alerting hardening.
+3. Feature-flag naming parity and rollout UX polish.
 
 ## 4) Architecture Principles
 1. Deterministic first: metric/rule outcomes are reproducible from stored raw inputs.
@@ -76,7 +84,7 @@ flowchart LR
   O[Saved Presets/Alerts API] --> P[(saved_queries)]
   P --> J
   Q[Feature Flags + Shadow Comparator] --> J
-  R[Observability + SLO Dashboards] --> B
+  R[Observability + Quality Metrics] --> B
   R --> E
   R --> J
 ```
@@ -154,7 +162,7 @@ Pieces to implement:
 - Persist evaluated chip flags into enriched store for fast query filtering.
 
 ### 6.5 Query API layer
-Purpose: serve UI-ready rows and filtering semantics within latency target.
+Purpose: serve deterministic score-bearing rows and filters from enriched/cache-backed data.
 
 Pieces to implement:
 - Replace fixture-driven query path in `src/flow.js` with repository-backed execution.
@@ -170,10 +178,11 @@ Pieces to implement:
   - pre-filter by high-selectivity columns
   - cursor pagination stability on `(sort_key, id)` composite
 - Fallback mode contract:
-  - when enrichment lag > 30s, return raw rows + explicit `meta.degraded=true` and reason.
+  - when enrichment lag > 30s or live data is unavailable, return explicit degraded metadata.
+  - fixture fallback is test-only and excluded from production score-bearing behavior.
 
 ### 6.6 Live stream delivery
-Purpose: low-latency incremental updates to UI.
+Purpose: optional incremental updates for downstream consumers.
 
 Pieces to implement:
 - Server SSE endpoint (`/api/flow/stream`) backed by enriched row updates.
@@ -189,35 +198,29 @@ Pieces to implement:
 - Add catalog-aware validation to reject unknown fields/chips at write time.
 
 ### 6.8 Feature flags and shadow rollout
-Purpose: safe migration with measurable diffs.
+Purpose: optional safe migration support (non-blocking for current mission completion).
 
 Pieces to implement:
-- Feature flag key: `FLOW_FILTERS_V2`.
+- Feature flag key(s): support existing runtime controls; naming parity is optional.
 - Shadow comparator job (`src/shadow/live-compare.js`):
   - compute old/new chip outputs in parallel
   - write per-session diff artifacts
-- Rollout phases:
-  1. shadow-only for 3+ sessions
-  2. enable core chips
-  3. progressive enable advanced chips
+- Rollout phases are recommended but not mission-gating for score/cache quality.
 
 ### 6.9 Observability and operations
-Purpose: enforce SLOs and diagnose failures quickly.
+Purpose: detect score-quality and cache-health regressions quickly.
 
 Pieces to implement:
 - Metrics namespace:
-  - `ingest_events_total`, `ingest_parse_failures_total`, `ingest_lag_seconds`
-  - `enrichment_latency_ms`, `enrichment_backlog_size`
-  - `api_flow_latency_ms`, `api_flow_error_total`
-  - `filter_hits_total{chip=...}`
+  - `ingest_events_total`, `ingest_parse_failures_total`, `ingest_dropped_total`
+  - score-quality mix (`complete`/`partial`) and missing-metric distribution
+  - supplemental cache hit/miss ratios (spot/OI/greeks)
+  - `filter_hits_total{chip=...}` for unusual-flow diagnostics
 - Structured logs with request id + watermark + filter version.
 - Health/readiness:
   - `/health`: process alive
   - `/ready`: Theta connectivity, DB ready, enrichment backlog below threshold
-- Alerting:
-  - ingest lag p95 > 5s
-  - query p95 > 350ms for benchmark profile
-  - parse failure rate threshold
+- Alerting and dashboards are deferred hardening work, not mission gate.
 
 ## 7) Data Model (Target)
 
@@ -310,18 +313,18 @@ Rule: each endpoint added to production path must pass the MON-79/MON-86 preflig
 ### 8.3 Known likely entitlement boundaries
 Based on current guide, plan for failure/denial on higher-tier APIs (e.g., advanced greeks/NBBO/full tick history). The architecture must not depend on those for V1 critical path.
 
-## 9) Performance and Reliability Design
-- Ingest-to-UI p95 <= 5s:
+## 9) Mission Reliability Design
+- Freshness and correctness first:
   - async ingestion + bounded enrichment backlog
-  - precomputed chip flags + indexed query path
-- `/api/flow` p95 <= 350ms (limit=50, 3 filters):
-  - avoid live Theta calls on read path
-  - enforce query plans via index hints/EXPLAIN checks in CI
+  - avoid live Theta calls on score-bearing read path
+- Cache-first execution:
+  - full-day + metric cache states gate enrichment/read behavior
+  - supplemental cache reuse for spot/OI/greeks reduces re-download churn
 - Deterministic behavior:
   - formula engine pure functions covered by high unit-test density
-  - version pinning for chip configs
+  - version pinning for scoring/chip configs
 - Degradation mode:
-  - explicit raw-mode response when enrichment lag threshold breached
+  - explicit degraded response when enrichment lag threshold breached or source unavailable
 
 ## 10) Security and Configuration
 - Secrets are not embedded in app code; ThetaTerminal credentials remain in local creds file.
@@ -343,8 +346,8 @@ Based on current guide, plan for failure/denial on higher-tier APIs (e.g., advan
 
 ### 11.3 End-to-end and operational
 - Theta preflight + smoke (`MON-79`, `MON-86`) before runtime tests.
-- top-200 stream simulation for ingest lag and API p95.
-- shadow comparison for 3 market sessions minimum.
+- minute-rollup validation (`390` intraday buckets/day on full-market sessions for tracked symbols).
+- optional: top-200 stream performance simulation and shadow multi-session comparisons.
 
 ## 12) Milestone Implementation Plan (M0-M5)
 
@@ -372,17 +375,17 @@ Deliver:
 - `GET /api/flow/summary`.
 - `GET /api/flow/filters/catalog`.
 
-### M4 UI integration
+### M4 Mission consistency hardening
 Deliver:
-- API-backed chip behavior.
-- full filter drawer contract.
-- saved preset state parity with server DSL.
+- live and historical paths share active rule-version config for score/chip decisions.
+- strict score-quality gating semantics are consistent across read paths.
+- production score-bearing read paths remove fixture fallback.
 
-### M5 hardening
+### M5 hardening (deferred/non-gating)
 Deliver:
-- replay/perf validation.
+- replay/perf validation (optional mission follow-up).
 - observability dashboards and alerting.
-- staged rollout from shadow to enabled.
+- rollout UX polish (including flag naming parity).
 
 ## 13) Proposed Repository Structure Changes
 
@@ -407,17 +410,17 @@ New backend modules:
 
 Operational scripts:
 - keep `scripts/mon79_*` and `scripts/mon86_thetadata_bootstrap.py` as preflight gates
-- add `scripts/flow-replay-benchmark.js` for p95 checks
+- optional: add `scripts/flow-replay-benchmark.js` for performance follow-up
 
 ## 14) Definition of Done Checklist
 A release candidate is ready only when all are true:
-- ingest-to-UI lag <= 5s p95 during market hours simulation.
-- `GET /api/flow` p95 <= 350ms (`limit=50`, 3 filters).
-- deterministic formula/rule unit coverage >= 95%.
+- scoring contract is explicit and consistent across seed/spec/runtime (`rule_version`, `scoring_model`, weights).
+- live and historical paths use the same active rule-version thresholds for score-bearing chips.
+- strict score-quality gating is enforced for unusual/high-sig/urgent decisions.
+- production score-bearing APIs do not rely on fixture fallback.
 - repeat-flow integration scenario passes.
-- UI chips + drawer produce server-consistent filtered rows.
-- shadow rollout report covers >=3 sessions with acceptable deltas.
 - fallback mode tested for enrichment lag breach.
+- minute-rollup integrity checks pass on full-market cached sessions.
 
 ## 15) Open Decisions to Lock Early
 1. Exact Theta endpoint(s) and payload schema for live option trade ingest under current entitlement.

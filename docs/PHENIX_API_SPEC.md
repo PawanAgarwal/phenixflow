@@ -177,7 +177,7 @@ This table defines terms used by chips and enriched filters. If a term is direct
 | `repeatNorm` | Normalized repeat input (`clamp(repeat3m/repeatFlowMin,0,1)`). | `repeat3m` | Derived. |
 | `otmNorm` | Normalized moneyness input (`clamp(abs(otmPct)/25,0,1)`). | `otmPct` | Derived. |
 | `sideConfidence` | Confidence weight from execution side (`AA=1`, `ASK=0.85`, `BID=0.7`, `OTHER=0.25`). | `executionSide` | Derived (rule constant). |
-| `sigScore` | `0.35*valuePctile + 0.25*volOiNorm + 0.20*repeatNorm + 0.10*otmNorm + 0.10*sideConfidence` (clamped to `[0,1]`). | `valuePctile`, `volOiNorm`, `repeatNorm`, `otmNorm`, `sideConfidence` | Derived. |
+| `sigScore` | Versioned model in active `ruleVersion`: `v1_baseline` uses the 5-term weighted baseline; `v4_expanded` (default) adds `dteNorm`, `spreadNorm`, `sweepNorm`, `multilegNorm`, `timeNorm`, `deltaNorm`, `ivSkewNorm` (clamped to `[0,1]`). | `valuePctile`, `volOiNorm`, `repeatNorm`, `otmNorm`, `sideConfidence` (+ expanded terms for `v4_expanded`) | Derived. |
 | `standardMonthlyThirdFriday` | Boolean calendar helper: expiration date is Friday and day-of-month in `[15..21]`. | `expiration` | Derived. |
 
 Notes:
@@ -365,7 +365,11 @@ Facet aggregations for UI controls.
     "chips": { "calls": 7, "100k+": 6 }
   },
   "total": 10,
-  "meta": { "filterVersion": "legacy", "ruleVersion": "historical-v1" }
+  "meta": {
+    "filterVersion": "legacy",
+    "ruleVersion": "v4_expanded_default",
+    "scoringModel": "v4_expanded"
+  }
 }
 ```
 
@@ -398,7 +402,11 @@ Top tiles and summary ratios for dashboard header.
       { "symbol": "AAPL", "rows": 10, "premium": 123456.78 }
     ]
   },
-  "meta": { "filterVersion": "legacy", "ruleVersion": "historical-v1" }
+  "meta": {
+    "filterVersion": "legacy",
+    "ruleVersion": "v4_expanded_default",
+    "scoringModel": "v4_expanded"
+  }
 }
 ```
 
@@ -414,7 +422,8 @@ Catalog of supported chips, thresholds, ranges, and enum filters.
 ```json
 {
   "data": {
-    "ruleVersion": "historical-v1",
+    "ruleVersion": "v4_expanded_default",
+    "scoringModel": "v4_expanded",
     "thresholds": {
       "premium100kMin": 100000,
       "premiumSizableMin": 250000,
@@ -736,11 +745,12 @@ These are not Phenix public endpoints; they are required upstream APIs.
 | 503 | `db_unavailable` | SQLite unavailable or schema bootstrap failed |
 | 503 | `thetadata_not_configured` | Missing `THETADATA_BASE_URL` |
 
-## 13. Performance and SLO Contract
-- Ingest-to-UI lag target: `<= 5s p95` during regular market hours.
-- `GET /api/flow` target: `<= 350ms p95` for `limit=50` with 3 active filters.
+## 13. Mission Reliability Contract
 - Historical endpoint must avoid duplicate upstream fetch via day cache.
 - Read path must not block on live Theta call when data for requested day/symbol is already full-cached.
+- Score-bearing responses must expose active `ruleVersion` and `scoringModel`.
+- Score-dependent chips (`high-sig`, `unusual`, `urgent`) must honor strict score-quality gating when enabled.
+- Degraded mode must be explicit when enrichment freshness or source availability is compromised.
 
 ## 14. Backward Compatibility Requirements
 - Keep `/api/v1/...` aliases for all flow endpoints.

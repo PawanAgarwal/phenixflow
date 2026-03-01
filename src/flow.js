@@ -8,6 +8,7 @@ const {
 } = require('./flow-filter-definitions');
 const { computeSentiment, isStandardMonthly, isAmSpikeWindow } = require('./historical-formulas');
 const { CHIP_DEFINITIONS, getThresholds, parseChipList } = require('./historical-filter-definitions');
+const { resolveActiveRuleConfig } = require('./scoring/rule-config');
 const { buildShadowComparison } = require('./shadow/live-compare');
 
 const FLOW_FIXTURES = [
@@ -536,11 +537,15 @@ function buildChipSet(flow = {}, settings = {}) {
   const symbolVolBaseline15m = getCanonicalSymbolVolBaseline15m(flow);
   const openWindowBaseline = getCanonicalOpenWindowBaseline(flow);
   const tradeTs = getCanonicalTradeTs(flow);
-  const scoreQuality = typeof flow.scoreQuality === 'string' ? flow.scoreQuality : 'partial';
+  const rawScoreQuality = typeof flow.scoreQuality === 'string'
+    ? flow.scoreQuality
+    : (typeof flow.score_quality === 'string' ? flow.score_quality : null);
+  const scoreQuality = rawScoreQuality ? rawScoreQuality.trim().toLowerCase() : null;
   const strictScoreQuality = String(process.env.FLOW_SCORE_QUALITY_STRICT || '1') !== '0';
+  const compatibilityMode = settings.compatibilityMode === true;
   const scoreQualityEligible = !strictScoreQuality
     || scoreQuality === 'complete'
-    || flow.scoreQuality === undefined;
+    || (compatibilityMode && scoreQuality === null);
   const scoreDependentAllowed = settings.degraded !== true;
 
   if (value !== undefined && value >= thresholdSettings['100k']) chips.add('100k+');
@@ -646,6 +651,68 @@ function parseRealIngestRows(rawContent) {
 function resolveDbPath(env = process.env) {
   const configuredPath = env.PHENIX_DB_PATH || path.resolve(__dirname, '..', 'data', 'phenixflow.sqlite');
   return path.resolve(configuredPath);
+}
+
+function resolveDefaultScoringModel(env = process.env) {
+  const model = typeof env.FLOW_SIGSCORE_MODEL === 'string' ? env.FLOW_SIGSCORE_MODEL.trim().toLowerCase() : '';
+  if (model === 'v1' || model === 'baseline' || model === 'v1_baseline') return 'v1_baseline';
+  return 'v4_expanded';
+}
+
+function toThresholdFilterSettings(advancedThresholds, fallback = {}) {
+  return {
+    '100k': toNumber(advancedThresholds?.premium100kMin, fallback['100k']),
+    sizable: toNumber(advancedThresholds?.premiumSizableMin, fallback.sizable),
+    whales: toNumber(advancedThresholds?.premiumWhalesMin, fallback.whales),
+    largeSize: toNumber(advancedThresholds?.sizeLargeMin, fallback.largeSize),
+  };
+}
+
+function resolveRuntimeRuleConfig(env = process.env, options = {}) {
+  const fallbackAdvancedThresholds = getThresholds(env);
+  const fallbackThresholdSettings = getThresholdFilterSettings(env);
+  const fallbackScoringModel = resolveDefaultScoringModel(env);
+  const fallbackRuleVersion = fallbackScoringModel === 'v1_baseline'
+    ? 'v1_baseline_default'
+    : 'v4_expanded_default';
+  const useDb = options.useDb !== false;
+
+  if (!useDb) {
+    return {
+      ruleVersion: fallbackRuleVersion,
+      scoringModel: fallbackScoringModel,
+      advancedThresholds: fallbackAdvancedThresholds,
+      thresholdSettings: toThresholdFilterSettings(fallbackAdvancedThresholds, fallbackThresholdSettings),
+    };
+  }
+
+  let db;
+  try {
+    db = new Database(resolveDbPath(env), { readonly: true });
+    db.pragma('query_only = ON');
+    const activeRuleConfig = resolveActiveRuleConfig(db, fallbackAdvancedThresholds, env);
+    const resolvedAdvancedThresholds = activeRuleConfig.thresholds || fallbackAdvancedThresholds;
+    return {
+      ruleVersion: activeRuleConfig.versionId || fallbackRuleVersion,
+      scoringModel: activeRuleConfig.scoringModel || fallbackScoringModel,
+      advancedThresholds: resolvedAdvancedThresholds,
+      thresholdSettings: toThresholdFilterSettings(resolvedAdvancedThresholds, fallbackThresholdSettings),
+    };
+  } catch {
+    return {
+      ruleVersion: fallbackRuleVersion,
+      scoringModel: fallbackScoringModel,
+      advancedThresholds: fallbackAdvancedThresholds,
+      thresholdSettings: toThresholdFilterSettings(fallbackAdvancedThresholds, fallbackThresholdSettings),
+    };
+  } finally {
+    if (db) db.close();
+  }
+}
+
+function shouldUseFixtureCompatibility(sourceData = {}, env = process.env) {
+  if (env.NODE_ENV === 'test') return true;
+  return sourceData?.observability?.source === 'fixtures';
 }
 
 function parseJsonArray(rawValue, fallback = []) {
@@ -829,11 +896,11 @@ function resolveSourceData(rawQuery) {
     const configuredPath = rawQuery.artifactPath || process.env.FLOW_INGEST_ARTIFACT_PATH;
     if (!configuredPath) {
       return {
-        flows: FLOW_FIXTURES.map((row) => toFlowRowV2(row)),
+        flows: [],
         observability: {
-          source: 'fixtures',
+          source: 'real-ingest',
           artifactPath: null,
-          rowCount: FLOW_FIXTURES.length,
+          rowCount: 0,
           fallbackReason: 'artifact_path_missing',
         },
       };
@@ -858,11 +925,11 @@ function resolveSourceData(rawQuery) {
         : 'artifact_read_error';
 
       return {
-        flows: FLOW_FIXTURES.map((row) => toFlowRowV2(row)),
+        flows: [],
         observability: {
-          source: 'fixtures',
+          source: 'real-ingest',
           artifactPath,
-          rowCount: FLOW_FIXTURES.length,
+          rowCount: 0,
           fallbackReason,
         },
       };
@@ -877,7 +944,8 @@ function resolveSourceData(rawQuery) {
     };
   }
 
-  const allowFixtureFallback = process.env.NODE_ENV === 'test' || parseBoolean(process.env.FLOW_FIXTURE_FALLBACK);
+  const allowFixtureFallback = process.env.NODE_ENV === 'test'
+    || (process.env.NODE_ENV !== 'production' && parseBoolean(process.env.FLOW_FIXTURE_FALLBACK));
   if (!allowFixtureFallback) {
     return {
       flows: [],
@@ -963,6 +1031,7 @@ function filterFlows(flows, filters, filterVersion) {
         thresholdSettings: filters.thresholdSettings,
         advancedThresholds: filters.advancedThresholds,
         degraded: filters.degraded,
+        compatibilityMode: filters.compatibilityMode,
       });
       const allMatch = filters.advancedChips.every((chipId) => chipSet.has(chipId));
       if (!allMatch) return false;
@@ -977,9 +1046,9 @@ function buildFilters(rawQuery, filterVersion, runtime = {}) {
     ? (value) => (typeof value === 'string' && value.trim().length ? value.trim().toLowerCase() : undefined)
     : (value) => value;
 
-  const thresholdSettings = getThresholdFilterSettings(process.env);
+  const thresholdSettings = runtime.thresholdSettings || getThresholdFilterSettings(process.env);
   const thresholds = parseThresholdFilterSet(rawQuery);
-  const advancedThresholds = getThresholds(process.env);
+  const advancedThresholds = runtime.advancedThresholds || getThresholds(process.env);
   const rightFromType = normalizeRight(rawQuery.type);
   const right = normalizeRight(rawQuery.right) || rightFromType || undefined;
 
@@ -1019,6 +1088,9 @@ function buildFilters(rawQuery, filterVersion, runtime = {}) {
     advancedThresholds,
     advancedChips: parseAdvancedChipFilters(rawQuery),
     degraded: runtime.degraded === true,
+    compatibilityMode: runtime.compatibilityMode === true,
+    ruleVersion: runtime.ruleVersion || null,
+    scoringModel: runtime.scoringModel || null,
   };
 }
 
@@ -1030,8 +1102,16 @@ function queryFlow(rawQuery, options = {}) {
   const limit = limitValue && limitValue >= 1 ? Math.min(100, limitValue) : 25;
 
   const sourceData = resolveSourceData(rawQuery);
+  const runtimeRuleConfig = resolveRuntimeRuleConfig(process.env, {
+    useDb: sourceData.observability.source === 'sqlite',
+  });
   const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
-  const filters = buildFilters(rawQuery, filterVersion, { degraded: degradedMeta.degraded });
+  const compatibilityMode = shouldUseFixtureCompatibility(sourceData, process.env);
+  const filters = buildFilters(rawQuery, filterVersion, {
+    degraded: degradedMeta.degraded,
+    compatibilityMode,
+    ...runtimeRuleConfig,
+  });
   const sorted = filterFlows(sourceData.flows, filters, filterVersion).sort(buildComparator(sortBy, sortOrder));
   const includeShadowComparison = shouldRunShadowCompare(rawQuery, process.env);
 
@@ -1053,7 +1133,11 @@ function queryFlow(rawQuery, options = {}) {
   let shadowMeta;
   if (includeShadowComparison) {
     const shadowVersion = filterVersion === 'candidate' ? 'legacy' : 'candidate';
-    const shadowFilters = buildFilters(rawQuery, shadowVersion);
+    const shadowFilters = buildFilters(rawQuery, shadowVersion, {
+      degraded: degradedMeta.degraded,
+      compatibilityMode,
+      ...runtimeRuleConfig,
+    });
     const shadowSorted = filterFlows(sourceData.flows, shadowFilters, shadowVersion).sort(buildComparator(sortBy, sortOrder));
     shadowMeta = buildShadowComparison({
       activeVersion: filterVersion,
@@ -1068,6 +1152,8 @@ function queryFlow(rawQuery, options = {}) {
     page: { limit, hasMore, nextCursor, sortBy, sortOrder, total: sorted.length },
     meta: {
       filterVersion,
+      ruleVersion: runtimeRuleConfig.ruleVersion,
+      scoringModel: runtimeRuleConfig.scoringModel,
       observability: sourceData.observability,
       degraded: degradedMeta.degraded,
       degradedReason: degradedMeta.reasons,
@@ -1081,8 +1167,15 @@ function queryFlow(rawQuery, options = {}) {
 function buildFlowFacets(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
   const sourceData = resolveSourceData(query);
+  const runtimeRuleConfig = resolveRuntimeRuleConfig(process.env, {
+    useDb: sourceData.observability.source === 'sqlite',
+  });
   const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
-  const filters = buildFilters(query, filterVersion, { degraded: degradedMeta.degraded });
+  const filters = buildFilters(query, filterVersion, {
+    degraded: degradedMeta.degraded,
+    compatibilityMode: shouldUseFixtureCompatibility(sourceData, process.env),
+    ...runtimeRuleConfig,
+  });
   const filtered = filterFlows(sourceData.flows, filters, filterVersion);
 
   const bySymbol = {};
@@ -1098,6 +1191,7 @@ function buildFlowFacets(query = {}, options = {}) {
       thresholdSettings: filters.thresholdSettings,
       advancedThresholds: filters.advancedThresholds,
       degraded: filters.degraded,
+      compatibilityMode: filters.compatibilityMode,
     });
 
     bySymbol[symbol] = (bySymbol[symbol] || 0) + 1;
@@ -1119,7 +1213,8 @@ function buildFlowFacets(query = {}, options = {}) {
     total: filtered.length,
     meta: {
       filterVersion,
-      ruleVersion: 'historical-v1',
+      ruleVersion: runtimeRuleConfig.ruleVersion,
+      scoringModel: runtimeRuleConfig.scoringModel,
       observability: sourceData.observability,
       ...(degradedMeta.degraded ? { degraded: true, degradedReason: degradedMeta.reasons } : {}),
     },
@@ -1129,14 +1224,20 @@ function buildFlowFacets(query = {}, options = {}) {
 function buildFlowSummary(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
   const sourceData = resolveSourceData(query);
+  const runtimeRuleConfig = resolveRuntimeRuleConfig(process.env, {
+    useDb: sourceData.observability.source === 'sqlite',
+  });
   const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
-  const filters = buildFilters(query, filterVersion, { degraded: degradedMeta.degraded });
+  const filters = buildFilters(query, filterVersion, {
+    degraded: degradedMeta.degraded,
+    compatibilityMode: shouldUseFixtureCompatibility(sourceData, process.env),
+    ...runtimeRuleConfig,
+  });
   const filtered = filterFlows(sourceData.flows, filters, filterVersion);
   const topSymbolsLimit = parseTopSymbolsLimit(query.topSymbolsLimit);
 
-  const thresholdSettings = getThresholdFilterSettings(process.env);
-  const configuredHighSigMin = parseNumber(process.env.FLOW_FILTER_HIGH_SIG_MIN);
-  const highSigMin = configuredHighSigMin === undefined ? 0.9 : configuredHighSigMin;
+  const thresholdSettings = filters.thresholdSettings;
+  const highSigMin = filters.advancedThresholds.highSigMin;
 
   const totals = {
     rows: filtered.length,
@@ -1197,7 +1298,8 @@ function buildFlowSummary(query = {}, options = {}) {
     },
     meta: {
       filterVersion,
-      ruleVersion: 'historical-v1',
+      ruleVersion: runtimeRuleConfig.ruleVersion,
+      scoringModel: runtimeRuleConfig.scoringModel,
       observability: sourceData.observability,
       ...(degradedMeta.degraded ? { degraded: true, degradedReason: degradedMeta.reasons } : {}),
     },
@@ -1207,7 +1309,8 @@ function buildFlowSummary(query = {}, options = {}) {
 function buildFlowFiltersCatalog(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
   const includeDisabled = parseIncludeDisabled(query.includeDisabled);
-  const thresholds = getThresholds(process.env);
+  const runtimeRuleConfig = resolveRuntimeRuleConfig(process.env);
+  const thresholds = runtimeRuleConfig.advancedThresholds;
 
   const chips = CHIP_DEFINITIONS.map((definition) => ({
     id: definition.id,
@@ -1233,7 +1336,8 @@ function buildFlowFiltersCatalog(query = {}, options = {}) {
 
   return {
     data: {
-      ruleVersion: 'historical-v1',
+      ruleVersion: runtimeRuleConfig.ruleVersion,
+      scoringModel: runtimeRuleConfig.scoringModel,
       thresholds,
       chips: filteredChips,
       enums: {

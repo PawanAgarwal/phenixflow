@@ -5,8 +5,8 @@ This document captures the Core Quant V1 plan for the Bullflow-style filter engi
 
 Locked decisions:
 1. Scope: Core Quant filters first.
-2. Delivery: API + UI filters.
-3. Latency target: 1-5s updates.
+2. Delivery: API-first backend scoring and filter contracts (UI integration can follow in a separate repo).
+3. Latency target: freshness and cache completeness are prioritized over UI latency SLOs for current mission phase.
 4. Coverage: top 200 tickers.
 5. Data policy: Theta-only.
 6. Rule strategy: configurable heuristics.
@@ -15,17 +15,17 @@ Locked decisions:
 ## Broad Capabilities to Deliver
 1. Real-time flow ingestion and enrichment for a top-200 universe.
 2. Deterministic, configurable chip/filter engine for Core Quant rules.
-3. Server-side query/filter API that fully drives UI chip and drawer behavior.
+3. Versioned sigScore control plane (`filter_rule_versions`) that governs scoring behavior consistently.
 4. Backward-compatible saved filters/alerts with expanded V2 filter state.
-5. Rollout-safe filter evolution using feature flags and shadow comparison.
-6. Operational reliability with p95 latency targets, observability, and graceful degradation.
+5. Cache-first historical and live read paths that reuse downloaded data and avoid duplicate recompute.
+6. Reliability semantics for degraded/partial data to prevent misleading score-driven decisions.
 
 ## Success Criteria
-1. Ingest-to-UI lag <= 5s p95 during regular market hours.
-2. `GET /api/flow` p95 <= 350ms for `limit=50` with 3 active filters.
-3. Deterministic unit coverage for chip formulas and range logic >= 95%.
-4. Repeat-flow scenario (`20 repeats in 3 mins`) is detected in integration tests.
-5. UI chip toggles and drawer filters produce server-side consistent results.
+1. `sigScore` and chip outputs are reproducible for a given `rule_version` on replayed cached sessions.
+2. Historical enriched minute rollups provide complete intraday coverage (`390` minute buckets on full market days for tracked symbols).
+3. Score-bearing outputs are explicitly quality-tagged (`complete` vs `partial`) and strict-mode chip gating is enforced for unusual-flow decisions.
+4. Live and historical score/chip logic use the same active rule configuration source.
+5. Downloaded supplemental data (spot/OI/greeks) is reused from cache on reruns whenever validity windows allow.
 
 ## Implementation Update (2026-02-28)
 Implemented in backend:
@@ -55,10 +55,26 @@ Implemented in backend:
    - maintainable symbol universe file: `config/top200-universe.json`,
    - worker supports `INGEST_SYMBOLS` / `INGEST_UNIVERSE_FILE`.
 
+## Mission Re-Baseline (2026-03-01)
+After validating recent symbol-day runs and minute-level score coverage, the mission-critical path is narrowed to backend scoring quality + cache reuse consistency.
+
+Mission-critical closure update (2026-03-01):
+1. Seed/spec/runtime sigScore contract now uses explicit versioned model definitions.
+2. Live `/api/flow` path now resolves runtime rule-version config for score-bearing chip logic.
+3. Strict score-quality gating is enforced on live score-dependent chips (with test/fixture compatibility carve-out only).
+4. Production score-bearing reads no longer silently fall back to fixtures.
+5. Rule activation now supports a calibration gate for promotion control.
+
+De-prioritized (not blocking current mission completion):
+1. UI chip/drawer integration and UI-specific consistency tests.
+2. p95 latency/dashboard alerting as release gates.
+3. Feature-flag naming parity work (`FLOW_FILTERS_V2` aliasing) when behavior is otherwise equivalent.
+4. Coverage percentage gate enforcement as a hard release requirement.
+
 ## Phase-1 Scope
 1. Implement calculable filters/chips and row-level computed metrics.
 2. Expose enriched fields and filter params in Flow API.
-3. Add chip bar and drawer controls in Flow UI.
+3. Align live and historical API paths to a single rule-versioned scoring/filter contract.
 4. Keep current saved filters/alerts model compatible.
 
 ## Deferred to Phase-2+
@@ -117,8 +133,8 @@ Implemented in backend:
    - `M1 Ingestion and Storage` (5 days)
    - `M2 Metrics and Rule Engine` (5 days)
    - `M3 API and Query Layer` (4 days)
-   - `M4 UI Integration` (4 days)
-   - `M5 Validation and Hardening` (4 days)
+   - `M4 Mission Consistency Hardening` (4 days)
+   - `M5 Operational Hardening` (deferred/non-gating for mission)
 3. Labels:
    - `filters`
    - `thetadata`
@@ -147,14 +163,14 @@ Implemented in backend:
    - Extend `/api/flow` with server-side filter params and chip selectors.
    - Add `/api/flow/summary` for top tiles and ratios.
    - Add `/api/flow/filters/catalog` returning chips, ranges, and active threshold version.
-5. `M4 UI Integration`
-   - Replace placeholder chip behavior with API-backed chips.
-   - Expand right-panel filter controls to include key range filters.
-   - Wire save/load preset payloads to full filter state.
-6. `M5 Validation and Hardening`
+5. `M4 Mission Consistency Hardening`
+   - Ensure live `/api/flow` and historical enrichment consume the same active rule-version thresholds and score model.
+   - Eliminate production fixture fallback from score-bearing query paths.
+   - Tighten strict score-quality gating for unusual/high-sig/urgent chip decisions.
+6. `M5 Operational Hardening` (deferred/non-gating)
    - Run replay tests on historical session samples.
-   - Add p95 latency/load checks for top-200 symbol scenario.
-   - Add observability counters for ingest lag, parse failures, and filter hit distributions.
+   - Expand observability counters for score-quality and cache-hit distributions.
+   - Add optional p95 latency/load checks for top-200 symbol scenario.
 
 ## Data Model Goals
 1. Keep `option_trades` as raw source.
@@ -169,16 +185,15 @@ Implemented in backend:
 3. Integration tests: ingest fixture -> enrich -> `/api/flow` filter query expected ids.
 4. Integration tests: repeat-flow 20-in-3-min detection.
 5. API tests: cursor pagination stability with new sort/filter predicates.
-6. UI tests: chip toggle + range inputs -> URL/query -> expected row subset.
-7. Performance tests: top-200 stream simulation with p95 query latency and ingest lag checks.
+6. Minute-rollup validation tests: complete `390` intraday buckets and bounded score aggregates on full market days.
+7. Performance tests: top-200 stream simulation is optional hardening, not mission gate.
 8. Regression tests: existing filters/alerts paths still function with expanded payloads.
 
 ## Rollout and Risk Controls
-1. Feature-flag new chips behind `FLOW_FILTERS_V2`.
-2. Start in shadow mode: compute chips without enabling default UI filtering.
-3. Compare shadow metrics versus visible rows for 3 market sessions.
-4. Roll out gradually: core chips first (`Calls`, `Puts`, `Bid`, `Ask`, `100k+`, `Whales`, `OTM`), then advanced chips.
-5. Fail-safe: if enrichment lag > 30s, API falls back to raw row view with explicit status.
+1. Keep a runtime kill-switch for experimental scoring/filter behavior.
+2. Compare candidate vs active scoring outputs on replayed cached sessions before activation.
+3. Roll out rule-version changes gradually and persist `rule_version` on enriched rows.
+4. Fail-safe: if enrichment lag > 30s or live data is unavailable, return explicit degraded metadata.
 
 ## Assumptions and Defaults
 1. Theta streaming entitlement is available and stable.
@@ -227,14 +242,13 @@ Planned new files:
 1. Theta streaming ingestion worker with reconnect and replay-safe resume.
 2. Storage for raw trades, enriched rows, and rolling aggregate stats.
 3. Config-driven rule engine with versioned thresholds and checksums.
-4. API query layer optimized for p95 target (`<= 350ms` for `limit=50` with 3 active filters).
+4. API query layer that is deterministic and cache-first for score-bearing reads.
 5. Observability:
-   - ingest lag metrics
-   - parse failure metrics
-   - filter-hit distribution metrics
-   - request latency and error-rate dashboards
+   - score-quality mix (`complete` vs `partial`)
+   - cache hit/miss metrics for supplemental data
+   - ingest parse failure metrics and dropped-row accounting
 6. CI gates for lint, unit, integration, and replay/performance checks.
-7. Feature flag infrastructure and shadow-mode reporting pipeline.
+7. Optional feature flag/shadow reporting pipeline for controlled experiments.
 8. Reliability controls:
    - health/readiness probes
    - fallback to raw row mode when enrichment lag breaches threshold
