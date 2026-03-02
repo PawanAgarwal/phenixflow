@@ -1,0 +1,249 @@
+{
+  "packId": "mon63-market-core",
+  "fixtureVersion": "v1",
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-02-16T16:00:00.000Z",
+  "datasets": {
+    "trades": [
+      {
+        "id": "trade_liquid_call_sweep",
+        "symbol": "AAPL",
+        "eventTs": "2026-02-14T14:31:05.120Z",
+        "expiration": "2026-03-20",
+        "strike": 200,
+        "right": "CALL",
+        "price": 2.45,
+        "size": 120,
+        "premium": 29400,
+        "isSweep": true
+      },
+      {
+        "id": "trade_liquid_put_bid",
+        "symbol": "TSLA",
+        "eventTs": "2026-02-14T14:35:44.501Z",
+        "expiration": "2026-03-20",
+        "strike": 220,
+        "right": "PUT",
+        "price": 4.1,
+        "size": 40,
+        "premium": 16400,
+        "isSweep": false
+      },
+      {
+        "id": "trade_zero_oi_new_listing",
+        "symbol": "NVDA",
+        "eventTs": "2026-02-14T15:01:11.000Z",
+        "expiration": "2026-02-21",
+        "strike": 980,
+        "right": "CALL",
+        "price": 0.35,
+        "size": 5,
+        "premium": 175,
+        "isSweep": false
+      },
+      {
+        "id": "trade_crossed_market_edge",
+        "symbol": "SPY",
+        "eventTs": "2026-02-14T15:05:03.003Z",
+        "expiration": "2026-02-14",
+        "strike": 503,
+        "right": "PUT",
+        "price": 1.03,
+        "size": 25,
+        "premium": 2575,
+        "isSweep": false
+      },
+      {
+        "id": "trade_stale_spot_edge",
+        "symbol": "QQQ",
+        "eventTs": "2026-02-14T15:44:50.900Z",
+        "expiration": "2026-02-28",
+        "strike": 432,
+        "right": "CALL",
+        "price": 0.92,
+        "size": 60,
+        "premium": 5520,
+        "isSweep": true
+      },
+      {
+        "id": "trade_halted_quote_edge",
+        "symbol": "GME",
+        "eventTs": "2026-02-14T15:49:12.700Z",
+        "expiration": "2026-03-20",
+        "strike": 20,
+        "right": "CALL",
+        "price": 0.61,
+        "size": 10,
+        "premium": 610,
+        "isSweep": false
+      }
+    ],
+    "quotes": [
+      {
+        "id": "quote_aapl_normal",
+        "tradeId": "trade_liquid_call_sweep",
+        "eventTs": "2026-02-14T14:31:05.100Z",
+        "bid": 2.35,
+        "ask": 2.45
+      },
+      {
+        "id": "quote_tsla_normal",
+        "tradeId": "trade_liquid_put_bid",
+        "eventTs": "2026-02-14T14:35:44.490Z",
+        "bid": 4.1,
+        "ask": 4.25
+      },
+      {
+        "id": "quote_nvda_wide",
+        "tradeId": "trade_zero_oi_new_listing",
+        "eventTs": "2026-02-14T15:01:10.900Z",
+        "bid": 0.2,
+        "ask": 0.5
+      },
+      {
+        "id": "quote_spy_crossed",
+        "tradeId": "trade_crossed_market_edge",
+        "eventTs": "2026-02-14T15:05:03.000Z",
+        "bid": 1.05,
+        "ask": 1.01
+      },
+      {
+        "id": "quote_qqq_normal",
+        "tradeId": "trade_stale_spot_edge",
+        "eventTs": "2026-02-14T15:44:50.890Z",
+        "bid": 0.91,
+        "ask": 0.95
+      },
+      {
+        "id": "quote_gme_halt_missing",
+        "tradeId": "trade_halted_quote_edge",
+        "eventTs": "2026-02-14T15:49:12.600Z",
+        "bid": null,
+        "ask": null
+      }
+    ],
+    "oi": [
+      {
+        "id": "oi_aapl_normal",
+        "tradeId": "trade_liquid_call_sweep",
+        "snapshotDate": "2026-02-14",
+        "value": 12950
+      },
+      {
+        "id": "oi_tsla_normal",
+        "tradeId": "trade_liquid_put_bid",
+        "snapshotDate": "2026-02-14",
+        "value": 8100
+      },
+      {
+        "id": "oi_nvda_zero",
+        "tradeId": "trade_zero_oi_new_listing",
+        "snapshotDate": "2026-02-14",
+        "value": 0
+      },
+      {
+        "id": "oi_spy_low",
+        "tradeId": "trade_crossed_market_edge",
+        "snapshotDate": "2026-02-14",
+        "value": 85
+      },
+      {
+        "id": "oi_qqq_normal",
+        "tradeId": "trade_stale_spot_edge",
+        "snapshotDate": "2026-02-14",
+        "value": 2300
+      },
+      {
+        "id": "oi_gme_missing",
+        "tradeId": "trade_halted_quote_edge",
+        "snapshotDate": "2026-02-14",
+        "value": null
+      }
+    ],
+    "spot": [
+      {
+        "id": "spot_aapl_aligned",
+        "tradeId": "trade_liquid_call_sweep",
+        "eventTs": "2026-02-14T14:31:05.000Z",
+        "price": 198.52
+      },
+      {
+        "id": "spot_tsla_aligned",
+        "tradeId": "trade_liquid_put_bid",
+        "eventTs": "2026-02-14T14:35:44.400Z",
+        "price": 223.14
+      },
+      {
+        "id": "spot_nvda_aligned",
+        "tradeId": "trade_zero_oi_new_listing",
+        "eventTs": "2026-02-14T15:01:10.800Z",
+        "price": 973.3
+      },
+      {
+        "id": "spot_spy_aligned",
+        "tradeId": "trade_crossed_market_edge",
+        "eventTs": "2026-02-14T15:05:02.900Z",
+        "price": 502.4
+      },
+      {
+        "id": "spot_qqq_stale",
+        "tradeId": "trade_stale_spot_edge",
+        "eventTs": "2026-02-14T15:43:15.000Z",
+        "price": 430.05
+      },
+      {
+        "id": "spot_gme_aligned",
+        "tradeId": "trade_halted_quote_edge",
+        "eventTs": "2026-02-14T15:49:12.500Z",
+        "price": 19.88
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "representative-liquid-flow",
+      "type": "representative",
+      "description": "Liquid names with standard quote/OI/spot alignment.",
+      "tradeIds": ["trade_liquid_call_sweep", "trade_liquid_put_bid"],
+      "quoteIds": ["quote_aapl_normal", "quote_tsla_normal"],
+      "oiIds": ["oi_aapl_normal", "oi_tsla_normal"],
+      "spotIds": ["spot_aapl_aligned", "spot_tsla_aligned"]
+    },
+    {
+      "id": "edge-zero-oi",
+      "type": "edge-case",
+      "description": "Contract listed with zero open interest.",
+      "tradeIds": ["trade_zero_oi_new_listing"],
+      "quoteIds": ["quote_nvda_wide"],
+      "oiIds": ["oi_nvda_zero"],
+      "spotIds": ["spot_nvda_aligned"]
+    },
+    {
+      "id": "edge-crossed-market",
+      "type": "edge-case",
+      "description": "Crossed bid/ask quote around execution.",
+      "tradeIds": ["trade_crossed_market_edge"],
+      "quoteIds": ["quote_spy_crossed"],
+      "oiIds": ["oi_spy_low"],
+      "spotIds": ["spot_spy_aligned"]
+    },
+    {
+      "id": "edge-stale-spot",
+      "type": "edge-case",
+      "description": "Underlying spot is stale versus trade timestamp.",
+      "tradeIds": ["trade_stale_spot_edge"],
+      "quoteIds": ["quote_qqq_normal"],
+      "oiIds": ["oi_qqq_normal"],
+      "spotIds": ["spot_qqq_stale"]
+    },
+    {
+      "id": "edge-halted-no-quote",
+      "type": "edge-case",
+      "description": "No valid quote and missing OI snapshot while trade prints.",
+      "tradeIds": ["trade_halted_quote_edge"],
+      "quoteIds": ["quote_gme_halt_missing"],
+      "oiIds": ["oi_gme_missing"],
+      "spotIds": ["spot_gme_aligned"]
+    }
+  ]
+}
