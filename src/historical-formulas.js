@@ -16,6 +16,38 @@ function parseUtcMs(isoTs) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+const MAX_BUCKET_CACHE_SIZE = 50000;
+const minuteBucketCache = new Map();
+const etClockCache = new Map();
+const etClockFormatter = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/New_York',
+  hour12: false,
+  hour: '2-digit',
+  minute: '2-digit',
+});
+
+function maybeClearCache(cache) {
+  if (cache.size >= MAX_BUCKET_CACHE_SIZE) {
+    cache.clear();
+  }
+}
+
+function tryExtractUtcMinuteKey(isoTs) {
+  if (typeof isoTs !== 'string') return null;
+  const value = isoTs.trim();
+  if (
+    value.length >= 17
+    && value[4] === '-'
+    && value[7] === '-'
+    && value[10] === 'T'
+    && value[13] === ':'
+    && value.endsWith('Z')
+  ) {
+    return value.slice(0, 16);
+  }
+  return null;
+}
+
 function computeValue(price, size) {
   const p = toFiniteNumber(price);
   const s = toFiniteNumber(size);
@@ -552,41 +584,60 @@ function computeSigScore({
 }
 
 function toMinuteBucketUtc(isoTs) {
+  const minuteKey = tryExtractUtcMinuteKey(isoTs);
+  if (minuteKey) {
+    const cached = minuteBucketCache.get(minuteKey);
+    if (cached) return cached;
+    maybeClearCache(minuteBucketCache);
+    const minuteBucket = `${minuteKey}:00.000Z`;
+    minuteBucketCache.set(minuteKey, minuteBucket);
+    return minuteBucket;
+  }
+
   const ms = parseUtcMs(isoTs);
   if (ms === null) return null;
   const floored = ms - (ms % 60000);
-  return new Date(floored).toISOString();
+  const flooredKey = String(floored);
+  const cached = minuteBucketCache.get(flooredKey);
+  if (cached) return cached;
+  maybeClearCache(minuteBucketCache);
+  const minuteBucket = new Date(floored).toISOString();
+  minuteBucketCache.set(flooredKey, minuteBucket);
+  return minuteBucket;
 }
 
 function getEtClock(isoTs) {
-  const dt = new Date(isoTs);
-  if (Number.isNaN(dt.getTime())) return null;
+  let cacheKey = tryExtractUtcMinuteKey(isoTs);
+  let dt = null;
+  if (cacheKey) {
+    const cached = etClockCache.get(cacheKey);
+    if (cached) return cached;
+    dt = new Date(`${cacheKey}:00.000Z`);
+  } else {
+    const ms = parseUtcMs(isoTs);
+    if (ms === null) return null;
+    const floored = ms - (ms % 60000);
+    cacheKey = String(floored);
+    const cached = etClockCache.get(cacheKey);
+    if (cached) return cached;
+    dt = new Date(floored);
+  }
 
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/New_York',
-    hour12: false,
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-
-  const parts = formatter.formatToParts(dt);
+  if (!dt || Number.isNaN(dt.getTime())) return null;
+  const parts = etClockFormatter.formatToParts(dt);
   const byType = {};
   parts.forEach((part) => {
     byType[part.type] = part.value;
   });
 
-  return {
-    year: Number(byType.year),
-    month: Number(byType.month),
-    day: Number(byType.day),
+  const resolved = {
     hour: Number(byType.hour),
     minute: Number(byType.minute),
-    second: Number(byType.second),
+    second: 0,
   };
+  maybeClearCache(etClockCache);
+  etClockCache.set(cacheKey, resolved);
+  return resolved;
 }
 
 function isAmSpikeWindow(isoTs) {
