@@ -8,15 +8,28 @@
   "scripts": {
     "start": "node src/server.js",
     "ingest:start": "node scripts/ingest-worker.js",
+    "options:init-layout": "node scripts/options/init-options-layout.js",
+    "options:download:top100-30d": "node scripts/backfill/backfill-options-top100-30d.js",
     "oi:sync": "node scripts/oi/sync-gov-oi.js",
     "rules:activate": "node scripts/rules/activate-rule-version.js",
     "sigscore:calibrate": "node scripts/sigscore/calibrate-unusual.js",
     "sigscore:calibrate:swing": "node scripts/sigscore/calibrate-swing.js",
+    "clickhouse:install": "bash scripts/clickhouse/install-clickhouse.sh status",
+    "clickhouse:start": "bash scripts/clickhouse/start-clickhouse.sh",
+    "clickhouse:stop": "bash scripts/clickhouse/stop-clickhouse.sh",
+    "clickhouse:status": "bash scripts/clickhouse/status-clickhouse.sh",
+    "clickhouse:move-to-external": "bash scripts/clickhouse/move-clickhouse-to-external.sh",
+    "clickhouse:init-schema": "bash scripts/clickhouse/init-options-schema.sh",
+    "clickhouse:import:sqlite": "bash scripts/clickhouse/import-from-sqlite.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
     "backfill:option-trade-quote": "node scripts/backfill/backfill-option-trade-quote.js",
-    "enrich:option-trades": "node scripts/backfill/enrich-option-trades.js"
+    "backfill:clickhouse:historical-days": "node scripts/backfill/backfill-clickhouse-historical-days.js",
+    "backfill:clickhouse:historical-days:parallel": "bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh",
+    "backfill:clickhouse:historical-days:pipeline": "bash scripts/backfill/backfill-clickhouse-historical-days-pipeline.sh",
+    "enrich:option-trades": "node scripts/backfill/enrich-option-trades.js",
+    "enrich:option-trades:parallel": "bash scripts/backfill/enrich-option-trades-parallel.sh"
   },
   "engines": {
     "node": ">=20"
