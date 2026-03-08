@@ -1039,6 +1039,10 @@ function shouldStreamClickHouseEnrichedWrites(env = process.env) {
   return String(env.CLICKHOUSE_ENRICH_STREAM_WRITE || '1') !== '0';
 }
 
+function shouldStreamClickHouseEnrichedReads(env = process.env) {
+  return String(env.CLICKHOUSE_ENRICH_STREAM_READ || '0') === '1';
+}
+
 function parseClickHouseEnrichStreamChunkSize(env = process.env) {
   const parsed = Number(env.CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE);
   if (Number.isFinite(parsed) && parsed >= 1) {
@@ -2063,11 +2067,20 @@ function seedClickHouseStateIntoSqlite(
   };
 }
 
+function parseClickHouseDeleteMutationSync(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_DELETE_MUTATION_SYNC);
+  if (Number.isFinite(parsed) && parsed >= 0 && parsed <= 2) {
+    return Math.trunc(parsed);
+  }
+  return 1;
+}
+
 function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
+  const mutationSync = parseClickHouseDeleteMutationSync(env);
   execClickHouseQuerySync(`
     ALTER TABLE options.${tableName}
     DELETE WHERE ${whereSql}
-    SETTINGS mutations_sync = 1
+    SETTINGS mutations_sync = ${mutationSync}
   `, params, env);
 }
 
@@ -3094,6 +3107,7 @@ function loadClickHouseTradeRowsForDay({
   env = process.env,
   queryRows = queryClickHouseRowsSync,
   includeRawPayloadJson = false,
+  onChunk = null,
 }) {
   const rawPayloadSelectSql = includeRawPayloadJson
     ? 'raw_payload_json AS rawPayloadJson,'
@@ -3131,18 +3145,26 @@ function loadClickHouseTradeRowsForDay({
     FROM options.option_trades
   `;
   const orderBySql = 'ORDER BY trade_ts_utc ASC, trade_id ASC';
+  const emitChunk = typeof onChunk === 'function'
+    ? onChunk
+    : null;
   const windowMinutes = parseClickHouseTradeReadWindowMinutes(env);
   if (windowMinutes <= 0 || windowMinutes >= 24 * 60) {
-    return queryRows(`
+    const rows = queryRows(`
       ${baseSelectSql}
       WHERE symbol = {symbol:String}
         AND trade_date = toDate({dayIso:String})
       ${orderBySql}
     `, { symbol, dayIso }, env);
+    if (emitChunk) {
+      if (rows.length > 0) emitChunk(rows);
+      return [];
+    }
+    return rows;
   }
 
   const windows = buildClickHouseTradeReadWindows(dayIso, windowMinutes);
-  const rows = [];
+  const rows = emitChunk ? null : [];
   windows.forEach(({ fromIso, toIso }) => {
     const chunkRows = queryRows(`
       ${baseSelectSql}
@@ -3152,11 +3174,15 @@ function loadClickHouseTradeRowsForDay({
       ${orderBySql}
     `, { symbol, fromIso, toIso }, env);
     if (chunkRows.length > 0) {
-      chunkRows.forEach((row) => rows.push(row));
+      if (emitChunk) {
+        emitChunk(chunkRows);
+      } else {
+        chunkRows.forEach((row) => rows.push(row));
+      }
     }
   });
 
-  return rows;
+  return rows || [];
 }
 
 function loadClickHouseStockRawRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
@@ -3664,44 +3690,7 @@ function parsePayload(jsonValue) {
   }
 }
 
-function buildMinuteStats(rows) {
-  const minuteMap = new Map();
-  const lastContractPrint = new Map();
-
-  rows.forEach((row) => {
-    const minuteBucket = toMinuteBucketUtc(row.tradeTsUtc);
-    if (!minuteBucket) return;
-
-    const existing = minuteMap.get(minuteBucket) || {
-      minuteBucket,
-      volume: 0,
-      bullish: 0,
-      bearish: 0,
-    };
-
-    const size = toFiniteNumber(row.size) || 0;
-    const contractKey = buildContractKey(row);
-    const previousPrint = lastContractPrint.get(contractKey) || null;
-    const execution = computeExecutionFlags({
-      ...row,
-      lastTradePrice: previousPrint ? previousPrint.tradePrice : null,
-      lastExecutionSide: previousPrint ? previousPrint.executionSide : null,
-    });
-    const sentiment = computeSentiment({ right: row.right, executionSide: execution.executionSide });
-    if (toFiniteNumber(row.price) !== null) {
-      lastContractPrint.set(contractKey, {
-        tradePrice: toFiniteNumber(row.price),
-        executionSide: execution.executionSide,
-      });
-    }
-
-    existing.volume += size;
-    if (sentiment === 'bullish') existing.bullish += 1;
-    if (sentiment === 'bearish') existing.bearish += 1;
-
-    minuteMap.set(minuteBucket, existing);
-  });
-
+function finalizeMinuteStatsMap(minuteMap) {
   const orderedBuckets = Array.from(minuteMap.keys()).sort((a, b) => Date.parse(a) - Date.parse(b));
 
   const volumeWindow = [];
@@ -3763,6 +3752,46 @@ function buildMinuteStats(rows) {
   });
 
   return statsByMinute;
+}
+
+function buildMinuteStats(rows) {
+  const minuteMap = new Map();
+  const lastContractPrint = new Map();
+
+  rows.forEach((row) => {
+    const minuteBucket = toMinuteBucketUtc(row.tradeTsUtc);
+    if (!minuteBucket) return;
+
+    const existing = minuteMap.get(minuteBucket) || {
+      minuteBucket,
+      volume: 0,
+      bullish: 0,
+      bearish: 0,
+    };
+
+    const size = toFiniteNumber(row.size) || 0;
+    const contractKey = buildContractKey(row);
+    const previousPrint = lastContractPrint.get(contractKey) || null;
+    const execution = computeExecutionFlags({
+      ...row,
+      lastTradePrice: previousPrint ? previousPrint.tradePrice : null,
+      lastExecutionSide: previousPrint ? previousPrint.executionSide : null,
+    });
+    const sentiment = computeSentiment({ right: row.right, executionSide: execution.executionSide });
+    if (toFiniteNumber(row.price) !== null) {
+      lastContractPrint.set(contractKey, {
+        tradePrice: toFiniteNumber(row.price),
+        executionSide: execution.executionSide,
+      });
+    }
+
+    existing.volume += size;
+    if (sentiment === 'bullish') existing.bullish += 1;
+    if (sentiment === 'bearish') existing.bearish += 1;
+
+    minuteMap.set(minuteBucket, existing);
+  });
+  return finalizeMinuteStatsMap(minuteMap);
 }
 
 function buildContractKey(row) {
@@ -5535,29 +5564,41 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
     : DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE;
   const minuteRollupState = scoringConfig.minuteRollupState || null;
   const metricStatusAccumulator = scoringConfig.metricStatusAccumulator || null;
-  const statsByMinute = buildMinuteStats(rawRows);
+  const rollingState = scoringConfig.rollingState || null;
+  const statsByMinute = scoringConfig.precomputedStatsByMinute instanceof Map
+    ? scoringConfig.precomputedStatsByMinute
+    : buildMinuteStats(rawRows);
 
-  const multilegIndices = detectHeuristicMultilegs(rawRows);
+  const disableHeuristicMultileg = Boolean(scoringConfig.disableHeuristicMultileg);
+  const multilegIndices = disableHeuristicMultileg
+    ? new Set()
+    : detectHeuristicMultilegs(rawRows);
 
-  const contractDayVolume = new Map();
-  const contractStatsMap = new Map();
-  const sideWindows = new Map();
-  const symbolPressureWindows = new Map();
-  const cpOiPressureWindows = new Map();
-  const runningCallIv = new Map();
-  const runningPutIv = new Map();
-  const spotLastSeenBySymbol = new Map();
-  const trendLastSeenBySymbol = new Map();
-  const lastContractPrint = new Map();
-  const featureBaselineUpdates = new Map();
+  const contractDayVolume = rollingState?.contractDayVolume || new Map();
+  const contractStatsMap = rollingState?.contractStatsMap || new Map();
+  const sideWindows = rollingState?.sideWindows || new Map();
+  const symbolPressureWindows = rollingState?.symbolPressureWindows || new Map();
+  const cpOiPressureWindows = rollingState?.cpOiPressureWindows || new Map();
+  const runningCallIv = rollingState?.runningCallIv || new Map();
+  const runningPutIv = rollingState?.runningPutIv || new Map();
+  const spotLastSeenBySymbol = rollingState?.spotLastSeenBySymbol || new Map();
+  const trendLastSeenBySymbol = rollingState?.trendLastSeenBySymbol || new Map();
+  const lastContractPrint = rollingState?.lastContractPrint || new Map();
+  const featureBaselineUpdates = rollingState?.featureBaselineUpdates || new Map();
 
-  const valueSamples = rawRows
-    .map((row) => computeValue(row.price, row.size))
-    .filter((value) => value !== null)
-    .sort((a, b) => a - b);
+  const valueSamples = Array.isArray(scoringConfig.precomputedValueSamples)
+    ? scoringConfig.precomputedValueSamples
+    : rawRows
+      .map((row) => computeValue(row.price, row.size))
+      .filter((value) => value !== null)
+      .sort((a, b) => a - b);
 
-  const minValue = valueSamples.length ? valueSamples[0] : 0;
-  const maxValue = valueSamples.length ? valueSamples[valueSamples.length - 1] : 0;
+  const minValue = Number.isFinite(Number(scoringConfig.precomputedMinValue))
+    ? Number(scoringConfig.precomputedMinValue)
+    : (valueSamples.length ? valueSamples[0] : 0);
+  const maxValue = Number.isFinite(Number(scoringConfig.precomputedMaxValue))
+    ? Number(scoringConfig.precomputedMaxValue)
+    : (valueSamples.length ? valueSamples[valueSamples.length - 1] : 0);
   const scoreModel = scoringConfig.scoringModel || 'v4_expanded';
   const scoreRuleVersion = scoringConfig.versionId
     || (scoreModel === 'v1_baseline' ? 'v1_baseline_default' : (scoreModel === 'v5_swing' ? 'v5_swing_default' : 'v4_expanded_default'));
@@ -6029,6 +6070,20 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
 
   flushRowConsumerBuffer();
 
+  if (rollingState) {
+    rollingState.contractDayVolume = contractDayVolume;
+    rollingState.contractStatsMap = contractStatsMap;
+    rollingState.sideWindows = sideWindows;
+    rollingState.symbolPressureWindows = symbolPressureWindows;
+    rollingState.cpOiPressureWindows = cpOiPressureWindows;
+    rollingState.runningCallIv = runningCallIv;
+    rollingState.runningPutIv = runningPutIv;
+    rollingState.spotLastSeenBySymbol = spotLastSeenBySymbol;
+    rollingState.trendLastSeenBySymbol = trendLastSeenBySymbol;
+    rollingState.lastContractPrint = lastContractPrint;
+    rollingState.featureBaselineUpdates = featureBaselineUpdates;
+  }
+
   return {
     rows: enrichedRows || [],
     rowCount,
@@ -6478,15 +6533,8 @@ function countClickHouseOptionGreeksRowsForDay({ symbol, dayIso, env = process.e
   return Number(rows?.[0]?.count || 0);
 }
 
-function loadClickHouseRawTradesForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = loadClickHouseTradeRowsForDay({
-    symbol,
-    dayIso,
-    env,
-    queryRows,
-    includeRawPayloadJson: false,
-  });
-  return rows.map((row) => ({
+function normalizeClickHouseRawTradeRow(row) {
+  const normalized = {
     tradeId: row.tradeId,
     tradeTsUtc: row.tradeTsUtc,
     symbol: row.symbol,
@@ -6502,7 +6550,122 @@ function loadClickHouseRawTradesForDay({ symbol, dayIso, env = process.env, quer
     payloadSpot: toFiniteNumber(row.payloadSpot),
     payloadOi: toFiniteNumber(row.payloadOi),
     rawPayloadJson: row.rawPayloadJson || '{}',
-  })).filter((row) => row.tradeId && row.tradeTsUtc && row.symbol && row.expiration && row.right);
+  };
+  if (!normalized.tradeId || !normalized.tradeTsUtc || !normalized.symbol || !normalized.expiration || !normalized.right) {
+    return null;
+  }
+  return normalized;
+}
+
+function loadClickHouseRawTradesForDay({
+  symbol,
+  dayIso,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+  onChunk = null,
+}) {
+  const emitChunk = typeof onChunk === 'function' ? onChunk : null;
+  const rows = loadClickHouseTradeRowsForDay({
+    symbol,
+    dayIso,
+    env,
+    queryRows,
+    includeRawPayloadJson: false,
+    onChunk: emitChunk
+      ? (chunkRows) => {
+        const normalizedChunk = chunkRows
+          .map((row) => normalizeClickHouseRawTradeRow(row))
+          .filter(Boolean);
+        if (normalizedChunk.length > 0) {
+          emitChunk(normalizedChunk);
+        }
+      }
+      : null,
+  });
+  if (emitChunk) return [];
+  return rows
+    .map((row) => normalizeClickHouseRawTradeRow(row))
+    .filter(Boolean);
+}
+
+function buildClickHouseStreamingPrecompute({
+  symbol,
+  dayIso,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
+  const minuteMap = new Map();
+  const lastContractPrint = new Map();
+  const valueSamples = [];
+  const payloadSpotBySymbol = new Map();
+  const payloadOiByContract = new Map();
+  let rowCount = 0;
+
+  loadClickHouseRawTradesForDay({
+    symbol,
+    dayIso,
+    env,
+    queryRows,
+    onChunk: (rows) => {
+      rows.forEach((row) => {
+        rowCount += 1;
+        const minuteBucket = toMinuteBucketUtc(row.tradeTsUtc);
+        if (minuteBucket) {
+          const existing = minuteMap.get(minuteBucket) || {
+            minuteBucket,
+            volume: 0,
+            bullish: 0,
+            bearish: 0,
+          };
+          const size = toFiniteNumber(row.size) || 0;
+          const contractKey = buildContractKey(row);
+          const previousPrint = lastContractPrint.get(contractKey) || null;
+          const execution = computeExecutionFlags({
+            ...row,
+            lastTradePrice: previousPrint ? previousPrint.tradePrice : null,
+            lastExecutionSide: previousPrint ? previousPrint.executionSide : null,
+          });
+          const sentiment = computeSentiment({ right: row.right, executionSide: execution.executionSide });
+          if (toFiniteNumber(row.price) !== null) {
+            lastContractPrint.set(contractKey, {
+              tradePrice: toFiniteNumber(row.price),
+              executionSide: execution.executionSide,
+            });
+          }
+          existing.volume += size;
+          if (sentiment === 'bullish') existing.bullish += 1;
+          if (sentiment === 'bearish') existing.bearish += 1;
+          minuteMap.set(minuteBucket, existing);
+        }
+
+        const value = computeValue(row.price, row.size);
+        if (value !== null) {
+          valueSamples.push(value);
+        }
+
+        const payloadSpot = toFiniteNumber(row.payloadSpot);
+        if (payloadSpot !== null && !payloadSpotBySymbol.has(row.symbol)) {
+          payloadSpotBySymbol.set(row.symbol, payloadSpot);
+        }
+
+        const payloadOi = toFiniteNumber(row.payloadOi);
+        if (payloadOi !== null) {
+          payloadOiByContract.set(buildContractKey(row), Math.trunc(payloadOi));
+        }
+      });
+    },
+  });
+
+  valueSamples.sort((left, right) => left - right);
+  return {
+    statsByMinute: finalizeMinuteStatsMap(minuteMap),
+    valueSamples,
+    minValue: valueSamples.length ? valueSamples[0] : 0,
+    maxValue: valueSamples.length ? valueSamples[valueSamples.length - 1] : 0,
+    payloadSpotBySymbol,
+    payloadOiByContract,
+    rowCount,
+  };
 }
 
 function loadClickHouseContractOiFromRaw({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
@@ -8151,18 +8314,19 @@ async function ensureEnrichedForDayInClickHouse({
     };
   }
 
-  let rawRows = loadClickHouseRawTradesForDay({ symbol, dayIso, env });
-  const supplementalMetrics = buildSupplementalMetricLookupFromClickHouse({
-    symbol,
-    dayIso,
-    rawRows,
-    env,
-  });
   const streamEnrichedRows = shouldStreamClickHouseEnrichedWrites(env);
+  const streamEnrichedRead = shouldStreamClickHouseEnrichedReads(env);
+  if (streamEnrichedRead && !streamEnrichedRows) {
+    throw new Error('clickhouse_stream_read_requires_stream_write');
+  }
   const metricStatusAccumulator = createMetricStatusAccumulator(markPartial);
   const enrichChunkSize = parseClickHouseEnrichStreamChunkSize(env);
   const minuteRollupState = createMinuteDerivedRollupState();
   const enrichedInsertColumns = ['trade_id', 'trade_ts_utc', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'value', 'dte', 'spot', 'otm_pct', 'day_volume', 'oi', 'vol_oi_ratio', 'repeat3m', 'sig_score', 'sentiment', 'execution_side', 'symbol_vol_1m', 'symbol_vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'chips_json', 'rule_version', 'score_quality', 'missing_metrics_json', 'enriched_at_utc', 'is_sweep', 'is_multileg', 'minute_of_day_et', 'delta', 'implied_vol', 'time_norm', 'delta_norm', 'iv_skew_norm', 'value_shock_norm', 'dte_swing_norm', 'flow_imbalance_norm', 'delta_pressure_norm', 'cp_oi_pressure_norm', 'iv_skew_surface_norm', 'iv_term_slope_norm', 'underlying_trend_confirm_norm', 'liquidity_quality_norm', 'multileg_penalty_norm', 'sig_score_components_json'];
+  let rawRows = [];
+  let supplementalMetrics = null;
+  let built = null;
+  let minuteRollupsOverride = null;
 
   if (streamEnrichedRows) {
     deleteClickHouseScope(
@@ -8173,7 +8337,7 @@ async function ensureEnrichedForDayInClickHouse({
     );
   }
 
-  const buildConfig = {
+  const baseBuildConfig = {
     ...activeRuleConfig,
     dayIso,
     minuteRollupState: streamEnrichedRows ? minuteRollupState : null,
@@ -8193,12 +8357,75 @@ async function ensureEnrichedForDayInClickHouse({
       }
       : null,
   };
-  const built = buildEnrichedRows(rawRows, activeRuleConfig.thresholds, supplementalMetrics, buildConfig);
-  const minuteRollupsOverride = streamEnrichedRows
-    ? finalizeMinuteDerivedRollups(minuteRollupState)
-    : null;
 
-  rawRows = [];
+  if (streamEnrichedRead) {
+    const precomputed = buildClickHouseStreamingPrecompute({ symbol, dayIso, env });
+    supplementalMetrics = buildSupplementalMetricLookupFromClickHouse({
+      symbol,
+      dayIso,
+      rawRows: [],
+      env,
+    });
+    precomputed.payloadSpotBySymbol.forEach((value, rowSymbol) => {
+      if (!supplementalMetrics.spotBySymbol.has(rowSymbol)) {
+        supplementalMetrics.spotBySymbol.set(rowSymbol, value);
+      }
+    });
+    precomputed.payloadOiByContract.forEach((value, key) => {
+      if (!supplementalMetrics.oiByContract.has(key)) {
+        supplementalMetrics.oiByContract.set(key, value);
+      }
+    });
+
+    const rollingState = {};
+    let streamedRowCount = 0;
+    loadClickHouseRawTradesForDay({
+      symbol,
+      dayIso,
+      env,
+      onChunk: (chunkRows) => {
+        const chunkBuilt = buildEnrichedRows(
+          chunkRows,
+          activeRuleConfig.thresholds,
+          supplementalMetrics,
+          {
+            ...baseBuildConfig,
+            rollingState,
+            precomputedStatsByMinute: precomputed.statsByMinute,
+            precomputedValueSamples: precomputed.valueSamples,
+            precomputedMinValue: precomputed.minValue,
+            precomputedMaxValue: precomputed.maxValue,
+            disableHeuristicMultileg: true,
+          },
+        );
+        streamedRowCount += Number(chunkBuilt.rowCount || 0);
+      },
+    });
+
+    built = {
+      rows: [],
+      rowCount: streamedRowCount,
+      contractStatsMap: rollingState.contractStatsMap || new Map(),
+      statsByMinute: precomputed.statsByMinute || new Map(),
+      featureBaselineUpdates: rollingState.featureBaselineUpdates || new Map(),
+    };
+    minuteRollupsOverride = streamEnrichedRows
+      ? finalizeMinuteDerivedRollups(minuteRollupState)
+      : null;
+  } else {
+    rawRows = loadClickHouseRawTradesForDay({ symbol, dayIso, env });
+    supplementalMetrics = buildSupplementalMetricLookupFromClickHouse({
+      symbol,
+      dayIso,
+      rawRows,
+      env,
+    });
+    built = buildEnrichedRows(rawRows, activeRuleConfig.thresholds, supplementalMetrics, baseBuildConfig);
+    minuteRollupsOverride = streamEnrichedRows
+      ? finalizeMinuteDerivedRollups(minuteRollupState)
+      : null;
+    rawRows = [];
+  }
 
   persistClickHouseEnrichedDayState({
     symbol,
