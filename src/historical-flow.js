@@ -87,6 +87,22 @@ const DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES = 60;
 const DEFAULT_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES = 5;
 const DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE = 5000;
 const DEFAULT_CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES = 10;
+const DEFAULT_CLICKHOUSE_CHUNK_STATUS_MINUTES = 10;
+
+const DOWNLOAD_CHUNK_STREAMS = Object.freeze({
+  TRADE_QUOTE_1M: 'option_trade_quote_1m',
+  OPTION_QUOTE_1M: 'option_quote_1m',
+  STOCK_PRICE_1M: 'stock_price_1m',
+});
+const ENRICH_CHUNK_STREAM = 'option_trade_enriched_1m';
+
+const CHUNK_STATUS_STATE = Object.freeze({
+  AVAILABLE: 'available',
+  COMPLETE: 'complete',
+  PARTIAL: 'partial',
+  MISSING: 'missing',
+  EXTRA: 'extra',
+});
 
 const METRIC_NAMES = Object.freeze([
   'enrichedRows',
@@ -680,6 +696,17 @@ function floorIsoToMinute(isoValue) {
   return parsed.toISOString();
 }
 
+function floorIsoToChunk(isoValue, chunkMinutes) {
+  const parsed = new Date(isoValue);
+  const normalizedChunkMinutes = Number.isFinite(Number(chunkMinutes))
+    ? Math.max(1, Math.trunc(Number(chunkMinutes)))
+    : 1;
+  if (Number.isNaN(parsed.getTime())) return null;
+  const chunkMs = normalizedChunkMinutes * 60000;
+  const flooredMs = Math.floor(parsed.getTime() / chunkMs) * chunkMs;
+  return new Date(flooredMs).toISOString();
+}
+
 function isoToTimeHms(isoValue) {
   const parsed = new Date(isoValue);
   if (Number.isNaN(parsed.getTime())) return null;
@@ -692,6 +719,37 @@ function addMinutesToIso(isoValue, minutes) {
   if (Number.isNaN(parsed.getTime()) || !Number.isFinite(minuteDelta)) return null;
   parsed.setUTCMinutes(parsed.getUTCMinutes() + Math.trunc(minuteDelta), 0, 0);
   return parsed.toISOString();
+}
+
+function buildChunkMapFromMinuteRows(minuteRows = [], chunkMinutes = 10) {
+  const map = new Map();
+  const normalizedChunkMinutes = Number.isFinite(Number(chunkMinutes))
+    ? Math.max(1, Math.trunc(Number(chunkMinutes)))
+    : 10;
+
+  minuteRows.forEach((row) => {
+    const minuteBucketUtc = String(row?.minuteBucketUtc || '').trim();
+    if (!minuteBucketUtc) return;
+    const rowCount = Math.max(0, Math.trunc(Number(row?.rowCount || 0)));
+    if (rowCount === 0) return;
+
+    const chunkStartUtc = floorIsoToChunk(minuteBucketUtc, normalizedChunkMinutes);
+    if (!chunkStartUtc) return;
+    const chunkEndUtc = addMinutesToIso(chunkStartUtc, normalizedChunkMinutes);
+    if (!chunkEndUtc) return;
+
+    const existing = map.get(chunkStartUtc) || {
+      chunkStartUtc,
+      chunkEndUtc,
+      rowCount: 0,
+      minuteCount: 0,
+    };
+    existing.rowCount += rowCount;
+    existing.minuteCount += 1;
+    map.set(chunkStartUtc, existing);
+  });
+
+  return map;
 }
 
 function normalizeThetaRow(row, symbol, dayIso) {
@@ -1076,6 +1134,14 @@ function parseClickHouseEnrichProgressBatchMinutes(env = process.env) {
     return Math.max(1, Math.min(120, Math.trunc(parsed)));
   }
   return DEFAULT_CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES;
+}
+
+function parseClickHouseChunkStatusMinutes(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_CHUNK_STATUS_MINUTES);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(120, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_CHUNK_STATUS_MINUTES;
 }
 
 function createClickHouseEnrichBatchProgressLogger({
@@ -3144,6 +3210,48 @@ const CLICKHOUSE_SUPPORT_TABLE_DDLS = Object.freeze([
     )
     ENGINE = ReplacingMergeTree(updated_at_utc)
     ORDER BY (symbol, minute_of_day_et, feature_name)
+  `,
+  `
+    CREATE TABLE IF NOT EXISTS options.option_download_chunk_status
+    (
+      symbol LowCardinality(String),
+      trade_date_utc Date,
+      stream_name LowCardinality(String),
+      chunk_start_utc DateTime64(3, 'UTC'),
+      chunk_end_utc DateTime64(3, 'UTC'),
+      chunk_minutes UInt16,
+      row_count UInt64,
+      minute_count UInt16,
+      status LowCardinality(String),
+      source_endpoint Nullable(String),
+      last_error Nullable(String),
+      updated_at_utc DateTime64(3, 'UTC')
+    )
+    ENGINE = ReplacingMergeTree(updated_at_utc)
+    PARTITION BY toYYYYMM(trade_date_utc)
+    ORDER BY (symbol, trade_date_utc, stream_name, chunk_start_utc)
+  `,
+  `
+    CREATE TABLE IF NOT EXISTS options.option_enrich_chunk_status
+    (
+      symbol LowCardinality(String),
+      trade_date_utc Date,
+      stream_name LowCardinality(String),
+      chunk_start_utc DateTime64(3, 'UTC'),
+      chunk_end_utc DateTime64(3, 'UTC'),
+      chunk_minutes UInt16,
+      input_row_count UInt64,
+      output_row_count UInt64,
+      input_minute_count UInt16,
+      output_minute_count UInt16,
+      status LowCardinality(String),
+      rule_version Nullable(String),
+      last_error Nullable(String),
+      updated_at_utc DateTime64(3, 'UTC')
+    )
+    ENGINE = ReplacingMergeTree(updated_at_utc)
+    PARTITION BY toYYYYMM(trade_date_utc)
+    ORDER BY (symbol, trade_date_utc, stream_name, chunk_start_utc)
   `,
   `
     CREATE TABLE IF NOT EXISTS options.option_open_interest_reference
@@ -6679,6 +6787,251 @@ function countClickHouseOptionGreeksRowsForDay({ symbol, dayIso, env = process.e
   return Number(rows?.[0]?.count || 0);
 }
 
+function normalizeClickHouseMinuteCountRows(rows = []) {
+  if (!Array.isArray(rows) || rows.length === 0) return [];
+  return rows
+    .map((row) => {
+      const minuteBucketUtc = floorIsoToMinute(row?.minuteBucketUtc);
+      const rowCount = Math.max(0, Math.trunc(Number(row?.rowCount || 0)));
+      if (!minuteBucketUtc || rowCount <= 0) return null;
+      return {
+        minuteBucketUtc,
+        rowCount,
+      };
+    })
+    .filter(Boolean);
+}
+
+function loadClickHouseTradeMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  const rows = queryRows(`
+    SELECT
+      concat(replaceAll(toString(toStartOfMinute(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+      count() AS rowCount
+    FROM options.option_trades
+    WHERE symbol = {symbol:String}
+      AND trade_date = toDate({dayIso:String})
+    GROUP BY toStartOfMinute(trade_ts_utc)
+    ORDER BY toStartOfMinute(trade_ts_utc) ASC
+  `, { symbol, dayIso }, env);
+  return normalizeClickHouseMinuteCountRows(rows);
+}
+
+function loadClickHouseOptionQuoteMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  const rows = queryRows(`
+    SELECT
+      concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+      count() AS rowCount
+    FROM options.option_quote_minute_raw
+    WHERE symbol = {symbol:String}
+      AND trade_date_utc = toDate({dayIso:String})
+    GROUP BY minuteBucketUtc
+    ORDER BY minuteBucketUtc ASC
+  `, { symbol, dayIso }, env);
+  return normalizeClickHouseMinuteCountRows(rows);
+}
+
+function loadClickHouseStockMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  const rows = queryRows(`
+    SELECT
+      concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+      count() AS rowCount
+    FROM options.stock_ohlc_minute_raw
+    WHERE symbol = {symbol:String}
+      AND trade_date_utc = toDate({dayIso:String})
+    GROUP BY minuteBucketUtc
+    ORDER BY minuteBucketUtc ASC
+  `, { symbol, dayIso }, env);
+  return normalizeClickHouseMinuteCountRows(rows);
+}
+
+function loadClickHouseEnrichedMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  const rows = queryRows(`
+    SELECT
+      concat(replaceAll(toString(toStartOfMinute(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+      count() AS rowCount
+    FROM options.option_trade_enriched
+    WHERE symbol = {symbol:String}
+      AND trade_date = toDate({dayIso:String})
+    GROUP BY toStartOfMinute(trade_ts_utc)
+    ORDER BY toStartOfMinute(trade_ts_utc) ASC
+  `, { symbol, dayIso }, env);
+  return normalizeClickHouseMinuteCountRows(rows);
+}
+
+function loadClickHouseDownloadMinuteCountRowsForStream({
+  symbol,
+  dayIso,
+  streamName,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
+  switch (streamName) {
+    case DOWNLOAD_CHUNK_STREAMS.TRADE_QUOTE_1M:
+      return loadClickHouseTradeMinuteCountRowsForDay({ symbol, dayIso, env, queryRows });
+    case DOWNLOAD_CHUNK_STREAMS.OPTION_QUOTE_1M:
+      return loadClickHouseOptionQuoteMinuteCountRowsForDay({ symbol, dayIso, env, queryRows });
+    case DOWNLOAD_CHUNK_STREAMS.STOCK_PRICE_1M:
+      return loadClickHouseStockMinuteCountRowsForDay({ symbol, dayIso, env, queryRows });
+    default:
+      throw new Error(`unsupported_download_chunk_stream:${streamName}`);
+  }
+}
+
+function upsertClickHouseDownloadChunkStatusForStream({
+  symbol,
+  dayIso,
+  streamName,
+  sourceEndpoint = null,
+  lastError = null,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
+  ensureClickHouseSupportSchema(env);
+  const chunkMinutes = parseClickHouseChunkStatusMinutes(env);
+  const minuteRows = loadClickHouseDownloadMinuteCountRowsForStream({
+    symbol,
+    dayIso,
+    streamName,
+    env,
+    queryRows,
+  });
+  const chunkRows = Array.from(buildChunkMapFromMinuteRows(minuteRows, chunkMinutes).values())
+    .sort((left, right) => Date.parse(left.chunkStartUtc) - Date.parse(right.chunkStartUtc));
+  const nowIso = new Date().toISOString();
+
+  replaceClickHouseDayRows({
+    tableName: 'option_download_chunk_status',
+    whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String}) AND stream_name = {streamName:String}',
+    deleteParams: { symbol, dayIso, streamName },
+    columns: [
+      'symbol',
+      'trade_date_utc',
+      'stream_name',
+      'chunk_start_utc',
+      'chunk_end_utc',
+      'chunk_minutes',
+      'row_count',
+      'minute_count',
+      'status',
+      'source_endpoint',
+      'last_error',
+      'updated_at_utc',
+    ],
+    rows: chunkRows.map((row) => ({
+      symbol,
+      trade_date_utc: dayIso,
+      stream_name: streamName,
+      chunk_start_utc: row.chunkStartUtc,
+      chunk_end_utc: row.chunkEndUtc,
+      chunk_minutes: chunkMinutes,
+      row_count: row.rowCount,
+      minute_count: row.minuteCount,
+      status: CHUNK_STATUS_STATE.AVAILABLE,
+      source_endpoint: sourceEndpoint,
+      last_error: lastError,
+      updated_at_utc: nowIso,
+    })),
+    env,
+  });
+
+  return {
+    streamName,
+    chunkMinutes,
+    chunkCount: chunkRows.length,
+    rowCount: chunkRows.reduce((acc, row) => acc + row.rowCount, 0),
+    minuteCount: chunkRows.reduce((acc, row) => acc + row.minuteCount, 0),
+  };
+}
+
+function resolveEnrichChunkStatus(inputRowCount, outputRowCount) {
+  if (inputRowCount <= 0 && outputRowCount > 0) return CHUNK_STATUS_STATE.EXTRA;
+  if (inputRowCount <= 0 && outputRowCount <= 0) return CHUNK_STATUS_STATE.AVAILABLE;
+  if (outputRowCount === inputRowCount) return CHUNK_STATUS_STATE.COMPLETE;
+  if (outputRowCount <= 0) return CHUNK_STATUS_STATE.MISSING;
+  if (outputRowCount < inputRowCount) return CHUNK_STATUS_STATE.PARTIAL;
+  return CHUNK_STATUS_STATE.EXTRA;
+}
+
+function upsertClickHouseEnrichChunkStatusForDay({
+  symbol,
+  dayIso,
+  ruleVersion = null,
+  lastError = null,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
+  ensureClickHouseSupportSchema(env);
+  const chunkMinutes = parseClickHouseChunkStatusMinutes(env);
+  const inputChunkMap = buildChunkMapFromMinuteRows(
+    loadClickHouseTradeMinuteCountRowsForDay({ symbol, dayIso, env, queryRows }),
+    chunkMinutes,
+  );
+  const outputChunkMap = buildChunkMapFromMinuteRows(
+    loadClickHouseEnrichedMinuteCountRowsForDay({ symbol, dayIso, env, queryRows }),
+    chunkMinutes,
+  );
+  const chunkStarts = Array.from(new Set([...inputChunkMap.keys(), ...outputChunkMap.keys()]))
+    .sort((left, right) => Date.parse(left) - Date.parse(right));
+  const nowIso = new Date().toISOString();
+
+  replaceClickHouseDayRows({
+    tableName: 'option_enrich_chunk_status',
+    whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String}) AND stream_name = {streamName:String}',
+    deleteParams: { symbol, dayIso, streamName: ENRICH_CHUNK_STREAM },
+    columns: [
+      'symbol',
+      'trade_date_utc',
+      'stream_name',
+      'chunk_start_utc',
+      'chunk_end_utc',
+      'chunk_minutes',
+      'input_row_count',
+      'output_row_count',
+      'input_minute_count',
+      'output_minute_count',
+      'status',
+      'rule_version',
+      'last_error',
+      'updated_at_utc',
+    ],
+    rows: chunkStarts.map((chunkStartUtc) => {
+      const inputChunk = inputChunkMap.get(chunkStartUtc) || null;
+      const outputChunk = outputChunkMap.get(chunkStartUtc) || null;
+      const chunkEndUtc = inputChunk?.chunkEndUtc
+        || outputChunk?.chunkEndUtc
+        || addMinutesToIso(chunkStartUtc, chunkMinutes);
+      const inputRowCount = Math.max(0, Math.trunc(Number(inputChunk?.rowCount || 0)));
+      const outputRowCount = Math.max(0, Math.trunc(Number(outputChunk?.rowCount || 0)));
+      const inputMinuteCount = Math.max(0, Math.trunc(Number(inputChunk?.minuteCount || 0)));
+      const outputMinuteCount = Math.max(0, Math.trunc(Number(outputChunk?.minuteCount || 0)));
+      return {
+        symbol,
+        trade_date_utc: dayIso,
+        stream_name: ENRICH_CHUNK_STREAM,
+        chunk_start_utc: chunkStartUtc,
+        chunk_end_utc: chunkEndUtc,
+        chunk_minutes: chunkMinutes,
+        input_row_count: inputRowCount,
+        output_row_count: outputRowCount,
+        input_minute_count: inputMinuteCount,
+        output_minute_count: outputMinuteCount,
+        status: resolveEnrichChunkStatus(inputRowCount, outputRowCount),
+        rule_version: ruleVersion,
+        last_error: lastError,
+        updated_at_utc: nowIso,
+      };
+    }),
+    env,
+  });
+
+  return {
+    chunkMinutes,
+    chunkCount: chunkStarts.length,
+    inputRowCount: chunkStarts.reduce((acc, chunkStartUtc) => acc + Math.max(0, Math.trunc(Number(inputChunkMap.get(chunkStartUtc)?.rowCount || 0))), 0),
+    outputRowCount: chunkStarts.reduce((acc, chunkStartUtc) => acc + Math.max(0, Math.trunc(Number(outputChunkMap.get(chunkStartUtc)?.rowCount || 0))), 0),
+  };
+}
+
 function normalizeClickHouseRawTradeRow(row) {
   const normalized = {
     tradeId: row.tradeId,
@@ -7136,6 +7489,13 @@ async function syncThetaTradesToClickHouse({
       sourceEndpoint: resolveThetaCalendarEndpoint(dayIso, env),
       env,
     });
+    upsertClickHouseDownloadChunkStatusForStream({
+      symbol,
+      dayIso,
+      streamName: DOWNLOAD_CHUNK_STREAMS.TRADE_QUOTE_1M,
+      sourceEndpoint: resolveThetaCalendarEndpoint(dayIso, env),
+      env,
+    });
     return {
       synced: true,
       reason: 'no_data',
@@ -7374,6 +7734,13 @@ async function syncThetaTradesToClickHouse({
       sourceEndpoint: endpoints[0] || null,
       env,
     });
+    upsertClickHouseDownloadChunkStatusForStream({
+      symbol,
+      dayIso,
+      streamName: DOWNLOAD_CHUNK_STREAMS.TRADE_QUOTE_1M,
+      sourceEndpoint: endpoints[0] || null,
+      env,
+    });
     return {
       synced: true,
       reason: 'no_data',
@@ -7397,6 +7764,13 @@ async function syncThetaTradesToClickHouse({
     sourceEndpoint: endpoints[0] || null,
     env,
   });
+  upsertClickHouseDownloadChunkStatusForStream({
+    symbol,
+    dayIso,
+    streamName: DOWNLOAD_CHUNK_STREAMS.TRADE_QUOTE_1M,
+    sourceEndpoint: endpoints[0] || null,
+    env,
+  });
 
   return {
     synced: true,
@@ -7415,6 +7789,13 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
       cacheStats.stockHit += 1;
       if (fromRaw.latestSpot !== null) cacheStats.spotHit += 1;
     }
+    upsertClickHouseDownloadChunkStatusForStream({
+      symbol,
+      dayIso,
+      streamName: DOWNLOAD_CHUNK_STREAMS.STOCK_PRICE_1M,
+      sourceEndpoint: null,
+      env,
+    });
     return fromRaw;
   }
 
@@ -7473,6 +7854,13 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
     if (reloaded.latestSpot !== null) cacheStats.spotHit += 1;
     else cacheStats.spotMiss += 1;
   }
+  upsertClickHouseDownloadChunkStatusForStream({
+    symbol,
+    dayIso,
+    streamName: DOWNLOAD_CHUNK_STREAMS.STOCK_PRICE_1M,
+    sourceEndpoint: endpoint,
+    env,
+  });
 
   return reloaded;
 }
@@ -7481,6 +7869,13 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
   const resumeCursor = getClickHouseOptionQuoteResumeCursor({ symbol, dayIso, env });
   const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
   if (sessionWindow && sessionWindow.isOpen === false) {
+    upsertClickHouseDownloadChunkStatusForStream({
+      symbol,
+      dayIso,
+      streamName: DOWNLOAD_CHUNK_STREAMS.OPTION_QUOTE_1M,
+      sourceEndpoint: resolveThetaCalendarEndpoint(dayIso, env),
+      env,
+    });
     return true;
   }
   const requestWindows = resolveThetaTimeWindowsForSymbol(symbol, {
@@ -7501,6 +7896,17 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     ))
     .filter(Boolean);
   if (endpoints.length === 0) return false;
+  const defaultSourceEndpoint = endpoints[0] || null;
+  const refreshDownloadChunkStatus = (sourceEndpoint = defaultSourceEndpoint, lastError = null) => {
+    upsertClickHouseDownloadChunkStatusForStream({
+      symbol,
+      dayIso,
+      streamName: DOWNLOAD_CHUNK_STREAMS.OPTION_QUOTE_1M,
+      sourceEndpoint,
+      lastError,
+      env,
+    });
+  };
   const columns = [
     'symbol',
     'trade_date_utc',
@@ -7617,6 +8023,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) continue;
+        refreshDownloadChunkStatus(endpoint, `http_${response.status}`);
         return false;
       }
       flushChunk();
@@ -7648,6 +8055,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) continue;
+        refreshDownloadChunkStatus(endpoint, `http_${response.status}`);
         return false;
       }
 
@@ -7688,6 +8096,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     }
     flushChunk();
   }
+  refreshDownloadChunkStatus(defaultSourceEndpoint, null);
   if (insertedRows > 0) return true;
   return countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }) > 0;
 }
@@ -8453,6 +8862,12 @@ async function ensureEnrichedForDayInClickHouse({
         env,
       });
     }
+    upsertClickHouseEnrichChunkStatusForDay({
+      symbol,
+      dayIso,
+      ruleVersion: activeRuleConfig.versionId,
+      env,
+    });
 
     return {
       synced: false,
@@ -8608,6 +9023,12 @@ async function ensureEnrichedForDayInClickHouse({
     rows: { length: rowCount },
     metricStatuses,
     markPartial,
+    env,
+  });
+  upsertClickHouseEnrichChunkStatusForDay({
+    symbol,
+    dayIso,
+    ruleVersion: activeRuleConfig.versionId,
     env,
   });
 

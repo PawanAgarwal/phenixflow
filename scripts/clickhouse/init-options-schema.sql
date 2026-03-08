@@ -284,6 +284,46 @@ ENGINE = ReplacingMergeTree(last_sync_at_utc)
 PARTITION BY toYYYYMM(trade_date_utc)
 ORDER BY (symbol, trade_date_utc, metric_name);
 
+CREATE TABLE IF NOT EXISTS options.option_download_chunk_status
+(
+  symbol LowCardinality(String),
+  trade_date_utc Date,
+  stream_name LowCardinality(String),
+  chunk_start_utc DateTime64(3, 'UTC'),
+  chunk_end_utc DateTime64(3, 'UTC'),
+  chunk_minutes UInt16,
+  row_count UInt64,
+  minute_count UInt16,
+  status LowCardinality(String),
+  source_endpoint Nullable(String),
+  last_error Nullable(String),
+  updated_at_utc DateTime64(3, 'UTC')
+)
+ENGINE = ReplacingMergeTree(updated_at_utc)
+PARTITION BY toYYYYMM(trade_date_utc)
+ORDER BY (symbol, trade_date_utc, stream_name, chunk_start_utc);
+
+CREATE TABLE IF NOT EXISTS options.option_enrich_chunk_status
+(
+  symbol LowCardinality(String),
+  trade_date_utc Date,
+  stream_name LowCardinality(String),
+  chunk_start_utc DateTime64(3, 'UTC'),
+  chunk_end_utc DateTime64(3, 'UTC'),
+  chunk_minutes UInt16,
+  input_row_count UInt64,
+  output_row_count UInt64,
+  input_minute_count UInt16,
+  output_minute_count UInt16,
+  status LowCardinality(String),
+  rule_version Nullable(String),
+  last_error Nullable(String),
+  updated_at_utc DateTime64(3, 'UTC')
+)
+ENGINE = ReplacingMergeTree(updated_at_utc)
+PARTITION BY toYYYYMM(trade_date_utc)
+ORDER BY (symbol, trade_date_utc, stream_name, chunk_start_utc);
+
 CREATE TABLE IF NOT EXISTS options.option_symbol_status
 (
   symbol LowCardinality(String),
