@@ -83,6 +83,8 @@ const DEFAULT_SUPPLEMENTAL_CACHE_TTL_HOURS = 24;
 const DEFAULT_SUPPLEMENTAL_CONCURRENCY = 4;
 const DEFAULT_TREND_FALLBACK_MAX_LAG_MINUTES = 480;
 const DEFAULT_GREEKS_CONTRACT_FALLBACK_LIMIT = 200;
+const DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES = 60;
+const DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE = 5000;
 
 const METRIC_NAMES = Object.freeze([
   'enrichedRows',
@@ -1024,6 +1026,49 @@ function parseLargeSymbolWindowMinutes(env = process.env) {
   return DEFAULT_THETADATA_LARGE_SYMBOL_WINDOW_MINUTES;
 }
 
+function parseClickHouseTradeReadWindowMinutes(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_TRADE_READ_WINDOW_MINUTES);
+  if (Number.isFinite(parsed) && parsed === 0) return 0;
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(24 * 60, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES;
+}
+
+function shouldStreamClickHouseEnrichedWrites(env = process.env) {
+  return String(env.CLICKHOUSE_ENRICH_STREAM_WRITE || '1') !== '0';
+}
+
+function parseClickHouseEnrichStreamChunkSize(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(250, Math.min(50000, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE;
+}
+
+function buildClickHouseTradeReadWindows(dayIso, windowMinutes) {
+  const dayStartMs = Date.parse(`${dayIso}T00:00:00.000Z`);
+  if (!Number.isFinite(dayStartMs)) return [];
+
+  const normalizedWindowMinutes = Number.isFinite(windowMinutes)
+    ? Math.max(1, Math.min(24 * 60, Math.trunc(windowMinutes)))
+    : DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES;
+  const windowMs = normalizedWindowMinutes * 60000;
+  const dayEndMs = dayStartMs + (24 * 60 * 60000);
+  const windows = [];
+
+  for (let fromMs = dayStartMs; fromMs < dayEndMs; fromMs += windowMs) {
+    const toMs = Math.min(dayEndMs, fromMs + windowMs);
+    windows.push({
+      fromIso: new Date(fromMs).toISOString(),
+      toIso: new Date(toMs).toISOString(),
+    });
+  }
+
+  return windows;
+}
+
 function parseThetaCalendarTimeoutMs(env = process.env) {
   const parsed = Number(env.THETADATA_CALENDAR_TIMEOUT_MS);
   if (Number.isFinite(parsed) && parsed >= 1000) {
@@ -1912,7 +1957,13 @@ function seedClickHouseStateIntoSqlite(
   let greeksRows = [];
 
   if (includeDayState) {
-    tradeRows = loadClickHouseTradeRowsForDay({ symbol, dayIso, env, queryRows });
+    tradeRows = loadClickHouseTradeRowsForDay({
+      symbol,
+      dayIso,
+      env,
+      queryRows,
+      includeRawPayloadJson: true,
+    });
     upsertOptionTrades(db, tradeRows);
 
     stockRows = loadClickHouseStockRawRowsForDay({ symbol, dayIso, env, queryRows });
@@ -3037,8 +3088,17 @@ function listClickHouseMetricCacheRows({ symbol, dayIso, env = process.env, quer
   `, { symbol, dayIso }, env);
 }
 
-function loadClickHouseTradeRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  return queryRows(`
+function loadClickHouseTradeRowsForDay({
+  symbol,
+  dayIso,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+  includeRawPayloadJson = false,
+}) {
+  const rawPayloadSelectSql = includeRawPayloadJson
+    ? 'raw_payload_json AS rawPayloadJson,'
+    : '\'{}\' AS rawPayloadJson,';
+  const baseSelectSql = `
     SELECT
       trade_id AS tradeId,
       concat(replaceAll(toString(trade_ts_utc, 'UTC'), ' ', 'T'), 'Z') AS tradeTsUtc,
@@ -3053,13 +3113,50 @@ function loadClickHouseTradeRowsForDay({ symbol, dayIso, env = process.env, quer
       ask,
       condition_code AS conditionCode,
       exchange,
-      raw_payload_json AS rawPayloadJson,
+      ${rawPayloadSelectSql}
+      coalesce(
+        JSONExtract(raw_payload_json, 'spot', 'Nullable(Float64)'),
+        JSONExtract(raw_payload_json, 'underlying_price', 'Nullable(Float64)'),
+        JSONExtract(raw_payload_json, 'underlyingPrice', 'Nullable(Float64)'),
+        JSONExtract(raw_payload_json, 'price', 'Nullable(Float64)'),
+        JSONExtract(raw_payload_json, 'last', 'Nullable(Float64)'),
+        JSONExtract(raw_payload_json, 'close', 'Nullable(Float64)')
+      ) AS payloadSpot,
+      coalesce(
+        JSONExtract(raw_payload_json, 'oi', 'Nullable(Float64)'),
+        JSONExtract(raw_payload_json, 'open_interest', 'Nullable(Float64)'),
+        JSONExtract(raw_payload_json, 'openInterest', 'Nullable(Float64)')
+      ) AS payloadOi,
       watermark
     FROM options.option_trades
-    WHERE symbol = {symbol:String}
-      AND trade_date = toDate({dayIso:String})
-    ORDER BY trade_ts_utc ASC, trade_id ASC
-  `, { symbol, dayIso }, env);
+  `;
+  const orderBySql = 'ORDER BY trade_ts_utc ASC, trade_id ASC';
+  const windowMinutes = parseClickHouseTradeReadWindowMinutes(env);
+  if (windowMinutes <= 0 || windowMinutes >= 24 * 60) {
+    return queryRows(`
+      ${baseSelectSql}
+      WHERE symbol = {symbol:String}
+        AND trade_date = toDate({dayIso:String})
+      ${orderBySql}
+    `, { symbol, dayIso }, env);
+  }
+
+  const windows = buildClickHouseTradeReadWindows(dayIso, windowMinutes);
+  const rows = [];
+  windows.forEach(({ fromIso, toIso }) => {
+    const chunkRows = queryRows(`
+      ${baseSelectSql}
+      WHERE symbol = {symbol:String}
+        AND trade_ts_utc >= parseDateTime64BestEffortOrNull({fromIso:String}, 3, 'UTC')
+        AND trade_ts_utc < parseDateTime64BestEffortOrNull({toIso:String}, 3, 'UTC')
+      ${orderBySql}
+    `, { symbol, fromIso, toIso }, env);
+    if (chunkRows.length > 0) {
+      chunkRows.forEach((row) => rows.push(row));
+    }
+  });
+
+  return rows;
 }
 
 function loadClickHouseStockRawRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
@@ -3806,34 +3903,71 @@ function evaluateChips(row, thresholds, options = {}) {
   return chips;
 }
 
-function calculateMetricStatuses(rows, markPartial) {
-  const emptyIsFull = rows.length === 0;
+const METRIC_STATUS_PREDICATES = Object.freeze({
+  execution: (row) => row.execution && typeof row.execution.executionSide === 'string',
+  value: (row) => row.value !== null,
+  size: (row) => row.size !== null,
+  dte: (row) => row.dte !== null,
+  expiration: (row) => typeof row.expiration === 'string' && row.expiration.length >= 10,
+  repeat3m: (row) => row.repeat3m !== null,
+  sentiment: (row) => typeof row.sentiment === 'string',
+  symbolVolStats: (row) => row.symbolVol1m !== null
+    && row.symbolVolBaseline15m !== null
+    && row.openWindowBaseline !== null,
+  bullishRatio15m: (row) => row.bullishRatio15m !== null,
+  spot: (row) => row.spot !== null,
+  otmPct: (row) => row.otmPct !== null,
+  oi: (row) => row.oi !== null,
+  volOiRatio: (row) => row.volOiRatio !== null,
+  sigScore: (row) => row.sigScore !== null,
+});
 
-  const statusFromPredicate = (predicate) => {
-    if (markPartial) return DAY_CACHE_STATUS_PARTIAL;
-    if (emptyIsFull) return DAY_CACHE_STATUS_FULL;
-    return rows.every(predicate) ? DAY_CACHE_STATUS_FULL : DAY_CACHE_STATUS_PARTIAL;
-  };
-
+function createMetricStatusAccumulator(markPartial = false) {
+  const flags = {};
+  Object.keys(METRIC_STATUS_PREDICATES).forEach((metricName) => {
+    flags[metricName] = true;
+  });
   return {
-    enrichedRows: markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL,
-    execution: statusFromPredicate((row) => row.execution && typeof row.execution.executionSide === 'string'),
-    value: statusFromPredicate((row) => row.value !== null),
-    size: statusFromPredicate((row) => row.size !== null),
-    dte: statusFromPredicate((row) => row.dte !== null),
-    expiration: statusFromPredicate((row) => typeof row.expiration === 'string' && row.expiration.length >= 10),
-    repeat3m: statusFromPredicate((row) => row.repeat3m !== null),
-    sentiment: statusFromPredicate((row) => typeof row.sentiment === 'string'),
-    symbolVolStats: statusFromPredicate((row) => row.symbolVol1m !== null
-      && row.symbolVolBaseline15m !== null
-      && row.openWindowBaseline !== null),
-    bullishRatio15m: statusFromPredicate((row) => row.bullishRatio15m !== null),
-    spot: statusFromPredicate((row) => row.spot !== null),
-    otmPct: statusFromPredicate((row) => row.otmPct !== null),
-    oi: statusFromPredicate((row) => row.oi !== null),
-    volOiRatio: statusFromPredicate((row) => row.volOiRatio !== null),
-    sigScore: statusFromPredicate((row) => row.sigScore !== null),
+    markPartial: Boolean(markPartial),
+    rowCount: 0,
+    flags,
   };
+}
+
+function accumulateMetricStatuses(accumulator, row) {
+  if (!accumulator || !row) return;
+  accumulator.rowCount += 1;
+  Object.entries(METRIC_STATUS_PREDICATES).forEach(([metricName, predicate]) => {
+    if (!accumulator.flags[metricName]) return;
+    if (!predicate(row)) {
+      accumulator.flags[metricName] = false;
+    }
+  });
+}
+
+function finalizeMetricStatuses(accumulator) {
+  const markPartial = Boolean(accumulator?.markPartial);
+  const rowCount = Number(accumulator?.rowCount || 0);
+  const emptyIsFull = rowCount === 0;
+  const metricStatuses = {
+    enrichedRows: markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL,
+  };
+  Object.keys(METRIC_STATUS_PREDICATES).forEach((metricName) => {
+    if (markPartial) {
+      metricStatuses[metricName] = DAY_CACHE_STATUS_PARTIAL;
+      return;
+    }
+    metricStatuses[metricName] = emptyIsFull || accumulator.flags[metricName]
+      ? DAY_CACHE_STATUS_FULL
+      : DAY_CACHE_STATUS_PARTIAL;
+  });
+  return metricStatuses;
+}
+
+function calculateMetricStatuses(rows, markPartial) {
+  const accumulator = createMetricStatusAccumulator(markPartial);
+  rows.forEach((row) => accumulateMetricStatuses(accumulator, row));
+  return finalizeMetricStatuses(accumulator);
 }
 
 function upsertEnrichedRows(db, rows) {
@@ -4082,281 +4216,285 @@ function upsertSymbolStats(db, symbol, statsByMinute) {
   txn(rows);
 }
 
-function buildMinuteDerivedRollups(rows, dayIso) {
-  const symbolMinute = new Map();
-  const contractMinute = new Map();
+function createMinuteDerivedRollupState() {
+  return {
+    symbolMinute: new Map(),
+    contractMinute: new Map(),
+  };
+}
 
-  rows.forEach((row) => {
-    const minuteBucket = toMinuteBucketUtc(row.tradeTsUtc);
-    if (!minuteBucket) return;
+function accumulateMinuteDerivedRollupRow(rollupState, row, dayIsoOverride = null) {
+  if (!rollupState || !row) return;
+  const minuteBucket = toMinuteBucketUtc(row.tradeTsUtc);
+  if (!minuteBucket) return;
 
-    const contractKey = buildContractKey(row);
-    const symbolKey = `${row.symbol}|${minuteBucket}`;
-    const contractMinuteKey = `${row.symbol}|${row.expiration}|${row.strike}|${row.right}|${minuteBucket}`;
+  const tradeDateUtc = dayIsoOverride || normalizeIsoDate(String(row.tradeTsUtc || '').slice(0, 10));
+  if (!tradeDateUtc) return;
 
-    const symbolAgg = symbolMinute.get(symbolKey) || {
-      symbol: row.symbol,
-      tradeDateUtc: dayIso,
-      minuteBucketUtc: minuteBucket,
-      tradeCount: 0,
-      contractSet: new Set(),
-      totalSize: 0,
-      totalValue: 0,
-      callSize: 0,
-      putSize: 0,
-      bullishCount: 0,
-      bearishCount: 0,
-      neutralCount: 0,
-      sigScoreSum: 0,
-      sigScoreCount: 0,
-      maxSigScore: null,
-      sigScoreBullishSum: 0,
-      sigScoreBullishCount: 0,
-      sigScoreBearishSum: 0,
-      sigScoreBearishCount: 0,
-      valueSigScoreSum: 0,
-      valueSigScoreWeight: 0,
-      lastSpot: null,
-      volOiSum: 0,
-      volOiCount: 0,
-      maxVolOiRatio: null,
-      maxRepeat3m: null,
-      oiSum: 0,
-      dayVolumeSum: 0,
-      chipHits: {},
-      sweepCount: 0,
-      sweepValueSum: 0,
-      multilegCount: 0,
-      ivSum: 0,
-      ivCount: 0,
-      callIvSum: 0,
-      callIvCount: 0,
-      putIvSum: 0,
-      putIvCount: 0,
-      netDeltaDollars: 0,
-      minuteOfDayEtSum: 0,
-      minuteOfDayEtCount: 0,
-      valuePctileSum: 0,
-      volOiNormSum: 0,
-      repeatNormSum: 0,
-      otmNormSum: 0,
-      sideConfidenceSum: 0,
-      dteNormSum: 0,
-      spreadNormSum: 0,
-      sweepNormSum: 0,
-      multilegNormSum: 0,
-      timeNormSum: 0,
-      deltaNormSum: 0,
-      ivSkewNormSum: 0,
-      valueShockNormSum: 0,
-      dteSwingNormSum: 0,
-      flowImbalanceNormSum: 0,
-      deltaPressureNormSum: 0,
-      cpOiPressureNormSum: 0,
-      ivSkewSurfaceNormSum: 0,
-      ivTermSlopeNormSum: 0,
-      underlyingTrendConfirmNormSum: 0,
-      liquidityQualityNormSum: 0,
-      multilegPenaltyNormSum: 0,
-      componentCount: 0,
-    };
+  const contractKey = buildContractKey(row);
+  const symbolKey = `${row.symbol}|${minuteBucket}`;
+  const contractMinuteKey = `${row.symbol}|${row.expiration}|${row.strike}|${row.right}|${minuteBucket}`;
 
-    symbolAgg.tradeCount += 1;
-    symbolAgg.contractSet.add(contractKey);
-    symbolAgg.totalSize += Math.trunc(toFiniteNumber(row.size) || 0);
-    symbolAgg.totalValue += toFiniteNumber(row.value) || 0;
-    if (row.right === 'CALL') symbolAgg.callSize += Math.trunc(toFiniteNumber(row.size) || 0);
-    if (row.right === 'PUT') symbolAgg.putSize += Math.trunc(toFiniteNumber(row.size) || 0);
-    if (row.sentiment === 'bullish') symbolAgg.bullishCount += 1;
-    else if (row.sentiment === 'bearish') symbolAgg.bearishCount += 1;
-    else symbolAgg.neutralCount += 1;
+  const symbolAgg = rollupState.symbolMinute.get(symbolKey) || {
+    symbol: row.symbol,
+    tradeDateUtc,
+    minuteBucketUtc: minuteBucket,
+    tradeCount: 0,
+    contractSet: new Set(),
+    totalSize: 0,
+    totalValue: 0,
+    callSize: 0,
+    putSize: 0,
+    bullishCount: 0,
+    bearishCount: 0,
+    neutralCount: 0,
+    sigScoreSum: 0,
+    sigScoreCount: 0,
+    maxSigScore: null,
+    sigScoreBullishSum: 0,
+    sigScoreBullishCount: 0,
+    sigScoreBearishSum: 0,
+    sigScoreBearishCount: 0,
+    valueSigScoreSum: 0,
+    valueSigScoreWeight: 0,
+    lastSpot: null,
+    volOiSum: 0,
+    volOiCount: 0,
+    maxVolOiRatio: null,
+    maxRepeat3m: null,
+    oiSum: 0,
+    dayVolumeSum: 0,
+    chipHits: {},
+    sweepCount: 0,
+    sweepValueSum: 0,
+    multilegCount: 0,
+    ivSum: 0,
+    ivCount: 0,
+    callIvSum: 0,
+    callIvCount: 0,
+    putIvSum: 0,
+    putIvCount: 0,
+    netDeltaDollars: 0,
+    minuteOfDayEtSum: 0,
+    minuteOfDayEtCount: 0,
+    valuePctileSum: 0,
+    volOiNormSum: 0,
+    repeatNormSum: 0,
+    otmNormSum: 0,
+    sideConfidenceSum: 0,
+    dteNormSum: 0,
+    spreadNormSum: 0,
+    sweepNormSum: 0,
+    multilegNormSum: 0,
+    timeNormSum: 0,
+    deltaNormSum: 0,
+    ivSkewNormSum: 0,
+    valueShockNormSum: 0,
+    dteSwingNormSum: 0,
+    flowImbalanceNormSum: 0,
+    deltaPressureNormSum: 0,
+    cpOiPressureNormSum: 0,
+    ivSkewSurfaceNormSum: 0,
+    ivTermSlopeNormSum: 0,
+    underlyingTrendConfirmNormSum: 0,
+    liquidityQualityNormSum: 0,
+    multilegPenaltyNormSum: 0,
+    componentCount: 0,
+  };
 
-    const sigScore = toFiniteNumber(row.sigScore);
-    if (sigScore !== null) {
-      symbolAgg.sigScoreSum += sigScore;
-      symbolAgg.sigScoreCount += 1;
-      symbolAgg.maxSigScore = symbolAgg.maxSigScore === null ? sigScore : Math.max(symbolAgg.maxSigScore, sigScore);
+  symbolAgg.tradeCount += 1;
+  symbolAgg.contractSet.add(contractKey);
+  symbolAgg.totalSize += Math.trunc(toFiniteNumber(row.size) || 0);
+  symbolAgg.totalValue += toFiniteNumber(row.value) || 0;
+  if (row.right === 'CALL') symbolAgg.callSize += Math.trunc(toFiniteNumber(row.size) || 0);
+  if (row.right === 'PUT') symbolAgg.putSize += Math.trunc(toFiniteNumber(row.size) || 0);
+  if (row.sentiment === 'bullish') symbolAgg.bullishCount += 1;
+  else if (row.sentiment === 'bearish') symbolAgg.bearishCount += 1;
+  else symbolAgg.neutralCount += 1;
 
-      if (row.sentiment === 'bullish') {
-        symbolAgg.sigScoreBullishSum += sigScore;
-        symbolAgg.sigScoreBullishCount += 1;
-      } else if (row.sentiment === 'bearish') {
-        symbolAgg.sigScoreBearishSum += sigScore;
-        symbolAgg.sigScoreBearishCount += 1;
-      }
+  const sigScore = toFiniteNumber(row.sigScore);
+  if (sigScore !== null) {
+    symbolAgg.sigScoreSum += sigScore;
+    symbolAgg.sigScoreCount += 1;
+    symbolAgg.maxSigScore = symbolAgg.maxSigScore === null ? sigScore : Math.max(symbolAgg.maxSigScore, sigScore);
 
-      const tradeValue = toFiniteNumber(row.value);
-      if (tradeValue !== null && tradeValue > 0) {
-        symbolAgg.valueSigScoreSum += sigScore * tradeValue;
-        symbolAgg.valueSigScoreWeight += tradeValue;
-      }
+    if (row.sentiment === 'bullish') {
+      symbolAgg.sigScoreBullishSum += sigScore;
+      symbolAgg.sigScoreBullishCount += 1;
+    } else if (row.sentiment === 'bearish') {
+      symbolAgg.sigScoreBearishSum += sigScore;
+      symbolAgg.sigScoreBearishCount += 1;
     }
 
-    const spotValue = toFiniteNumber(row.spot);
-    if (spotValue !== null) {
-      symbolAgg.lastSpot = spotValue;
-    }
-
-    const volOiRatio = toFiniteNumber(row.volOiRatio);
-    if (volOiRatio !== null) {
-      symbolAgg.volOiSum += volOiRatio;
-      symbolAgg.volOiCount += 1;
-      symbolAgg.maxVolOiRatio = symbolAgg.maxVolOiRatio === null ? volOiRatio : Math.max(symbolAgg.maxVolOiRatio, volOiRatio);
-    }
-
-    const repeat3m = toFiniteNumber(row.repeat3m);
-    if (repeat3m !== null) {
-      symbolAgg.maxRepeat3m = symbolAgg.maxRepeat3m === null ? Math.trunc(repeat3m) : Math.max(symbolAgg.maxRepeat3m, Math.trunc(repeat3m));
-    }
-
-    symbolAgg.oiSum += Math.trunc(toFiniteNumber(row.oi) || 0);
-    symbolAgg.dayVolumeSum += Math.trunc(toFiniteNumber(row.dayVolume) || 0);
-
-    if (Array.isArray(row.chips)) {
-      row.chips.forEach((chipId) => {
-        symbolAgg.chipHits[chipId] = (symbolAgg.chipHits[chipId] || 0) + 1;
-      });
-    }
-
-    // Sweep accumulation
-    if (row.isSweep) {
-      symbolAgg.sweepCount += 1;
-      symbolAgg.sweepValueSum += toFiniteNumber(row.value) || 0;
-    }
-
-    // Multileg accumulation
-    if (row.isMultileg) {
-      symbolAgg.multilegCount += 1;
-    }
-
-    // IV accumulation
-    const iv = toFiniteNumber(row.impliedVol);
-    if (iv !== null) {
-      symbolAgg.ivSum += iv;
-      symbolAgg.ivCount += 1;
-      if (row.right === 'CALL') {
-        symbolAgg.callIvSum += iv;
-        symbolAgg.callIvCount += 1;
-      } else if (row.right === 'PUT') {
-        symbolAgg.putIvSum += iv;
-        symbolAgg.putIvCount += 1;
-      }
-    }
-
-    // Delta accumulation
-    const delta = toFiniteNumber(row.delta);
     const tradeValue = toFiniteNumber(row.value);
-    if (delta !== null && tradeValue !== null) {
-      const directionSign = row.sentiment === 'bullish' ? 1 : (row.sentiment === 'bearish' ? -1 : 0);
-      symbolAgg.netDeltaDollars += delta * tradeValue * directionSign;
+    if (tradeValue !== null && tradeValue > 0) {
+      symbolAgg.valueSigScoreSum += sigScore * tradeValue;
+      symbolAgg.valueSigScoreWeight += tradeValue;
     }
+  }
 
-    // Time accumulation
-    const minuteOfDayEt = toFiniteNumber(row.minuteOfDayEt);
-    if (minuteOfDayEt !== null) {
-      symbolAgg.minuteOfDayEtSum += minuteOfDayEt;
-      symbolAgg.minuteOfDayEtCount += 1;
+  const spotValue = toFiniteNumber(row.spot);
+  if (spotValue !== null) {
+    symbolAgg.lastSpot = spotValue;
+  }
+
+  const volOiRatio = toFiniteNumber(row.volOiRatio);
+  if (volOiRatio !== null) {
+    symbolAgg.volOiSum += volOiRatio;
+    symbolAgg.volOiCount += 1;
+    symbolAgg.maxVolOiRatio = symbolAgg.maxVolOiRatio === null ? volOiRatio : Math.max(symbolAgg.maxVolOiRatio, volOiRatio);
+  }
+
+  const repeat3m = toFiniteNumber(row.repeat3m);
+  if (repeat3m !== null) {
+    symbolAgg.maxRepeat3m = symbolAgg.maxRepeat3m === null ? Math.trunc(repeat3m) : Math.max(symbolAgg.maxRepeat3m, Math.trunc(repeat3m));
+  }
+
+  symbolAgg.oiSum += Math.trunc(toFiniteNumber(row.oi) || 0);
+  symbolAgg.dayVolumeSum += Math.trunc(toFiniteNumber(row.dayVolume) || 0);
+
+  if (Array.isArray(row.chips)) {
+    row.chips.forEach((chipId) => {
+      symbolAgg.chipHits[chipId] = (symbolAgg.chipHits[chipId] || 0) + 1;
+    });
+  }
+
+  if (row.isSweep) {
+    symbolAgg.sweepCount += 1;
+    symbolAgg.sweepValueSum += toFiniteNumber(row.value) || 0;
+  }
+
+  if (row.isMultileg) {
+    symbolAgg.multilegCount += 1;
+  }
+
+  const iv = toFiniteNumber(row.impliedVol);
+  if (iv !== null) {
+    symbolAgg.ivSum += iv;
+    symbolAgg.ivCount += 1;
+    if (row.right === 'CALL') {
+      symbolAgg.callIvSum += iv;
+      symbolAgg.callIvCount += 1;
+    } else if (row.right === 'PUT') {
+      symbolAgg.putIvSum += iv;
+      symbolAgg.putIvCount += 1;
     }
+  }
 
-    // Per-component accumulation for sigScore decomposition
-    symbolAgg.valuePctileSum += toFiniteNumber(row.valuePctile) || 0;
-    symbolAgg.volOiNormSum += toFiniteNumber(row.volOiNorm) || 0;
-    symbolAgg.repeatNormSum += toFiniteNumber(row.repeatNorm) || 0;
-    symbolAgg.otmNormSum += toFiniteNumber(row.otmNorm) || 0;
-    symbolAgg.sideConfidenceSum += toFiniteNumber(row.sideConfidenceVal) || 0;
-    symbolAgg.dteNormSum += toFiniteNumber(row.dteNorm) || 0;
-    symbolAgg.spreadNormSum += toFiniteNumber(row.spreadNorm) || 0;
-    symbolAgg.sweepNormSum += toFiniteNumber(row.sweepNorm) || 0;
-    symbolAgg.multilegNormSum += toFiniteNumber(row.multilegNorm) || 0;
-    symbolAgg.timeNormSum += toFiniteNumber(row.timeNorm) || 0;
-    symbolAgg.deltaNormSum += toFiniteNumber(row.deltaNorm) || 0;
-    symbolAgg.ivSkewNormSum += toFiniteNumber(row.ivSkewNorm) || 0;
-    symbolAgg.valueShockNormSum += toFiniteNumber(row.valueShockNorm) || 0;
-    symbolAgg.dteSwingNormSum += toFiniteNumber(row.dteSwingNorm) || 0;
-    symbolAgg.flowImbalanceNormSum += toFiniteNumber(row.flowImbalanceNorm) || 0;
-    symbolAgg.deltaPressureNormSum += toFiniteNumber(row.deltaPressureNorm) || 0;
-    symbolAgg.cpOiPressureNormSum += toFiniteNumber(row.cpOiPressureNorm) || 0;
-    symbolAgg.ivSkewSurfaceNormSum += toFiniteNumber(row.ivSkewSurfaceNorm) || 0;
-    symbolAgg.ivTermSlopeNormSum += toFiniteNumber(row.ivTermSlopeNorm) || 0;
-    symbolAgg.underlyingTrendConfirmNormSum += toFiniteNumber(row.underlyingTrendConfirmNorm) || 0;
-    symbolAgg.liquidityQualityNormSum += toFiniteNumber(row.liquidityQualityNorm) || 0;
-    symbolAgg.multilegPenaltyNormSum += toFiniteNumber(row.multilegPenaltyNorm) || 0;
-    symbolAgg.componentCount += 1;
+  const delta = toFiniteNumber(row.delta);
+  const tradeValue = toFiniteNumber(row.value);
+  if (delta !== null && tradeValue !== null) {
+    const directionSign = row.sentiment === 'bullish' ? 1 : (row.sentiment === 'bearish' ? -1 : 0);
+    symbolAgg.netDeltaDollars += delta * tradeValue * directionSign;
+  }
 
-    symbolMinute.set(symbolKey, symbolAgg);
+  const minuteOfDayEt = toFiniteNumber(row.minuteOfDayEt);
+  if (minuteOfDayEt !== null) {
+    symbolAgg.minuteOfDayEtSum += minuteOfDayEt;
+    symbolAgg.minuteOfDayEtCount += 1;
+  }
 
-    const contractAgg = contractMinute.get(contractMinuteKey) || {
-      symbol: row.symbol,
-      expiration: row.expiration,
-      strike: row.strike,
-      right: row.right,
-      tradeDateUtc: dayIso,
-      minuteBucketUtc: minuteBucket,
-      tradeCount: 0,
-      sizeSum: 0,
-      valueSum: 0,
-      priceSum: 0,
-      priceCount: 0,
-      lastPrice: null,
-      dayVolume: null,
-      oi: null,
-      volOiRatio: null,
-      sigScoreSum: 0,
-      sigScoreCount: 0,
-      maxSigScore: null,
-      maxRepeat3m: null,
-      bullishCount: 0,
-      bearishCount: 0,
-      neutralCount: 0,
-      chipHits: {},
-    };
+  symbolAgg.valuePctileSum += toFiniteNumber(row.valuePctile) || 0;
+  symbolAgg.volOiNormSum += toFiniteNumber(row.volOiNorm) || 0;
+  symbolAgg.repeatNormSum += toFiniteNumber(row.repeatNorm) || 0;
+  symbolAgg.otmNormSum += toFiniteNumber(row.otmNorm) || 0;
+  symbolAgg.sideConfidenceSum += toFiniteNumber(row.sideConfidenceVal) || 0;
+  symbolAgg.dteNormSum += toFiniteNumber(row.dteNorm) || 0;
+  symbolAgg.spreadNormSum += toFiniteNumber(row.spreadNorm) || 0;
+  symbolAgg.sweepNormSum += toFiniteNumber(row.sweepNorm) || 0;
+  symbolAgg.multilegNormSum += toFiniteNumber(row.multilegNorm) || 0;
+  symbolAgg.timeNormSum += toFiniteNumber(row.timeNorm) || 0;
+  symbolAgg.deltaNormSum += toFiniteNumber(row.deltaNorm) || 0;
+  symbolAgg.ivSkewNormSum += toFiniteNumber(row.ivSkewNorm) || 0;
+  symbolAgg.valueShockNormSum += toFiniteNumber(row.valueShockNorm) || 0;
+  symbolAgg.dteSwingNormSum += toFiniteNumber(row.dteSwingNorm) || 0;
+  symbolAgg.flowImbalanceNormSum += toFiniteNumber(row.flowImbalanceNorm) || 0;
+  symbolAgg.deltaPressureNormSum += toFiniteNumber(row.deltaPressureNorm) || 0;
+  symbolAgg.cpOiPressureNormSum += toFiniteNumber(row.cpOiPressureNorm) || 0;
+  symbolAgg.ivSkewSurfaceNormSum += toFiniteNumber(row.ivSkewSurfaceNorm) || 0;
+  symbolAgg.ivTermSlopeNormSum += toFiniteNumber(row.ivTermSlopeNorm) || 0;
+  symbolAgg.underlyingTrendConfirmNormSum += toFiniteNumber(row.underlyingTrendConfirmNorm) || 0;
+  symbolAgg.liquidityQualityNormSum += toFiniteNumber(row.liquidityQualityNorm) || 0;
+  symbolAgg.multilegPenaltyNormSum += toFiniteNumber(row.multilegPenaltyNorm) || 0;
+  symbolAgg.componentCount += 1;
 
-    const size = Math.trunc(toFiniteNumber(row.size) || 0);
-    const value = toFiniteNumber(row.value) || 0;
-    const price = toFiniteNumber(row.price);
-    const contractSigScore = toFiniteNumber(row.sigScore);
-    const contractRepeat3m = toFiniteNumber(row.repeat3m);
+  rollupState.symbolMinute.set(symbolKey, symbolAgg);
 
-    contractAgg.tradeCount += 1;
-    contractAgg.sizeSum += size;
-    contractAgg.valueSum += value;
-    if (price !== null) {
-      contractAgg.priceSum += price;
-      contractAgg.priceCount += 1;
-      contractAgg.lastPrice = price;
-    }
-    contractAgg.dayVolume = Math.trunc(toFiniteNumber(row.dayVolume) || 0);
-    contractAgg.oi = Math.trunc(toFiniteNumber(row.oi) || 0);
-    contractAgg.volOiRatio = toFiniteNumber(row.volOiRatio);
+  const contractAgg = rollupState.contractMinute.get(contractMinuteKey) || {
+    symbol: row.symbol,
+    expiration: row.expiration,
+    strike: row.strike,
+    right: row.right,
+    tradeDateUtc,
+    minuteBucketUtc: minuteBucket,
+    tradeCount: 0,
+    sizeSum: 0,
+    valueSum: 0,
+    priceSum: 0,
+    priceCount: 0,
+    lastPrice: null,
+    dayVolume: null,
+    oi: null,
+    volOiRatio: null,
+    sigScoreSum: 0,
+    sigScoreCount: 0,
+    maxSigScore: null,
+    maxRepeat3m: null,
+    bullishCount: 0,
+    bearishCount: 0,
+    neutralCount: 0,
+    chipHits: {},
+  };
 
-    if (contractSigScore !== null) {
-      contractAgg.sigScoreSum += contractSigScore;
-      contractAgg.sigScoreCount += 1;
-      contractAgg.maxSigScore = contractAgg.maxSigScore === null
-        ? contractSigScore
-        : Math.max(contractAgg.maxSigScore, contractSigScore);
-    }
+  const size = Math.trunc(toFiniteNumber(row.size) || 0);
+  const value = toFiniteNumber(row.value) || 0;
+  const price = toFiniteNumber(row.price);
+  const contractSigScore = toFiniteNumber(row.sigScore);
+  const contractRepeat3m = toFiniteNumber(row.repeat3m);
 
-    if (contractRepeat3m !== null) {
-      const repeatValue = Math.trunc(contractRepeat3m);
-      contractAgg.maxRepeat3m = contractAgg.maxRepeat3m === null
-        ? repeatValue
-        : Math.max(contractAgg.maxRepeat3m, repeatValue);
-    }
+  contractAgg.tradeCount += 1;
+  contractAgg.sizeSum += size;
+  contractAgg.valueSum += value;
+  if (price !== null) {
+    contractAgg.priceSum += price;
+    contractAgg.priceCount += 1;
+    contractAgg.lastPrice = price;
+  }
+  contractAgg.dayVolume = Math.trunc(toFiniteNumber(row.dayVolume) || 0);
+  contractAgg.oi = Math.trunc(toFiniteNumber(row.oi) || 0);
+  contractAgg.volOiRatio = toFiniteNumber(row.volOiRatio);
 
-    if (row.sentiment === 'bullish') contractAgg.bullishCount += 1;
-    else if (row.sentiment === 'bearish') contractAgg.bearishCount += 1;
-    else contractAgg.neutralCount += 1;
+  if (contractSigScore !== null) {
+    contractAgg.sigScoreSum += contractSigScore;
+    contractAgg.sigScoreCount += 1;
+    contractAgg.maxSigScore = contractAgg.maxSigScore === null
+      ? contractSigScore
+      : Math.max(contractAgg.maxSigScore, contractSigScore);
+  }
 
-    if (Array.isArray(row.chips)) {
-      row.chips.forEach((chipId) => {
-        contractAgg.chipHits[chipId] = (contractAgg.chipHits[chipId] || 0) + 1;
-      });
-    }
+  if (contractRepeat3m !== null) {
+    const repeatValue = Math.trunc(contractRepeat3m);
+    contractAgg.maxRepeat3m = contractAgg.maxRepeat3m === null
+      ? repeatValue
+      : Math.max(contractAgg.maxRepeat3m, repeatValue);
+  }
 
-    contractMinute.set(contractMinuteKey, contractAgg);
-  });
+  if (row.sentiment === 'bullish') contractAgg.bullishCount += 1;
+  else if (row.sentiment === 'bearish') contractAgg.bearishCount += 1;
+  else contractAgg.neutralCount += 1;
 
+  if (Array.isArray(row.chips)) {
+    row.chips.forEach((chipId) => {
+      contractAgg.chipHits[chipId] = (contractAgg.chipHits[chipId] || 0) + 1;
+    });
+  }
+
+  rollupState.contractMinute.set(contractMinuteKey, contractAgg);
+}
+
+function finalizeMinuteDerivedRollups(rollupState) {
+  const symbolMinute = rollupState?.symbolMinute || new Map();
+  const contractMinute = rollupState?.contractMinute || new Map();
   const symbolMinuteRows = Array.from(symbolMinute.values()).map((row) => ({
     symbol: row.symbol,
     tradeDateUtc: row.tradeDateUtc,
@@ -4450,6 +4588,14 @@ function buildMinuteDerivedRollups(rows, dayIso) {
     symbolMinuteRows,
     contractMinuteRows,
   };
+}
+
+function buildMinuteDerivedRollups(rows, dayIso) {
+  const rollupState = createMinuteDerivedRollupState();
+  rows.forEach((row) => {
+    accumulateMinuteDerivedRollupRow(rollupState, row, dayIso);
+  });
+  return finalizeMinuteDerivedRollups(rollupState);
 }
 
 function upsertSymbolMinuteDerived(db, rows) {
@@ -5381,6 +5527,14 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
   const greeksSurfaceBySymbolMinute = supplementalMetrics.greeksSurfaceBySymbolMinute || new Map();
   const featureBaselines = supplementalMetrics.featureBaselines || new Map();
   const strictScoreQuality = String(process.env.FLOW_SCORE_QUALITY_STRICT || '1') !== '0';
+  const rowConsumer = typeof scoringConfig.rowConsumer === 'function'
+    ? scoringConfig.rowConsumer
+    : null;
+  const rowConsumerChunkSize = Number.isFinite(Number(scoringConfig.rowConsumerChunkSize))
+    ? Math.max(250, Math.min(50000, Math.trunc(Number(scoringConfig.rowConsumerChunkSize))))
+    : DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE;
+  const minuteRollupState = scoringConfig.minuteRollupState || null;
+  const metricStatusAccumulator = scoringConfig.metricStatusAccumulator || null;
   const statsByMinute = buildMinuteStats(rawRows);
 
   const multilegIndices = detectHeuristicMultilegs(rawRows);
@@ -5408,7 +5562,14 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
   const scoreRuleVersion = scoringConfig.versionId
     || (scoreModel === 'v1_baseline' ? 'v1_baseline_default' : (scoreModel === 'v5_swing' ? 'v5_swing_default' : 'v4_expanded_default'));
 
-  const enrichedRows = [];
+  const enrichedRows = rowConsumer ? null : [];
+  let rowCount = 0;
+  let rowConsumerBuffer = [];
+  const flushRowConsumerBuffer = () => {
+    if (!rowConsumer || rowConsumerBuffer.length === 0) return;
+    rowConsumer(rowConsumerBuffer);
+    rowConsumerBuffer = [];
+  };
 
   rawRows.forEach((row, rowIndex) => {
     const contractKey = buildContractKey(row);
@@ -5441,19 +5602,39 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
 
     const rowMs = Date.parse(row.tradeTsUtc);
     const sideKey = buildSideKey(row, execution.executionSide);
-    const sideWindow = sideWindows.get(sideKey) || [];
-
-    while (sideWindow.length && (rowMs - sideWindow[0]) > 180000) {
-      sideWindow.shift();
+    let sideWindowState = sideWindows.get(sideKey);
+    if (!sideWindowState) {
+      sideWindowState = { values: [], head: 0 };
+      sideWindows.set(sideKey, sideWindowState);
     }
+    const sideValues = sideWindowState.values;
+    while (sideWindowState.head < sideValues.length && (rowMs - sideValues[sideWindowState.head]) > 180000) {
+      sideWindowState.head += 1;
+    }
+    sideValues.push(rowMs);
+    if (sideWindowState.head > 256 && sideWindowState.head * 2 > sideValues.length) {
+      sideWindowState.values = sideValues.slice(sideWindowState.head);
+      sideWindowState.head = 0;
+    }
+    const repeat3m = sideWindowState.values.length - sideWindowState.head;
 
-    sideWindow.push(rowMs);
-    sideWindows.set(sideKey, sideWindow);
-
-    const repeat3m = sideWindow.length;
-
-    const payload = parsePayload(row.rawPayloadJson);
-    const payloadSpot = computeSpot(payload);
+    let payload = null;
+    let payloadSpot = toFiniteNumber(row.payloadSpot);
+    let payloadOi = toFiniteNumber(row.payloadOi);
+    if (
+      (payloadSpot === null || payloadOi === null)
+      && typeof row.rawPayloadJson === 'string'
+      && row.rawPayloadJson !== '{}'
+      && row.rawPayloadJson.trim()
+    ) {
+      payload = parsePayload(row.rawPayloadJson);
+    }
+    if (payloadSpot === null && payload) {
+      payloadSpot = computeSpot(payload);
+    }
+    if (payloadOi === null && payload) {
+      payloadOi = extractOi(payload);
+    }
     let stockFeatures = minuteBucket ? (stockBySymbolMinute.get(`${row.symbol}|${minuteBucket}`) || null) : null;
     if (stockFeatures && minuteBucket) {
       trendLastSeenBySymbol.set(row.symbol, { minuteBucket, features: stockFeatures });
@@ -5485,7 +5666,7 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
     const otmPct = computeOtmPct({ right: row.right, strike: row.strike, spot });
     const value = computeValue(row.price, row.size);
     const dte = computeDte(row.tradeTsUtc, row.expiration);
-    const oiCandidate = extractOi(payload) ?? oiByContract.get(contractKey) ?? null;
+    const oiCandidate = payloadOi ?? oiByContract.get(contractKey) ?? null;
     const oi = (oiCandidate === null && oiDefaultsToZero) ? 0 : oiCandidate;
     const volOiRatio = oi === null ? null : (dayVolume / Math.max(oi, 1));
 
@@ -5580,63 +5761,89 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
 
     const direction = sentiment === 'bullish' ? 1 : (sentiment === 'bearish' ? -1 : 0);
     const hasDirection = direction !== 0;
-    const pressureWindow = symbolPressureWindows.get(row.symbol) || [];
-    while (pressureWindow.length && (rowMs - pressureWindow[0].ts) > 1800000) {
-      pressureWindow.shift();
+    let pressureState = symbolPressureWindows.get(row.symbol);
+    if (!pressureState) {
+      pressureState = {
+        entries: [],
+        head: 0,
+        signedPremium: 0,
+        totalPremium: 0,
+        signedDeltaNotional: 0,
+        totalDeltaNotional: 0,
+      };
+      symbolPressureWindows.set(row.symbol, pressureState);
+    }
+    const pressureEntries = pressureState.entries;
+    while (pressureState.head < pressureEntries.length && (rowMs - pressureEntries[pressureState.head].ts) > 1800000) {
+      const removed = pressureEntries[pressureState.head];
+      pressureState.head += 1;
+      pressureState.signedPremium -= removed.signedPremium;
+      pressureState.totalPremium -= removed.totalPremium;
+      pressureState.signedDeltaNotional -= removed.signedDeltaNotional;
+      pressureState.totalDeltaNotional -= removed.totalDeltaNotional;
     }
 
     const premiumValue = value || 0;
     const deltaNotional = (effectiveDelta !== null && value !== null) ? (Math.abs(effectiveDelta) * value) : 0;
     if (hasDirection && value !== null) {
-      pressureWindow.push({
+      const pressureEntry = {
         ts: rowMs,
         signedPremium: direction * premiumValue,
         totalPremium: premiumValue,
         signedDeltaNotional: direction * deltaNotional,
         totalDeltaNotional: deltaNotional,
-      });
+      };
+      pressureEntries.push(pressureEntry);
+      pressureState.signedPremium += pressureEntry.signedPremium;
+      pressureState.totalPremium += pressureEntry.totalPremium;
+      pressureState.signedDeltaNotional += pressureEntry.signedDeltaNotional;
+      pressureState.totalDeltaNotional += pressureEntry.totalDeltaNotional;
     }
-    symbolPressureWindows.set(row.symbol, pressureWindow);
-
-    const pressureTotals = pressureWindow.reduce((acc, item) => {
-      acc.signedPremium += item.signedPremium;
-      acc.totalPremium += item.totalPremium;
-      acc.signedDeltaNotional += item.signedDeltaNotional;
-      acc.totalDeltaNotional += item.totalDeltaNotional;
-      return acc;
-    }, {
-      signedPremium: 0,
-      totalPremium: 0,
-      signedDeltaNotional: 0,
-      totalDeltaNotional: 0,
-    });
+    if (pressureState.head > 256 && pressureState.head * 2 > pressureEntries.length) {
+      pressureState.entries = pressureEntries.slice(pressureState.head);
+      pressureState.head = 0;
+    }
 
     const flowImbalanceNorm = hasDirection
-      ? computeFlowImbalanceNorm(pressureTotals.signedPremium, pressureTotals.totalPremium)
+      ? computeFlowImbalanceNorm(pressureState.signedPremium, pressureState.totalPremium)
       : 0;
     const deltaPressureNorm = hasDirection
-      ? computeDeltaPressureNorm(pressureTotals.signedDeltaNotional, pressureTotals.totalDeltaNotional)
+      ? computeDeltaPressureNorm(pressureState.signedDeltaNotional, pressureState.totalDeltaNotional)
       : 0;
 
-    const cpWindow = cpOiPressureWindows.get(row.symbol) || [];
-    while (cpWindow.length && (rowMs - cpWindow[0].ts) > 1800000) {
-      cpWindow.shift();
+    let cpState = cpOiPressureWindows.get(row.symbol);
+    if (!cpState) {
+      cpState = {
+        entries: [],
+        head: 0,
+        callPressure: 0,
+        putPressure: 0,
+      };
+      cpOiPressureWindows.set(row.symbol, cpState);
+    }
+    const cpEntries = cpState.entries;
+    while (cpState.head < cpEntries.length && (rowMs - cpEntries[cpState.head].ts) > 1800000) {
+      const removed = cpEntries[cpState.head];
+      cpState.head += 1;
+      cpState.callPressure -= removed.callPressure;
+      cpState.putPressure -= removed.putPressure;
     }
 
     if (value !== null && oi !== null && oi >= 0 && dte !== null && dte <= 60 && otmPct !== null && Math.abs(otmPct) <= 20) {
-      cpWindow.push({
+      const cpEntry = {
         ts: rowMs,
         callPressure: row.right === 'CALL' ? (value / Math.max(oi, 1)) : 0,
         putPressure: row.right === 'PUT' ? (value / Math.max(oi, 1)) : 0,
-      });
+      };
+      cpEntries.push(cpEntry);
+      cpState.callPressure += cpEntry.callPressure;
+      cpState.putPressure += cpEntry.putPressure;
     }
-    cpOiPressureWindows.set(row.symbol, cpWindow);
-    const cpTotals = cpWindow.reduce((acc, item) => {
-      acc.call += item.callPressure;
-      acc.put += item.putPressure;
-      return acc;
-    }, { call: 0, put: 0 });
-    const cpOiPressureNorm = computeCpOiPressureNorm(cpTotals.call, cpTotals.put);
+    if (cpState.head > 256 && cpState.head * 2 > cpEntries.length) {
+      cpState.entries = cpEntries.slice(cpState.head);
+      cpState.head = 0;
+    }
+    const cpOiPressureNorm = computeCpOiPressureNorm(cpState.callPressure, cpState.putPressure);
 
     const trendSignal = stockFeatures && toFiniteNumber(stockFeatures.trendSignal) !== null
       ? toFiniteNumber(stockFeatures.trendSignal)
@@ -5788,8 +5995,21 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
     };
 
     enriched.chips = evaluateChips(enriched, thresholds, { strictScoreQuality });
-
-    enrichedRows.push(enriched);
+    rowCount += 1;
+    if (metricStatusAccumulator) {
+      accumulateMetricStatuses(metricStatusAccumulator, enriched);
+    }
+    if (minuteRollupState) {
+      accumulateMinuteDerivedRollupRow(minuteRollupState, enriched, scoringConfig.dayIso || null);
+    }
+    if (rowConsumer) {
+      rowConsumerBuffer.push(enriched);
+      if (rowConsumerBuffer.length >= rowConsumerChunkSize) {
+        flushRowConsumerBuffer();
+      }
+    } else {
+      enrichedRows.push(enriched);
+    }
 
     const contractStats = contractStatsMap.get(contractKey) || {
       symbol: row.symbol,
@@ -5807,8 +6027,11 @@ function buildEnrichedRows(rawRows, thresholds, supplementalMetrics = {}, scorin
     contractStatsMap.set(contractKey, contractStats);
   });
 
+  flushRowConsumerBuffer();
+
   return {
-    rows: enrichedRows,
+    rows: enrichedRows || [],
+    rowCount,
     contractStatsMap,
     statsByMinute,
     featureBaselineUpdates,
@@ -6256,7 +6479,13 @@ function countClickHouseOptionGreeksRowsForDay({ symbol, dayIso, env = process.e
 }
 
 function loadClickHouseRawTradesForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = loadClickHouseTradeRowsForDay({ symbol, dayIso, env, queryRows });
+  const rows = loadClickHouseTradeRowsForDay({
+    symbol,
+    dayIso,
+    env,
+    queryRows,
+    includeRawPayloadJson: false,
+  });
   return rows.map((row) => ({
     tradeId: row.tradeId,
     tradeTsUtc: row.tradeTsUtc,
@@ -6270,6 +6499,8 @@ function loadClickHouseRawTradesForDay({ symbol, dayIso, env = process.env, quer
     ask: toFiniteNumber(row.ask),
     conditionCode: row.conditionCode === null ? null : String(row.conditionCode),
     exchange: row.exchange === null ? null : String(row.exchange),
+    payloadSpot: toFiniteNumber(row.payloadSpot),
+    payloadOi: toFiniteNumber(row.payloadOi),
     rawPayloadJson: row.rawPayloadJson || '{}',
   })).filter((row) => row.tradeId && row.tradeTsUtc && row.symbol && row.expiration && row.right);
 }
@@ -7484,15 +7715,25 @@ function buildSupplementalMetricLookupFromClickHouse({
   }
 
   rawRows.forEach((row) => {
-    const payload = parsePayload(row.rawPayloadJson);
-    const spot = computeSpot(payload);
-    if (spot !== null && !spotBySymbol.has(row.symbol)) {
-      spotBySymbol.set(row.symbol, spot);
+    const payloadSpot = toFiniteNumber(row.payloadSpot);
+    if (payloadSpot !== null && !spotBySymbol.has(row.symbol)) {
+      spotBySymbol.set(row.symbol, payloadSpot);
     }
 
-    const oi = extractOi(payload);
-    if (oi !== null) {
-      oiByContract.set(buildContractKey(row), oi);
+    const payloadOi = toFiniteNumber(row.payloadOi);
+    if (payloadOi !== null) {
+      oiByContract.set(buildContractKey(row), Math.trunc(payloadOi));
+      return;
+    }
+
+    if (typeof row.rawPayloadJson !== 'string' || row.rawPayloadJson === '{}' || !row.rawPayloadJson.trim()) {
+      return;
+    }
+
+    const payload = parsePayload(row.rawPayloadJson);
+    const fallbackOi = extractOi(payload);
+    if (fallbackOi !== null) {
+      oiByContract.set(buildContractKey(row), fallbackOi);
     }
   });
 
@@ -7548,78 +7789,86 @@ function hasClickHouseMinuteDerivedRows({ symbol, dayIso, env = process.env, que
   return symbolCount > 0 && contractCount > 0;
 }
 
+function toClickHouseEnrichedInsertRow(row, nowIso) {
+  return {
+    trade_id: row.tradeId,
+    trade_ts_utc: row.tradeTsUtc,
+    symbol: row.symbol,
+    expiration: row.expiration,
+    strike: row.strike,
+    option_right: row.right,
+    price: row.price,
+    size: Math.max(0, Math.trunc(toFiniteNumber(row.size) || 0)),
+    bid: row.bid,
+    ask: row.ask,
+    condition_code: row.conditionCode,
+    exchange: row.exchange,
+    value: row.value,
+    dte: row.dte,
+    spot: row.spot,
+    otm_pct: row.otmPct,
+    day_volume: row.dayVolume,
+    oi: row.oi,
+    vol_oi_ratio: row.volOiRatio,
+    repeat3m: row.repeat3m,
+    sig_score: row.sigScore,
+    sentiment: row.sentiment,
+    execution_side: row.executionSide,
+    symbol_vol_1m: row.symbolVol1m,
+    symbol_vol_baseline_15m: row.symbolVolBaseline15m,
+    open_window_baseline: row.openWindowBaseline,
+    bullish_ratio_15m: row.bullishRatio15m,
+    chips_json: JSON.stringify(row.chips || []),
+    rule_version: row.ruleVersion || null,
+    score_quality: row.scoreQuality || 'partial',
+    missing_metrics_json: JSON.stringify(row.missingMetrics || []),
+    enriched_at_utc: nowIso,
+    is_sweep: Number.isFinite(Number(row.isSweep)) ? Math.trunc(Number(row.isSweep)) : 0,
+    is_multileg: Number.isFinite(Number(row.isMultileg)) ? Math.trunc(Number(row.isMultileg)) : 0,
+    minute_of_day_et: Number.isFinite(Number(row.minuteOfDayEt)) ? Math.trunc(Number(row.minuteOfDayEt)) : null,
+    delta: row.delta,
+    implied_vol: row.impliedVol,
+    time_norm: row.timeNorm,
+    delta_norm: row.deltaNorm,
+    iv_skew_norm: row.ivSkewNorm,
+    value_shock_norm: row.valueShockNorm,
+    dte_swing_norm: row.dteSwingNorm,
+    flow_imbalance_norm: row.flowImbalanceNorm,
+    delta_pressure_norm: row.deltaPressureNorm,
+    cp_oi_pressure_norm: row.cpOiPressureNorm,
+    iv_skew_surface_norm: row.ivSkewSurfaceNorm,
+    iv_term_slope_norm: row.ivTermSlopeNorm,
+    underlying_trend_confirm_norm: row.underlyingTrendConfirmNorm,
+    liquidity_quality_norm: row.liquidityQualityNorm,
+    multileg_penalty_norm: row.multilegPenaltyNorm,
+    sig_score_components_json: JSON.stringify(row.sigScoreComponents || {}),
+  };
+}
+
 function persistClickHouseEnrichedDayState({
   symbol,
   dayIso,
   built,
   featureBaselines,
   env = process.env,
+  skipEnrichedRowsReplace = false,
+  minuteRollupsOverride = null,
 }) {
   const nowIso = new Date().toISOString();
   const enrichedRows = Array.isArray(built?.rows) ? built.rows : [];
 
-  replaceClickHouseDayRows({
-    tableName: 'option_trade_enriched',
-    whereSql: 'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
-    deleteParams: { symbol, dayIso },
-    columns: ['trade_id', 'trade_ts_utc', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'value', 'dte', 'spot', 'otm_pct', 'day_volume', 'oi', 'vol_oi_ratio', 'repeat3m', 'sig_score', 'sentiment', 'execution_side', 'symbol_vol_1m', 'symbol_vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'chips_json', 'rule_version', 'score_quality', 'missing_metrics_json', 'enriched_at_utc', 'is_sweep', 'is_multileg', 'minute_of_day_et', 'delta', 'implied_vol', 'time_norm', 'delta_norm', 'iv_skew_norm', 'value_shock_norm', 'dte_swing_norm', 'flow_imbalance_norm', 'delta_pressure_norm', 'cp_oi_pressure_norm', 'iv_skew_surface_norm', 'iv_term_slope_norm', 'underlying_trend_confirm_norm', 'liquidity_quality_norm', 'multileg_penalty_norm', 'sig_score_components_json'],
-    rows: enrichedRows.map((row) => ({
-      trade_id: row.tradeId,
-      trade_ts_utc: row.tradeTsUtc,
-      symbol: row.symbol,
-      expiration: row.expiration,
-      strike: row.strike,
-      option_right: row.right,
-      price: row.price,
-      size: Math.max(0, Math.trunc(toFiniteNumber(row.size) || 0)),
-      bid: row.bid,
-      ask: row.ask,
-      condition_code: row.conditionCode,
-      exchange: row.exchange,
-      value: row.value,
-      dte: row.dte,
-      spot: row.spot,
-      otm_pct: row.otmPct,
-      day_volume: row.dayVolume,
-      oi: row.oi,
-      vol_oi_ratio: row.volOiRatio,
-      repeat3m: row.repeat3m,
-      sig_score: row.sigScore,
-      sentiment: row.sentiment,
-      execution_side: row.executionSide,
-      symbol_vol_1m: row.symbolVol1m,
-      symbol_vol_baseline_15m: row.symbolVolBaseline15m,
-      open_window_baseline: row.openWindowBaseline,
-      bullish_ratio_15m: row.bullishRatio15m,
-      chips_json: JSON.stringify(row.chips || []),
-      rule_version: row.ruleVersion || null,
-      score_quality: row.scoreQuality || 'partial',
-      missing_metrics_json: JSON.stringify(row.missingMetrics || []),
-      enriched_at_utc: nowIso,
-      is_sweep: Number.isFinite(Number(row.isSweep)) ? Math.trunc(Number(row.isSweep)) : 0,
-      is_multileg: Number.isFinite(Number(row.isMultileg)) ? Math.trunc(Number(row.isMultileg)) : 0,
-      minute_of_day_et: Number.isFinite(Number(row.minuteOfDayEt)) ? Math.trunc(Number(row.minuteOfDayEt)) : null,
-      delta: row.delta,
-      implied_vol: row.impliedVol,
-      time_norm: row.timeNorm,
-      delta_norm: row.deltaNorm,
-      iv_skew_norm: row.ivSkewNorm,
-      value_shock_norm: row.valueShockNorm,
-      dte_swing_norm: row.dteSwingNorm,
-      flow_imbalance_norm: row.flowImbalanceNorm,
-      delta_pressure_norm: row.deltaPressureNorm,
-      cp_oi_pressure_norm: row.cpOiPressureNorm,
-      iv_skew_surface_norm: row.ivSkewSurfaceNorm,
-      iv_term_slope_norm: row.ivTermSlopeNorm,
-      underlying_trend_confirm_norm: row.underlyingTrendConfirmNorm,
-      liquidity_quality_norm: row.liquidityQualityNorm,
-      multileg_penalty_norm: row.multilegPenaltyNorm,
-      sig_score_components_json: JSON.stringify(row.sigScoreComponents || {}),
-    })),
-    env,
-  });
+  if (!skipEnrichedRowsReplace) {
+    replaceClickHouseDayRows({
+      tableName: 'option_trade_enriched',
+      whereSql: 'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
+      deleteParams: { symbol, dayIso },
+      columns: ['trade_id', 'trade_ts_utc', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'value', 'dte', 'spot', 'otm_pct', 'day_volume', 'oi', 'vol_oi_ratio', 'repeat3m', 'sig_score', 'sentiment', 'execution_side', 'symbol_vol_1m', 'symbol_vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'chips_json', 'rule_version', 'score_quality', 'missing_metrics_json', 'enriched_at_utc', 'is_sweep', 'is_multileg', 'minute_of_day_et', 'delta', 'implied_vol', 'time_norm', 'delta_norm', 'iv_skew_norm', 'value_shock_norm', 'dte_swing_norm', 'flow_imbalance_norm', 'delta_pressure_norm', 'cp_oi_pressure_norm', 'iv_skew_surface_norm', 'iv_term_slope_norm', 'underlying_trend_confirm_norm', 'liquidity_quality_norm', 'multileg_penalty_norm', 'sig_score_components_json'],
+      rows: enrichedRows.map((row) => toClickHouseEnrichedInsertRow(row, nowIso)),
+      env,
+    });
+  }
 
-  const minuteRollups = buildMinuteDerivedRollups(enrichedRows, dayIso);
+  const minuteRollups = minuteRollupsOverride || buildMinuteDerivedRollups(enrichedRows, dayIso);
 
   replaceClickHouseDayRows({
     tableName: 'option_symbol_minute_derived',
@@ -7902,14 +8151,54 @@ async function ensureEnrichedForDayInClickHouse({
     };
   }
 
-  const rawRows = loadClickHouseRawTradesForDay({ symbol, dayIso, env });
+  let rawRows = loadClickHouseRawTradesForDay({ symbol, dayIso, env });
   const supplementalMetrics = buildSupplementalMetricLookupFromClickHouse({
     symbol,
     dayIso,
     rawRows,
     env,
   });
-  const built = buildEnrichedRows(rawRows, activeRuleConfig.thresholds, supplementalMetrics, activeRuleConfig);
+  const streamEnrichedRows = shouldStreamClickHouseEnrichedWrites(env);
+  const metricStatusAccumulator = createMetricStatusAccumulator(markPartial);
+  const enrichChunkSize = parseClickHouseEnrichStreamChunkSize(env);
+  const minuteRollupState = createMinuteDerivedRollupState();
+  const enrichedInsertColumns = ['trade_id', 'trade_ts_utc', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'value', 'dte', 'spot', 'otm_pct', 'day_volume', 'oi', 'vol_oi_ratio', 'repeat3m', 'sig_score', 'sentiment', 'execution_side', 'symbol_vol_1m', 'symbol_vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'chips_json', 'rule_version', 'score_quality', 'missing_metrics_json', 'enriched_at_utc', 'is_sweep', 'is_multileg', 'minute_of_day_et', 'delta', 'implied_vol', 'time_norm', 'delta_norm', 'iv_skew_norm', 'value_shock_norm', 'dte_swing_norm', 'flow_imbalance_norm', 'delta_pressure_norm', 'cp_oi_pressure_norm', 'iv_skew_surface_norm', 'iv_term_slope_norm', 'underlying_trend_confirm_norm', 'liquidity_quality_norm', 'multileg_penalty_norm', 'sig_score_components_json'];
+
+  if (streamEnrichedRows) {
+    deleteClickHouseScope(
+      'option_trade_enriched',
+      'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
+      { symbol, dayIso },
+      env,
+    );
+  }
+
+  const buildConfig = {
+    ...activeRuleConfig,
+    dayIso,
+    minuteRollupState: streamEnrichedRows ? minuteRollupState : null,
+    metricStatusAccumulator,
+    rowConsumerChunkSize: enrichChunkSize,
+    rowConsumer: streamEnrichedRows
+      ? (chunkRows) => {
+        if (!Array.isArray(chunkRows) || chunkRows.length === 0) return;
+        const nowIso = new Date().toISOString();
+        insertClickHouseRows(
+          'option_trade_enriched',
+          enrichedInsertColumns,
+          chunkRows.map((row) => toClickHouseEnrichedInsertRow(row, nowIso)),
+          env,
+          { chunkSize: enrichChunkSize },
+        );
+      }
+      : null,
+  };
+  const built = buildEnrichedRows(rawRows, activeRuleConfig.thresholds, supplementalMetrics, buildConfig);
+  const minuteRollupsOverride = streamEnrichedRows
+    ? finalizeMinuteDerivedRollups(minuteRollupState)
+    : null;
+
+  rawRows = [];
 
   persistClickHouseEnrichedDayState({
     symbol,
@@ -7917,13 +8206,16 @@ async function ensureEnrichedForDayInClickHouse({
     built,
     featureBaselines: supplementalMetrics.featureBaselines,
     env,
+    skipEnrichedRowsReplace: streamEnrichedRows,
+    minuteRollupsOverride,
   });
 
-  const metricStatuses = calculateMetricStatuses(built.rows, markPartial);
+  const metricStatuses = finalizeMetricStatuses(metricStatusAccumulator);
+  const rowCount = Number(streamEnrichedRows ? built.rowCount : built.rows.length) || 0;
   upsertClickHouseMetricCacheRows({
     symbol,
     dayIso,
-    rows: built.rows,
+    rows: { length: rowCount },
     metricStatuses,
     markPartial,
     env,
@@ -7932,7 +8224,7 @@ async function ensureEnrichedForDayInClickHouse({
   return {
     synced: true,
     reason: null,
-    rowCount: built.rows.length,
+    rowCount,
     ruleVersion: activeRuleConfig.versionId,
     scoringModel: activeRuleConfig.scoringModel,
     targetHorizon: activeRuleConfig.targetSpec?.horizon || null,
