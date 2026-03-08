@@ -85,6 +85,7 @@ const DEFAULT_TREND_FALLBACK_MAX_LAG_MINUTES = 480;
 const DEFAULT_GREEKS_CONTRACT_FALLBACK_LIMIT = 200;
 const DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES = 60;
 const DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE = 5000;
+const DEFAULT_CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES = 10;
 
 const METRIC_NAMES = Object.freeze([
   'enrichedRows',
@@ -1049,6 +1050,91 @@ function parseClickHouseEnrichStreamChunkSize(env = process.env) {
     return Math.max(250, Math.min(50000, Math.trunc(parsed)));
   }
   return DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE;
+}
+
+function shouldLogClickHouseEnrichBatchProgress(env = process.env) {
+  return String(env.CLICKHOUSE_ENRICH_BATCH_PROGRESS_LOG || '1') !== '0';
+}
+
+function parseClickHouseEnrichProgressBatchMinutes(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES);
+  if (Number.isFinite(parsed) && parsed === 0) return 0;
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(120, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES;
+}
+
+function createClickHouseEnrichBatchProgressLogger({
+  symbol,
+  dayIso,
+  env = process.env,
+}) {
+  if (!shouldLogClickHouseEnrichBatchProgress(env)) return null;
+  const batchMinutes = parseClickHouseEnrichProgressBatchMinutes(env);
+  if (!Number.isFinite(batchMinutes) || batchMinutes <= 0) return null;
+
+  const batchMs = batchMinutes * 60000;
+  const startedAtMs = Date.now();
+  let emittedBatches = 0;
+  let totalRows = 0;
+  let currentBatchStartMs = null;
+  let currentBatchRows = 0;
+  let currentBatchMinuteBuckets = new Set();
+
+  const emitCurrentBatch = ({ final = false } = {}) => {
+    if (!Number.isFinite(currentBatchStartMs)) return;
+    const elapsedSec = (Date.now() - startedAtMs) / 1000;
+    emittedBatches += 1;
+    totalRows += currentBatchRows;
+    const rowsPerMinute = currentBatchRows / batchMinutes;
+
+    console.log('[ENRICH_BATCH_PROGRESS]', JSON.stringify({
+      symbol,
+      dayIso,
+      batchIndex: emittedBatches,
+      batchMinutes,
+      batchStartUtc: new Date(currentBatchStartMs).toISOString(),
+      batchEndUtc: new Date(currentBatchStartMs + batchMs).toISOString(),
+      rows: currentBatchRows,
+      rowsPerMinute: Number(rowsPerMinute.toFixed(2)),
+      activeMinutes: currentBatchMinuteBuckets.size,
+      totalRows,
+      totalRowsPerSec: Number((totalRows / Math.max(1, elapsedSec)).toFixed(2)),
+      elapsedSec: Number(elapsedSec.toFixed(1)),
+      final,
+    }));
+
+    currentBatchStartMs = null;
+    currentBatchRows = 0;
+    currentBatchMinuteBuckets = new Set();
+  };
+
+  return {
+    recordRows(rows = []) {
+      if (!Array.isArray(rows) || rows.length === 0) return;
+      rows.forEach((row) => {
+        const minuteBucket = toMinuteBucketUtc(row?.tradeTsUtc);
+        if (!minuteBucket) return;
+        const minuteMs = Date.parse(minuteBucket);
+        if (!Number.isFinite(minuteMs)) return;
+        const batchStartMs = Math.floor(minuteMs / batchMs) * batchMs;
+
+        if (currentBatchStartMs === null) {
+          currentBatchStartMs = batchStartMs;
+        } else if (batchStartMs !== currentBatchStartMs) {
+          emitCurrentBatch();
+          currentBatchStartMs = batchStartMs;
+        }
+
+        currentBatchRows += 1;
+        currentBatchMinuteBuckets.add(minuteBucket);
+      });
+    },
+    flush() {
+      emitCurrentBatch({ final: true });
+    },
+  };
 }
 
 function buildClickHouseTradeReadWindows(dayIso, windowMinutes) {
@@ -8322,6 +8408,7 @@ async function ensureEnrichedForDayInClickHouse({
   const metricStatusAccumulator = createMetricStatusAccumulator(markPartial);
   const enrichChunkSize = parseClickHouseEnrichStreamChunkSize(env);
   const minuteRollupState = createMinuteDerivedRollupState();
+  const enrichProgressLogger = createClickHouseEnrichBatchProgressLogger({ symbol, dayIso, env });
   const enrichedInsertColumns = ['trade_id', 'trade_ts_utc', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'value', 'dte', 'spot', 'otm_pct', 'day_volume', 'oi', 'vol_oi_ratio', 'repeat3m', 'sig_score', 'sentiment', 'execution_side', 'symbol_vol_1m', 'symbol_vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'chips_json', 'rule_version', 'score_quality', 'missing_metrics_json', 'enriched_at_utc', 'is_sweep', 'is_multileg', 'minute_of_day_et', 'delta', 'implied_vol', 'time_norm', 'delta_norm', 'iv_skew_norm', 'value_shock_norm', 'dte_swing_norm', 'flow_imbalance_norm', 'delta_pressure_norm', 'cp_oi_pressure_norm', 'iv_skew_surface_norm', 'iv_term_slope_norm', 'underlying_trend_confirm_norm', 'liquidity_quality_norm', 'multileg_penalty_norm', 'sig_score_components_json'];
   let rawRows = [];
   let supplementalMetrics = null;
@@ -8384,6 +8471,9 @@ async function ensureEnrichedForDayInClickHouse({
       dayIso,
       env,
       onChunk: (chunkRows) => {
+        if (enrichProgressLogger) {
+          enrichProgressLogger.recordRows(chunkRows);
+        }
         const chunkBuilt = buildEnrichedRows(
           chunkRows,
           activeRuleConfig.thresholds,
@@ -8401,6 +8491,9 @@ async function ensureEnrichedForDayInClickHouse({
         streamedRowCount += Number(chunkBuilt.rowCount || 0);
       },
     });
+    if (enrichProgressLogger) {
+      enrichProgressLogger.flush();
+    }
 
     built = {
       rows: [],
@@ -8414,6 +8507,10 @@ async function ensureEnrichedForDayInClickHouse({
       : null;
   } else {
     rawRows = loadClickHouseRawTradesForDay({ symbol, dayIso, env });
+    if (enrichProgressLogger) {
+      enrichProgressLogger.recordRows(rawRows);
+      enrichProgressLogger.flush();
+    }
     supplementalMetrics = buildSupplementalMetricLookupFromClickHouse({
       symbol,
       dayIso,
