@@ -33,7 +33,7 @@ Use for most remediation runs:
 ```bash
 BACKFILL_MODE=download \
 BACKFILL_FORCE=1 \
-BACKFILL_WORKERS=2 \
+BACKFILL_WORKERS=8 \
 BACKFILL_RAM_BUDGET_MB=10240 \
 BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
 CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
@@ -46,12 +46,12 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 
 ### 2) Max Theta concurrency (when server is healthy)
 
-Use only when Theta is stable and you want to saturate 4 allowed connections:
+Use when Theta is stable and you want max download throughput:
 
 ```bash
 BACKFILL_MODE=download \
 BACKFILL_FORCE=1 \
-BACKFILL_WORKERS=4 \
+BACKFILL_WORKERS=8 \
 BACKFILL_RAM_BUDGET_MB=10240 \
 BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
 CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
@@ -62,7 +62,7 @@ THETADATA_STREAM_IDLE_TIMEOUT_MS=1800000 \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 ```
 
-If retries/500s spike, immediately drop back to 2 workers.
+If retries/500s spike, immediately drop to 6 workers, then 4 workers.
 
 ### 3) Targeted raw-component remediation (no unnecessary downloads)
 
@@ -73,7 +73,7 @@ BACKFILL_MODE=download \
 BACKFILL_FORCE=1 \
 BACKFILL_RAW_COMPONENTS=quote \
 BACKFILL_SYMBOL_DAY_LIST_PATH=artifacts/reports/missing-quote-symbol-days-<ts>.tsv \
-BACKFILL_WORKERS=4 \
+BACKFILL_WORKERS=8 \
 BACKFILL_RAM_BUDGET_MB=10240 \
 CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
@@ -86,7 +86,7 @@ BACKFILL_MODE=download \
 BACKFILL_FORCE=1 \
 BACKFILL_RAW_COMPONENTS=stock \
 BACKFILL_SYMBOL_DAY_LIST_PATH=artifacts/reports/missing-stock-symbol-days-<ts>.tsv \
-BACKFILL_WORKERS=4 \
+BACKFILL_WORKERS=8 \
 BACKFILL_RAM_BUDGET_MB=10240 \
 CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
@@ -113,7 +113,8 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `BACKFILL_MODE`: `full | download | enrich`.
 - `BACKFILL_FORCE`: `1` to re-run even if cache says complete.
 - `BACKFILL_SYMBOL_DAY_LIST_PATH`: TSV (`YYYY-MM-DD<TAB>SYMBOL`) for targeted jobs.
-- `BACKFILL_WORKERS`: parallel worker count (keep `<=4` for Theta cap alignment).
+- `BACKFILL_WORKERS`: parallel worker count (if unset and `BACKFILL_MODE=download`, defaults to `THETADATA_DOWNLOAD_CONCURRENCY`).
+- `THETADATA_DOWNLOAD_CONCURRENCY`: target worker concurrency for download mode when `BACKFILL_WORKERS` is unset (default `8`).
 - `BACKFILL_REPORT_INCLUDE_JOBS`: `1` for detailed per-job output.
 
 ### Memory and worker sizing
@@ -153,7 +154,7 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 
 ## Guardrails
 
-- Keep total Theta concurrent streams `<= 4`.
+- Keep total Theta concurrent streams `<= 8`.
 - Prefer 2 workers when Theta is unstable.
 - Use targeted missing lists before any broad rerun.
 - Keep `CLICKHOUSE_DELETE_MUTATION_SYNC=0` unless debugging mutations.
@@ -172,4 +173,3 @@ Common files:
 - `summary.json`
 - `summary.tsv`
 - `failures.tsv`
-
