@@ -85,3 +85,10 @@
   - reliability/retry changes
   - observability/chunk-status changes
 - Exclude transient artifacts/reports from commits unless explicitly requested.
+
+## Canonical Runtime Parameters
+- Use `docs/BACKFILL_RUNTIME_PARAMETERS.md` as the single source of truth for:
+  - worker count and memory budget selection
+  - Theta stream timeout/heartbeat settings
+  - ClickHouse mutation/timeout settings
+  - targeted quote-only/stock-only/enrich-only runs

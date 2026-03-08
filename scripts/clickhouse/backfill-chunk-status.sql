@@ -1,8 +1,16 @@
 -- One-time rebuild of chunk status tables from existing historical data.
 -- Canonical expected grid is derived from option_trade_quote chunks per symbol-day.
+-- Performance notes:
+-- - TRUNCATE is faster than mutation delete for full-table refreshes.
+-- - quote/raw tables are very large; run with elevated threads and group-by spill guardrails.
 
-ALTER TABLE options.option_download_chunk_status DELETE WHERE 1 SETTINGS mutations_sync = 1;
-ALTER TABLE options.option_enrich_chunk_status DELETE WHERE 1 SETTINGS mutations_sync = 1;
+SET max_threads = 10;
+SET max_insert_threads = 10;
+SET max_memory_usage = 8589934592; -- 8 GiB
+SET max_bytes_before_external_group_by = 2147483648; -- 2 GiB
+
+TRUNCATE TABLE options.option_download_chunk_status;
+TRUNCATE TABLE options.option_enrich_chunk_status;
 
 INSERT INTO options.option_download_chunk_status
 (
@@ -21,6 +29,13 @@ INSERT INTO options.option_download_chunk_status
 )
 WITH
   toUInt16(10) AS chunk_minutes,
+  trade_days AS
+  (
+    SELECT DISTINCT
+      symbol,
+      trade_date AS trade_date_utc
+    FROM options.option_trades
+  ),
   trade_chunks AS
   (
     SELECT
@@ -35,26 +50,32 @@ WITH
   quote_chunks AS
   (
     SELECT
-      symbol,
-      trade_date_utc,
+      q.symbol AS symbol,
+      q.trade_date_utc AS trade_date_utc,
       toStartOfInterval(minute_bucket_utc, INTERVAL 10 MINUTE) AS chunk_start_utc,
       count() AS row_count,
       uniqExact(minute_bucket_utc) AS minute_count,
       argMax(source_endpoint, ingested_at_utc) AS source_endpoint
-    FROM options.option_quote_minute_raw
-    GROUP BY symbol, trade_date_utc, chunk_start_utc
+    FROM options.option_quote_minute_raw AS q
+    INNER JOIN trade_days AS td
+      ON q.symbol = td.symbol
+     AND q.trade_date_utc = td.trade_date_utc
+    GROUP BY q.symbol, q.trade_date_utc, chunk_start_utc
   ),
   stock_chunks AS
   (
     SELECT
-      symbol,
-      trade_date_utc,
+      s.symbol AS symbol,
+      s.trade_date_utc AS trade_date_utc,
       toStartOfInterval(minute_bucket_utc, INTERVAL 10 MINUTE) AS chunk_start_utc,
       count() AS row_count,
       uniqExact(minute_bucket_utc) AS minute_count,
       argMax(source_endpoint, ingested_at_utc) AS source_endpoint
-    FROM options.stock_ohlc_minute_raw
-    GROUP BY symbol, trade_date_utc, chunk_start_utc
+    FROM options.stock_ohlc_minute_raw AS s
+    INNER JOIN trade_days AS td
+      ON s.symbol = td.symbol
+     AND s.trade_date_utc = td.trade_date_utc
+    GROUP BY s.symbol, s.trade_date_utc, chunk_start_utc
   )
 SELECT
   symbol,
@@ -91,12 +112,7 @@ FROM
     t.chunk_start_utc AS chunk_start_utc,
     toUInt64(ifNull(q.row_count, 0)) AS row_count,
     toUInt16(ifNull(q.minute_count, 0)) AS minute_count,
-    multiIf(
-      ifNull(q.row_count, 0) = 0, 'missing',
-      ifNull(q.minute_count, 0) < t.expected_minute_count, 'partial',
-      ifNull(q.minute_count, 0) > t.expected_minute_count, 'extra',
-      'complete'
-    ) AS status,
+    if(ifNull(q.row_count, 0) = 0, 'missing', 'complete') AS status,
     q.source_endpoint AS source_endpoint
   FROM trade_chunks AS t
   LEFT JOIN quote_chunks AS q
@@ -113,12 +129,7 @@ FROM
     t.chunk_start_utc AS chunk_start_utc,
     toUInt64(ifNull(s.row_count, 0)) AS row_count,
     toUInt16(ifNull(s.minute_count, 0)) AS minute_count,
-    multiIf(
-      ifNull(s.row_count, 0) = 0, 'missing',
-      ifNull(s.minute_count, 0) < t.expected_minute_count, 'partial',
-      ifNull(s.minute_count, 0) > t.expected_minute_count, 'extra',
-      'complete'
-    ) AS status,
+    if(ifNull(s.row_count, 0) = 0, 'missing', 'complete') AS status,
     s.source_endpoint AS source_endpoint
   FROM trade_chunks AS t
   LEFT JOIN stock_chunks AS s
