@@ -13,6 +13,130 @@ function makeTempDbPath() {
   return { tempDir, dbPath: path.join(tempDir, 'historical.sqlite') };
 }
 
+function jsonResponse(payload, status = 200) {
+  return {
+    ok: status >= 200 && status < 300,
+    status,
+    text: async () => JSON.stringify(payload),
+  };
+}
+
+function getSymbolFixture(symbol) {
+  if (symbol === 'AAPL') {
+    return {
+      expirations: ['2026-02-20', '2026-02-27'],
+      strikes: [212.5, 215],
+      spotSeries: [209.8, 210.3, 210.6],
+    };
+  }
+
+  if (symbol === 'IBM') {
+    return {
+      expirations: ['2026-02-20', '2026-02-27'],
+      strikes: [252.5, 255],
+      spotSeries: [253.2, 253.8, 254.1],
+    };
+  }
+
+  return {
+    expirations: ['2026-02-20', '2026-02-27'],
+    strikes: [400, 405],
+    spotSeries: [401.2, 401.8, 402.1],
+  };
+}
+
+function createDefaultThetaFetch(fetchCalls) {
+  return async (url) => {
+    const endpoint = String(url);
+    fetchCalls.push(endpoint);
+    const parsedUrl = new URL(endpoint);
+    const symbol = parsedUrl.searchParams.get('symbol') || 'AAPL';
+    const { expirations, strikes, spotSeries } = getSymbolFixture(symbol);
+
+    if (endpoint.includes('/v3/option/history/trade_quote')) {
+      return jsonResponse({
+        symbol: [symbol, symbol],
+        trade_timestamp: ['2026-02-13T14:35:00.000Z', '2026-02-13T15:10:00.000Z'],
+        expiration: expirations,
+        strike: strikes,
+        right: ['CALL', 'CALL'],
+        price: [1.87, 2.11],
+        size: [200, 340],
+        bid: [1.84, 2.07],
+        ask: [1.88, 2.12],
+        condition: [18, 18],
+        exchange: ['OPRA', 'OPRA'],
+      });
+    }
+
+    if (endpoint.includes('/v3/stock/history/ohlc')) {
+      return jsonResponse({
+        symbol: [symbol, symbol, symbol],
+        timestamp: ['2026-02-13T14:35:00.000Z', '2026-02-13T15:10:00.000Z', '2026-02-13T15:11:00.000Z'],
+        open: [spotSeries[0] - 0.1, spotSeries[1] - 0.1, spotSeries[2] - 0.1],
+        high: [spotSeries[0] + 0.2, spotSeries[1] + 0.2, spotSeries[2] + 0.2],
+        low: [spotSeries[0] - 0.2, spotSeries[1] - 0.2, spotSeries[2] - 0.2],
+        close: spotSeries,
+        volume: [1000, 1200, 900],
+      });
+    }
+
+    if (endpoint.includes('/v3/option/history/quote')) {
+      return jsonResponse({
+        symbol: [symbol, symbol, symbol, symbol],
+        timestamp: [
+          '2026-02-13T14:35:00.000Z',
+          '2026-02-13T14:35:00.000Z',
+          '2026-02-13T15:10:00.000Z',
+          '2026-02-13T15:10:00.000Z',
+        ],
+        expiration: [expirations[0], expirations[1], expirations[0], expirations[1]],
+        strike: [strikes[0], strikes[1], strikes[0], strikes[1]],
+        right: ['CALL', 'CALL', 'CALL', 'CALL'],
+        bid: [1.84, 2.05, 1.9, 2.08],
+        ask: [1.88, 2.12, 1.95, 2.15],
+        last: [1.87, 2.11, 1.92, 2.1],
+        bid_size: [10, 12, 9, 11],
+        ask_size: [14, 13, 12, 10],
+      });
+    }
+
+    if (endpoint.includes('/v3/option/history/open_interest') && endpoint.includes('expiration=*')) {
+      return jsonResponse({
+        symbol: [symbol, symbol],
+        expiration: expirations,
+        strike: strikes,
+        right: ['CALL', 'CALL'],
+        open_interest: [900, 650],
+        timestamp: ['2026-02-13T06:30:00', '2026-02-13T06:30:00'],
+      });
+    }
+
+    if (endpoint.includes('/v3/option/history/greeks/first_order')) {
+      const expiration = parsedUrl.searchParams.get('expiration') || expirations[0];
+      const strike = expiration === expirations[0] ? strikes[0] : strikes[1];
+      const deltaBase = expiration === expirations[0] ? 0.42 : 0.36;
+      const ivBase = expiration === expirations[0] ? 0.24 : 0.28;
+      return jsonResponse({
+        symbol: [symbol, symbol],
+        expiration: [expiration, expiration],
+        strike: [strike, strike],
+        right: ['CALL', 'CALL'],
+        timestamp: ['2026-02-13T14:35:00', '2026-02-13T15:10:00'],
+        delta: [deltaBase, deltaBase + 0.03],
+        implied_vol: [ivBase, ivBase + 0.01],
+        gamma: [0.02, 0.021],
+        theta: [-0.015, -0.016],
+        vega: [0.12, 0.125],
+        rho: [0.03, 0.031],
+        underlying_price: [spotSeries[1], spotSeries[2]],
+      });
+    }
+
+    return jsonResponse({ error: 'not_found' }, 404);
+  };
+}
+
 describe('historical flow API', () => {
   let app;
   let tempDir;
@@ -37,26 +161,7 @@ describe('historical flow API', () => {
 
     fetchCalls = [];
 
-    global.fetch = async (url) => {
-      fetchCalls.push(String(url));
-      return {
-        ok: true,
-        status: 200,
-        text: async () => JSON.stringify({
-          symbol: ['AAPL', 'AAPL'],
-          trade_timestamp: ['2026-02-13T14:35:00.000Z', '2026-02-13T15:10:00.000Z'],
-          expiration: ['2026-02-20', '2026-02-27'],
-          strike: [212.5, 215],
-          right: ['CALL', 'CALL'],
-          price: [1.87, 2.11],
-          size: [200, 340],
-          bid: [1.84, 2.07],
-          ask: [1.88, 2.12],
-          condition: [18, 18],
-          exchange: ['OPRA', 'OPRA'],
-        }),
-      };
-    };
+    global.fetch = createDefaultThetaFetch(fetchCalls);
 
     app = createApp();
   });
@@ -97,6 +202,26 @@ describe('historical flow API', () => {
 
     const db = new Database(dbPath, { readonly: true });
     const count = db.prepare('SELECT COUNT(*) AS c FROM option_trades WHERE symbol = ?').get('AAPL').c;
+    const stockRawCount = db.prepare(`
+      SELECT COUNT(*) AS c
+      FROM stock_ohlc_minute_raw
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).get('AAPL', '2026-02-13').c;
+    const oiRawCount = db.prepare(`
+      SELECT COUNT(*) AS c
+      FROM option_open_interest_raw
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).get('AAPL', '2026-02-13').c;
+    const quoteRawCount = db.prepare(`
+      SELECT COUNT(*) AS c
+      FROM option_quote_minute_raw
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).get('AAPL', '2026-02-13').c;
+    const greeksRawCount = db.prepare(`
+      SELECT COUNT(*) AS c
+      FROM option_greeks_minute_raw
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).get('AAPL', '2026-02-13').c;
     const symbolMinuteCount = db.prepare(`
       SELECT COUNT(*) AS c
       FROM option_symbol_minute_derived
@@ -113,12 +238,17 @@ describe('historical flow API', () => {
     db.close();
 
     expect(count).toBe(2);
+    expect(stockRawCount).toBeGreaterThan(0);
+    expect(oiRawCount).toBeGreaterThan(0);
+    expect(quoteRawCount).toBeGreaterThan(0);
+    expect(greeksRawCount).toBeGreaterThan(0);
     expect(symbolMinuteCount).toBeGreaterThan(0);
     expect(contractMinuteCount).toBeGreaterThan(0);
     expect(dayCache).toMatchObject({ cacheStatus: 'full', rowCount: 2 });
     // With supplemental cache reuse in place, expected calls are:
-    // 1 trade_quote + 1 spot + 1 bulk OI + 2 greeks = 5
-    expect(fetchCalls.length).toBe(5);
+    // 1 trade_quote + 1 stock OHLC + 1 full quote chain + 1 bulk OI + 2 expiration greeks
+    // + 1 contract greeks fallback = 7
+    expect(fetchCalls.length).toBe(7);
   });
 
   it('skips Theta call on cache hit for same day/symbol', async () => {
@@ -135,8 +265,8 @@ describe('historical flow API', () => {
       cachedRows: 2,
     });
 
-    // No new fetch calls on cache hit — count stays at 5 from the first test
-    expect(fetchCalls.length).toBe(5);
+    // No new fetch calls on cache hit — count stays at 7 from the first test
+    expect(fetchCalls.length).toBe(7);
   });
 
   it('stores per-minute sigScore component averages in option_symbol_minute_derived', async () => {
@@ -275,6 +405,56 @@ describe('historical flow API', () => {
       fetchedRows: 1,
       upsertedRows: 1,
     });
+  });
+
+  it('treats Theta no-data responses as a full zero-row cache', async () => {
+    global.fetch = async (url) => {
+      fetchCalls.push(String(url));
+      if (String(url).includes('symbol=K') && String(url).includes('/v3/option/history/trade_quote')) {
+        return {
+          ok: false,
+          status: 472,
+          text: async () => 'No data found for your request',
+        };
+      }
+      return createDefaultThetaFetch(fetchCalls)(url);
+    };
+
+    const response = await request(app)
+      .get('/api/flow/historical')
+      .query({ from: FRIDAY_FROM, to: FRIDAY_TO, symbol: 'K' });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.data).toEqual([]);
+    expect(response.body.meta.total).toBe(0);
+    expect(response.body.meta.sync).toMatchObject({
+      synced: true,
+      fetchedRows: 0,
+      upsertedRows: 0,
+      cacheStatus: 'full',
+    });
+
+    const db = new Database(dbPath, { readonly: true });
+    const dayCache = db.prepare(`
+      SELECT cache_status AS cacheStatus, row_count AS rowCount, last_error AS lastError
+      FROM option_trade_day_cache
+      WHERE symbol = ? AND trade_date_utc = ?
+    `).get('K', '2026-02-13');
+    const metricCacheRows = db.prepare(`
+      SELECT metric_name AS metricName, cache_status AS cacheStatus, row_count AS rowCount
+      FROM option_trade_metric_day_cache
+      WHERE symbol = ? AND trade_date_utc = ?
+      ORDER BY metric_name ASC
+    `).all('K', '2026-02-13');
+    db.close();
+
+    expect(dayCache).toMatchObject({
+      cacheStatus: 'full',
+      rowCount: 0,
+      lastError: null,
+    });
+    expect(metricCacheRows.length).toBeGreaterThan(0);
+    expect(metricCacheRows.every((row) => row.cacheStatus === 'full' && row.rowCount === 0)).toBe(true);
   });
 
   it('returns validation error for missing required params', async () => {
@@ -444,6 +624,12 @@ describe('historical flow API', () => {
         raw_payload_json = excluded.raw_payload_json,
         ingested_at_utc = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
     `).run('FINRA', 'https://example.gov/oi.csv', '2026-02-13', 'AAPL', '2026-02-27', 215, 'CALL', 10, '{}');
+    db.prepare('DELETE FROM option_open_interest_raw WHERE symbol = ? AND trade_date_utc = ?')
+      .run('AAPL', '2026-02-13');
+    db.prepare('DELETE FROM contract_stats_intraday WHERE symbol = ? AND session_date = ?')
+      .run('AAPL', '2026-02-13');
+    db.prepare('DELETE FROM option_trade_metric_day_cache WHERE symbol = ? AND trade_date_utc = ?')
+      .run('AAPL', '2026-02-13');
     db.close();
 
     const response = await request(app)
@@ -499,7 +685,14 @@ describe('historical flow API', () => {
           return {
             ok: true,
             status: 200,
-            text: async () => JSON.stringify({ oi: 20 }),
+            text: async () => JSON.stringify({
+              symbol: ['QQQ'],
+              expiration: ['2026-02-20'],
+              strike: [500],
+              right: ['CALL'],
+              open_interest: [20],
+              timestamp: ['2026-02-13T06:30:00'],
+            }),
           };
         }
 
@@ -519,7 +712,7 @@ describe('historical flow API', () => {
       expect(response.body.data[0]).toMatchObject({
         symbol: 'QQQ',
         spot: 490,
-        oi: 0,
+        oi: 20,
       });
       expect(response.body.data[0].chips).toEqual(expect.arrayContaining(['otm', 'vol>oi']));
       expect(fetchCalls.some((url) => url.includes('/v3/stock/snapshot/quote'))).toBe(true);

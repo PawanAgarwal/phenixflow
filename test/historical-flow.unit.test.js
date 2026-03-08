@@ -54,4 +54,15 @@ describe('historical flow parser', () => {
     expect(endpoint).toContain('expiration=*');
     expect(endpoint).toContain('date=20260213');
   });
+
+  it('builds 1m option quote endpoint for symbol/day', () => {
+    const endpoint = __private.resolveThetaOptionQuoteEndpoint('AAPL', '2026-02-13', {
+      THETADATA_BASE_URL: 'http://127.0.0.1:25503',
+    });
+
+    expect(endpoint).toContain('/v3/option/history/quote');
+    expect(endpoint).toContain('symbol=AAPL');
+    expect(endpoint).toContain('date=20260213');
+    expect(endpoint).toContain('interval=1m');
+  });
 });

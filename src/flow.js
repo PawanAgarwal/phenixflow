@@ -2,6 +2,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 const Database = require('better-sqlite3');
 const {
+  resolveFlowReadBackend,
+  buildArtifactPath: buildClickHouseArtifactPath,
+  queryRowsSync: queryClickHouseRowsSync,
+} = require('./storage/clickhouse');
+const {
   THRESHOLD_FILTER_DEFINITIONS,
   getThresholdFilterSettings,
   findThresholdDefinition,
@@ -909,6 +914,93 @@ function loadSqliteRows(rawQuery = {}, env = process.env) {
   }
 }
 
+function loadClickHouseRows(rawQuery = {}, env = process.env) {
+  const artifactPath = buildClickHouseArtifactPath(env);
+
+  try {
+    const where = [];
+    const params = {};
+
+    if (typeof rawQuery.symbol === 'string' && rawQuery.symbol.trim()) {
+      where.push('t.symbol = {symbol:String}');
+      params.symbol = rawQuery.symbol.trim().toUpperCase();
+    }
+
+    if (typeof rawQuery.from === 'string' && rawQuery.from.trim()) {
+      where.push("t.trade_ts_utc >= parseDateTime64BestEffort({from:String})");
+      params.from = rawQuery.from.trim();
+    }
+
+    if (typeof rawQuery.to === 'string' && rawQuery.to.trim()) {
+      where.push("t.trade_ts_utc <= parseDateTime64BestEffort({to:String})");
+      params.to = rawQuery.to.trim();
+    }
+
+    const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
+
+    const rows = queryClickHouseRowsSync(`
+      SELECT
+        t.trade_id AS id,
+        concat(replaceAll(toString(t.trade_ts_utc, 'UTC'), ' ', 'T'), 'Z') AS tradeTsUtc,
+        t.symbol AS symbol,
+        toString(t.expiration) AS expiration,
+        t.strike AS strike,
+        t.option_right AS right,
+        t.price AS price,
+        t.size AS size,
+        t.bid AS bid,
+        t.ask AS ask,
+        t.condition_code AS conditionCode,
+        t.exchange AS exchange,
+        e.value AS value,
+        e.dte AS dte,
+        e.spot AS spot,
+        e.otm_pct AS otmPct,
+        e.day_volume AS dayVolume,
+        e.oi AS oi,
+        e.vol_oi_ratio AS volOiRatio,
+        e.repeat3m AS repeat3m,
+        e.sig_score AS sigScore,
+        e.sentiment AS sentiment,
+        e.rule_version AS ruleVersion,
+        e.score_quality AS scoreQuality,
+        e.missing_metrics_json AS missingMetricsJson,
+        e.sig_score_components_json AS sigScoreComponentsJson,
+        e.execution_side AS executionSide,
+        e.symbol_vol_1m AS symbolVol1m,
+        e.symbol_vol_baseline_15m AS symbolVolBaseline15m,
+        e.open_window_baseline AS openWindowBaseline,
+        e.bullish_ratio_15m AS bullishRatio15m,
+        e.chips_json AS chipsJson,
+        concat(replaceAll(toString(e.enriched_at_utc, 'UTC'), ' ', 'T'), 'Z') AS enrichedAtUtc
+      FROM options.option_trades AS t
+      LEFT JOIN options.option_trade_enriched AS e ON e.trade_id = t.trade_id
+      ${whereSql}
+      ORDER BY t.trade_ts_utc DESC, t.trade_id DESC
+    `, params, env);
+
+    return {
+      rows: rows.map((row) => toFlowRowV2(row)),
+      observability: {
+        source: 'clickhouse',
+        artifactPath,
+        rowCount: rows.length,
+        fallbackReason: null,
+      },
+    };
+  } catch (error) {
+    return {
+      rows: [],
+      observability: {
+        source: 'clickhouse',
+        artifactPath,
+        rowCount: 0,
+        fallbackReason: `db_unavailable:${error.message}`,
+      },
+    };
+  }
+}
+
 function resolveSourceData(rawQuery) {
   if (rawQuery.source === 'fixtures') {
     return {
@@ -962,6 +1054,17 @@ function resolveSourceData(rawQuery) {
           rowCount: 0,
           fallbackReason,
         },
+      };
+    }
+  }
+
+  const readBackend = resolveFlowReadBackend(process.env);
+  if (readBackend !== 'sqlite') {
+    const clickhouseResult = loadClickHouseRows(rawQuery, process.env);
+    if (clickhouseResult.rows.length > 0 || readBackend === 'clickhouse') {
+      return {
+        flows: clickhouseResult.rows,
+        observability: clickhouseResult.observability,
       };
     }
   }
@@ -1134,7 +1237,7 @@ function queryFlow(rawQuery, options = {}) {
 
   const sourceData = resolveSourceData(rawQuery);
   const runtimeRuleConfig = resolveRuntimeRuleConfig(process.env, {
-    useDb: sourceData.observability.source === 'sqlite',
+    useDb: sourceData.observability.source === 'sqlite' || sourceData.observability.source === 'clickhouse',
   });
   const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
   const compatibilityMode = shouldUseFixtureCompatibility(sourceData, process.env);
@@ -1200,7 +1303,7 @@ function buildFlowFacets(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
   const sourceData = resolveSourceData(query);
   const runtimeRuleConfig = resolveRuntimeRuleConfig(process.env, {
-    useDb: sourceData.observability.source === 'sqlite',
+    useDb: sourceData.observability.source === 'sqlite' || sourceData.observability.source === 'clickhouse',
   });
   const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
   const filters = buildFilters(query, filterVersion, {
@@ -1258,7 +1361,7 @@ function buildFlowSummary(query = {}, options = {}) {
   const filterVersion = normalizeFilterVersion(options.filterVersion);
   const sourceData = resolveSourceData(query);
   const runtimeRuleConfig = resolveRuntimeRuleConfig(process.env, {
-    useDb: sourceData.observability.source === 'sqlite',
+    useDb: sourceData.observability.source === 'sqlite' || sourceData.observability.source === 'clickhouse',
   });
   const degradedMeta = buildDegradedMeta(sourceData.observability, process.env);
   const filters = buildFilters(query, filterVersion, {
