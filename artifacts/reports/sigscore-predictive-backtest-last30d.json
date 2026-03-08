@@ -1,0 +1,317 @@
+{
+  "generatedAt": "2026-03-08T03:57:26.740Z",
+  "startedAt": "2026-03-08T03:57:08.009Z",
+  "readBackend": "clickhouse",
+  "artifactPath": "clickhouse://127.0.0.1:9000/options",
+  "config": {
+    "backtestDays": 30,
+    "stockLookbackDays": 65,
+    "signalColumn": "max_sig_score",
+    "horizons": {
+      "1h": 60,
+      "1d": 390,
+      "1w": 1950,
+      "2w": 3900,
+      "3w": 5850
+    }
+  },
+  "summary": [
+    {
+      "horizon": "1w",
+      "samples": 144446,
+      "pearsonCorr": 0.06470102367276408,
+      "scoreQ20": 0.30221683,
+      "scoreQ80": 0.48016205,
+      "avgReturnAllPct": 0.03056238017845808,
+      "avgReturnHighSigPct": 0.8402509384236562,
+      "avgReturnLowSigPct": -0.5661927391501032,
+      "highMinusLowSpreadBps": 140.64436775737593,
+      "highSigSamples": 28915,
+      "lowSigSamples": 28871,
+      "highSigUpHitRate": 0.47916306415355353,
+      "lowSigDownHitRate": 0.5409580547954695
+    },
+    {
+      "horizon": "1h",
+      "samples": 307327,
+      "pearsonCorr": -0.011486085157369633,
+      "scoreQ20": 0.30139247,
+      "scoreQ80": 0.48097593,
+      "avgReturnAllPct": -0.023362462932207367,
+      "avgReturnHighSigPct": -0.04322552869996383,
+      "avgReturnLowSigPct": -0.005036116665617988,
+      "highMinusLowSpreadBps": -3.8189412034345844,
+      "highSigSamples": 61435,
+      "lowSigSamples": 61481,
+      "highSigUpHitRate": 0.4920322291853178,
+      "lowSigDownHitRate": 0.4695434361835364
+    },
+    {
+      "horizon": "1d",
+      "samples": 278366,
+      "pearsonCorr": 0.026533812039291144,
+      "scoreQ20": 0.30111313,
+      "scoreQ80": 0.4804682,
+      "avgReturnAllPct": -0.21000651987381352,
+      "avgReturnHighSigPct": -0.05532884409612659,
+      "avgReturnLowSigPct": -0.37871757925695315,
+      "highMinusLowSpreadBps": 32.33887351608266,
+      "highSigSamples": 55672,
+      "lowSigSamples": 55689,
+      "highSigUpHitRate": 0.47005676102888344,
+      "lowSigDownHitRate": 0.5624809208281707
+    },
+    {
+      "horizon": "3w",
+      "samples": 0,
+      "pearsonCorr": 0,
+      "scoreQ20": 0,
+      "scoreQ80": 0,
+      "avgReturnAllPct": 0,
+      "avgReturnHighSigPct": 0,
+      "avgReturnLowSigPct": 0,
+      "highMinusLowSpreadBps": 0,
+      "highSigSamples": 0,
+      "lowSigSamples": 0,
+      "highSigUpHitRate": 0,
+      "lowSigDownHitRate": 0
+    },
+    {
+      "horizon": "2w",
+      "samples": 20980,
+      "pearsonCorr": 0.07443141323266388,
+      "scoreQ20": 0.31131372,
+      "scoreQ80": 0.50870824,
+      "avgReturnAllPct": -3.9682313500708917,
+      "avgReturnHighSigPct": -2.868972845014928,
+      "avgReturnLowSigPct": -4.608759887939129,
+      "highMinusLowSpreadBps": 173.9787042924201,
+      "highSigSamples": 4191,
+      "lowSigSamples": 4201,
+      "highSigUpHitRate": 0.19064662371748986,
+      "lowSigDownHitRate": 0.6993572958819329
+    }
+  ],
+  "buckets": [
+    {
+      "horizon": "1d",
+      "bucketIndex": 0,
+      "bucketRange": [
+        0,
+        0.2
+      ],
+      "samples": 9601,
+      "avgReturnPct": -0.6344435306891643,
+      "upHitRate": 0.3994375585876471
+    },
+    {
+      "horizon": "1d",
+      "bucketIndex": 1,
+      "bucketRange": [
+        0.2,
+        0.4
+      ],
+      "samples": 158366,
+      "avgReturnPct": -0.22527752957333005,
+      "upHitRate": 0.45848224997789927
+    },
+    {
+      "horizon": "1d",
+      "bucketIndex": 2,
+      "bucketRange": [
+        0.4,
+        0.6000000000000001
+      ],
+      "samples": 97174,
+      "avgReturnPct": -0.1439128852481869,
+      "upHitRate": 0.465906518204458
+    },
+    {
+      "horizon": "1d",
+      "bucketIndex": 3,
+      "bucketRange": [
+        0.6000000000000001,
+        0.8
+      ],
+      "samples": 13199,
+      "avgReturnPct": -0.20255785677342045,
+      "upHitRate": 0.46253504053337374
+    },
+    {
+      "horizon": "1d",
+      "bucketIndex": 4,
+      "bucketRange": [
+        0.8,
+        1
+      ],
+      "samples": 26,
+      "avgReturnPct": -1.2665177683644735,
+      "upHitRate": 0.38461538461538464
+    },
+    {
+      "horizon": "1h",
+      "bucketIndex": 0,
+      "bucketRange": [
+        0,
+        0.2
+      ],
+      "samples": 10587,
+      "avgReturnPct": -0.016315628556833467,
+      "upHitRate": 0.5298006989704355
+    },
+    {
+      "horizon": "1h",
+      "bucketIndex": 1,
+      "bucketRange": [
+        0.2,
+        0.4
+      ],
+      "samples": 174609,
+      "avgReturnPct": -0.006027431111523049,
+      "upHitRate": 0.5215825072018052
+    },
+    {
+      "horizon": "1h",
+      "bucketIndex": 2,
+      "bucketRange": [
+        0.4,
+        0.6000000000000001
+      ],
+      "samples": 107466,
+      "avgReturnPct": -0.05194664185054434,
+      "upHitRate": 0.494193512366702
+    },
+    {
+      "horizon": "1h",
+      "bucketIndex": 3,
+      "bucketRange": [
+        0.6000000000000001,
+        0.8
+      ],
+      "samples": 14639,
+      "avgReturnPct": -0.023890882630161064,
+      "upHitRate": 0.5015369902315732
+    },
+    {
+      "horizon": "1h",
+      "bucketIndex": 4,
+      "bucketRange": [
+        0.8,
+        1
+      ],
+      "samples": 26,
+      "avgReturnPct": -0.8654585826855795,
+      "upHitRate": 0.34615384615384615
+    },
+    {
+      "horizon": "1w",
+      "bucketIndex": 0,
+      "bucketRange": [
+        0,
+        0.2
+      ],
+      "samples": 4950,
+      "avgReturnPct": -1.0652942561121563,
+      "upHitRate": 0.4262626262626263
+    },
+    {
+      "horizon": "1w",
+      "bucketIndex": 1,
+      "bucketRange": [
+        0.2,
+        0.4
+      ],
+      "samples": 82455,
+      "avgReturnPct": -0.3044601070075575,
+      "upHitRate": 0.479255351403796
+    },
+    {
+      "horizon": "1w",
+      "bucketIndex": 2,
+      "bucketRange": [
+        0.4,
+        0.6000000000000001
+      ],
+      "samples": 49504,
+      "avgReturnPct": 0.6696133919711009,
+      "upHitRate": 0.48864738202973496
+    },
+    {
+      "horizon": "1w",
+      "bucketIndex": 3,
+      "bucketRange": [
+        0.6000000000000001,
+        0.8
+      ],
+      "samples": 7518,
+      "avgReturnPct": 0.22128152101518533,
+      "upHitRate": 0.44094173982442136
+    },
+    {
+      "horizon": "1w",
+      "bucketIndex": 4,
+      "bucketRange": [
+        0.8,
+        1
+      ],
+      "samples": 19,
+      "avgReturnPct": -1.0556617267818174,
+      "upHitRate": 0.42105263157894735
+    },
+    {
+      "horizon": "2w",
+      "bucketIndex": 0,
+      "bucketRange": [
+        0,
+        0.2
+      ],
+      "samples": 603,
+      "avgReturnPct": -4.666891994760937,
+      "upHitRate": 0.3067993366500829
+    },
+    {
+      "horizon": "2w",
+      "bucketIndex": 1,
+      "bucketRange": [
+        0.2,
+        0.4
+      ],
+      "samples": 11007,
+      "avgReturnPct": -4.747661551976498,
+      "upHitRate": 0.27982193149813755
+    },
+    {
+      "horizon": "2w",
+      "bucketIndex": 2,
+      "bucketRange": [
+        0.4,
+        0.6000000000000001
+      ],
+      "samples": 7697,
+      "avgReturnPct": -2.833070492759803,
+      "upHitRate": 0.28933350656099777
+    },
+    {
+      "horizon": "2w",
+      "bucketIndex": 3,
+      "bucketRange": [
+        0.6000000000000001,
+        0.8
+      ],
+      "samples": 1669,
+      "avgReturnPct": -3.812091616796941,
+      "upHitRate": 0.1030557219892151
+    },
+    {
+      "horizon": "2w",
+      "bucketIndex": 4,
+      "bucketRange": [
+        0.8,
+        1
+      ],
+      "samples": 4,
+      "avgReturnPct": -3.3306644587274197,
+      "upHitRate": 0
+    }
+  ]
+}
