@@ -92,8 +92,10 @@ function isFullyEnriched(metricCacheMap = {}) {
 
 function isRetriableError(error) {
   const message = String(error?.message || '').toLowerCase();
+  const theta5xx = /thetadata_request_failed:5\d\d/.test(message) || /http_5\d\d/.test(message);
   return (
     message.includes('fetch failed')
+    || theta5xx
     || message.includes('thetadata_request_failed:429')
     || message.includes('thetadata_request_timeout:')
     || message.includes('timed out')

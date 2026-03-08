@@ -2,6 +2,12 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const Database = require('better-sqlite3');
+let UndiciAgent = null;
+try {
+  ({ Agent: UndiciAgent } = require('undici'));
+} catch {
+  UndiciAgent = null;
+}
 const {
   resolveFlowReadBackend,
   resolveFlowWriteBackend,
@@ -58,10 +64,21 @@ const DAY_CACHE_STATUS_FULL = 'full';
 const DAY_CACHE_STATUS_PARTIAL = 'partial';
 const DEFAULT_HISTORICAL_OPTION_PATH = '/v3/option/history/trade_quote';
 const DEFAULT_OPTION_QUOTE_PATH = '/v3/option/history/quote';
+const DEFAULT_THETADATA_CALENDAR_PATH = '/v3/calendar/on_date';
 const DEFAULT_SPOT_PATH = '/v3/stock/history/ohlc';
 const DEFAULT_OI_PATH = '/v3/option/history/open_interest';
 const DEFAULT_GREEKS_PATH = '/v3/option/history/greeks/first_order';
-const DEFAULT_THETADATA_TIMEOUT_MS = 15000;
+const DEFAULT_HISTORICAL_OPTION_FORMAT = 'ndjson';
+const DEFAULT_OPTION_QUOTE_FORMAT = 'ndjson';
+const DEFAULT_THETADATA_TIMEOUT_MS = 120000;
+const DEFAULT_THETADATA_CALENDAR_TIMEOUT_MS = 30000;
+const DEFAULT_THETADATA_STREAM_IDLE_TIMEOUT_MS = 1800000;
+const DEFAULT_THETADATA_STREAM_HEARTBEAT_EVERY_ROWS = 250000;
+const DEFAULT_THETADATA_MAX_CONNECTIONS_PER_PROCESS = 1;
+const DEFAULT_THETADATA_MAX_PIPELINING_PER_CONNECTION = 1;
+const DEFAULT_THETADATA_LARGE_SYMBOLS = ['SPY', 'QQQ'];
+const DEFAULT_THETADATA_LARGE_SYMBOL_WINDOW_MINUTES = 60;
+const DEFAULT_THETADATA_CALENDAR_CLOSE_PAD_MINUTES = 15;
 const DEFAULT_SUPPLEMENTAL_CACHE_TTL_HOURS = 24;
 const DEFAULT_SUPPLEMENTAL_CONCURRENCY = 4;
 const DEFAULT_TREND_FALLBACK_MAX_LAG_MINUTES = 480;
@@ -84,6 +101,10 @@ const METRIC_NAMES = Object.freeze([
   'volOiRatio',
   'sigScore',
 ]);
+
+let thetaFetchDispatcher = null;
+let thetaFetchDispatcherKey = null;
+const thetaCalendarSessionCache = new Map();
 
 function resolveDbPath(env = process.env) {
   const configuredPath = env.PHENIX_DB_PATH || path.resolve(__dirname, '..', 'data', 'phenixflow.sqlite');
@@ -647,50 +668,77 @@ function toIsoFromAnyTs(value, fallbackIso) {
   return fallbackIso;
 }
 
-function normalizeThetaRows(rows, symbol, dayIso) {
-  const fallbackTs = `${dayIso}T00:00:00.000Z`;
-
-  return rows.map((row) => {
-    const expiration = pickField(row, ['expiration', 'exp', 'expiry', 'expiration_date']);
-    const strike = toNumber(pickField(row, ['strike', 'strike_price']));
-    const right = normalizeRight(String(pickField(row, ['right', 'option_right', 'side']) || ''));
-    const price = toNumber(pickField(row, ['price', 'trade_price', 'last']));
-    const size = toInteger(pickField(row, ['size', 'trade_size', 'quantity', 'qty']));
-
-    if (!expiration || strike === null || !right || price === null || size === null) return null;
-
-    const tradeTsUtc = toIsoFromAnyTs(pickField(row, ['trade_timestamp', 'trade_ts', 'timestamp', 'time']), fallbackTs);
-    const bid = toNumber(pickField(row, ['bid', 'bid_price']));
-    const ask = toNumber(pickField(row, ['ask', 'ask_price']));
-    const conditionCode = pickField(row, ['condition_code', 'condition', 'sale_condition']);
-    const exchange = pickField(row, ['exchange', 'exch']);
-
-    const tradeId = crypto
-      .createHash('sha1')
-      .update([symbol, expiration, strike, right, tradeTsUtc, price, size, conditionCode || '', exchange || ''].join('|'))
-      .digest('hex');
-
-    return {
-      tradeId,
-      tradeTsUtc,
-      tradeTsEt: tradeTsUtc,
-      symbol,
-      expiration: String(expiration),
-      strike,
-      optionRight: right,
-      price,
-      size,
-      bid,
-      ask,
-      conditionCode: conditionCode === null ? null : String(conditionCode),
-      exchange: exchange === null ? null : String(exchange),
-      rawPayloadJson: JSON.stringify(row),
-      watermark: `theta-sync-${dayIso}`,
-    };
-  }).filter(Boolean);
+function floorIsoToMinute(isoValue) {
+  if (typeof isoValue !== 'string' || !isoValue.trim()) return null;
+  const parsed = new Date(isoValue);
+  if (Number.isNaN(parsed.getTime())) return null;
+  parsed.setUTCSeconds(0, 0);
+  return parsed.toISOString();
 }
 
-function resolveThetaEndpoint(symbol, yyyymmdd, env = process.env) {
+function isoToTimeHms(isoValue) {
+  const parsed = new Date(isoValue);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed.toISOString().slice(11, 19);
+}
+
+function addMinutesToIso(isoValue, minutes) {
+  const parsed = new Date(isoValue);
+  const minuteDelta = Number(minutes);
+  if (Number.isNaN(parsed.getTime()) || !Number.isFinite(minuteDelta)) return null;
+  parsed.setUTCMinutes(parsed.getUTCMinutes() + Math.trunc(minuteDelta), 0, 0);
+  return parsed.toISOString();
+}
+
+function normalizeThetaRow(row, symbol, dayIso) {
+  if (!row || typeof row !== 'object') return null;
+  const fallbackTs = `${dayIso}T00:00:00.000Z`;
+  const expiration = pickField(row, ['expiration', 'exp', 'expiry', 'expiration_date']);
+  const strike = toNumber(pickField(row, ['strike', 'strike_price']));
+  const right = normalizeRight(String(pickField(row, ['right', 'option_right', 'side']) || ''));
+  const price = toNumber(pickField(row, ['price', 'trade_price', 'last']));
+  const size = toInteger(pickField(row, ['size', 'trade_size', 'quantity', 'qty']));
+
+  if (!expiration || strike === null || !right || price === null || size === null) return null;
+
+  const tradeTsUtc = toIsoFromAnyTs(pickField(row, ['trade_timestamp', 'trade_ts', 'timestamp', 'time']), fallbackTs);
+  const bid = toNumber(pickField(row, ['bid', 'bid_price']));
+  const ask = toNumber(pickField(row, ['ask', 'ask_price']));
+  const conditionCode = pickField(row, ['condition_code', 'condition', 'sale_condition']);
+  const exchange = pickField(row, ['exchange', 'exch']);
+
+  const tradeId = crypto
+    .createHash('sha1')
+    .update([symbol, expiration, strike, right, tradeTsUtc, price, size, conditionCode || '', exchange || ''].join('|'))
+    .digest('hex');
+
+  return {
+    tradeId,
+    tradeTsUtc,
+    tradeTsEt: tradeTsUtc,
+    symbol,
+    expiration: String(expiration),
+    strike,
+    optionRight: right,
+    price,
+    size,
+    bid,
+    ask,
+    conditionCode: conditionCode === null ? null : String(conditionCode),
+    exchange: exchange === null ? null : String(exchange),
+    rawPayloadJson: JSON.stringify(row),
+    watermark: `theta-sync-${dayIso}`,
+  };
+}
+
+function normalizeThetaRows(rows, symbol, dayIso) {
+  return rows
+    .map((row) => normalizeThetaRow(row, symbol, dayIso))
+    .filter(Boolean);
+}
+
+function resolveThetaEndpoint(symbol, yyyymmdd, env = process.env, options = {}) {
+  const { startTime = null, endTime = null } = options || {};
   const baseUrl = (env.THETADATA_BASE_URL || '').trim();
   if (!baseUrl) return null;
 
@@ -702,7 +750,13 @@ function resolveThetaEndpoint(symbol, yyyymmdd, env = process.env) {
   url.searchParams.set('symbol', symbol);
   url.searchParams.set('expiration', '*');
   url.searchParams.set('date', yyyymmdd);
-  url.searchParams.set('format', 'json');
+  if (startTime) {
+    url.searchParams.set('start_time', startTime);
+  }
+  if (endTime) {
+    url.searchParams.set('end_time', endTime);
+  }
+  url.searchParams.set('format', parseHistoricalOptionFormat(env));
   return url.toString();
 }
 
@@ -724,7 +778,8 @@ function resolveThetaSpotEndpoint(symbol, dayIso, env = process.env) {
   return url.toString();
 }
 
-function resolveThetaOptionQuoteEndpoint(symbol, dayIso, env = process.env) {
+function resolveThetaOptionQuoteEndpoint(symbol, dayIso, env = process.env, options = {}) {
+  const { startTime = null, endTime = null } = options || {};
   const baseUrl = (env.THETADATA_BASE_URL || '').trim();
   const configuredPath = (env.THETADATA_OPTION_QUOTE_PATH || DEFAULT_OPTION_QUOTE_PATH).trim();
   if (!baseUrl || !configuredPath) return null;
@@ -737,6 +792,26 @@ function resolveThetaOptionQuoteEndpoint(symbol, dayIso, env = process.env) {
   url.searchParams.set('expiration', '*');
   url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
   url.searchParams.set('interval', '1m');
+  if (startTime) {
+    url.searchParams.set('start_time', startTime);
+  }
+  if (endTime) {
+    url.searchParams.set('end_time', endTime);
+  }
+  url.searchParams.set('format', parseOptionQuoteFormat(env));
+  return url.toString();
+}
+
+function resolveThetaCalendarEndpoint(dayIso, env = process.env) {
+  const baseUrl = (env.THETADATA_BASE_URL || '').trim();
+  const configuredPath = (env.THETADATA_CALENDAR_PATH || DEFAULT_THETADATA_CALENDAR_PATH).trim();
+  if (!baseUrl || !configuredPath) return null;
+
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+  const normalizedPath = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
+  const url = new URL(`${normalizedBase}${normalizedPath}`);
+
+  url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
   url.searchParams.set('format', 'json');
   return url.toString();
 }
@@ -863,10 +938,320 @@ function parseTimeoutMs(env = process.env) {
 
 function parseOptionQuoteTimeoutMs(env = process.env) {
   const parsed = Number(env.THETADATA_OPTION_QUOTE_TIMEOUT_MS);
+  if (Number.isFinite(parsed) && parsed === 0) {
+    return 0;
+  }
   if (Number.isFinite(parsed) && parsed >= 1000) {
     return Math.trunc(parsed);
   }
-  return Math.max(parseTimeoutMs(env), 120000);
+  return parseStreamIdleTimeoutMs(env);
+}
+
+function parseStreamIdleTimeoutMs(env = process.env) {
+  const parsed = Number(env.THETADATA_STREAM_IDLE_TIMEOUT_MS);
+  if (Number.isFinite(parsed) && parsed === 0) {
+    return 0;
+  }
+  if (Number.isFinite(parsed) && parsed >= 1000) {
+    return Math.trunc(parsed);
+  }
+  return DEFAULT_THETADATA_STREAM_IDLE_TIMEOUT_MS;
+}
+
+function parseStreamHeartbeatEveryRows(env = process.env) {
+  const parsed = Number(env.THETADATA_STREAM_HEARTBEAT_EVERY_ROWS);
+  if (Number.isFinite(parsed) && parsed === 0) return 0;
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.trunc(parsed));
+  }
+  return DEFAULT_THETADATA_STREAM_HEARTBEAT_EVERY_ROWS;
+}
+
+function parseThetaMaxConnectionsPerProcess(env = process.env) {
+  const parsed = Number(env.THETADATA_MAX_CONNECTIONS_PER_PROCESS);
+  if (Number.isFinite(parsed) && parsed === 0) return 0;
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(32, Math.trunc(parsed)));
+  }
+  return DEFAULT_THETADATA_MAX_CONNECTIONS_PER_PROCESS;
+}
+
+function parseThetaMaxPipeliningPerConnection(env = process.env) {
+  const parsed = Number(env.THETADATA_MAX_PIPELINING_PER_CONNECTION);
+  if (Number.isFinite(parsed) && parsed === 0) return 0;
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(8, Math.trunc(parsed)));
+  }
+  return DEFAULT_THETADATA_MAX_PIPELINING_PER_CONNECTION;
+}
+
+function shouldForceThetaConnectionClose(env = process.env) {
+  return String(env.THETADATA_FORCE_CONNECTION_CLOSE || '1') !== '0';
+}
+
+function getThetaFetchDispatcher(env = process.env) {
+  if (!UndiciAgent) return null;
+  const connections = parseThetaMaxConnectionsPerProcess(env);
+  if (!Number.isFinite(connections) || connections <= 0) return null;
+  const pipelining = parseThetaMaxPipeliningPerConnection(env);
+  const key = `${connections}|${pipelining}`;
+  if (thetaFetchDispatcher && thetaFetchDispatcherKey === key) {
+    return thetaFetchDispatcher;
+  }
+  if (thetaFetchDispatcher && typeof thetaFetchDispatcher.close === 'function') {
+    try {
+      thetaFetchDispatcher.close();
+    } catch {
+      // Best-effort close during reconfiguration.
+    }
+  }
+  thetaFetchDispatcher = new UndiciAgent({
+    connections,
+    pipelining: Math.max(1, pipelining),
+    keepAliveTimeout: 10_000,
+    keepAliveMaxTimeout: 60_000,
+  });
+  thetaFetchDispatcherKey = key;
+  return thetaFetchDispatcher;
+}
+
+function parseLargeSymbolWindowMinutes(env = process.env) {
+  const parsed = Number(env.THETADATA_LARGE_SYMBOL_WINDOW_MINUTES);
+  if (Number.isFinite(parsed) && parsed === 0) return 0;
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(24 * 60, Math.trunc(parsed)));
+  }
+  return DEFAULT_THETADATA_LARGE_SYMBOL_WINDOW_MINUTES;
+}
+
+function parseThetaCalendarTimeoutMs(env = process.env) {
+  const parsed = Number(env.THETADATA_CALENDAR_TIMEOUT_MS);
+  if (Number.isFinite(parsed) && parsed >= 1000) {
+    return Math.trunc(parsed);
+  }
+  return DEFAULT_THETADATA_CALENDAR_TIMEOUT_MS;
+}
+
+function parseThetaCalendarClosePadMinutes(env = process.env) {
+  const parsed = Number(env.THETADATA_CALENDAR_CLOSE_PAD_MINUTES);
+  if (Number.isFinite(parsed) && parsed >= 0) {
+    return Math.max(0, Math.min(240, Math.trunc(parsed)));
+  }
+  return DEFAULT_THETADATA_CALENDAR_CLOSE_PAD_MINUTES;
+}
+
+function parseThetaLargeSymbols(env = process.env) {
+  const raw = String(env.THETADATA_LARGE_SYMBOLS || DEFAULT_THETADATA_LARGE_SYMBOLS.join(',')).trim();
+  if (!raw) return { symbols: new Set(), includeAll: false };
+
+  const lowered = raw.toLowerCase();
+  if (lowered === 'all' || raw === '*') {
+    return { symbols: new Set(), includeAll: true };
+  }
+
+  const symbols = new Set(
+    raw
+      .split(',')
+      .map((token) => normalizeSymbol(token))
+      .filter(Boolean),
+  );
+  return { symbols, includeAll: false };
+}
+
+function parseTimeHmsToSecondOfDay(rawValue) {
+  if (typeof rawValue !== 'string') return null;
+  const value = rawValue.trim();
+  const match = value.match(/^(\d{2}):(\d{2}):(\d{2})$/);
+  if (!match) return null;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  const seconds = Number(match[3]);
+  if (
+    !Number.isInteger(hours) || !Number.isInteger(minutes) || !Number.isInteger(seconds)
+    || hours < 0 || hours > 23
+    || minutes < 0 || minutes > 59
+    || seconds < 0 || seconds > 59
+  ) {
+    return null;
+  }
+  return (hours * 3600) + (minutes * 60) + seconds;
+}
+
+function formatSecondOfDayAsHms(value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return null;
+  const bounded = Math.max(0, Math.min(86399, Math.trunc(parsed)));
+  const hours = Math.trunc(bounded / 3600);
+  const minutes = Math.trunc((bounded % 3600) / 60);
+  const seconds = bounded % 60;
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function parseThetaCalendarSessionWindow(rawBody, env = process.env) {
+  const rows = parseJsonRows(rawBody);
+  const row = rows.find((entry) => entry && typeof entry === 'object') || null;
+  if (!row) return null;
+
+  const sessionType = String(row.type || '').trim().toLowerCase();
+  if (sessionType && sessionType !== 'open') {
+    return {
+      isOpen: false,
+      type: sessionType,
+      openTime: null,
+      closeTime: null,
+    };
+  }
+  if (sessionType !== 'open') return null;
+
+  const openSecond = parseTimeHmsToSecondOfDay(typeof row.open === 'string' ? row.open : null);
+  const closeSecond = parseTimeHmsToSecondOfDay(typeof row.close === 'string' ? row.close : null);
+  if (openSecond === null || closeSecond === null) {
+    return {
+      isOpen: true,
+      type: 'open',
+      openTime: null,
+      closeTime: null,
+    };
+  }
+
+  const closePadMinutes = parseThetaCalendarClosePadMinutes(env);
+  const paddedCloseSecond = Math.min(86399, closeSecond + (closePadMinutes * 60));
+  const boundedCloseSecond = Math.max(openSecond, paddedCloseSecond);
+
+  return {
+    isOpen: true,
+    type: 'open',
+    openTime: formatSecondOfDayAsHms(openSecond),
+    closeTime: formatSecondOfDayAsHms(boundedCloseSecond),
+  };
+}
+
+async function resolveThetaCalendarSessionWindowForDay(dayIso, { env = process.env } = {}) {
+  const normalizedDayIso = normalizeIsoDate(dayIso);
+  if (!normalizedDayIso) return null;
+
+  const endpoint = resolveThetaCalendarEndpoint(normalizedDayIso, env);
+  if (!endpoint) return null;
+
+  const cacheKey = `${endpoint}|pad:${parseThetaCalendarClosePadMinutes(env)}`;
+  if (thetaCalendarSessionCache.has(cacheKey)) {
+    return thetaCalendarSessionCache.get(cacheKey);
+  }
+
+  let sessionWindow = null;
+  try {
+    const { response, body, durationMs } = await fetchTextWithTimeout(endpoint, {
+      env,
+      timeoutMs: parseThetaCalendarTimeoutMs(env),
+    });
+    if (response.ok) {
+      sessionWindow = parseThetaCalendarSessionWindow(body, env);
+    }
+    logThetaDownload({
+      env,
+      url: endpoint,
+      durationMs,
+      status: response.status,
+      ok: response.ok,
+      rows: sessionWindow ? 1 : 0,
+      error: response.ok ? null : `http_${response.status}`,
+    });
+  } catch {
+    sessionWindow = null;
+  }
+
+  thetaCalendarSessionCache.set(cacheKey, sessionWindow);
+  return sessionWindow;
+}
+
+function resolveThetaTimeWindowsForSymbol(symbol, {
+  startTime = null,
+  sessionStartTime = null,
+  sessionEndTime = null,
+  env = process.env,
+} = {}) {
+  const sessionStartSecond = parseTimeHmsToSecondOfDay(sessionStartTime);
+  const sessionEndSecondRaw = parseTimeHmsToSecondOfDay(sessionEndTime);
+  const hasSessionBounds = sessionStartSecond !== null || sessionEndSecondRaw !== null;
+  const lowerBound = sessionStartSecond === null ? 0 : sessionStartSecond;
+  const upperBound = sessionEndSecondRaw === null
+    ? 86399
+    : Math.max(lowerBound, sessionEndSecondRaw);
+
+  const parsedStartSecond = startTime ? parseTimeHmsToSecondOfDay(startTime) : null;
+  if (startTime && parsedStartSecond === null) {
+    return [{ startTime: startTime || null, endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null }];
+  }
+
+  let startSecond = parsedStartSecond;
+  if (startSecond === null && hasSessionBounds) {
+    startSecond = lowerBound;
+  }
+  if (startSecond !== null) {
+    startSecond = Math.max(lowerBound, Math.min(startSecond, upperBound));
+  }
+
+  const windowMinutes = parseLargeSymbolWindowMinutes(env);
+  if (windowMinutes <= 0) {
+    if (startSecond === null) {
+      return [{ startTime: startTime || null, endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null }];
+    }
+    return [{
+      startTime: formatSecondOfDayAsHms(startSecond),
+      endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null,
+    }];
+  }
+
+  const normalizedSymbol = normalizeSymbol(symbol);
+  const { symbols, includeAll } = parseThetaLargeSymbols(env);
+  if (!includeAll && (!normalizedSymbol || !symbols.has(normalizedSymbol))) {
+    if (startSecond === null) {
+      return [{ startTime: startTime || null, endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null }];
+    }
+    return [{
+      startTime: formatSecondOfDayAsHms(startSecond),
+      endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null,
+    }];
+  }
+
+  const effectiveStartSecond = startSecond === null ? lowerBound : startSecond;
+
+  const windowSeconds = windowMinutes * 60;
+  const spanSeconds = (upperBound - effectiveStartSecond) + 1;
+  if (windowSeconds >= spanSeconds) {
+    return [{
+      startTime: formatSecondOfDayAsHms(effectiveStartSecond),
+      endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null,
+    }];
+  }
+
+  const windows = [];
+  for (let cursor = effectiveStartSecond; cursor <= upperBound; cursor += windowSeconds) {
+    const windowStart = cursor;
+    const windowEnd = Math.min(upperBound, cursor + windowSeconds - 1);
+    windows.push({
+      startTime: formatSecondOfDayAsHms(windowStart),
+      endTime: formatSecondOfDayAsHms(windowEnd),
+    });
+  }
+
+  return windows;
+}
+
+function parseHistoricalOptionFormat(env = process.env) {
+  const raw = String(env.THETADATA_HISTORICAL_OPTION_FORMAT || DEFAULT_HISTORICAL_OPTION_FORMAT)
+    .trim()
+    .toLowerCase();
+  if (raw === 'json' || raw === 'ndjson') return raw;
+  return DEFAULT_HISTORICAL_OPTION_FORMAT;
+}
+
+function parseOptionQuoteFormat(env = process.env) {
+  const raw = String(env.THETADATA_OPTION_QUOTE_FORMAT || DEFAULT_OPTION_QUOTE_FORMAT)
+    .trim()
+    .toLowerCase();
+  if (raw === 'json' || raw === 'ndjson') return raw;
+  return DEFAULT_OPTION_QUOTE_FORMAT;
 }
 
 function shouldTraceThetaDownloads(env = process.env) {
@@ -940,6 +1325,52 @@ function logThetaDownload({
   }));
 }
 
+function createThetaStreamHeartbeatLogger({
+  env = process.env,
+  endpoint,
+  stage,
+  symbol = null,
+  dayIso = null,
+}) {
+  const everyRows = parseStreamHeartbeatEveryRows(env);
+  if (!Number.isFinite(everyRows) || everyRows <= 0) {
+    return null;
+  }
+
+  let nextRows = everyRows;
+  const startedAtMs = Date.now();
+  const api = inferThetaApiName(endpoint);
+  const context = thetaLogContext(endpoint);
+
+  return ({
+    parsedRows = 0,
+    fetchedRows = 0,
+    insertedRows = 0,
+    bufferedRows = 0,
+  } = {}) => {
+    if (!Number.isFinite(parsedRows) || parsedRows < nextRows) return;
+
+    while (parsedRows >= nextRows) {
+      nextRows += everyRows;
+    }
+
+    const elapsedSec = (Date.now() - startedAtMs) / 1000;
+    console.log('[THETA_STREAM_HEARTBEAT]', JSON.stringify({
+      api,
+      stage,
+      symbol: symbol || context.symbol,
+      dayIso: dayIso || context.date,
+      format: context.format,
+      parsedRows: Math.max(0, Math.trunc(parsedRows)),
+      fetchedRows: Math.max(0, Math.trunc(fetchedRows)),
+      insertedRows: Math.max(0, Math.trunc(insertedRows)),
+      bufferedRows: Math.max(0, Math.trunc(bufferedRows)),
+      elapsedSec: Number(elapsedSec.toFixed(1)),
+      everyRows,
+    }));
+  };
+}
+
 async function fetchTextWithTimeout(url, {
   env = process.env,
   timeoutMs = parseTimeoutMs(env),
@@ -951,9 +1382,15 @@ async function fetchTextWithTimeout(url, {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   const startedAt = Date.now();
+  const dispatcher = getThetaFetchDispatcher(env);
+  const requestOptions = { signal: controller.signal };
+  if (dispatcher) requestOptions.dispatcher = dispatcher;
+  if (shouldForceThetaConnectionClose(env)) {
+    requestOptions.headers = { connection: 'close' };
+  }
 
   try {
-    const response = await fetch(url, { signal: controller.signal });
+    const response = await fetch(url, requestOptions);
     const body = await response.text();
     const durationMs = Date.now() - startedAt;
     return { response, body, durationMs };
@@ -983,6 +1420,154 @@ async function fetchTextWithTimeout(url, {
     throw error;
   } finally {
     clearTimeout(timer);
+  }
+}
+
+function parseThetaUrlFormat(url) {
+  try {
+    const parsed = new URL(url);
+    return String(parsed.searchParams.get('format') || '').trim().toLowerCase();
+  } catch {
+    return '';
+  }
+}
+
+async function streamNdjsonRowsFromResponse(response, onRow, { onChunk = null } = {}) {
+  if (!response?.body || typeof response.body.getReader !== 'function') {
+    const body = await response.text();
+    if (typeof onChunk === 'function' && body.length > 0) {
+      onChunk(body.length);
+    }
+    let rowCount = 0;
+    parseJsonRows(body).forEach((row) => {
+      if (!row || typeof row !== 'object') return;
+      onRow(row);
+      rowCount += 1;
+    });
+    return rowCount;
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let rowCount = 0;
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    if (typeof onChunk === 'function' && value && value.length > 0) {
+      onChunk(value.length);
+    }
+    buffer += decoder.decode(value, { stream: true });
+
+    let newlineIndex = buffer.indexOf('\n');
+    while (newlineIndex >= 0) {
+      const line = buffer.slice(0, newlineIndex).trim();
+      buffer = buffer.slice(newlineIndex + 1);
+      if (line) {
+        try {
+          const parsed = JSON.parse(line);
+          if (parsed && typeof parsed === 'object') {
+            onRow(parsed);
+            rowCount += 1;
+          }
+        } catch {
+          // Skip malformed lines and continue parsing the stream.
+        }
+      }
+      newlineIndex = buffer.indexOf('\n');
+    }
+  }
+
+  buffer += decoder.decode();
+  const tail = buffer.trim();
+  if (tail) {
+    try {
+      const parsed = JSON.parse(tail);
+      if (parsed && typeof parsed === 'object') {
+        onRow(parsed);
+        rowCount += 1;
+      }
+    } catch {
+      // Ignore malformed trailing line.
+    }
+  }
+
+  return rowCount;
+}
+
+async function fetchThetaNdjsonRows(url, {
+  env = process.env,
+  timeoutMs = parseStreamIdleTimeoutMs(env),
+  onRow = null,
+} = {}) {
+  if (!url) {
+    throw new Error('thetadata_endpoint_missing');
+  }
+
+  const useIdleTimeout = Number.isFinite(timeoutMs) && timeoutMs > 0;
+  const controller = new AbortController();
+  let timer = null;
+  let timeoutKind = null;
+  const startedAt = Date.now();
+  const resetIdleTimer = () => {
+    if (!useIdleTimeout) return;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      timeoutKind = 'idle';
+      controller.abort();
+    }, timeoutMs);
+  };
+
+  try {
+    resetIdleTimer();
+    const dispatcher = getThetaFetchDispatcher(env);
+    const requestOptions = { signal: controller.signal };
+    if (dispatcher) requestOptions.dispatcher = dispatcher;
+    if (shouldForceThetaConnectionClose(env)) {
+      requestOptions.headers = { connection: 'close' };
+    }
+    const response = await fetch(url, requestOptions);
+    let rowCount = 0;
+    if (response.ok && typeof onRow === 'function') {
+      rowCount = await streamNdjsonRowsFromResponse(response, onRow, { onChunk: resetIdleTimer });
+    } else if (response.ok) {
+      rowCount = await streamNdjsonRowsFromResponse(response, () => {}, { onChunk: resetIdleTimer });
+    } else {
+      resetIdleTimer();
+      await response.arrayBuffer();
+    }
+    const durationMs = Date.now() - startedAt;
+    return { response, rowCount, durationMs };
+  } catch (error) {
+    const durationMs = Date.now() - startedAt;
+    if (error && error.name === 'AbortError') {
+      const timeoutLabel = timeoutKind === 'idle'
+        ? 'thetadata_request_idle_timeout'
+        : 'thetadata_request_timeout';
+      logThetaDownload({
+        env,
+        url,
+        durationMs,
+        status: 0,
+        ok: false,
+        rows: 0,
+        error: `${timeoutLabel}:${timeoutMs}`,
+      });
+      throw new Error(`${timeoutLabel}:${timeoutMs}`);
+    }
+    logThetaDownload({
+      env,
+      url,
+      durationMs,
+      status: 0,
+      ok: false,
+      rows: 0,
+      error: error.message || 'request_failed',
+    });
+    throw error;
+  } finally {
+    if (timer) clearTimeout(timer);
   }
 }
 
@@ -2545,6 +3130,24 @@ function countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env = process.en
   return Number(rows?.[0]?.count || 0);
 }
 
+function getClickHouseOptionQuoteResumeCursor({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  const rows = queryRows(`
+    SELECT
+      ifNull(concat(replaceAll(toString(max(minute_bucket_utc), 'UTC'), ' ', 'T'), 'Z'), null) AS maxMinuteBucketUtc
+    FROM options.option_quote_minute_raw
+    WHERE symbol = {symbol:String}
+      AND trade_date_utc = toDate({dayIso:String})
+  `, { symbol, dayIso }, env);
+
+  const maxMinuteBucketUtc = rows?.[0]?.maxMinuteBucketUtc || null;
+  if (!maxMinuteBucketUtc) return null;
+  const resumeFromIso = floorIsoToMinute(maxMinuteBucketUtc);
+  if (!resumeFromIso) return null;
+  const startTime = isoToTimeHms(resumeFromIso);
+  if (!startTime) return null;
+  return { startTime, resumeFromIso };
+}
+
 function loadClickHouseOptionGreeksRawRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
   return queryRows(`
     SELECT
@@ -2681,76 +3284,188 @@ async function syncThetaTradesToSqlite({
   db,
   markPartial = false,
 }) {
-  const endpoint = resolveThetaEndpoint(symbol, toYyyymmdd(`${dayIso}T00:00:00.000Z`), env);
-  if (!endpoint) {
-    return { synced: false, reason: 'thetadata_base_url_missing', fetchedRows: 0, upsertedRows: 0, cachedRows: 0 };
-  }
+  const dbPath = resolveDbPath(env);
+  const writeDb = db || new Database(dbPath);
+  const resumeCursor = getSqliteTradeResumeCursor(writeDb, { symbol, dayIso });
+  let parsedRows = 0;
+  let fetchedRows = 0;
+  let upsertedRows = 0;
+  let sawHttpOk = false;
+  let sawNoData = false;
 
-  const { response, body, durationMs } = await fetchTextWithTimeout(endpoint, { env });
-  const isThetaNoData = response.status === 472;
-
-  if (!response.ok) {
-    logThetaDownload({
-      env,
-      url: endpoint,
-      durationMs,
-      status: response.status,
-      ok: isThetaNoData,
-      rows: 0,
-      error: isThetaNoData ? 'no_data' : `http_${response.status}`,
-    });
-    if (isThetaNoData) {
-      const dbPath = resolveDbPath(env);
-      const writeDb = db || new Database(dbPath);
-
-      try {
-        ensureSchema(writeDb);
-        upsertDayCache(writeDb, {
-          symbol,
-          dayIso,
-          cacheStatus: markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL,
-          rowCount: 0,
-          lastError: null,
-          sourceEndpoint: endpoint,
-        });
-      } finally {
-        if (!db) {
-          writeDb.close();
-        }
-      }
-
+  try {
+    ensureSchema(writeDb);
+    const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
+    if (sessionWindow && sessionWindow.isOpen === false) {
+      const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
+      upsertDayCache(writeDb, {
+        symbol,
+        dayIso,
+        cacheStatus,
+        rowCount: 0,
+        lastError: null,
+        sourceEndpoint: resolveThetaCalendarEndpoint(dayIso, env),
+      });
       return {
         synced: true,
         reason: 'no_data',
         fetchedRows: 0,
         upsertedRows: 0,
         cachedRows: 0,
-        cacheStatus: markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL,
+        cacheStatus,
       };
     }
-    throw new Error(`thetadata_request_failed:${response.status}`);
-  }
 
-  const parsedRows = parseJsonRows(body);
-  const normalizedRows = normalizeThetaRows(parsedRows, symbol, dayIso);
-  logThetaDownload({
-    env,
-    url: endpoint,
-    durationMs,
-    status: response.status,
-    ok: true,
-    rows: normalizedRows.length,
-    error: null,
-  });
-  const dbPath = resolveDbPath(env);
-  const writeDb = db || new Database(dbPath);
+    const yyyymmdd = toYyyymmdd(`${dayIso}T00:00:00.000Z`);
+    const requestWindows = resolveThetaTimeWindowsForSymbol(symbol, {
+      startTime: resumeCursor?.startTime || null,
+      sessionStartTime: sessionWindow?.openTime || null,
+      sessionEndTime: sessionWindow?.closeTime || null,
+      env,
+    });
+    const endpoints = requestWindows
+      .map((window) => resolveThetaEndpoint(
+        symbol,
+        yyyymmdd,
+        env,
+        {
+          startTime: window.startTime || null,
+          endTime: window.endTime || null,
+        },
+      ))
+      .filter(Boolean);
+    if (endpoints.length === 0) {
+      return { synced: false, reason: 'thetadata_base_url_missing', fetchedRows: 0, upsertedRows: 0, cachedRows: 0 };
+    }
+    const endpointFormat = parseThetaUrlFormat(endpoints[0]);
 
-  try {
-    ensureSchema(writeDb);
-    const upsertedRows = upsertOptionTrades(writeDb, normalizedRows);
+    for (const endpoint of endpoints) {
+      const fetchedBeforeEndpoint = fetchedRows;
+      if (endpointFormat === 'ndjson') {
+        const heartbeat = createThetaStreamHeartbeatLogger({
+          env,
+          endpoint,
+          stage: 'trade_sync_sqlite',
+          symbol,
+          dayIso,
+        });
+        let chunk = [];
+        const flushChunk = () => {
+          if (chunk.length === 0) return;
+          upsertedRows += upsertOptionTrades(writeDb, chunk);
+          fetchedRows += chunk.length;
+          chunk = [];
+        };
+        const streamResult = await fetchThetaNdjsonRows(endpoint, {
+          env,
+          onRow: (rawRow) => {
+            parsedRows += 1;
+            const normalized = normalizeThetaRow(rawRow, symbol, dayIso);
+            if (normalized) {
+              chunk.push(normalized);
+              if (chunk.length >= 5000) flushChunk();
+            }
+            if (heartbeat) {
+              heartbeat({
+                parsedRows,
+                fetchedRows: fetchedRows + chunk.length,
+                insertedRows: upsertedRows,
+                bufferedRows: chunk.length,
+              });
+            }
+          },
+        });
+        const { response, durationMs } = streamResult;
+        if (!response.ok) {
+          const isThetaNoData = response.status === 472;
+          logThetaDownload({
+            env,
+            url: endpoint,
+            durationMs,
+            status: response.status,
+            ok: isThetaNoData,
+            rows: 0,
+            error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+          });
+          if (isThetaNoData) {
+            sawNoData = true;
+            continue;
+          }
+          throw new Error(`thetadata_request_failed:${response.status}`);
+        }
+        sawHttpOk = true;
+        flushChunk();
+        logThetaDownload({
+          env,
+          url: endpoint,
+          durationMs,
+          status: response.status,
+          ok: true,
+          rows: fetchedRows - fetchedBeforeEndpoint,
+          error: null,
+        });
+        continue;
+      }
+
+      const textResult = await fetchTextWithTimeout(endpoint, { env });
+      const { response, durationMs } = textResult;
+      if (!response.ok) {
+        const isThetaNoData = response.status === 472;
+        logThetaDownload({
+          env,
+          url: endpoint,
+          durationMs,
+          status: response.status,
+          ok: isThetaNoData,
+          rows: 0,
+          error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+        });
+        if (isThetaNoData) {
+          sawNoData = true;
+          continue;
+        }
+        throw new Error(`thetadata_request_failed:${response.status}`);
+      }
+
+      sawHttpOk = true;
+      const parsed = parseJsonRows(textResult.body);
+      const normalizedRows = normalizeThetaRows(parsed, symbol, dayIso);
+      fetchedRows += normalizedRows.length;
+      upsertedRows += upsertOptionTrades(writeDb, normalizedRows);
+      logThetaDownload({
+        env,
+        url: endpoint,
+        durationMs,
+        status: response.status,
+        ok: true,
+        rows: normalizedRows.length,
+        error: null,
+      });
+    }
+
     const dayStart = `${dayIso}T00:00:00.000Z`;
     const dayEnd = `${dayIso}T23:59:59.999Z`;
     const rowCount = countCachedRows(writeDb, { from: dayStart, to: dayEnd, symbol });
+
+    if (!sawHttpOk && sawNoData && rowCount === 0) {
+      const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
+      upsertDayCache(writeDb, {
+        symbol,
+        dayIso,
+        cacheStatus,
+        rowCount: 0,
+        lastError: null,
+        sourceEndpoint: endpoints[0] || null,
+      });
+      return {
+        synced: true,
+        reason: 'no_data',
+        fetchedRows: 0,
+        upsertedRows: 0,
+        cachedRows: 0,
+        cacheStatus,
+      };
+    }
 
     // Only mark as 'full' if we actually have rows. A successful HTTP response
     // with 0 parsed rows may indicate a malformed response — mark 'partial'
@@ -2765,13 +3480,13 @@ async function syncThetaTradesToSqlite({
       cacheStatus,
       rowCount,
       lastError: rowCount === 0 ? 'empty_response' : null,
-      sourceEndpoint: endpoint,
+      sourceEndpoint: endpoints[0] || null,
     });
 
     return {
       synced: true,
       reason: null,
-      fetchedRows: normalizedRows.length,
+      fetchedRows,
       upsertedRows,
       cachedRows: 0,
       cacheStatus,
@@ -2793,6 +3508,26 @@ function countCachedRows(db, { from, to, symbol }) {
   `).get({ from, to, symbol });
 
   return Number(row?.count || 0);
+}
+
+function getSqliteTradeResumeCursor(db, { symbol, dayIso }) {
+  const from = `${dayIso}T00:00:00.000Z`;
+  const to = `${dayIso}T23:59:59.999Z`;
+  const row = db.prepare(`
+    SELECT MAX(trade_ts_utc) AS maxTradeTsUtc
+    FROM option_trades
+    WHERE symbol = @symbol
+      AND trade_ts_utc >= @from
+      AND trade_ts_utc <= @to
+  `).get({ symbol, from, to });
+
+  const maxTradeTsUtc = typeof row?.maxTradeTsUtc === 'string' ? row.maxTradeTsUtc : null;
+  if (!maxTradeTsUtc) return null;
+  const resumeFromIso = floorIsoToMinute(maxTradeTsUtc);
+  if (!resumeFromIso) return null;
+  const startTime = isoToTimeHms(resumeFromIso);
+  if (!startTime) return null;
+  return { startTime, resumeFromIso };
 }
 
 function getRawTradesForDay(db, { symbol, dayIso }) {
@@ -5472,6 +6207,24 @@ function countClickHouseTradesForDay({ symbol, dayIso, env = process.env, queryR
   return Number(rows?.[0]?.count || 0);
 }
 
+function getClickHouseTradeResumeCursor({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  const rows = queryRows(`
+    SELECT
+      ifNull(concat(replaceAll(toString(max(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z'), null) AS maxTradeTsUtc
+    FROM options.option_trades
+    WHERE symbol = {symbol:String}
+      AND trade_date = toDate({dayIso:String})
+  `, { symbol, dayIso }, env);
+
+  const maxTradeTsUtc = rows?.[0]?.maxTradeTsUtc || null;
+  if (!maxTradeTsUtc) return null;
+  const resumeFromIso = floorIsoToMinute(maxTradeTsUtc);
+  if (!resumeFromIso) return null;
+  const startTime = isoToTimeHms(resumeFromIso);
+  if (!startTime) return null;
+  return { startTime, resumeFromIso };
+}
+
 function countClickHouseStockRawRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
   const rows = queryRows(`
     SELECT count() AS count
@@ -5830,8 +6583,48 @@ async function syncThetaTradesToClickHouse({
   env = process.env,
   markPartial = false,
 }) {
-  const endpoint = resolveThetaEndpoint(symbol, toYyyymmdd(`${dayIso}T00:00:00.000Z`), env);
-  if (!endpoint) {
+  const resumeCursor = getClickHouseTradeResumeCursor({ symbol, dayIso, env });
+  const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
+  if (sessionWindow && sessionWindow.isOpen === false) {
+    const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
+    upsertClickHouseDayCache({
+      symbol,
+      dayIso,
+      cacheStatus,
+      rowCount: 0,
+      lastError: null,
+      sourceEndpoint: resolveThetaCalendarEndpoint(dayIso, env),
+      env,
+    });
+    return {
+      synced: true,
+      reason: 'no_data',
+      fetchedRows: 0,
+      upsertedRows: 0,
+      cachedRows: 0,
+      cacheStatus,
+    };
+  }
+
+  const yyyymmdd = toYyyymmdd(`${dayIso}T00:00:00.000Z`);
+  const requestWindows = resolveThetaTimeWindowsForSymbol(symbol, {
+    startTime: resumeCursor?.startTime || null,
+    sessionStartTime: sessionWindow?.openTime || null,
+    sessionEndTime: sessionWindow?.closeTime || null,
+    env,
+  });
+  const endpoints = requestWindows
+    .map((window) => resolveThetaEndpoint(
+      symbol,
+      yyyymmdd,
+      env,
+      {
+        startTime: window.startTime || null,
+        endTime: window.endTime || null,
+      },
+    ))
+    .filter(Boolean);
+  if (endpoints.length === 0) {
     return {
       synced: false,
       reason: 'thetadata_base_url_missing',
@@ -5841,85 +6634,216 @@ async function syncThetaTradesToClickHouse({
       cacheStatus: null,
     };
   }
+  const endpointFormat = parseThetaUrlFormat(endpoints[0]);
+  let parsedRows = 0;
+  let fetchedRows = 0;
+  let upsertedRows = 0;
+  let sawHttpOk = false;
+  let sawNoData = false;
+  const columns = ['trade_id', 'trade_ts_utc', 'trade_ts_et', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'raw_payload_json', 'watermark', 'ingested_at_utc'];
+  const nowIso = new Date().toISOString();
+  let dayScopeCleared = false;
+  const clearDayScope = () => {
+    if (dayScopeCleared) return;
+    if (resumeCursor?.resumeFromIso) {
+      const resumeUntilIso = addMinutesToIso(resumeCursor.resumeFromIso, 1);
+      if (resumeUntilIso) {
+        deleteClickHouseScope(
+          'option_trades',
+          'symbol = {symbol:String} AND trade_ts_utc >= parseDateTime64BestEffortOrNull({resumeFromIso:String}, 3, \'UTC\') AND trade_ts_utc < parseDateTime64BestEffortOrNull({resumeUntilIso:String}, 3, \'UTC\')',
+          { symbol, resumeFromIso: resumeCursor.resumeFromIso, resumeUntilIso },
+          env,
+        );
+        dayScopeCleared = true;
+        return;
+      }
+      deleteClickHouseScope(
+        'option_trades',
+        'symbol = {symbol:String} AND trade_ts_utc >= parseDateTime64BestEffortOrNull({resumeFromIso:String}, 3, \'UTC\')',
+        { symbol, resumeFromIso: resumeCursor.resumeFromIso },
+        env,
+      );
+    } else {
+      deleteClickHouseScope(
+        'option_trades',
+        'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
+        { symbol, dayIso },
+        env,
+      );
+    }
+    dayScopeCleared = true;
+  };
 
-  const { response, body, durationMs } = await fetchTextWithTimeout(endpoint, { env });
-  const isThetaNoData = response.status === 472;
-
-  if (!response.ok) {
-    logThetaDownload({
-      env,
-      url: endpoint,
-      durationMs,
-      status: response.status,
-      ok: isThetaNoData,
-      rows: 0,
-      error: isThetaNoData ? 'no_data' : `http_${response.status}`,
-    });
-    if (isThetaNoData) {
-      const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
-      upsertClickHouseDayCache({
+  if (endpointFormat === 'ndjson') {
+    for (const endpoint of endpoints) {
+      const fetchedBeforeEndpoint = fetchedRows;
+      const heartbeat = createThetaStreamHeartbeatLogger({
+        env,
+        endpoint,
+        stage: 'trade_sync_clickhouse',
         symbol,
         dayIso,
-        cacheStatus,
-        rowCount: 0,
-        lastError: null,
-        sourceEndpoint: endpoint,
-        env,
       });
-      return {
-        synced: true,
-        reason: 'no_data',
-        fetchedRows: 0,
-        upsertedRows: 0,
-        cachedRows: 0,
-        cacheStatus,
+      let chunk = [];
+      const flushChunk = () => {
+        if (chunk.length === 0) return;
+        clearDayScope();
+        upsertedRows += insertClickHouseRows('option_trades', columns, chunk, env);
+        fetchedRows += chunk.length;
+        chunk = [];
       };
+      const streamResult = await fetchThetaNdjsonRows(endpoint, {
+        env,
+        onRow: (rawRow) => {
+          parsedRows += 1;
+          const normalized = normalizeThetaRow(rawRow, symbol, dayIso);
+          if (normalized) {
+            chunk.push({
+              trade_id: normalized.tradeId,
+              trade_ts_utc: normalized.tradeTsUtc,
+              trade_ts_et: normalized.tradeTsEt,
+              symbol: normalized.symbol,
+              expiration: normalized.expiration,
+              strike: normalized.strike,
+              option_right: normalized.optionRight,
+              price: normalized.price,
+              size: normalized.size,
+              bid: normalized.bid,
+              ask: normalized.ask,
+              condition_code: normalized.conditionCode,
+              exchange: normalized.exchange,
+              raw_payload_json: normalized.rawPayloadJson,
+              watermark: normalized.watermark,
+              ingested_at_utc: nowIso,
+            });
+            if (chunk.length >= 5000) flushChunk();
+          }
+          if (heartbeat) {
+            heartbeat({
+              parsedRows,
+              fetchedRows: fetchedRows + chunk.length,
+              insertedRows: upsertedRows,
+              bufferedRows: chunk.length,
+            });
+          }
+        },
+      });
+      const { response, durationMs } = streamResult;
+      if (!response.ok) {
+        const isThetaNoData = response.status === 472;
+        logThetaDownload({
+          env,
+          url: endpoint,
+          durationMs,
+          status: response.status,
+          ok: isThetaNoData,
+          rows: 0,
+          error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+        });
+        if (isThetaNoData) {
+          sawNoData = true;
+          continue;
+        }
+        throw new Error(`thetadata_request_failed:${response.status}`);
+      }
+      sawHttpOk = true;
+      flushChunk();
+      logThetaDownload({
+        env,
+        url: endpoint,
+        durationMs,
+        status: response.status,
+        ok: true,
+        rows: fetchedRows - fetchedBeforeEndpoint,
+        error: null,
+      });
     }
-    throw new Error(`thetadata_request_failed:${response.status}`);
-  }
-
-  const parsedRows = parseJsonRows(body);
-  const normalizedRows = normalizeThetaRows(parsedRows, symbol, dayIso);
-  logThetaDownload({
-    env,
-    url: endpoint,
-    durationMs,
-    status: response.status,
-    ok: true,
-    rows: normalizedRows.length,
-    error: null,
-  });
-
-  let upsertedRows = 0;
-  if (normalizedRows.length > 0) {
-    upsertedRows = replaceClickHouseDayRows({
-      tableName: 'option_trades',
-      whereSql: 'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
-      deleteParams: { symbol, dayIso },
-      columns: ['trade_id', 'trade_ts_utc', 'trade_ts_et', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'raw_payload_json', 'watermark', 'ingested_at_utc'],
-      rows: normalizedRows.map((row) => ({
-        trade_id: row.tradeId,
-        trade_ts_utc: row.tradeTsUtc,
-        trade_ts_et: row.tradeTsEt,
-        symbol: row.symbol,
-        expiration: row.expiration,
-        strike: row.strike,
-        option_right: row.optionRight,
-        price: row.price,
-        size: row.size,
-        bid: row.bid,
-        ask: row.ask,
-        condition_code: row.conditionCode,
-        exchange: row.exchange,
-        raw_payload_json: row.rawPayloadJson,
-        watermark: row.watermark,
-        ingested_at_utc: new Date().toISOString(),
-      })),
-      env,
-    });
+  } else {
+    for (const endpoint of endpoints) {
+      const textResult = await fetchTextWithTimeout(endpoint, { env });
+      const { response, durationMs } = textResult;
+      if (!response.ok) {
+        const isThetaNoData = response.status === 472;
+        logThetaDownload({
+          env,
+          url: endpoint,
+          durationMs,
+          status: response.status,
+          ok: isThetaNoData,
+          rows: 0,
+          error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+        });
+        if (isThetaNoData) {
+          sawNoData = true;
+          continue;
+        }
+        throw new Error(`thetadata_request_failed:${response.status}`);
+      }
+      sawHttpOk = true;
+      const parsed = parseJsonRows(textResult.body);
+      const normalizedRows = normalizeThetaRows(parsed, symbol, dayIso);
+      fetchedRows += normalizedRows.length;
+      if (normalizedRows.length > 0) {
+        const mappedRows = normalizedRows.map((row) => ({
+          trade_id: row.tradeId,
+          trade_ts_utc: row.tradeTsUtc,
+          trade_ts_et: row.tradeTsEt,
+          symbol: row.symbol,
+          expiration: row.expiration,
+          strike: row.strike,
+          option_right: row.optionRight,
+          price: row.price,
+          size: row.size,
+          bid: row.bid,
+          ask: row.ask,
+          condition_code: row.conditionCode,
+          exchange: row.exchange,
+          raw_payload_json: row.rawPayloadJson,
+          watermark: row.watermark,
+          ingested_at_utc: new Date().toISOString(),
+        }));
+        clearDayScope();
+        upsertedRows += insertClickHouseRows(
+          'option_trades',
+          columns,
+          mappedRows,
+          env,
+        );
+      }
+      logThetaDownload({
+        env,
+        url: endpoint,
+        durationMs,
+        status: response.status,
+        ok: true,
+        rows: normalizedRows.length,
+        error: null,
+      });
+    }
   }
 
   const rowCount = countClickHouseTradesForDay({ symbol, dayIso, env });
+  if (!sawHttpOk && sawNoData && rowCount === 0) {
+    const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
+    upsertClickHouseDayCache({
+      symbol,
+      dayIso,
+      cacheStatus,
+      rowCount: 0,
+      lastError: null,
+      sourceEndpoint: endpoints[0] || null,
+      env,
+    });
+    return {
+      synced: true,
+      reason: 'no_data',
+      fetchedRows: 0,
+      upsertedRows: 0,
+      cachedRows: 0,
+      cacheStatus,
+    };
+  }
+
   const cacheStatus = markPartial || rowCount === 0
     ? DAY_CACHE_STATUS_PARTIAL
     : DAY_CACHE_STATUS_FULL;
@@ -5930,14 +6854,14 @@ async function syncThetaTradesToClickHouse({
     cacheStatus,
     rowCount,
     lastError: rowCount === 0 ? 'empty_response' : null,
-    sourceEndpoint: endpoint,
+    sourceEndpoint: endpoints[0] || null,
     env,
   });
 
   return {
     synced: true,
     reason: null,
-    fetchedRows: normalizedRows.length,
+    fetchedRows,
     upsertedRows,
     cachedRows: rowCount,
     cacheStatus,
@@ -6014,23 +6938,29 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
 }
 
 async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = process.env) {
-  if (countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }) > 0) return true;
-
-  const endpoint = resolveThetaOptionQuoteEndpoint(symbol, dayIso, env);
-  if (!endpoint) return false;
-  let rows = await fetchThetaRows(endpoint, {
+  const resumeCursor = getClickHouseOptionQuoteResumeCursor({ symbol, dayIso, env });
+  const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
+  if (sessionWindow && sessionWindow.isOpen === false) {
+    return true;
+  }
+  const requestWindows = resolveThetaTimeWindowsForSymbol(symbol, {
+    startTime: resumeCursor?.startTime || null,
+    sessionStartTime: sessionWindow?.openTime || null,
+    sessionEndTime: sessionWindow?.closeTime || null,
     env,
-    timeoutMs: parseOptionQuoteTimeoutMs(env),
   });
-  if (!Array.isArray(rows) || rows.length === 0) return false;
-
-  deleteClickHouseScope(
-    'option_quote_minute_raw',
-    'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
-    { symbol, dayIso },
-    env,
-  );
-
+  const endpoints = requestWindows
+    .map((window) => resolveThetaOptionQuoteEndpoint(
+      symbol,
+      dayIso,
+      env,
+      {
+        startTime: window.startTime || null,
+        endTime: window.endTime || null,
+      },
+    ))
+    .filter(Boolean);
+  if (endpoints.length === 0) return false;
   const columns = [
     'symbol',
     'trade_date_utc',
@@ -6049,42 +6979,177 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
   ];
   const chunkSize = 2500;
   const nowIso = new Date().toISOString();
+  const endpointFormat = parseThetaUrlFormat(endpoints[0]);
   let insertedRows = 0;
-  let chunk = [];
+  let parsedRows = 0;
 
+  let chunk = [];
+  let dayScopeCleared = false;
   const flushChunk = () => {
     if (chunk.length === 0) return;
+    if (!dayScopeCleared) {
+      if (resumeCursor?.resumeFromIso) {
+        const resumeUntilIso = addMinutesToIso(resumeCursor.resumeFromIso, 1);
+        if (resumeUntilIso) {
+          deleteClickHouseScope(
+            'option_quote_minute_raw',
+            'symbol = {symbol:String} AND minute_bucket_utc >= parseDateTime64BestEffortOrNull({resumeFromIso:String}, 3, \'UTC\') AND minute_bucket_utc < parseDateTime64BestEffortOrNull({resumeUntilIso:String}, 3, \'UTC\')',
+            { symbol, resumeFromIso: resumeCursor.resumeFromIso, resumeUntilIso },
+            env,
+          );
+        } else {
+          deleteClickHouseScope(
+            'option_quote_minute_raw',
+            'symbol = {symbol:String} AND minute_bucket_utc >= parseDateTime64BestEffortOrNull({resumeFromIso:String}, 3, \'UTC\')',
+            { symbol, resumeFromIso: resumeCursor.resumeFromIso },
+            env,
+          );
+        }
+      } else {
+        deleteClickHouseScope(
+          'option_quote_minute_raw',
+          'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
+          { symbol, dayIso },
+          env,
+        );
+      }
+      dayScopeCleared = true;
+    }
     insertedRows += insertClickHouseRows('option_quote_minute_raw', columns, chunk, env, { chunkSize });
     chunk = [];
   };
 
-  for (const rawRow of rows) {
-    const normalized = normalizeOptionQuoteRow(rawRow, dayIso);
-    if (!normalized) continue;
-    chunk.push({
-      symbol: normalized.symbol,
-      trade_date_utc: dayIso,
-      expiration: normalized.expiration,
-      strike: normalized.strike,
-      option_right: normalized.right,
-      minute_bucket_utc: normalized.minuteBucketUtc,
-      bid: normalized.bid,
-      ask: normalized.ask,
-      last: normalized.last,
-      bid_size: normalized.bidSize,
-      ask_size: normalized.askSize,
-      source_endpoint: endpoint,
-      raw_payload_json: normalized.rawPayloadJson,
-      ingested_at_utc: nowIso,
-    });
-    if (chunk.length >= chunkSize) {
+  if (endpointFormat === 'ndjson') {
+    for (const endpoint of endpoints) {
+      const parsedBeforeEndpoint = parsedRows;
+      const heartbeat = createThetaStreamHeartbeatLogger({
+        env,
+        endpoint,
+        stage: 'quote_sync_clickhouse',
+        symbol,
+        dayIso,
+      });
+      const streamResult = await fetchThetaNdjsonRows(endpoint, {
+        env,
+        timeoutMs: parseOptionQuoteTimeoutMs(env),
+        onRow: (rawRow) => {
+          parsedRows += 1;
+          const normalized = normalizeOptionQuoteRow(rawRow, dayIso);
+          if (normalized) {
+            chunk.push({
+              symbol: normalized.symbol,
+              trade_date_utc: dayIso,
+              expiration: normalized.expiration,
+              strike: normalized.strike,
+              option_right: normalized.right,
+              minute_bucket_utc: normalized.minuteBucketUtc,
+              bid: normalized.bid,
+              ask: normalized.ask,
+              last: normalized.last,
+              bid_size: normalized.bidSize,
+              ask_size: normalized.askSize,
+              source_endpoint: endpoint,
+              raw_payload_json: normalized.rawPayloadJson,
+              ingested_at_utc: nowIso,
+            });
+            if (chunk.length >= chunkSize) flushChunk();
+          }
+          if (heartbeat) {
+            heartbeat({
+              parsedRows,
+              fetchedRows: parsedRows,
+              insertedRows,
+              bufferedRows: chunk.length,
+            });
+          }
+        },
+      });
+      const { response, durationMs } = streamResult;
+      if (!response.ok) {
+        const isThetaNoData = response.status === 472;
+        logThetaDownload({
+          env,
+          url: endpoint,
+          durationMs,
+          status: response.status,
+          ok: isThetaNoData,
+          rows: 0,
+          error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+        });
+        if (isThetaNoData) continue;
+        return false;
+      }
       flushChunk();
+      logThetaDownload({
+        env,
+        url: endpoint,
+        durationMs,
+        status: response.status,
+        ok: true,
+        rows: parsedRows - parsedBeforeEndpoint,
+        error: null,
+      });
     }
-  }
+  } else {
+    for (const endpoint of endpoints) {
+      const { response, body, durationMs } = await fetchTextWithTimeout(endpoint, {
+        env,
+        timeoutMs: parseOptionQuoteTimeoutMs(env),
+      });
+      if (!response.ok) {
+        const isThetaNoData = response.status === 472;
+        logThetaDownload({
+          env,
+          url: endpoint,
+          durationMs,
+          status: response.status,
+          ok: isThetaNoData,
+          rows: 0,
+          error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+        });
+        if (isThetaNoData) continue;
+        return false;
+      }
 
-  flushChunk();
-  rows = null;
-  return insertedRows > 0;
+      const rows = parseJsonRows(body);
+      parsedRows += rows.length;
+      for (const rawRow of rows) {
+        const normalized = normalizeOptionQuoteRow(rawRow, dayIso);
+        if (!normalized) continue;
+        chunk.push({
+          symbol: normalized.symbol,
+          trade_date_utc: dayIso,
+          expiration: normalized.expiration,
+          strike: normalized.strike,
+          option_right: normalized.right,
+          minute_bucket_utc: normalized.minuteBucketUtc,
+          bid: normalized.bid,
+          ask: normalized.ask,
+          last: normalized.last,
+          bid_size: normalized.bidSize,
+          ask_size: normalized.askSize,
+          source_endpoint: endpoint,
+          raw_payload_json: normalized.rawPayloadJson,
+          ingested_at_utc: nowIso,
+        });
+        if (chunk.length >= chunkSize) {
+          flushChunk();
+        }
+      }
+      logThetaDownload({
+        env,
+        url: endpoint,
+        durationMs,
+        status: response.status,
+        ok: true,
+        rows: rows.length,
+        error: null,
+      });
+    }
+    flushChunk();
+  }
+  if (insertedRows > 0) return true;
+  return countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }) > 0;
 }
 
 async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = process.env, cacheStats = null) {
@@ -6335,8 +7400,8 @@ async function ensureRawHydratedForDayInClickHouse({
   includeQuote = true,
   includeGreeks = true,
 }) {
-  const rawRows = loadClickHouseRawTradesForDay({ symbol, dayIso, env });
-  if (rawRows.length === 0) {
+  const tradeRows = countClickHouseTradesForDay({ symbol, dayIso, env });
+  if (tradeRows === 0) {
     return {
       tradeRows: 0,
       stockRows: 0,
@@ -6346,6 +7411,11 @@ async function ensureRawHydratedForDayInClickHouse({
       supplementalCache: null,
     };
   }
+
+  const needsContractLevelRawRows = includeOi || includeGreeks;
+  const rawRows = needsContractLevelRawRows
+    ? loadClickHouseRawTradesForDay({ symbol, dayIso, env })
+    : [];
 
   const cacheStats = {
     spotHit: 0,
@@ -6362,20 +7432,20 @@ async function ensureRawHydratedForDayInClickHouse({
   if (includeStock) {
     hydrationTasks.push(ensureClickHouseStockRawForDay(symbol, dayIso, env, cacheStats));
   }
-  if (includeOi) {
+  if (includeOi && rawRows.length > 0) {
     hydrationTasks.push(ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env, cacheStats));
   }
   if (includeQuote) {
     hydrationTasks.push(ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env));
   }
-  if (includeGreeks) {
+  if (includeGreeks && rawRows.length > 0) {
     hydrationTasks.push(ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env, cacheStats));
   }
 
   await Promise.all(hydrationTasks);
 
   return {
-    tradeRows: rawRows.length,
+    tradeRows,
     stockRows: countClickHouseStockRawRowsForDay({ symbol, dayIso, env }),
     oiRows: countClickHouseOptionOiRowsForDay({ symbol, dayIso, env }),
     quoteRows: countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }),
@@ -7241,6 +8311,7 @@ module.exports = {
     parseJsonRows,
     normalizeThetaRows,
     resolveThetaEndpoint,
+    resolveThetaTimeWindowsForSymbol,
     resolveThetaSpotEndpoint,
     resolveThetaOiEndpoint,
     resolveThetaOiBulkEndpoint,
