@@ -10,16 +10,33 @@ __pycache__/
 data/*.sqlite
 data/*.sqlite-wal
 data/*.sqlite-shm
+data/**/*.sqlite
+data/**/*.sqlite-wal
+data/**/*.sqlite-shm
 
 # Local benchmark/smoke artifacts
 artifacts/bench/
 artifacts/mon-79/
 artifacts/mon-86/
+artifacts/reports/clickhouse-*
 artifacts/reports/backfill-last7-3symbols-c18.json
+artifacts/reports/enrich-option-trades-worker*.json
 artifacts/reports/historical-backfill-year.json
 artifacts/reports/last_friday_top3_alert_trade_matches.csv
 artifacts/reports/last_friday_top3_api_checks.json
 artifacts/reports/last_friday_top3_per_min_filter_metrics.csv
+artifacts/reports/last-week-missing-symbol-days-*.tsv
+artifacts/reports/option-quote-parity*
 artifacts/reports/sigscore-minute-validation-last7.json
 artifacts/reports/sigscore-swing-calibration-smoke.json
+artifacts/reports/sqlite-clickhouse-*
 artifacts/reports/theta-concurrency-benchmark-*.json
+
+# Local generated datasets
+artifacts/thetadata/
+artifacts/reports/top100-30d-*
+artifacts/reports/last-week-missing-metric-symbol-days-*.tsv
+data/archive/
+data/options_storage/
+data/factset_eps_study/
+data/macro_transformer/
