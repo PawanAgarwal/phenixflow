@@ -84,6 +84,7 @@ const DEFAULT_SUPPLEMENTAL_CONCURRENCY = 4;
 const DEFAULT_TREND_FALLBACK_MAX_LAG_MINUTES = 480;
 const DEFAULT_GREEKS_CONTRACT_FALLBACK_LIMIT = 200;
 const DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES = 60;
+const DEFAULT_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES = 5;
 const DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE = 5000;
 const DEFAULT_CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES = 10;
 
@@ -1036,12 +1037,24 @@ function parseClickHouseTradeReadWindowMinutes(env = process.env) {
   return DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES;
 }
 
+function parseClickHouseTradeReadMinWindowMinutes(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(60, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES;
+}
+
 function shouldStreamClickHouseEnrichedWrites(env = process.env) {
   return String(env.CLICKHOUSE_ENRICH_STREAM_WRITE || '1') !== '0';
 }
 
 function shouldStreamClickHouseEnrichedReads(env = process.env) {
   return String(env.CLICKHOUSE_ENRICH_STREAM_READ || '0') === '1';
+}
+
+function shouldIncludeClickHouseGreeksInEnrichment(env = process.env) {
+  return String(env.CLICKHOUSE_ENRICH_INCLUDE_GREEKS || '1') !== '0';
 }
 
 function parseClickHouseEnrichStreamChunkSize(env = process.env) {
@@ -3234,6 +3247,67 @@ function loadClickHouseTradeRowsForDay({
   const emitChunk = typeof onChunk === 'function'
     ? onChunk
     : null;
+  const minWindowMinutes = parseClickHouseTradeReadMinWindowMinutes(env);
+  const rows = emitChunk ? null : [];
+
+  const emitRows = (chunkRows) => {
+    if (!Array.isArray(chunkRows) || chunkRows.length === 0) return;
+    if (emitChunk) {
+      emitChunk(chunkRows);
+      return;
+    }
+    chunkRows.forEach((row) => rows.push(row));
+  };
+
+  const isOversizedWindowError = (error) => {
+    const message = String(error?.message || '').toLowerCase();
+    return message.includes('cannot create a string longer than 0x1fffffe8 characters')
+      || message.includes('invalid string length')
+      || message.includes('string longer than')
+      || message.includes('allocation failed - javascript heap out of memory');
+  };
+
+  const splitWindow = (fromIso, toIso) => {
+    const fromMs = Date.parse(fromIso);
+    const toMs = Date.parse(toIso);
+    if (!Number.isFinite(fromMs) || !Number.isFinite(toMs) || toMs <= fromMs) {
+      return null;
+    }
+    const midMs = fromMs + Math.floor((toMs - fromMs) / 2);
+    if (!Number.isFinite(midMs) || midMs <= fromMs || midMs >= toMs) return null;
+    return {
+      left: { fromIso, toIso: new Date(midMs).toISOString() },
+      right: { fromIso: new Date(midMs).toISOString(), toIso },
+    };
+  };
+
+  const queryWindow = ({ fromIso, toIso, activeWindowMinutes }) => {
+    try {
+      const chunkRows = queryRows(`
+        ${baseSelectSql}
+        WHERE symbol = {symbol:String}
+          AND trade_ts_utc >= parseDateTime64BestEffortOrNull({fromIso:String}, 3, 'UTC')
+          AND trade_ts_utc < parseDateTime64BestEffortOrNull({toIso:String}, 3, 'UTC')
+        ${orderBySql}
+      `, { symbol, fromIso, toIso }, env);
+      emitRows(chunkRows);
+      return;
+    } catch (error) {
+      const canSplit = Number.isFinite(activeWindowMinutes)
+        && activeWindowMinutes > minWindowMinutes;
+      if (!canSplit || !isOversizedWindowError(error)) {
+        throw error;
+      }
+      const split = splitWindow(fromIso, toIso);
+      if (!split) {
+        throw error;
+      }
+      const nextWindowMinutes = Math.max(minWindowMinutes, Math.trunc(activeWindowMinutes / 2));
+      queryWindow({ ...split.left, activeWindowMinutes: nextWindowMinutes });
+      queryWindow({ ...split.right, activeWindowMinutes: nextWindowMinutes });
+    }
+  };
+
   const windowMinutes = parseClickHouseTradeReadWindowMinutes(env);
   if (windowMinutes <= 0 || windowMinutes >= 24 * 60) {
     const rows = queryRows(`
@@ -3250,22 +3324,8 @@ function loadClickHouseTradeRowsForDay({
   }
 
   const windows = buildClickHouseTradeReadWindows(dayIso, windowMinutes);
-  const rows = emitChunk ? null : [];
   windows.forEach(({ fromIso, toIso }) => {
-    const chunkRows = queryRows(`
-      ${baseSelectSql}
-      WHERE symbol = {symbol:String}
-        AND trade_ts_utc >= parseDateTime64BestEffortOrNull({fromIso:String}, 3, 'UTC')
-        AND trade_ts_utc < parseDateTime64BestEffortOrNull({toIso:String}, 3, 'UTC')
-      ${orderBySql}
-    `, { symbol, fromIso, toIso }, env);
-    if (chunkRows.length > 0) {
-      if (emitChunk) {
-        emitChunk(chunkRows);
-      } else {
-        chunkRows.forEach((row) => rows.push(row));
-      }
-    }
+    queryWindow({ fromIso, toIso, activeWindowMinutes: windowMinutes });
   });
 
   return rows || [];
@@ -8000,8 +8060,14 @@ function buildSupplementalMetricLookupFromClickHouse({
     }
   });
 
-  const greeksRows = loadClickHouseOptionGreeksRawRowsForDay({ symbol, dayIso, env });
-  const greeksLookup = buildGreeksLookupFromRawRows(symbol, greeksRows);
+  let greeksLookup = {
+    greeksByContractMinute: new Map(),
+    greeksSurfaceBySymbolMinute: new Map(),
+  };
+  if (shouldIncludeClickHouseGreeksInEnrichment(env)) {
+    const greeksRows = loadClickHouseOptionGreeksRawRowsForDay({ symbol, dayIso, env });
+    greeksLookup = buildGreeksLookupFromRawRows(symbol, greeksRows);
+  }
 
   return {
     spotBySymbol,
