@@ -1,6 +1,6 @@
 # Phenix Architecture (Current Implementation)
 
-Last updated: 2026-03-01
+Last updated: 2026-03-10
 
 ## 1. Architecture Purpose
 Support a cache-first, deterministic options-flow backend where `sigScore` is computed from versioned rules and enriched market context, with strict quality accounting and explainability.
@@ -94,3 +94,50 @@ Primary tables:
 1. Keep `v5_swing` deterministic and high-quality under real cache-reuse workloads.
 2. Promote calibrated rule versions only after walk-forward performance gates pass.
 3. Avoid architectural drift: docs/spec/runtime/seed must remain aligned to active scoring behavior.
+
+## 11. Historical Backfill and Remediation Subsystem
+### 11.1 Purpose
+Provide deterministic, resumable symbol-day hydration and enrichment in ClickHouse with explicit attempt tracking and gap verification.
+
+### 11.2 Orchestration Components
+1. Symbol-day list generator (`scripts/backfill/generate-symbol-days-topn-range.js`) with Theta calendar checks.
+2. Worker orchestrator (`scripts/backfill/backfill-clickhouse-historical-days-parallel.sh`) for bounded concurrency and memory budgets.
+3. Worker runtime (`scripts/backfill/backfill-clickhouse-historical-days.js`) for per-symbol/day execution, retries, and job-level reporting.
+4. Core materialization engine (`materializeHistoricalDayInClickHouse` in `src/historical-flow.js`) with download/enrich modes.
+
+### 11.3 Canonical Backfill Data Planes
+1. Raw planes:
+   - `option_trades`
+   - `option_quote_minute_raw`
+   - `stock_ohlc_minute_raw`
+2. Enriched plane:
+   - `option_trade_enriched`
+3. Status/attempt planes:
+   - `option_download_chunk_status`
+   - `option_enrich_chunk_status`
+   - `option_trade_day_cache`
+   - `option_trade_metric_day_cache`
+
+### 11.4 Session and Expectation Model
+1. Calendar `open` and `early_close` days are tradable and must be included in symbol-day generation.
+2. Coverage verification uses:
+   - padded-session expectation for stock (`open -> close+pad`),
+   - core-session expectation for quote/trade (`open -> close`, close minute excluded).
+3. Closed days are explicitly excluded from failure accounting.
+
+### 11.5 Attempted vs Missing Semantics
+1. A symbol-day is `attempted` if status exists in chunk-status tables for that stream.
+2. Default missing analysis must count only `attempted_missing`.
+3. Unattempted symbol-days are tracked separately for scheduling, not as failures.
+
+### 11.6 Observability and Telemetry
+1. Endpoint logs: `[THETA_DOWNLOAD]` with API, status, duration, rows.
+2. Stream liveness: `[THETA_STREAM_HEARTBEAT]` with parsed/inserted row counters.
+3. Per-job slot coverage (optional): `BACKFILL_GAP_TELEMETRY=1` emits expected/actual/missing slot summaries.
+4. Batch enrichment progress: `[ENRICH_BATCH_PROGRESS]` for minute-bucket throughput.
+
+### 11.7 Operational Loop Contract
+1. Download -> verify -> enrich -> verify for the same day/batch before moving forward.
+2. Requeue only failed symbol-days/workers; avoid restarting healthy workers.
+3. Quote-hole pattern (`quoteSlots == tradeSlots`, both below quote expectation) should trigger quote-only full refresh mode.
+4. Benchmark each wave by normalized throughput and slot closure before scaling to broader ranges.

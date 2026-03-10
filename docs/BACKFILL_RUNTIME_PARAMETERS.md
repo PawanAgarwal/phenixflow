@@ -24,6 +24,26 @@ cd /Users/pawanagarwal/github/phenixflow
 set -a; source .env.mon79.local; set +a
 ```
 
+## Coverage Analysis (Post-Run Verification)
+
+Use the analyzer to compute month/symbol/day slot coverage from raw or chunk sources:
+
+```bash
+node scripts/backfill/analyze-1m-coverage.js \
+  --symbol-days <symbol_days.tsv> \
+  --calendar <calendar_detailed.tsv> \
+  --from YYYY-MM-DD \
+  --to YYYY-MM-DD \
+  --source raw \
+  --out-dir artifacts/reports \
+  --tag <timestamp>
+```
+
+Defaults:
+- `--attempted-only 1` (default): count only attempted symbol-days as missing.
+- `--source raw` (default): authoritative but slower.
+- `--source chunk`: faster, only valid if chunk status is fully rebuilt for range.
+
 ## Recommended Profiles
 
 ### 1) Stable default (recommended)
@@ -147,6 +167,9 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `THETADATA_MAX_CONCURRENT_CONNECTIONS`: hard cap for Theta concurrent download workers (default `4`).
 - `THETADATA_DOWNLOAD_CONCURRENCY`: target worker concurrency for download mode when `BACKFILL_WORKERS` is unset (default `THETADATA_MAX_CONCURRENT_CONNECTIONS`).
 - `BACKFILL_REPORT_INCLUDE_JOBS`: `1` for detailed per-job output.
+- Coverage analyzer:
+  - `--attempted-only`: `1` (default) excludes unattempted days from missing counts.
+  - `--attempted-only 0`: legacy behavior (treat all expected days as in-scope).
 
 ### Memory and worker sizing
 
@@ -204,3 +227,14 @@ Common files:
 - `summary.json`
 - `summary.tsv`
 - `failures.tsv`
+
+Coverage analyzer artifacts:
+- `coverage-1m-<from>-<to>-<tag>-month-summary.tsv`
+- `coverage-1m-<from>-<to>-<tag>-symbol-summary.tsv`
+- `coverage-1m-<from>-<to>-<tag>-anomalies.tsv`
+
+## Operational Learnings
+
+Failure signatures, remediation loops, and anti-rerun guardrails are captured in:
+
+- `docs/BACKFILL_OPERATIONAL_LEARNINGS.md`

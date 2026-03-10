@@ -88,6 +88,13 @@ If PM_queue has no runnable work after a full scan:
 - Workers do not update backlog selection; they only report completion/blocked outcomes.
 - PM is responsible for creating follow-on tasks in Linear when decomposition is needed.
 
+## Backfill Task Addendum (When Task Type = historical backfill/remediation)
+- Use `AGENTS.md` and `docs/BACKFILL_RUNTIME_PARAMETERS.md` as execution contracts.
+- Treat day progression as gated: do not advance to next day until current day passes download + enrichment + verification.
+- Reports must include attempted-vs-missing breakdown (unattempted days are not failures).
+- On quote-hole pattern (`quoteSlots == tradeSlots` with large deficit), require quote-only full refresh mode and report outcome.
+- Capture new failure signatures/remediations in `docs/BACKFILL_OPERATIONAL_LEARNINGS.md` before closing task.
+
 ## Heartbeat / Loop Cadence
 - PM watchdog: every 3 minutes. If PM already running, do not create a duplicate PM run.
 - PM runs are the sole source of task assignment.

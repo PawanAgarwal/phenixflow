@@ -79,6 +79,33 @@
   - rows hydrated per component
   - remaining missing symbol-days/chunks
 
+## Run Completion Gates (Required)
+- Do not advance from day `D` to day `D+1` until `D` passes:
+  - download verification (stock/quote/trade expectations),
+  - enrichment verification (`enrich == trade` minute coverage),
+  - worker failures resolved or explicitly classified as provider no-data.
+- If a worker fails, restart only failed units and requeue only failed symbol-days.
+- Avoid broad reruns after every code change. Use one canary day to validate fix, then continue with next day.
+
+## Gap Classification Policy
+- Missing counts must distinguish:
+  - `unattempted` symbol-days (not run yet),
+  - `attempted_missing` symbol-days (run but still short),
+  - `provider_sparse` symbol-days (attempted, but provider appears to have sparse minutes).
+- Default reporting should only treat `attempted_missing` as failure.
+- For quote gaps where `quoteSlots == tradeSlots` and both are far below quote expectation:
+  - run quote-only remediation with `BACKFILL_RAW_COMPONENTS=quote`,
+  - set `BACKFILL_FORCE=1` and `BACKFILL_FORCE_QUOTE_FULL=1`.
+
+## Throughput Benchmark Policy
+- Record baseline per run:
+  - wall clock duration,
+  - total raw quote rows ingested,
+  - total enriched rows,
+  - expected vs actual minute slots,
+  - normalized speed (`seconds per 1m slot` and `rows/sec`).
+- Compare each rerun against the benchmark before claiming optimization.
+
 ## Git/Change Management
 - Commit in understandable chunks:
   - streaming/perf changes
@@ -92,3 +119,4 @@
   - Theta stream timeout/heartbeat settings
   - ClickHouse mutation/timeout settings
   - targeted quote-only/stock-only/enrich-only runs
+- Use `docs/BACKFILL_OPERATIONAL_LEARNINGS.md` for failure signatures, remediation loops, and anti-rerun guardrails learned from prior long runs.
