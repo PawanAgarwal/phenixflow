@@ -237,6 +237,72 @@ function queryEnrichStreamMap({
   return queryMapFromRows(rows);
 }
 
+function queryDownloadAttemptMap({
+  fromIso,
+  toIso,
+  symbolInClause,
+}) {
+  const rows = queryRowsSync(
+    `
+    SELECT
+      toString(trade_date_utc) AS day_iso,
+      symbol,
+      max(stream_name = 'stock_price_1m') AS stock_attempted,
+      max(stream_name = 'option_quote_1m') AS quote_attempted,
+      max(stream_name = 'option_trade_quote_1m') AS trade_attempted
+    FROM options.option_download_chunk_status FINAL
+    WHERE trade_date_utc BETWEEN toDate({fromIso:String}) AND toDate({toIso:String})
+      AND symbol IN (${symbolInClause})
+    GROUP BY day_iso, symbol
+    `,
+    { fromIso, toIso },
+  );
+
+  const out = new Map();
+  rows.forEach((row) => {
+    const dayIso = normalizeDate(String(row.day_iso || '').slice(0, 10));
+    const symbol = String(row.symbol || '').trim().toUpperCase();
+    if (!dayIso || !symbol) return;
+    const key = `${dayIso}\t${symbol}`;
+    out.set(key, {
+      stockAttempted: Number(row.stock_attempted || 0) > 0,
+      quoteAttempted: Number(row.quote_attempted || 0) > 0,
+      tradeAttempted: Number(row.trade_attempted || 0) > 0,
+    });
+  });
+  return out;
+}
+
+function queryEnrichAttemptMap({
+  fromIso,
+  toIso,
+  symbolInClause,
+}) {
+  const rows = queryRowsSync(
+    `
+    SELECT
+      toString(trade_date_utc) AS day_iso,
+      symbol,
+      max(1) AS enrich_attempted
+    FROM options.option_enrich_chunk_status FINAL
+    WHERE trade_date_utc BETWEEN toDate({fromIso:String}) AND toDate({toIso:String})
+      AND symbol IN (${symbolInClause})
+      AND stream_name = 'option_trade_enriched_1m'
+    GROUP BY day_iso, symbol
+    `,
+    { fromIso, toIso },
+  );
+
+  const out = new Map();
+  rows.forEach((row) => {
+    const dayIso = normalizeDate(String(row.day_iso || '').slice(0, 10));
+    const symbol = String(row.symbol || '').trim().toUpperCase();
+    if (!dayIso || !symbol) return;
+    out.set(`${dayIso}\t${symbol}`, Number(row.enrich_attempted || 0) > 0);
+  });
+  return out;
+}
+
 function initAggregate() {
   return {
     expectedSymbolDays: 0,
@@ -254,6 +320,10 @@ function initAggregate() {
     quoteDaysMissing: 0,
     tradeDaysMissing: 0,
     enrichDaysMissing: 0,
+    stockAttemptedDays: 0,
+    quoteAttemptedDays: 0,
+    tradeAttemptedDays: 0,
+    enrichAttemptedDays: 0,
     openSymbolDays: 0,
     earlyCloseSymbolDays: 0,
   };
@@ -275,6 +345,10 @@ function accumulate(agg, row) {
   agg.quoteDaysMissing += row.quoteMissingSlots > 0 ? 1 : 0;
   agg.tradeDaysMissing += row.tradeMissingSlots > 0 ? 1 : 0;
   agg.enrichDaysMissing += row.enrichVsTradeMissingSlots > 0 ? 1 : 0;
+  agg.stockAttemptedDays += row.stockAttempted ? 1 : 0;
+  agg.quoteAttemptedDays += row.quoteAttempted ? 1 : 0;
+  agg.tradeAttemptedDays += row.tradeAttempted ? 1 : 0;
+  agg.enrichAttemptedDays += row.enrichAttempted ? 1 : 0;
   agg.openSymbolDays += row.type === 'open' ? 1 : 0;
   agg.earlyCloseSymbolDays += row.type === 'early_close' ? 1 : 0;
 }
@@ -288,6 +362,8 @@ function main() {
   const outDir = path.resolve(args['out-dir'] || path.resolve(process.cwd(), 'artifacts', 'reports'));
   const tag = String(args.tag || new Date().toISOString().replace(/[-:]/g, '').replace(/\..*/, '').replace('T', 'T'));
   const source = String(args.source || 'raw').trim().toLowerCase();
+  const attemptedOnlyRaw = String(args['attempted-only'] || '1').trim().toLowerCase();
+  const attemptedOnly = !(attemptedOnlyRaw === '0' || attemptedOnlyRaw === 'false' || attemptedOnlyRaw === 'no');
 
   if (!symbolDaysPath || !calendarPath || !fromIso || !toIso) {
     throw new Error('usage: --symbol-days <tsv> --calendar <tsv> --from YYYY-MM-DD --to YYYY-MM-DD [--out-dir dir] [--tag tag]');
@@ -301,6 +377,16 @@ function main() {
 
   const symbols = Array.from(new Set(expectedRows.map((row) => row.symbol))).sort();
   const symbolInClause = buildSymbolInClause(symbols);
+  const downloadAttemptMap = queryDownloadAttemptMap({
+    fromIso,
+    toIso,
+    symbolInClause,
+  });
+  const enrichAttemptMap = queryEnrichAttemptMap({
+    fromIso,
+    toIso,
+    symbolInClause,
+  });
 
   const stockMap = source === 'chunk'
     ? queryDownloadStreamMap({
@@ -368,20 +454,37 @@ function main() {
 
   const detailedRows = expectedRows.map((row) => {
     const key = `${row.dayIso}\t${row.symbol}`;
+    const attempts = downloadAttemptMap.get(key) || {};
+    const stockAttempted = Boolean(attempts.stockAttempted);
+    const quoteAttempted = Boolean(attempts.quoteAttempted);
+    const tradeAttempted = Boolean(attempts.tradeAttempted);
+    const enrichAttempted = Boolean(enrichAttemptMap.get(key));
     const stockSlots = Number(stockMap.get(key)?.slots || 0);
     const quoteSlots = Number(quoteMap.get(key)?.slots || 0);
     const tradeSlots = Number(tradeMap.get(key)?.slots || 0);
     const enrichSlots = Number(enrichMap.get(key)?.slots || 0);
-    const stockMissingSlots = Math.max(0, row.expectedPaddedSlots - stockSlots);
-    const quoteMissingSlots = Math.max(0, row.expectedCoreSlots - quoteSlots);
-    const tradeMissingSlots = Math.max(0, row.expectedCoreSlots - tradeSlots);
-    const enrichVsTradeMissingSlots = Math.max(0, tradeSlots - enrichSlots);
+    const stockMissingSlots = (!attemptedOnly || stockAttempted)
+      ? Math.max(0, row.expectedPaddedSlots - stockSlots)
+      : 0;
+    const quoteMissingSlots = (!attemptedOnly || quoteAttempted)
+      ? Math.max(0, row.expectedCoreSlots - quoteSlots)
+      : 0;
+    const tradeMissingSlots = (!attemptedOnly || tradeAttempted)
+      ? Math.max(0, row.expectedCoreSlots - tradeSlots)
+      : 0;
+    const enrichVsTradeMissingSlots = (!attemptedOnly || enrichAttempted)
+      ? Math.max(0, tradeSlots - enrichSlots)
+      : 0;
 
     return {
       dayIso: row.dayIso,
       month: row.month,
       symbol: row.symbol,
       type: row.type,
+      stockAttempted,
+      quoteAttempted,
+      tradeAttempted,
+      enrichAttempted,
       expectedPaddedSlots: row.expectedPaddedSlots,
       expectedCoreSlots: row.expectedCoreSlots,
       stockSlots,
@@ -446,6 +549,10 @@ function main() {
     'quoteDaysMissing',
     'tradeDaysMissing',
     'enrichDaysMissing',
+    'stockAttemptedDays',
+    'quoteAttemptedDays',
+    'tradeAttemptedDays',
+    'enrichAttemptedDays',
     'openSymbolDays',
     'earlyCloseSymbolDays',
   ], monthRows);
@@ -467,6 +574,10 @@ function main() {
     'quoteDaysMissing',
     'tradeDaysMissing',
     'enrichDaysMissing',
+    'stockAttemptedDays',
+    'quoteAttemptedDays',
+    'tradeAttemptedDays',
+    'enrichAttemptedDays',
     'openSymbolDays',
     'earlyCloseSymbolDays',
   ], symbolRows);
@@ -476,6 +587,10 @@ function main() {
     'month',
     'symbol',
     'type',
+    'stockAttempted',
+    'quoteAttempted',
+    'tradeAttempted',
+    'enrichAttempted',
     'expectedPaddedSlots',
     'expectedCoreSlots',
     'stockSlots',
@@ -494,6 +609,7 @@ function main() {
   console.log(`Expected symbol-days: ${detailedRows.length}`);
   console.log(`Anomaly rows: ${anomalyRows.length}`);
   console.log(`Source: ${source}`);
+  console.log(`Attempted only: ${attemptedOnly}`);
 }
 
 main();
