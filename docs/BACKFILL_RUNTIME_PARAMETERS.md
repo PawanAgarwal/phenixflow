@@ -57,7 +57,7 @@ THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
 BACKFILL_RAM_BUDGET_MB=10240 \
 BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
-CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
+CLICKHOUSE_DELETE_MUTATION_SYNC=1 \
 THETADATA_HISTORICAL_OPTION_FORMAT=ndjson \
 THETADATA_OPTION_QUOTE_FORMAT=ndjson \
 THETADATA_STREAM_HEARTBEAT_EVERY_ROWS=250000 \
@@ -76,7 +76,7 @@ THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
 BACKFILL_RAM_BUDGET_MB=10240 \
 BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
-CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
+CLICKHOUSE_DELETE_MUTATION_SYNC=1 \
 THETADATA_HISTORICAL_OPTION_FORMAT=ndjson \
 THETADATA_OPTION_QUOTE_FORMAT=ndjson \
 THETADATA_STREAM_HEARTBEAT_EVERY_ROWS=250000 \
@@ -100,7 +100,7 @@ BACKFILL_SYMBOL_DAY_LIST_PATH=artifacts/reports/missing-quote-symbol-days-<ts>.t
 THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
 BACKFILL_RAM_BUDGET_MB=10240 \
-CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
+CLICKHOUSE_DELETE_MUTATION_SYNC=1 \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 ```
 
@@ -115,7 +115,7 @@ BACKFILL_SYMBOL_DAY_LIST_PATH=artifacts/reports/missing-stock-symbol-days-<ts>.t
 THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
 BACKFILL_RAM_BUDGET_MB=10240 \
-CLICKHOUSE_DELETE_MUTATION_SYNC=0 \
+CLICKHOUSE_DELETE_MUTATION_SYNC=1 \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 ```
 
@@ -192,7 +192,11 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 
 ### ClickHouse safety/performance
 
-- `CLICKHOUSE_DELETE_MUTATION_SYNC=0`: async delete mutations; avoid blocking stream ingestion.
+- `CLICKHOUSE_DELETE_MUTATION_SYNC=1`: synchronous single-replica mutation wait; deterministic delete+rewrite behavior.
+- `CLICKHOUSE_INSERT_ONLY_STOCK_QUOTE=1` (default): skip day-scope delete mutations for `stock_ohlc_minute_raw` and `option_quote_minute_raw` and rely on ReplacingMergeTree latest-row semantics.
+  - Set `0` only when you explicitly need delete+rewrite semantics for a controlled run.
+- `CLICKHOUSE_QUOTE_INCLUDE_RAW_PAYLOAD=0` (default): stores `{}` for quote payloads to reduce insert size and query pressure.
+- `CLICKHOUSE_INSERT_MAX_BYTES` default is `33554432` (32 MiB) to reduce insert chunk/process overhead.
 - `CLICKHOUSE_CONNECT_TIMEOUT_SEC`: connection timeout.
 - `CLICKHOUSE_SEND_TIMEOUT_SEC`: send timeout.
 - `CLICKHOUSE_RECEIVE_TIMEOUT_SEC`: receive timeout.
@@ -211,7 +215,7 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - Keep total Theta concurrent streams `<= 4`.
 - Prefer 2 workers when Theta is unstable.
 - Use targeted missing lists before any broad rerun.
-- Keep `CLICKHOUSE_DELETE_MUTATION_SYNC=0` unless debugging mutations.
+- Keep `CLICKHOUSE_DELETE_MUTATION_SYNC=1` for deterministic backfills. Use `0` only for controlled throughput experiments.
 - For retries, keep exponential backoff and do not use short request timeouts.
 
 ## Expected Artifacts
