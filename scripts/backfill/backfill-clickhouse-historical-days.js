@@ -236,6 +236,7 @@ async function processJob({
         thresholds,
         env: process.env,
         mode,
+        forceRecompute: FORCE,
       });
       if (result?.db) {
         result.db.close();
@@ -259,6 +260,9 @@ async function processJob({
   const sync = result.sync || {};
   const enrichment = result.enrichment || {};
   const rawHydration = result.rawHydration || {};
+  const coverage = rawHydration?.coverage && typeof rawHydration.coverage === 'object'
+    ? rawHydration.coverage
+    : null;
   const isNoData = sync.reason === 'no_data'
     && Number(enrichment.rowCount || 0) === 0
     && Number(rawHydration.tradeRows || 0) === 0;
@@ -311,12 +315,33 @@ async function processJob({
       quoteRows: Number(rawHydration.quoteRows || 0),
       greeksRows: Number(rawHydration.greeksRows || 0),
     },
+    coverage: coverage || null,
   });
+
+  const coverageSummary = coverage && !coverage.error
+    ? (
+      ` slots(exp_pad:${coverage.expectedPaddedSlots ?? coverage.expectedSlots ?? 'na'}`
+      + ` exp_core:${coverage.expectedCoreSlots ?? 'na'}`
+      + ` stock:${coverage.stockSlots ?? 'na'}`
+      + ` quote:${coverage.quoteSlots ?? 'na'}`
+      + ` trade:${coverage.tradeSlots ?? 'na'}`
+      + ` enrich:${coverage.enrichSlots ?? 'na'})`
+      + ` missing(stock_vs_pad:${coverage.missingStockSlots ?? 'na'}`
+      + ` quote_vs_core:${coverage.missingQuoteCoreSlots ?? coverage.missingQuoteSlots ?? 'na'}`
+      + ` trade_vs_core:${coverage.missingTradeCoreSlots ?? coverage.missingTradeSlots ?? 'na'}`
+      + ` enrich_vs_trade:${coverage.missingEnrichVsTradeSlots ?? 'na'})`
+      + ` coverage_pct(stock:${coverage.stockCoveragePct ?? 'na'}`
+      + ` quote:${coverage.quoteCoveragePct ?? 'na'}`
+      + ` trade:${coverage.tradeCoveragePct ?? 'na'})`
+    )
+    : coverage?.error
+      ? ` coverage_error:${coverage.error}`
+      : '';
 
   console.log(
     `${prefix} OK mode:${mode} status:${isNoData ? 'no_data' : 'completed'} `
     + `fetched:${Number(sync.fetchedRows || 0)} enriched:${Number(enrichment.rowCount || 0)} `
-    + `quotes:${Number(rawHydration.quoteRows || 0)} retries:${attemptsUsed}`,
+    + `quotes:${Number(rawHydration.quoteRows || 0)} retries:${attemptsUsed}${coverageSummary}`,
   );
   return { pending: false };
 }

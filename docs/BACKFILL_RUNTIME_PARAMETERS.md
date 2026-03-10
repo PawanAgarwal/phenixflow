@@ -74,7 +74,8 @@ Quote-only remediation:
 BACKFILL_MODE=download \
 BACKFILL_FORCE=1 \
 BACKFILL_RAW_COMPONENTS=quote \
-BACKFILL_FORCE_QUOTE_FULL=0 \
+BACKFILL_FORCE_QUOTE_FULL=1 \
+BACKFILL_GAP_TELEMETRY=1 \
 BACKFILL_SYMBOL_DAY_LIST_PATH=artifacts/reports/missing-quote-symbol-days-<ts>.tsv \
 THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
@@ -89,6 +90,7 @@ Stock-only remediation:
 BACKFILL_MODE=download \
 BACKFILL_FORCE=1 \
 BACKFILL_RAW_COMPONENTS=stock \
+BACKFILL_GAP_TELEMETRY=1 \
 BACKFILL_SYMBOL_DAY_LIST_PATH=artifacts/reports/missing-stock-symbol-days-<ts>.tsv \
 THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
@@ -132,7 +134,13 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 
 - `BACKFILL_MODE`: `full | download | enrich`.
 - `BACKFILL_FORCE`: `1` to re-run even if cache says complete.
+  - This now propagates end-to-end into `materializeHistoricalDayInClickHouse(..., forceRecompute=true)` so trade/day-cache sync is not silently skipped.
 - `BACKFILL_FORCE_QUOTE_FULL`: quote force mode scope; default `0` (minute-resume scope), set `1` for full-day quote rewrites.
+- `BACKFILL_GAP_TELEMETRY`: `1` to emit per-job expected/actual minute-slot coverage (stock/quote/trade/enrich + missing deltas) into worker logs and job JSON.
+  - Coverage fields now include both padded-session and core-session expectations:
+    - `expectedPaddedSlots` / `missingStockSlots` (stock vs padded session)
+    - `expectedCoreSlots` / `missingQuoteCoreSlots` / `missingTradeCoreSlots` (quote/trade vs core session)
+    - `missingEnrichVsTradeSlots` (enrich parity with trade stream)
 - `BACKFILL_SYMBOL_DAY_LIST_PATH`: TSV (`YYYY-MM-DD<TAB>SYMBOL`) for targeted jobs.
 - `BACKFILL_WORKERS`: parallel worker count (if unset and `BACKFILL_MODE=download`, defaults to `THETADATA_DOWNLOAD_CONCURRENCY`).
 - `BACKFILL_SHARD_STRATEGY`: worker shard strategy (`balanced` default, `hash` for legacy modulo hash sharding).

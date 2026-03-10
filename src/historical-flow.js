@@ -1261,6 +1261,11 @@ function parseThetaCalendarClosePadMinutes(env = process.env) {
   return DEFAULT_THETADATA_CALENDAR_CLOSE_PAD_MINUTES;
 }
 
+function shouldEmitBackfillGapTelemetry(env = process.env) {
+  const raw = String(env.BACKFILL_GAP_TELEMETRY || '0').trim().toLowerCase();
+  return raw === '1' || raw === 'true' || raw === 'yes';
+}
+
 function parseThetaLargeSymbols(env = process.env) {
   const raw = String(env.THETADATA_LARGE_SYMBOLS || DEFAULT_THETADATA_LARGE_SYMBOLS.join(',')).trim();
   if (!raw) return { symbols: new Set(), includeAll: false };
@@ -1339,12 +1344,15 @@ function parseThetaCalendarSessionWindow(rawBody, env = process.env) {
   const closePadMinutes = parseThetaCalendarClosePadMinutes(env);
   const paddedCloseSecond = Math.min(86399, closeSecond + (closePadMinutes * 60));
   const boundedCloseSecond = Math.max(openSecond, paddedCloseSecond);
+  const boundedRegularCloseSecond = Math.max(openSecond, closeSecond);
 
   return {
     isOpen: true,
     type: sessionType,
     openTime: formatSecondOfDayAsHms(openSecond),
     closeTime: formatSecondOfDayAsHms(boundedCloseSecond),
+    regularCloseTime: formatSecondOfDayAsHms(boundedRegularCloseSecond),
+    closePadMinutes,
   };
 }
 
@@ -6957,6 +6965,103 @@ function loadClickHouseEnrichedMinuteCountRowsForDay({ symbol, dayIso, env = pro
   return normalizeClickHouseMinuteCountRows(rows);
 }
 
+function computeExpectedSessionMinuteSlots(sessionWindow, { useRegularClose = false, includeCloseMinute = true } = {}) {
+  if (!sessionWindow || sessionWindow.isOpen === false) return 0;
+  const openSecond = parseTimeHmsToSecondOfDay(sessionWindow.openTime);
+  const closeSecond = parseTimeHmsToSecondOfDay(
+    useRegularClose
+      ? (sessionWindow.regularCloseTime || sessionWindow.closeTime)
+      : sessionWindow.closeTime,
+  );
+  if (openSecond === null || closeSecond === null) return null;
+  const boundedCloseSecond = Math.max(openSecond, closeSecond);
+  const baseSlots = Math.floor((boundedCloseSecond - openSecond) / 60);
+  if (baseSlots <= 0) return includeCloseMinute ? 1 : 0;
+  return includeCloseMinute ? (baseSlots + 1) : baseSlots;
+}
+
+function summarizeMinuteRowsRange(minuteRows = []) {
+  if (!Array.isArray(minuteRows) || minuteRows.length === 0) {
+    return {
+      slots: 0,
+      firstMinuteUtc: null,
+      lastMinuteUtc: null,
+    };
+  }
+  return {
+    slots: minuteRows.length,
+    firstMinuteUtc: minuteRows[0]?.minuteBucketUtc || null,
+    lastMinuteUtc: minuteRows[minuteRows.length - 1]?.minuteBucketUtc || null,
+  };
+}
+
+async function buildClickHouseGapTelemetryForDay({
+  symbol,
+  dayIso,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
+  const [tradeMinuteRows, quoteMinuteRows, stockMinuteRows, enrichMinuteRows, sessionWindow] = await Promise.all([
+    loadClickHouseTradeMinuteCountRowsForDay({ symbol, dayIso, env, queryRows }),
+    loadClickHouseOptionQuoteMinuteCountRowsForDay({ symbol, dayIso, env, queryRows }),
+    loadClickHouseStockMinuteCountRowsForDay({ symbol, dayIso, env, queryRows }),
+    loadClickHouseEnrichedMinuteCountRowsForDay({ symbol, dayIso, env, queryRows }),
+    resolveThetaCalendarSessionWindowForDay(dayIso, { env }),
+  ]);
+
+  const tradeSummary = summarizeMinuteRowsRange(tradeMinuteRows);
+  const quoteSummary = summarizeMinuteRowsRange(quoteMinuteRows);
+  const stockSummary = summarizeMinuteRowsRange(stockMinuteRows);
+  const enrichSummary = summarizeMinuteRowsRange(enrichMinuteRows);
+  const expectedPaddedSlots = computeExpectedSessionMinuteSlots(sessionWindow, { useRegularClose: false, includeCloseMinute: true });
+  const expectedCoreSlots = computeExpectedSessionMinuteSlots(sessionWindow, { useRegularClose: true, includeCloseMinute: false });
+  const missingStockSlots = expectedPaddedSlots === null ? null : Math.max(0, expectedPaddedSlots - stockSummary.slots);
+  const missingQuoteSlots = expectedPaddedSlots === null ? null : Math.max(0, expectedPaddedSlots - quoteSummary.slots);
+  const missingTradeSlots = expectedPaddedSlots === null ? null : Math.max(0, expectedPaddedSlots - tradeSummary.slots);
+  const missingQuoteCoreSlots = expectedCoreSlots === null ? null : Math.max(0, expectedCoreSlots - quoteSummary.slots);
+  const missingTradeCoreSlots = expectedCoreSlots === null ? null : Math.max(0, expectedCoreSlots - tradeSummary.slots);
+  const stockCoveragePct = expectedPaddedSlots > 0
+    ? Number(((stockSummary.slots / expectedPaddedSlots) * 100).toFixed(2))
+    : null;
+  const quoteCoveragePct = expectedCoreSlots > 0
+    ? Number(((quoteSummary.slots / expectedCoreSlots) * 100).toFixed(2))
+    : null;
+  const tradeCoveragePct = expectedCoreSlots > 0
+    ? Number(((tradeSummary.slots / expectedCoreSlots) * 100).toFixed(2))
+    : null;
+
+  return {
+    dayType: sessionWindow?.type || null,
+    sessionOpenTime: sessionWindow?.openTime || null,
+    sessionRegularCloseTime: sessionWindow?.regularCloseTime || null,
+    sessionCloseTime: sessionWindow?.closeTime || null,
+    expectedSlots: expectedPaddedSlots,
+    expectedPaddedSlots,
+    expectedCoreSlots,
+    stockSlots: stockSummary.slots,
+    quoteSlots: quoteSummary.slots,
+    tradeSlots: tradeSummary.slots,
+    enrichSlots: enrichSummary.slots,
+    missingStockSlots,
+    missingQuoteSlots,
+    missingTradeSlots,
+    missingQuoteCoreSlots,
+    missingTradeCoreSlots,
+    stockCoveragePct,
+    quoteCoveragePct,
+    tradeCoveragePct,
+    missingEnrichVsTradeSlots: Math.max(0, tradeSummary.slots - enrichSummary.slots),
+    stockFirstMinuteUtc: stockSummary.firstMinuteUtc,
+    stockLastMinuteUtc: stockSummary.lastMinuteUtc,
+    quoteFirstMinuteUtc: quoteSummary.firstMinuteUtc,
+    quoteLastMinuteUtc: quoteSummary.lastMinuteUtc,
+    tradeFirstMinuteUtc: tradeSummary.firstMinuteUtc,
+    tradeLastMinuteUtc: tradeSummary.lastMinuteUtc,
+    enrichFirstMinuteUtc: enrichSummary.firstMinuteUtc,
+    enrichLastMinuteUtc: enrichSummary.lastMinuteUtc,
+  };
+}
+
 function loadClickHouseDownloadMinuteCountRowsForStream({
   symbol,
   dayIso,
@@ -9222,6 +9327,7 @@ async function materializeHistoricalDayInClickHouse({
   requiredMetrics = [],
   markPartial = false,
   mode = 'full',
+  forceRecompute = false,
 }) {
   const normalizedMode = String(mode || 'full').trim().toLowerCase();
   const modeDownloadOnly = normalizedMode === 'download';
@@ -9246,7 +9352,12 @@ async function materializeHistoricalDayInClickHouse({
   };
 
   const shouldSyncTrades = !modeEnrichOnly
-    && (!existingDayCache || existingDayCache.cacheStatus !== DAY_CACHE_STATUS_FULL || cachedRows === 0);
+    && (
+      forceRecompute
+      || !existingDayCache
+      || existingDayCache.cacheStatus !== DAY_CACHE_STATUS_FULL
+      || cachedRows === 0
+    );
 
   if (shouldSyncTrades) {
     try {
@@ -9297,7 +9408,7 @@ async function materializeHistoricalDayInClickHouse({
     };
   }
 
-  const rawHydration = modeEnrichOnly
+  let rawHydration = modeEnrichOnly
     ? {
       tradeRows: countClickHouseTradesForDay({ symbol, dayIso, env }),
       stockRows: countClickHouseStockRawRowsForDay({ symbol, dayIso, env }),
@@ -9333,6 +9444,16 @@ async function materializeHistoricalDayInClickHouse({
       env,
       requiredMetrics,
     });
+
+  if (rawHydration && shouldEmitBackfillGapTelemetry(env)) {
+    try {
+      rawHydration.coverage = await buildClickHouseGapTelemetryForDay({ symbol, dayIso, env });
+    } catch (error) {
+      rawHydration.coverage = {
+        error: String(error?.message || 'coverage_telemetry_failed'),
+      };
+    }
+  }
 
   return {
     db: null,
@@ -9612,6 +9733,7 @@ module.exports = {
     hydrateEnrichedRows,
     buildMinuteStats,
     buildMinuteDerivedRollups,
+    buildClickHouseGapTelemetryForDay,
     upsertSymbolMinuteDerived,
     upsertContractMinuteDerived,
     upsertOptionTrades,
