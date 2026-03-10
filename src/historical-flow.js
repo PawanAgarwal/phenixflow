@@ -1314,7 +1314,8 @@ function parseThetaCalendarSessionWindow(rawBody, env = process.env) {
   if (!row) return null;
 
   const sessionType = String(row.type || '').trim().toLowerCase();
-  if (sessionType && sessionType !== 'open') {
+  const isTradableSession = sessionType === 'open' || sessionType === 'early_close';
+  if (sessionType && !isTradableSession) {
     return {
       isOpen: false,
       type: sessionType,
@@ -1322,14 +1323,14 @@ function parseThetaCalendarSessionWindow(rawBody, env = process.env) {
       closeTime: null,
     };
   }
-  if (sessionType !== 'open') return null;
+  if (!isTradableSession) return null;
 
   const openSecond = parseTimeHmsToSecondOfDay(typeof row.open === 'string' ? row.open : null);
   const closeSecond = parseTimeHmsToSecondOfDay(typeof row.close === 'string' ? row.close : null);
   if (openSecond === null || closeSecond === null) {
     return {
       isOpen: true,
-      type: 'open',
+      type: sessionType,
       openTime: null,
       closeTime: null,
     };
@@ -1341,7 +1342,7 @@ function parseThetaCalendarSessionWindow(rawBody, env = process.env) {
 
   return {
     isOpen: true,
-    type: 'open',
+    type: sessionType,
     openTime: formatSecondOfDayAsHms(openSecond),
     closeTime: formatSecondOfDayAsHms(boundedCloseSecond),
   };
@@ -8015,9 +8016,10 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     String(env.BACKFILL_FORCE || '').trim().toLowerCase() === '1'
     || String(env.BACKFILL_FORCE || '').trim().toLowerCase() === 'true'
   );
+  // Default to minute-scope resume even in force mode; full-day quote rewrites are opt-in.
   const forceQuoteFullRefresh = (
-    String(env.BACKFILL_FORCE_QUOTE_FULL || '1').trim().toLowerCase() !== '0'
-    && String(env.BACKFILL_FORCE_QUOTE_FULL || '1').trim().toLowerCase() !== 'false'
+    String(env.BACKFILL_FORCE_QUOTE_FULL || '0').trim().toLowerCase() !== '0'
+    && String(env.BACKFILL_FORCE_QUOTE_FULL || '0').trim().toLowerCase() !== 'false'
   );
   const forceQuoteRefresh = forceRequested && forceRawTargets.includeQuote && forceQuoteFullRefresh;
   const resumeCursor = forceQuoteRefresh ? null : getClickHouseOptionQuoteResumeCursor({ symbol, dayIso, env });

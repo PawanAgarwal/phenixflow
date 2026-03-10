@@ -5,15 +5,15 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 CPU_CORES="$(sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)"
-ENRICH_CPU_TARGET_PCT="${ENRICH_CPU_TARGET_PCT:-70}"
+ENRICH_CPU_TARGET_PCT="${ENRICH_CPU_TARGET_PCT:-60}"
 MAX_WORKERS="${BACKFILL_MAX_WORKERS:-16}"
 REPORT_ROOT="${BACKFILL_REPORT_DIR:-$PROJECT_ROOT/artifacts/reports}"
 INPUT_PATH="${BACKFILL_SYMBOL_DAY_LIST_PATH:-}"
 PIPELINE_LOOP_SLEEP_MS="${PIPELINE_LOOP_SLEEP_MS:-5000}"
 PIPELINE_LOOP_MAX_PASSES="${PIPELINE_LOOP_MAX_PASSES:-400}"
-DOWNLOAD_SUPPLEMENTAL_CONCURRENCY="${DOWNLOAD_SUPPLEMENTAL_CONCURRENCY:-4}"
+DOWNLOAD_SUPPLEMENTAL_CONCURRENCY="${DOWNLOAD_SUPPLEMENTAL_CONCURRENCY:-2}"
 ENRICH_SUPPLEMENTAL_CONCURRENCY="${ENRICH_SUPPLEMENTAL_CONCURRENCY:-2}"
-PIPELINE_STAGE_OVERLAP_RAW="${PIPELINE_STAGE_OVERLAP:-0}"
+PIPELINE_STAGE_OVERLAP_RAW="${PIPELINE_STAGE_OVERLAP:-1}"
 BACKFILL_MEMORY_RESERVE_MB="${BACKFILL_MEMORY_RESERVE_MB:-4096}"
 BACKFILL_MEMORY_PER_WORKER_MB="${BACKFILL_MEMORY_PER_WORKER_MB:-2200}"
 BACKFILL_NODE_MAX_OLD_SPACE_MB="${BACKFILL_NODE_MAX_OLD_SPACE_MB:-1024}"
@@ -25,6 +25,7 @@ BACKFILL_REPORT_INCLUDE_JOBS="${BACKFILL_REPORT_INCLUDE_JOBS:-0}"
 THETA_BASE_URL="${THETADATA_BASE_URL:-http://127.0.0.1:25503}"
 FLOW_READ_BACKEND="${PHENIX_FLOW_READ_BACKEND:-clickhouse}"
 FLOW_WRITE_BACKEND="${PHENIX_FLOW_WRITE_BACKEND:-clickhouse}"
+THETADATA_MAX_CONCURRENT_CONNECTIONS="${THETADATA_MAX_CONCURRENT_CONNECTIONS:-4}"
 TS="$(date +%Y%m%dT%H%M%S)"
 RUN_DIR="$REPORT_ROOT/clickhouse-historical-pipeline-$TS"
 DOWNLOAD_DIR="$RUN_DIR/download"
@@ -78,6 +79,11 @@ if ! [[ "$MAX_WORKERS" =~ ^[0-9]+$ ]] || (( MAX_WORKERS < 1 )); then
   exit 1
 fi
 
+if ! [[ "$THETADATA_MAX_CONCURRENT_CONNECTIONS" =~ ^[0-9]+$ ]] || (( THETADATA_MAX_CONCURRENT_CONNECTIONS < 1 )); then
+  echo "THETADATA_MAX_CONCURRENT_CONNECTIONS must be a positive integer (got: $THETADATA_MAX_CONCURRENT_CONNECTIONS)"
+  exit 1
+fi
+
 if ! [[ "$BACKFILL_MEMORY_RESERVE_MB" =~ ^[0-9]+$ ]]; then
   echo "BACKFILL_MEMORY_RESERVE_MB must be a non-negative integer (got: $BACKFILL_MEMORY_RESERVE_MB)"
   exit 1
@@ -118,7 +124,7 @@ if (( DEFAULT_ENRICH_WORKERS < 1 )); then
   DEFAULT_ENRICH_WORKERS=1
 fi
 
-DEFAULT_DOWNLOAD_WORKERS=2
+DEFAULT_DOWNLOAD_WORKERS="$THETADATA_MAX_CONCURRENT_CONNECTIONS"
 
 ENRICH_WORKERS="${ENRICH_WORKERS:-$DEFAULT_ENRICH_WORKERS}"
 DOWNLOAD_WORKERS="${DOWNLOAD_WORKERS:-$DEFAULT_DOWNLOAD_WORKERS}"
@@ -133,6 +139,16 @@ if ! [[ "$DOWNLOAD_WORKERS" =~ ^[0-9]+$ ]] || (( DOWNLOAD_WORKERS < 1 )); then
   exit 1
 fi
 
+if ! [[ "$DOWNLOAD_SUPPLEMENTAL_CONCURRENCY" =~ ^[0-9]+$ ]] || (( DOWNLOAD_SUPPLEMENTAL_CONCURRENCY < 1 )); then
+  echo "DOWNLOAD_SUPPLEMENTAL_CONCURRENCY must be a positive integer (got: $DOWNLOAD_SUPPLEMENTAL_CONCURRENCY)"
+  exit 1
+fi
+
+if ! [[ "$ENRICH_SUPPLEMENTAL_CONCURRENCY" =~ ^[0-9]+$ ]] || (( ENRICH_SUPPLEMENTAL_CONCURRENCY < 1 )); then
+  echo "ENRICH_SUPPLEMENTAL_CONCURRENCY must be a positive integer (got: $ENRICH_SUPPLEMENTAL_CONCURRENCY)"
+  exit 1
+fi
+
 if (( ENRICH_WORKERS > MAX_WORKERS )); then
   echo "Capping ENRICH_WORKERS from $ENRICH_WORKERS to $MAX_WORKERS"
   ENRICH_WORKERS="$MAX_WORKERS"
@@ -141,6 +157,16 @@ fi
 if (( DOWNLOAD_WORKERS > MAX_WORKERS )); then
   echo "Capping DOWNLOAD_WORKERS from $DOWNLOAD_WORKERS to $MAX_WORKERS"
   DOWNLOAD_WORKERS="$MAX_WORKERS"
+fi
+
+if (( DOWNLOAD_WORKERS > THETADATA_MAX_CONCURRENT_CONNECTIONS )); then
+  echo "Capping DOWNLOAD_WORKERS from $DOWNLOAD_WORKERS to THETADATA_MAX_CONCURRENT_CONNECTIONS=$THETADATA_MAX_CONCURRENT_CONNECTIONS"
+  DOWNLOAD_WORKERS="$THETADATA_MAX_CONCURRENT_CONNECTIONS"
+fi
+
+if (( DOWNLOAD_SUPPLEMENTAL_CONCURRENCY > THETADATA_MAX_CONCURRENT_CONNECTIONS )); then
+  echo "Capping DOWNLOAD_SUPPLEMENTAL_CONCURRENCY from $DOWNLOAD_SUPPLEMENTAL_CONCURRENCY to THETADATA_MAX_CONCURRENT_CONNECTIONS=$THETADATA_MAX_CONCURRENT_CONNECTIONS"
+  DOWNLOAD_SUPPLEMENTAL_CONCURRENCY="$THETADATA_MAX_CONCURRENT_CONNECTIONS"
 fi
 
 TOTAL_MEMORY_MB="$(detect_total_memory_mb)"
@@ -237,6 +263,7 @@ echo "CPU cores: $CPU_CORES"
 echo "Enrichment target CPU: ${ENRICH_CPU_TARGET_PCT}%"
 echo "Download workers: $DOWNLOAD_WORKERS (supplemental concurrency: $DOWNLOAD_SUPPLEMENTAL_CONCURRENCY)"
 echo "Enrich workers: $ENRICH_WORKERS (supplemental concurrency: $ENRICH_SUPPLEMENTAL_CONCURRENCY)"
+echo "Theta max concurrent connections: $THETADATA_MAX_CONCURRENT_CONNECTIONS"
 echo "Stage overlap: $([[ "$PIPELINE_STAGE_OVERLAP" == "1" ]] && echo "enabled" || echo "disabled")"
 if [[ "$TOTAL_MEMORY_MB" =~ ^[0-9]+$ ]] && (( TOTAL_MEMORY_MB > 0 )); then
   echo "Total memory detected: ${TOTAL_MEMORY_MB}MB"
@@ -267,11 +294,58 @@ if [[ -n "$INPUT_PATH" ]]; then
   echo "Input: $INPUT_PATH"
 fi
 
-launch_enrich_workers() {
-  enrich_pids=()
-  for idx in $(seq 0 $((ENRICH_WORKERS - 1))); do
-    report_path="$ENRICH_DIR/worker${idx}.json"
-    log_path="$ENRICH_DIR/worker${idx}.log"
+DEDUPED_INDICES=()
+dedupe_indices() {
+  DEDUPED_INDICES=()
+  local seen=","
+  local idx
+  for idx in "$@"; do
+    if [[ "$seen" == *",$idx,"* ]]; then
+      continue
+    fi
+    seen="${seen}${idx},"
+    DEDUPED_INDICES+=("$idx")
+  done
+}
+
+worker_report_is_complete() {
+  local report_path="$1"
+  if [[ ! -s "$report_path" ]]; then
+    return 1
+  fi
+  node - "$report_path" <<'NODE' >/dev/null 2>&1
+const fs = require('node:fs');
+
+const reportPath = process.argv[2];
+const toNum = (value) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+try {
+  const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+  const totalJobs = toNum(report.totalJobs);
+  const completedJobs = toNum(report.completedJobs);
+  const failedJobs = toNum(report.failedJobs);
+  const loopExitReason = String(report.loopExitReason || '').toLowerCase();
+  const completed = totalJobs === 0
+    ? loopExitReason === 'completed' || loopExitReason === 'no_jobs'
+    : completedJobs >= totalJobs;
+  const ok = failedJobs === 0 && completed;
+  process.exit(ok ? 0 : 1);
+} catch {
+  process.exit(2);
+}
+NODE
+}
+
+run_enrich_worker_once() {
+  local idx="$1"
+  local append_mode="${2:-0}"
+  local report_path="$ENRICH_DIR/worker${idx}.json"
+  local log_path="$ENRICH_DIR/worker${idx}.log"
+  if (( append_mode == 1 )); then
+    echo "--- REQUEUE worker ${idx} ---" >> "$log_path"
     (
       cd "$PROJECT_ROOT"
       NODE_OPTIONS="$ENRICH_NODE_OPTIONS" \
@@ -290,16 +364,37 @@ launch_enrich_workers() {
       THETADATA_BASE_URL="$THETA_BASE_URL" \
       THETADATA_SUPPLEMENTAL_CONCURRENCY="$ENRICH_SUPPLEMENTAL_CONCURRENCY" \
       node scripts/backfill/backfill-clickhouse-historical-days.js
-    ) > "$log_path" 2>&1 &
-    enrich_pids+=("$!")
-  done
+    ) >> "$log_path" 2>&1
+  else
+    (
+      cd "$PROJECT_ROOT"
+      NODE_OPTIONS="$ENRICH_NODE_OPTIONS" \
+      BACKFILL_MODE="enrich" \
+      BACKFILL_LOOP_UNTIL_READY="1" \
+      BACKFILL_LOOP_SLEEP_MS="$PIPELINE_LOOP_SLEEP_MS" \
+      BACKFILL_LOOP_MAX_PASSES="$PIPELINE_LOOP_MAX_PASSES" \
+      BACKFILL_DOWNLOAD_DONE_FLAG="$DOWNLOAD_DONE_FLAG" \
+      BACKFILL_WORKER_TOTAL="$ENRICH_WORKERS" \
+      BACKFILL_WORKER_INDEX="$idx" \
+      BACKFILL_REPORT_PATH="$report_path" \
+      BACKFILL_SYMBOL_DAY_LIST_PATH="$INPUT_PATH" \
+      BACKFILL_REPORT_INCLUDE_JOBS="$BACKFILL_REPORT_INCLUDE_JOBS" \
+      PHENIX_FLOW_READ_BACKEND="$FLOW_READ_BACKEND" \
+      PHENIX_FLOW_WRITE_BACKEND="$FLOW_WRITE_BACKEND" \
+      THETADATA_BASE_URL="$THETA_BASE_URL" \
+      THETADATA_SUPPLEMENTAL_CONCURRENCY="$ENRICH_SUPPLEMENTAL_CONCURRENCY" \
+      node scripts/backfill/backfill-clickhouse-historical-days.js
+    ) > "$log_path" 2>&1
+  fi
 }
 
-launch_download_workers() {
-  download_pids=()
-  for idx in $(seq 0 $((DOWNLOAD_WORKERS - 1))); do
-    report_path="$DOWNLOAD_DIR/worker${idx}.json"
-    log_path="$DOWNLOAD_DIR/worker${idx}.log"
+run_download_worker_once() {
+  local idx="$1"
+  local append_mode="${2:-0}"
+  local report_path="$DOWNLOAD_DIR/worker${idx}.json"
+  local log_path="$DOWNLOAD_DIR/worker${idx}.log"
+  if (( append_mode == 1 )); then
+    echo "--- REQUEUE worker ${idx} ---" >> "$log_path"
     (
       cd "$PROJECT_ROOT"
       NODE_OPTIONS="$DOWNLOAD_NODE_OPTIONS" \
@@ -314,9 +409,172 @@ launch_download_workers() {
       THETADATA_BASE_URL="$THETA_BASE_URL" \
       THETADATA_SUPPLEMENTAL_CONCURRENCY="$DOWNLOAD_SUPPLEMENTAL_CONCURRENCY" \
       node scripts/backfill/backfill-clickhouse-historical-days.js
-    ) > "$log_path" 2>&1 &
+    ) >> "$log_path" 2>&1
+  else
+    (
+      cd "$PROJECT_ROOT"
+      NODE_OPTIONS="$DOWNLOAD_NODE_OPTIONS" \
+      BACKFILL_MODE="download" \
+      BACKFILL_WORKER_TOTAL="$DOWNLOAD_WORKERS" \
+      BACKFILL_WORKER_INDEX="$idx" \
+      BACKFILL_REPORT_PATH="$report_path" \
+      BACKFILL_SYMBOL_DAY_LIST_PATH="$INPUT_PATH" \
+      BACKFILL_REPORT_INCLUDE_JOBS="$BACKFILL_REPORT_INCLUDE_JOBS" \
+      PHENIX_FLOW_READ_BACKEND="$FLOW_READ_BACKEND" \
+      PHENIX_FLOW_WRITE_BACKEND="$FLOW_WRITE_BACKEND" \
+      THETADATA_BASE_URL="$THETA_BASE_URL" \
+      THETADATA_SUPPLEMENTAL_CONCURRENCY="$DOWNLOAD_SUPPLEMENTAL_CONCURRENCY" \
+      node scripts/backfill/backfill-clickhouse-historical-days.js
+    ) > "$log_path" 2>&1
+  fi
+}
+
+launch_enrich_workers() {
+  enrich_pids=()
+  local idx
+  for idx in $(seq 0 $((ENRICH_WORKERS - 1))); do
+    run_enrich_worker_once "$idx" 0 &
+    enrich_pids+=("$!")
+  done
+}
+
+launch_download_workers() {
+  download_pids=()
+  local idx
+  for idx in $(seq 0 $((DOWNLOAD_WORKERS - 1))); do
+    run_download_worker_once "$idx" 0 &
     download_pids+=("$!")
   done
+}
+
+wait_for_download_workers_with_requeue() {
+  local stage_failed=0
+  local -a failed_indices=()
+  local -a missing_indices=()
+  local -a requeue_indices=()
+  local idx
+  local wait_ok
+  local report_path
+  local report_ok
+  for idx in $(seq 0 $((DOWNLOAD_WORKERS - 1))); do
+    wait_ok=1
+    if ! wait "${download_pids[$idx]}"; then
+      wait_ok=0
+    fi
+
+    report_path="$DOWNLOAD_DIR/worker${idx}.json"
+    report_ok=0
+    if worker_report_is_complete "$report_path"; then
+      report_ok=1
+    fi
+
+    if [[ ! -s "$report_path" ]]; then
+      missing_indices+=("$idx")
+      stage_failed=1
+      if (( wait_ok == 0 )); then
+        failed_indices+=("$idx")
+      fi
+      continue
+    fi
+
+    if (( wait_ok == 0 && report_ok == 1 )); then
+      echo "Download worker $idx exited non-zero but report is complete; skipping requeue."
+      continue
+    fi
+
+    if (( wait_ok == 0 || report_ok == 0 )); then
+      stage_failed=1
+      failed_indices+=("$idx")
+    fi
+  done
+  if (( ${#failed_indices[@]} > 0 || ${#missing_indices[@]} > 0 )); then
+    if (( ${#failed_indices[@]} > 0 )); then
+      requeue_indices+=("${failed_indices[@]}")
+    fi
+    if (( ${#missing_indices[@]} > 0 )); then
+      requeue_indices+=("${missing_indices[@]}")
+    fi
+    dedupe_indices "${requeue_indices[@]}"
+    echo "Requeueing download shard workers: ${DEDUPED_INDICES[*]}"
+    stage_failed=0
+    for idx in "${DEDUPED_INDICES[@]}"; do
+      if ! run_download_worker_once "$idx" 1; then
+        stage_failed=1
+      fi
+      if [[ ! -s "$DOWNLOAD_DIR/worker${idx}.json" ]]; then
+        stage_failed=1
+      fi
+    done
+  fi
+  if (( stage_failed != 0 )); then
+    return 1
+  fi
+  return 0
+}
+
+wait_for_enrich_workers_with_requeue() {
+  local stage_failed=0
+  local -a failed_indices=()
+  local -a missing_indices=()
+  local -a requeue_indices=()
+  local idx
+  local wait_ok
+  local report_path
+  local report_ok
+  for idx in $(seq 0 $((ENRICH_WORKERS - 1))); do
+    wait_ok=1
+    if ! wait "${enrich_pids[$idx]}"; then
+      wait_ok=0
+    fi
+
+    report_path="$ENRICH_DIR/worker${idx}.json"
+    report_ok=0
+    if worker_report_is_complete "$report_path"; then
+      report_ok=1
+    fi
+
+    if [[ ! -s "$report_path" ]]; then
+      missing_indices+=("$idx")
+      stage_failed=1
+      if (( wait_ok == 0 )); then
+        failed_indices+=("$idx")
+      fi
+      continue
+    fi
+
+    if (( wait_ok == 0 && report_ok == 1 )); then
+      echo "Enrich worker $idx exited non-zero but report is complete; skipping requeue."
+      continue
+    fi
+
+    if (( wait_ok == 0 || report_ok == 0 )); then
+      stage_failed=1
+      failed_indices+=("$idx")
+    fi
+  done
+  if (( ${#failed_indices[@]} > 0 || ${#missing_indices[@]} > 0 )); then
+    if (( ${#failed_indices[@]} > 0 )); then
+      requeue_indices+=("${failed_indices[@]}")
+    fi
+    if (( ${#missing_indices[@]} > 0 )); then
+      requeue_indices+=("${missing_indices[@]}")
+    fi
+    dedupe_indices "${requeue_indices[@]}"
+    echo "Requeueing enrich shard workers: ${DEDUPED_INDICES[*]}"
+    stage_failed=0
+    for idx in "${DEDUPED_INDICES[@]}"; do
+      if ! run_enrich_worker_once "$idx" 1; then
+        stage_failed=1
+      fi
+      if [[ ! -s "$ENRICH_DIR/worker${idx}.json" ]]; then
+        stage_failed=1
+      fi
+    done
+  fi
+  if (( stage_failed != 0 )); then
+    return 1
+  fi
+  return 0
 }
 
 download_fail=0
@@ -326,34 +584,26 @@ if (( PIPELINE_STAGE_OVERLAP == 1 )); then
   launch_enrich_workers
   launch_download_workers
 
-  for pid in "${download_pids[@]}"; do
-    if ! wait "$pid"; then
-      download_fail=1
-    fi
-  done
+  if ! wait_for_download_workers_with_requeue; then
+    download_fail=1
+  fi
   touch "$DOWNLOAD_DONE_FLAG"
 
-  for pid in "${enrich_pids[@]}"; do
-    if ! wait "$pid"; then
-      enrich_fail=1
-    fi
-  done
+  if ! wait_for_enrich_workers_with_requeue; then
+    enrich_fail=1
+  fi
 else
   launch_download_workers
-  for pid in "${download_pids[@]}"; do
-    if ! wait "$pid"; then
-      download_fail=1
-    fi
-  done
+  if ! wait_for_download_workers_with_requeue; then
+    download_fail=1
+  fi
   touch "$DOWNLOAD_DONE_FLAG"
 
   if (( download_fail == 0 )); then
     launch_enrich_workers
-    for pid in "${enrich_pids[@]}"; do
-      if ! wait "$pid"; then
-        enrich_fail=1
-      fi
-    done
+    if ! wait_for_enrich_workers_with_requeue; then
+      enrich_fail=1
+    fi
   else
     enrich_fail=1
     echo "Skipping enrich stage because download stage failed."

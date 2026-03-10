@@ -1,0 +1,1335 @@
+{
+  "startedAt": "2026-03-10T14:17:19.724Z",
+  "dbPath": "clickhouse://127.0.0.1:9000/options",
+  "inputPath": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/symbol-days-top100-early-close-20251101-20260309.tsv",
+  "writeBackend": "clickhouse",
+  "mode": "enrich",
+  "force": false,
+  "workerIndex": 3,
+  "workerTotal": 4,
+  "jobLimit": 0,
+  "totalJobs": 50,
+  "loopUntilReady": false,
+  "loopSleepMs": 5000,
+  "loopMaxPasses": 200,
+  "passes": 1,
+  "skippedJobs": 0,
+  "completedJobs": 50,
+  "pendingJobs": 0,
+  "noDataJobs": 0,
+  "retriedJobs": 0,
+  "retryCount": 0,
+  "failedJobs": 0,
+  "totalFetchedRows": 0,
+  "totalEnrichedRows": 1012294,
+  "totalRawTradeRows": 1012294,
+  "totalRawStockRows": 11300,
+  "totalRawOiRows": 84490,
+  "totalRawQuoteRows": 19716240,
+  "totalRawGreeksRows": 1849720,
+  "failures": [],
+  "jobs": [
+    {
+      "symbol": "MSFT",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 46974,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 46974,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 46974,
+        "stockRows": 226,
+        "oiRows": 3480,
+        "quoteRows": 807272,
+        "greeksRows": 1337220
+      }
+    },
+    {
+      "symbol": "TSLA",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 368228,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 368228,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 368228,
+        "stockRows": 226,
+        "oiRows": 5736,
+        "quoteRows": 1335208,
+        "greeksRows": 512500
+      }
+    },
+    {
+      "symbol": "AMD",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 71680,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 71680,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 71680,
+        "stockRows": 226,
+        "oiRows": 3024,
+        "quoteRows": 701956,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "QCOM",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 7253,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 7253,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 7253,
+        "stockRows": 226,
+        "oiRows": 1528,
+        "quoteRows": 346684,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "CRM",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 7779,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 7779,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 7779,
+        "stockRows": 226,
+        "oiRows": 1806,
+        "quoteRows": 412676,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "UBER",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 10926,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 10926,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 10926,
+        "stockRows": 226,
+        "oiRows": 1314,
+        "quoteRows": 302388,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "SNOW",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 4210,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 4210,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 4210,
+        "stockRows": 226,
+        "oiRows": 1872,
+        "quoteRows": 431208,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "AFRM",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 4199,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 4199,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 4199,
+        "stockRows": 226,
+        "oiRows": 1302,
+        "quoteRows": 298772,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "BAC",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 10554,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 10554,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 10554,
+        "stockRows": 226,
+        "oiRows": 1050,
+        "quoteRows": 238656,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "C",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 6084,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 6084,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 6084,
+        "stockRows": 226,
+        "oiRows": 1386,
+        "quoteRows": 317756,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "V",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 3123,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 3123,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 3123,
+        "stockRows": 226,
+        "oiRows": 2340,
+        "quoteRows": 539236,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "ICE",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 191,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 191,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 191,
+        "stockRows": 226,
+        "oiRows": 508,
+        "quoteRows": 114808,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "TFC",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 549,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 549,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 549,
+        "stockRows": 226,
+        "oiRows": 384,
+        "quoteRows": 86784,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "CVX",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 4224,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 4224,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 4224,
+        "stockRows": 226,
+        "oiRows": 1122,
+        "quoteRows": 253572,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "HAL",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 1126,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 1126,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 1126,
+        "stockRows": 226,
+        "oiRows": 884,
+        "quoteRows": 204304,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "OXY",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 3286,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 3286,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 3286,
+        "stockRows": 226,
+        "oiRows": 876,
+        "quoteRows": 200236,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "HON",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 395,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 395,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 395,
+        "stockRows": 226,
+        "oiRows": 1000,
+        "quoteRows": 226904,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "ETN",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 644,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 644,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 644,
+        "stockRows": 226,
+        "oiRows": 1646,
+        "quoteRows": 384652,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "MRK",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 3332,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 3332,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 3332,
+        "stockRows": 226,
+        "oiRows": 1238,
+        "quoteRows": 283404,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "GILD",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 1100,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 1100,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 1100,
+        "stockRows": 226,
+        "oiRows": 1300,
+        "quoteRows": 298772,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "COST",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 8088,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 8088,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 8088,
+        "stockRows": 226,
+        "oiRows": 3400,
+        "quoteRows": 805464,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "HD",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 3247,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 3247,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 3247,
+        "stockRows": 226,
+        "oiRows": 1912,
+        "quoteRows": 444768,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "DIS",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 3658,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 3658,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 3658,
+        "stockRows": 226,
+        "oiRows": 1324,
+        "quoteRows": 305100,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "PG",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 2032,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 2032,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 2032,
+        "stockRows": 226,
+        "oiRows": 1152,
+        "quoteRows": 260804,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "KHC",
+      "dayIso": "2025-11-28",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 972,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 972,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 972,
+        "stockRows": 226,
+        "oiRows": 646,
+        "quoteRows": 145996,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "AMD",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 27619,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 27619,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 27619,
+        "stockRows": 226,
+        "oiRows": 2766,
+        "quoteRows": 666700,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "NFLX",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 24995,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 24995,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 24995,
+        "stockRows": 226,
+        "oiRows": 6096,
+        "quoteRows": 1390352,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "QCOM",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 2399,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 2399,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 2399,
+        "stockRows": 226,
+        "oiRows": 1316,
+        "quoteRows": 310524,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "UBER",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 6273,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 6273,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 6273,
+        "stockRows": 226,
+        "oiRows": 1294,
+        "quoteRows": 303292,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "SNOW",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 4459,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 4459,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 4459,
+        "stockRows": 226,
+        "oiRows": 1776,
+        "quoteRows": 415388,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "SOFI",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 19790,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 19790,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 19790,
+        "stockRows": 226,
+        "oiRows": 1090,
+        "quoteRows": 255832,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "BAC",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 6475,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 6475,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 6475,
+        "stockRows": 226,
+        "oiRows": 970,
+        "quoteRows": 238656,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "WFC",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 4194,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 4194,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 4194,
+        "stockRows": 226,
+        "oiRows": 1212,
+        "quoteRows": 288828,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "AXP",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 1595,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 1595,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 1595,
+        "stockRows": 226,
+        "oiRows": 1720,
+        "quoteRows": 403184,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "SPGI",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 149,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 149,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 149,
+        "stockRows": 226,
+        "oiRows": 1776,
+        "quoteRows": 416292,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "PNC",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 187,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 187,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 187,
+        "stockRows": 226,
+        "oiRows": 1146,
+        "quoteRows": 274816,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "ALLY",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 170,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 170,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 170,
+        "stockRows": 226,
+        "oiRows": 404,
+        "quoteRows": 91304,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "XOM",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 7424,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 7424,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 7424,
+        "stockRows": 226,
+        "oiRows": 1140,
+        "quoteRows": 272556,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "SLB",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 951,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 951,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 951,
+        "stockRows": 226,
+        "oiRows": 722,
+        "quoteRows": 172664,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "PSX",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 353,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 353,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 353,
+        "stockRows": 226,
+        "oiRows": 1166,
+        "quoteRows": 279336,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "DE",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 560,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 560,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 560,
+        "stockRows": 226,
+        "oiRows": 1728,
+        "quoteRows": 403636,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "NOC",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 61,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 61,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 61,
+        "stockRows": 226,
+        "oiRows": 1284,
+        "quoteRows": 290184,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "JNJ",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 1668,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 1668,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 1668,
+        "stockRows": 226,
+        "oiRows": 1306,
+        "quoteRows": 309168,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "ABBV",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 1389,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 1389,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 1389,
+        "stockRows": 226,
+        "oiRows": 1390,
+        "quoteRows": 328152,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "CVS",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 1052,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 1052,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 1052,
+        "stockRows": 226,
+        "oiRows": 1036,
+        "quoteRows": 245436,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "LOW",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 427,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 427,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 427,
+        "stockRows": 226,
+        "oiRows": 1258,
+        "quoteRows": 297416,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "NKE",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 40516,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 40516,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 40516,
+        "stockRows": 226,
+        "oiRows": 1170,
+        "quoteRows": 284760,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "CL",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 307,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 307,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 307,
+        "stockRows": 226,
+        "oiRows": 810,
+        "quoteRows": 194360,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "GIS",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 391,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 391,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 391,
+        "stockRows": 226,
+        "oiRows": 404,
+        "quoteRows": 91304,
+        "greeksRows": 0
+      }
+    },
+    {
+      "symbol": "QQQ",
+      "dayIso": "2025-12-24",
+      "status": "completed",
+      "attemptsUsed": 0,
+      "sync": {
+        "synced": false,
+        "reason": "day_cache_full",
+        "fetchedRows": 0,
+        "upsertedRows": 0,
+        "cachedRows": 285036,
+        "cacheStatus": "full"
+      },
+      "enrichment": {
+        "rowCount": 285036,
+        "ruleVersion": "v4_expanded_default",
+        "reason": null
+      },
+      "rawHydration": {
+        "tradeRows": 285036,
+        "stockRows": 226,
+        "oiRows": 7280,
+        "quoteRows": 1744720,
+        "greeksRows": 0
+      }
+    }
+  ],
+  "loopExitReason": "completed",
+  "completedAt": "2026-03-10T14:39:01.557Z"
+}

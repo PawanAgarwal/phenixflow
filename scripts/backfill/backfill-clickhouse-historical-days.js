@@ -25,6 +25,7 @@ const RETRY_MAX_DELAY_MS = Math.max(RETRY_DELAY_MS, Math.trunc(Number(process.en
 const WORKER_TOTAL = Math.max(1, Math.trunc(Number(process.env.BACKFILL_WORKER_TOTAL || 1)));
 const WORKER_INDEX = Math.max(0, Math.trunc(Number(process.env.BACKFILL_WORKER_INDEX || 0)));
 const JOB_LIMIT = Math.max(0, Math.trunc(Number(process.env.BACKFILL_JOB_LIMIT || 0)));
+const SHARD_STRATEGY = String(process.env.BACKFILL_SHARD_STRATEGY || 'balanced').trim().toLowerCase();
 const LOOP_UNTIL_READY = process.env.BACKFILL_LOOP_UNTIL_READY === '1'
   || process.env.BACKFILL_LOOP_UNTIL_READY === 'true';
 const LOOP_SLEEP_MS = Math.max(250, Math.trunc(Number(process.env.BACKFILL_LOOP_SLEEP_MS || 5000)));
@@ -81,9 +82,72 @@ function hashJobKey(symbol, dayIso) {
   return hash >>> 0;
 }
 
+const HEAVY_SYMBOL_WEIGHTS = new Map([
+  ['SPY', 40],
+  ['QQQ', 36],
+  ['TSLA', 28],
+  ['NVDA', 24],
+  ['AAPL', 22],
+  ['META', 20],
+  ['AMD', 18],
+  ['AMZN', 16],
+  ['MSFT', 16],
+  ['COIN', 14],
+  ['PLTR', 14],
+  ['MU', 12],
+  ['NFLX', 12],
+  ['GS', 10],
+  ['ORCL', 10],
+  ['CRM', 10],
+  ['BAC', 8],
+  ['XOM', 8],
+  ['CMG', 8],
+]);
+
+function estimateJobWeight(job, originalIndex, totalRows) {
+  const heavyWeight = HEAVY_SYMBOL_WEIGHTS.get(job.symbol) || 0;
+  const decileSize = Math.max(1, Math.ceil(totalRows / 10));
+  const rankWeight = Math.max(1, Math.ceil((totalRows - originalIndex) / decileSize));
+  return heavyWeight + rankWeight;
+}
+
+function balancedShardJobs(rows, workerTotal, workerIndex) {
+  const indexed = rows.map((job, index) => ({
+    job,
+    index,
+    weight: estimateJobWeight(job, index, rows.length),
+  }));
+  indexed.sort((left, right) => {
+    if (right.weight !== left.weight) return right.weight - left.weight;
+    return left.index - right.index;
+  });
+
+  const buckets = Array.from({ length: workerTotal }, () => ({ load: 0, jobs: [] }));
+  indexed.forEach((entry) => {
+    let target = 0;
+    for (let idx = 1; idx < buckets.length; idx += 1) {
+      if (buckets[idx].load < buckets[target].load) {
+        target = idx;
+      }
+    }
+    buckets[target].jobs.push(entry);
+    buckets[target].load += entry.weight;
+  });
+
+  const selected = buckets[workerIndex]?.jobs || [];
+  selected.sort((left, right) => left.index - right.index);
+  return selected.map(({ job }) => job);
+}
+
 function filterJobsForWorker(rows, workerTotal, workerIndex) {
   if (workerTotal <= 1) return rows;
-  return rows.filter(({ symbol, dayIso }) => (hashJobKey(symbol, dayIso) % workerTotal) === workerIndex);
+  if (SHARD_STRATEGY === 'hash') {
+    return rows.filter(({ symbol, dayIso }) => (hashJobKey(symbol, dayIso) % workerTotal) === workerIndex);
+  }
+  if (SHARD_STRATEGY !== 'balanced') {
+    return rows.filter(({ symbol, dayIso }) => (hashJobKey(symbol, dayIso) % workerTotal) === workerIndex);
+  }
+  return balancedShardJobs(rows, workerTotal, workerIndex);
 }
 
 function isFullyEnriched(metricCacheMap = {}) {

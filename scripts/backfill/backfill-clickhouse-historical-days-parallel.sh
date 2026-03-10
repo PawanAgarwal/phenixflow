@@ -23,14 +23,19 @@ DEFAULT_WORKERS=$(( (CPU_CORES * CPU_TARGET_PCT + 99) / 100 ))
 if (( DEFAULT_WORKERS < 1 )); then
   DEFAULT_WORKERS=1
 fi
-THETADATA_DOWNLOAD_CONCURRENCY="${THETADATA_DOWNLOAD_CONCURRENCY:-8}"
+THETADATA_MAX_CONCURRENT_CONNECTIONS="${THETADATA_MAX_CONCURRENT_CONNECTIONS:-4}"
+THETADATA_DOWNLOAD_CONCURRENCY="${THETADATA_DOWNLOAD_CONCURRENCY:-$THETADATA_MAX_CONCURRENT_CONNECTIONS}"
+if ! [[ "$THETADATA_MAX_CONCURRENT_CONNECTIONS" =~ ^[0-9]+$ ]] || (( THETADATA_MAX_CONCURRENT_CONNECTIONS < 1 )); then
+  echo "THETADATA_MAX_CONCURRENT_CONNECTIONS must be a positive integer (got: $THETADATA_MAX_CONCURRENT_CONNECTIONS)"
+  exit 1
+fi
 if ! [[ "$THETADATA_DOWNLOAD_CONCURRENCY" =~ ^[0-9]+$ ]] || (( THETADATA_DOWNLOAD_CONCURRENCY < 1 )); then
   echo "THETADATA_DOWNLOAD_CONCURRENCY must be a positive integer (got: $THETADATA_DOWNLOAD_CONCURRENCY)"
   exit 1
 fi
-if (( THETADATA_DOWNLOAD_CONCURRENCY > 32 )); then
-  echo "Capping THETADATA_DOWNLOAD_CONCURRENCY from $THETADATA_DOWNLOAD_CONCURRENCY to 32"
-  THETADATA_DOWNLOAD_CONCURRENCY=32
+if (( THETADATA_DOWNLOAD_CONCURRENCY > THETADATA_MAX_CONCURRENT_CONNECTIONS )); then
+  echo "Capping THETADATA_DOWNLOAD_CONCURRENCY from $THETADATA_DOWNLOAD_CONCURRENCY to THETADATA_MAX_CONCURRENT_CONNECTIONS=$THETADATA_MAX_CONCURRENT_CONNECTIONS"
+  THETADATA_DOWNLOAD_CONCURRENCY=$THETADATA_MAX_CONCURRENT_CONNECTIONS
 fi
 
 WORKER_DEFAULT_SOURCE="cpu_target"
@@ -172,6 +177,7 @@ echo "Worker default source: $WORKER_DEFAULT_SOURCE"
 echo "CPU cores: $CPU_CORES"
 echo "CPU target: ${CPU_TARGET_PCT}%"
 echo "Theta download concurrency target: ${THETADATA_DOWNLOAD_CONCURRENCY}"
+echo "Theta max concurrent connections: ${THETADATA_MAX_CONCURRENT_CONNECTIONS}"
 if [[ "$TOTAL_MEMORY_MB" =~ ^[0-9]+$ ]] && (( TOTAL_MEMORY_MB > 0 )); then
   echo "Total memory detected: ${TOTAL_MEMORY_MB}MB"
 else
@@ -229,11 +235,79 @@ for idx in $(seq 0 $((BACKFILL_WORKERS - 1))); do
 done
 
 fail=0
-for pid in "${pids[@]}"; do
+failed_worker_indices=()
+for idx in $(seq 0 $((BACKFILL_WORKERS - 1))); do
+  pid="${pids[$idx]}"
   if ! wait "$pid"; then
     fail=1
+    failed_worker_indices+=("$idx")
   fi
 done
+
+missing_worker_indices=()
+for idx in $(seq 0 $((BACKFILL_WORKERS - 1))); do
+  if [[ ! -s "$RUN_DIR/worker${idx}.json" ]]; then
+    missing_worker_indices+=("$idx")
+  fi
+done
+
+if (( ${#missing_worker_indices[@]} > 0 || ${#failed_worker_indices[@]} > 0 )); then
+  requeue_indices=()
+  if (( ${#failed_worker_indices[@]} > 0 )); then
+    requeue_indices+=("${failed_worker_indices[@]}")
+  fi
+  if (( ${#missing_worker_indices[@]} > 0 )); then
+    requeue_indices+=("${missing_worker_indices[@]}")
+  fi
+
+  # De-duplicate while preserving first-seen order.
+  deduped_requeue_indices=()
+  seen_requeue=","
+  for idx in "${requeue_indices[@]}"; do
+    if [[ "$seen_requeue" != *",$idx,"* ]]; then
+      seen_requeue="${seen_requeue}${idx},"
+      deduped_requeue_indices+=("$idx")
+    fi
+  done
+
+  echo "Requeueing unfinished shard workers: ${deduped_requeue_indices[*]}"
+  fail=0
+  for idx in "${deduped_requeue_indices[@]}"; do
+    report_path="$RUN_DIR/worker${idx}.json"
+    log_path="$RUN_DIR/worker${idx}.log"
+    echo "--- REQUEUE worker ${idx} ---" >> "$log_path"
+    if ! (
+      cd "$PROJECT_ROOT"
+      NODE_OPTIONS="$WORKER_NODE_OPTIONS" \
+      BACKFILL_MODE="$BACKFILL_MODE" \
+      BACKFILL_WORKER_TOTAL="$BACKFILL_WORKERS" \
+      BACKFILL_WORKER_INDEX="$idx" \
+      BACKFILL_REPORT_PATH="$report_path" \
+      BACKFILL_SYMBOL_DAY_LIST_PATH="$INPUT_PATH" \
+      BACKFILL_REPORT_INCLUDE_JOBS="$BACKFILL_REPORT_INCLUDE_JOBS" \
+      THETADATA_BASE_URL="$THETA_BASE_URL" \
+      THETADATA_HISTORICAL_OPTION_FORMAT="$THETADATA_HISTORICAL_OPTION_FORMAT" \
+      THETADATA_OPTION_QUOTE_FORMAT="$THETADATA_OPTION_QUOTE_FORMAT" \
+      CLICKHOUSE_ENRICH_STREAM_WRITE="$CLICKHOUSE_ENRICH_STREAM_WRITE" \
+      CLICKHOUSE_ENRICH_STREAM_READ="$CLICKHOUSE_ENRICH_STREAM_READ" \
+      CLICKHOUSE_ENRICH_BATCH_PROGRESS_LOG="$CLICKHOUSE_ENRICH_BATCH_PROGRESS_LOG" \
+      CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES="$CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES" \
+      CLICKHOUSE_CONNECT_TIMEOUT_SEC="$CLICKHOUSE_CONNECT_TIMEOUT_SEC" \
+      CLICKHOUSE_SEND_TIMEOUT_SEC="$CLICKHOUSE_SEND_TIMEOUT_SEC" \
+      CLICKHOUSE_RECEIVE_TIMEOUT_SEC="$CLICKHOUSE_RECEIVE_TIMEOUT_SEC" \
+      CLICKHOUSE_DELETE_MUTATION_SYNC="$CLICKHOUSE_DELETE_MUTATION_SYNC" \
+      node scripts/backfill/backfill-clickhouse-historical-days.js
+    ) >> "$log_path" 2>&1; then
+      echo "Requeued worker ${idx} still failed. See: $log_path"
+      fail=1
+      continue
+    fi
+    if [[ ! -s "$report_path" ]]; then
+      echo "Requeued worker ${idx} did not produce a worker report. See: $log_path"
+      fail=1
+    fi
+  done
+fi
 
 SUMMARY_JSON="$RUN_DIR/summary.json"
 SUMMARY_TSV="$RUN_DIR/summary.tsv"
