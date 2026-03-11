@@ -24,6 +24,67 @@ function parseArgs(argv) {
   return out;
 }
 
+function parseBooleanLike(rawValue, defaultValue = false) {
+  if (rawValue === undefined || rawValue === null || rawValue === '') return defaultValue;
+  const raw = String(rawValue).trim().toLowerCase();
+  if (!raw) return defaultValue;
+  if (raw === '1' || raw === 'true' || raw === 'yes' || raw === 'on') return true;
+  if (raw === '0' || raw === 'false' || raw === 'no' || raw === 'off') return false;
+  return defaultValue;
+}
+
+function buildCoverageSettingsClause({ forceProjection, optimizeInOrder }) {
+  const settings = [];
+  if (forceProjection) {
+    settings.push('force_optimize_projection = 1');
+    settings.push("force_optimize_projection_name = 'p_cov_day_symbol_minute'");
+  }
+  if (optimizeInOrder) {
+    settings.push('optimize_aggregation_in_order = 1');
+  }
+  return settings.length > 0 ? `\n    SETTINGS ${settings.join(', ')}` : '';
+}
+
+function isProjectionForceError(error) {
+  const message = String(error?.message || '').toLowerCase();
+  if (!message) return false;
+  return message.includes('force_optimize_projection')
+    || message.includes('projection')
+    || message.includes('unknown setting');
+}
+
+function queryCoverageRowsWithProjectionFallback({
+  sql,
+  params,
+  forceProjection,
+  optimizeInOrder,
+  scope,
+}) {
+  const withProjectionSettings = `${sql}${buildCoverageSettingsClause({
+    forceProjection,
+    optimizeInOrder,
+  })}`;
+  try {
+    return queryRowsSync(withProjectionSettings, params);
+  } catch (error) {
+    if (!forceProjection || !isProjectionForceError(error)) {
+      throw error;
+    }
+    const compactError = String(error?.message || 'projection_query_failed')
+      .split('\n')[0]
+      .slice(0, 500);
+    console.warn('[COVERAGE_PROJECTION_FALLBACK]', JSON.stringify({
+      scope,
+      reason: compactError,
+    }));
+    const fallbackSql = `${sql}${buildCoverageSettingsClause({
+      forceProjection: false,
+      optimizeInOrder,
+    })}`;
+    return queryRowsSync(fallbackSql, params);
+  }
+}
+
 function parseTsv(filePath) {
   return fs.readFileSync(filePath, 'utf8')
     .split(/\r?\n/)
@@ -169,21 +230,34 @@ function queryRawComponentMap({
   fromIso,
   toIso,
   symbolInClause,
+  forceProjection,
+  optimizeInOrder,
 }) {
-  const rows = queryRowsSync(
-    `
+  const rows = queryCoverageRowsWithProjectionFallback({
+    sql: `
     SELECT
-      toString(${dayColumn}) AS day_iso,
+      toString(day_value) AS day_iso,
       symbol,
-      uniqExact(${minuteExpr}) AS minute_slots,
-      count() AS row_count
-    FROM options.${tableName}
-    WHERE ${dayColumn} BETWEEN toDate({fromIso:String}) AND toDate({toIso:String})
-      AND symbol IN (${symbolInClause})
-    GROUP BY day_iso, symbol
+      count() AS minute_slots,
+      sum(row_count) AS row_count
+    FROM (
+      SELECT
+        ${dayColumn} AS day_value,
+        symbol,
+        ${minuteExpr} AS minute_value,
+        count() AS row_count
+      FROM options.${tableName}
+      WHERE ${dayColumn} BETWEEN toDate({fromIso:String}) AND toDate({toIso:String})
+        AND symbol IN (${symbolInClause})
+      GROUP BY day_value, symbol, minute_value
+    )
+    GROUP BY day_value, symbol
     `,
-    { fromIso, toIso },
-  );
+    params: { fromIso, toIso },
+    forceProjection,
+    optimizeInOrder,
+    scope: `${tableName}:coverage_map`,
+  });
   return queryMapFromRows(rows);
 }
 
@@ -315,10 +389,13 @@ function initAggregate() {
     stockMissingSlots: 0,
     quoteMissingSlots: 0,
     tradeMissingSlots: 0,
+    tradeNoDataSlots: 0,
+    tradeIncompleteSlots: 0,
     enrichVsTradeMissingSlots: 0,
     stockDaysMissing: 0,
     quoteDaysMissing: 0,
     tradeDaysMissing: 0,
+    tradeNoDataDays: 0,
     enrichDaysMissing: 0,
     stockAttemptedDays: 0,
     quoteAttemptedDays: 0,
@@ -340,10 +417,13 @@ function accumulate(agg, row) {
   agg.stockMissingSlots += row.stockMissingSlots;
   agg.quoteMissingSlots += row.quoteMissingSlots;
   agg.tradeMissingSlots += row.tradeMissingSlots;
+  agg.tradeNoDataSlots += row.tradeNoDataSlots;
+  agg.tradeIncompleteSlots += row.tradeIncompleteSlots;
   agg.enrichVsTradeMissingSlots += row.enrichVsTradeMissingSlots;
   agg.stockDaysMissing += row.stockMissingSlots > 0 ? 1 : 0;
   agg.quoteDaysMissing += row.quoteMissingSlots > 0 ? 1 : 0;
-  agg.tradeDaysMissing += row.tradeMissingSlots > 0 ? 1 : 0;
+  agg.tradeDaysMissing += row.tradeIncompleteSlots > 0 ? 1 : 0;
+  agg.tradeNoDataDays += row.tradeNoDataSlots > 0 ? 1 : 0;
   agg.enrichDaysMissing += row.enrichVsTradeMissingSlots > 0 ? 1 : 0;
   agg.stockAttemptedDays += row.stockAttempted ? 1 : 0;
   agg.quoteAttemptedDays += row.quoteAttempted ? 1 : 0;
@@ -364,6 +444,8 @@ function main() {
   const source = String(args.source || 'raw').trim().toLowerCase();
   const attemptedOnlyRaw = String(args['attempted-only'] || '1').trim().toLowerCase();
   const attemptedOnly = !(attemptedOnlyRaw === '0' || attemptedOnlyRaw === 'false' || attemptedOnlyRaw === 'no');
+  const forceProjection = parseBooleanLike(args['force-projection'], false);
+  const optimizeInOrder = parseBooleanLike(args['optimize-in-order'], true);
 
   if (!symbolDaysPath || !calendarPath || !fromIso || !toIso) {
     throw new Error('usage: --symbol-days <tsv> --calendar <tsv> --from YYYY-MM-DD --to YYYY-MM-DD [--out-dir dir] [--tag tag]');
@@ -402,6 +484,8 @@ function main() {
       fromIso,
       toIso,
       symbolInClause,
+      forceProjection,
+      optimizeInOrder,
     });
 
   const quoteMap = source === 'chunk'
@@ -418,6 +502,8 @@ function main() {
       fromIso,
       toIso,
       symbolInClause,
+      forceProjection,
+      optimizeInOrder,
     });
 
   const tradeMap = source === 'chunk'
@@ -434,6 +520,8 @@ function main() {
       fromIso,
       toIso,
       symbolInClause,
+      forceProjection,
+      optimizeInOrder,
     });
 
   const enrichMap = source === 'chunk'
@@ -450,6 +538,8 @@ function main() {
       fromIso,
       toIso,
       symbolInClause,
+      forceProjection,
+      optimizeInOrder,
     });
 
   const detailedRows = expectedRows.map((row) => {
@@ -472,6 +562,11 @@ function main() {
     const tradeMissingSlots = (!attemptedOnly || tradeAttempted)
       ? Math.max(0, row.expectedCoreSlots - tradeSlots)
       : 0;
+    const observedQuoteCoreSlots = Math.min(row.expectedCoreSlots, Math.max(0, quoteSlots));
+    const tradeNoDataSlots = (!attemptedOnly || tradeAttempted)
+      ? Math.max(0, observedQuoteCoreSlots - tradeSlots)
+      : 0;
+    const tradeIncompleteSlots = Math.max(0, tradeMissingSlots - tradeNoDataSlots);
     const enrichVsTradeMissingSlots = (!attemptedOnly || enrichAttempted)
       ? Math.max(0, tradeSlots - enrichSlots)
       : 0;
@@ -494,6 +589,8 @@ function main() {
       stockMissingSlots,
       quoteMissingSlots,
       tradeMissingSlots,
+      tradeNoDataSlots,
+      tradeIncompleteSlots,
       enrichVsTradeMissingSlots,
     };
   });
@@ -520,6 +617,7 @@ function main() {
     .filter((row) => (
       row.stockMissingSlots > 0
       || row.quoteMissingSlots > 0
+      || row.tradeIncompleteSlots > 0
       || row.enrichVsTradeMissingSlots > 0
     ))
     .sort((a, b) => (
@@ -544,10 +642,13 @@ function main() {
     'stockMissingSlots',
     'quoteMissingSlots',
     'tradeMissingSlots',
+    'tradeNoDataSlots',
+    'tradeIncompleteSlots',
     'enrichVsTradeMissingSlots',
     'stockDaysMissing',
     'quoteDaysMissing',
     'tradeDaysMissing',
+    'tradeNoDataDays',
     'enrichDaysMissing',
     'stockAttemptedDays',
     'quoteAttemptedDays',
@@ -569,10 +670,13 @@ function main() {
     'stockMissingSlots',
     'quoteMissingSlots',
     'tradeMissingSlots',
+    'tradeNoDataSlots',
+    'tradeIncompleteSlots',
     'enrichVsTradeMissingSlots',
     'stockDaysMissing',
     'quoteDaysMissing',
     'tradeDaysMissing',
+    'tradeNoDataDays',
     'enrichDaysMissing',
     'stockAttemptedDays',
     'quoteAttemptedDays',
@@ -600,6 +704,8 @@ function main() {
     'stockMissingSlots',
     'quoteMissingSlots',
     'tradeMissingSlots',
+    'tradeNoDataSlots',
+    'tradeIncompleteSlots',
     'enrichVsTradeMissingSlots',
   ], anomalyRows);
 
@@ -610,6 +716,8 @@ function main() {
   console.log(`Anomaly rows: ${anomalyRows.length}`);
   console.log(`Source: ${source}`);
   console.log(`Attempted only: ${attemptedOnly}`);
+  console.log(`Force projection: ${forceProjection}`);
+  console.log(`Optimize in order: ${optimizeInOrder}`);
 }
 
 main();

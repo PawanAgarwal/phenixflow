@@ -127,6 +127,7 @@ const METRIC_NAMES = Object.freeze([
 let thetaFetchDispatcher = null;
 let thetaFetchDispatcherKey = null;
 const thetaCalendarSessionCache = new Map();
+const coverageProjectionFallbackNotices = new Set();
 
 function resolveDbPath(env = process.env) {
   const configuredPath = env.PHENIX_DB_PATH || path.resolve(__dirname, '..', 'data', 'phenixflow.sqlite');
@@ -1172,6 +1173,72 @@ function parseBackfillQuoteGapMaxWindows(env = process.env) {
     return Math.max(1, Math.min(2000, Math.trunc(parsed)));
   }
   return DEFAULT_BACKFILL_QUOTE_GAP_MAX_WINDOWS;
+}
+
+function shouldForceClickHouseCoverageProjection(env = process.env) {
+  return parseBooleanLike(env.CLICKHOUSE_FORCE_COVERAGE_PROJECTION, false);
+}
+
+function shouldOptimizeClickHouseCoverageAggregationInOrder(env = process.env) {
+  return parseBooleanLike(env.CLICKHOUSE_COVERAGE_OPTIMIZE_IN_ORDER, true);
+}
+
+function buildClickHouseCoverageSettingsClause(env = process.env, { forceProjection = true } = {}) {
+  const settings = [];
+  if (forceProjection && shouldForceClickHouseCoverageProjection(env)) {
+    settings.push('force_optimize_projection = 1');
+    settings.push("force_optimize_projection_name = 'p_cov_day_symbol_minute'");
+  }
+  if (shouldOptimizeClickHouseCoverageAggregationInOrder(env)) {
+    settings.push('optimize_aggregation_in_order = 1');
+  }
+  return settings.length > 0 ? `\nSETTINGS ${settings.join(', ')}` : '';
+}
+
+function isClickHouseCoverageProjectionError(error) {
+  const message = String(error?.message || '').toLowerCase();
+  if (!message) return false;
+  return (
+    message.includes('force_optimize_projection')
+    || message.includes('projection')
+    || message.includes('unknown setting')
+  );
+}
+
+function logCoverageProjectionFallbackOnce(scope, error, env = process.env) {
+  const key = `${scope}`;
+  if (coverageProjectionFallbackNotices.has(key)) return;
+  coverageProjectionFallbackNotices.add(key);
+  const compactError = String(error?.message || 'projection_query_failed')
+    .split('\n')[0]
+    .slice(0, 500);
+  console.warn('[CLICKHOUSE_COVERAGE_PROJECTION_FALLBACK]', JSON.stringify({
+    scope,
+    reason: compactError,
+    forceProjection: shouldForceClickHouseCoverageProjection(env),
+  }));
+}
+
+function runClickHouseCoverageQueryWithFallback({
+  scope,
+  projectionSql,
+  fallbackSql,
+  params,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
+  const forceProjection = shouldForceClickHouseCoverageProjection(env);
+  const projectionQuery = `${projectionSql}${buildClickHouseCoverageSettingsClause(env, { forceProjection })}`;
+  try {
+    return queryRows(projectionQuery, params, env);
+  } catch (error) {
+    if (!forceProjection || !isClickHouseCoverageProjectionError(error)) {
+      throw error;
+    }
+    logCoverageProjectionFallbackOnce(scope, error, env);
+    const fallbackQuery = `${fallbackSql}${buildClickHouseCoverageSettingsClause(env, { forceProjection: false })}`;
+    return queryRows(fallbackQuery, params, env);
+  }
 }
 
 function shouldUseInsertOnlyStockQuoteUpserts(env = process.env) {
@@ -2294,13 +2361,196 @@ function parseClickHouseDeleteMutationSync(env = process.env) {
   return 1;
 }
 
+function parseBooleanLike(rawValue, defaultValue = false) {
+  if (rawValue === undefined || rawValue === null || rawValue === '') return defaultValue;
+  const raw = String(rawValue).trim().toLowerCase();
+  if (!raw) return defaultValue;
+  if (raw === '1' || raw === 'true' || raw === 'yes' || raw === 'on') return true;
+  if (raw === '0' || raw === 'false' || raw === 'no' || raw === 'off') return false;
+  return defaultValue;
+}
+
+function shouldTrackClickHouseDeletes(env = process.env) {
+  return parseBooleanLike(env.CLICKHOUSE_TRACK_DELETES, true);
+}
+
+function shouldTrackClickHouseDeleteCounts(env = process.env) {
+  return parseBooleanLike(env.CLICKHOUSE_TRACK_DELETE_COUNTS, true);
+}
+
+function parseClickHouseDeleteTrackRecheckMs(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_TRACK_DELETE_RECHECK_MS);
+  if (Number.isFinite(parsed) && parsed >= 0) {
+    return Math.min(600000, Math.trunc(parsed));
+  }
+  return 0;
+}
+
+function resolveClickHouseDeleteAuditPath(env = process.env) {
+  const configuredPath = String(env.CLICKHOUSE_DELETE_AUDIT_PATH || '').trim();
+  if (configuredPath) return path.resolve(configuredPath);
+  return path.resolve(__dirname, '..', 'artifacts', 'reports', 'clickhouse-delete-audit.jsonl');
+}
+
+function sleepSync(ms) {
+  const timeoutMs = Number.isFinite(Number(ms)) ? Math.max(0, Math.trunc(Number(ms))) : 0;
+  if (timeoutMs <= 0) return;
+  const end = Date.now() + timeoutMs;
+  while (Date.now() < end) {
+    // Busy-wait is acceptable here because recheck is disabled by default and delete events are rare.
+  }
+}
+
+function queryClickHouseScopedRowCount(tableName, whereSql, params, env = process.env) {
+  const rows = queryClickHouseRowsSync(`
+    SELECT count() AS row_count
+    FROM options.${tableName}
+    WHERE ${whereSql}
+  `, params, env);
+  const value = Number(rows?.[0]?.row_count || 0);
+  return Number.isFinite(value) ? Math.max(0, Math.trunc(value)) : 0;
+}
+
+function loadRecentClickHouseMutations(tableName, env = process.env) {
+  const databaseName = String(env.CLICKHOUSE_DATABASE || 'options').trim() || 'options';
+  const rows = queryClickHouseRowsSync(`
+    SELECT
+      mutation_id AS mutationId,
+      create_time AS createTime,
+      command AS command,
+      is_done AS isDone,
+      parts_to_do AS partsToDo,
+      latest_failed_part AS latestFailedPart,
+      latest_fail_reason AS latestFailReason
+    FROM system.mutations
+    WHERE database = {databaseName:String}
+      AND table = {tableName:String}
+    ORDER BY create_time DESC
+    LIMIT 5
+  `, { databaseName, tableName }, env);
+  return rows.map((row) => ({
+    mutationId: row.mutationId || null,
+    createTime: row.createTime || null,
+    isDone: Number(row.isDone || 0),
+    partsToDo: Number(row.partsToDo || 0),
+    latestFailedPart: row.latestFailedPart || null,
+    latestFailReason: row.latestFailReason || null,
+    command: row.command || null,
+  }));
+}
+
+function appendClickHouseDeleteAudit(event, env = process.env) {
+  if (!shouldTrackClickHouseDeletes(env)) return;
+  const logPath = resolveClickHouseDeleteAuditPath(env);
+  fs.mkdirSync(path.dirname(logPath), { recursive: true });
+  fs.appendFileSync(logPath, `${JSON.stringify(event)}\n`, 'utf8');
+
+  const logSummary = {
+    tableName: event.tableName,
+    mutationSync: event.mutationSync,
+    durationMs: event.durationMs,
+    success: event.success,
+    rowsBeforeDelete: event.rowsBeforeDelete,
+    rowsAfterDeleteImmediate: event.rowsAfterDeleteImmediate,
+    rowsAfterDeleteRecheck: event.rowsAfterDeleteRecheck,
+    deleteRowsEstimateImmediate: event.deleteRowsEstimateImmediate,
+    deleteRowsEstimateRecheck: event.deleteRowsEstimateRecheck,
+    caller: event.caller || null,
+  };
+  console.log('[CLICKHOUSE_DELETE_AUDIT]', JSON.stringify(logSummary));
+}
+
 function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
   const mutationSync = parseClickHouseDeleteMutationSync(env);
-  execClickHouseQuerySync(`
-    ALTER TABLE options.${tableName}
-    DELETE WHERE ${whereSql}
-    SETTINGS mutations_sync = ${mutationSync}
-  `, params, env);
+  const startIso = new Date().toISOString();
+  const startedAtMs = Date.now();
+  const caller = String(new Error().stack || '')
+    .split('\n')[2]
+    ?.trim()
+    ?.replace(/^at\s+/, '') || null;
+  const trackCounts = shouldTrackClickHouseDeletes(env) && shouldTrackClickHouseDeleteCounts(env);
+  const recheckMs = shouldTrackClickHouseDeletes(env) ? parseClickHouseDeleteTrackRecheckMs(env) : 0;
+  let rowsBeforeDelete = null;
+  let rowsAfterDeleteImmediate = null;
+  let rowsAfterDeleteRecheck = null;
+  let recentMutations = [];
+  let success = false;
+  let errorMessage = null;
+
+  if (trackCounts) {
+    try {
+      rowsBeforeDelete = queryClickHouseScopedRowCount(tableName, whereSql, params, env);
+    } catch (error) {
+      rowsBeforeDelete = null;
+      errorMessage = `pre_count_failed:${error.message || 'unknown_error'}`;
+    }
+  }
+
+  try {
+    execClickHouseQuerySync(`
+      ALTER TABLE options.${tableName}
+      DELETE WHERE ${whereSql}
+      SETTINGS mutations_sync = ${mutationSync}
+    `, params, env);
+    success = true;
+  } catch (error) {
+    errorMessage = error.message || 'delete_failed';
+    throw error;
+  } finally {
+    if (trackCounts) {
+      try {
+        rowsAfterDeleteImmediate = queryClickHouseScopedRowCount(tableName, whereSql, params, env);
+      } catch (error) {
+        rowsAfterDeleteImmediate = null;
+        if (!errorMessage) {
+          errorMessage = `post_count_failed:${error.message || 'unknown_error'}`;
+        }
+      }
+      if (success && recheckMs > 0) {
+        sleepSync(recheckMs);
+        try {
+          rowsAfterDeleteRecheck = queryClickHouseScopedRowCount(tableName, whereSql, params, env);
+        } catch (error) {
+          rowsAfterDeleteRecheck = null;
+          if (!errorMessage) {
+            errorMessage = `recheck_count_failed:${error.message || 'unknown_error'}`;
+          }
+        }
+      }
+    }
+
+    if (shouldTrackClickHouseDeletes(env)) {
+      try {
+        recentMutations = loadRecentClickHouseMutations(tableName, env);
+      } catch (error) {
+        recentMutations = [{
+          error: `mutation_query_failed:${error.message || 'unknown_error'}`,
+        }];
+      }
+      appendClickHouseDeleteAudit({
+        ts: new Date().toISOString(),
+        startedAt: startIso,
+        durationMs: Date.now() - startedAtMs,
+        tableName,
+        whereSql,
+        params,
+        mutationSync,
+        caller,
+        success,
+        error: errorMessage,
+        rowsBeforeDelete,
+        rowsAfterDeleteImmediate,
+        rowsAfterDeleteRecheck,
+        deleteRowsEstimateImmediate: rowsBeforeDelete !== null && rowsAfterDeleteImmediate !== null
+          ? Math.max(0, rowsBeforeDelete - rowsAfterDeleteImmediate)
+          : null,
+        deleteRowsEstimateRecheck: rowsBeforeDelete !== null && rowsAfterDeleteRecheck !== null
+          ? Math.max(0, rowsBeforeDelete - rowsAfterDeleteRecheck)
+          : null,
+        recentMutations,
+      }, env);
+    }
+  }
 }
 
 const CLICKHOUSE_INSERT_ONLY_REPLACING_TABLES = new Set([
@@ -3555,13 +3805,15 @@ function loadClickHouseOptionQuoteRawRowsForDay({ symbol, dayIso, env = process.
 }
 
 function countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = queryRows(`
-    SELECT count() AS count
-    FROM options.option_quote_minute_raw
-    WHERE symbol = {symbol:String}
-      AND trade_date_utc = toDate({dayIso:String})
-  `, { symbol, dayIso }, env);
-  return Number(rows?.[0]?.count || 0);
+  return countClickHouseRowsForDayViaMinuteProjection({
+    tableName: 'option_quote_minute_raw',
+    dayColumn: 'trade_date_utc',
+    minuteExpr: 'minute_bucket_utc',
+    symbol,
+    dayIso,
+    env,
+    queryRows,
+  });
 }
 
 function getClickHouseOptionQuoteResumeCursor({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
@@ -6877,14 +7129,72 @@ function loadClickHouseHistoricalDay({
   };
 }
 
-function countClickHouseTradesForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+function hasClickHouseRowsForDay({
+  tableName,
+  dayColumn,
+  symbol,
+  dayIso,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
   const rows = queryRows(`
-    SELECT count() AS count
-    FROM options.option_trades
+    SELECT 1 AS hasRows
+    FROM options.${tableName}
     WHERE symbol = {symbol:String}
-      AND trade_date = toDate({dayIso:String})
+      AND ${dayColumn} = toDate({dayIso:String})
+    LIMIT 1
   `, { symbol, dayIso }, env);
+  return rows.length > 0;
+}
+
+function countClickHouseRowsForDayViaMinuteProjection({
+  tableName,
+  dayColumn,
+  minuteExpr,
+  symbol,
+  dayIso,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+}) {
+  const rows = runClickHouseCoverageQueryWithFallback({
+    scope: `${tableName}:day_row_count`,
+    projectionSql: `
+      SELECT ifNull(sum(row_count), 0) AS count
+      FROM (
+        SELECT
+          ${dayColumn} AS day_value,
+          symbol,
+          ${minuteExpr} AS minute_value,
+          count() AS row_count
+        FROM options.${tableName}
+        WHERE symbol = {symbol:String}
+          AND ${dayColumn} = toDate({dayIso:String})
+        GROUP BY day_value, symbol, minute_value
+      )
+    `,
+    fallbackSql: `
+      SELECT count() AS count
+      FROM options.${tableName}
+      WHERE symbol = {symbol:String}
+        AND ${dayColumn} = toDate({dayIso:String})
+    `,
+    params: { symbol, dayIso },
+    env,
+    queryRows,
+  });
   return Number(rows?.[0]?.count || 0);
+}
+
+function countClickHouseTradesForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  return countClickHouseRowsForDayViaMinuteProjection({
+    tableName: 'option_trades',
+    dayColumn: 'trade_date',
+    minuteExpr: 'toStartOfMinute(trade_ts_utc)',
+    symbol,
+    dayIso,
+    env,
+    queryRows,
+  });
 }
 
 function getClickHouseTradeResumeCursor({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
@@ -6906,13 +7216,15 @@ function getClickHouseTradeResumeCursor({ symbol, dayIso, env = process.env, que
 }
 
 function countClickHouseStockRawRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = queryRows(`
-    SELECT count() AS count
-    FROM options.stock_ohlc_minute_raw
-    WHERE symbol = {symbol:String}
-      AND trade_date_utc = toDate({dayIso:String})
-  `, { symbol, dayIso }, env);
-  return Number(rows?.[0]?.count || 0);
+  return countClickHouseRowsForDayViaMinuteProjection({
+    tableName: 'stock_ohlc_minute_raw',
+    dayColumn: 'trade_date_utc',
+    minuteExpr: 'minute_bucket_utc',
+    symbol,
+    dayIso,
+    env,
+    queryRows,
+  });
 }
 
 function countClickHouseOptionOiRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
@@ -6951,58 +7263,154 @@ function normalizeClickHouseMinuteCountRows(rows = []) {
 }
 
 function loadClickHouseTradeMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = queryRows(`
-    SELECT
-      concat(replaceAll(toString(toStartOfMinute(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
-      count() AS rowCount
-    FROM options.option_trades
-    WHERE symbol = {symbol:String}
-      AND trade_date = toDate({dayIso:String})
-    GROUP BY toStartOfMinute(trade_ts_utc)
-    ORDER BY toStartOfMinute(trade_ts_utc) ASC
-  `, { symbol, dayIso }, env);
+  const rows = runClickHouseCoverageQueryWithFallback({
+    scope: 'option_trades:minute_count',
+    projectionSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        sum(row_count) AS rowCount
+      FROM (
+        SELECT
+          trade_date AS day_value,
+          symbol,
+          toStartOfMinute(trade_ts_utc) AS minute_bucket_utc,
+          count() AS row_count
+        FROM options.option_trades
+        WHERE symbol = {symbol:String}
+          AND trade_date = toDate({dayIso:String})
+        GROUP BY day_value, symbol, minute_bucket_utc
+      )
+      GROUP BY minute_bucket_utc
+      ORDER BY minute_bucket_utc ASC
+    `,
+    fallbackSql: `
+      SELECT
+        concat(replaceAll(toString(toStartOfMinute(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        count() AS rowCount
+      FROM options.option_trades
+      WHERE symbol = {symbol:String}
+        AND trade_date = toDate({dayIso:String})
+      GROUP BY toStartOfMinute(trade_ts_utc)
+      ORDER BY toStartOfMinute(trade_ts_utc) ASC
+    `,
+    params: { symbol, dayIso },
+    env,
+    queryRows,
+  });
   return normalizeClickHouseMinuteCountRows(rows);
 }
 
 function loadClickHouseOptionQuoteMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = queryRows(`
-    SELECT
-      concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
-      count() AS rowCount
-    FROM options.option_quote_minute_raw
-    WHERE symbol = {symbol:String}
-      AND trade_date_utc = toDate({dayIso:String})
-    GROUP BY minuteBucketUtc
-    ORDER BY minuteBucketUtc ASC
-  `, { symbol, dayIso }, env);
+  const rows = runClickHouseCoverageQueryWithFallback({
+    scope: 'option_quote_minute_raw:minute_count',
+    projectionSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        sum(row_count) AS rowCount
+      FROM (
+        SELECT
+          trade_date_utc AS day_value,
+          symbol,
+          minute_bucket_utc,
+          count() AS row_count
+        FROM options.option_quote_minute_raw
+        WHERE symbol = {symbol:String}
+          AND trade_date_utc = toDate({dayIso:String})
+        GROUP BY day_value, symbol, minute_bucket_utc
+      )
+      GROUP BY minute_bucket_utc
+      ORDER BY minute_bucket_utc ASC
+    `,
+    fallbackSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        count() AS rowCount
+      FROM options.option_quote_minute_raw
+      WHERE symbol = {symbol:String}
+        AND trade_date_utc = toDate({dayIso:String})
+      GROUP BY minuteBucketUtc
+      ORDER BY minuteBucketUtc ASC
+    `,
+    params: { symbol, dayIso },
+    env,
+    queryRows,
+  });
   return normalizeClickHouseMinuteCountRows(rows);
 }
 
 function loadClickHouseStockMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = queryRows(`
-    SELECT
-      concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
-      count() AS rowCount
-    FROM options.stock_ohlc_minute_raw
-    WHERE symbol = {symbol:String}
-      AND trade_date_utc = toDate({dayIso:String})
-    GROUP BY minuteBucketUtc
-    ORDER BY minuteBucketUtc ASC
-  `, { symbol, dayIso }, env);
+  const rows = runClickHouseCoverageQueryWithFallback({
+    scope: 'stock_ohlc_minute_raw:minute_count',
+    projectionSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        sum(row_count) AS rowCount
+      FROM (
+        SELECT
+          trade_date_utc AS day_value,
+          symbol,
+          minute_bucket_utc,
+          count() AS row_count
+        FROM options.stock_ohlc_minute_raw
+        WHERE symbol = {symbol:String}
+          AND trade_date_utc = toDate({dayIso:String})
+        GROUP BY day_value, symbol, minute_bucket_utc
+      )
+      GROUP BY minute_bucket_utc
+      ORDER BY minute_bucket_utc ASC
+    `,
+    fallbackSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        count() AS rowCount
+      FROM options.stock_ohlc_minute_raw
+      WHERE symbol = {symbol:String}
+        AND trade_date_utc = toDate({dayIso:String})
+      GROUP BY minuteBucketUtc
+      ORDER BY minuteBucketUtc ASC
+    `,
+    params: { symbol, dayIso },
+    env,
+    queryRows,
+  });
   return normalizeClickHouseMinuteCountRows(rows);
 }
 
 function loadClickHouseEnrichedMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
-  const rows = queryRows(`
-    SELECT
-      concat(replaceAll(toString(toStartOfMinute(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
-      count() AS rowCount
-    FROM options.option_trade_enriched
-    WHERE symbol = {symbol:String}
-      AND trade_date = toDate({dayIso:String})
-    GROUP BY toStartOfMinute(trade_ts_utc)
-    ORDER BY toStartOfMinute(trade_ts_utc) ASC
-  `, { symbol, dayIso }, env);
+  const rows = runClickHouseCoverageQueryWithFallback({
+    scope: 'option_trade_enriched:minute_count',
+    projectionSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        sum(row_count) AS rowCount
+      FROM (
+        SELECT
+          trade_date AS day_value,
+          symbol,
+          toStartOfMinute(trade_ts_utc) AS minute_bucket_utc,
+          count() AS row_count
+        FROM options.option_trade_enriched
+        WHERE symbol = {symbol:String}
+          AND trade_date = toDate({dayIso:String})
+        GROUP BY day_value, symbol, minute_bucket_utc
+      )
+      GROUP BY minute_bucket_utc
+      ORDER BY minute_bucket_utc ASC
+    `,
+    fallbackSql: `
+      SELECT
+        concat(replaceAll(toString(toStartOfMinute(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        count() AS rowCount
+      FROM options.option_trade_enriched
+      WHERE symbol = {symbol:String}
+        AND trade_date = toDate({dayIso:String})
+      GROUP BY toStartOfMinute(trade_ts_utc)
+      ORDER BY toStartOfMinute(trade_ts_utc) ASC
+    `,
+    params: { symbol, dayIso },
+    env,
+    queryRows,
+  });
   return normalizeClickHouseMinuteCountRows(rows);
 }
 
@@ -7145,6 +7553,15 @@ async function buildClickHouseGapTelemetryForDay({
   const missingTradeSlots = expectedPaddedSlots === null ? null : Math.max(0, expectedPaddedSlots - tradeSummary.slots);
   const missingQuoteCoreSlots = expectedCoreSlots === null ? null : Math.max(0, expectedCoreSlots - quoteSummary.slots);
   const missingTradeCoreSlots = expectedCoreSlots === null ? null : Math.max(0, expectedCoreSlots - tradeSummary.slots);
+  const observedQuoteCoreSlots = expectedCoreSlots === null
+    ? null
+    : Math.max(0, Math.min(expectedCoreSlots, quoteSummary.slots));
+  const tradeNoDataCoreSlots = missingTradeCoreSlots === null || observedQuoteCoreSlots === null
+    ? null
+    : Math.max(0, observedQuoteCoreSlots - tradeSummary.slots);
+  const tradeIncompleteCoreSlots = missingTradeCoreSlots === null || tradeNoDataCoreSlots === null
+    ? null
+    : Math.max(0, missingTradeCoreSlots - tradeNoDataCoreSlots);
   const stockCoveragePct = expectedPaddedSlots > 0
     ? Number(((stockSummary.slots / expectedPaddedSlots) * 100).toFixed(2))
     : null;
@@ -7172,6 +7589,10 @@ async function buildClickHouseGapTelemetryForDay({
     missingTradeSlots,
     missingQuoteCoreSlots,
     missingTradeCoreSlots,
+    tradeNoDataCoreSlots,
+    tradeIncompleteCoreSlots,
+    tradeNoDataSlots: tradeNoDataCoreSlots,
+    tradeIncompleteSlots: tradeIncompleteCoreSlots,
     stockCoveragePct,
     quoteCoveragePct,
     tradeCoveragePct,
@@ -7893,7 +8314,13 @@ async function syncThetaTradesToClickHouse({
   let dayScopeCleared = false;
   const needsInitialDayDelete = resumeCursor?.resumeFromIso
     ? true
-    : countClickHouseTradesForDay({ symbol, dayIso, env }) > 0;
+    : hasClickHouseRowsForDay({
+      tableName: 'option_trades',
+      dayColumn: 'trade_date',
+      symbol,
+      dayIso,
+      env,
+    });
   const clearDayScope = () => {
     if (dayScopeCleared) return;
     if (resumeCursor?.resumeFromIso) {
@@ -8342,8 +8769,14 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     ))
     .filter(Boolean);
   if (endpoints.length === 0) {
-    const existingRows = countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env });
-    if (existingRows === 0) {
+    const hasExistingRows = hasClickHouseRowsForDay({
+      tableName: 'option_quote_minute_raw',
+      dayColumn: 'trade_date_utc',
+      symbol,
+      dayIso,
+      env,
+    });
+    if (!hasExistingRows) {
       console.log('[QUOTE_SYNC_SKIPPED_NO_ENDPOINT]', JSON.stringify({
         symbol,
         dayIso,
@@ -8352,7 +8785,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
         quotePath: (env.THETADATA_OPTION_QUOTE_PATH || DEFAULT_OPTION_QUOTE_PATH || '').trim() || null,
       }));
     }
-    return existingRows > 0;
+    return hasExistingRows;
   }
   const defaultSourceEndpoint = endpoints[0] || null;
   const refreshDownloadChunkStatus = (sourceEndpoint = defaultSourceEndpoint, lastError = null) => {
@@ -8401,7 +8834,13 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     ? false
     : resumeCursor?.resumeFromIso
     ? true
-    : countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }) > 0;
+    : hasClickHouseRowsForDay({
+      tableName: 'option_quote_minute_raw',
+      dayColumn: 'trade_date_utc',
+      symbol,
+      dayIso,
+      env,
+    });
   const flushChunk = () => {
     if (chunk.length === 0) return;
     if (!dayScopeCleared) {
@@ -8596,7 +9035,13 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     chunkSize,
   }));
   if (insertedRows > 0) return true;
-  return countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }) > 0;
+  return hasClickHouseRowsForDay({
+    tableName: 'option_quote_minute_raw',
+    dayColumn: 'trade_date_utc',
+    symbol,
+    dayIso,
+    env,
+  });
 }
 
 async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = process.env, cacheStats = null) {
@@ -8752,7 +9197,13 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
 }
 
 async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = process.env, cacheStats = null) {
-  if (countClickHouseOptionGreeksRowsForDay({ symbol, dayIso, env }) > 0) {
+  if (hasClickHouseRowsForDay({
+    tableName: 'option_greeks_minute_raw',
+    dayColumn: 'trade_date_utc',
+    symbol,
+    dayIso,
+    env,
+  })) {
     if (cacheStats) cacheStats.greeksHit += 1;
     return true;
   }
@@ -9993,6 +10444,7 @@ module.exports = {
     upsertSymbolMinuteDerived,
     upsertContractMinuteDerived,
     upsertOptionTrades,
+    deleteClickHouseScope,
     evaluateChips,
     requiresClickHouseDeleteBeforeInsert,
     DAY_CACHE_STATUS_FULL,

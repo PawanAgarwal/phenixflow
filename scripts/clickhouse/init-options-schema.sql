@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS options.stock_ohlc_minute_raw
 )
 ENGINE = ReplacingMergeTree(ingested_at_utc)
 PARTITION BY toYYYYMM(trade_date_utc)
-ORDER BY (symbol, trade_date_utc, minute_bucket_utc);
+ORDER BY (symbol, trade_date_utc, minute_bucket_utc)
+SETTINGS deduplicate_merge_projection_mode = 'rebuild';
 
 CREATE TABLE IF NOT EXISTS options.option_open_interest_raw
 (
@@ -77,7 +78,8 @@ CREATE TABLE IF NOT EXISTS options.option_quote_minute_raw
 )
 ENGINE = ReplacingMergeTree(ingested_at_utc)
 PARTITION BY toYYYYMM(trade_date_utc)
-ORDER BY (symbol, expiration, strike, option_right, trade_date_utc, minute_bucket_utc);
+ORDER BY (symbol, expiration, strike, option_right, trade_date_utc, minute_bucket_utc)
+SETTINGS deduplicate_merge_projection_mode = 'rebuild';
 
 CREATE TABLE IF NOT EXISTS options.option_greeks_minute_raw
 (
@@ -160,6 +162,62 @@ CREATE TABLE IF NOT EXISTS options.option_trade_enriched
 ENGINE = MergeTree
 PARTITION BY toYYYYMM(trade_ts_utc)
 ORDER BY (symbol, trade_ts_utc, trade_id);
+
+ALTER TABLE options.option_quote_minute_raw
+  ADD PROJECTION IF NOT EXISTS p_cov_day_symbol_minute
+  (
+    SELECT
+      trade_date_utc,
+      symbol,
+      minute_bucket_utc,
+      count() AS row_count
+    GROUP BY
+      trade_date_utc,
+      symbol,
+      minute_bucket_utc
+  );
+
+ALTER TABLE options.stock_ohlc_minute_raw
+  ADD PROJECTION IF NOT EXISTS p_cov_day_symbol_minute
+  (
+    SELECT
+      trade_date_utc,
+      symbol,
+      minute_bucket_utc,
+      count() AS row_count
+    GROUP BY
+      trade_date_utc,
+      symbol,
+      minute_bucket_utc
+  );
+
+ALTER TABLE options.option_trades
+  ADD PROJECTION IF NOT EXISTS p_cov_day_symbol_minute
+  (
+    SELECT
+      trade_date,
+      symbol,
+      toStartOfMinute(trade_ts_utc) AS minute_bucket_utc,
+      count() AS row_count
+    GROUP BY
+      trade_date,
+      symbol,
+      minute_bucket_utc
+  );
+
+ALTER TABLE options.option_trade_enriched
+  ADD PROJECTION IF NOT EXISTS p_cov_day_symbol_minute
+  (
+    SELECT
+      trade_date,
+      symbol,
+      toStartOfMinute(trade_ts_utc) AS minute_bucket_utc,
+      count() AS row_count
+    GROUP BY
+      trade_date,
+      symbol,
+      minute_bucket_utc
+  );
 
 CREATE TABLE IF NOT EXISTS options.option_symbol_minute_derived
 (

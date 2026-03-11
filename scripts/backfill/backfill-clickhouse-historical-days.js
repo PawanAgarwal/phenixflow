@@ -329,6 +329,8 @@ async function processJob({
       + ` missing(stock_vs_pad:${coverage.missingStockSlots ?? 'na'}`
       + ` quote_vs_core:${coverage.missingQuoteCoreSlots ?? coverage.missingQuoteSlots ?? 'na'}`
       + ` trade_vs_core:${coverage.missingTradeCoreSlots ?? coverage.missingTradeSlots ?? 'na'}`
+      + ` trade_no_data:${coverage.tradeNoDataCoreSlots ?? coverage.tradeNoDataSlots ?? 'na'}`
+      + ` trade_incomplete:${coverage.tradeIncompleteCoreSlots ?? coverage.tradeIncompleteSlots ?? 'na'}`
       + ` enrich_vs_trade:${coverage.missingEnrichVsTradeSlots ?? 'na'})`
       + ` coverage_pct(stock:${coverage.stockCoveragePct ?? 'na'}`
       + ` quote:${coverage.quoteCoveragePct ?? 'na'}`

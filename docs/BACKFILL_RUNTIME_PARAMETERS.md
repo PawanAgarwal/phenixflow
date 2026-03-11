@@ -195,6 +195,10 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `CLICKHOUSE_DELETE_MUTATION_SYNC=1`: synchronous single-replica mutation wait; deterministic delete+rewrite behavior.
 - `CLICKHOUSE_INSERT_ONLY_STOCK_QUOTE=1` (default): skip day-scope delete mutations for `stock_ohlc_minute_raw` and `option_quote_minute_raw` and rely on ReplacingMergeTree latest-row semantics.
   - Set `0` only when you explicitly need delete+rewrite semantics for a controlled run.
+- `CLICKHOUSE_TRACK_DELETES=1` (default): emit one audit event for every `ALTER ... DELETE` scope used by the pipeline.
+- `CLICKHOUSE_TRACK_DELETE_COUNTS=1` (default): include scoped row counts before/after each delete in audit events.
+- `CLICKHOUSE_TRACK_DELETE_RECHECK_MS=0` (default): optional delayed second count check; use when testing async mutation behavior (`CLICKHOUSE_DELETE_MUTATION_SYNC=0`).
+- `CLICKHOUSE_DELETE_AUDIT_PATH`: optional path for delete audit JSONL log (default `artifacts/reports/clickhouse-delete-audit.jsonl`).
 - `CLICKHOUSE_QUOTE_INCLUDE_RAW_PAYLOAD=0` (default): stores `{}` for quote payloads to reduce insert size and query pressure.
 - `CLICKHOUSE_INSERT_MAX_BYTES` default is `33554432` (32 MiB) to reduce insert chunk/process overhead.
 - `CLICKHOUSE_CONNECT_TIMEOUT_SEC`: connection timeout.
@@ -204,6 +208,33 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `CLICKHOUSE_ENRICH_STREAM_WRITE=1`: stream write enriched rows.
 - `CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE`: insert chunk size (recommended 2000-5000).
 - `CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES`: enrich progress log interval (minutes).
+- `CLICKHOUSE_FORCE_COVERAGE_PROJECTION=0` (default): optional strict mode to force projection (`p_cov_day_symbol_minute`) for minute-coverage/count queries. Keep `0` during projection catch-up to avoid fallback retries.
+- `CLICKHOUSE_COVERAGE_OPTIMIZE_IN_ORDER=1` (default): enables `optimize_aggregation_in_order` for minute-coverage/count queries.
+
+### ClickHouse query acceleration for 1m coverage scans
+
+- Use projection-backed minute rollups for coverage queries (avoids wide `uniqExact` scans on raw quote rows):
+
+```bash
+node scripts/clickhouse/optimize-clickhouse-query-paths.js --materialize 1 --partitions 202511,202512,202601,202602,202603
+```
+
+- Check projection materialization progress:
+
+```bash
+node scripts/clickhouse/optimize-clickhouse-query-paths.js --status-only 1
+```
+
+- For immediate sync materialization of a small partition, add `--wait 1`:
+
+```bash
+node scripts/clickhouse/optimize-clickhouse-query-paths.js --materialize 1 --partitions 202603 --wait 1
+```
+
+- `scripts/backfill/analyze-1m-coverage.js --source raw` uses a projection-friendly grouped minute subquery path (instead of direct `uniqExact` on the raw quote table).
+- Coverage analyzer flags:
+  - `--force-projection 0` (default): force projection path (`p_cov_day_symbol_minute`) only when explicitly enabled.
+  - `--optimize-in-order 1` (default): add `optimize_aggregation_in_order=1`.
 
 ### Raw-hydration selectors
 
