@@ -134,6 +134,26 @@ PIPELINE_STAGE_OVERLAP=1 \
 bash scripts/backfill/run-clickhouse-backfill-range.sh
 ```
 
+### 4b) Max Theta throughput within 10GB overlap budget (recommended for full-month waves)
+
+Use asymmetric overlap so download saturates Theta cap (`4`) while enrichment stays within memory guardrails:
+
+```bash
+START_DATE=2025-10-01 \
+END_DATE=2025-10-31 \
+SYMBOL_LIMIT=100 \
+THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
+DOWNLOAD_WORKERS=4 \
+ENRICH_WORKERS=2 \
+BACKFILL_RAM_BUDGET_MB=10240 \
+BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
+PIPELINE_STAGE_OVERLAP=1 \
+THETADATA_STREAM_IDLE_TIMEOUT_MS=1800000 \
+bash scripts/backfill/run-clickhouse-backfill-range.sh
+```
+
+If startup logs show `Capping overlapping workers ... download 4->3, enrich 4->3`, relaunch with `DOWNLOAD_WORKERS=4 ENRICH_WORKERS=2`.
+
 ### 5) Enrichment-only
 
 ```bash
@@ -155,7 +175,16 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `BACKFILL_MODE`: `full | download | enrich`.
 - `BACKFILL_FORCE`: `1` to re-run even if cache says complete.
   - This now propagates end-to-end into `materializeHistoricalDayInClickHouse(..., forceRecompute=true)` so trade/day-cache sync is not silently skipped.
-- `BACKFILL_FORCE_QUOTE_FULL`: quote force mode scope; default `0` (minute-resume scope), set `1` for full-day quote rewrites.
+- `BACKFILL_FORCE_QUOTE_FULL`: quote force mode scope; default `0` (minute-resume scope).
+  - When `1`, quote remediation now prefers contiguous missing-minute windows first (when gap planning is enabled) and falls back to full-day windows only if needed (for example, too many gap windows).
+- `BACKFILL_FORCE_QUOTE_GAP_WINDOWS`: `1` (default) enables missing-minute contiguous window planning even when `BACKFILL_FORCE_QUOTE_FULL=1`.
+  - Set `0` only when you explicitly want strict full-day quote rewrites in force mode.
+- `BACKFILL_TRADE_SYNC_MODE`: `auto | skip | force`.
+  - Default when unset: `auto`.
+  - Special default: when `BACKFILL_RAW_COMPONENTS` is explicitly set and does **not** include `tradequote`, trade sync is auto-forced to `skip` to avoid unnecessary trade mutations.
+  - Use `BACKFILL_TRADE_SYNC_MODE=force` only for explicit trade-stream repair cases.
+- `BACKFILL_FORCE_TRADE_SYNC`: legacy force flag.
+  - Still supported, but ignored by default when explicit raw-component selection excludes `tradequote`, unless you set `BACKFILL_TRADE_SYNC_MODE=force`.
 - `BACKFILL_GAP_TELEMETRY`: `1` to emit per-job expected/actual minute-slot coverage (stock/quote/trade/enrich + missing deltas) into worker logs and job JSON.
   - Coverage fields now include both padded-session and core-session expectations:
     - `expectedPaddedSlots` / `missingStockSlots` (stock vs padded session)
@@ -195,12 +224,36 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `CLICKHOUSE_DELETE_MUTATION_SYNC=1`: synchronous single-replica mutation wait; deterministic delete+rewrite behavior.
 - `CLICKHOUSE_INSERT_ONLY_STOCK_QUOTE=1` (default): skip day-scope delete mutations for `stock_ohlc_minute_raw` and `option_quote_minute_raw` and rely on ReplacingMergeTree latest-row semantics.
   - Set `0` only when you explicitly need delete+rewrite semantics for a controlled run.
+- `CLICKHOUSE_INSERT_ONLY_CHUNK_STATUS=1` (default): skip delete-before-insert for `option_download_chunk_status` and `option_enrich_chunk_status` (ReplacingMergeTree handles latest row version).
+- `CLICKHOUSE_INSERT_ONLY_ENRICH_SUPPORT=0` (default): when set to `1`, skip delete-before-insert for:
+  - `option_symbol_minute_derived`
+  - `option_contract_minute_derived`
+  - `contract_stats_intraday`
+  - `symbol_stats_intraday`
+  This reduces mutation overhead significantly during backfills, but can temporarily create duplicate versions until merges complete. Enable only when downstream reads are dedupe-safe (`argMax`/`FINAL`) or you will run a cleanup rewrite pass afterward.
 - `CLICKHOUSE_TRACK_DELETES=1` (default): emit one audit event for every `ALTER ... DELETE` scope used by the pipeline.
-- `CLICKHOUSE_TRACK_DELETE_COUNTS=1` (default): include scoped row counts before/after each delete in audit events.
+- `CLICKHOUSE_TRACK_DELETE_COUNTS=0` (default): include scoped row counts before/after each delete in audit events when set to `1`.
 - `CLICKHOUSE_TRACK_DELETE_RECHECK_MS=0` (default): optional delayed second count check; use when testing async mutation behavior (`CLICKHOUSE_DELETE_MUTATION_SYNC=0`).
 - `CLICKHOUSE_DELETE_AUDIT_PATH`: optional path for delete audit JSONL log (default `artifacts/reports/clickhouse-delete-audit.jsonl`).
+- `CLICKHOUSE_DELETE_BUDGET_PROTECTION=1` (default): runtime mutation-budget guard for delete-heavy backfills.
+- `CLICKHOUSE_DELETE_BUDGET_SPIKE_MS=5000` (default): a delete taking longer than this is counted as a spike.
+- `CLICKHOUSE_DELETE_BUDGET_SPIKE_COUNT=2` (default): number of spikes before table-level auto-downgrade.
+- `CLICKHOUSE_DELETE_BUDGET_DOWNGRADE_TABLES`: comma list of tables eligible for auto-downgrade to insert-only when spikes persist.
+  - Default:
+    - `stock_ohlc_minute_raw`
+    - `option_quote_minute_raw`
+    - `option_open_interest_raw`
+    - `option_download_chunk_status`
+    - `option_enrich_chunk_status`
+    - `option_symbol_minute_derived`
+    - `option_contract_minute_derived`
+    - `contract_stats_intraday`
+    - `symbol_stats_intraday`
+  - Special values: `default`, `none`, `all`.
+  - Safety note: tables that require strict delete semantics (for example `option_trades` and `option_trade_enriched`) are intentionally excluded by default.
 - `CLICKHOUSE_QUOTE_INCLUDE_RAW_PAYLOAD=0` (default): stores `{}` for quote payloads to reduce insert size and query pressure.
-- `CLICKHOUSE_INSERT_MAX_BYTES` default is `33554432` (32 MiB) to reduce insert chunk/process overhead.
+- `CLICKHOUSE_INSERT_MAX_BYTES` default is `67108864` (64 MiB) to reduce insert chunk/process overhead.
+- `CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE` default is `20000` rows (bounded by `CLICKHOUSE_INSERT_MAX_BYTES`).
 - `CLICKHOUSE_CONNECT_TIMEOUT_SEC`: connection timeout.
 - `CLICKHOUSE_SEND_TIMEOUT_SEC`: send timeout.
 - `CLICKHOUSE_RECEIVE_TIMEOUT_SEC`: receive timeout.
@@ -238,8 +291,21 @@ node scripts/clickhouse/optimize-clickhouse-query-paths.js --materialize 1 --par
 
 ### Raw-hydration selectors
 
-- `BACKFILL_RAW_COMPONENTS=all|stock|quote|oi|greeks` (comma-separated supported).
+- `BACKFILL_RAW_COMPONENTS=all|tradequote|stock|quote|oi|greeks` (comma-separated supported).
 - Use this to avoid unnecessary downloads during remediation.
+- Trade sync behavior:
+  - Include `tradequote` when you want trade/trade-quote stream sync to run as part of that wave.
+  - If `BACKFILL_RAW_COMPONENTS` is explicitly set and excludes `tradequote`, trade sync defaults to `skip`.
+  - Explicit-selection policy telemetry is emitted as `[BACKFILL_RAW_COMPONENTS_TRADE_SYNC_POLICY]`.
+  - Ignored legacy force telemetry is emitted as `[BACKFILL_RAW_COMPONENTS_FORCE_TRADE_SYNC_IGNORED]`.
+- Quote gap/window telemetry:
+  - `[QUOTE_GAP_FILL]` reports expected/missing minutes and strategy (`gap_windows`, `force_gap_windows`, `force_fallback_full_day`, `already_complete`).
+  - `[QUOTE_WINDOW_PLAN]` reports final request-window strategy and window count.
+- ClickHouse mutation-budget telemetry:
+  - `[CLICKHOUSE_DELETE_BUDGET_SPIKE]` logs spike detections.
+  - `[CLICKHOUSE_DELETE_BUDGET_DOWNGRADE]` logs table-level auto-downgrade activation.
+  - `[CLICKHOUSE_DELETE_BUDGET_SKIP]` logs when a downgraded table skip is first applied.
+  - `[CLICKHOUSE_DELETE_AUDIT]` now includes budget fields (`budgetProtectedMode`, `budgetIsSpike`, `budgetDowngradedNow`, `budgetDowngradedActive`).
 
 ## Guardrails
 

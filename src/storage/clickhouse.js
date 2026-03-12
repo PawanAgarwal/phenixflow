@@ -2,8 +2,8 @@ const { execFileSync } = require('node:child_process');
 
 const READ_BACKENDS = new Set(['auto', 'clickhouse']);
 const WRITE_BACKENDS = new Set(['auto', 'clickhouse']);
-const DEFAULT_INSERT_CHUNK_SIZE = 5000;
-const DEFAULT_INSERT_MAX_BYTES = 32 * 1024 * 1024;
+const DEFAULT_INSERT_CHUNK_SIZE = 20000;
+const DEFAULT_INSERT_MAX_BYTES = 64 * 1024 * 1024;
 const DEFAULT_QUERY_MAX_BUFFER_BYTES = 1024 * 1024 * 1024;
 
 function resolveFlowReadBackend(env = process.env) {

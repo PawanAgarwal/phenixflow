@@ -86,10 +86,25 @@ const DEFAULT_TREND_FALLBACK_MAX_LAG_MINUTES = 480;
 const DEFAULT_GREEKS_CONTRACT_FALLBACK_LIMIT = 200;
 const DEFAULT_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES = 60;
 const DEFAULT_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES = 5;
+const DEFAULT_CLICKHOUSE_TRADE_STREAM_CHUNK_SIZE = 20000;
 const DEFAULT_CLICKHOUSE_QUOTE_STREAM_CHUNK_SIZE = 50000;
-const DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE = 5000;
+const DEFAULT_CLICKHOUSE_GREEKS_STREAM_CHUNK_SIZE = 50000;
+const DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE = 20000;
 const DEFAULT_CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES = 10;
 const DEFAULT_CLICKHOUSE_CHUNK_STATUS_MINUTES = 10;
+const DEFAULT_CLICKHOUSE_DELETE_BUDGET_SPIKE_MS = 5000;
+const DEFAULT_CLICKHOUSE_DELETE_BUDGET_SPIKE_COUNT = 2;
+const DEFAULT_CLICKHOUSE_DELETE_BUDGET_DOWNGRADE_TABLES = Object.freeze([
+  'stock_ohlc_minute_raw',
+  'option_quote_minute_raw',
+  'option_open_interest_raw',
+  'option_download_chunk_status',
+  'option_enrich_chunk_status',
+  'option_symbol_minute_derived',
+  'option_contract_minute_derived',
+  'contract_stats_intraday',
+  'symbol_stats_intraday',
+]);
 
 const DOWNLOAD_CHUNK_STREAMS = Object.freeze({
   TRADE_QUOTE_1M: 'option_trade_quote_1m',
@@ -128,6 +143,11 @@ let thetaFetchDispatcher = null;
 let thetaFetchDispatcherKey = null;
 const thetaCalendarSessionCache = new Map();
 const coverageProjectionFallbackNotices = new Set();
+const clickHouseDeleteBudgetRuntime = {
+  spikeCountsByTable: new Map(),
+  downgradedTables: new Set(),
+  skipLogsByTable: new Set(),
+};
 
 function resolveDbPath(env = process.env) {
   const configuredPath = env.PHENIX_DB_PATH || path.resolve(__dirname, '..', 'data', 'phenixflow.sqlite');
@@ -945,7 +965,8 @@ function resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env = process.en
   url.searchParams.set('right', right || 'both');
   url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
   url.searchParams.set('interval', '1m');
-  url.searchParams.set('format', 'json');
+  const requestedFormat = String(options.format || '').trim().toLowerCase();
+  url.searchParams.set('format', requestedFormat === 'ndjson' ? 'ndjson' : 'json');
   return url.toString();
 }
 
@@ -1118,7 +1139,7 @@ function shouldStreamClickHouseEnrichedWrites(env = process.env) {
 }
 
 function shouldStreamClickHouseEnrichedReads(env = process.env) {
-  return String(env.CLICKHOUSE_ENRICH_STREAM_READ || '0') === '1';
+  return String(env.CLICKHOUSE_ENRICH_STREAM_READ || '1') === '1';
 }
 
 function shouldIncludeClickHouseGreeksInEnrichment(env = process.env) {
@@ -1133,6 +1154,14 @@ function parseClickHouseEnrichStreamChunkSize(env = process.env) {
   return DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE;
 }
 
+function parseClickHouseTradeStreamChunkSize(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_TRADE_STREAM_CHUNK_SIZE);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(500, Math.min(50000, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_TRADE_STREAM_CHUNK_SIZE;
+}
+
 function parseClickHouseQuoteStreamChunkSize(env = process.env) {
   const parsed = Number(env.CLICKHOUSE_QUOTE_STREAM_CHUNK_SIZE);
   if (Number.isFinite(parsed) && parsed >= 1) {
@@ -1141,8 +1170,21 @@ function parseClickHouseQuoteStreamChunkSize(env = process.env) {
   return DEFAULT_CLICKHOUSE_QUOTE_STREAM_CHUNK_SIZE;
 }
 
+function parseClickHouseGreeksStreamChunkSize(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_GREEKS_STREAM_CHUNK_SIZE);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(500, Math.min(50000, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_GREEKS_STREAM_CHUNK_SIZE;
+}
+
 function shouldIncludeClickHouseQuoteRawPayload(env = process.env) {
   const raw = String(env.CLICKHOUSE_QUOTE_INCLUDE_RAW_PAYLOAD || '0').trim().toLowerCase();
+  return !(raw === '0' || raw === 'false' || raw === 'no');
+}
+
+function shouldIncludeClickHouseGreeksRawPayload(env = process.env) {
+  const raw = String(env.CLICKHOUSE_GREEKS_INCLUDE_RAW_PAYLOAD || '0').trim().toLowerCase();
   return !(raw === '0' || raw === 'false' || raw === 'no');
 }
 
@@ -1243,6 +1285,16 @@ function runClickHouseCoverageQueryWithFallback({
 
 function shouldUseInsertOnlyStockQuoteUpserts(env = process.env) {
   const raw = String(env.CLICKHOUSE_INSERT_ONLY_STOCK_QUOTE || '1').trim().toLowerCase();
+  return raw === '1' || raw === 'true' || raw === 'yes';
+}
+
+function shouldUseInsertOnlyChunkStatusUpserts(env = process.env) {
+  const raw = String(env.CLICKHOUSE_INSERT_ONLY_CHUNK_STATUS || '1').trim().toLowerCase();
+  return raw === '1' || raw === 'true' || raw === 'yes';
+}
+
+function shouldUseInsertOnlyEnrichSupportUpserts(env = process.env) {
+  const raw = String(env.CLICKHOUSE_INSERT_ONLY_ENRICH_SUPPORT || '1').trim().toLowerCase();
   return raw === '1' || raw === 'true' || raw === 'yes';
 }
 
@@ -1366,8 +1418,56 @@ function shouldForceTradeSyncOnBackfill(env = process.env) {
   return raw === '1' || raw === 'true' || raw === 'yes';
 }
 
+function hasExplicitRawTradeQuoteSelection(rawHydrationTargets = null) {
+  if (!rawHydrationTargets || rawHydrationTargets.isExplicitSelection !== true) return false;
+  return Boolean(rawHydrationTargets.includeTradeQuote);
+}
+
+function resolveBackfillTradeSyncMode({ rawHydrationTargets = null, env = process.env } = {}) {
+  const explicitModeRaw = String(env.BACKFILL_TRADE_SYNC_MODE || '').trim().toLowerCase();
+  if (explicitModeRaw === 'auto' || explicitModeRaw === 'skip' || explicitModeRaw === 'force') {
+    return {
+      mode: explicitModeRaw,
+      source: 'BACKFILL_TRADE_SYNC_MODE',
+    };
+  }
+
+  if (rawHydrationTargets?.isExplicitSelection === true && !rawHydrationTargets.includeTradeQuote) {
+    return {
+      mode: 'skip',
+      source: shouldForceTradeSyncOnBackfill(env)
+        ? 'raw_components_without_tradequote_overrides_BACKFILL_FORCE_TRADE_SYNC'
+        : 'raw_components_without_tradequote',
+    };
+  }
+
+  if (shouldForceTradeSyncOnBackfill(env)) {
+    return {
+      mode: 'force',
+      source: 'BACKFILL_FORCE_TRADE_SYNC',
+    };
+  }
+
+  if (rawHydrationTargets?.isExplicitSelection === true && rawHydrationTargets.includeTradeQuote) {
+    return {
+      mode: 'auto',
+      source: 'raw_components_with_tradequote',
+    };
+  }
+
+  return {
+    mode: 'auto',
+    source: 'default_auto',
+  };
+}
+
 function shouldEnableBackfillQuoteGapFill(env = process.env) {
   const raw = String(env.BACKFILL_QUOTE_GAP_FILL || '1').trim().toLowerCase();
+  return !(raw === '0' || raw === 'false' || raw === 'no');
+}
+
+function shouldPreferForceQuoteGapWindows(env = process.env) {
+  const raw = String(env.BACKFILL_FORCE_QUOTE_GAP_WINDOWS || '1').trim().toLowerCase();
   return !(raw === '0' || raw === 'false' || raw === 'no');
 }
 
@@ -2375,7 +2475,7 @@ function shouldTrackClickHouseDeletes(env = process.env) {
 }
 
 function shouldTrackClickHouseDeleteCounts(env = process.env) {
-  return parseBooleanLike(env.CLICKHOUSE_TRACK_DELETE_COUNTS, true);
+  return parseBooleanLike(env.CLICKHOUSE_TRACK_DELETE_COUNTS, false);
 }
 
 function parseClickHouseDeleteTrackRecheckMs(env = process.env) {
@@ -2384,6 +2484,164 @@ function parseClickHouseDeleteTrackRecheckMs(env = process.env) {
     return Math.min(600000, Math.trunc(parsed));
   }
   return 0;
+}
+
+function shouldProtectClickHouseDeleteBudget(env = process.env) {
+  return parseBooleanLike(env.CLICKHOUSE_DELETE_BUDGET_PROTECTION, true);
+}
+
+function parseClickHouseDeleteBudgetSpikeMs(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_DELETE_BUDGET_SPIKE_MS);
+  if (Number.isFinite(parsed) && parsed >= 0) {
+    return Math.trunc(parsed);
+  }
+  return DEFAULT_CLICKHOUSE_DELETE_BUDGET_SPIKE_MS;
+}
+
+function parseClickHouseDeleteBudgetSpikeCount(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_DELETE_BUDGET_SPIKE_COUNT);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.trunc(parsed);
+  }
+  return DEFAULT_CLICKHOUSE_DELETE_BUDGET_SPIKE_COUNT;
+}
+
+function parseClickHouseDeleteBudgetDowngradeTableSet(env = process.env) {
+  const raw = String(env.CLICKHOUSE_DELETE_BUDGET_DOWNGRADE_TABLES || '').trim().toLowerCase();
+  if (!raw || raw === 'default') {
+    return new Set(DEFAULT_CLICKHOUSE_DELETE_BUDGET_DOWNGRADE_TABLES);
+  }
+  if (raw === 'none' || raw === 'off' || raw === '0' || raw === 'false') {
+    return new Set();
+  }
+  if (raw === 'all' || raw === '*') {
+    return new Set(['*']);
+  }
+  return new Set(
+    raw
+      .split(',')
+      .map((token) => token.trim().toLowerCase())
+      .filter(Boolean),
+  );
+}
+
+function canAutoDowngradeClickHouseDeleteTable(tableName, env = process.env) {
+  if (!shouldProtectClickHouseDeleteBudget(env)) return false;
+  const normalizedTable = String(tableName || '').trim().toLowerCase();
+  if (!normalizedTable) return false;
+  const allowed = parseClickHouseDeleteBudgetDowngradeTableSet(env);
+  return allowed.has('*') || allowed.has(normalizedTable);
+}
+
+function isClickHouseDeleteBudgetDowngraded(tableName, env = process.env) {
+  if (!shouldProtectClickHouseDeleteBudget(env)) return false;
+  return clickHouseDeleteBudgetRuntime.downgradedTables.has(String(tableName || '').trim().toLowerCase());
+}
+
+function noteClickHouseDeleteBudgetSkip(tableName, caller = null) {
+  const normalizedTable = String(tableName || '').trim().toLowerCase();
+  if (!normalizedTable || clickHouseDeleteBudgetRuntime.skipLogsByTable.has(normalizedTable)) return;
+  clickHouseDeleteBudgetRuntime.skipLogsByTable.add(normalizedTable);
+  console.warn('[CLICKHOUSE_DELETE_BUDGET_SKIP]', JSON.stringify({
+    tableName: normalizedTable,
+    reason: 'budget_downgraded_insert_only',
+    caller: caller || null,
+  }));
+}
+
+function maybeRecordClickHouseDeleteBudgetSpike({
+  tableName,
+  durationMs,
+  mutationSync,
+  caller = null,
+  env = process.env,
+}) {
+  if (!shouldProtectClickHouseDeleteBudget(env)) {
+    return {
+      protectedMode: false,
+      isSpike: false,
+      downgradedNow: false,
+      downgradedActive: false,
+      spikeCount: 0,
+      spikeThresholdMs: null,
+      downgradeAfterSpikes: null,
+      autoDowngradeEligible: false,
+    };
+  }
+
+  const normalizedTable = String(tableName || '').trim().toLowerCase();
+  if (!normalizedTable || !Number.isFinite(durationMs) || durationMs < 0) {
+    return {
+      protectedMode: true,
+      isSpike: false,
+      downgradedNow: false,
+      downgradedActive: isClickHouseDeleteBudgetDowngraded(tableName, env),
+      spikeCount: 0,
+      spikeThresholdMs: parseClickHouseDeleteBudgetSpikeMs(env),
+      downgradeAfterSpikes: parseClickHouseDeleteBudgetSpikeCount(env),
+      autoDowngradeEligible: canAutoDowngradeClickHouseDeleteTable(tableName, env),
+    };
+  }
+
+  const spikeThresholdMs = parseClickHouseDeleteBudgetSpikeMs(env);
+  const downgradeAfterSpikes = parseClickHouseDeleteBudgetSpikeCount(env);
+  const autoDowngradeEligible = canAutoDowngradeClickHouseDeleteTable(normalizedTable, env);
+  if (durationMs < spikeThresholdMs) {
+    return {
+      protectedMode: true,
+      isSpike: false,
+      downgradedNow: false,
+      downgradedActive: isClickHouseDeleteBudgetDowngraded(normalizedTable, env),
+      spikeCount: clickHouseDeleteBudgetRuntime.spikeCountsByTable.get(normalizedTable) || 0,
+      spikeThresholdMs,
+      downgradeAfterSpikes,
+      autoDowngradeEligible,
+    };
+  }
+
+  const nextSpikeCount = (clickHouseDeleteBudgetRuntime.spikeCountsByTable.get(normalizedTable) || 0) + 1;
+  clickHouseDeleteBudgetRuntime.spikeCountsByTable.set(normalizedTable, nextSpikeCount);
+
+  console.warn('[CLICKHOUSE_DELETE_BUDGET_SPIKE]', JSON.stringify({
+    tableName: normalizedTable,
+    durationMs,
+    mutationSync,
+    spikeThresholdMs,
+    spikeCount: nextSpikeCount,
+    downgradeAfterSpikes,
+    autoDowngradeEligible,
+    caller: caller || null,
+  }));
+
+  let downgradedNow = false;
+  if (
+    autoDowngradeEligible
+    && nextSpikeCount >= downgradeAfterSpikes
+    && !clickHouseDeleteBudgetRuntime.downgradedTables.has(normalizedTable)
+  ) {
+    clickHouseDeleteBudgetRuntime.downgradedTables.add(normalizedTable);
+    downgradedNow = true;
+    console.warn('[CLICKHOUSE_DELETE_BUDGET_DOWNGRADE]', JSON.stringify({
+      tableName: normalizedTable,
+      reason: 'delete_duration_spike',
+      durationMs,
+      spikeThresholdMs,
+      spikeCount: nextSpikeCount,
+      downgradeAfterSpikes,
+      caller: caller || null,
+    }));
+  }
+
+  return {
+    protectedMode: true,
+    isSpike: true,
+    downgradedNow,
+    downgradedActive: clickHouseDeleteBudgetRuntime.downgradedTables.has(normalizedTable),
+    spikeCount: nextSpikeCount,
+    spikeThresholdMs,
+    downgradeAfterSpikes,
+    autoDowngradeEligible,
+  };
 }
 
 function resolveClickHouseDeleteAuditPath(env = process.env) {
@@ -2450,17 +2708,23 @@ function appendClickHouseDeleteAudit(event, env = process.env) {
     mutationSync: event.mutationSync,
     durationMs: event.durationMs,
     success: event.success,
+    skipped: event.skipped || false,
     rowsBeforeDelete: event.rowsBeforeDelete,
     rowsAfterDeleteImmediate: event.rowsAfterDeleteImmediate,
     rowsAfterDeleteRecheck: event.rowsAfterDeleteRecheck,
     deleteRowsEstimateImmediate: event.deleteRowsEstimateImmediate,
     deleteRowsEstimateRecheck: event.deleteRowsEstimateRecheck,
+    budgetProtectedMode: event.budgetProtectedMode || false,
+    budgetIsSpike: event.budgetIsSpike || false,
+    budgetDowngradedNow: event.budgetDowngradedNow || false,
+    budgetDowngradedActive: event.budgetDowngradedActive || false,
     caller: event.caller || null,
   };
   console.log('[CLICKHOUSE_DELETE_AUDIT]', JSON.stringify(logSummary));
 }
 
 function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
+  const normalizedTableName = String(tableName || '').trim().toLowerCase();
   const mutationSync = parseClickHouseDeleteMutationSync(env);
   const startIso = new Date().toISOString();
   const startedAtMs = Date.now();
@@ -2468,6 +2732,37 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
     .split('\n')[2]
     ?.trim()
     ?.replace(/^at\s+/, '') || null;
+  if (isClickHouseDeleteBudgetDowngraded(normalizedTableName, env)) {
+    noteClickHouseDeleteBudgetSkip(normalizedTableName, caller);
+    appendClickHouseDeleteAudit({
+      ts: new Date().toISOString(),
+      startedAt: startIso,
+      durationMs: Date.now() - startedAtMs,
+      tableName: normalizedTableName,
+      whereSql,
+      params,
+      mutationSync,
+      caller,
+      success: true,
+      skipped: true,
+      error: null,
+      rowsBeforeDelete: null,
+      rowsAfterDeleteImmediate: null,
+      rowsAfterDeleteRecheck: null,
+      deleteRowsEstimateImmediate: null,
+      deleteRowsEstimateRecheck: null,
+      recentMutations: [],
+      budgetProtectedMode: shouldProtectClickHouseDeleteBudget(env),
+      budgetIsSpike: false,
+      budgetDowngradedNow: false,
+      budgetDowngradedActive: true,
+      budgetSpikeCount: clickHouseDeleteBudgetRuntime.spikeCountsByTable.get(normalizedTableName) || 0,
+      budgetSpikeThresholdMs: parseClickHouseDeleteBudgetSpikeMs(env),
+      budgetDowngradeAfterSpikes: parseClickHouseDeleteBudgetSpikeCount(env),
+      budgetAutoDowngradeEligible: canAutoDowngradeClickHouseDeleteTable(normalizedTableName, env),
+    }, env);
+    return;
+  }
   const trackCounts = shouldTrackClickHouseDeletes(env) && shouldTrackClickHouseDeleteCounts(env);
   const recheckMs = shouldTrackClickHouseDeletes(env) ? parseClickHouseDeleteTrackRecheckMs(env) : 0;
   let rowsBeforeDelete = null;
@@ -2479,7 +2774,7 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
 
   if (trackCounts) {
     try {
-      rowsBeforeDelete = queryClickHouseScopedRowCount(tableName, whereSql, params, env);
+      rowsBeforeDelete = queryClickHouseScopedRowCount(normalizedTableName, whereSql, params, env);
     } catch (error) {
       rowsBeforeDelete = null;
       errorMessage = `pre_count_failed:${error.message || 'unknown_error'}`;
@@ -2488,7 +2783,7 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
 
   try {
     execClickHouseQuerySync(`
-      ALTER TABLE options.${tableName}
+      ALTER TABLE options.${normalizedTableName}
       DELETE WHERE ${whereSql}
       SETTINGS mutations_sync = ${mutationSync}
     `, params, env);
@@ -2499,7 +2794,7 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
   } finally {
     if (trackCounts) {
       try {
-        rowsAfterDeleteImmediate = queryClickHouseScopedRowCount(tableName, whereSql, params, env);
+        rowsAfterDeleteImmediate = queryClickHouseScopedRowCount(normalizedTableName, whereSql, params, env);
       } catch (error) {
         rowsAfterDeleteImmediate = null;
         if (!errorMessage) {
@@ -2509,7 +2804,7 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
       if (success && recheckMs > 0) {
         sleepSync(recheckMs);
         try {
-          rowsAfterDeleteRecheck = queryClickHouseScopedRowCount(tableName, whereSql, params, env);
+          rowsAfterDeleteRecheck = queryClickHouseScopedRowCount(normalizedTableName, whereSql, params, env);
         } catch (error) {
           rowsAfterDeleteRecheck = null;
           if (!errorMessage) {
@@ -2519,9 +2814,29 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
       }
     }
 
+    const durationMs = Date.now() - startedAtMs;
+    const budgetEvent = success
+      ? maybeRecordClickHouseDeleteBudgetSpike({
+        tableName: normalizedTableName,
+        durationMs,
+        mutationSync,
+        caller,
+        env,
+      })
+      : {
+        protectedMode: shouldProtectClickHouseDeleteBudget(env),
+        isSpike: false,
+        downgradedNow: false,
+        downgradedActive: isClickHouseDeleteBudgetDowngraded(normalizedTableName, env),
+        spikeCount: clickHouseDeleteBudgetRuntime.spikeCountsByTable.get(normalizedTableName) || 0,
+        spikeThresholdMs: parseClickHouseDeleteBudgetSpikeMs(env),
+        downgradeAfterSpikes: parseClickHouseDeleteBudgetSpikeCount(env),
+        autoDowngradeEligible: canAutoDowngradeClickHouseDeleteTable(normalizedTableName, env),
+      };
+
     if (shouldTrackClickHouseDeletes(env)) {
       try {
-        recentMutations = loadRecentClickHouseMutations(tableName, env);
+        recentMutations = loadRecentClickHouseMutations(normalizedTableName, env);
       } catch (error) {
         recentMutations = [{
           error: `mutation_query_failed:${error.message || 'unknown_error'}`,
@@ -2530,13 +2845,14 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
       appendClickHouseDeleteAudit({
         ts: new Date().toISOString(),
         startedAt: startIso,
-        durationMs: Date.now() - startedAtMs,
-        tableName,
+        durationMs,
+        tableName: normalizedTableName,
         whereSql,
         params,
         mutationSync,
         caller,
         success,
+        skipped: false,
         error: errorMessage,
         rowsBeforeDelete,
         rowsAfterDeleteImmediate,
@@ -2548,6 +2864,14 @@ function deleteClickHouseScope(tableName, whereSql, params, env = process.env) {
           ? Math.max(0, rowsBeforeDelete - rowsAfterDeleteRecheck)
           : null,
         recentMutations,
+        budgetProtectedMode: budgetEvent.protectedMode,
+        budgetIsSpike: budgetEvent.isSpike,
+        budgetDowngradedNow: budgetEvent.downgradedNow,
+        budgetDowngradedActive: budgetEvent.downgradedActive,
+        budgetSpikeCount: budgetEvent.spikeCount,
+        budgetSpikeThresholdMs: budgetEvent.spikeThresholdMs,
+        budgetDowngradeAfterSpikes: budgetEvent.downgradeAfterSpikes,
+        budgetAutoDowngradeEligible: budgetEvent.autoDowngradeEligible,
       }, env);
     }
   }
@@ -2560,8 +2884,37 @@ const CLICKHOUSE_INSERT_ONLY_REPLACING_TABLES = new Set([
   'feature_baseline_intraday',
 ]);
 
-function requiresClickHouseDeleteBeforeInsert(tableName) {
-  return !CLICKHOUSE_INSERT_ONLY_REPLACING_TABLES.has(tableName);
+const CLICKHOUSE_INSERT_ONLY_CHUNK_STATUS_TABLES = new Set([
+  'option_download_chunk_status',
+  'option_enrich_chunk_status',
+]);
+
+const CLICKHOUSE_INSERT_ONLY_ENRICH_SUPPORT_TABLES = new Set([
+  'option_symbol_minute_derived',
+  'option_contract_minute_derived',
+  'contract_stats_intraday',
+  'symbol_stats_intraday',
+]);
+
+function shouldUseInsertOnlyForTable(tableName, env = process.env) {
+  const normalizedTable = String(tableName || '').trim().toLowerCase();
+  if (!normalizedTable) return false;
+  if (isClickHouseDeleteBudgetDowngraded(normalizedTable, env)) return true;
+  if (CLICKHOUSE_INSERT_ONLY_REPLACING_TABLES.has(normalizedTable)) return true;
+  if (shouldUseInsertOnlyChunkStatusUpserts(env) && CLICKHOUSE_INSERT_ONLY_CHUNK_STATUS_TABLES.has(normalizedTable)) {
+    return true;
+  }
+  if (shouldUseInsertOnlyEnrichSupportUpserts(env) && CLICKHOUSE_INSERT_ONLY_ENRICH_SUPPORT_TABLES.has(normalizedTable)) {
+    return true;
+  }
+  if (shouldUseInsertOnlyStockQuoteUpserts(env) && (normalizedTable === 'stock_ohlc_minute_raw' || normalizedTable === 'option_quote_minute_raw')) {
+    return true;
+  }
+  return false;
+}
+
+function requiresClickHouseDeleteBeforeInsert(tableName, env = process.env) {
+  return !shouldUseInsertOnlyForTable(tableName, env);
 }
 
 function insertClickHouseRows(tableName, columns, rows, env = process.env, options = {}) {
@@ -2577,7 +2930,7 @@ function insertClickHouseRows(tableName, columns, rows, env = process.env, optio
 function persistSqliteCacheStateToClickHouse(db, { symbol, dayIso, env = process.env }) {
   ensureClickHouseSupportSchema(env);
 
-  if (requiresClickHouseDeleteBeforeInsert('option_trade_day_cache')) {
+  if (requiresClickHouseDeleteBeforeInsert('option_trade_day_cache', env)) {
     deleteClickHouseScope('option_trade_day_cache', 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})', { symbol, dayIso }, env);
   }
   const dayCacheRows = db.prepare(`
@@ -2600,7 +2953,7 @@ function persistSqliteCacheStateToClickHouse(db, { symbol, dayIso, env = process
     env,
   );
 
-  if (requiresClickHouseDeleteBeforeInsert('option_trade_metric_day_cache')) {
+  if (requiresClickHouseDeleteBeforeInsert('option_trade_metric_day_cache', env)) {
     deleteClickHouseScope('option_trade_metric_day_cache', 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})', { symbol, dayIso }, env);
   }
   const metricCacheRows = db.prepare(`
@@ -2712,7 +3065,9 @@ function persistSqliteDayStateToClickHouse(
       env,
     );
 
-    deleteClickHouseScope('option_symbol_minute_derived', 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})', { symbol, dayIso }, env);
+    if (requiresClickHouseDeleteBeforeInsert('option_symbol_minute_derived', env)) {
+      deleteClickHouseScope('option_symbol_minute_derived', 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})', { symbol, dayIso }, env);
+    }
     insertClickHouseRows(
       'option_symbol_minute_derived',
       ['symbol', 'trade_date_utc', 'minute_bucket_utc', 'trade_count', 'contract_count', 'total_size', 'total_value', 'call_size', 'put_size', 'bullish_count', 'bearish_count', 'neutral_count', 'avg_sig_score', 'max_sig_score', 'avg_vol_oi_ratio', 'max_vol_oi_ratio', 'max_repeat3m', 'oi_sum', 'day_volume_sum', 'chip_hits_json', 'updated_at_utc', 'spot', 'avg_sig_score_bullish', 'avg_sig_score_bearish', 'net_sig_score', 'value_weighted_sig_score', 'sweep_count', 'sweep_value_ratio', 'multileg_count', 'multileg_pct', 'avg_minute_of_day_et', 'avg_iv', 'call_iv_avg', 'put_iv_avg', 'iv_spread', 'net_delta_dollars', 'avg_value_pctile', 'avg_vol_oi_norm', 'avg_repeat_norm', 'avg_otm_norm', 'avg_side_confidence', 'avg_dte_norm', 'avg_spread_norm', 'avg_sweep_norm', 'avg_multileg_norm', 'avg_time_norm', 'avg_delta_norm', 'avg_iv_skew_norm', 'avg_value_shock_norm', 'avg_dte_swing_norm', 'avg_flow_imbalance_norm', 'avg_delta_pressure_norm', 'avg_cp_oi_pressure_norm', 'avg_iv_skew_surface_norm', 'avg_iv_term_slope_norm', 'avg_underlying_trend_confirm_norm', 'avg_liquidity_quality_norm', 'avg_multileg_penalty_norm'],
@@ -2720,7 +3075,9 @@ function persistSqliteDayStateToClickHouse(
       env,
     );
 
-    deleteClickHouseScope('option_contract_minute_derived', 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})', { symbol, dayIso }, env);
+    if (requiresClickHouseDeleteBeforeInsert('option_contract_minute_derived', env)) {
+      deleteClickHouseScope('option_contract_minute_derived', 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})', { symbol, dayIso }, env);
+    }
     insertClickHouseRows(
       'option_contract_minute_derived',
       ['symbol', 'expiration', 'strike', 'option_right', 'trade_date_utc', 'minute_bucket_utc', 'trade_count', 'size_sum', 'value_sum', 'avg_price', 'last_price', 'day_volume', 'oi', 'vol_oi_ratio', 'avg_sig_score', 'max_sig_score', 'max_repeat3m', 'bullish_count', 'bearish_count', 'neutral_count', 'chip_hits_json', 'updated_at_utc'],
@@ -2728,7 +3085,9 @@ function persistSqliteDayStateToClickHouse(
       env,
     );
 
-    deleteClickHouseScope('contract_stats_intraday', 'symbol = {symbol:String} AND session_date = toDate({dayIso:String})', { symbol, dayIso }, env);
+    if (requiresClickHouseDeleteBeforeInsert('contract_stats_intraday', env)) {
+      deleteClickHouseScope('contract_stats_intraday', 'symbol = {symbol:String} AND session_date = toDate({dayIso:String})', { symbol, dayIso }, env);
+    }
     insertClickHouseRows(
       'contract_stats_intraday',
       ['symbol', 'expiration', 'strike', 'option_right', 'session_date', 'day_volume', 'oi', 'last_trade_ts_utc', 'updated_at_utc'],
@@ -2736,7 +3095,9 @@ function persistSqliteDayStateToClickHouse(
       env,
     );
 
-    deleteClickHouseScope('symbol_stats_intraday', 'symbol = {symbol:String} AND toDate(minute_bucket_et) = toDate({dayIso:String})', { symbol, dayIso }, env);
+    if (requiresClickHouseDeleteBeforeInsert('symbol_stats_intraday', env)) {
+      deleteClickHouseScope('symbol_stats_intraday', 'symbol = {symbol:String} AND toDate(minute_bucket_et) = toDate({dayIso:String})', { symbol, dayIso }, env);
+    }
     insertClickHouseRows(
       'symbol_stats_intraday',
       ['symbol', 'minute_bucket_et', 'vol_1m', 'vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'updated_at_utc'],
@@ -2755,7 +3116,7 @@ function persistSqliteDayStateToClickHouse(
       env,
     );
 
-    if (requiresClickHouseDeleteBeforeInsert('feature_baseline_intraday')) {
+    if (requiresClickHouseDeleteBeforeInsert('feature_baseline_intraday', env)) {
       deleteClickHouseScope('feature_baseline_intraday', 'symbol = {symbol:String}', { symbol }, env);
     }
     insertClickHouseRows(
@@ -2766,7 +3127,7 @@ function persistSqliteDayStateToClickHouse(
     );
 
     const supplementalDayKey = `${symbol}|${dayIso}`;
-    if (requiresClickHouseDeleteBeforeInsert('supplemental_metric_cache')) {
+    if (requiresClickHouseDeleteBeforeInsert('supplemental_metric_cache', env)) {
       deleteClickHouseScope(
         'supplemental_metric_cache',
         '(cache_key = {dayKey:String} OR startsWith(cache_key, {dayPrefix:String}))',
@@ -3168,33 +3529,35 @@ function upsertOptionQuoteMinuteRaw(db, dayIso, rows = [], sourceEndpoint = null
   return txn(payload);
 }
 
-function normalizeOptionGreeksRows(rows = [], dayIso) {
+function normalizeOptionGreeksRow(row, dayIso, { includeRawPayload = true } = {}) {
   const fallbackTs = `${dayIso}T00:00:00.000Z`;
-  return rows.map((row) => {
-    const symbol = normalizeSymbol(pickField(row, ['symbol', 'root', 'underlying']));
-    const expiration = normalizeIsoDate(pickField(row, ['expiration', 'exp', 'expiration_date']));
-    const strike = toFiniteNumber(pickField(row, ['strike', 'strike_price']));
-    const right = normalizeRight(pickField(row, ['right', 'option_right', 'side']));
-    const rawTs = pickField(row, ['timestamp', 'trade_timestamp', 'datetime', 'time']);
-    const ts = normalizeThetaTimestamp(rawTs) || toIsoFromAnyTs(rawTs, fallbackTs);
-    const minuteBucketUtc = toMinuteBucketUtc(ts);
-    if (!symbol || !expiration || strike === null || !right || !minuteBucketUtc) return null;
-    return {
-      symbol,
-      expiration,
-      strike,
-      right,
-      minuteBucketUtc,
-      delta: toFiniteNumber(pickField(row, ['delta'])),
-      impliedVol: toFiniteNumber(pickField(row, ['implied_vol', 'impliedVol', 'iv'])),
-      gamma: toFiniteNumber(pickField(row, ['gamma'])),
-      theta: toFiniteNumber(pickField(row, ['theta'])),
-      vega: toFiniteNumber(pickField(row, ['vega'])),
-      rho: toFiniteNumber(pickField(row, ['rho'])),
-      underlyingPrice: toFiniteNumber(pickField(row, ['underlying_price', 'underlyingPrice', 'spot'])),
-      rawPayloadJson: JSON.stringify(row),
-    };
-  }).filter(Boolean);
+  const symbol = normalizeSymbol(pickField(row, ['symbol', 'root', 'underlying']));
+  const expiration = normalizeIsoDate(pickField(row, ['expiration', 'exp', 'expiration_date']));
+  const strike = toFiniteNumber(pickField(row, ['strike', 'strike_price']));
+  const right = normalizeRight(pickField(row, ['right', 'option_right', 'side']));
+  const rawTs = pickField(row, ['timestamp', 'trade_timestamp', 'datetime', 'time']);
+  const ts = normalizeThetaTimestamp(rawTs) || toIsoFromAnyTs(rawTs, fallbackTs);
+  const minuteBucketUtc = toMinuteBucketUtc(ts);
+  if (!symbol || !expiration || strike === null || !right || !minuteBucketUtc) return null;
+  return {
+    symbol,
+    expiration,
+    strike,
+    right,
+    minuteBucketUtc,
+    delta: toFiniteNumber(pickField(row, ['delta'])),
+    impliedVol: toFiniteNumber(pickField(row, ['implied_vol', 'impliedVol', 'iv'])),
+    gamma: toFiniteNumber(pickField(row, ['gamma'])),
+    theta: toFiniteNumber(pickField(row, ['theta'])),
+    vega: toFiniteNumber(pickField(row, ['vega'])),
+    rho: toFiniteNumber(pickField(row, ['rho'])),
+    underlyingPrice: toFiniteNumber(pickField(row, ['underlying_price', 'underlyingPrice', 'spot'])),
+    rawPayloadJson: includeRawPayload ? JSON.stringify(row) : null,
+  };
+}
+
+function normalizeOptionGreeksRows(rows = [], dayIso, options = {}) {
+  return rows.map((row) => normalizeOptionGreeksRow(row, dayIso, options)).filter(Boolean);
 }
 
 function upsertOptionGreeksMinuteRaw(db, dayIso, rows = [], sourceEndpoint = null) {
@@ -3819,7 +4182,7 @@ function countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env = process.en
 function getClickHouseOptionQuoteResumeCursor({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
   const rows = queryRows(`
     SELECT
-      ifNull(concat(replaceAll(toString(max(minute_bucket_utc), 'UTC'), ' ', 'T'), 'Z'), null) AS maxMinuteBucketUtc
+      ifNull(concat(replaceAll(toString(maxOrNull(minute_bucket_utc), 'UTC'), ' ', 'T'), 'Z'), null) AS maxMinuteBucketUtc
     FROM options.option_quote_minute_raw
     WHERE symbol = {symbol:String}
       AND trade_date_utc = toDate({dayIso:String})
@@ -7200,7 +7563,7 @@ function countClickHouseTradesForDay({ symbol, dayIso, env = process.env, queryR
 function getClickHouseTradeResumeCursor({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
   const rows = queryRows(`
     SELECT
-      ifNull(concat(replaceAll(toString(max(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z'), null) AS maxTradeTsUtc
+      ifNull(concat(replaceAll(toString(maxOrNull(trade_ts_utc), 'UTC'), ' ', 'T'), 'Z'), null) AS maxTradeTsUtc
     FROM options.option_trades
     WHERE symbol = {symbol:String}
       AND trade_date = toDate({dayIso:String})
@@ -8232,7 +8595,7 @@ function replaceClickHouseDayRows({
   chunkSize = undefined,
   skipDelete = false,
 }) {
-  if (!skipDelete) {
+  if (!skipDelete && requiresClickHouseDeleteBeforeInsert(tableName, env)) {
     deleteClickHouseScope(tableName, whereSql, deleteParams, env);
   }
   if (!Array.isArray(rows) || rows.length === 0) return 0;
@@ -8304,9 +8667,14 @@ async function syncThetaTradesToClickHouse({
     };
   }
   const endpointFormat = parseThetaUrlFormat(endpoints[0]);
+  const startedAtMs = Date.now();
   let parsedRows = 0;
   let fetchedRows = 0;
   let upsertedRows = 0;
+  let insertDurationMs = 0;
+  let streamDownloadDurationMs = 0;
+  let chunkFlushes = 0;
+  const chunkSize = parseClickHouseTradeStreamChunkSize(env);
   let sawHttpOk = false;
   let sawNoData = false;
   const columns = ['trade_id', 'trade_ts_utc', 'trade_ts_et', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'raw_payload_json', 'watermark', 'ingested_at_utc'];
@@ -8368,7 +8736,10 @@ async function syncThetaTradesToClickHouse({
       const flushChunk = () => {
         if (chunk.length === 0) return;
         clearDayScope();
+        const insertStartedAtMs = Date.now();
         upsertedRows += insertClickHouseRows('option_trades', columns, chunk, env);
+        insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+        chunkFlushes += 1;
         fetchedRows += chunk.length;
         chunk = [];
       };
@@ -8396,7 +8767,7 @@ async function syncThetaTradesToClickHouse({
               watermark: normalized.watermark,
               ingested_at_utc: nowIso,
             });
-            if (chunk.length >= 5000) flushChunk();
+            if (chunk.length >= chunkSize) flushChunk();
           }
           if (heartbeat) {
             heartbeat({
@@ -8427,6 +8798,9 @@ async function syncThetaTradesToClickHouse({
         throw new Error(`thetadata_request_failed:${response.status}`);
       }
       sawHttpOk = true;
+      if (Number.isFinite(durationMs)) {
+        streamDownloadDurationMs += Math.max(0, Math.trunc(durationMs));
+      }
       flushChunk();
       logThetaDownload({
         env,
@@ -8483,12 +8857,19 @@ async function syncThetaTradesToClickHouse({
           ingested_at_utc: new Date().toISOString(),
         }));
         clearDayScope();
+        const insertStartedAtMs = Date.now();
         upsertedRows += insertClickHouseRows(
           'option_trades',
           columns,
           mappedRows,
           env,
+          { chunkSize },
         );
+        insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+        chunkFlushes += 1;
+      }
+      if (Number.isFinite(durationMs)) {
+        streamDownloadDurationMs += Math.max(0, Math.trunc(durationMs));
       }
       logThetaDownload({
         env,
@@ -8503,6 +8884,22 @@ async function syncThetaTradesToClickHouse({
   }
 
   const rowCount = countClickHouseTradesForDay({ symbol, dayIso, env });
+  const wallDurationMs = Math.max(0, Date.now() - startedAtMs);
+  const tradeSyncStats = {
+    symbol,
+    dayIso,
+    endpoints: endpoints.length,
+    endpointFormat,
+    parsedRows,
+    fetchedRows,
+    upsertedRows,
+    chunkFlushes,
+    streamDownloadDurationMs,
+    insertDurationMs,
+    wallDurationMs,
+    chunkSize,
+    resumedFromMinuteUtc: resumeCursor?.resumeFromIso || null,
+  };
   if (!sawHttpOk && sawNoData && rowCount === 0) {
     const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
     upsertClickHouseDayCache({
@@ -8521,6 +8918,11 @@ async function syncThetaTradesToClickHouse({
       sourceEndpoint: endpoints[0] || null,
       env,
     });
+    console.log('[TRADE_SYNC_STATS]', JSON.stringify({
+      ...tradeSyncStats,
+      reason: 'no_data',
+      cacheStatus,
+    }));
     return {
       synced: true,
       reason: 'no_data',
@@ -8551,6 +8953,12 @@ async function syncThetaTradesToClickHouse({
     sourceEndpoint: endpoints[0] || null,
     env,
   });
+  console.log('[TRADE_SYNC_STATS]', JSON.stringify({
+    ...tradeSyncStats,
+    reason: null,
+    cacheStatus,
+    cachedRows: rowCount,
+  }));
 
   return {
     synced: true,
@@ -8703,6 +9111,9 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     && String(env.BACKFILL_FORCE_QUOTE_FULL || '0').trim().toLowerCase() !== 'false'
   );
   const forceQuoteRefresh = forceRequested && forceRawTargets.includeQuote && forceQuoteFullRefresh;
+  const preferForceGapWindows = shouldPreferForceQuoteGapWindows(env);
+  const enableGapPlanning = shouldEnableBackfillQuoteGapFill(env)
+    && (!forceQuoteRefresh || preferForceGapWindows);
   const resumeCursor = forceQuoteRefresh ? null : getClickHouseOptionQuoteResumeCursor({ symbol, dayIso, env });
   const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
   if (sessionWindow && sessionWindow.isOpen === false) {
@@ -8717,14 +9128,25 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
   }
   let requestWindows = [];
   let useGapWindows = false;
-  if (!forceQuoteRefresh && shouldEnableBackfillQuoteGapFill(env)) {
+  let gapPlan = null;
+  if (enableGapPlanning) {
     const existingMinuteRows = loadClickHouseOptionQuoteMinuteCountRowsForDay({ symbol, dayIso, env });
-    const gapPlan = buildQuoteGapFillWindowsForDay({
+    gapPlan = buildQuoteGapFillWindowsForDay({
       dayIso,
       sessionWindow,
       existingMinuteRows,
     });
     if (gapPlan.expectedMinutes > 0 && gapPlan.missingMinutes === 0) {
+      console.log('[QUOTE_GAP_FILL]', JSON.stringify({
+        symbol,
+        dayIso,
+        expectedMinutes: gapPlan.expectedMinutes,
+        missingMinutes: gapPlan.missingMinutes,
+        missingFraction: Number(gapPlan.missingFraction.toFixed(4)),
+        windows: 0,
+        strategy: 'already_complete',
+        forceQuoteRefresh,
+      }));
       upsertClickHouseDownloadChunkStatusForStream({
         symbol,
         dayIso,
@@ -8745,6 +9167,20 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
         missingMinutes: gapPlan.missingMinutes,
         missingFraction: Number(gapPlan.missingFraction.toFixed(4)),
         windows: gapPlan.windows.length,
+        strategy: forceQuoteRefresh ? 'force_gap_windows' : 'gap_windows',
+        forceQuoteRefresh,
+      }));
+    } else if (forceQuoteRefresh && gapPlan.missingMinutes > 0) {
+      console.log('[QUOTE_GAP_FILL]', JSON.stringify({
+        symbol,
+        dayIso,
+        expectedMinutes: gapPlan.expectedMinutes,
+        missingMinutes: gapPlan.missingMinutes,
+        missingFraction: Number(gapPlan.missingFraction.toFixed(4)),
+        windows: gapPlan.windows.length,
+        maxGapWindows,
+        strategy: 'force_fallback_full_day',
+        forceQuoteRefresh,
       }));
     }
   }
@@ -8756,6 +9192,21 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
       sessionEndTime: sessionWindow?.closeTime || null,
       env,
     });
+  }
+  if (requestWindows.length > 0) {
+    const windowStrategy = useGapWindows ? 'gap_windows' : (forceQuoteRefresh ? 'force_full_or_split' : 'resume_or_full');
+    console.log('[QUOTE_WINDOW_PLAN]', JSON.stringify({
+      symbol,
+      dayIso,
+      forceQuoteRefresh,
+      preferForceGapWindows,
+      useGapWindows,
+      windowStrategy,
+      requestWindows: requestWindows.length,
+      resumeFromMinuteUtc: resumeCursor?.resumeFromIso || null,
+      plannedMissingMinutes: gapPlan?.missingMinutes ?? null,
+      plannedExpectedMinutes: gapPlan?.expectedMinutes ?? null,
+    }));
   }
   const endpoints = requestWindows
     .map((window) => resolveThetaOptionQuoteEndpoint(
@@ -9197,6 +9648,7 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
 }
 
 async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = process.env, cacheStats = null) {
+  const startedAtMs = Date.now();
   if (hasClickHouseRowsForDay({
     tableName: 'option_greeks_minute_raw',
     dayColumn: 'trade_date_utc',
@@ -9212,33 +9664,141 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
     .sort((left, right) => Date.parse(left) - Date.parse(right));
   if (expirations.length === 0) return false;
 
+  const chunkSize = parseClickHouseGreeksStreamChunkSize(env);
+  const includeRawPayload = shouldIncludeClickHouseGreeksRawPayload(env);
+  const syncFormat = String(env.THETADATA_GREEKS_SYNC_FORMAT || 'ndjson').trim().toLowerCase() === 'json'
+    ? 'json'
+    : 'ndjson';
+
   if (cacheStats) cacheStats.greeksMiss += expirations.length;
-  const concurrency = parseSupplementalConcurrency(env);
-  const collectedRows = [];
-  await parallelMapLimit(expirations, concurrency, async (expiration) => {
-    const endpoint = resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env);
-    if (!endpoint) return;
+  let fetchDurationMs = 0;
+  let insertDurationMs = 0;
+  let fetchedRows = 0;
+  let insertedRows = 0;
+  let wroteRows = false;
+  let chunkFlushes = 0;
+
+  for (const expiration of expirations) {
+    const endpoint = resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, { format: syncFormat });
+    if (!endpoint) continue;
+    const endpointFormat = parseThetaUrlFormat(endpoint);
+    const rowsBeforeEndpoint = fetchedRows;
+
+    if (endpointFormat === 'ndjson') {
+      let chunk = [];
+      const flushChunk = () => {
+        if (chunk.length === 0) return;
+        const insertStartedAtMs = Date.now();
+        insertedRows += replaceClickHouseDayRows({
+          tableName: 'option_greeks_minute_raw',
+          whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
+          deleteParams: { symbol, dayIso },
+          columns: ['symbol', 'trade_date_utc', 'expiration', 'strike', 'option_right', 'minute_bucket_utc', 'delta', 'implied_vol', 'gamma', 'theta', 'vega', 'rho', 'underlying_price', 'source_endpoint', 'raw_payload_json', 'ingested_at_utc'],
+          rows: chunk,
+          env,
+          chunkSize,
+          skipDelete: wroteRows,
+        });
+        insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+        wroteRows = true;
+        chunk = [];
+        chunkFlushes += 1;
+      };
+
+      const heartbeat = createThetaStreamHeartbeatLogger({
+        env,
+        endpoint,
+        stage: 'greeks_sync_clickhouse',
+        symbol,
+        dayIso,
+      });
+      const streamResult = await fetchThetaNdjsonRows(endpoint, {
+        env,
+        onRow: (rawRow) => {
+          const normalized = normalizeOptionGreeksRow(rawRow, dayIso, { includeRawPayload });
+          if (!normalized) return;
+          fetchedRows += 1;
+          chunk.push({
+            symbol: normalized.symbol,
+            trade_date_utc: dayIso,
+            expiration: normalized.expiration,
+            strike: normalized.strike,
+            option_right: normalized.right,
+            minute_bucket_utc: normalized.minuteBucketUtc,
+            delta: normalized.delta,
+            implied_vol: normalized.impliedVol,
+            gamma: normalized.gamma,
+            theta: normalized.theta,
+            vega: normalized.vega,
+            rho: normalized.rho,
+            underlying_price: normalized.underlyingPrice,
+            source_endpoint: endpoint,
+            raw_payload_json: normalized.rawPayloadJson,
+            ingested_at_utc: new Date().toISOString(),
+          });
+          if (chunk.length >= chunkSize) {
+            flushChunk();
+          }
+          if (heartbeat) {
+            heartbeat({
+              parsedRows: fetchedRows,
+              fetchedRows,
+              insertedRows,
+              bufferedRows: chunk.length,
+            });
+          }
+        },
+      });
+      const { response, durationMs } = streamResult;
+      if (!response.ok) {
+        const isThetaNoData = response.status === 472;
+        logThetaDownload({
+          env,
+          url: endpoint,
+          durationMs,
+          status: response.status,
+          ok: isThetaNoData,
+          rows: 0,
+          error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+        });
+        if (isThetaNoData) continue;
+        throw new Error(`thetadata_request_failed:${response.status}`);
+      }
+      if (Number.isFinite(durationMs)) {
+        fetchDurationMs += Math.max(0, Math.trunc(durationMs));
+      }
+      flushChunk();
+      logThetaDownload({
+        env,
+        url: endpoint,
+        durationMs,
+        status: response.status,
+        ok: true,
+        rows: fetchedRows - rowsBeforeEndpoint,
+        error: null,
+      });
+      continue;
+    }
+
+    const fetchStartedAtMs = Date.now();
     const rows = await fetchThetaRows(endpoint, { env });
-    const normalized = normalizeOptionGreeksRows(rows, dayIso);
+    fetchDurationMs += Math.max(0, Date.now() - fetchStartedAtMs);
+
+    const normalized = normalizeOptionGreeksRows(rows, dayIso, { includeRawPayload });
+    if (!Array.isArray(normalized) || normalized.length === 0) {
+      continue;
+    }
+    fetchedRows += normalized.length;
+
+    // Deduplicate within the fetched expiration payload before insert.
+    const dedupedByMinute = new Map();
     normalized.forEach((row) => {
-      collectedRows.push(row);
+      const key = `${row.symbol}|${row.expiration}|${row.strike}|${row.right}|${row.minuteBucketUtc}`;
+      dedupedByMinute.set(key, row);
     });
-  });
 
-  if (collectedRows.length === 0) return false;
-
-  const deduped = new Map();
-  collectedRows.forEach((row) => {
-    const key = `${row.symbol}|${row.expiration}|${row.strike}|${row.right}|${row.minuteBucketUtc}`;
-    deduped.set(key, row);
-  });
-
-  replaceClickHouseDayRows({
-    tableName: 'option_greeks_minute_raw',
-    whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
-    deleteParams: { symbol, dayIso },
-    columns: ['symbol', 'trade_date_utc', 'expiration', 'strike', 'option_right', 'minute_bucket_utc', 'delta', 'implied_vol', 'gamma', 'theta', 'vega', 'rho', 'underlying_price', 'source_endpoint', 'raw_payload_json', 'ingested_at_utc'],
-    rows: Array.from(deduped.values()).map((row) => ({
+    const ingestedAtIso = new Date().toISOString();
+    const mappedRows = Array.from(dedupedByMinute.values()).map((row) => ({
       symbol: row.symbol,
       trade_date_utc: dayIso,
       expiration: row.expiration,
@@ -9252,27 +9812,78 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
       vega: row.vega,
       rho: row.rho,
       underlying_price: row.underlyingPrice,
-      source_endpoint: null,
+      source_endpoint: endpoint,
       raw_payload_json: row.rawPayloadJson,
-      ingested_at_utc: new Date().toISOString(),
-    })),
-    env,
-    chunkSize: 2500,
-  });
+      ingested_at_utc: ingestedAtIso,
+    }));
+    if (mappedRows.length === 0) continue;
 
-  return true;
+    const insertStartedAtMs = Date.now();
+    insertedRows += replaceClickHouseDayRows({
+      tableName: 'option_greeks_minute_raw',
+      whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
+      deleteParams: { symbol, dayIso },
+      columns: ['symbol', 'trade_date_utc', 'expiration', 'strike', 'option_right', 'minute_bucket_utc', 'delta', 'implied_vol', 'gamma', 'theta', 'vega', 'rho', 'underlying_price', 'source_endpoint', 'raw_payload_json', 'ingested_at_utc'],
+      rows: mappedRows,
+      env,
+      chunkSize,
+      skipDelete: wroteRows,
+    });
+    insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+    wroteRows = true;
+  }
+
+  const wallDurationMs = Math.max(0, Date.now() - startedAtMs);
+  console.log('[GREEKS_SYNC_STATS]', JSON.stringify({
+    symbol,
+    dayIso,
+    expirations: expirations.length,
+    endpointFormat: syncFormat,
+    fetchedRows,
+    insertedRows,
+    fetchDurationMs,
+    insertDurationMs,
+    chunkFlushes,
+    wallDurationMs,
+    wroteRows,
+    includeRawPayload,
+    chunkSize,
+  }));
+
+  if (wroteRows) return true;
+  return hasClickHouseRowsForDay({
+    tableName: 'option_greeks_minute_raw',
+    dayColumn: 'trade_date_utc',
+    symbol,
+    dayIso,
+    env,
+  });
 }
 
 function parseClickHouseRawHydrationTargets(env = process.env) {
+  const tradeQuoteAliases = new Set([
+    'tradequote',
+    'trade_quote',
+    'trade-quote',
+    'tradequotes',
+    'trade',
+    'trades',
+    'option_trade_quote',
+    'option_trade_quote_1m',
+  ]);
+
   const raw = String(env.BACKFILL_RAW_COMPONENTS || env.BACKFILL_RAW_TARGETS || '')
     .trim()
     .toLowerCase();
   if (!raw || raw === 'all') {
     return {
+      includeTradeQuote: true,
       includeStock: true,
       includeOi: true,
       includeQuote: true,
       includeGreeks: true,
+      isExplicitSelection: false,
+      selectionTokens: ['tradequote', 'stock', 'oi', 'quote', 'greeks'],
     };
   }
 
@@ -9284,10 +9895,13 @@ function parseClickHouseRawHydrationTargets(env = process.env) {
   );
 
   return {
+    includeTradeQuote: Array.from(tokens).some((token) => tradeQuoteAliases.has(token)),
     includeStock: tokens.has('stock'),
     includeOi: tokens.has('oi'),
     includeQuote: tokens.has('quote'),
     includeGreeks: tokens.has('greeks'),
+    isExplicitSelection: true,
+    selectionTokens: Array.from(tokens).sort(),
   };
 }
 
@@ -10034,6 +10648,11 @@ async function materializeHistoricalDayInClickHouse({
   }
 
   const rawHydrationTargets = parseClickHouseRawHydrationTargets(env);
+  const tradeSyncPolicy = resolveBackfillTradeSyncMode({
+    rawHydrationTargets,
+    env,
+  });
+  const explicitTradeQuoteSelection = hasExplicitRawTradeQuoteSelection(rawHydrationTargets);
 
   ensureClickHouseSupportSchema(env);
   let existingDayCache = getClickHouseDayCache({ symbol, dayIso, env });
@@ -10057,11 +10676,60 @@ async function materializeHistoricalDayInClickHouse({
 
   const shouldSyncTrades = !modeEnrichOnly
     && (
-      (forceRecompute && shouldForceTradeSyncOnBackfill(env))
-      || !existingDayCache
-      || existingDayCache.cacheStatus !== DAY_CACHE_STATUS_FULL
-      || cachedRows === 0
+      tradeSyncPolicy.mode === 'force'
+      || (
+        tradeSyncPolicy.mode === 'auto'
+        && (
+          (explicitTradeQuoteSelection && forceRecompute)
+          || !existingDayCache
+          || existingDayCache.cacheStatus !== DAY_CACHE_STATUS_FULL
+          || cachedRows === 0
+        )
+      )
     );
+
+  if (rawHydrationTargets?.isExplicitSelection === true) {
+    console.log('[BACKFILL_RAW_COMPONENTS_TRADE_SYNC_POLICY]', JSON.stringify({
+      symbol,
+      dayIso,
+      includeTradeQuote: Boolean(rawHydrationTargets.includeTradeQuote),
+      tradeSyncMode: tradeSyncPolicy.mode,
+      source: tradeSyncPolicy.source,
+      selectionTokens: rawHydrationTargets.selectionTokens || [],
+      legacyForceTradeSync: shouldForceTradeSyncOnBackfill(env),
+      forceRecompute: Boolean(forceRecompute),
+    }));
+    if (!rawHydrationTargets.includeTradeQuote && shouldForceTradeSyncOnBackfill(env) && tradeSyncPolicy.mode === 'skip') {
+      console.log('[BACKFILL_RAW_COMPONENTS_FORCE_TRADE_SYNC_IGNORED]', JSON.stringify({
+        symbol,
+        dayIso,
+        includeTradeQuote: Boolean(rawHydrationTargets.includeTradeQuote),
+        tradeSyncMode: tradeSyncPolicy.mode,
+        source: tradeSyncPolicy.source,
+        selectionTokens: rawHydrationTargets.selectionTokens || [],
+        forceRecompute: Boolean(forceRecompute),
+      }));
+    }
+    if (rawHydrationTargets.includeTradeQuote && tradeSyncPolicy.mode === 'skip') {
+      console.log('[BACKFILL_RAW_COMPONENTS_TRADEQUOTE_SYNC_SKIPPED]', JSON.stringify({
+        symbol,
+        dayIso,
+        includeTradeQuote: Boolean(rawHydrationTargets.includeTradeQuote),
+        tradeSyncMode: tradeSyncPolicy.mode,
+        source: tradeSyncPolicy.source,
+        selectionTokens: rawHydrationTargets.selectionTokens || [],
+        forceRecompute: Boolean(forceRecompute),
+      }));
+    }
+  } else if (shouldForceTradeSyncOnBackfill(env) && tradeSyncPolicy.mode === 'skip') {
+    console.log('[BACKFILL_FORCE_TRADE_SYNC_IGNORED]', JSON.stringify({
+      symbol,
+      dayIso,
+      tradeSyncMode: tradeSyncPolicy.mode,
+      source: tradeSyncPolicy.source,
+      forceRecompute: Boolean(forceRecompute),
+    }));
+  }
 
   if (shouldSyncTrades) {
     try {

@@ -1,6 +1,6 @@
 # Phenix Architecture (Current Implementation)
 
-Last updated: 2026-03-10
+Last updated: 2026-03-11
 
 ## 1. Architecture Purpose
 Support a cache-first, deterministic options-flow backend where `sigScore` is computed from versioned rules and enriched market context, with strict quality accounting and explainability.
@@ -110,9 +110,13 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
    - `option_trades`
    - `option_quote_minute_raw`
    - `stock_ohlc_minute_raw`
-2. Enriched plane:
+2. Plane role split:
+   - `option_trades` is the base day-cache stream (trade/trade-quote sync gate).
+   - `BACKFILL_RAW_COMPONENTS` supports `tradequote` plus supplemental hydration tokens (`stock|quote|oi|greeks`).
+   - For explicit component selections that exclude `tradequote`, trade sync defaults to skip unless explicitly overridden.
+3. Enriched plane:
    - `option_trade_enriched`
-3. Status/attempt planes:
+4. Status/attempt planes:
    - `option_download_chunk_status`
    - `option_enrich_chunk_status`
    - `option_trade_day_cache`
@@ -135,9 +139,26 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
 2. Stream liveness: `[THETA_STREAM_HEARTBEAT]` with parsed/inserted row counters.
 3. Per-job slot coverage (optional): `BACKFILL_GAP_TELEMETRY=1` emits expected/actual/missing slot summaries.
 4. Batch enrichment progress: `[ENRICH_BATCH_PROGRESS]` for minute-bucket throughput.
+5. Raw-component trade-sync policy telemetry:
+   - `[BACKFILL_RAW_COMPONENTS_TRADE_SYNC_POLICY]` is emitted for explicit `BACKFILL_RAW_COMPONENTS` runs.
+   - `[BACKFILL_RAW_COMPONENTS_FORCE_TRADE_SYNC_IGNORED]` is emitted when legacy force is ignored because `tradequote` was not selected.
+   - Operational policy: monitor non-skip `tradequote` override usage; if it remains zero across backfill waves, remove the non-skip override path.
+6. ClickHouse mutation-budget telemetry:
+   - `[CLICKHOUSE_DELETE_BUDGET_SPIKE]` marks delete-latency spikes.
+   - `[CLICKHOUSE_DELETE_BUDGET_DOWNGRADE]` marks table-level downgrade to insert-only mode.
+   - `[CLICKHOUSE_DELETE_BUDGET_SKIP]` marks subsequent skipped deletes for downgraded tables.
+   - `[CLICKHOUSE_DELETE_AUDIT]` carries mutation outcome plus budget-state fields.
 
 ### 11.7 Operational Loop Contract
 1. Download -> verify -> enrich -> verify for the same day/batch before moving forward.
 2. Requeue only failed symbol-days/workers; avoid restarting healthy workers.
 3. Quote-hole pattern (`quoteSlots == tradeSlots`, both below quote expectation) should trigger quote-only full refresh mode.
 4. Benchmark each wave by normalized throughput and slot closure before scaling to broader ranges.
+5. Quote remediation strategy:
+   - Build missing-minute contiguous windows from existing quote-minute coverage.
+   - In force quote mode (`BACKFILL_FORCE_QUOTE_FULL=1`), prefer these gap windows first to reduce transfer volume and runtime.
+   - Fall back to full-day windows only when gap planning cannot be applied efficiently (for example, excessive window fragmentation).
+6. Mutation budget protection strategy:
+   - Keep proactive insert-only defaults enabled for known-safe ReplacingMergeTree paths.
+   - For delete-required paths, monitor delete latency and auto-downgrade only allowlisted safe tables after repeated spikes.
+   - Keep strict delete semantics for core MergeTree fact tables (`option_trades`, `option_trade_enriched`) unless explicitly overridden.
