@@ -56,7 +56,7 @@ BACKFILL_FORCE=1 \
 THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
 BACKFILL_RAM_BUDGET_MB=10240 \
-BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
+BACKFILL_NODE_MAX_OLD_SPACE_MB=1536 \
 CLICKHOUSE_DELETE_MUTATION_SYNC=1 \
 THETADATA_HISTORICAL_OPTION_FORMAT=ndjson \
 THETADATA_OPTION_QUOTE_FORMAT=ndjson \
@@ -75,7 +75,7 @@ BACKFILL_FORCE=1 \
 THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 BACKFILL_WORKERS=4 \
 BACKFILL_RAM_BUDGET_MB=10240 \
-BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
+BACKFILL_NODE_MAX_OLD_SPACE_MB=1536 \
 CLICKHOUSE_DELETE_MUTATION_SYNC=1 \
 THETADATA_HISTORICAL_OPTION_FORMAT=ndjson \
 THETADATA_OPTION_QUOTE_FORMAT=ndjson \
@@ -129,7 +129,7 @@ THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 DOWNLOAD_WORKERS=4 \
 ENRICH_WORKERS=4 \
 BACKFILL_RAM_BUDGET_MB=10240 \
-BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
+BACKFILL_NODE_MAX_OLD_SPACE_MB=1536 \
 PIPELINE_STAGE_OVERLAP=1 \
 bash scripts/backfill/run-clickhouse-backfill-range.sh
 ```
@@ -146,7 +146,7 @@ THETADATA_MAX_CONCURRENT_CONNECTIONS=4 \
 DOWNLOAD_WORKERS=4 \
 ENRICH_WORKERS=2 \
 BACKFILL_RAM_BUDGET_MB=10240 \
-BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
+BACKFILL_NODE_MAX_OLD_SPACE_MB=1536 \
 PIPELINE_STAGE_OVERLAP=1 \
 THETADATA_STREAM_IDLE_TIMEOUT_MS=1800000 \
 bash scripts/backfill/run-clickhouse-backfill-range.sh
@@ -216,6 +216,7 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `THETADATA_STREAM_IDLE_TIMEOUT_MS`: client idle timeout for NDJSON stream.
   - `1800000` (30 min) is safe default.
   - `0` disables client idle timeout (use only if external watchdog exists).
+- `THETADATA_DOWNLOAD_TRACE=1` (default): emit `[THETA_DOWNLOAD]` for every Theta request with rows and `bytesDownloaded`.
 - `THETADATA_LARGE_SYMBOLS`: comma list or `all`.
 - `THETADATA_LARGE_SYMBOL_WINDOW_MINUTES`: window split for heavy symbols (default 60).
 
@@ -257,6 +258,7 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `CLICKHOUSE_CONNECT_TIMEOUT_SEC`: connection timeout.
 - `CLICKHOUSE_SEND_TIMEOUT_SEC`: send timeout.
 - `CLICKHOUSE_RECEIVE_TIMEOUT_SEC`: receive timeout.
+- Pipeline runner (`scripts/backfill/backfill-clickhouse-historical-days-pipeline.sh`) passes the above timeout vars plus `CLICKHOUSE_DELETE_MUTATION_SYNC` to every worker process.
 - `CLICKHOUSE_ENRICH_STREAM_READ=1`: stream read trade rows for enrichment.
 - `CLICKHOUSE_ENRICH_STREAM_WRITE=1`: stream write enriched rows.
 - `CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE`: insert chunk size (recommended 2000-5000).

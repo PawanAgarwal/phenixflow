@@ -82,6 +82,7 @@ function main() {
   const totals = {
     thetaDownloadDurationMs: 0,
     thetaDownloadRows: 0,
+    thetaDownloadBytes: 0,
     thetaDownloadRequests: 0,
     tradeSyncJobs: 0,
     tradeParsedRows: 0,
@@ -126,16 +127,19 @@ function main() {
           okRequests: 0,
           errorRequests: 0,
           rows: 0,
+          bytes: 0,
           durationMs: 0,
         });
         agg.requests += 1;
         agg.okRequests += payload.ok === true ? 1 : 0;
         agg.errorRequests += payload.ok === true ? 0 : 1;
         agg.rows += asNumber(payload.rows);
+        agg.bytes += asNumber(payload.bytesDownloaded);
         agg.durationMs += asNumber(payload.durationMs);
 
         totals.thetaDownloadRequests += 1;
         totals.thetaDownloadRows += asNumber(payload.rows);
+        totals.thetaDownloadBytes += asNumber(payload.bytesDownloaded);
         totals.thetaDownloadDurationMs += asNumber(payload.durationMs);
         return;
       }
@@ -200,6 +204,20 @@ function main() {
     });
   });
 
+  const thetaByApiRows = mapToSortedArray(thetaByApi, (a, b) => b.durationMs - a.durationMs)
+    .map((row) => ({
+      ...row,
+      rowsPerSec: row.durationMs > 0
+        ? Number((row.rows / (row.durationMs / 1000)).toFixed(2))
+        : 0,
+      bytesPerSec: row.durationMs > 0
+        ? Number((row.bytes / (row.durationMs / 1000)).toFixed(2))
+        : 0,
+      mibPerSec: row.durationMs > 0
+        ? Number(((row.bytes / (1024 * 1024)) / (row.durationMs / 1000)).toFixed(3))
+        : 0,
+    }));
+
   const summary = {
     runDir,
     parsedAt: new Date().toISOString(),
@@ -211,11 +229,20 @@ function main() {
       avgThetaRowsPerRequest: totals.thetaDownloadRequests > 0
         ? Number((totals.thetaDownloadRows / totals.thetaDownloadRequests).toFixed(2))
         : 0,
+      avgThetaBytesPerRequest: totals.thetaDownloadRequests > 0
+        ? Number((totals.thetaDownloadBytes / totals.thetaDownloadRequests).toFixed(2))
+        : 0,
       avgThetaMsPerRequest: totals.thetaDownloadRequests > 0
         ? Number((totals.thetaDownloadDurationMs / totals.thetaDownloadRequests).toFixed(2))
         : 0,
       thetaRowsPerSec: totals.thetaDownloadDurationMs > 0
         ? Number((totals.thetaDownloadRows / (totals.thetaDownloadDurationMs / 1000)).toFixed(2))
+        : 0,
+      thetaBytesPerSec: totals.thetaDownloadDurationMs > 0
+        ? Number((totals.thetaDownloadBytes / (totals.thetaDownloadDurationMs / 1000)).toFixed(2))
+        : 0,
+      thetaMiBPerSec: totals.thetaDownloadDurationMs > 0
+        ? Number((((totals.thetaDownloadBytes / (1024 * 1024)) / (totals.thetaDownloadDurationMs / 1000)).toFixed(3)))
         : 0,
       quoteRowsPerSecInsertPhase: totals.quoteInsertDurationMs > 0
         ? Number((totals.quoteInsertedRows / (totals.quoteInsertDurationMs / 1000)).toFixed(2))
@@ -230,7 +257,7 @@ function main() {
         ? Number((totals.deleteAuditOps / (totals.deleteAuditDurationMs / 1000)).toFixed(2))
         : 0,
     },
-    thetaByApi: mapToSortedArray(thetaByApi, (a, b) => b.durationMs - a.durationMs),
+    thetaByApi: thetaByApiRows,
     deleteByTable: mapToSortedArray(deleteByTable, (a, b) => b.durationMs - a.durationMs),
   };
 
@@ -245,6 +272,7 @@ function main() {
     parsedLines: summary.parsedLines,
     parsedEvents: summary.parsedEvents,
     thetaRowsPerSec: summary.derived.thetaRowsPerSec,
+    thetaMiBPerSec: summary.derived.thetaMiBPerSec,
     tradeInsertRowsPerSec: summary.derived.tradeRowsPerSecInsertPhase,
     quoteInsertRowsPerSec: summary.derived.quoteRowsPerSecInsertPhase,
     stockInsertRowsPerSec: summary.derived.stockRowsPerSecInsertPhase,

@@ -1,7 +1,7 @@
 {
-  "startedAt": "2026-03-11T05:36:33.567Z",
+  "startedAt": "2026-03-12T00:13:25.845Z",
   "dbPath": "clickhouse://127.0.0.1:9000/options",
-  "inputPath": "/tmp/aapl-2025-11-04.tsv",
+  "inputPath": "/tmp/tradequote-canary.tsv",
   "writeBackend": "clickhouse",
   "mode": "download",
   "force": true,
@@ -20,14 +20,14 @@
   "retriedJobs": 0,
   "retryCount": 0,
   "failedJobs": 0,
-  "totalFetchedRows": 0,
+  "totalFetchedRows": 708,
   "totalEnrichedRows": 0,
-  "totalRawTradeRows": 99067,
-  "totalRawStockRows": 406,
-  "totalRawOiRows": 2708,
-  "totalRawQuoteRows": 87505,
+  "totalRawTradeRows": 120008,
+  "totalRawStockRows": 0,
+  "totalRawOiRows": 0,
+  "totalRawQuoteRows": 0,
   "totalRawGreeksRows": 0,
   "failures": [],
   "loopExitReason": "completed",
-  "completedAt": "2026-03-11T05:36:39.048Z"
+  "completedAt": "2026-03-12T00:13:37.248Z"
 }

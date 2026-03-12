@@ -135,7 +135,7 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
 3. Unattempted symbol-days are tracked separately for scheduling, not as failures.
 
 ### 11.6 Observability and Telemetry
-1. Endpoint logs: `[THETA_DOWNLOAD]` with API, status, duration, rows.
+1. Endpoint logs: `[THETA_DOWNLOAD]` with API, status, duration, rows, and `bytesDownloaded`.
 2. Stream liveness: `[THETA_STREAM_HEARTBEAT]` with parsed/inserted row counters.
 3. Per-job slot coverage (optional): `BACKFILL_GAP_TELEMETRY=1` emits expected/actual/missing slot summaries.
 4. Batch enrichment progress: `[ENRICH_BATCH_PROGRESS]` for minute-bucket throughput.

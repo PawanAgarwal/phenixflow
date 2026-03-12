@@ -1575,7 +1575,7 @@ async function resolveThetaCalendarSessionWindowForDay(dayIso, { env = process.e
 
   let sessionWindow = null;
   try {
-    const { response, body, durationMs } = await fetchTextWithTimeout(endpoint, {
+    const { response, body, durationMs, bytesDownloaded } = await fetchTextWithTimeout(endpoint, {
       env,
       timeoutMs: parseThetaCalendarTimeoutMs(env),
     });
@@ -1589,6 +1589,7 @@ async function resolveThetaCalendarSessionWindowForDay(dayIso, { env = process.e
       status: response.status,
       ok: response.ok,
       rows: sessionWindow ? 1 : 0,
+      bytesDownloaded,
       error: response.ok ? null : `http_${response.status}`,
     });
   } catch {
@@ -1738,6 +1739,7 @@ function logThetaDownload({
   status,
   ok,
   rows = null,
+  bytesDownloaded = null,
   error = null,
 }) {
   if (!shouldTraceThetaDownloads(env)) return;
@@ -1756,6 +1758,7 @@ function logThetaDownload({
     status,
     ok,
     rows,
+    bytesDownloaded,
     error,
   }));
 }
@@ -1826,9 +1829,11 @@ async function fetchTextWithTimeout(url, {
 
   try {
     const response = await fetch(url, requestOptions);
-    const body = await response.text();
+    const arrayBuffer = await response.arrayBuffer();
+    const bytesDownloaded = Number(arrayBuffer?.byteLength || 0);
+    const body = new TextDecoder().decode(arrayBuffer);
     const durationMs = Date.now() - startedAt;
-    return { response, body, durationMs };
+    return { response, body, durationMs, bytesDownloaded };
   } catch (error) {
     const durationMs = Date.now() - startedAt;
     if (error && error.name === 'AbortError') {
@@ -1839,6 +1844,7 @@ async function fetchTextWithTimeout(url, {
         status: 0,
         ok: false,
         rows: 0,
+        bytesDownloaded: 0,
         error: `thetadata_request_timeout:${timeoutMs}`,
       });
       throw new Error(`thetadata_request_timeout:${timeoutMs}`);
@@ -1850,6 +1856,7 @@ async function fetchTextWithTimeout(url, {
       status: 0,
       ok: false,
       rows: 0,
+      bytesDownloaded: 0,
       error: error.message || 'request_failed',
     });
     throw error;
@@ -1870,8 +1877,9 @@ function parseThetaUrlFormat(url) {
 async function streamNdjsonRowsFromResponse(response, onRow, { onChunk = null } = {}) {
   if (!response?.body || typeof response.body.getReader !== 'function') {
     const body = await response.text();
-    if (typeof onChunk === 'function' && body.length > 0) {
-      onChunk(body.length);
+    const bytesDownloaded = Buffer.byteLength(body);
+    if (typeof onChunk === 'function' && bytesDownloaded > 0) {
+      onChunk(bytesDownloaded);
     }
     let rowCount = 0;
     parseJsonRows(body).forEach((row) => {
@@ -1879,19 +1887,23 @@ async function streamNdjsonRowsFromResponse(response, onRow, { onChunk = null } 
       onRow(row);
       rowCount += 1;
     });
-    return rowCount;
+    return { rowCount, bytesDownloaded };
   }
 
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = '';
   let rowCount = 0;
+  let bytesDownloaded = 0;
 
   while (true) {
     const { value, done } = await reader.read();
     if (done) break;
     if (typeof onChunk === 'function' && value && value.length > 0) {
       onChunk(value.length);
+    }
+    if (value && value.length > 0) {
+      bytesDownloaded += value.length;
     }
     buffer += decoder.decode(value, { stream: true });
 
@@ -1928,7 +1940,7 @@ async function streamNdjsonRowsFromResponse(response, onRow, { onChunk = null } 
     }
   }
 
-  return rowCount;
+  return { rowCount, bytesDownloaded };
 }
 
 async function fetchThetaNdjsonRows(url, {
@@ -1964,16 +1976,22 @@ async function fetchThetaNdjsonRows(url, {
     }
     const response = await fetch(url, requestOptions);
     let rowCount = 0;
+    let bytesDownloaded = 0;
     if (response.ok && typeof onRow === 'function') {
-      rowCount = await streamNdjsonRowsFromResponse(response, onRow, { onChunk: resetIdleTimer });
+      const streamed = await streamNdjsonRowsFromResponse(response, onRow, { onChunk: resetIdleTimer });
+      rowCount = Number(streamed?.rowCount || 0);
+      bytesDownloaded = Number(streamed?.bytesDownloaded || 0);
     } else if (response.ok) {
-      rowCount = await streamNdjsonRowsFromResponse(response, () => {}, { onChunk: resetIdleTimer });
+      const streamed = await streamNdjsonRowsFromResponse(response, () => {}, { onChunk: resetIdleTimer });
+      rowCount = Number(streamed?.rowCount || 0);
+      bytesDownloaded = Number(streamed?.bytesDownloaded || 0);
     } else {
       resetIdleTimer();
-      await response.arrayBuffer();
+      const bodyBuffer = await response.arrayBuffer();
+      bytesDownloaded = Number(bodyBuffer?.byteLength || 0);
     }
     const durationMs = Date.now() - startedAt;
-    return { response, rowCount, durationMs };
+    return { response, rowCount, durationMs, bytesDownloaded };
   } catch (error) {
     const durationMs = Date.now() - startedAt;
     if (error && error.name === 'AbortError') {
@@ -1987,6 +2005,7 @@ async function fetchThetaNdjsonRows(url, {
         status: 0,
         ok: false,
         rows: 0,
+        bytesDownloaded: 0,
         error: `${timeoutLabel}:${timeoutMs}`,
       });
       throw new Error(`${timeoutLabel}:${timeoutMs}`);
@@ -1998,6 +2017,7 @@ async function fetchThetaNdjsonRows(url, {
       status: 0,
       ok: false,
       rows: 0,
+      bytesDownloaded: 0,
       error: error.message || 'request_failed',
     });
     throw error;
@@ -2010,7 +2030,7 @@ async function fetchThetaMetricNumber(url, candidateKeys) {
   if (!url) return null;
 
   try {
-    const { response, body, durationMs } = await fetchTextWithTimeout(url);
+    const { response, body, durationMs, bytesDownloaded } = await fetchTextWithTimeout(url);
     const rows = response.ok ? parseJsonRows(body).length : 0;
     const value = response.ok ? extractMetricFromResponse(body, candidateKeys) : null;
     logThetaDownload({
@@ -2019,6 +2039,7 @@ async function fetchThetaMetricNumber(url, candidateKeys) {
       status: response.status,
       ok: response.ok,
       rows,
+      bytesDownloaded,
       error: response.ok ? null : `http_${response.status}`,
     });
     return value;
@@ -2029,6 +2050,7 @@ async function fetchThetaMetricNumber(url, candidateKeys) {
       status: 0,
       ok: false,
       rows: 0,
+      bytesDownloaded: 0,
       error: error.message || 'request_failed',
     });
     return null;
@@ -2039,7 +2061,7 @@ async function fetchThetaRows(url, { env = process.env, timeoutMs = null } = {})
   if (!url) return [];
 
   try {
-    const { response, body, durationMs } = await fetchTextWithTimeout(url, {
+    const { response, body, durationMs, bytesDownloaded } = await fetchTextWithTimeout(url, {
       env,
       timeoutMs: timeoutMs ?? parseTimeoutMs(env),
     });
@@ -2051,6 +2073,7 @@ async function fetchThetaRows(url, { env = process.env, timeoutMs = null } = {})
       status: response.status,
       ok: response.ok,
       rows: rows.length,
+      bytesDownloaded,
       error: response.ok ? null : `http_${response.status}`,
     });
     return rows;
@@ -2062,6 +2085,7 @@ async function fetchThetaRows(url, { env = process.env, timeoutMs = null } = {})
       status: 0,
       ok: false,
       rows: 0,
+      bytesDownloaded: 0,
       error: error.message || 'request_failed',
     });
     return [];
@@ -4515,7 +4539,7 @@ async function syncThetaTradesToSqlite({
             }
           },
         });
-        const { response, durationMs } = streamResult;
+        const { response, durationMs, bytesDownloaded } = streamResult;
         if (!response.ok) {
           const isThetaNoData = response.status === 472;
           logThetaDownload({
@@ -4525,6 +4549,7 @@ async function syncThetaTradesToSqlite({
             status: response.status,
             ok: isThetaNoData,
             rows: 0,
+            bytesDownloaded,
             error: isThetaNoData ? 'no_data' : `http_${response.status}`,
           });
           if (isThetaNoData) {
@@ -4542,13 +4567,14 @@ async function syncThetaTradesToSqlite({
           status: response.status,
           ok: true,
           rows: fetchedRows - fetchedBeforeEndpoint,
+          bytesDownloaded,
           error: null,
         });
         continue;
       }
 
       const textResult = await fetchTextWithTimeout(endpoint, { env });
-      const { response, durationMs } = textResult;
+      const { response, durationMs, bytesDownloaded } = textResult;
       if (!response.ok) {
         const isThetaNoData = response.status === 472;
         logThetaDownload({
@@ -4558,6 +4584,7 @@ async function syncThetaTradesToSqlite({
           status: response.status,
           ok: isThetaNoData,
           rows: 0,
+          bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) {
@@ -4579,6 +4606,7 @@ async function syncThetaTradesToSqlite({
         status: response.status,
         ok: true,
         rows: normalizedRows.length,
+        bytesDownloaded,
         error: null,
       });
     }
@@ -6262,7 +6290,7 @@ async function ensureOiRawForDay(db, symbol, dayIso, rawRows, env = process.env,
   const bulkOiEndpoint = resolveThetaOiBulkEndpoint(symbol, dayIso, env);
   if (bulkOiEndpoint) {
     try {
-      const { response, body, durationMs } = await fetchTextWithTimeout(bulkOiEndpoint, { env });
+      const { response, body, durationMs, bytesDownloaded } = await fetchTextWithTimeout(bulkOiEndpoint, { env });
       if (response.ok) {
         bulkOiSucceeded = true;
         oiDefaultsToZero = true;
@@ -6274,6 +6302,7 @@ async function ensureOiRawForDay(db, symbol, dayIso, rawRows, env = process.env,
           status: response.status,
           ok: true,
           rows: oiRows.length,
+          bytesDownloaded,
           error: null,
         });
         const normalizedBulkRows = normalizeOptionOpenInterestRows(oiRows);
@@ -6291,6 +6320,7 @@ async function ensureOiRawForDay(db, symbol, dayIso, rawRows, env = process.env,
           status: response.status,
           ok: false,
           rows: 0,
+          bytesDownloaded,
           error: `http_${response.status}`,
         });
       }
@@ -6302,6 +6332,7 @@ async function ensureOiRawForDay(db, symbol, dayIso, rawRows, env = process.env,
         status: 0,
         ok: false,
         rows: 0,
+        bytesDownloaded: 0,
         error: error.message || 'request_failed',
       });
     }
@@ -8779,7 +8810,7 @@ async function syncThetaTradesToClickHouse({
           }
         },
       });
-      const { response, durationMs } = streamResult;
+      const { response, durationMs, bytesDownloaded } = streamResult;
       if (!response.ok) {
         const isThetaNoData = response.status === 472;
         logThetaDownload({
@@ -8789,6 +8820,7 @@ async function syncThetaTradesToClickHouse({
           status: response.status,
           ok: isThetaNoData,
           rows: 0,
+          bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) {
@@ -8809,13 +8841,14 @@ async function syncThetaTradesToClickHouse({
         status: response.status,
         ok: true,
         rows: fetchedRows - fetchedBeforeEndpoint,
+        bytesDownloaded,
         error: null,
       });
     }
   } else {
     for (const endpoint of endpoints) {
       const textResult = await fetchTextWithTimeout(endpoint, { env });
-      const { response, durationMs } = textResult;
+      const { response, durationMs, bytesDownloaded } = textResult;
       if (!response.ok) {
         const isThetaNoData = response.status === 472;
         logThetaDownload({
@@ -8825,6 +8858,7 @@ async function syncThetaTradesToClickHouse({
           status: response.status,
           ok: isThetaNoData,
           rows: 0,
+          bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) {
@@ -8878,6 +8912,7 @@ async function syncThetaTradesToClickHouse({
         status: response.status,
         ok: true,
         rows: normalizedRows.length,
+        bytesDownloaded,
         error: null,
       });
     }
@@ -9376,7 +9411,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           }
         },
       });
-      const { response, durationMs } = streamResult;
+      const { response, durationMs, bytesDownloaded } = streamResult;
       if (!response.ok) {
         const isThetaNoData = response.status === 472;
         logThetaDownload({
@@ -9386,6 +9421,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           status: response.status,
           ok: isThetaNoData,
           rows: 0,
+          bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) continue;
@@ -9403,12 +9439,13 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
         status: response.status,
         ok: true,
         rows: parsedRows - parsedBeforeEndpoint,
+        bytesDownloaded,
         error: null,
       });
     }
   } else {
     for (const endpoint of endpoints) {
-      const { response, body, durationMs } = await fetchTextWithTimeout(endpoint, {
+      const { response, body, durationMs, bytesDownloaded } = await fetchTextWithTimeout(endpoint, {
         env,
         timeoutMs: parseOptionQuoteTimeoutMs(env),
       });
@@ -9421,6 +9458,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           status: response.status,
           ok: isThetaNoData,
           rows: 0,
+          bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) continue;
@@ -9463,6 +9501,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
         status: response.status,
         ok: true,
         rows: rows.length,
+        bytesDownloaded,
         error: null,
       });
     }
@@ -9510,7 +9549,7 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
   let bulkRows = [];
   if (bulkEndpoint) {
     try {
-      const { response, body, durationMs } = await fetchTextWithTimeout(bulkEndpoint, { env });
+      const { response, body, durationMs, bytesDownloaded } = await fetchTextWithTimeout(bulkEndpoint, { env });
       if (response.ok) {
         oiDefaultsToZero = true;
         bulkRows = normalizeOptionOpenInterestRows(parseJsonRows(body));
@@ -9521,6 +9560,7 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
           status: response.status,
           ok: true,
           rows: bulkRows.length,
+          bytesDownloaded,
           error: null,
         });
       } else {
@@ -9531,6 +9571,7 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
           status: response.status,
           ok: false,
           rows: 0,
+          bytesDownloaded,
           error: `http_${response.status}`,
         });
       }
@@ -9542,6 +9583,7 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
         status: 0,
         ok: false,
         rows: 0,
+        bytesDownloaded: 0,
         error: error.message || 'request_failed',
       });
     }
@@ -9749,7 +9791,7 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
           }
         },
       });
-      const { response, durationMs } = streamResult;
+      const { response, durationMs, bytesDownloaded } = streamResult;
       if (!response.ok) {
         const isThetaNoData = response.status === 472;
         logThetaDownload({
@@ -9759,6 +9801,7 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
           status: response.status,
           ok: isThetaNoData,
           rows: 0,
+          bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
         if (isThetaNoData) continue;
@@ -9775,6 +9818,7 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
         status: response.status,
         ok: true,
         rows: fetchedRows - rowsBeforeEndpoint,
+        bytesDownloaded,
         error: null,
       });
       continue;
