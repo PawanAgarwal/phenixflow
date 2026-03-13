@@ -59,6 +59,24 @@ ENGINE = ReplacingMergeTree(ingested_at_utc)
 PARTITION BY toYYYYMM(trade_date_utc)
 ORDER BY (symbol, trade_date_utc, expiration, strike, option_right);
 
+CREATE TABLE IF NOT EXISTS options.reference_sofr_daily
+(
+  effective_date Date,
+  rate_percent Float64,
+  rate_decimal Float64,
+  percentile_1 Nullable(Float64),
+  percentile_25 Nullable(Float64),
+  percentile_75 Nullable(Float64),
+  percentile_99 Nullable(Float64),
+  volume_billions Nullable(Float64),
+  revision_indicator Nullable(String),
+  source_url String,
+  ingested_at_utc DateTime64(3, 'UTC')
+)
+ENGINE = ReplacingMergeTree(ingested_at_utc)
+PARTITION BY toYYYYMM(effective_date)
+ORDER BY (effective_date);
+
 CREATE TABLE IF NOT EXISTS options.option_quote_minute_raw
 (
   symbol LowCardinality(String),
@@ -103,6 +121,45 @@ CREATE TABLE IF NOT EXISTS options.option_greeks_minute_raw
 ENGINE = ReplacingMergeTree(ingested_at_utc)
 PARTITION BY toYYYYMM(trade_date_utc)
 ORDER BY (symbol, expiration, strike, option_right, trade_date_utc, minute_bucket_utc);
+
+CREATE TABLE IF NOT EXISTS options.option_calculated_greeks_minute
+(
+  symbol LowCardinality(String),
+  trade_date_utc Date,
+  expiration Date,
+  strike Float64,
+  option_right Enum8('CALL' = 1, 'PUT' = -1),
+  minute_bucket_utc DateTime64(3, 'UTC'),
+  bid Nullable(Float64),
+  ask Nullable(Float64),
+  last Nullable(Float64),
+  mid_price Nullable(Float64),
+  underlying_price Nullable(Float64),
+  risk_free_rate Nullable(Float64),
+  dividend_yield Nullable(Float64),
+  time_to_expiry_years Nullable(Float64),
+  implied_vol Nullable(Float64),
+  delta Nullable(Float64),
+  gamma Nullable(Float64),
+  theta_annual Nullable(Float64),
+  theta_per_day Nullable(Float64),
+  vega_annual Nullable(Float64),
+  vega_per_1pct Nullable(Float64),
+  rho_annual Nullable(Float64),
+  rho_per_1pct Nullable(Float64),
+  model_price Nullable(Float64),
+  price_error_abs Nullable(Float64),
+  iv_low Nullable(Float64),
+  iv_high Nullable(Float64),
+  calc_status LowCardinality(String),
+  calc_run_id String,
+  calc_version LowCardinality(String),
+  ingested_at_utc DateTime64(3, 'UTC')
+)
+ENGINE = ReplacingMergeTree(ingested_at_utc)
+PARTITION BY toYYYYMM(trade_date_utc)
+ORDER BY (symbol, expiration, strike, option_right, trade_date_utc, minute_bucket_utc)
+SETTINGS deduplicate_merge_projection_mode = 'rebuild';
 
 CREATE TABLE IF NOT EXISTS options.option_trade_enriched
 (
@@ -381,6 +438,34 @@ CREATE TABLE IF NOT EXISTS options.option_enrich_chunk_status
 ENGINE = ReplacingMergeTree(updated_at_utc)
 PARTITION BY toYYYYMM(trade_date_utc)
 ORDER BY (symbol, trade_date_utc, stream_name, chunk_start_utc);
+
+CREATE TABLE IF NOT EXISTS options.option_calculated_greeks_day_status
+(
+  symbol LowCardinality(String),
+  trade_date_utc Date,
+  calc_run_id String,
+  calc_version LowCardinality(String),
+  status LowCardinality(String),
+  source_rate Nullable(Float64),
+  source_rate_date Nullable(Date),
+  started_at_utc DateTime64(3, 'UTC'),
+  completed_at_utc Nullable(DateTime64(3, 'UTC')),
+  elapsed_ms UInt64,
+  inserted_rows UInt64,
+  solved_rows UInt64,
+  missing_underlying_rows UInt64,
+  missing_price_rows UInt64,
+  invalid_input_rows UInt64,
+  expired_rows UInt64,
+  unsolved_rows UInt64,
+  avg_price_error Nullable(Float64),
+  p95_price_error Nullable(Float64),
+  error_message Nullable(String),
+  updated_at_utc DateTime64(3, 'UTC')
+)
+ENGINE = ReplacingMergeTree(updated_at_utc)
+PARTITION BY toYYYYMM(trade_date_utc)
+ORDER BY (symbol, trade_date_utc, calc_run_id);
 
 CREATE TABLE IF NOT EXISTS options.option_symbol_status
 (

@@ -15,6 +15,7 @@ const {
   queryRowsSync: queryClickHouseRowsSync,
   execQuerySync: execClickHouseQuerySync,
   insertJsonRowsSync: insertClickHouseJsonRowsSync,
+  insertJsonRowsAsync: insertClickHouseJsonRowsAsync,
 } = require('./storage/clickhouse');
 
 const {
@@ -80,6 +81,14 @@ const DEFAULT_THETADATA_LARGE_SYMBOLS = ['SPY', 'QQQ'];
 const DEFAULT_THETADATA_LARGE_SYMBOL_WINDOW_MINUTES = 60;
 const DEFAULT_THETADATA_CALENDAR_CLOSE_PAD_MINUTES = 15;
 const DEFAULT_BACKFILL_QUOTE_GAP_MAX_WINDOWS = 48;
+const DEFAULT_BACKFILL_GREEKS_GAP_MAX_WINDOWS = 24;
+const DEFAULT_THETADATA_GREEKS_WINDOW_MINUTES_MIN = 15;
+const DEFAULT_THETADATA_GREEKS_WINDOW_MINUTES_MAX = 391;
+const DEFAULT_THETADATA_GREEKS_ADAPTIVE_HIGH_EXPIRATIONS = 400;
+const DEFAULT_THETADATA_GREEKS_ADAPTIVE_VERY_HIGH_EXPIRATIONS = 800;
+const DEFAULT_THETADATA_GREEKS_ADAPTIVE_LOW_EXPIRATIONS = 120;
+const DEFAULT_THETADATA_GREEKS_RATE_TYPE = 'sofr';
+const THETADATA_GREEKS_RATE_TYPE_ALLOWLIST = new Set(['sofr', 'bond', 'federal_funds', 'zero']);
 const DEFAULT_SUPPLEMENTAL_CACHE_TTL_HOURS = 24;
 const DEFAULT_SUPPLEMENTAL_CONCURRENCY = 4;
 const DEFAULT_TREND_FALLBACK_MAX_LAG_MINUTES = 480;
@@ -89,6 +98,7 @@ const DEFAULT_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES = 5;
 const DEFAULT_CLICKHOUSE_TRADE_STREAM_CHUNK_SIZE = 20000;
 const DEFAULT_CLICKHOUSE_QUOTE_STREAM_CHUNK_SIZE = 50000;
 const DEFAULT_CLICKHOUSE_GREEKS_STREAM_CHUNK_SIZE = 50000;
+const DEFAULT_CLICKHOUSE_STREAM_INSERT_MAX_INFLIGHT = 2;
 const DEFAULT_CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE = 20000;
 const DEFAULT_CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES = 10;
 const DEFAULT_CLICKHOUSE_CHUNK_STATUS_MINUTES = 10;
@@ -950,7 +960,61 @@ function normalizeThetaRightParam(right, { allowBoth = false } = {}) {
   return null;
 }
 
+function parseThetaGreeksRateType(env = process.env) {
+  const configured = String(env.THETADATA_GREEKS_RATE_TYPE || DEFAULT_THETADATA_GREEKS_RATE_TYPE)
+    .trim()
+    .toLowerCase();
+  if (!configured) return null;
+  if (!THETADATA_GREEKS_RATE_TYPE_ALLOWLIST.has(configured)) return null;
+  return configured;
+}
+
+function parseThetaGreeksRateValue(env = process.env) {
+  const value = toFiniteNumber(env.THETADATA_GREEKS_RATE_VALUE);
+  if (value === null) return null;
+  return value;
+}
+
+function parseThetaGreeksVersion(env = process.env) {
+  const raw = String(env.THETADATA_GREEKS_VERSION || '').trim();
+  if (!raw) return null;
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed)) return null;
+  const normalized = Math.trunc(parsed);
+  if (normalized < 1) return null;
+  return normalized;
+}
+
+function parseThetaGreeksDividendOverrides(env = process.env) {
+  const raw = String(env.THETADATA_GREEKS_DIVIDEND_OVERRIDES || '').trim();
+  if (!raw) return new Map();
+
+  const map = new Map();
+  raw.split(',').forEach((entry) => {
+    const [rawSymbol, rawDividend] = entry.split('=');
+    const symbol = normalizeSymbol(rawSymbol);
+    if (!symbol) return;
+    const dividend = toFiniteNumber(rawDividend);
+    if (dividend === null || dividend < 0) return;
+    map.set(symbol, dividend);
+  });
+  return map;
+}
+
+function resolveThetaGreeksAnnualDividend(symbol, env = process.env) {
+  const normalizedSymbol = normalizeSymbol(symbol);
+  const overrides = parseThetaGreeksDividendOverrides(env);
+  if (normalizedSymbol && overrides.has(normalizedSymbol)) {
+    return overrides.get(normalizedSymbol);
+  }
+
+  const globalDividend = toFiniteNumber(env.THETADATA_GREEKS_ANNUAL_DIVIDEND);
+  if (globalDividend === null || globalDividend < 0) return null;
+  return globalDividend;
+}
+
 function resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env = process.env, options = {}) {
+  const { startTime = null, endTime = null } = options || {};
   const baseUrl = (env.THETADATA_BASE_URL || '').trim();
   if (!baseUrl) return null;
 
@@ -965,6 +1029,28 @@ function resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env = process.en
   url.searchParams.set('right', right || 'both');
   url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
   url.searchParams.set('interval', '1m');
+  if (startTime) {
+    url.searchParams.set('start_time', startTime);
+  }
+  if (endTime) {
+    url.searchParams.set('end_time', endTime);
+  }
+  const rateType = parseThetaGreeksRateType(env);
+  if (rateType) {
+    url.searchParams.set('rate_type', rateType);
+  }
+  const rateValue = parseThetaGreeksRateValue(env);
+  if (rateValue !== null) {
+    url.searchParams.set('rate_value', String(rateValue));
+  }
+  const annualDividend = resolveThetaGreeksAnnualDividend(symbol, env);
+  if (annualDividend !== null) {
+    url.searchParams.set('annual_dividend', String(annualDividend));
+  }
+  const version = parseThetaGreeksVersion(env);
+  if (version !== null) {
+    url.searchParams.set('version', String(version));
+  }
   const requestedFormat = String(options.format || '').trim().toLowerCase();
   url.searchParams.set('format', requestedFormat === 'ndjson' ? 'ndjson' : 'json');
   return url.toString();
@@ -1178,6 +1264,14 @@ function parseClickHouseGreeksStreamChunkSize(env = process.env) {
   return DEFAULT_CLICKHOUSE_GREEKS_STREAM_CHUNK_SIZE;
 }
 
+function parseClickHouseStreamInsertMaxInflight(env = process.env) {
+  const parsed = Number(env.CLICKHOUSE_STREAM_INSERT_MAX_INFLIGHT);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(8, Math.trunc(parsed)));
+  }
+  return DEFAULT_CLICKHOUSE_STREAM_INSERT_MAX_INFLIGHT;
+}
+
 function shouldIncludeClickHouseQuoteRawPayload(env = process.env) {
   const raw = String(env.CLICKHOUSE_QUOTE_INCLUDE_RAW_PAYLOAD || '0').trim().toLowerCase();
   return !(raw === '0' || raw === 'false' || raw === 'no');
@@ -1215,6 +1309,127 @@ function parseBackfillQuoteGapMaxWindows(env = process.env) {
     return Math.max(1, Math.min(2000, Math.trunc(parsed)));
   }
   return DEFAULT_BACKFILL_QUOTE_GAP_MAX_WINDOWS;
+}
+
+function parseBackfillGreeksGapMaxWindows(env = process.env) {
+  const parsed = Number(env.BACKFILL_GREEKS_GAP_MAX_WINDOWS);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(2000, Math.trunc(parsed)));
+  }
+  return DEFAULT_BACKFILL_GREEKS_GAP_MAX_WINDOWS;
+}
+
+function shouldEnableBackfillGreeksGapFill(env = process.env) {
+  const raw = String(env.BACKFILL_GREEKS_GAP_FILL || '1').trim().toLowerCase();
+  return !(raw === '0' || raw === 'false' || raw === 'no');
+}
+
+function shouldPreferForceGreeksGapWindows(env = process.env) {
+  const raw = String(env.BACKFILL_FORCE_GREEKS_GAP_WINDOWS || '1').trim().toLowerCase();
+  return !(raw === '0' || raw === 'false' || raw === 'no');
+}
+
+function shouldEnableAdaptiveGreeksWindows(env = process.env) {
+  const raw = String(env.THETADATA_GREEKS_ADAPTIVE_WINDOWS || '1').trim().toLowerCase();
+  return !(raw === '0' || raw === 'false' || raw === 'no');
+}
+
+function parseThetaGreeksWindowMinutes(env = process.env) {
+  const parsed = Number(env.THETADATA_GREEKS_WINDOW_MINUTES);
+  if (Number.isFinite(parsed) && parsed === 0) return 0;
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(24 * 60, Math.trunc(parsed)));
+  }
+  return parseLargeSymbolWindowMinutes(env);
+}
+
+function parseThetaGreeksWindowMinMinutes(env = process.env) {
+  const parsed = Number(env.THETADATA_GREEKS_WINDOW_MIN_MINUTES);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(24 * 60, Math.trunc(parsed)));
+  }
+  return DEFAULT_THETADATA_GREEKS_WINDOW_MINUTES_MIN;
+}
+
+function parseThetaGreeksWindowMaxMinutes(env = process.env) {
+  const parsed = Number(env.THETADATA_GREEKS_WINDOW_MAX_MINUTES);
+  if (Number.isFinite(parsed) && parsed >= 1) {
+    return Math.max(1, Math.min(24 * 60, Math.trunc(parsed)));
+  }
+  return DEFAULT_THETADATA_GREEKS_WINDOW_MINUTES_MAX;
+}
+
+function parseThetaGreeksAdaptiveExpirationThresholds(env = process.env) {
+  const lowParsed = Number(env.THETADATA_GREEKS_ADAPTIVE_LOW_EXPIRATIONS);
+  const highParsed = Number(env.THETADATA_GREEKS_ADAPTIVE_HIGH_EXPIRATIONS);
+  const veryHighParsed = Number(env.THETADATA_GREEKS_ADAPTIVE_VERY_HIGH_EXPIRATIONS);
+  const low = Number.isFinite(lowParsed) && lowParsed >= 0
+    ? Math.max(0, Math.trunc(lowParsed))
+    : DEFAULT_THETADATA_GREEKS_ADAPTIVE_LOW_EXPIRATIONS;
+  const high = Number.isFinite(highParsed) && highParsed >= 1
+    ? Math.max(1, Math.trunc(highParsed))
+    : DEFAULT_THETADATA_GREEKS_ADAPTIVE_HIGH_EXPIRATIONS;
+  const veryHigh = Number.isFinite(veryHighParsed) && veryHighParsed >= 1
+    ? Math.max(1, Math.trunc(veryHighParsed))
+    : DEFAULT_THETADATA_GREEKS_ADAPTIVE_VERY_HIGH_EXPIRATIONS;
+  return {
+    low,
+    high: Math.max(1, Math.max(low, high)),
+    veryHigh: Math.max(1, Math.max(high, veryHigh)),
+  };
+}
+
+function resolveThetaGreeksAdaptiveWindowMinutes({ symbol, expirationCount = 0, env = process.env } = {}) {
+  const minWindowMinutes = parseThetaGreeksWindowMinMinutes(env);
+  const maxWindowMinutes = parseThetaGreeksWindowMaxMinutes(env);
+  const boundedMin = Math.max(1, Math.min(minWindowMinutes, maxWindowMinutes));
+  const boundedMax = Math.max(boundedMin, maxWindowMinutes);
+  const configuredBaseWindow = parseThetaGreeksWindowMinutes(env);
+  const boundedBase = configuredBaseWindow <= 0
+    ? 0
+    : Math.max(boundedMin, Math.min(boundedMax, configuredBaseWindow));
+  const baseWindow = boundedBase === 0
+    ? Math.max(boundedMin, Math.min(boundedMax, parseLargeSymbolWindowMinutes(env)))
+    : boundedBase;
+  if (!shouldEnableAdaptiveGreeksWindows(env)) {
+    return {
+      symbol: normalizeSymbol(symbol),
+      expirationCount: Math.max(0, Math.trunc(Number(expirationCount) || 0)),
+      windowMinutes: baseWindow,
+      mode: 'fixed',
+      minWindowMinutes: boundedMin,
+      maxWindowMinutes: boundedMax,
+      baseWindowMinutes: baseWindow,
+    };
+  }
+
+  const normalizedExpirationCount = Math.max(0, Math.trunc(Number(expirationCount) || 0));
+  const thresholds = parseThetaGreeksAdaptiveExpirationThresholds(env);
+  let mode = 'adaptive_base';
+  let windowMinutes = baseWindow;
+  if (normalizedExpirationCount >= thresholds.veryHigh) {
+    mode = 'adaptive_very_high';
+    windowMinutes = boundedMin;
+  } else if (normalizedExpirationCount >= thresholds.high) {
+    mode = 'adaptive_high';
+    windowMinutes = Math.max(boundedMin, Math.min(boundedMax, Math.trunc(baseWindow / 2) || boundedMin));
+  } else if (normalizedExpirationCount <= thresholds.low) {
+    mode = 'adaptive_low';
+    windowMinutes = boundedMax;
+  }
+
+  return {
+    symbol: normalizeSymbol(symbol),
+    expirationCount: normalizedExpirationCount,
+    windowMinutes,
+    mode,
+    minWindowMinutes: boundedMin,
+    maxWindowMinutes: boundedMax,
+    baseWindowMinutes: baseWindow,
+    lowExpirationThreshold: thresholds.low,
+    highExpirationThreshold: thresholds.high,
+    veryHighExpirationThreshold: thresholds.veryHigh,
+  };
 }
 
 function shouldForceClickHouseCoverageProjection(env = process.env) {
@@ -1604,6 +1819,8 @@ function resolveThetaTimeWindowsForSymbol(symbol, {
   startTime = null,
   sessionStartTime = null,
   sessionEndTime = null,
+  windowMinutes = null,
+  forceWindowing = false,
   env = process.env,
 } = {}) {
   const sessionStartSecond = parseTimeHmsToSecondOfDay(sessionStartTime);
@@ -1627,8 +1844,11 @@ function resolveThetaTimeWindowsForSymbol(symbol, {
     startSecond = Math.max(lowerBound, Math.min(startSecond, upperBound));
   }
 
-  const windowMinutes = parseLargeSymbolWindowMinutes(env);
-  if (windowMinutes <= 0) {
+  const parsedWindowMinutes = Number(windowMinutes);
+  const normalizedWindowMinutes = Number.isFinite(parsedWindowMinutes)
+    ? Math.max(0, Math.min(24 * 60, Math.trunc(parsedWindowMinutes)))
+    : parseLargeSymbolWindowMinutes(env);
+  if (normalizedWindowMinutes <= 0) {
     if (startSecond === null) {
       return [{ startTime: startTime || null, endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null }];
     }
@@ -1640,7 +1860,7 @@ function resolveThetaTimeWindowsForSymbol(symbol, {
 
   const normalizedSymbol = normalizeSymbol(symbol);
   const { symbols, includeAll } = parseThetaLargeSymbols(env);
-  if (!includeAll && (!normalizedSymbol || !symbols.has(normalizedSymbol))) {
+  if (!forceWindowing && !includeAll && (!normalizedSymbol || !symbols.has(normalizedSymbol))) {
     if (startSecond === null) {
       return [{ startTime: startTime || null, endTime: hasSessionBounds ? formatSecondOfDayAsHms(upperBound) : null }];
     }
@@ -1652,7 +1872,7 @@ function resolveThetaTimeWindowsForSymbol(symbol, {
 
   const effectiveStartSecond = startSecond === null ? lowerBound : startSecond;
 
-  const windowSeconds = windowMinutes * 60;
+  const windowSeconds = normalizedWindowMinutes * 60;
   const spanSeconds = (upperBound - effectiveStartSecond) + 1;
   if (windowSeconds >= spanSeconds) {
     return [{
@@ -1882,11 +2102,15 @@ async function streamNdjsonRowsFromResponse(response, onRow, { onChunk = null } 
       onChunk(bytesDownloaded);
     }
     let rowCount = 0;
-    parseJsonRows(body).forEach((row) => {
-      if (!row || typeof row !== 'object') return;
-      onRow(row);
+    const parsedRows = parseJsonRows(body);
+    for (const row of parsedRows) {
+      if (!row || typeof row !== 'object') continue;
+      const maybePromise = onRow(row);
+      if (maybePromise && typeof maybePromise.then === 'function') {
+        await maybePromise;
+      }
       rowCount += 1;
-    });
+    }
     return { rowCount, bytesDownloaded };
   }
 
@@ -1915,7 +2139,10 @@ async function streamNdjsonRowsFromResponse(response, onRow, { onChunk = null } 
         try {
           const parsed = JSON.parse(line);
           if (parsed && typeof parsed === 'object') {
-            onRow(parsed);
+            const maybePromise = onRow(parsed);
+            if (maybePromise && typeof maybePromise.then === 'function') {
+              await maybePromise;
+            }
             rowCount += 1;
           }
         } catch {
@@ -1932,7 +2159,10 @@ async function streamNdjsonRowsFromResponse(response, onRow, { onChunk = null } 
     try {
       const parsed = JSON.parse(tail);
       if (parsed && typeof parsed === 'object') {
-        onRow(parsed);
+        const maybePromise = onRow(parsed);
+        if (maybePromise && typeof maybePromise.then === 'function') {
+          await maybePromise;
+        }
         rowCount += 1;
       }
     } catch {
@@ -2949,6 +3179,51 @@ function insertClickHouseRows(tableName, columns, rows, env = process.env, optio
     env,
     options,
   );
+}
+
+async function insertClickHouseRowsAsync(tableName, columns, rows, env = process.env, options = {}) {
+  if (!rows) return 0;
+  return insertClickHouseJsonRowsAsync(
+    `INSERT INTO options.${tableName} (${columns.join(', ')})`,
+    rows,
+    env,
+    options,
+  );
+}
+
+function createAsyncInsertQueue(maxInflight = 1) {
+  const inflight = new Set();
+  const limit = Math.max(1, Math.trunc(Number(maxInflight) || 1));
+
+  const enqueue = async (task) => {
+    const wrapped = Promise.resolve()
+      .then(task)
+      .then(
+        (value) => ({ ok: true, value }),
+        (error) => ({ ok: false, error }),
+      );
+    inflight.add(wrapped);
+    wrapped.finally(() => {
+      inflight.delete(wrapped);
+    });
+    if (inflight.size >= limit) {
+      const settled = await Promise.race(Array.from(inflight));
+      if (!settled.ok) throw settled.error;
+    }
+  };
+
+  const drain = async () => {
+    if (inflight.size === 0) return;
+    const settled = await Promise.all(Array.from(inflight));
+    const failed = settled.find((entry) => !entry.ok);
+    if (failed) throw failed.error;
+  };
+
+  return {
+    enqueue,
+    drain,
+    size: () => inflight.size,
+  };
 }
 
 function persistSqliteCacheStateToClickHouse(db, { symbol, dayIso, env = process.env }) {
@@ -7732,6 +8007,44 @@ function loadClickHouseOptionQuoteMinuteCountRowsForDay({ symbol, dayIso, env = 
   return normalizeClickHouseMinuteCountRows(rows);
 }
 
+function loadClickHouseOptionGreeksMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
+  const rows = runClickHouseCoverageQueryWithFallback({
+    scope: 'option_greeks_minute_raw:minute_count',
+    projectionSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        sum(row_count) AS rowCount
+      FROM (
+        SELECT
+          trade_date_utc AS day_value,
+          symbol,
+          minute_bucket_utc,
+          count() AS row_count
+        FROM options.option_greeks_minute_raw
+        WHERE symbol = {symbol:String}
+          AND trade_date_utc = toDate({dayIso:String})
+        GROUP BY day_value, symbol, minute_bucket_utc
+      )
+      GROUP BY minute_bucket_utc
+      ORDER BY minute_bucket_utc ASC
+    `,
+    fallbackSql: `
+      SELECT
+        concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+        count() AS rowCount
+      FROM options.option_greeks_minute_raw
+      WHERE symbol = {symbol:String}
+        AND trade_date_utc = toDate({dayIso:String})
+      GROUP BY minuteBucketUtc
+      ORDER BY minuteBucketUtc ASC
+    `,
+    params: { symbol, dayIso },
+    env,
+    queryRows,
+  });
+  return normalizeClickHouseMinuteCountRows(rows);
+}
+
 function loadClickHouseStockMinuteCountRowsForDay({ symbol, dayIso, env = process.env, queryRows = queryClickHouseRowsSync }) {
   const rows = runClickHouseCoverageQueryWithFallback({
     scope: 'stock_ohlc_minute_raw:minute_count',
@@ -7845,46 +8158,21 @@ function isoMinuteToSecondOfDay(isoValue) {
   return (parsed.getUTCHours() * 3600) + (parsed.getUTCMinutes() * 60);
 }
 
-function buildQuoteGapFillWindowsForDay({ dayIso, sessionWindow, existingMinuteRows = [] }) {
-  if (!sessionWindow || sessionWindow.isOpen === false) {
-    return {
-      dayIso,
-      expectedMinutes: 0,
-      missingMinutes: 0,
-      missingFraction: 0,
-      windows: [],
-    };
-  }
+function buildGapFillWindowsFromExpectedMinuteRows({ dayIso, expectedMinuteRows = [], existingMinuteRows = [] }) {
+  const expectedSeconds = new Set();
+  expectedMinuteRows.forEach((row) => {
+    const second = isoMinuteToSecondOfDay(row?.minuteBucketUtc);
+    if (second !== null) expectedSeconds.add(second);
+  });
 
-  const openSecond = parseTimeHmsToSecondOfDay(sessionWindow.openTime);
-  const closeSecond = parseTimeHmsToSecondOfDay(sessionWindow.regularCloseTime || sessionWindow.closeTime);
-  if (
-    openSecond === null
-    || closeSecond === null
-    || closeSecond <= openSecond
-  ) {
-    return {
-      dayIso,
-      expectedMinutes: 0,
-      missingMinutes: 0,
-      missingFraction: 0,
-      windows: [],
-    };
-  }
-
-  const expectedMinutes = Math.max(0, Math.floor((closeSecond - openSecond) / 60));
   const existingSeconds = new Set();
   existingMinuteRows.forEach((row) => {
     const second = isoMinuteToSecondOfDay(row?.minuteBucketUtc);
     if (second !== null) existingSeconds.add(second);
   });
 
-  const missingSeconds = [];
-  for (let second = openSecond; second < closeSecond; second += 60) {
-    if (!existingSeconds.has(second)) {
-      missingSeconds.push(second);
-    }
-  }
+  const expectedSecondsSorted = Array.from(expectedSeconds.values()).sort((left, right) => left - right);
+  const missingSeconds = expectedSecondsSorted.filter((second) => !existingSeconds.has(second));
 
   const windows = [];
   let rangeStart = null;
@@ -7913,6 +8201,7 @@ function buildQuoteGapFillWindowsForDay({ dayIso, sessionWindow, existingMinuteR
     });
   }
 
+  const expectedMinutes = expectedSecondsSorted.length;
   return {
     dayIso,
     expectedMinutes,
@@ -7920,6 +8209,48 @@ function buildQuoteGapFillWindowsForDay({ dayIso, sessionWindow, existingMinuteR
     missingFraction: expectedMinutes > 0 ? (missingSeconds.length / expectedMinutes) : 0,
     windows,
   };
+}
+
+function buildQuoteGapFillWindowsForDay({ dayIso, sessionWindow, existingMinuteRows = [] }) {
+  if (!sessionWindow || sessionWindow.isOpen === false) {
+    return {
+      dayIso,
+      expectedMinutes: 0,
+      missingMinutes: 0,
+      missingFraction: 0,
+      windows: [],
+    };
+  }
+
+  const openSecond = parseTimeHmsToSecondOfDay(sessionWindow.openTime);
+  const closeSecond = parseTimeHmsToSecondOfDay(sessionWindow.regularCloseTime || sessionWindow.closeTime);
+  if (
+    openSecond === null
+    || closeSecond === null
+    || closeSecond <= openSecond
+  ) {
+    return {
+      dayIso,
+      expectedMinutes: 0,
+      missingMinutes: 0,
+      missingFraction: 0,
+      windows: [],
+    };
+  }
+
+  const expectedMinuteRows = [];
+  for (let second = openSecond; second < closeSecond; second += 60) {
+    expectedMinuteRows.push({
+      minuteBucketUtc: `${dayIso}T${formatSecondOfDayAsHms(second)}.000Z`,
+      rowCount: 1,
+    });
+  }
+
+  return buildGapFillWindowsFromExpectedMinuteRows({
+    dayIso,
+    expectedMinuteRows,
+    existingMinuteRows,
+  });
 }
 
 async function buildClickHouseGapTelemetryForDay({
@@ -8706,6 +9037,8 @@ async function syncThetaTradesToClickHouse({
   let streamDownloadDurationMs = 0;
   let chunkFlushes = 0;
   const chunkSize = parseClickHouseTradeStreamChunkSize(env);
+  const maxInflightInserts = parseClickHouseStreamInsertMaxInflight(env);
+  const insertQueue = createAsyncInsertQueue(maxInflightInserts);
   let sawHttpOk = false;
   let sawNoData = false;
   const columns = ['trade_id', 'trade_ts_utc', 'trade_ts_et', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'raw_payload_json', 'watermark', 'ingested_at_utc'];
@@ -8764,19 +9097,23 @@ async function syncThetaTradesToClickHouse({
         dayIso,
       });
       let chunk = [];
-      const flushChunk = () => {
+      const flushChunk = async () => {
         if (chunk.length === 0) return;
         clearDayScope();
-        const insertStartedAtMs = Date.now();
-        upsertedRows += insertClickHouseRows('option_trades', columns, chunk, env);
-        insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+        const rowsToInsert = chunk;
+        fetchedRows += rowsToInsert.length;
         chunkFlushes += 1;
-        fetchedRows += chunk.length;
         chunk = [];
+        await insertQueue.enqueue(async () => {
+          const insertStartedAtMs = Date.now();
+          const inserted = await insertClickHouseRowsAsync('option_trades', columns, rowsToInsert, env);
+          upsertedRows += inserted;
+          insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+        });
       };
       const streamResult = await fetchThetaNdjsonRows(endpoint, {
         env,
-        onRow: (rawRow) => {
+        onRow: async (rawRow) => {
           parsedRows += 1;
           const normalized = normalizeThetaRow(rawRow, symbol, dayIso);
           if (normalized) {
@@ -8798,7 +9135,9 @@ async function syncThetaTradesToClickHouse({
               watermark: normalized.watermark,
               ingested_at_utc: nowIso,
             });
-            if (chunk.length >= chunkSize) flushChunk();
+            if (chunk.length >= chunkSize) {
+              await flushChunk();
+            }
           }
           if (heartbeat) {
             heartbeat({
@@ -8833,7 +9172,7 @@ async function syncThetaTradesToClickHouse({
       if (Number.isFinite(durationMs)) {
         streamDownloadDurationMs += Math.max(0, Math.trunc(durationMs));
       }
-      flushChunk();
+      await flushChunk();
       logThetaDownload({
         env,
         url: endpoint,
@@ -8845,6 +9184,7 @@ async function syncThetaTradesToClickHouse({
         error: null,
       });
     }
+    await insertQueue.drain();
   } else {
     for (const endpoint of endpoints) {
       const textResult = await fetchTextWithTimeout(endpoint, { env });
@@ -9311,6 +9651,8 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
   let insertDurationMs = 0;
   let streamDownloadDurationMs = 0;
   let chunkFlushes = 0;
+  const maxInflightInserts = parseClickHouseStreamInsertMaxInflight(env);
+  const insertQueue = createAsyncInsertQueue(maxInflightInserts);
 
   let chunk = [];
   let dayScopeCleared = false;
@@ -9327,7 +9669,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
       dayIso,
       env,
     });
-  const flushChunk = () => {
+  const flushChunk = async () => {
     if (chunk.length === 0) return;
     if (!dayScopeCleared) {
       if (!insertOnlyUpsert) {
@@ -9359,11 +9701,15 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
       }
       dayScopeCleared = true;
     }
-    const insertStartedAtMs = Date.now();
-    insertedRows += insertClickHouseRows('option_quote_minute_raw', columns, chunk, env, { chunkSize });
-    insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+    const rowsToInsert = chunk;
     chunkFlushes += 1;
     chunk = [];
+    await insertQueue.enqueue(async () => {
+      const insertStartedAtMs = Date.now();
+      const inserted = await insertClickHouseRowsAsync('option_quote_minute_raw', columns, rowsToInsert, env, { chunkSize });
+      insertedRows += inserted;
+      insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
+    });
   };
 
   if (endpointFormat === 'ndjson') {
@@ -9379,7 +9725,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
       const streamResult = await fetchThetaNdjsonRows(endpoint, {
         env,
         timeoutMs: parseOptionQuoteTimeoutMs(env),
-        onRow: (rawRow) => {
+        onRow: async (rawRow) => {
           parsedRows += 1;
           const normalized = normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload });
           if (normalized) {
@@ -9399,7 +9745,9 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
               raw_payload_json: normalized.rawPayloadJson,
               ingested_at_utc: nowIso,
             });
-            if (chunk.length >= chunkSize) flushChunk();
+            if (chunk.length >= chunkSize) {
+              await flushChunk();
+            }
           }
           if (heartbeat) {
             heartbeat({
@@ -9431,7 +9779,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
       if (Number.isFinite(durationMs)) {
         streamDownloadDurationMs += Math.max(0, Math.trunc(durationMs));
       }
-      flushChunk();
+      await flushChunk();
       logThetaDownload({
         env,
         url: endpoint,
@@ -9443,6 +9791,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
         error: null,
       });
     }
+    await insertQueue.drain();
   } else {
     for (const endpoint of endpoints) {
       const { response, body, durationMs, bytesDownloaded } = await fetchTextWithTimeout(endpoint, {
@@ -9491,7 +9840,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           ingested_at_utc: nowIso,
         });
         if (chunk.length >= chunkSize) {
-          flushChunk();
+          await flushChunk();
         }
       }
       logThetaDownload({
@@ -9505,7 +9854,8 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
         error: null,
       });
     }
-    flushChunk();
+    await flushChunk();
+    await insertQueue.drain();
   }
   refreshDownloadChunkStatus(defaultSourceEndpoint, null);
   const wallDurationMs = Math.max(0, Date.now() - startedAtMs);
@@ -9691,20 +10041,28 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
 
 async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = process.env, cacheStats = null) {
   const startedAtMs = Date.now();
-  if (hasClickHouseRowsForDay({
-    tableName: 'option_greeks_minute_raw',
-    dayColumn: 'trade_date_utc',
-    symbol,
-    dayIso,
-    env,
-  })) {
-    if (cacheStats) cacheStats.greeksHit += 1;
-    return true;
-  }
+  const forceRawTargets = parseClickHouseRawHydrationTargets(env);
+  const forceRequested = (
+    String(env.BACKFILL_FORCE || '').trim().toLowerCase() === '1'
+    || String(env.BACKFILL_FORCE || '').trim().toLowerCase() === 'true'
+  );
+  // Default behavior stays minute-targeted even in force mode; full-day greek rewrites are opt-in.
+  const forceGreeksFullRefresh = (
+    String(env.BACKFILL_FORCE_GREEKS_FULL || '0').trim().toLowerCase() !== '0'
+    && String(env.BACKFILL_FORCE_GREEKS_FULL || '0').trim().toLowerCase() !== 'false'
+  );
+  const forceGreeksRefresh = forceRequested && forceRawTargets.includeGreeks && forceGreeksFullRefresh;
+  const preferForceGapWindows = shouldPreferForceGreeksGapWindows(env);
 
   const expirations = Array.from(new Set((rawRows || []).map((row) => row.expiration).filter(Boolean)))
     .sort((left, right) => Date.parse(left) - Date.parse(right));
   if (expirations.length === 0) return false;
+
+  const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
+  if (sessionWindow && sessionWindow.isOpen === false) {
+    if (cacheStats) cacheStats.greeksHit += 1;
+    return true;
+  }
 
   const chunkSize = parseClickHouseGreeksStreamChunkSize(env);
   const includeRawPayload = shouldIncludeClickHouseGreeksRawPayload(env);
@@ -9712,7 +10070,154 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
     ? 'json'
     : 'ndjson';
 
-  if (cacheStats) cacheStats.greeksMiss += expirations.length;
+  const existingMinuteRows = loadClickHouseOptionGreeksMinuteCountRowsForDay({ symbol, dayIso, env });
+  const hasExistingRows = existingMinuteRows.length > 0;
+  const enableGapPlanning = hasExistingRows
+    && shouldEnableBackfillGreeksGapFill(env)
+    && (!forceGreeksRefresh || preferForceGapWindows);
+  let requestWindows = [];
+  let useGapWindows = false;
+  let gapPlan = null;
+  if (enableGapPlanning) {
+    const expectedMinuteRows = loadClickHouseTradeMinuteCountRowsForDay({ symbol, dayIso, env });
+    gapPlan = buildGapFillWindowsFromExpectedMinuteRows({
+      dayIso,
+      expectedMinuteRows,
+      existingMinuteRows,
+    });
+    if (gapPlan.expectedMinutes > 0 && gapPlan.missingMinutes === 0) {
+      console.log('[GREEKS_GAP_FILL]', JSON.stringify({
+        symbol,
+        dayIso,
+        expectedMinutes: gapPlan.expectedMinutes,
+        missingMinutes: gapPlan.missingMinutes,
+        missingFraction: Number(gapPlan.missingFraction.toFixed(4)),
+        windows: 0,
+        strategy: 'already_complete',
+        forceGreeksRefresh,
+      }));
+      if (cacheStats) cacheStats.greeksHit += 1;
+      return true;
+    }
+    const maxGapWindows = parseBackfillGreeksGapMaxWindows(env);
+    if (gapPlan.windows.length > 0 && gapPlan.windows.length <= maxGapWindows) {
+      requestWindows = gapPlan.windows;
+      useGapWindows = true;
+      console.log('[GREEKS_GAP_FILL]', JSON.stringify({
+        symbol,
+        dayIso,
+        expectedMinutes: gapPlan.expectedMinutes,
+        missingMinutes: gapPlan.missingMinutes,
+        missingFraction: Number(gapPlan.missingFraction.toFixed(4)),
+        windows: gapPlan.windows.length,
+        strategy: forceGreeksRefresh ? 'force_gap_windows' : 'gap_windows',
+        forceGreeksRefresh,
+      }));
+    } else if (forceGreeksRefresh && gapPlan.missingMinutes > 0) {
+      console.log('[GREEKS_GAP_FILL]', JSON.stringify({
+        symbol,
+        dayIso,
+        expectedMinutes: gapPlan.expectedMinutes,
+        missingMinutes: gapPlan.missingMinutes,
+        missingFraction: Number(gapPlan.missingFraction.toFixed(4)),
+        windows: gapPlan.windows.length,
+        maxGapWindows,
+        strategy: 'force_fallback_full_day',
+        forceGreeksRefresh,
+      }));
+    }
+  }
+
+  const adaptiveWindowPlan = resolveThetaGreeksAdaptiveWindowMinutes({
+    symbol,
+    expirationCount: expirations.length,
+    env,
+  });
+  const sessionOpenSecond = parseTimeHmsToSecondOfDay(sessionWindow?.openTime || null);
+  const sessionCoreCloseSecondRaw = parseTimeHmsToSecondOfDay(
+    sessionWindow?.regularCloseTime || sessionWindow?.closeTime || null,
+  );
+  const sessionCoreCloseSecond = sessionCoreCloseSecondRaw === null
+    ? null
+    : Math.max(sessionOpenSecond ?? 0, sessionCoreCloseSecondRaw - 60);
+  const sessionCoreCloseTime = sessionCoreCloseSecond === null
+    ? (sessionWindow?.closeTime || null)
+    : formatSecondOfDayAsHms(sessionCoreCloseSecond);
+  if (requestWindows.length === 0) {
+    requestWindows = resolveThetaTimeWindowsForSymbol(symbol, {
+      sessionStartTime: sessionWindow?.openTime || null,
+      // Align greek minute coverage to core quote minutes (exclude regular close minute).
+      sessionEndTime: sessionCoreCloseTime,
+      windowMinutes: adaptiveWindowPlan.windowMinutes,
+      forceWindowing: true,
+      env,
+    });
+  }
+  if (requestWindows.length > 0) {
+    const windowStrategy = useGapWindows ? 'gap_windows' : (forceGreeksRefresh ? 'force_full_or_split' : 'adaptive_full_or_split');
+    console.log('[GREEKS_WINDOW_PLAN]', JSON.stringify({
+      symbol,
+      dayIso,
+      forceGreeksRefresh,
+      preferForceGapWindows,
+      useGapWindows,
+      windowStrategy,
+      requestWindows: requestWindows.length,
+      adaptiveWindowMinutes: adaptiveWindowPlan.windowMinutes,
+      adaptiveMode: adaptiveWindowPlan.mode,
+      expirationCount: expirations.length,
+      plannedMissingMinutes: gapPlan?.missingMinutes ?? null,
+      plannedExpectedMinutes: gapPlan?.expectedMinutes ?? null,
+    }));
+  }
+
+  const endpoints = expirations.flatMap((expiration) => requestWindows
+    .map((window) => resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, {
+      format: syncFormat,
+      startTime: window.startTime || null,
+      endTime: window.endTime || null,
+    }))
+    .filter(Boolean));
+  if (endpoints.length === 0) {
+    return hasExistingRows;
+  }
+
+  if (cacheStats) {
+    if (hasExistingRows) cacheStats.greeksHit += 1;
+    cacheStats.greeksMiss += expirations.length;
+  }
+
+  const insertColumns = [
+    'symbol',
+    'trade_date_utc',
+    'expiration',
+    'strike',
+    'option_right',
+    'minute_bucket_utc',
+    'delta',
+    'implied_vol',
+    'gamma',
+    'theta',
+    'vega',
+    'rho',
+    'underlying_price',
+    'source_endpoint',
+    'raw_payload_json',
+    'ingested_at_utc',
+  ];
+  let dayScopeCleared = false;
+  const needsInitialDayDelete = !useGapWindows && (forceGreeksRefresh || hasExistingRows);
+  const clearDayScope = () => {
+    if (dayScopeCleared || !needsInitialDayDelete) return;
+    deleteClickHouseScope(
+      'option_greeks_minute_raw',
+      'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
+      { symbol, dayIso },
+      env,
+    );
+    dayScopeCleared = true;
+  };
+
   let fetchDurationMs = 0;
   let insertDurationMs = 0;
   let fetchedRows = 0;
@@ -9720,9 +10225,7 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
   let wroteRows = false;
   let chunkFlushes = 0;
 
-  for (const expiration of expirations) {
-    const endpoint = resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, { format: syncFormat });
-    if (!endpoint) continue;
+  for (const endpoint of endpoints) {
     const endpointFormat = parseThetaUrlFormat(endpoint);
     const rowsBeforeEndpoint = fetchedRows;
 
@@ -9730,17 +10233,9 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
       let chunk = [];
       const flushChunk = () => {
         if (chunk.length === 0) return;
+        clearDayScope();
         const insertStartedAtMs = Date.now();
-        insertedRows += replaceClickHouseDayRows({
-          tableName: 'option_greeks_minute_raw',
-          whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
-          deleteParams: { symbol, dayIso },
-          columns: ['symbol', 'trade_date_utc', 'expiration', 'strike', 'option_right', 'minute_bucket_utc', 'delta', 'implied_vol', 'gamma', 'theta', 'vega', 'rho', 'underlying_price', 'source_endpoint', 'raw_payload_json', 'ingested_at_utc'],
-          rows: chunk,
-          env,
-          chunkSize,
-          skipDelete: wroteRows,
-        });
+        insertedRows += insertClickHouseRows('option_greeks_minute_raw', insertColumns, chunk, env, { chunkSize });
         insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
         wroteRows = true;
         chunk = [];
@@ -9862,19 +10357,12 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
     }));
     if (mappedRows.length === 0) continue;
 
+    clearDayScope();
     const insertStartedAtMs = Date.now();
-    insertedRows += replaceClickHouseDayRows({
-      tableName: 'option_greeks_minute_raw',
-      whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
-      deleteParams: { symbol, dayIso },
-      columns: ['symbol', 'trade_date_utc', 'expiration', 'strike', 'option_right', 'minute_bucket_utc', 'delta', 'implied_vol', 'gamma', 'theta', 'vega', 'rho', 'underlying_price', 'source_endpoint', 'raw_payload_json', 'ingested_at_utc'],
-      rows: mappedRows,
-      env,
-      chunkSize,
-      skipDelete: wroteRows,
-    });
+    insertedRows += insertClickHouseRows('option_greeks_minute_raw', insertColumns, mappedRows, env, { chunkSize });
     insertDurationMs += Math.max(0, Date.now() - insertStartedAtMs);
     wroteRows = true;
+    chunkFlushes += 1;
   }
 
   const wallDurationMs = Math.max(0, Date.now() - startedAtMs);
@@ -9882,6 +10370,15 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
     symbol,
     dayIso,
     expirations: expirations.length,
+    endpoints: endpoints.length,
+    requestWindows: requestWindows.length,
+    windowStrategy: useGapWindows ? 'gap_windows' : (forceGreeksRefresh ? 'force_full_or_split' : 'adaptive_full_or_split'),
+    adaptiveWindowMinutes: adaptiveWindowPlan.windowMinutes,
+    adaptiveMode: adaptiveWindowPlan.mode,
+    forceGreeksRefresh,
+    useGapWindows,
+    plannedMissingMinutes: gapPlan?.missingMinutes ?? null,
+    plannedExpectedMinutes: gapPlan?.expectedMinutes ?? null,
     endpointFormat: syncFormat,
     fetchedRows,
     insertedRows,
@@ -9895,7 +10392,7 @@ async function ensureClickHouseGreeksRawForDay(symbol, dayIso, rawRows, env = pr
   }));
 
   if (wroteRows) return true;
-  return hasClickHouseRowsForDay({
+  return hasExistingRows || hasClickHouseRowsForDay({
     tableName: 'option_greeks_minute_raw',
     dayColumn: 'trade_date_utc',
     symbol,
@@ -9947,6 +10444,65 @@ function parseClickHouseRawHydrationTargets(env = process.env) {
     isExplicitSelection: true,
     selectionTokens: Array.from(tokens).sort(),
   };
+}
+
+function resolveRawHydrationExecutionPlan({
+  symbol,
+  dayIso,
+  env = process.env,
+  forceRecompute = false,
+  rawHydrationTargets = null,
+  existingDayCache = null,
+  cachedRows = 0,
+}) {
+  const basePlan = {
+    includeTradeQuote: Boolean(rawHydrationTargets?.includeTradeQuote),
+    includeStock: Boolean(rawHydrationTargets?.includeStock),
+    includeOi: Boolean(rawHydrationTargets?.includeOi),
+    includeQuote: Boolean(rawHydrationTargets?.includeQuote),
+    includeGreeks: Boolean(rawHydrationTargets?.includeGreeks),
+    isExplicitSelection: Boolean(rawHydrationTargets?.isExplicitSelection),
+    selectionTokens: Array.isArray(rawHydrationTargets?.selectionTokens)
+      ? [...rawHydrationTargets.selectionTokens]
+      : [],
+    optimized: false,
+    disabledComponents: [],
+    reason: null,
+  };
+
+  if (!basePlan.isExplicitSelection || forceRecompute) {
+    return basePlan;
+  }
+
+  const tradeCacheFull = String(existingDayCache?.cacheStatus || '').toLowerCase() === DAY_CACHE_STATUS_FULL;
+  const hasTradeRows = Number.isFinite(Number(cachedRows)) && Number(cachedRows) > 0;
+  if (basePlan.includeTradeQuote && (tradeCacheFull || hasTradeRows)) {
+    basePlan.includeTradeQuote = false;
+    basePlan.disabledComponents.push('tradequote');
+  }
+
+  if (basePlan.includeStock) {
+    const stockRows = countClickHouseStockRawRowsForDay({ symbol, dayIso, env });
+    if (stockRows > 0) {
+      basePlan.includeStock = false;
+      basePlan.disabledComponents.push('stock');
+    }
+  }
+
+  if (basePlan.includeOi) {
+    const oiRows = countClickHouseOptionOiRowsForDay({ symbol, dayIso, env });
+    if (oiRows > 0) {
+      basePlan.includeOi = false;
+      basePlan.disabledComponents.push('oi');
+    }
+  }
+
+  if (basePlan.disabledComponents.length > 0) {
+    basePlan.optimized = true;
+    basePlan.reason = 'existing_component_rows';
+  }
+
+  return basePlan;
 }
 
 async function ensureRawHydratedForDayInClickHouse({
@@ -10692,11 +11248,6 @@ async function materializeHistoricalDayInClickHouse({
   }
 
   const rawHydrationTargets = parseClickHouseRawHydrationTargets(env);
-  const tradeSyncPolicy = resolveBackfillTradeSyncMode({
-    rawHydrationTargets,
-    env,
-  });
-  const explicitTradeQuoteSelection = hasExplicitRawTradeQuoteSelection(rawHydrationTargets);
 
   ensureClickHouseSupportSchema(env);
   let existingDayCache = getClickHouseDayCache({ symbol, dayIso, env });
@@ -10708,6 +11259,20 @@ async function materializeHistoricalDayInClickHouse({
   )
     ? Math.max(0, Math.trunc(dayCacheRowCount))
     : countClickHouseTradesForDay({ symbol, dayIso, env });
+  const rawHydrationPlan = resolveRawHydrationExecutionPlan({
+    symbol,
+    dayIso,
+    env,
+    forceRecompute,
+    rawHydrationTargets,
+    existingDayCache,
+    cachedRows,
+  });
+  const tradeSyncPolicy = resolveBackfillTradeSyncMode({
+    rawHydrationTargets: rawHydrationPlan,
+    env,
+  });
+  const explicitTradeQuoteSelection = hasExplicitRawTradeQuoteSelection(rawHydrationPlan);
 
   let sync = {
     synced: false,
@@ -10719,6 +11284,7 @@ async function materializeHistoricalDayInClickHouse({
   };
 
   const shouldSyncTrades = !modeEnrichOnly
+    && rawHydrationPlan.includeTradeQuote
     && (
       tradeSyncPolicy.mode === 'force'
       || (
@@ -10733,35 +11299,48 @@ async function materializeHistoricalDayInClickHouse({
     );
 
   if (rawHydrationTargets?.isExplicitSelection === true) {
+    if (rawHydrationPlan.optimized) {
+      console.log('[BACKFILL_RAW_COMPONENT_PLAN]', JSON.stringify({
+        symbol,
+        dayIso,
+        reason: rawHydrationPlan.reason || null,
+        disabledComponents: rawHydrationPlan.disabledComponents || [],
+        includeTradeQuote: Boolean(rawHydrationPlan.includeTradeQuote),
+        includeStock: Boolean(rawHydrationPlan.includeStock),
+        includeOi: Boolean(rawHydrationPlan.includeOi),
+        includeQuote: Boolean(rawHydrationPlan.includeQuote),
+        includeGreeks: Boolean(rawHydrationPlan.includeGreeks),
+      }));
+    }
     console.log('[BACKFILL_RAW_COMPONENTS_TRADE_SYNC_POLICY]', JSON.stringify({
       symbol,
       dayIso,
-      includeTradeQuote: Boolean(rawHydrationTargets.includeTradeQuote),
+      includeTradeQuote: Boolean(rawHydrationPlan.includeTradeQuote),
       tradeSyncMode: tradeSyncPolicy.mode,
       source: tradeSyncPolicy.source,
-      selectionTokens: rawHydrationTargets.selectionTokens || [],
+      selectionTokens: rawHydrationPlan.selectionTokens || [],
       legacyForceTradeSync: shouldForceTradeSyncOnBackfill(env),
       forceRecompute: Boolean(forceRecompute),
     }));
-    if (!rawHydrationTargets.includeTradeQuote && shouldForceTradeSyncOnBackfill(env) && tradeSyncPolicy.mode === 'skip') {
+    if (!rawHydrationPlan.includeTradeQuote && shouldForceTradeSyncOnBackfill(env) && tradeSyncPolicy.mode === 'skip') {
       console.log('[BACKFILL_RAW_COMPONENTS_FORCE_TRADE_SYNC_IGNORED]', JSON.stringify({
         symbol,
         dayIso,
-        includeTradeQuote: Boolean(rawHydrationTargets.includeTradeQuote),
+        includeTradeQuote: Boolean(rawHydrationPlan.includeTradeQuote),
         tradeSyncMode: tradeSyncPolicy.mode,
         source: tradeSyncPolicy.source,
-        selectionTokens: rawHydrationTargets.selectionTokens || [],
+        selectionTokens: rawHydrationPlan.selectionTokens || [],
         forceRecompute: Boolean(forceRecompute),
       }));
     }
-    if (rawHydrationTargets.includeTradeQuote && tradeSyncPolicy.mode === 'skip') {
+    if (rawHydrationPlan.includeTradeQuote && tradeSyncPolicy.mode === 'skip') {
       console.log('[BACKFILL_RAW_COMPONENTS_TRADEQUOTE_SYNC_SKIPPED]', JSON.stringify({
         symbol,
         dayIso,
-        includeTradeQuote: Boolean(rawHydrationTargets.includeTradeQuote),
+        includeTradeQuote: Boolean(rawHydrationPlan.includeTradeQuote),
         tradeSyncMode: tradeSyncPolicy.mode,
         source: tradeSyncPolicy.source,
-        selectionTokens: rawHydrationTargets.selectionTokens || [],
+        selectionTokens: rawHydrationPlan.selectionTokens || [],
         forceRecompute: Boolean(forceRecompute),
       }));
     }
@@ -10827,17 +11406,17 @@ async function materializeHistoricalDayInClickHouse({
   let rawHydration = modeEnrichOnly
     ? {
       tradeRows: cachedRows,
-      stockRows: countClickHouseStockRawRowsForDay({ symbol, dayIso, env }),
-      oiRows: countClickHouseOptionOiRowsForDay({ symbol, dayIso, env }),
-      quoteRows: countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }),
-      greeksRows: countClickHouseOptionGreeksRowsForDay({ symbol, dayIso, env }),
+      stockRows: rawHydrationPlan.includeStock ? countClickHouseStockRawRowsForDay({ symbol, dayIso, env }) : 0,
+      oiRows: rawHydrationPlan.includeOi ? countClickHouseOptionOiRowsForDay({ symbol, dayIso, env }) : 0,
+      quoteRows: rawHydrationPlan.includeQuote ? countClickHouseOptionQuoteRowsForDay({ symbol, dayIso, env }) : 0,
+      greeksRows: rawHydrationPlan.includeGreeks ? countClickHouseOptionGreeksRowsForDay({ symbol, dayIso, env }) : 0,
       supplementalCache: null,
     }
     : await ensureRawHydratedForDayInClickHouse({
       symbol,
       dayIso,
       env,
-      ...rawHydrationTargets,
+      ...rawHydrationPlan,
       tradeRowsHint: Number.isFinite(Number(sync.cachedRows))
         ? Math.max(0, Math.trunc(Number(sync.cachedRows)))
         : cachedRows,
@@ -11129,6 +11708,8 @@ module.exports = {
     resolveThetaOiEndpoint,
     resolveThetaOiBulkEndpoint,
     resolveThetaOptionQuoteEndpoint,
+    resolveThetaGreeksEndpoint,
+    resolveThetaGreeksAnnualDividend,
     extractMetricFromResponse,
     fetchThetaMetricNumber,
     fetchThetaRows,

@@ -121,6 +121,8 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
    - `option_enrich_chunk_status`
    - `option_trade_day_cache`
    - `option_trade_metric_day_cache`
+5. Reference factors:
+   - `reference_sofr_daily` (Fed SOFR daily rates for reproducible rate assumptions)
 
 ### 11.4 Session and Expectation Model
 1. Calendar `open` and `early_close` days are tradable and must be included in symbol-day generation.
@@ -143,7 +145,10 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
    - `[BACKFILL_RAW_COMPONENTS_TRADE_SYNC_POLICY]` is emitted for explicit `BACKFILL_RAW_COMPONENTS` runs.
    - `[BACKFILL_RAW_COMPONENTS_FORCE_TRADE_SYNC_IGNORED]` is emitted when legacy force is ignored because `tradequote` was not selected.
    - Operational policy: monitor non-skip `tradequote` override usage; if it remains zero across backfill waves, remove the non-skip override path.
-6. ClickHouse mutation-budget telemetry:
+6. Greeks gap/window telemetry:
+   - `[GREEKS_GAP_FILL]` reports expected/missing trade-minute slots and chosen strategy.
+   - `[GREEKS_WINDOW_PLAN]` reports final request-window strategy, adaptive window mode, and window count.
+7. ClickHouse mutation-budget telemetry:
    - `[CLICKHOUSE_DELETE_BUDGET_SPIKE]` marks delete-latency spikes.
    - `[CLICKHOUSE_DELETE_BUDGET_DOWNGRADE]` marks table-level downgrade to insert-only mode.
    - `[CLICKHOUSE_DELETE_BUDGET_SKIP]` marks subsequent skipped deletes for downgraded tables.
@@ -158,7 +163,25 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
    - Build missing-minute contiguous windows from existing quote-minute coverage.
    - In force quote mode (`BACKFILL_FORCE_QUOTE_FULL=1`), prefer these gap windows first to reduce transfer volume and runtime.
    - Fall back to full-day windows only when gap planning cannot be applied efficiently (for example, excessive window fragmentation).
-6. Mutation budget protection strategy:
+6. Greeks remediation strategy:
+   - Build missing-minute contiguous windows from trade-minute baseline vs existing greeks minute coverage.
+   - Apply gap windows for top-up/remediation waves (existing greek coverage present); use adaptive broader windows for fresh symbol-days.
+   - In force mode (`BACKFILL_FORCE_GREEKS_FULL=1`), prefer gap windows first when `BACKFILL_FORCE_GREEKS_GAP_WINDOWS=1`.
+   - Fall back to adaptive split windows only when gap-window planning is not efficient (for example, excessive fragmentation).
+7. Download worker startup guard:
+   - For large waves, launch must fail fast if effective download workers are below target (`BACKFILL_DOWNLOAD_WORKER_GUARD*`).
+   - This prevents accidental under-cap runs (for example, overlap/memory auto-caps silently dropping download workers below 4).
+8. Mutation budget protection strategy:
    - Keep proactive insert-only defaults enabled for known-safe ReplacingMergeTree paths.
    - For delete-required paths, monitor delete latency and auto-downgrade only allowlisted safe tables after repeated spikes.
    - Keep strict delete semantics for core MergeTree fact tables (`option_trades`, `option_trade_enriched`) unless explicitly overridden.
+
+### 11.8 Greeks Model Input Sources
+1. Local IV/Greeks reconstruction requires explicit assumptions for risk-free rate and dividends in addition to raw market data.
+2. Runtime can now pass Greek model controls directly to Theta endpoints:
+   - `THETADATA_GREEKS_RATE_TYPE`
+   - `THETADATA_GREEKS_RATE_VALUE`
+   - `THETADATA_GREEKS_ANNUAL_DIVIDEND`
+   - `THETADATA_GREEKS_DIVIDEND_OVERRIDES`
+   - `THETADATA_GREEKS_VERSION`
+3. Canonical source-coverage matrix (available vs missing factor tables) is maintained in `docs/THETADATA_GREEKS_INPUT_SOURCES.md`.

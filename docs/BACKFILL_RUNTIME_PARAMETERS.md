@@ -179,6 +179,12 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
   - When `1`, quote remediation now prefers contiguous missing-minute windows first (when gap planning is enabled) and falls back to full-day windows only if needed (for example, too many gap windows).
 - `BACKFILL_FORCE_QUOTE_GAP_WINDOWS`: `1` (default) enables missing-minute contiguous window planning even when `BACKFILL_FORCE_QUOTE_FULL=1`.
   - Set `0` only when you explicitly want strict full-day quote rewrites in force mode.
+- `BACKFILL_FORCE_GREEKS_FULL`: greeks force mode scope; default `0` (minute-targeted scope).
+  - When `1`, force mode may rewrite broader greek windows if gap planning cannot be applied.
+- `BACKFILL_GREEKS_GAP_FILL`: `1` (default) enables greeks missing-minute contiguous window planning using trade-minute baseline.
+  - Applied for remediation/top-up when greek rows already exist for the symbol-day; fresh symbol-days use adaptive broader windows.
+- `BACKFILL_FORCE_GREEKS_GAP_WINDOWS`: `1` (default) keeps gap-window planning enabled even when `BACKFILL_FORCE_GREEKS_FULL=1`.
+- `BACKFILL_GREEKS_GAP_MAX_WINDOWS`: max contiguous gap windows to request before falling back to broader windows (default `24`).
 - `BACKFILL_TRADE_SYNC_MODE`: `auto | skip | force`.
   - Default when unset: `auto`.
   - Special default: when `BACKFILL_RAW_COMPONENTS` is explicitly set and does **not** include `tradequote`, trade sync is auto-forced to `skip` to avoid unnecessary trade mutations.
@@ -195,6 +201,11 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `BACKFILL_SHARD_STRATEGY`: worker shard strategy (`balanced` default, `hash` for legacy modulo hash sharding).
 - `THETADATA_MAX_CONCURRENT_CONNECTIONS`: hard cap for Theta concurrent download workers (default `4`).
 - `THETADATA_DOWNLOAD_CONCURRENCY`: target worker concurrency for download mode when `BACKFILL_WORKERS` is unset (default `THETADATA_MAX_CONCURRENT_CONNECTIONS`).
+- Download worker startup guard (enabled by default):
+  - `BACKFILL_DOWNLOAD_WORKER_GUARD=1`
+  - `BACKFILL_DOWNLOAD_WORKER_GUARD_MIN_JOBS=200`
+  - `BACKFILL_DOWNLOAD_WORKER_GUARD_TARGET=4` (clamped to `THETADATA_MAX_CONCURRENT_CONNECTIONS`)
+  - For large runs (`jobs >= min`), launch fails fast if effective download workers are below target.
 - `BACKFILL_REPORT_INCLUDE_JOBS`: `1` for detailed per-job output.
 - Coverage analyzer:
   - `--attempted-only`: `1` (default) excludes unattempted days from missing counts.
@@ -219,6 +230,23 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `THETADATA_DOWNLOAD_TRACE=1` (default): emit `[THETA_DOWNLOAD]` for every Theta request with rows and `bytesDownloaded`.
 - `THETADATA_LARGE_SYMBOLS`: comma list or `all`.
 - `THETADATA_LARGE_SYMBOL_WINDOW_MINUTES`: window split for heavy symbols (default 60).
+- SOFR reference source:
+  - `npm run clickhouse:sofr:sync` ingests New York Fed SOFR into `options.reference_sofr_daily`.
+  - First run seeds ~3 years; subsequent runs refresh incrementally with overlap.
+- Greeks window sizing:
+  - `THETADATA_GREEKS_WINDOW_MINUTES`: base greek window size (defaults to `THETADATA_LARGE_SYMBOL_WINDOW_MINUTES`).
+  - `THETADATA_GREEKS_ADAPTIVE_WINDOWS=1` (default): enable adaptive greek window sizing by expiration count.
+  - `THETADATA_GREEKS_WINDOW_MIN_MINUTES=15`, `THETADATA_GREEKS_WINDOW_MAX_MINUTES=391`.
+  - `THETADATA_GREEKS_ADAPTIVE_LOW_EXPIRATIONS=120`
+  - `THETADATA_GREEKS_ADAPTIVE_HIGH_EXPIRATIONS=400`
+  - `THETADATA_GREEKS_ADAPTIVE_VERY_HIGH_EXPIRATIONS=800`
+  - Optional Greek model inputs (passed to Theta Greeks history endpoint):
+    - `THETADATA_GREEKS_RATE_TYPE=sofr|bond|federal_funds|zero` (default `sofr`).
+    - `THETADATA_GREEKS_RATE_VALUE=<float>` (optional explicit annualized rate override).
+    - `THETADATA_GREEKS_ANNUAL_DIVIDEND=<float>` (optional global annualized dividend amount).
+    - `THETADATA_GREEKS_DIVIDEND_OVERRIDES=<SYM=DIV,...>` (optional symbol-level overrides; takes precedence over global dividend).
+    - `THETADATA_GREEKS_VERSION=<int>` (optional Theta model version).
+  - Source coverage and remaining gaps for local IV/Greeks reconstruction are documented in `docs/THETADATA_GREEKS_INPUT_SOURCES.md`.
 
 ### ClickHouse safety/performance
 
@@ -303,6 +331,9 @@ node scripts/clickhouse/optimize-clickhouse-query-paths.js --materialize 1 --par
 - Quote gap/window telemetry:
   - `[QUOTE_GAP_FILL]` reports expected/missing minutes and strategy (`gap_windows`, `force_gap_windows`, `force_fallback_full_day`, `already_complete`).
   - `[QUOTE_WINDOW_PLAN]` reports final request-window strategy and window count.
+- Greeks gap/window telemetry:
+  - `[GREEKS_GAP_FILL]` reports expected/missing minutes and strategy (`gap_windows`, `force_gap_windows`, `force_fallback_full_day`, `already_complete`).
+  - `[GREEKS_WINDOW_PLAN]` reports request-window strategy, adaptive window mode/size, and window count.
 - ClickHouse mutation-budget telemetry:
   - `[CLICKHOUSE_DELETE_BUDGET_SPIKE]` logs spike detections.
   - `[CLICKHOUSE_DELETE_BUDGET_DOWNGRADE]` logs table-level auto-downgrade activation.

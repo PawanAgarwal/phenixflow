@@ -1,4 +1,4 @@
-const { execFileSync } = require('node:child_process');
+const { execFileSync, spawn } = require('node:child_process');
 
 const READ_BACKENDS = new Set(['auto', 'clickhouse']);
 const WRITE_BACKENDS = new Set(['auto', 'clickhouse']);
@@ -146,10 +146,47 @@ function buildJsonInsertChunks(rows = [], options = {}, env = process.env) {
 
 function execInsertChunkSync(insertQuery, chunk, env = process.env) {
   execFileSync('clickhouse', buildClientArgs(`${insertQuery}
-SETTINGS date_time_input_format='best_effort', input_format_parallel_parsing=1`, {}, env, 'JSONEachRow'), {
+SETTINGS
+  date_time_input_format='best_effort',
+  input_format_parallel_parsing=1,
+  async_insert=0,
+  wait_for_async_insert=1`, {}, env, 'JSONEachRow'), {
     encoding: 'utf8',
     input: chunk,
     maxBuffer: resolveQueryMaxBufferBytes(env),
+  });
+}
+
+function execInsertChunkAsync(insertQuery, chunk, env = process.env) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(
+      'clickhouse',
+      buildClientArgs(`${insertQuery}
+SETTINGS
+  date_time_input_format='best_effort',
+  input_format_parallel_parsing=1,
+  async_insert=0,
+  wait_for_async_insert=1`, {}, env, 'JSONEachRow'),
+      {
+        stdio: ['pipe', 'pipe', 'pipe'],
+      },
+    );
+    let stderr = '';
+    child.stdout.on('data', () => {});
+    child.stderr.on('data', (data) => {
+      stderr += String(data || '');
+    });
+    child.on('error', (error) => reject(error));
+    child.on('close', (code) => {
+      if (code === 0) {
+        resolve();
+        return;
+      }
+      const message = (stderr || `clickhouse_insert_failed_exit_${code}`).trim();
+      reject(new Error(message));
+    });
+    child.stdin.on('error', (error) => reject(error));
+    child.stdin.end(chunk);
   });
 }
 
@@ -189,6 +226,42 @@ function insertJsonRowsSync(insertQuery, rows = [], env = process.env, options =
   return inserted;
 }
 
+async function insertJsonRowsAsync(insertQuery, rows = [], env = process.env, options = {}) {
+  if (!isIterableRows(rows)) return 0;
+  if (Array.isArray(rows) && rows.length === 0) return 0;
+
+  let inserted = 0;
+  const chunkSize = Math.max(1, Math.trunc(Number(options.chunkSize || DEFAULT_INSERT_CHUNK_SIZE)));
+  const maxChunkBytes = resolveInsertMaxBytes(options, env);
+  let lines = [];
+  let chunkBytes = 0;
+  let chunkRowCount = 0;
+
+  const flushChunk = async () => {
+    if (chunkRowCount === 0) return;
+    await execInsertChunkAsync(insertQuery, lines.join(''), env);
+    inserted += chunkRowCount;
+    lines = [];
+    chunkBytes = 0;
+    chunkRowCount = 0;
+  };
+
+  for (const row of rows) {
+    const line = `${JSON.stringify(sanitizeJsonRow(row))}\n`;
+    const lineBytes = Buffer.byteLength(line);
+    if (chunkRowCount > 0 && (chunkRowCount >= chunkSize || chunkBytes + lineBytes > maxChunkBytes)) {
+      await flushChunk();
+    }
+    lines.push(line);
+    chunkBytes += lineBytes;
+    chunkRowCount += 1;
+  }
+
+  await flushChunk();
+
+  return inserted;
+}
+
 module.exports = {
   resolveFlowReadBackend,
   resolveFlowWriteBackend,
@@ -197,6 +270,7 @@ module.exports = {
   queryRowsSync,
   execQuerySync,
   insertJsonRowsSync,
+  insertJsonRowsAsync,
   __private: {
     parseJsonEachRow,
     buildClientArgs,
