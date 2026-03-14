@@ -1,0 +1,640 @@
+{
+  "generatedAt": "2026-03-14T13:07:59.604Z",
+  "sourceBacktestReport": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/flag30-ema8-backtest-2025-09-01-2026-03-12-20260314T124920456Z.json",
+  "config": {
+    "targetR": 5,
+    "minTrades": 25,
+    "includeAllSymbols": false,
+    "symbolScope": "robust20",
+    "trainFrom": "2025-09-01",
+    "trainTo": "2025-12-31",
+    "testFrom": "2026-01-01",
+    "testTo": "2026-03-12",
+    "primaryExitField": "closeOrStopR",
+    "testedExitFields": [
+      "closeOrStopR",
+      "hodOrStopR",
+      "scaleout1r2rBeR"
+    ],
+    "minuteFeatureSource": "options.option_symbol_minute_derived",
+    "featureMinuteLag": "prior_1m",
+    "strictWalkForward": true
+  },
+  "coverage": {
+    "sourceTrades": 1614,
+    "analyzedTrades": 355,
+    "tradesWithOptionFeatures": 283,
+    "optionFeatureCoverageRate": 0.7971830985915493,
+    "trainTrades": 179,
+    "testTrades": 104,
+    "filteredTrainTrades": 28,
+    "filteredTestTrades": 23
+  },
+  "train": {
+    "baselineByExit": {
+      "closeOrStopR": {
+        "trades": 179,
+        "hitTargetRate": 0.10614525139664804,
+        "avgExitR": 0.4865595071502841,
+        "totalExitR": 87.09415177990086,
+        "winRate": 0.33519553072625696,
+        "avgMaxR": 2.0879939638443044,
+        "avgWinR": 3.313048746337459,
+        "avgLossR": -0.9385611176499721
+      },
+      "hodOrStopR": {
+        "trades": 179,
+        "hitTargetRate": 0.10614525139664804,
+        "avgExitR": 0.47082784394107147,
+        "totalExitR": 84.2781840654518,
+        "winRate": 0.44692737430167595,
+        "avgMaxR": 2.0879939638443044,
+        "avgWinR": 2.258393719111568,
+        "avgLossR": -0.9736698329643799
+      },
+      "scaleout1r2rBeR": {
+        "trades": 179,
+        "hitTargetRate": 0.10614525139664804,
+        "avgExitR": 0.25543280935061163,
+        "totalExitR": 45.72247287375948,
+        "winRate": 0.5418994413407822,
+        "avgMaxR": 2.0879939638443044,
+        "avgWinR": 1.2828081673944283,
+        "avgLossR": -0.9598770654085372
+      }
+    },
+    "selectedFilterByPrimaryExit": {
+      "type": "combo",
+      "label": "ivSpread >= 0 AND callSize >= 163.2",
+      "legs": [
+        "ivSpread >= 0",
+        "callSize >= 163.2"
+      ],
+      "trades": 28,
+      "hitTargetRate": 0.17857142857142858,
+      "avgExitR": 1.6633976723255726,
+      "totalExitR": 46.57513482511603,
+      "winRate": 0.39285714285714285,
+      "avgMaxR": 3.2433375095282346,
+      "avgWinR": 5.7182763015729545,
+      "avgLossR": -0.9603473230697922,
+      "deltaHitTargetVsBaseline": 0.07242617717478053,
+      "deltaAvgExitRVsBaseline": 1.1768381651752884
+    },
+    "selectedFilterBeatsTrainBaseline": true,
+    "bestForExpectancyByPrimaryExit": {
+      "type": "combo",
+      "label": "ivSpread >= 0 AND callSize >= 163.2",
+      "legs": [
+        "ivSpread >= 0",
+        "callSize >= 163.2"
+      ],
+      "trades": 28,
+      "hitTargetRate": 0.17857142857142858,
+      "avgExitR": 1.6633976723255726,
+      "totalExitR": 46.57513482511603,
+      "winRate": 0.39285714285714285,
+      "avgMaxR": 3.2433375095282346,
+      "avgWinR": 5.7182763015729545,
+      "avgLossR": -0.9603473230697922,
+      "deltaHitTargetVsBaseline": 0.07242617717478053,
+      "deltaAvgExitRVsBaseline": 1.1768381651752884
+    },
+    "bestForHitByPrimaryExit": {
+      "type": "combo",
+      "label": "ivSpread >= 0 AND callSize >= 163.2",
+      "legs": [
+        "ivSpread >= 0",
+        "callSize >= 163.2"
+      ],
+      "trades": 28,
+      "hitTargetRate": 0.17857142857142858,
+      "avgExitR": 1.6633976723255726,
+      "totalExitR": 46.57513482511603,
+      "winRate": 0.39285714285714285,
+      "avgMaxR": 3.2433375095282346,
+      "avgWinR": 5.7182763015729545,
+      "avgLossR": -0.9603473230697922,
+      "deltaHitTargetVsBaseline": 0.07242617717478053,
+      "deltaAvgExitRVsBaseline": 1.1768381651752884
+    },
+    "topSingleByExpectancy": [
+      {
+        "type": "single",
+        "label": "callSize >= 325.4",
+        "feature": "callSize",
+        "op": ">=",
+        "threshold": 325.4,
+        "trades": 36,
+        "hitTargetRate": 0.16666666666666666,
+        "avgExitR": 1.3389562109306998,
+        "totalExitR": 48.202423593505195,
+        "winRate": 0.3888888888888889,
+        "avgMaxR": 2.8966499456269386,
+        "avgWinR": 4.966309148977976,
+        "avgLossR": -0.9693592950993849,
+        "deltaHitTargetVsBaseline": 0.060521415270018614,
+        "deltaAvgExitRVsBaseline": 0.8523967037804157
+      },
+      {
+        "type": "single",
+        "label": "netSigScore >= 0.051983",
+        "feature": "netSigScore",
+        "op": ">=",
+        "threshold": 0.05198269441808199,
+        "trades": 36,
+        "hitTargetRate": 0.1111111111111111,
+        "avgExitR": 0.921758929540153,
+        "totalExitR": 33.18332146344551,
+        "winRate": 0.4444444444444444,
+        "avgMaxR": 2.379087558681763,
+        "avgWinR": 3.214851248227197,
+        "avgLossR": -0.912714925409482,
+        "deltaHitTargetVsBaseline": 0.004965859714463061,
+        "deltaAvgExitRVsBaseline": 0.4351994223898689
+      },
+      {
+        "type": "single",
+        "label": "callSize >= 163.2",
+        "feature": "callSize",
+        "op": ">=",
+        "threshold": 163.2,
+        "trades": 54,
+        "hitTargetRate": 0.12962962962962962,
+        "avgExitR": 0.9049518330429387,
+        "totalExitR": 48.86739898431869,
+        "winRate": 0.3333333333333333,
+        "avgMaxR": 2.4374489663756984,
+        "avgWinR": 4.67740574869473,
+        "avgLossR": -0.9812751247829574,
+        "deltaHitTargetVsBaseline": 0.02348437823298158,
+        "deltaAvgExitRVsBaseline": 0.41839232589265457
+      },
+      {
+        "type": "single",
+        "label": "sweepTradeShare >= 0.02461",
+        "feature": "sweepTradeShare",
+        "op": ">=",
+        "threshold": 0.0246104772420562,
+        "trades": 36,
+        "hitTargetRate": 0.08333333333333333,
+        "avgExitR": 0.8663974257923829,
+        "totalExitR": 31.190307328525783,
+        "winRate": 0.2777777777777778,
+        "avgMaxR": 2.3925213100389686,
+        "avgWinR": 5.650311285610245,
+        "avgLossR": -0.9735694433683333,
+        "deltaHitTargetVsBaseline": -0.022811918063314715,
+        "deltaAvgExitRVsBaseline": 0.37983791864209876
+      },
+      {
+        "type": "single",
+        "label": "totalValue >= 110807.6",
+        "feature": "totalValue",
+        "op": ">=",
+        "threshold": 110807.59999999998,
+        "trades": 54,
+        "hitTargetRate": 0.12962962962962962,
+        "avgExitR": 0.8605714789149476,
+        "totalExitR": 46.47085986140717,
+        "winRate": 0.3333333333333333,
+        "avgMaxR": 2.4945890714632157,
+        "avgWinR": 4.507704731482602,
+        "avgLossR": -0.9629951473688797,
+        "deltaHitTargetVsBaseline": 0.02348437823298158,
+        "deltaAvgExitRVsBaseline": 0.37401197176466344
+      },
+      {
+        "type": "single",
+        "label": "deltaPressureNorm >= 0.350564",
+        "feature": "deltaPressureNorm",
+        "op": ">=",
+        "threshold": 0.350563633723795,
+        "trades": 54,
+        "hitTargetRate": 0.09259259259259259,
+        "avgExitR": 0.8596883811124527,
+        "totalExitR": 46.423172580072446,
+        "winRate": 0.35185185185185186,
+        "avgMaxR": 2.421473192536835,
+        "avgWinR": 4.1055419184661615,
+        "avgLossR": -0.9023463963081314,
+        "deltaHitTargetVsBaseline": -0.013552658804055456,
+        "deltaAvgExitRVsBaseline": 0.3731288739621686
+      },
+      {
+        "type": "single",
+        "label": "putSize >= 170.2",
+        "feature": "putSize",
+        "op": ">=",
+        "threshold": 170.20000000000007,
+        "trades": 36,
+        "hitTargetRate": 0.08333333333333333,
+        "avgExitR": 0.7938744684210314,
+        "totalExitR": 28.57948086315713,
+        "winRate": 0.2777777777777778,
+        "avgMaxR": 2.2692936452703147,
+        "avgWinR": 5.390538535534359,
+        "avgLossR": -0.9740732496994795,
+        "deltaHitTargetVsBaseline": -0.022811918063314715,
+        "deltaAvgExitRVsBaseline": 0.30731496127074726
+      },
+      {
+        "type": "single",
+        "label": "bullishShare >= 0.709615",
+        "feature": "bullishShare",
+        "op": ">=",
+        "threshold": 0.7096153846153846,
+        "trades": 36,
+        "hitTargetRate": 0.08333333333333333,
+        "avgExitR": 0.7787167974054923,
+        "totalExitR": 28.03380470659772,
+        "winRate": 0.3888888888888889,
+        "avgMaxR": 2.004464180763652,
+        "avgWinR": 3.379867605237277,
+        "avgLossR": -0.8765609893965528,
+        "deltaHitTargetVsBaseline": -0.022811918063314715,
+        "deltaAvgExitRVsBaseline": 0.29215729025520815
+      },
+      {
+        "type": "single",
+        "label": "ivSpread >= 0",
+        "feature": "ivSpread",
+        "op": ">=",
+        "threshold": 0,
+        "trades": 118,
+        "hitTargetRate": 0.13559322033898305,
+        "avgExitR": 0.7787079257367768,
+        "totalExitR": 91.88753523693967,
+        "winRate": 0.3474576271186441,
+        "avgMaxR": 2.4023557552090096,
+        "avgWinR": 3.9617618201465796,
+        "avgLossR": -0.9161649271307798,
+        "deltaHitTargetVsBaseline": 0.029447968942335007,
+        "deltaAvgExitRVsBaseline": 0.2921484185864927
+      },
+      {
+        "type": "single",
+        "label": "ivSpread >= 0",
+        "feature": "ivSpread",
+        "op": ">=",
+        "threshold": 0,
+        "trades": 118,
+        "hitTargetRate": 0.13559322033898305,
+        "avgExitR": 0.7787079257367768,
+        "totalExitR": 91.88753523693967,
+        "winRate": 0.3474576271186441,
+        "avgMaxR": 2.4023557552090096,
+        "avgWinR": 3.9617618201465796,
+        "avgLossR": -0.9161649271307798,
+        "deltaHitTargetVsBaseline": 0.029447968942335007,
+        "deltaAvgExitRVsBaseline": 0.2921484185864927
+      }
+    ],
+    "topComboByExpectancy": [
+      {
+        "type": "combo",
+        "label": "callSize >= 325.4 AND ivSpread >= 0",
+        "legs": [
+          "callSize >= 325.4",
+          "ivSpread >= 0"
+        ],
+        "trades": 22,
+        "hitTargetRate": 0.22727272727272727,
+        "avgExitR": 2.314974473920314,
+        "totalExitR": 50.929438426246904,
+        "winRate": 0.45454545454545453,
+        "avgMaxR": 3.98610147317342,
+        "avgWinR": 6.225534291843337,
+        "avgLossR": -0.9438253743488724,
+        "deltaHitTargetVsBaseline": 0.12112747587607922,
+        "deltaAvgExitRVsBaseline": 1.8284149667700298
+      },
+      {
+        "type": "combo",
+        "label": "callSize >= 325.4 AND ivSpread >= 0",
+        "legs": [
+          "callSize >= 325.4",
+          "ivSpread >= 0"
+        ],
+        "trades": 22,
+        "hitTargetRate": 0.22727272727272727,
+        "avgExitR": 2.314974473920314,
+        "totalExitR": 50.929438426246904,
+        "winRate": 0.45454545454545453,
+        "avgMaxR": 3.98610147317342,
+        "avgWinR": 6.225534291843337,
+        "avgLossR": -0.9438253743488724,
+        "deltaHitTargetVsBaseline": 0.12112747587607922,
+        "deltaAvgExitRVsBaseline": 1.8284149667700298
+      },
+      {
+        "type": "combo",
+        "label": "callSize >= 325.4 AND ivSpread >= 0",
+        "legs": [
+          "callSize >= 325.4",
+          "ivSpread >= 0"
+        ],
+        "trades": 22,
+        "hitTargetRate": 0.22727272727272727,
+        "avgExitR": 2.314974473920314,
+        "totalExitR": 50.929438426246904,
+        "winRate": 0.45454545454545453,
+        "avgMaxR": 3.98610147317342,
+        "avgWinR": 6.225534291843337,
+        "avgLossR": -0.9438253743488724,
+        "deltaHitTargetVsBaseline": 0.12112747587607922,
+        "deltaAvgExitRVsBaseline": 1.8284149667700298
+      },
+      {
+        "type": "combo",
+        "label": "ivSpread >= 0 AND callSize >= 163.2",
+        "legs": [
+          "ivSpread >= 0",
+          "callSize >= 163.2"
+        ],
+        "trades": 28,
+        "hitTargetRate": 0.17857142857142858,
+        "avgExitR": 1.6633976723255726,
+        "totalExitR": 46.57513482511603,
+        "winRate": 0.39285714285714285,
+        "avgMaxR": 3.2433375095282346,
+        "avgWinR": 5.7182763015729545,
+        "avgLossR": -0.9603473230697922,
+        "deltaHitTargetVsBaseline": 0.07242617717478053,
+        "deltaAvgExitRVsBaseline": 1.1768381651752884
+      },
+      {
+        "type": "combo",
+        "label": "ivSpread >= 0 AND callSize >= 163.2",
+        "legs": [
+          "ivSpread >= 0",
+          "callSize >= 163.2"
+        ],
+        "trades": 28,
+        "hitTargetRate": 0.17857142857142858,
+        "avgExitR": 1.6633976723255726,
+        "totalExitR": 46.57513482511603,
+        "winRate": 0.39285714285714285,
+        "avgMaxR": 3.2433375095282346,
+        "avgWinR": 5.7182763015729545,
+        "avgLossR": -0.9603473230697922,
+        "deltaHitTargetVsBaseline": 0.07242617717478053,
+        "deltaAvgExitRVsBaseline": 1.1768381651752884
+      },
+      {
+        "type": "combo",
+        "label": "ivSpread >= 0 AND callSize >= 163.2",
+        "legs": [
+          "ivSpread >= 0",
+          "callSize >= 163.2"
+        ],
+        "trades": 28,
+        "hitTargetRate": 0.17857142857142858,
+        "avgExitR": 1.6633976723255726,
+        "totalExitR": 46.57513482511603,
+        "winRate": 0.39285714285714285,
+        "avgMaxR": 3.2433375095282346,
+        "avgWinR": 5.7182763015729545,
+        "avgLossR": -0.9603473230697922,
+        "deltaHitTargetVsBaseline": 0.07242617717478053,
+        "deltaAvgExitRVsBaseline": 1.1768381651752884
+      },
+      {
+        "type": "combo",
+        "label": "ivSpread >= 0 AND totalValue >= 110807.6",
+        "legs": [
+          "ivSpread >= 0",
+          "totalValue >= 110807.6"
+        ],
+        "trades": 29,
+        "hitTargetRate": 0.1724137931034483,
+        "avgExitR": 1.5726801957848338,
+        "totalExitR": 45.60772567776018,
+        "winRate": 0.3793103448275862,
+        "avgMaxR": 3.349653039680217,
+        "avgWinR": 5.661413725730895,
+        "avgLossR": -0.9259902947377595,
+        "deltaHitTargetVsBaseline": 0.06626854170680024,
+        "deltaAvgExitRVsBaseline": 1.0861206886345496
+      },
+      {
+        "type": "combo",
+        "label": "ivSpread >= 0 AND totalValue >= 110807.6",
+        "legs": [
+          "ivSpread >= 0",
+          "totalValue >= 110807.6"
+        ],
+        "trades": 29,
+        "hitTargetRate": 0.1724137931034483,
+        "avgExitR": 1.5726801957848338,
+        "totalExitR": 45.60772567776018,
+        "winRate": 0.3793103448275862,
+        "avgMaxR": 3.349653039680217,
+        "avgWinR": 5.661413725730895,
+        "avgLossR": -0.9259902947377595,
+        "deltaHitTargetVsBaseline": 0.06626854170680024,
+        "deltaAvgExitRVsBaseline": 1.0861206886345496
+      },
+      {
+        "type": "combo",
+        "label": "ivSpread >= 0 AND totalValue >= 110807.6",
+        "legs": [
+          "ivSpread >= 0",
+          "totalValue >= 110807.6"
+        ],
+        "trades": 29,
+        "hitTargetRate": 0.1724137931034483,
+        "avgExitR": 1.5726801957848338,
+        "totalExitR": 45.60772567776018,
+        "winRate": 0.3793103448275862,
+        "avgMaxR": 3.349653039680217,
+        "avgWinR": 5.661413725730895,
+        "avgLossR": -0.9259902947377595,
+        "deltaHitTargetVsBaseline": 0.06626854170680024,
+        "deltaAvgExitRVsBaseline": 1.0861206886345496
+      },
+      {
+        "type": "combo",
+        "label": "callSize >= 325.4 AND totalValue >= 110807.6",
+        "legs": [
+          "callSize >= 325.4",
+          "totalValue >= 110807.6"
+        ],
+        "trades": 32,
+        "hitTargetRate": 0.15625,
+        "avgExitR": 1.4441974641234463,
+        "totalExitR": 46.21431885195028,
+        "winRate": 0.40625,
+        "avgMaxR": 3.0090563220711566,
+        "avgWinR": 4.964632564933596,
+        "avgLossR": -0.9645212890624456,
+        "deltaHitTargetVsBaseline": 0.050104748603351956,
+        "deltaAvgExitRVsBaseline": 0.9576379569731621
+      }
+    ],
+    "filteredByExit": {
+      "closeOrStopR": {
+        "trades": 28,
+        "hitTargetRate": 0.17857142857142858,
+        "avgExitR": 1.6633976723255726,
+        "totalExitR": 46.57513482511603,
+        "winRate": 0.39285714285714285,
+        "avgMaxR": 3.2433375095282346,
+        "avgWinR": 5.7182763015729545,
+        "avgLossR": -0.9603473230697922
+      },
+      "hodOrStopR": {
+        "trades": 28,
+        "hitTargetRate": 0.17857142857142858,
+        "avgExitR": 1.242643231460349,
+        "totalExitR": 34.794010480889774,
+        "winRate": 0.4642857142857143,
+        "avgMaxR": 3.2433375095282346,
+        "avgWinR": 3.8303084985299827,
+        "avgLossR": -1
+      },
+      "scaleout1r2rBeR": {
+        "trades": 28,
+        "hitTargetRate": 0.17857142857142858,
+        "avgExitR": 0.46216816211997197,
+        "totalExitR": 12.940708539359216,
+        "winRate": 0.4642857142857143,
+        "avgMaxR": 3.2433375095282346,
+        "avgWinR": 2.0974317716573605,
+        "avgLossR": -0.9550602994790979
+      }
+    }
+  },
+  "test": {
+    "baselineByExit": {
+      "closeOrStopR": {
+        "trades": 104,
+        "hitTargetRate": 0.10576923076923077,
+        "avgExitR": 0.351797616943018,
+        "totalExitR": 36.58695216207387,
+        "winRate": 0.33653846153846156,
+        "avgMaxR": 2.1004675576180363,
+        "avgWinR": 2.9262625706366037,
+        "avgLossR": -0.9540904030464816
+      },
+      "hodOrStopR": {
+        "trades": 104,
+        "hitTargetRate": 0.10576923076923077,
+        "avgExitR": 0.40381219326106516,
+        "totalExitR": 41.996468099150775,
+        "winRate": 0.4326923076923077,
+        "avgMaxR": 2.1004675576180363,
+        "avgWinR": 2.2216189446849106,
+        "avgLossR": -0.9826505832486476
+      },
+      "scaleout1r2rBeR": {
+        "trades": 104,
+        "hitTargetRate": 0.10576923076923077,
+        "avgExitR": 0.30444289841618905,
+        "totalExitR": 31.66206143528366,
+        "winRate": 0.5769230769230769,
+        "avgMaxR": 2.1004675576180363,
+        "avgWinR": 1.2433088651986812,
+        "avgLossR": -0.9758288744690276
+      }
+    },
+    "filteredByExit": {
+      "closeOrStopR": {
+        "trades": 23,
+        "hitTargetRate": 0.13043478260869565,
+        "avgExitR": 1.078255881838365,
+        "totalExitR": 24.799885282282393,
+        "winRate": 0.34782608695652173,
+        "avgMaxR": 2.991431863722519,
+        "avgWinR": 4.8184171341364594,
+        "avgLossR": -0.9164967860539527
+      },
+      "hodOrStopR": {
+        "trades": 23,
+        "hitTargetRate": 0.13043478260869565,
+        "avgExitR": 1.2066251181400294,
+        "totalExitR": 27.752377717220675,
+        "winRate": 0.5217391304347826,
+        "avgMaxR": 2.991431863722519,
+        "avgWinR": 3.22936480976839,
+        "avgLossR": -1
+      },
+      "scaleout1r2rBeR": {
+        "trades": 23,
+        "hitTargetRate": 0.13043478260869565,
+        "avgExitR": 0.7016014899249096,
+        "totalExitR": 16.13683426827292,
+        "winRate": 0.6956521739130435,
+        "avgMaxR": 2.991431863722519,
+        "avgWinR": 1.4460521417670575,
+        "avgLossR": -1
+      }
+    },
+    "deltaByExit": {
+      "closeOrStopR": {
+        "deltaTrades": -81,
+        "deltaHitTargetRate": 0.02466555183946488,
+        "deltaAvgExitR": 0.726458264895347,
+        "deltaTotalExitR": -11.787066879791478
+      },
+      "hodOrStopR": {
+        "deltaTrades": -81,
+        "deltaHitTargetRate": 0.02466555183946488,
+        "deltaAvgExitR": 0.8028129248789642,
+        "deltaTotalExitR": -14.2440903819301
+      },
+      "scaleout1r2rBeR": {
+        "deltaTrades": -81,
+        "deltaHitTargetRate": 0.02466555183946488,
+        "deltaAvgExitR": 0.3971585915087205,
+        "deltaTotalExitR": -15.52522716701074
+      }
+    }
+  },
+  "exitModelSelection": {
+    "selectedOnTrainFiltered": "closeOrStopR",
+    "trainFilteredExitRanking": [
+      {
+        "exitField": "closeOrStopR",
+        "avgExitR": 1.6633976723255726,
+        "totalExitR": 46.57513482511603
+      },
+      {
+        "exitField": "hodOrStopR",
+        "avgExitR": 1.242643231460349,
+        "totalExitR": 34.794010480889774
+      },
+      {
+        "exitField": "scaleout1r2rBeR",
+        "avgExitR": 0.46216816211997197,
+        "totalExitR": 12.940708539359216
+      }
+    ],
+    "selectedExitTestBaseline": {
+      "trades": 104,
+      "hitTargetRate": 0.10576923076923077,
+      "avgExitR": 0.351797616943018,
+      "totalExitR": 36.58695216207387,
+      "winRate": 0.33653846153846156,
+      "avgMaxR": 2.1004675576180363,
+      "avgWinR": 2.9262625706366037,
+      "avgLossR": -0.9540904030464816
+    },
+    "selectedExitTestFiltered": {
+      "trades": 23,
+      "hitTargetRate": 0.13043478260869565,
+      "avgExitR": 1.078255881838365,
+      "totalExitR": 24.799885282282393,
+      "winRate": 0.34782608695652173,
+      "avgMaxR": 2.991431863722519,
+      "avgWinR": 4.8184171341364594,
+      "avgLossR": -0.9164967860539527
+    },
+    "selectedExitTestDelta": {
+      "deltaTrades": -81,
+      "deltaHitTargetRate": 0.02466555183946488,
+      "deltaAvgExitR": 0.726458264895347,
+      "deltaTotalExitR": -11.787066879791478
+    }
+  }
+}
