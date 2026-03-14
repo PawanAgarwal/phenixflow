@@ -1232,6 +1232,16 @@ function shouldIncludeClickHouseGreeksInEnrichment(env = process.env) {
   return String(env.CLICKHOUSE_ENRICH_INCLUDE_GREEKS || '1') !== '0';
 }
 
+function parseClickHouseEnrichGreeksSource(env = process.env) {
+  const raw = String(env.CLICKHOUSE_ENRICH_GREEKS_SOURCE || 'calculated_first')
+    .trim()
+    .toLowerCase();
+  if (raw === 'raw') return 'raw';
+  if (raw === 'calculated') return 'calculated';
+  if (raw === 'calculated_first') return 'calculated_first';
+  return 'calculated_first';
+}
+
 function parseClickHouseEnrichStreamChunkSize(env = process.env) {
   const parsed = Number(env.CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE);
   if (Number.isFinite(parsed) && parsed >= 1) {
@@ -4601,6 +4611,115 @@ function loadClickHouseOptionGreeksRawRowsForDay({
       return [];
     }
     return rows;
+  }
+
+  const windows = buildClickHouseTradeReadWindows(dayIso, windowMinutes);
+  windows.forEach(({ fromIso, toIso }) => {
+    queryWindow({ fromIso, toIso, activeWindowMinutes: windowMinutes });
+  });
+
+  return rows || [];
+}
+
+function loadClickHouseCalculatedGreeksRowsForDay({
+  symbol,
+  dayIso,
+  env = process.env,
+  queryRows = queryClickHouseRowsSync,
+  onChunk = null,
+}) {
+  const baseSelectSql = `
+    SELECT
+      symbol,
+      toString(expiration) AS expiration,
+      strike,
+      option_right AS right,
+      concat(replaceAll(toString(minute_bucket_utc, 'UTC'), ' ', 'T'), 'Z') AS minuteBucketUtc,
+      argMax(delta, ingested_at_utc) AS delta,
+      argMax(implied_vol, ingested_at_utc) AS impliedVol
+    FROM options.option_calculated_greeks_minute
+  `;
+  const orderBySql = 'ORDER BY minute_bucket_utc ASC, expiration ASC, strike ASC, option_right ASC';
+  const groupBySql = 'GROUP BY symbol, expiration, strike, option_right, minute_bucket_utc';
+  const emitChunk = typeof onChunk === 'function' ? onChunk : null;
+  const minWindowMinutes = parseClickHouseTradeReadMinWindowMinutes(env);
+  const rows = emitChunk ? null : [];
+
+  const emitRows = (chunkRows) => {
+    if (!Array.isArray(chunkRows) || chunkRows.length === 0) return;
+    if (emitChunk) {
+      emitChunk(chunkRows);
+      return;
+    }
+    chunkRows.forEach((row) => rows.push(row));
+  };
+
+  const isOversizedWindowError = (error) => {
+    const message = String(error?.message || '').toLowerCase();
+    return message.includes('cannot create a string longer than 0x1fffffe8 characters')
+      || message.includes('invalid string length')
+      || message.includes('string longer than')
+      || message.includes('allocation failed - javascript heap out of memory');
+  };
+
+  const splitWindow = (fromIso, toIso) => {
+    const fromMs = Date.parse(fromIso);
+    const toMs = Date.parse(toIso);
+    if (!Number.isFinite(fromMs) || !Number.isFinite(toMs) || toMs <= fromMs) {
+      return null;
+    }
+    const midMs = fromMs + Math.floor((toMs - fromMs) / 2);
+    if (!Number.isFinite(midMs) || midMs <= fromMs || midMs >= toMs) return null;
+    return {
+      left: { fromIso, toIso: new Date(midMs).toISOString() },
+      right: { fromIso: new Date(midMs).toISOString(), toIso },
+    };
+  };
+
+  const queryWindow = ({ fromIso, toIso, activeWindowMinutes }) => {
+    try {
+      const chunkRows = queryRows(`
+        ${baseSelectSql}
+        WHERE symbol = {symbol:String}
+          AND calc_status = 'ok'
+          AND minute_bucket_utc >= parseDateTime64BestEffortOrNull({fromIso:String}, 3, 'UTC')
+          AND minute_bucket_utc < parseDateTime64BestEffortOrNull({toIso:String}, 3, 'UTC')
+        ${groupBySql}
+        ${orderBySql}
+      `, { symbol, fromIso, toIso }, env);
+      emitRows(chunkRows);
+      return;
+    } catch (error) {
+      const canSplit = Number.isFinite(activeWindowMinutes)
+        && activeWindowMinutes > minWindowMinutes;
+      if (!canSplit || !isOversizedWindowError(error)) {
+        throw error;
+      }
+      const split = splitWindow(fromIso, toIso);
+      if (!split) {
+        throw error;
+      }
+      const nextWindowMinutes = Math.max(minWindowMinutes, Math.trunc(activeWindowMinutes / 2));
+      queryWindow({ ...split.left, activeWindowMinutes: nextWindowMinutes });
+      queryWindow({ ...split.right, activeWindowMinutes: nextWindowMinutes });
+    }
+  };
+
+  const windowMinutes = parseClickHouseTradeReadWindowMinutes(env);
+  if (windowMinutes <= 0 || windowMinutes >= 24 * 60) {
+    const fetchedRows = queryRows(`
+      ${baseSelectSql}
+      WHERE symbol = {symbol:String}
+        AND trade_date_utc = toDate({dayIso:String})
+        AND calc_status = 'ok'
+      ${groupBySql}
+      ${orderBySql}
+    `, { symbol, dayIso }, env);
+    if (emitChunk) {
+      if (fetchedRows.length > 0) emitChunk(fetchedRows);
+      return [];
+    }
+    return fetchedRows;
   }
 
   const windows = buildClickHouseTradeReadWindows(dayIso, windowMinutes);
@@ -9651,6 +9770,7 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
   let insertDurationMs = 0;
   let streamDownloadDurationMs = 0;
   let chunkFlushes = 0;
+  let noDataResponses = 0;
   const maxInflightInserts = parseClickHouseStreamInsertMaxInflight(env);
   const insertQueue = createAsyncInsertQueue(maxInflightInserts);
 
@@ -9772,7 +9892,10 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
-        if (isThetaNoData) continue;
+        if (isThetaNoData) {
+          noDataResponses += 1;
+          continue;
+        }
         refreshDownloadChunkStatus(endpoint, `http_${response.status}`);
         return false;
       }
@@ -9810,7 +9933,10 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
           bytesDownloaded,
           error: isThetaNoData ? 'no_data' : `http_${response.status}`,
         });
-        if (isThetaNoData) continue;
+        if (isThetaNoData) {
+          noDataResponses += 1;
+          continue;
+        }
         refreshDownloadChunkStatus(endpoint, `http_${response.status}`);
         return false;
       }
@@ -9857,7 +9983,8 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     await flushChunk();
     await insertQueue.drain();
   }
-  refreshDownloadChunkStatus(defaultSourceEndpoint, null);
+  const finalStatusError = (insertedRows === 0 && noDataResponses > 0) ? 'no_data' : null;
+  refreshDownloadChunkStatus(defaultSourceEndpoint, finalStatusError);
   const wallDurationMs = Math.max(0, Date.now() - startedAtMs);
   console.log('[QUOTE_SYNC_STATS]', JSON.stringify({
     symbol,
@@ -9873,15 +10000,27 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
     insertOnlyUpsert,
     includeRawPayload,
     chunkSize,
+    noDataResponses,
   }));
   if (insertedRows > 0) return true;
-  return hasClickHouseRowsForDay({
+  const hasExistingRows = hasClickHouseRowsForDay({
     tableName: 'option_quote_minute_raw',
     dayColumn: 'trade_date_utc',
     symbol,
     dayIso,
     env,
   });
+  if (hasExistingRows) return true;
+  if (noDataResponses > 0) {
+    console.log('[QUOTE_SYNC_NO_DATA]', JSON.stringify({
+      symbol,
+      dayIso,
+      endpoints: endpoints.length,
+      noDataResponses,
+    }));
+    return true;
+  }
+  return false;
 }
 
 async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = process.env, cacheStats = null) {
@@ -10519,16 +10658,6 @@ async function ensureRawHydratedForDayInClickHouse({
   const tradeRows = Number.isFinite(hintedTradeRows) && hintedTradeRows >= 0
     ? Math.max(0, Math.trunc(hintedTradeRows))
     : countClickHouseTradesForDay({ symbol, dayIso, env });
-  if (tradeRows === 0) {
-    return {
-      tradeRows: 0,
-      stockRows: 0,
-      oiRows: 0,
-      quoteRows: 0,
-      greeksRows: 0,
-      supplementalCache: null,
-    };
-  }
 
   const needsContractLevelRawRows = includeOi || includeGreeks;
   const rawRows = needsContractLevelRawRows
@@ -10652,15 +10781,48 @@ function buildSupplementalMetricLookupFromClickHouse({
   };
   if (shouldIncludeClickHouseGreeksInEnrichment(env)) {
     const greeksState = createGreeksLookupState();
-    loadClickHouseOptionGreeksRawRowsForDay({
+    const greeksSourceMode = parseClickHouseEnrichGreeksSource(env);
+    let greeksSourceUsed = 'none';
+    let greeksRowsLoaded = 0;
+    const ingestRows = (chunkRows) => {
+      const chunkCount = Array.isArray(chunkRows) ? chunkRows.length : 0;
+      if (chunkCount <= 0) return;
+      greeksRowsLoaded += chunkCount;
+      accumulateGreeksLookupRows(symbol, chunkRows, greeksState);
+    };
+
+    if (greeksSourceMode === 'calculated' || greeksSourceMode === 'calculated_first') {
+      loadClickHouseCalculatedGreeksRowsForDay({
+        symbol,
+        dayIso,
+        env,
+        onChunk: ingestRows,
+      });
+      if (greeksRowsLoaded > 0) {
+        greeksSourceUsed = 'calculated';
+      }
+    }
+
+    if (greeksRowsLoaded === 0 && (greeksSourceMode === 'raw' || greeksSourceMode === 'calculated_first')) {
+      loadClickHouseOptionGreeksRawRowsForDay({
+        symbol,
+        dayIso,
+        env,
+        includeRawPayloadJson: false,
+        onChunk: ingestRows,
+      });
+      if (greeksRowsLoaded > 0) {
+        greeksSourceUsed = 'raw';
+      }
+    }
+
+    console.log('[ENRICH_GREEKS_SOURCE]', JSON.stringify({
       symbol,
       dayIso,
-      env,
-      includeRawPayloadJson: false,
-      onChunk: (chunkRows) => {
-        accumulateGreeksLookupRows(symbol, chunkRows, greeksState);
-      },
-    });
+      mode: greeksSourceMode,
+      sourceUsed: greeksSourceUsed,
+      rowsLoaded: greeksRowsLoaded,
+    }));
     greeksLookup = finalizeGreeksLookupState(symbol, greeksState);
   }
 

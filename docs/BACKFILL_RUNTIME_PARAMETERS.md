@@ -165,6 +165,7 @@ CLICKHOUSE_ENRICH_STREAM_READ=1 \
 CLICKHOUSE_ENRICH_STREAM_WRITE=1 \
 CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE=5000 \
 CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES=10 \
+CLICKHOUSE_ENRICH_GREEKS_SOURCE=calculated_first \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 ```
 
@@ -175,6 +176,11 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `BACKFILL_MODE`: `full | download | enrich`.
 - `BACKFILL_FORCE`: `1` to re-run even if cache says complete.
   - This now propagates end-to-end into `materializeHistoricalDayInClickHouse(..., forceRecompute=true)` so trade/day-cache sync is not silently skipped.
+- `CLICKHOUSE_ENRICH_GREEKS_SOURCE`: enrich greeks lookup mode (`calculated_first | calculated | raw`).
+  - Default: `calculated_first`.
+  - `calculated_first` loads from `option_calculated_greeks_minute` first, then falls back to raw greeks if none are available.
+  - `calculated` requires calculated greeks only (no fallback).
+  - `raw` keeps legacy behavior.
 - `BACKFILL_FORCE_QUOTE_FULL`: quote force mode scope; default `0` (minute-resume scope).
   - When `1`, quote remediation now prefers contiguous missing-minute windows first (when gap planning is enabled) and falls back to full-day windows only if needed (for example, too many gap windows).
 - `BACKFILL_FORCE_QUOTE_GAP_WINDOWS`: `1` (default) enables missing-minute contiguous window planning even when `BACKFILL_FORCE_QUOTE_FULL=1`.

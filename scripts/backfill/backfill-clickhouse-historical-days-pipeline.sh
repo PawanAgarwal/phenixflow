@@ -33,6 +33,7 @@ CLICKHOUSE_CONNECT_TIMEOUT_SEC="${CLICKHOUSE_CONNECT_TIMEOUT_SEC:-10}"
 CLICKHOUSE_SEND_TIMEOUT_SEC="${CLICKHOUSE_SEND_TIMEOUT_SEC:-600}"
 CLICKHOUSE_RECEIVE_TIMEOUT_SEC="${CLICKHOUSE_RECEIVE_TIMEOUT_SEC:-600}"
 CLICKHOUSE_DELETE_MUTATION_SYNC="${CLICKHOUSE_DELETE_MUTATION_SYNC:-0}"
+CLICKHOUSE_ENRICH_GREEKS_SOURCE="${CLICKHOUSE_ENRICH_GREEKS_SOURCE:-calculated_first}"
 TS="$(date +%Y%m%dT%H%M%S)"
 RUN_DIR="$REPORT_ROOT/clickhouse-historical-pipeline-$TS"
 DOWNLOAD_DIR="$RUN_DIR/download"
@@ -309,6 +310,7 @@ echo "Enrich workers: $ENRICH_WORKERS (supplemental concurrency: $ENRICH_SUPPLEM
 echo "Theta max concurrent connections: $THETADATA_MAX_CONCURRENT_CONNECTIONS"
 echo "ClickHouse timeouts (sec): connect=${CLICKHOUSE_CONNECT_TIMEOUT_SEC} send=${CLICKHOUSE_SEND_TIMEOUT_SEC} receive=${CLICKHOUSE_RECEIVE_TIMEOUT_SEC}"
 echo "ClickHouse delete mutation sync: ${CLICKHOUSE_DELETE_MUTATION_SYNC}"
+echo "Enrich greeks source: ${CLICKHOUSE_ENRICH_GREEKS_SOURCE}"
 echo "Stage overlap: $([[ "$PIPELINE_STAGE_OVERLAP" == "1" ]] && echo "enabled" || echo "disabled")"
 if [[ "$TOTAL_MEMORY_MB" =~ ^[0-9]+$ ]] && (( TOTAL_MEMORY_MB > 0 )); then
   echo "Total memory detected: ${TOTAL_MEMORY_MB}MB"
@@ -414,6 +416,7 @@ run_enrich_worker_once() {
       CLICKHOUSE_SEND_TIMEOUT_SEC="$CLICKHOUSE_SEND_TIMEOUT_SEC" \
       CLICKHOUSE_RECEIVE_TIMEOUT_SEC="$CLICKHOUSE_RECEIVE_TIMEOUT_SEC" \
       CLICKHOUSE_DELETE_MUTATION_SYNC="$CLICKHOUSE_DELETE_MUTATION_SYNC" \
+      CLICKHOUSE_ENRICH_GREEKS_SOURCE="$CLICKHOUSE_ENRICH_GREEKS_SOURCE" \
       node scripts/backfill/backfill-clickhouse-historical-days.js
     ) >> "$log_path" 2>&1
   else
@@ -438,6 +441,7 @@ run_enrich_worker_once() {
       CLICKHOUSE_SEND_TIMEOUT_SEC="$CLICKHOUSE_SEND_TIMEOUT_SEC" \
       CLICKHOUSE_RECEIVE_TIMEOUT_SEC="$CLICKHOUSE_RECEIVE_TIMEOUT_SEC" \
       CLICKHOUSE_DELETE_MUTATION_SYNC="$CLICKHOUSE_DELETE_MUTATION_SYNC" \
+      CLICKHOUSE_ENRICH_GREEKS_SOURCE="$CLICKHOUSE_ENRICH_GREEKS_SOURCE" \
       node scripts/backfill/backfill-clickhouse-historical-days.js
     ) > "$log_path" 2>&1
   fi

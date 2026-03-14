@@ -116,12 +116,15 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
    - For explicit component selections that exclude `tradequote`, trade sync defaults to skip unless explicitly overridden.
 3. Enriched plane:
    - `option_trade_enriched`
-4. Status/attempt planes:
+4. Calculated-greeks plane:
+   - `option_calculated_greeks_minute`
+   - Enrichment resolves greeks from this table first by default (`CLICKHOUSE_ENRICH_GREEKS_SOURCE=calculated_first`), with optional fallback/override modes.
+5. Status/attempt planes:
    - `option_download_chunk_status`
    - `option_enrich_chunk_status`
    - `option_trade_day_cache`
    - `option_trade_metric_day_cache`
-5. Reference factors:
+6. Reference factors:
    - `reference_sofr_daily` (Fed SOFR daily rates for reproducible rate assumptions)
 
 ### 11.4 Session and Expectation Model
@@ -141,14 +144,15 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
 2. Stream liveness: `[THETA_STREAM_HEARTBEAT]` with parsed/inserted row counters.
 3. Per-job slot coverage (optional): `BACKFILL_GAP_TELEMETRY=1` emits expected/actual/missing slot summaries.
 4. Batch enrichment progress: `[ENRICH_BATCH_PROGRESS]` for minute-bucket throughput.
-5. Raw-component trade-sync policy telemetry:
+5. Enrichment greeks source telemetry: `[ENRICH_GREEKS_SOURCE]` with mode (`calculated_first|calculated|raw`), selected source, and rows loaded.
+6. Raw-component trade-sync policy telemetry:
    - `[BACKFILL_RAW_COMPONENTS_TRADE_SYNC_POLICY]` is emitted for explicit `BACKFILL_RAW_COMPONENTS` runs.
    - `[BACKFILL_RAW_COMPONENTS_FORCE_TRADE_SYNC_IGNORED]` is emitted when legacy force is ignored because `tradequote` was not selected.
    - Operational policy: monitor non-skip `tradequote` override usage; if it remains zero across backfill waves, remove the non-skip override path.
-6. Greeks gap/window telemetry:
+7. Greeks gap/window telemetry:
    - `[GREEKS_GAP_FILL]` reports expected/missing trade-minute slots and chosen strategy.
    - `[GREEKS_WINDOW_PLAN]` reports final request-window strategy, adaptive window mode, and window count.
-7. ClickHouse mutation-budget telemetry:
+8. ClickHouse mutation-budget telemetry:
    - `[CLICKHOUSE_DELETE_BUDGET_SPIKE]` marks delete-latency spikes.
    - `[CLICKHOUSE_DELETE_BUDGET_DOWNGRADE]` marks table-level downgrade to insert-only mode.
    - `[CLICKHOUSE_DELETE_BUDGET_SKIP]` marks subsequent skipped deletes for downgraded tables.
