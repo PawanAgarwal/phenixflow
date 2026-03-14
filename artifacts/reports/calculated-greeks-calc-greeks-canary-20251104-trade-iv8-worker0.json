@@ -1,0 +1,77 @@
+{
+  "runId": "calc-greeks-canary-20251104-trade-iv8",
+  "calcVersion": "bs_v1",
+  "workerIndex": 0,
+  "workerTotal": 1,
+  "runStartedAt": "2026-03-13T03:59:12.642Z",
+  "runFinishedAt": "2026-03-13T03:59:34.377Z",
+  "range": {
+    "startDay": "2025-11-04",
+    "endDay": "2025-11-04"
+  },
+  "config": {
+    "symbolDayListPath": "artifacts/reports/tmp-calc-greeks-canary-next.tsv",
+    "skipCompleted": false,
+    "fallbackRate": 0,
+    "dividendYield": 0,
+    "sourceMode": "trade_minute",
+    "ivLow": 0.0005,
+    "ivHigh": 5,
+    "ivIterations": 8,
+    "maxThreads": 6,
+    "maxMemoryBytes": 4294967296,
+    "heartbeatEvery": 10
+  },
+  "timingsMs": {
+    "schemaMs": 1810,
+    "loadJobsMs": 1,
+    "processingMs": 19780
+  },
+  "totals": {
+    "assignedJobs": 1,
+    "completedJobs": 1,
+    "failedJobs": 0,
+    "skippedJobs": 0,
+    "insertedRowsTotal": 28446,
+    "solvedRowsTotal": 28123
+  },
+  "aggregate": {
+    "rows": 28446,
+    "solvedRows": 28123,
+    "missingUnderlyingRows": 0,
+    "missingPriceRows": 0,
+    "invalidInputRows": 323,
+    "expiredRows": 0,
+    "unsolvedRows": 0,
+    "monthly": [
+      {
+        "month": "2025-11-01",
+        "rows": 28446,
+        "solved_rows": 28123
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "symbol": "AAPL",
+      "dayIso": "2025-11-04",
+      "status": "complete",
+      "rate": 0.04,
+      "rateDay": "2025-11-04",
+      "rateSource": "reference_sofr_daily",
+      "sourceMode": "trade_minute",
+      "elapsedMs": 19633,
+      "insertMs": 19053,
+      "rowsPerSecond": 1492.9932294126909,
+      "insertedRows": 28446,
+      "solvedRows": 28123,
+      "missingUnderlyingRows": 0,
+      "missingPriceRows": 0,
+      "invalidInputRows": 323,
+      "expiredRows": 0,
+      "unsolvedRows": 0,
+      "avgPriceError": 0.11691137772882541,
+      "p95PriceError": 0.43282837
+    }
+  ]
+}

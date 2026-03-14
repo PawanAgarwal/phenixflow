@@ -1,0 +1,118 @@
+{
+  "generatedAt": "2026-03-14T12:20:07.763Z",
+  "startedAt": "2026-03-14T12:20:02.148Z",
+  "readBackend": "clickhouse",
+  "artifactPath": "clickhouse://127.0.0.1:9000/options",
+  "config": {
+    "fromIso": "2025-09-01",
+    "toIso": "2026-03-12",
+    "symbolsPath": "/Users/pawanagarwal/github/phenixflow/config/top200-universe.json",
+    "availableSymbols": 101,
+    "emaPeriod": 8,
+    "morningEndEt": "11:30",
+    "lunchStartEt": "11:30",
+    "lunchEndEt": "14:00",
+    "minMorningMovePct": 1.5,
+    "minPullbackPct": 0.4,
+    "touchTolerancePct": 0.15,
+    "minRiskPct": 0.08,
+    "rTarget": 9,
+    "chunkSize": 300,
+    "conservativeFillRule": "if stop and target are both touched in same minute, stop is assumed first"
+  },
+  "dataCoverage": {
+    "min_day": "2024-11-07",
+    "max_day": "2026-03-12"
+  },
+  "pipelineCounts": {
+    "bars": 62040,
+    "setupsDetected": 0,
+    "minuteRowsFetched": 0,
+    "tradesEvaluated": 0,
+    "skipped": {
+      "noMinuteRows": 0,
+      "noEntryMinute": 0,
+      "invalidRisk": 0
+    },
+    "setupDiagnostics": {
+      "symbolDays": 13106,
+      "symbolDaysWithMorningBars": 4707,
+      "symbolDaysPassMorningMove": 186,
+      "lunchBarsScanned": 372,
+      "failEma": 0,
+      "failBelowPriorHigh": 168,
+      "failTouch": 62,
+      "failCloseAboveEma": 140,
+      "failBullBody": 2,
+      "failPullbackDepth": 0,
+      "selected": 0
+    }
+  },
+  "summary": {
+    "all": {
+      "trades": 0,
+      "stopHitRate": null,
+      "reach1RRate": null,
+      "reach2RRate": null,
+      "reach3RRate": null,
+      "reach5RRate": null,
+      "reach9RRate": null,
+      "priorHodHitRate": null,
+      "avgMaxR": null,
+      "medianMaxR": null,
+      "p90MaxR": null,
+      "avgCloseOrStopR": null,
+      "avgTargetPriorHodR": null,
+      "avgMorningMovePct": null,
+      "avgPullbackPct": null,
+      "maxRBest": null,
+      "worstCloseOrStopR": null,
+      "bestCloseOrStopR": null
+    },
+    "stocks": {
+      "trades": 0,
+      "stopHitRate": null,
+      "reach1RRate": null,
+      "reach2RRate": null,
+      "reach3RRate": null,
+      "reach5RRate": null,
+      "reach9RRate": null,
+      "priorHodHitRate": null,
+      "avgMaxR": null,
+      "medianMaxR": null,
+      "p90MaxR": null,
+      "avgCloseOrStopR": null,
+      "avgTargetPriorHodR": null,
+      "avgMorningMovePct": null,
+      "avgPullbackPct": null,
+      "maxRBest": null,
+      "worstCloseOrStopR": null,
+      "bestCloseOrStopR": null
+    },
+    "etfs": {
+      "trades": 0,
+      "stopHitRate": null,
+      "reach1RRate": null,
+      "reach2RRate": null,
+      "reach3RRate": null,
+      "reach5RRate": null,
+      "reach9RRate": null,
+      "priorHodHitRate": null,
+      "avgMaxR": null,
+      "medianMaxR": null,
+      "p90MaxR": null,
+      "avgCloseOrStopR": null,
+      "avgTargetPriorHodR": null,
+      "avgMorningMovePct": null,
+      "avgPullbackPct": null,
+      "maxRBest": null,
+      "worstCloseOrStopR": null,
+      "bestCloseOrStopR": null
+    }
+  },
+  "focusChecks": {
+    "avgo_2026_03_11": []
+  },
+  "topTradesByMaxR": [],
+  "topTradesByCloseOrStopR": []
+}

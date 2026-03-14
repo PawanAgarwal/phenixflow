@@ -1,0 +1,207 @@
+- generic [ref=e6]:
+  - navigation [ref=e7]:
+    - generic [ref=e9]:
+      - button "Morningstar brands and products" [ref=e11] [cursor=pointer]:
+        - generic [ref=e12]: Morningstar brands and products
+        - img [ref=e13]:
+          - img [ref=e14]
+      - button "Company" [ref=e17] [cursor=pointer]:
+        - generic [ref=e18]: Company
+        - img [ref=e19]:
+          - img [ref=e20]
+  - generic [ref=e22]:
+    - generic [ref=e23]:
+      - generic [ref=e24]:
+        - button "Navigation menu" [ref=e27] [cursor=pointer]:
+          - img [ref=e28]:
+            - img [ref=e29]
+        - link "Morningstar" [ref=e31] [cursor=pointer]:
+          - /url: /
+          - img "Morningstar" [ref=e32]
+      - search [ref=e38]:
+        - textbox "Search Field" [ref=e39]:
+          - /placeholder: Search…
+        - img [ref=e40]:
+          - img [ref=e41]
+      - generic [ref=e44]:
+        - link "Sign In" [ref=e47] [cursor=pointer]:
+          - /url: /login?destination=https://www.morningstar.com/etfs/arcx/shdg/people
+          - img [ref=e48]:
+            - img [ref=e49]
+        - button "Notifications" [ref=e56] [cursor=pointer]:
+          - img [ref=e57]:
+            - img [ref=e58]
+        - button "Help" [ref=e65] [cursor=pointer]:
+          - img [ref=e66]:
+            - img [ref=e67]
+        - link "Get 7 Days Free" [ref=e71] [cursor=pointer]:
+          - /url: https://www.morningstar.com/mm/investor/learn?utm_source=mstar&utm_medium=header&utm_campaign=evergreen
+          - generic [ref=e72]: Get 7 Days Free
+    - navigation [ref=e73]:
+      - list [ref=e75]:
+        - listitem [ref=e76]:
+          - link "Portfolio" [ref=e77] [cursor=pointer]:
+            - /url: /tools/portfolio
+            - text: Portfolio
+        - listitem [ref=e78]:
+          - button "Tools" [ref=e81] [cursor=pointer]:
+            - generic [ref=e82]: Tools
+            - img [ref=e83]:
+              - img [ref=e84]
+      - list [ref=e87]:
+        - listitem [ref=e88]:
+          - button "Sections" [ref=e91] [cursor=pointer]:
+            - generic [ref=e92]: Sections
+            - img [ref=e93]:
+              - img [ref=e94]
+        - listitem [ref=e96]:
+          - button "Markets" [ref=e99] [cursor=pointer]:
+            - generic [ref=e100]: Markets
+            - img [ref=e101]:
+              - img [ref=e102]
+        - listitem [ref=e104]:
+          - link "Funds" [ref=e105] [cursor=pointer]:
+            - /url: /funds
+            - text: Funds
+        - listitem [ref=e106]:
+          - link "ETFs" [ref=e107] [cursor=pointer]:
+            - /url: /topics/etfs
+            - text: ETFs
+        - listitem [ref=e108]:
+          - link "Stocks" [ref=e109] [cursor=pointer]:
+            - /url: /stocks
+            - text: Stocks
+        - listitem [ref=e110]:
+          - link "Bonds" [ref=e111] [cursor=pointer]:
+            - /url: /bonds
+            - text: Bonds
+      - list [ref=e113]:
+        - listitem [ref=e114]:
+          - button "Investing Ideas" [ref=e117] [cursor=pointer]:
+            - generic [ref=e118]: Investing Ideas
+            - img [ref=e119]:
+              - img [ref=e120]
+  - navigation [ref=e122]:
+    - generic [ref=e123]:
+      - button "Close" [ref=e125] [cursor=pointer]:
+        - img [ref=e126]:
+          - img [ref=e127]
+      - generic [ref=e129]:
+        - list [ref=e131]:
+          - listitem [ref=e132]:
+            - link "Home" [ref=e133] [cursor=pointer]:
+              - /url: /
+              - text: Home
+        - list [ref=e135]:
+          - listitem [ref=e136]:
+            - generic [ref=e137]:
+              - button "Tools" [ref=e138] [cursor=pointer]:
+                - img [ref=e139]:
+                  - img [ref=e140]
+                - generic [ref=e142]: Tools
+              - list [ref=e145]:
+                - listitem [ref=e146]:
+                  - link "Portfolio Locked" [ref=e147] [cursor=pointer]:
+                    - /url: /tools/portfolio
+                    - text: Portfolio
+                    - img "Locked" [ref=e149]:
+                      - img [ref=e150]
+                - listitem [ref=e153]:
+                  - link "Watchlists Locked" [ref=e154] [cursor=pointer]:
+                    - /url: /tools/watchlists
+                    - text: Watchlists
+                    - img "Locked" [ref=e156]:
+                      - img [ref=e157]
+                - listitem [ref=e160]:
+                  - link "Screener Locked" [ref=e161] [cursor=pointer]:
+                    - /url: /tools/screener
+                    - text: Screener
+                    - img "Locked" [ref=e163]:
+                      - img [ref=e164]
+                - listitem [ref=e167]:
+                  - link "Chart Locked" [ref=e168] [cursor=pointer]:
+                    - /url: /tools/chart
+                    - text: Chart
+                    - img "Locked" [ref=e170]:
+                      - img [ref=e171]
+                - listitem [ref=e174]:
+                  - link "Rating Changes Locked" [ref=e175] [cursor=pointer]:
+                    - /url: /tools/rating-changes
+                    - text: Rating Changes
+                    - img "Locked" [ref=e177]:
+                      - img [ref=e178]
+        - list [ref=e182]:
+          - listitem [ref=e183]:
+            - button "Sections" [ref=e185] [cursor=pointer]:
+              - img [ref=e186]:
+                - img [ref=e187]
+              - generic [ref=e189]: Sections
+          - listitem [ref=e190]:
+            - button "Markets" [ref=e192] [cursor=pointer]:
+              - img [ref=e193]:
+                - img [ref=e194]
+              - generic [ref=e196]: Markets
+          - listitem [ref=e197]:
+            - link "Funds" [ref=e198] [cursor=pointer]:
+              - /url: /funds
+              - text: Funds
+          - listitem [ref=e199]:
+            - link "ETFs" [ref=e200] [cursor=pointer]:
+              - /url: /topics/etfs
+              - text: ETFs
+          - listitem [ref=e201]:
+            - link "Stocks" [ref=e202] [cursor=pointer]:
+              - /url: /stocks
+              - text: Stocks
+          - listitem [ref=e203]:
+            - link "Bonds" [ref=e204] [cursor=pointer]:
+              - /url: /bonds
+              - text: Bonds
+        - list [ref=e206]:
+          - listitem [ref=e207]:
+            - button "Investing Ideas" [ref=e209] [cursor=pointer]:
+              - img [ref=e210]:
+                - img [ref=e211]
+              - generic [ref=e213]: Investing Ideas
+        - list [ref=e215]:
+          - listitem [ref=e216]:
+            - button "Media" [ref=e218] [cursor=pointer]:
+              - img [ref=e219]:
+                - img [ref=e220]
+              - generic [ref=e222]: Media
+        - list [ref=e224]:
+          - listitem [ref=e225]:
+            - link "Help" [ref=e226] [cursor=pointer]:
+              - /url: /help-center
+              - text: Help
+          - listitem [ref=e227]:
+            - link "What’s New" [ref=e228] [cursor=pointer]:
+              - /url: /whats-new
+              - text: What’s New
+          - listitem [ref=e229]:
+            - link "Notifications Locked" [ref=e230] [cursor=pointer]:
+              - /url: /notifications
+              - text: Notifications
+              - img "Locked" [ref=e232]:
+                - img [ref=e233]
+        - list [ref=e237]:
+          - listitem [ref=e238]:
+            - button "Products for Investors" [ref=e240] [cursor=pointer]:
+              - img [ref=e241]:
+                - img [ref=e242]
+              - generic [ref=e244]: Products for Investors
+          - listitem [ref=e245]:
+            - link "All Products and Services" [ref=e246] [cursor=pointer]:
+              - /url: /business
+              - text: All Products and Services
+              - img [ref=e248]:
+                - img [ref=e249]
+  - main [ref=e253]:
+    - generic [ref=e254]:
+      - heading "404 Error" [level=1] [ref=e255]
+      - generic [ref=e256]: Like guarantees of future returns, this page doesn’t exist.
+      - generic [ref=e257]:
+        - text: Try searching, or go to our
+        - link "homepage" [ref=e258] [cursor=pointer]:
+          - /url: /
+        - text: .

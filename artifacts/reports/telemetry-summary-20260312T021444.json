@@ -1,0 +1,63 @@
+{
+  "runDir": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/clickhouse-historical-pipeline-20260312T021444",
+  "parsedAt": "2026-03-12T09:22:23.928Z",
+  "logFiles": 4,
+  "parsedLines": 790,
+  "parsedEvents": 231,
+  "totals": {
+    "thetaDownloadDurationMs": 3655,
+    "thetaDownloadRows": 13,
+    "thetaDownloadBytes": 767,
+    "thetaDownloadRequests": 13,
+    "tradeSyncJobs": 0,
+    "tradeParsedRows": 0,
+    "tradeFetchedRows": 0,
+    "tradeUpsertedRows": 0,
+    "tradeStreamDownloadDurationMs": 0,
+    "tradeInsertDurationMs": 0,
+    "tradeWallDurationMs": 0,
+    "quoteSyncJobs": 0,
+    "quoteParsedRows": 0,
+    "quoteInsertedRows": 0,
+    "quoteStreamDownloadDurationMs": 0,
+    "quoteInsertDurationMs": 0,
+    "quoteWallDurationMs": 0,
+    "stockSyncJobs": 0,
+    "stockFetchedRows": 0,
+    "stockInsertedRows": 0,
+    "stockFetchDurationMs": 0,
+    "stockInsertDurationMs": 0,
+    "stockReloadDurationMs": 0,
+    "deleteAuditOps": 0,
+    "deleteAuditDurationMs": 0,
+    "enrichProgressBatches": 0,
+    "enrichProgressRows": 0
+  },
+  "derived": {
+    "avgThetaRowsPerRequest": 1,
+    "avgThetaBytesPerRequest": 59,
+    "avgThetaMsPerRequest": 281.15,
+    "thetaRowsPerSec": 3.56,
+    "thetaBytesPerSec": 209.85,
+    "thetaMiBPerSec": 0,
+    "quoteRowsPerSecInsertPhase": 0,
+    "tradeRowsPerSecInsertPhase": 0,
+    "stockRowsPerSecInsertPhase": 0,
+    "deleteOpsPerSec": 0
+  },
+  "thetaByApi": [
+    {
+      "key": "/v3/calendar/on_date",
+      "requests": 13,
+      "okRequests": 13,
+      "errorRequests": 0,
+      "rows": 13,
+      "bytes": 767,
+      "durationMs": 3655,
+      "rowsPerSec": 3.56,
+      "bytesPerSec": 209.85,
+      "mibPerSec": 0
+    }
+  ],
+  "deleteByTable": []
+}

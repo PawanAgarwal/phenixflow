@@ -1,0 +1,682 @@
+- generic [ref=e5]:
+  - navigation [ref=e6]:
+    - generic [ref=e8]:
+      - button "Morningstar brands and products" [ref=e10] [cursor=pointer]:
+        - generic [ref=e11]: Morningstar brands and products
+        - img [ref=e12]:
+          - img [ref=e13]
+      - button "Company" [ref=e16] [cursor=pointer]:
+        - generic [ref=e17]: Company
+        - img [ref=e18]:
+          - img [ref=e19]
+  - generic [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - button "Navigation menu" [ref=e26] [cursor=pointer]:
+          - img [ref=e27]:
+            - img [ref=e28]
+        - link "Morningstar" [ref=e30] [cursor=pointer]:
+          - /url: /
+          - img "Morningstar" [ref=e31]
+      - search [ref=e37]:
+        - textbox "Search Field" [ref=e38]:
+          - /placeholder: Search…
+        - img [ref=e39]:
+          - img [ref=e40]
+      - generic [ref=e43]:
+        - link "Sign In" [ref=e46] [cursor=pointer]:
+          - /url: /login?destination=https://www.morningstar.com/etfs/arcx/qai/people
+          - img [ref=e47]:
+            - img [ref=e48]
+        - button "Notifications" [ref=e55] [cursor=pointer]:
+          - img [ref=e56]:
+            - img [ref=e57]
+        - button "Help" [ref=e64] [cursor=pointer]:
+          - img [ref=e65]:
+            - img [ref=e66]
+        - button "Get 7 Days Free" [ref=e72] [cursor=pointer]:
+          - generic [ref=e73]: Get 7 Days Free
+    - navigation [ref=e74]:
+      - list [ref=e76]:
+        - listitem [ref=e77]:
+          - link "Portfolio" [ref=e78] [cursor=pointer]:
+            - /url: /tools/portfolio
+            - text: Portfolio
+        - listitem [ref=e79]:
+          - button "Tools" [ref=e82] [cursor=pointer]:
+            - generic [ref=e83]: Tools
+            - img [ref=e84]:
+              - img [ref=e85]
+      - list [ref=e88]:
+        - listitem [ref=e89]:
+          - button "Sections" [ref=e92] [cursor=pointer]:
+            - generic [ref=e93]: Sections
+            - img [ref=e94]:
+              - img [ref=e95]
+        - listitem [ref=e97]:
+          - button "Markets" [ref=e100] [cursor=pointer]:
+            - generic [ref=e101]: Markets
+            - img [ref=e102]:
+              - img [ref=e103]
+        - listitem [ref=e105]:
+          - link "Funds" [ref=e106] [cursor=pointer]:
+            - /url: /funds
+            - text: Funds
+        - listitem [ref=e107]:
+          - link "ETFs" [ref=e108] [cursor=pointer]:
+            - /url: /topics/etfs
+            - text: ETFs
+        - listitem [ref=e109]:
+          - link "Stocks" [ref=e110] [cursor=pointer]:
+            - /url: /stocks
+            - text: Stocks
+        - listitem [ref=e111]:
+          - link "Bonds" [ref=e112] [cursor=pointer]:
+            - /url: /bonds
+            - text: Bonds
+      - list [ref=e114]:
+        - listitem [ref=e115]:
+          - button "Investing Ideas" [ref=e118] [cursor=pointer]:
+            - generic [ref=e119]: Investing Ideas
+            - img [ref=e120]:
+              - img [ref=e121]
+  - navigation [ref=e123]:
+    - generic [ref=e124]:
+      - button "Close" [ref=e126] [cursor=pointer]:
+        - img [ref=e127]:
+          - img [ref=e128]
+      - generic [ref=e130]:
+        - list [ref=e132]:
+          - listitem [ref=e133]:
+            - link "Home" [ref=e134] [cursor=pointer]:
+              - /url: /
+              - text: Home
+        - list [ref=e136]:
+          - listitem [ref=e137]:
+            - generic [ref=e138]:
+              - button "Tools" [ref=e139] [cursor=pointer]:
+                - img [ref=e140]:
+                  - img [ref=e141]
+                - generic [ref=e143]: Tools
+              - list [ref=e146]:
+                - listitem [ref=e147]:
+                  - link "Portfolio Locked" [ref=e148] [cursor=pointer]:
+                    - /url: /tools/portfolio
+                    - text: Portfolio
+                    - img "Locked" [ref=e150]:
+                      - img [ref=e151]
+                - listitem [ref=e154]:
+                  - link "Watchlists Locked" [ref=e155] [cursor=pointer]:
+                    - /url: /tools/watchlists
+                    - text: Watchlists
+                    - img "Locked" [ref=e157]:
+                      - img [ref=e158]
+                - listitem [ref=e161]:
+                  - link "Screener Locked" [ref=e162] [cursor=pointer]:
+                    - /url: /tools/screener
+                    - text: Screener
+                    - img "Locked" [ref=e164]:
+                      - img [ref=e165]
+                - listitem [ref=e168]:
+                  - link "Chart Locked" [ref=e169] [cursor=pointer]:
+                    - /url: /tools/chart
+                    - text: Chart
+                    - img "Locked" [ref=e171]:
+                      - img [ref=e172]
+                - listitem [ref=e175]:
+                  - link "Rating Changes Locked" [ref=e176] [cursor=pointer]:
+                    - /url: /tools/rating-changes
+                    - text: Rating Changes
+                    - img "Locked" [ref=e178]:
+                      - img [ref=e179]
+        - list [ref=e183]:
+          - listitem [ref=e184]:
+            - button "Sections" [ref=e186] [cursor=pointer]:
+              - img [ref=e187]:
+                - img [ref=e188]
+              - generic [ref=e190]: Sections
+          - listitem [ref=e191]:
+            - button "Markets" [ref=e193] [cursor=pointer]:
+              - img [ref=e194]:
+                - img [ref=e195]
+              - generic [ref=e197]: Markets
+          - listitem [ref=e198]:
+            - link "Funds" [ref=e199] [cursor=pointer]:
+              - /url: /funds
+              - text: Funds
+          - listitem [ref=e200]:
+            - link "ETFs" [ref=e201] [cursor=pointer]:
+              - /url: /topics/etfs
+              - text: ETFs
+          - listitem [ref=e202]:
+            - link "Stocks" [ref=e203] [cursor=pointer]:
+              - /url: /stocks
+              - text: Stocks
+          - listitem [ref=e204]:
+            - link "Bonds" [ref=e205] [cursor=pointer]:
+              - /url: /bonds
+              - text: Bonds
+        - list [ref=e207]:
+          - listitem [ref=e208]:
+            - button "Investing Ideas" [ref=e210] [cursor=pointer]:
+              - img [ref=e211]:
+                - img [ref=e212]
+              - generic [ref=e214]: Investing Ideas
+        - list [ref=e216]:
+          - listitem [ref=e217]:
+            - button "Media" [ref=e219] [cursor=pointer]:
+              - img [ref=e220]:
+                - img [ref=e221]
+              - generic [ref=e223]: Media
+        - list [ref=e225]:
+          - listitem [ref=e226]:
+            - link "Help" [ref=e227] [cursor=pointer]:
+              - /url: /help-center
+              - text: Help
+          - listitem [ref=e228]:
+            - link "What’s New" [ref=e229] [cursor=pointer]:
+              - /url: /whats-new
+              - text: What’s New
+          - listitem [ref=e230]:
+            - link "Notifications Locked" [ref=e231] [cursor=pointer]:
+              - /url: /notifications
+              - text: Notifications
+              - img "Locked" [ref=e233]:
+                - img [ref=e234]
+        - list [ref=e238]:
+          - listitem [ref=e239]:
+            - button "Products for Investors" [ref=e241] [cursor=pointer]:
+              - img [ref=e242]:
+                - img [ref=e243]
+              - generic [ref=e245]: Products for Investors
+          - listitem [ref=e246]:
+            - link "All Products and Services" [ref=e247] [cursor=pointer]:
+              - /url: /business
+              - text: All Products and Services
+              - img [ref=e249]:
+                - img [ref=e250]
+  - generic [ref=e254]:
+    - complementary [ref=e256]:
+      - generic [ref=e258]:
+        - iframe [ref=e260]:
+          - link "Morningstar Advertisement" [ref=f1135e3] [cursor=pointer]:
+            - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224145/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=728x90/pos=top/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=60173696/viewid=62223024
+            - img "Morningstar Advertisement" [ref=f1135e4]
+        - iframe [ref=e262]:
+          - link "Advertisement" [ref=f1136e3] [cursor=pointer]:
+            - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224306/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=195x90/pos=top/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=71572355/viewid=62223024
+            - img "Advertisement" [ref=f1136e4]
+    - main [ref=e264]:
+      - complementary "Wallpaper ad"
+      - generic [ref=e265]:
+        - generic [ref=e266]:
+          - generic [ref=e268]:
+            - generic [ref=e269]:
+              - heading "NYLI Hedge Multi-Strategy Tracker ETF QAI People" [level=1] [ref=e270]:
+                - text: NYLI Hedge Multi-Strategy Tracker ETF QAI
+                - generic [ref=e271]: People
+              - generic "3 Stars" [ref=e273]:
+                - img "rating of 3 out of 5 stars" [ref=e274]:
+                  - img [ref=e275]:
+                    - img [ref=e276]
+                  - img [ref=e278]:
+                    - img [ref=e279]
+                  - img [ref=e281]:
+                    - img [ref=e282]
+            - generic [ref=e284]:
+              - text: "| Rating as of"
+              - time [ref=e285]: Feb 28, 2026
+              - generic [ref=e286]:
+                - text: "|"
+                - link "See New York Life Investment Hub" [ref=e287] [cursor=pointer]:
+                  - /url: /asset-management-companies/new-york-life-BN00000BDQ
+                  - generic [ref=e288]: See New York Life Investment Hub
+                  - img [ref=e289]:
+                    - img [ref=e290]
+          - generic [ref=e292]:
+            - button "Download PDF" [ref=e293] [cursor=pointer]:
+              - img [ref=e294]:
+                - img [ref=e295]
+              - generic [ref=e297]: Download PDF
+              - img [ref=e298]:
+                - img [ref=e299]
+            - button "More Actions" [ref=e307] [cursor=pointer]:
+              - img [ref=e308]:
+                - img [ref=e309]
+              - generic [ref=e312]: More Actions
+          - complementary "Fund header ad" [ref=e313]
+        - navigation "Etf tab bar" [ref=e315]:
+          - region [ref=e316]:
+            - list [ref=e318]:
+              - listitem [ref=e319]:
+                - link "Quote" [ref=e320] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/quote
+                  - generic [ref=e321]: Quote
+              - listitem [ref=e322]:
+                - link "Chart" [ref=e323] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/chart
+                  - generic [ref=e324]: Chart
+              - listitem [ref=e325]:
+                - link "Fund Analysis" [ref=e326] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/analysis
+                  - generic [ref=e327]: Fund Analysis
+              - listitem [ref=e328]:
+                - link "Performance" [ref=e329] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/performance
+                  - generic [ref=e330]: Performance
+              - listitem [ref=e331]:
+                - link "Sustainability" [ref=e332] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/sustainability
+                  - generic [ref=e333]: Sustainability
+              - listitem [ref=e334]:
+                - link "Risk" [ref=e335] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/risk
+                  - generic [ref=e336]: Risk
+              - listitem [ref=e337]:
+                - link "Price" [ref=e338] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/price
+                  - generic [ref=e339]: Price
+              - listitem [ref=e340]:
+                - link "Portfolio" [ref=e341] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/portfolio
+                  - generic [ref=e342]: Portfolio
+              - listitem [ref=e343]:
+                - link "People" [ref=e344] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/people
+                  - generic [ref=e345]: People
+              - listitem [ref=e346]:
+                - link "Parent" [ref=e347] [cursor=pointer]:
+                  - /url: /etfs/arcx/qai/parent
+                  - generic [ref=e348]: Parent
+        - main [ref=e349]:
+          - generic [ref=e351]:
+            - generic [ref=e357]:
+              - generic [ref=e360]:
+                - generic [ref=e363]:
+                  - heading "People" [level=2] [ref=e365]
+                  - button "people-metadata" [ref=e368] [cursor=pointer]
+                - generic [ref=e374]:
+                  - generic [ref=e375]:
+                    - generic [ref=e377]:
+                      - generic [ref=e378]:
+                        - generic [ref=e379]: Inception Date
+                        - generic [ref=e380]: Mar 25, 2009
+                      - generic [ref=e381]:
+                        - generic [ref=e382]: Number of Managers
+                        - generic [ref=e383]: "2"
+                      - generic [ref=e384]:
+                        - generic [ref=e385]: Longest Tenure
+                        - generic [ref=e386]: 15.1 Years
+                      - generic [ref=e387]:
+                        - generic [ref=e388]: Average Tenure
+                        - generic [ref=e389]: 8.8 Years
+                    - generic [ref=e392]:
+                      - generic [ref=e393]: Advisor(s)
+                      - generic [ref=e395]: New York Life Investment Management LLC
+                  - generic [ref=e400]:
+                    - heading "Management Team" [level=3] [ref=e404]
+                    - generic [ref=e408]:
+                      - generic [ref=e409]:
+                        - generic [ref=e410]:
+                          - link "Greg Barrato" [ref=e412] [cursor=pointer]:
+                            - /url: javascript:void(0);
+                          - generic [ref=e413]: Feb 28, 2011 –Present
+                        - generic [ref=e414]:
+                          - generic [ref=e415]:
+                            - text: Position in Investment
+                            - generic [ref=e416]: N/A
+                          - img [ref=e418]:
+                            - generic [ref=e426]:
+                              - generic [ref=e428]: "0"
+                              - generic [ref=e430]: 10K
+                              - generic [ref=e432]: 50K
+                              - generic [ref=e434]: 100K
+                              - generic [ref=e436]: 500K
+                              - generic [ref=e438]: 1M
+                              - generic [ref=e440]: ">"
+                      - generic [ref=e441]:
+                        - generic [ref=e442]:
+                          - link "Francis J. Ok" [ref=e444] [cursor=pointer]:
+                            - /url: javascript:void(0);
+                          - generic [ref=e445]: Oct 02, 2023 –Present
+                        - generic [ref=e446]:
+                          - generic [ref=e447]:
+                            - text: Position in Investment
+                            - generic [ref=e448]: N/A
+                          - img [ref=e450]:
+                            - generic [ref=e458]:
+                              - generic [ref=e460]: "0"
+                              - generic [ref=e462]: 10K
+                              - generic [ref=e464]: 50K
+                              - generic [ref=e466]: 100K
+                              - generic [ref=e468]: 500K
+                              - generic [ref=e470]: 1M
+                              - generic [ref=e472]: ">"
+                  - generic [ref=e478]:
+                    - heading "Manager Timeline" [level=3] [ref=e480]
+                    - generic [ref=e482]:
+                      - generic [ref=e483]:
+                        - list:
+                          - listitem [ref=e484]: Male
+                          - listitem [ref=e486]: Female
+                          - listitem [ref=e488]: Non-Binary
+                          - listitem [ref=e490]: Not Disclosed
+                          - listitem [ref=e492]: Not Available
+                      - img [ref=e495]:
+                        - generic [ref=e496]:
+                          - generic [ref=e509]:
+                            - generic [ref=e512] [cursor=pointer]: Greg Barrato
+                            - generic [ref=e515] [cursor=pointer]: Francis J. Ok
+                          - generic [ref=e516]:
+                            - generic [ref=e519] [cursor=pointer]: Denise M. Krisko
+                            - generic [ref=e522] [cursor=pointer]: Steven Wetter
+                            - generic [ref=e525] [cursor=pointer]: Richard A. Brown
+                            - generic [ref=e528] [cursor=pointer]: Thomas J. Durante
+                            - generic [ref=e531] [cursor=pointer]: Karen Q. Wong
+                            - generic [ref=e534] [cursor=pointer]: Julie Abbett
+                            - generic [ref=e537] [cursor=pointer]: Paul (Teddy) Fusaro
+                            - generic [ref=e540] [cursor=pointer]: James Harrison
+                          - generic [ref=e541]:
+                            - generic [ref=e543]: "2006"
+                            - generic [ref=e545]: "2008"
+                            - generic [ref=e547]: "2010"
+                            - generic [ref=e549]: "2012"
+                            - generic [ref=e551]: "2014"
+                            - generic [ref=e553]: "2016"
+                            - generic [ref=e555]: "2018"
+                            - generic [ref=e557]: "2020"
+                            - generic [ref=e559]: "2022"
+                            - generic [ref=e561]: "2024"
+                            - generic [ref=e563]: "2026"
+              - generic [ref=e569]:
+                - button "Metadata" [ref=e572] [cursor=pointer]
+                - generic [ref=e577]:
+                  - heading "Management ManagementInfo" [level=3] [ref=e581]:
+                    - text: Management
+                    - button "ManagementInfo" [ref=e583] [cursor=pointer]:
+                      - img [ref=e585]
+                  - table "Proxy Voting data, which provides critical insight into the impacts that funds have on the holdings in their portfolios, is being moved from the People section of the report into a dedicated tab in this redesigned component." [ref=e591]:
+                    - rowgroup [ref=e592]:
+                      - row
+                      - row "Resolutions Support % Against % Vote Count" [ref=e593]:
+                        - columnheader "Resolutions" [ref=e594]:
+                          - generic [ref=e596]: Resolutions
+                        - columnheader "Support %" [ref=e597]:
+                          - generic [ref=e599]: Support %
+                        - columnheader "Against %" [ref=e600]:
+                          - generic [ref=e602]: Against %
+                        - columnheader "Vote Count" [ref=e603]:
+                          - generic [ref=e605]: Vote Count
+                    - rowgroup [ref=e606]:
+                      - row "Executive Compensation (Say on Pay) — — —" [ref=e607]:
+                        - cell "Executive Compensation (Say on Pay)" [ref=e608]
+                        - cell "—" [ref=e609]
+                        - cell "—" [ref=e610]
+                        - cell "—" [ref=e611]
+                      - row "Auditor Ratification — — —" [ref=e612]:
+                        - cell "Auditor Ratification" [ref=e613]
+                        - cell "—" [ref=e614]
+                        - cell "—" [ref=e615]
+                        - cell "—" [ref=e616]
+                      - row "Director Election — — —" [ref=e617]:
+                        - cell "Director Election" [ref=e618]
+                        - cell "—" [ref=e619]
+                        - cell "—" [ref=e620]
+                        - cell "—" [ref=e621]
+                      - row "Compensation Plan Approval — — —" [ref=e622]:
+                        - cell "Compensation Plan Approval" [ref=e623]
+                        - cell "—" [ref=e624]
+                        - cell "—" [ref=e625]
+                        - cell "—" [ref=e626]
+                      - row "Total Management Resolutions — — —" [ref=e627]:
+                        - cell "Total Management Resolutions" [ref=e628]
+                        - cell "—" [ref=e629]
+                        - cell "—" [ref=e630]
+                        - cell "—" [ref=e631]
+                - generic [ref=e635]:
+                  - heading "Shareholder ShareholderInfo" [level=3] [ref=e639]:
+                    - text: Shareholder
+                    - button "ShareholderInfo" [ref=e641] [cursor=pointer]:
+                      - img [ref=e643]
+                  - table [ref=e649]:
+                    - rowgroup [ref=e650]:
+                      - row
+                      - row "Resolutions Support % Against % Vote Count" [ref=e651]:
+                        - columnheader "Resolutions" [ref=e652]:
+                          - generic [ref=e654]: Resolutions
+                        - columnheader "Support %" [ref=e655]:
+                          - generic [ref=e657]: Support %
+                        - columnheader "Against %" [ref=e658]:
+                          - generic [ref=e660]: Against %
+                        - columnheader "Vote Count" [ref=e661]:
+                          - generic [ref=e663]: Vote Count
+                    - rowgroup [ref=e664]:
+                      - row "Board Governance — — —" [ref=e665]:
+                        - cell "Board Governance" [ref=e666]
+                        - cell "—" [ref=e667]
+                        - cell "—" [ref=e668]
+                        - cell "—" [ref=e669]
+                      - row "Climate Change — — —" [ref=e670]:
+                        - cell "Climate Change" [ref=e671]
+                        - cell "—" [ref=e672]
+                        - cell "—" [ref=e673]
+                        - cell "—" [ref=e674]
+                      - row "Director Elections — — —" [ref=e675]:
+                        - cell "Director Elections" [ref=e676]
+                        - cell "—" [ref=e677]
+                        - cell "—" [ref=e678]
+                        - cell "—" [ref=e679]
+                      - row "Environmental — — —" [ref=e680]:
+                        - cell "Environmental" [ref=e681]
+                        - cell "—" [ref=e682]
+                        - cell "—" [ref=e683]
+                        - cell "—" [ref=e684]
+                      - row "ESG Governance Arrangements — — —" [ref=e685]:
+                        - cell "ESG Governance Arrangements" [ref=e686]
+                        - cell "—" [ref=e687]
+                        - cell "—" [ref=e688]
+                        - cell "—" [ref=e689]
+                      - row "Executive Compensation — — —" [ref=e690]:
+                        - cell "Executive Compensation" [ref=e691]
+                        - cell "—" [ref=e692]
+                        - cell "—" [ref=e693]
+                        - cell "—" [ref=e694]
+                      - row "Human and Workers' Rights — — —" [ref=e695]:
+                        - cell "Human and Workers' Rights" [ref=e696]
+                        - cell "—" [ref=e697]
+                        - cell "—" [ref=e698]
+                        - cell "—" [ref=e699]
+                      - row "Humane Treatment of Animals — — —" [ref=e700]:
+                        - cell "Humane Treatment of Animals" [ref=e701]
+                        - cell "—" [ref=e702]
+                        - cell "—" [ref=e703]
+                        - cell "—" [ref=e704]
+                      - row "Militarism and Aggression — — —" [ref=e705]:
+                        - cell "Militarism and Aggression" [ref=e706]
+                        - cell "—" [ref=e707]
+                        - cell "—" [ref=e708]
+                        - cell "—" [ref=e709]
+                      - row "Other Corporate Governance — — —" [ref=e710]:
+                        - cell "Other Corporate Governance" [ref=e711]
+                        - cell "—" [ref=e712]
+                        - cell "—" [ref=e713]
+                        - cell "—" [ref=e714]
+                      - row "Other Environmental & Social — — —" [ref=e715]:
+                        - cell "Other Environmental & Social" [ref=e716]
+                        - cell "—" [ref=e717]
+                        - cell "—" [ref=e718]
+                        - cell "—" [ref=e719]
+                      - row "Political Influence — — —" [ref=e720]:
+                        - cell "Political Influence" [ref=e721]
+                        - cell "—" [ref=e722]
+                        - cell "—" [ref=e723]
+                        - cell "—" [ref=e724]
+                      - row "Public Health/Product Safety — — —" [ref=e725]:
+                        - cell "Public Health/Product Safety" [ref=e726]
+                        - cell "—" [ref=e727]
+                        - cell "—" [ref=e728]
+                        - cell "—" [ref=e729]
+                      - row "Shareholder Meetings/Proxy Process — — —" [ref=e730]:
+                        - cell "Shareholder Meetings/Proxy Process" [ref=e731]
+                        - cell "—" [ref=e732]
+                        - cell "—" [ref=e733]
+                        - cell "—" [ref=e734]
+                      - row "Shareholder Rights — — —" [ref=e735]:
+                        - cell "Shareholder Rights" [ref=e736]
+                        - cell "—" [ref=e737]
+                        - cell "—" [ref=e738]
+                        - cell "—" [ref=e739]
+                      - row "Strategy/Business — — —" [ref=e740]:
+                        - cell "Strategy/Business" [ref=e741]
+                        - cell "—" [ref=e742]
+                        - cell "—" [ref=e743]
+                        - cell "—" [ref=e744]
+                      - row "Total Shareholder Resolutions — — —" [ref=e745]:
+                        - cell "Total Shareholder Resolutions" [ref=e746]
+                        - cell "—" [ref=e747]
+                        - cell "—" [ref=e748]
+                        - cell "—" [ref=e749]
+            - complementary [ref=e751]:
+              - generic [ref=e752]:
+                - iframe [ref=e754]:
+                  - link [ref=f1142e3] [cursor=pointer]:
+                    - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224298/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=300x50,300x250,300x600,contentmodule/pos=topright/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=17576190/viewid=62223024
+                - iframe [ref=e756]:
+                  - link "Worried about market volatility? Morningstar StockInvestor can help." [ref=f1139e3] [cursor=pointer]:
+                    - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224194/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=65-chartextlink/pos=toplink/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=23085349/viewid=62223024
+    - generic [ref=e757]:
+      - heading "Sponsor Center" [level=2] [ref=e758]
+      - complementary [ref=e759]:
+        - generic [ref=e760]:
+          - iframe [ref=e762]:
+            - link "Morningstar Advertisement" [ref=f1138e3] [cursor=pointer]:
+              - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224183/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=120x60/pos=SC1/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=73577359/viewid=62223024
+              - img "Morningstar Advertisement" [ref=f1138e4]
+          - iframe [ref=e764]:
+            - link "Advertisement" [ref=f1137e3] [cursor=pointer]:
+              - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224189/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=120x60/pos=SC2/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=10758365/viewid=62223024
+              - img "Advertisement" [ref=f1137e4]
+          - iframe [ref=e766]:
+            - link "Advertisement" [ref=f1143e3] [cursor=pointer]:
+              - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224189/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=120x60/pos=SC3/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=61141215/viewid=62223024
+              - img "Advertisement" [ref=f1143e4]
+          - iframe [ref=e768]:
+            - link "Advertisement" [ref=f1141e3] [cursor=pointer]:
+              - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224188/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=120x60/pos=SC4/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=60789193/viewid=62223024
+              - img "Advertisement" [ref=f1141e4]
+          - iframe [ref=e770]:
+            - link "Advertisement" [ref=f1140e3] [cursor=pointer]:
+              - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224189/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=120x60/pos=SC5/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=61113232/viewid=62223024
+              - img "Advertisement" [ref=f1140e4]
+    - complementary [ref=e772]:
+      - iframe [ref=e776]:
+        - link "Morningstar Advertisement" [ref=f1144e3] [cursor=pointer]:
+          - /url: https://msmedia.morningstar.com/mstar/adclick/FCID=224172/format=tserver_json/formatmt=application/json/site=ms.us/pgid=Reports/usrt=v/ivt=h/isbot=true/size=728x90/pos=bottom/area=Reports.etfs/ticker=QAI/familyid=0C00002DSP/brandingNameId=BN00000BDQ/fundcat=Multistrategy/sustainabilityRating=5/random=28679501/viewid=62223024
+          - img "Morningstar Advertisement" [ref=f1144e4]
+  - generic [ref=e777]:
+    - complementary [ref=e778]:
+      - generic [ref=e780]:
+        - heading "Transparency is our policy. Learn how it impacts everything we do" [level=2] [ref=e781]
+        - button "Read More" [ref=e782] [cursor=pointer]:
+          - generic [ref=e783]: Read More
+          - img [ref=e784]:
+            - img [ref=e785]
+      - text: • • • •
+    - generic [ref=e787]:
+      - generic [ref=e788]: Site Index
+      - generic [ref=e789]:
+        - generic [ref=e790]:
+          - generic [ref=e791]:
+            - link "Morningstar" [ref=e792] [cursor=pointer]:
+              - /url: /
+              - img "Morningstar" [ref=e793]
+            - generic [ref=e794]:
+              - link "Visit us on Facebook" [ref=e795] [cursor=pointer]:
+                - /url: https://www.facebook.com/MorningstarInc
+                - img [ref=e796]:
+                  - img [ref=e797]
+              - link "Visit us on X" [ref=e799] [cursor=pointer]:
+                - /url: https://twitter.com/MorningstarInc
+                - img [ref=e800]:
+                  - img [ref=e801]
+              - link "Visit us on LinkedIn" [ref=e803] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/morningstar
+                - img [ref=e804]:
+                  - img [ref=e805]
+              - link "Visit us on Youtube" [ref=e807] [cursor=pointer]:
+                - /url: https://www.youtube.com/user/morningstar
+                - img [ref=e808]:
+                  - img [ref=e809]
+              - link "Visit us on Instagram" [ref=e811] [cursor=pointer]:
+                - /url: https://www.instagram.com/morningstarinc
+                - img [ref=e812]:
+                  - img [ref=e813]
+              - link "Visit us on Apple-News" [ref=e815] [cursor=pointer]:
+                - /url: https://apple.news/TVz1ZH812QrSloMH1yiAZUA
+                - img [ref=e816]:
+                  - img [ref=e817]
+          - list [ref=e820]:
+            - heading "What We Do" [level=5] [ref=e821]
+            - option "All Products & Services" [ref=e822] [cursor=pointer]:
+              - generic [ref=e826]: All Products & Services
+            - option "Our Signature Methodologies" [ref=e827] [cursor=pointer]:
+              - generic [ref=e831]: Our Signature Methodologies
+            - option "Morningstar Investment Conference" [ref=e832] [cursor=pointer]:
+              - generic [ref=e836]: Morningstar Investment Conference
+          - list [ref=e838]:
+            - heading "Company" [level=5] [ref=e839]
+            - option "About Us" [ref=e840] [cursor=pointer]:
+              - generic [ref=e844]: About Us
+            - option "Careers" [ref=e845] [cursor=pointer]:
+              - generic [ref=e849]: Careers
+            - option "Culture" [ref=e850] [cursor=pointer]:
+              - generic [ref=e854]: Culture
+            - option "Corporate Sustainability" [ref=e855] [cursor=pointer]:
+              - generic [ref=e859]: Corporate Sustainability
+            - option "Newsroom" [ref=e860] [cursor=pointer]:
+              - generic [ref=e864]: Newsroom
+            - option "Investor Relations" [ref=e865] [cursor=pointer]:
+              - generic [ref=e869]: Investor Relations
+          - list [ref=e871]:
+            - heading "Get Help" [level=5] [ref=e872]
+            - option "Advertising Opportunities" [ref=e873] [cursor=pointer]:
+              - generic [ref=e877]: Advertising Opportunities
+            - option "Feedback" [ref=e878] [cursor=pointer]:
+              - generic [ref=e882]: Feedback
+            - option "Reprints" [ref=e883] [cursor=pointer]:
+              - generic [ref=e887]: Reprints
+            - option "Investing Terms and Definitions" [ref=e888] [cursor=pointer]:
+              - generic [ref=e892]: Investing Terms and Definitions
+            - option "Global Contacts" [ref=e893] [cursor=pointer]:
+              - generic [ref=e897]: Global Contacts
+            - option "Affiliate Program" [ref=e898] [cursor=pointer]:
+              - generic [ref=e902]: Affiliate Program
+        - generic [ref=e904]:
+          - link "United States Flag United States" [ref=e906] [cursor=pointer]:
+            - /url: /company/location
+            - img "United States Flag" [ref=e907]
+            - text: United States
+          - generic [ref=e908]:
+            - paragraph [ref=e909]: © Copyright 2026 Morningstar, Inc. All rights reserved. Dow Jones Industrial Average, S&P 500, Nasdaq, and Morningstar Index (Market Barometer) quotes are real-time.
+            - list [ref=e911]:
+              - listitem [ref=e912]:
+                - link "Terms and Conditions" [ref=e913] [cursor=pointer]:
+                  - /url: https://www.morningstar.com/company/terms-and-conditions
+              - listitem [ref=e914]:
+                - link "Privacy Center" [ref=e915] [cursor=pointer]:
+                  - /url: https://www.morningstar.com/company/privacy-center
+              - listitem [ref=e916]:
+                - link "Disclosures" [ref=e917] [cursor=pointer]:
+                  - /url: https://www.morningstar.com/company/disclosures
+              - listitem [ref=e918]:
+                - link "Member User Agreement" [ref=e919] [cursor=pointer]:
+                  - /url: /user-agreement
+              - listitem [ref=e920]:
+                - link "Corrections" [ref=e921] [cursor=pointer]:
+                  - /url: https://www.morningstar.com/corrections
+              - listitem [ref=e922]:
+                - link "Do Not Sell or Share My Personal Information" [ref=e923] [cursor=pointer]:
+                  - /url: https://www.morningstar.com/company/privacy-policy/do-not-sell-or-share
+              - listitem [ref=e924]:
+                - link "Accessibility" [ref=e925] [cursor=pointer]:
+                  - /url: https://www.morningstar.com/company/accessibility

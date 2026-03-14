@@ -1,0 +1,374 @@
+- generic [ref=e2]:
+  - generic:
+    - generic:
+      - heading "To view keyboard shortcuts, press question mark View keyboard shortcuts" [level=2] [ref=e3]:
+        - generic [ref=e4]: To view keyboard shortcuts, press question mark
+        - link "View keyboard shortcuts" [ref=e5] [cursor=pointer]:
+          - /url: /i/keyboard_shortcuts
+      - generic:
+        - generic:
+          - button [ref=e8] [cursor=pointer]:
+            - img [ref=e9]
+          - img [ref=e16] [cursor=pointer]
+      - generic [ref=e18]:
+        - button "Skip to home timeline" [ref=e19] [cursor=pointer]
+        - button "Skip to trending" [ref=e21] [cursor=pointer]
+        - banner [ref=e23]:
+          - generic [ref=e25]:
+            - generic [ref=e26]:
+              - heading "X" [level=1] [ref=e28] [cursor=pointer]:
+                - link "X" [ref=e29]:
+                  - /url: /home
+                  - img [ref=e31]
+              - navigation "Primary" [ref=e35]:
+                - link "Home" [ref=e36] [cursor=pointer]:
+                  - /url: /home
+                  - img [ref=e39]
+                - link "Search and explore" [ref=e42] [cursor=pointer]:
+                  - /url: /explore
+                  - img [ref=e45]
+                - link "Notifications (5 unread notifications)" [ref=e48] [cursor=pointer]:
+                  - /url: /notifications
+                  - generic [ref=e50]:
+                    - img [ref=e51]
+                    - generic "5 unread items" [ref=e54]:
+                      - generic [ref=e55]: "5"
+                - link "Direct Messages" [ref=e56] [cursor=pointer]:
+                  - /url: /i/chat
+                  - img [ref=e59]
+                - link "Grok" [ref=e62] [cursor=pointer]:
+                  - /url: /i/grok
+                  - generic [ref=e64]:
+                    - img [ref=e65]
+                    - generic "undefined unread items" [ref=e68]
+                - link "Bookmarks" [ref=e69] [cursor=pointer]:
+                  - /url: /i/bookmarks
+                  - img [ref=e72]
+                - link "Creator Studio" [ref=e75] [cursor=pointer]:
+                  - /url: /i/jf/creators/studio
+                  - img [ref=e78]
+                - link "Premium" [ref=e81] [cursor=pointer]:
+                  - /url: /i/premium_sign_up
+                  - img [ref=e84]
+                - link "Profile" [ref=e87] [cursor=pointer]:
+                  - /url: /DragonCoolLime
+                  - img [ref=e90]
+                - button "More menu items" [ref=e93] [cursor=pointer]:
+                  - img [ref=e96]
+              - link "Post" [ref=e100] [cursor=pointer]:
+                - /url: /compose/post
+                - img [ref=e102]
+            - button "Account menu" [ref=e107] [cursor=pointer]:
+              - generic [ref=e115]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic "CoolLime":
+                        - img "CoolLime"
+        - main [ref=e118]:
+          - generic [ref=e121]:
+            - generic "Home timeline" [ref=e123]:
+              - generic [ref=e124]:
+                - generic [ref=e130] [cursor=pointer]:
+                  - button "Back" [ref=e132]:
+                    - img [ref=e134]
+                  - heading "Post" [level=2] [ref=e139]
+                - generic:
+                  - generic:
+                    - status:
+                      - button:
+                        - generic:
+                          - img
+                          - generic: See new posts
+              - region "Conversation" [ref=e249]:
+                - heading "Conversation" [level=1] [ref=e250]
+                - 'generic "Timeline: Conversation" [ref=e251]':
+                  - generic [ref=e252]:
+                    - 'article "Hayley 🔮 Verified account @HayleyTrading Mar 11 What I am doing to adapt to current market conditions while $SPY currently looks like this: I am playing two set ups only. That''s it. Two. ➡️ 30M flags later in the day ➡️ Gap n Go off the open Image 9 replies, 14 reposts, 165 likes, 192 bookmarks, 116649 views" [ref=e256] [cursor=pointer]':
+                      - generic [ref=e262]:
+                        - link [ref=e274]:
+                          - /url: /HayleyTrading
+                        - generic [ref=e278]:
+                          - generic [ref=e280]:
+                            - generic [ref=e283]:
+                              - link "Hayley 🔮 Verified account" [ref=e286]:
+                                - /url: /HayleyTrading
+                                - generic [ref=e287]:
+                                  - generic [ref=e289]:
+                                    - text: Hayley
+                                    - img "🔮" [ref=e290]
+                                  - img "Verified account" [ref=e293]
+                              - generic [ref=e297]:
+                                - link "@HayleyTrading" [ref=e299]:
+                                  - /url: /HayleyTrading
+                                  - generic [ref=e300]: "@HayleyTrading"
+                                - generic [ref=e301]: ·
+                                - link "Mar 11" [ref=e303]:
+                                  - /url: /HayleyTrading/status/2031851814191087641
+                                  - time [ref=e304]: Mar 11
+                            - generic [ref=e306]:
+                              - button "Grok actions" [ref=e308]:
+                                - img [ref=e313]
+                              - button "More" [ref=e319]:
+                                - img [ref=e323]
+                          - generic [ref=e327]:
+                            - text: What I am doing to adapt to current market conditions while
+                            - link "$SPY" [ref=e329]:
+                              - /url: /search?q=%24SPY&src=cashtag_click
+                            - text: "currently looks like this: I am playing two set ups only. That's it. Two."
+                            - img "➡️" [ref=e330]
+                            - text: 30M flags later in the day
+                            - img "➡️" [ref=e331]
+                            - text: Gap n Go off the open
+                          - link "Image" [ref=e339]:
+                            - /url: /HayleyTrading/status/2031851814191087641/photo/1
+                            - generic "Image" [ref=e343]:
+                              - img "Image" [ref=e345]
+                          - group "9 replies, 14 reposts, 165 likes, 192 bookmarks, 116649 views" [ref=e348]:
+                            - button "9 Replies. Reply" [ref=e350]:
+                              - generic [ref=e351]:
+                                - img [ref=e354]
+                                - generic [ref=e359]: "9"
+                            - button "14 reposts. Repost" [ref=e361]:
+                              - generic [ref=e362]:
+                                - img [ref=e365]
+                                - generic [ref=e370]: "14"
+                            - button "165 Likes. Like" [ref=e372]:
+                              - generic [ref=e373]:
+                                - img [ref=e376]
+                                - generic [ref=e381]: "165"
+                            - link "116649 views. View post analytics" [ref=e383]:
+                              - /url: /HayleyTrading/status/2031851814191087641/analytics
+                              - generic [ref=e384]:
+                                - img [ref=e387]
+                                - generic [ref=e392]: 116K
+                            - button "Bookmark" [ref=e394]:
+                              - img [ref=e398]
+                            - button "Share post" [ref=e403]:
+                              - img [ref=e407]
+                    - generic [ref=e412]:
+                      - article "Hayley 🔮 Verified account @HayleyTrading ➡️ 30M Flag example. What you want to look for is a strong move in the morning and then around lunch time, the stock starts to pull back. This set up confirms TREND. You want to see wicking off the 8 and buyers stepping in. SL is a loss of the 8. This set up was around a 9 R:R Image 1 reply, 4 reposts, 53 likes, 46 bookmarks, 5642 views" [ref=e413]:
+                        - generic [ref=e415]:
+                          - generic [ref=e421]:
+                            - link [active] [ref=e433] [cursor=pointer]:
+                              - /url: /HayleyTrading
+                            - generic [ref=e438]:
+                              - generic [ref=e441]:
+                                - link "Hayley 🔮 Verified account" [ref=e444] [cursor=pointer]:
+                                  - /url: /HayleyTrading
+                                  - generic [ref=e445]:
+                                    - generic [ref=e447]:
+                                      - text: Hayley
+                                      - img "🔮" [ref=e448]
+                                    - img "Verified account" [ref=e451]
+                                - link "@HayleyTrading" [ref=e457] [cursor=pointer]:
+                                  - /url: /HayleyTrading
+                                  - generic [ref=e458]: "@HayleyTrading"
+                              - generic [ref=e460]:
+                                - button "Grok actions" [ref=e462] [cursor=pointer]:
+                                  - img [ref=e467]
+                                - button "More" [ref=e473] [cursor=pointer]:
+                                  - img [ref=e477]
+                          - generic [ref=e480]:
+                            - generic [ref=e482]:
+                              - img "➡️" [ref=e483]
+                              - text: 30M Flag example. What you want to look for is a strong move in the morning and then around lunch time, the stock starts to pull back. This set up confirms TREND. You want to see wicking off the 8 and buyers stepping in. SL is a loss of the 8. This set up was around a 9 R:R
+                            - link "Image" [ref=e491] [cursor=pointer]:
+                              - /url: /HayleyTrading/status/2031853446639358283/photo/1
+                              - generic "Image" [ref=e495]:
+                                - img "Image" [ref=e497]
+                            - generic [ref=e501]:
+                              - link "3:03 PM · Mar 11, 2026" [ref=e503] [cursor=pointer]:
+                                - /url: /HayleyTrading/status/2031853446639358283
+                                - time [ref=e504]: 3:03 PM · Mar 11, 2026
+                              - generic [ref=e505]: ·
+                              - link "5,642 Views" [ref=e506] [cursor=pointer]:
+                                - /url: /HayleyTrading/status/2031853446639358283/analytics
+                                - generic [ref=e509]: 5,642
+                                - generic [ref=e510]: Views
+                            - group "1 reply, 4 reposts, 53 likes, 46 bookmarks, 5642 views" [ref=e513]:
+                              - button "1 Reply. Reply" [ref=e515] [cursor=pointer]:
+                                - generic [ref=e516]:
+                                  - img [ref=e519]
+                                  - generic [ref=e524]: "1"
+                              - button "4 reposts. Repost" [ref=e526] [cursor=pointer]:
+                                - generic [ref=e527]:
+                                  - img [ref=e530]
+                                  - generic [ref=e535]: "4"
+                              - button "53 Likes. Like" [ref=e537] [cursor=pointer]:
+                                - generic [ref=e538]:
+                                  - img [ref=e541]
+                                  - generic [ref=e546]: "53"
+                              - button "46 Bookmarks. Bookmark" [ref=e548] [cursor=pointer]:
+                                - generic [ref=e549]:
+                                  - img [ref=e552]
+                                  - generic [ref=e557]: "46"
+                              - button "Share post" [ref=e560] [cursor=pointer]:
+                                - img [ref=e564]
+                      - generic [ref=e575]:
+                        - link "CoolLime" [ref=e584] [cursor=pointer]:
+                          - /url: /DragonCoolLime
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic "CoolLime":
+                                  - img "CoolLime"
+                        - generic [ref=e592]:
+                          - generic [ref=e605]:
+                            - generic [ref=e607]: Post your reply
+                            - textbox "Post text" [ref=e609]
+                          - button "Reply" [disabled] [ref=e613]:
+                            - generic [ref=e616]: Reply
+                    - article "Hayley 🔮 Verified account @HayleyTrading Mar 11 ➡️ Gap n Go example. 5 inside days of tight consolidation on the daily. Stock in premarket was ABOVE the daily range and ABOVE the EMAs. If a stock is gapping up, above the daily range, higher probability it is going to rip. Set your stop at the bottom of the candle & let it work. Image Image 2 replies, 2 reposts, 48 likes, 40 bookmarks, 3925 views" [ref=e621] [cursor=pointer]:
+                      - generic [ref=e627]:
+                        - link [ref=e639]:
+                          - /url: /HayleyTrading
+                        - generic [ref=e642]:
+                          - generic [ref=e644]:
+                            - generic [ref=e647]:
+                              - link "Hayley 🔮 Verified account" [ref=e650]:
+                                - /url: /HayleyTrading
+                                - generic [ref=e651]:
+                                  - generic [ref=e653]:
+                                    - text: Hayley
+                                    - img "🔮" [ref=e654]
+                                  - img "Verified account" [ref=e657]
+                              - generic [ref=e661]:
+                                - link "@HayleyTrading" [ref=e663]:
+                                  - /url: /HayleyTrading
+                                  - generic [ref=e664]: "@HayleyTrading"
+                                - generic [ref=e665]: ·
+                                - link "Mar 11" [ref=e667]:
+                                  - /url: /HayleyTrading/status/2031855885664887060
+                                  - time [ref=e668]: Mar 11
+                            - generic [ref=e670]:
+                              - button "Grok actions" [ref=e672]:
+                                - img [ref=e677]
+                              - button "More" [ref=e683]:
+                                - img [ref=e687]
+                          - generic [ref=e691]:
+                            - img "➡️" [ref=e692]
+                            - text: Gap n Go example. 5 inside days of tight consolidation on the daily. Stock in premarket was ABOVE the daily range and ABOVE the EMAs. If a stock is gapping up, above the daily range, higher probability it is going to rip. Set your stop at the bottom of the candle & let it work.
+                          - generic [ref=e701]:
+                            - link "Image" [ref=e704]:
+                              - /url: /HayleyTrading/status/2031855885664887060/photo/1
+                              - generic "Image" [ref=e706]:
+                                - img "Image" [ref=e708]
+                            - link "Image" [ref=e711]:
+                              - /url: /HayleyTrading/status/2031855885664887060/photo/2
+                              - generic "Image" [ref=e713]:
+                                - img "Image" [ref=e715]
+                          - group "2 replies, 2 reposts, 48 likes, 40 bookmarks, 3925 views" [ref=e718]:
+                            - button "2 Replies. Reply" [ref=e720]:
+                              - generic [ref=e721]:
+                                - img [ref=e724]
+                                - generic [ref=e729]: "2"
+                            - button "2 reposts. Repost" [ref=e731]:
+                              - generic [ref=e732]:
+                                - img [ref=e735]
+                                - generic [ref=e740]: "2"
+                            - button "48 Likes. Like" [ref=e742]:
+                              - generic [ref=e743]:
+                                - img [ref=e746]
+                                - generic [ref=e751]: "48"
+                            - link "3925 views. View post analytics" [ref=e753]:
+                              - /url: /HayleyTrading/status/2031855885664887060/analytics
+                              - generic [ref=e754]:
+                                - img [ref=e757]
+                                - generic [ref=e762]: 3.9K
+                            - button "Bookmark" [ref=e764]:
+                              - img [ref=e768]
+                            - button "Share post" [ref=e773]:
+                              - img [ref=e777]
+            - generic "Trending" [ref=e151]:
+              - generic [ref=e152]:
+                - search "Search" [ref=e157]:
+                  - generic [ref=e162]:
+                    - img [ref=e164]
+                    - combobox "Search query" [ref=e169]
+                - complementary "Relevant people" [ref=e172]:
+                  - heading "Relevant people" [level=2] [ref=e174]:
+                    - generic [ref=e175]: Relevant people
+                  - list [ref=e176]:
+                    - listitem [ref=e177] [cursor=pointer]:
+                      - generic [ref=e178]:
+                        - link [ref=e188]:
+                          - /url: /HayleyTrading
+                        - generic [ref=e191]:
+                          - generic [ref=e192]:
+                            - generic [ref=e194]:
+                              - link "Hayley 🔮 Verified account" [ref=e196]:
+                                - /url: /HayleyTrading
+                                - generic [ref=e197]:
+                                  - generic [ref=e199]:
+                                    - text: Hayley
+                                    - img "🔮" [ref=e200]
+                                  - img "Verified account" [ref=e203]
+                              - link "@HayleyTrading" [ref=e208]:
+                                - /url: /HayleyTrading
+                                - generic [ref=e210]: "@HayleyTrading"
+                            - button "Follow @HayleyTrading" [ref=e212]:
+                              - generic [ref=e215]: Follow
+                          - generic [ref=e216]:
+                            - text: In my strong independent female day trader era. Discipline, Drive, Determination
+                            - img "📈" [ref=e217]
+                            - img "👩🏽‍💻" [ref=e218]
+                - region "Trending now" [ref=e783]:
+                  - heading "Trending now" [level=1] [ref=e784]
+                  - 'generic "Timeline: Trending now" [ref=e785]':
+                    - generic [ref=e786]:
+                      - heading "What’s happening" [level=2] [ref=e790]:
+                        - generic [ref=e791]: What’s happening
+                      - link "Politics · Trending Houthis More" [ref=e794] [cursor=pointer]:
+                        - generic [ref=e795]:
+                          - generic [ref=e797]: Politics · Trending
+                          - generic [ref=e798]: Houthis
+                          - button "More" [ref=e801]:
+                            - img [ref=e805]
+                      - link "Politics · Trending Melania More" [ref=e810] [cursor=pointer]:
+                        - generic [ref=e811]:
+                          - generic [ref=e813]: Politics · Trending
+                          - generic [ref=e814]: Melania
+                          - button "More" [ref=e817]:
+                            - img [ref=e821]
+                      - link "Politics · Trending Vance More" [ref=e826] [cursor=pointer]:
+                        - generic [ref=e827]:
+                          - generic [ref=e829]: Politics · Trending
+                          - generic [ref=e830]: Vance
+                          - button "More" [ref=e833]:
+                            - img [ref=e837]
+                      - link "Trending VOID More" [ref=e842] [cursor=pointer]:
+                        - generic [ref=e843]:
+                          - generic [ref=e845]: Trending
+                          - generic [ref=e846]: VOID
+                          - button "More" [ref=e849]:
+                            - img [ref=e853]
+                      - link "Show more" [ref=e858] [cursor=pointer]:
+                        - /url: /explore/tabs/for-you
+                        - generic [ref=e859]: Show more
+                - navigation "Footer" [ref=e227]:
+                  - generic [ref=e228]:
+                    - link "Terms of Service" [ref=e229] [cursor=pointer]:
+                      - /url: https://x.com/tos
+                    - generic [ref=e230]: "|"
+                  - generic [ref=e231]:
+                    - link "Privacy Policy" [ref=e232] [cursor=pointer]:
+                      - /url: https://x.com/privacy
+                    - generic [ref=e233]: "|"
+                  - generic [ref=e234]:
+                    - link "Cookie Policy" [ref=e235] [cursor=pointer]:
+                      - /url: https://support.x.com/articles/20170514
+                    - generic [ref=e236]: "|"
+                  - generic [ref=e237]:
+                    - link "Accessibility" [ref=e238] [cursor=pointer]:
+                      - /url: https://help.x.com/resources/accessibility
+                    - generic [ref=e239]: "|"
+                  - generic [ref=e240]:
+                    - link "Ads info" [ref=e241] [cursor=pointer]:
+                      - /url: https://business.x.com/en/help/troubleshooting/how-twitter-ads-work.html?ref=web-twc-ao-gbl-adsinfo&utm_source=twc&utm_medium=web&utm_campaign=ao&utm_content=adsinfo
+                    - generic [ref=e242]: "|"
+                  - button "More" [ref=e243] [cursor=pointer]:
+                    - generic [ref=e244]:
+                      - text: More
+                      - img [ref=e245]
+                  - generic [ref=e248]: © 2026 X Corp.

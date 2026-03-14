@@ -1,0 +1,410 @@
+{
+  "generatedAt": "2026-03-14T12:51:00.411Z",
+  "sourceReport": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/flag30-ema8-backtest-2025-09-01-2026-03-12-20260314T124920456Z.json",
+  "symbols": [
+    "AAPL",
+    "AVGO",
+    "BA",
+    "COP",
+    "CRM",
+    "CVS",
+    "CVX",
+    "GE",
+    "GIS",
+    "GOOGL",
+    "NKE",
+    "PLTR",
+    "PM",
+    "PYPL",
+    "RF",
+    "RTX",
+    "SHOP",
+    "SLB",
+    "SOFI",
+    "SPGI"
+  ],
+  "robustOverall": {
+    "trades": 355,
+    "winRate": 0.3408450704225352,
+    "avgExitR": 0.3938631998839845,
+    "totalR": 139.8214359588145,
+    "avgWinR": 2.998822381077254,
+    "avgLossR": -0.953145607485186,
+    "medianExitR": -1
+  },
+  "winnerLoserFeatureMeans": [
+    {
+      "field": "riskPct",
+      "winMean": 0.38640033733413887,
+      "lossMean": 0.3644571860462802,
+      "deltaWinMinusLoss": 0.021943151287858675
+    },
+    {
+      "field": "morningMovePct",
+      "winMean": 2.3640098992108896,
+      "lossMean": 2.4816677667486875,
+      "deltaWinMinusLoss": -0.11765786753779794
+    },
+    {
+      "field": "pullbackPct",
+      "winMean": 3.045814058498848,
+      "lossMean": 4.100544467329208,
+      "deltaWinMinusLoss": -1.0547304088303604
+    },
+    {
+      "field": "targetPriorHodR",
+      "winMean": 3.435328272327465,
+      "lossMean": 4.35989093271465,
+      "deltaWinMinusLoss": -0.9245626603871844
+    }
+  ],
+  "splitByMedian": [
+    {
+      "field": "riskPct",
+      "median": 0.31734396317238384,
+      "low": {
+        "trades": 177,
+        "winRate": 0.2994350282485876,
+        "avgExitR": 0.7112907160645462,
+        "totalR": 125.89845674342467,
+        "avgWinR": 4.669736998752694,
+        "avgLossR": -0.9806258402457104,
+        "medianExitR": -1
+      },
+      "high": {
+        "trades": 178,
+        "winRate": 0.38202247191011235,
+        "avgExitR": 0.0782189843561227,
+        "totalR": 13.92297921538984,
+        "avgWinR": 1.6964918702419898,
+        "avgLossR": -0.9221678905551401,
+        "medianExitR": -1
+      }
+    },
+    {
+      "field": "morningMovePct",
+      "median": 2.0962106960494387,
+      "low": {
+        "trades": 177,
+        "winRate": 0.3502824858757062,
+        "avgExitR": 0.47510954358632557,
+        "totalR": 84.09438921477962,
+        "avgWinR": 3.129965016151004,
+        "avgLossR": -0.9562038416224581,
+        "medianExitR": -1
+      },
+      "high": {
+        "trades": 178,
+        "winRate": 0.33146067415730335,
+        "avgExitR": 0.3130732963148027,
+        "totalR": 55.72704674403488,
+        "avgWinR": 2.8610114764234873,
+        "avgLossR": -0.9501901711340407,
+        "medianExitR": -1
+      }
+    },
+    {
+      "field": "pullbackPct",
+      "median": 1.285039448592184,
+      "low": {
+        "trades": 177,
+        "winRate": 0.3785310734463277,
+        "avgExitR": 0.2436472941707006,
+        "totalR": 43.12557106821401,
+        "avgWinR": 2.185656218082243,
+        "avgLossR": -0.9392126867572388,
+        "medianExitR": -1
+      },
+      "high": {
+        "trades": 178,
+        "winRate": 0.30337078651685395,
+        "avgExitR": 0.5432351960146095,
+        "totalR": 96.69586489060048,
+        "avgWinR": 4.007750768496995,
+        "avgLossR": -0.9655054565180422,
+        "medianExitR": -1
+      }
+    },
+    {
+      "field": "targetPriorHodR",
+      "median": 2.3226177448427667,
+      "low": {
+        "trades": 177,
+        "winRate": 0.3785310734463277,
+        "avgExitR": 0.08830068456997027,
+        "totalR": 15.629221168884737,
+        "avgWinR": 1.7305655041162658,
+        "avgLossR": -0.9119878873355,
+        "medianExitR": -1
+      },
+      "high": {
+        "trades": 178,
+        "winRate": 0.30337078651685395,
+        "avgExitR": 0.6977090718535379,
+        "totalR": 124.19221478992975,
+        "avgWinR": 4.572400358047376,
+        "avgLossR": -0.9896564882631332,
+        "medianExitR": -1
+      }
+    }
+  ],
+  "terciles": [
+    {
+      "field": "riskPct",
+      "cuts": [
+        0.2503396290906144,
+        0.428152074274945
+      ],
+      "bins": [
+        {
+          "label": "low",
+          "trades": 118,
+          "winRate": 0.23728813559322035,
+          "avgExitR": 0.7547749311152744,
+          "totalR": 89.06344187160238,
+          "avgWinR": 6.348226652197468,
+          "avgLossR": -0.9854100487769636,
+          "medianExitR": -1
+        },
+        {
+          "label": "mid",
+          "trades": 118,
+          "winRate": 0.3983050847457627,
+          "avgExitR": 0.4355795246867311,
+          "totalR": 51.39838391303427,
+          "avgWinR": 2.5670426495035925,
+          "avgLossR": -0.9753890227272476,
+          "medianExitR": -1
+        },
+        {
+          "label": "high",
+          "trades": 119,
+          "winRate": 0.3865546218487395,
+          "avgExitR": -0.005381427107748981,
+          "totalR": -0.6403898258221288,
+          "avgWinR": 1.4012208113510893,
+          "avgLossR": -0.8917335225749619,
+          "medianExitR": -1
+        }
+      ]
+    },
+    {
+      "field": "morningMovePct",
+      "cuts": [
+        1.85185185185186,
+        2.516178736517727
+      ],
+      "bins": [
+        {
+          "label": "low",
+          "trades": 118,
+          "winRate": 0.3474576271186441,
+          "avgExitR": 0.4897352143846969,
+          "totalR": 57.78875529739424,
+          "avgWinR": 3.1792060663915547,
+          "avgLossR": -0.9423206938267465,
+          "medianExitR": -1
+        },
+        {
+          "label": "mid",
+          "trades": 118,
+          "winRate": 0.3728813559322034,
+          "avgExitR": 0.36164073038774375,
+          "totalR": 42.67360618575376,
+          "avgWinR": 2.6228240690878044,
+          "avgLossR": -0.9828466601906709,
+          "medianExitR": -1
+        },
+        {
+          "label": "high",
+          "trades": 119,
+          "winRate": 0.3025210084033613,
+          "avgExitR": 0.33074852500560087,
+          "totalR": 39.3590744756665,
+          "avgWinR": 3.252938898567525,
+          "avgLossR": -0.9367075406357155,
+          "medianExitR": -1
+        }
+      ]
+    },
+    {
+      "field": "pullbackPct",
+      "cuts": [
+        1.0271774020971522,
+        1.6464169019446113
+      ],
+      "bins": [
+        {
+          "label": "low",
+          "trades": 118,
+          "winRate": 0.3728813559322034,
+          "avgExitR": 0.19105140808290835,
+          "totalR": 22.544066153783184,
+          "avgWinR": 2.115736777996363,
+          "avgLossR": -0.9533561091629292,
+          "medianExitR": -1
+        },
+        {
+          "label": "mid",
+          "trades": 118,
+          "winRate": 0.3305084745762712,
+          "avgExitR": 0.22048766432478398,
+          "totalR": 26.01754439032451,
+          "avgWinR": 2.5548107044494035,
+          "avgLossR": -0.9318996592810407,
+          "medianExitR": -1
+        },
+        {
+          "label": "high",
+          "trades": 119,
+          "winRate": 0.31932773109243695,
+          "avgExitR": 0.7668892891992171,
+          "totalR": 91.25982541470682,
+          "avgWinR": 4.477038747499509,
+          "avgLossR": -0.9736746542009204,
+          "medianExitR": -1
+        }
+      ]
+    },
+    {
+      "field": "targetPriorHodR",
+      "cuts": [
+        1.549470884976685,
+        3.7801915034666465
+      ],
+      "bins": [
+        {
+          "label": "low",
+          "trades": 118,
+          "winRate": 0.3644067796610169,
+          "avgExitR": -0.030195065056819653,
+          "totalR": -3.5630176767047192,
+          "avgWinR": 1.4719657874386718,
+          "avgLossR": -0.8914339538209015,
+          "medianExitR": -1
+        },
+        {
+          "label": "mid",
+          "trades": 118,
+          "winRate": 0.3728813559322034,
+          "avgExitR": 0.30793776291809277,
+          "totalR": 36.33665602433495,
+          "avgWinR": 2.472676752151645,
+          "avgLossR": -0.9792043387883432,
+          "medianExitR": -1
+        },
+        {
+          "label": "high",
+          "trades": 119,
+          "winRate": 0.2857142857142857,
+          "avgExitR": 0.8995613244637333,
+          "totalR": 107.04779761118427,
+          "avgWinR": 5.610741239876846,
+          "avgLossR": -0.984910641701512,
+          "medianExitR": -1
+        }
+      ]
+    }
+  ],
+  "setupTime": [
+    {
+      "time": "13:30",
+      "trades": 47,
+      "winRate": 0.3617021276595745,
+      "avgExitR": 0.6426838265225868,
+      "totalR": 30.20613984656158,
+      "avgWinR": 3.474301294154966,
+      "avgLossR": -0.9618994051357608,
+      "medianExitR": -1
+    },
+    {
+      "time": "13:00",
+      "trades": 52,
+      "winRate": 0.36538461538461536,
+      "avgExitR": 0.6167089187775034,
+      "totalR": 32.06886377643018,
+      "avgWinR": 3.25943900605024,
+      "avgLossR": -0.904862949652254,
+      "medianExitR": -1
+    },
+    {
+      "time": "12:00",
+      "trades": 64,
+      "winRate": 0.375,
+      "avgExitR": 0.5246274479847566,
+      "totalR": 33.57615667102442,
+      "avgWinR": 3.0144748657340217,
+      "avgLossR": -0.9692810026648024,
+      "medianExitR": -1
+    },
+    {
+      "time": "12:30",
+      "trades": 61,
+      "winRate": 0.22950819672131148,
+      "avgExitR": 0.4351677499054556,
+      "totalR": 26.54523274423279,
+      "avgWinR": 5.109003882723648,
+      "avgLossR": -0.9570387577425167,
+      "medianExitR": -1
+    },
+    {
+      "time": "11:30",
+      "trades": 90,
+      "winRate": 0.34444444444444444,
+      "avgExitR": 0.17535848438061327,
+      "totalR": 15.782263594255195,
+      "avgWinR": 2.345487242352838,
+      "avgLossR": -0.9648786596386913,
+      "medianExitR": -1
+    },
+    {
+      "time": "14:00",
+      "trades": 41,
+      "winRate": 0.3902439024390244,
+      "avgExitR": 0.04006778844659319,
+      "totalR": 1.642779326310321,
+      "avgWinR": 1.5800930841295906,
+      "avgLossR": -0.9455484007905253,
+      "medianExitR": -1
+    }
+  ],
+  "comboFilterValidation": {
+    "filter": "riskPct<=0.25 && targetPriorHodR>=3.8 && setupTime in [12:00,13:00,13:30]",
+    "allBaseline": {
+      "trades": 1614,
+      "winRate": 0.21933085501858737,
+      "avgExitR": -0.21654343455037017,
+      "totalR": -349.5011033642975,
+      "avgWinR": 2.4143171971932196,
+      "avgLossR": -0.9556899929926167,
+      "medianExitR": -1
+    },
+    "allFiltered": {
+      "trades": 174,
+      "winRate": 0.14367816091954022,
+      "avgExitR": 0.09466974782443753,
+      "totalR": 16.47253612145213,
+      "avgWinR": 6.561838983607283,
+      "avgLossR": -0.9904257615351002,
+      "medianExitR": -1
+    },
+    "robustBaseline": {
+      "trades": 355,
+      "winRate": 0.3408450704225352,
+      "avgExitR": 0.3938631998839845,
+      "totalR": 139.8214359588145,
+      "avgWinR": 2.998822381077254,
+      "avgLossR": -0.953145607485186,
+      "medianExitR": -1
+    },
+    "robustFiltered": {
+      "trades": 37,
+      "winRate": 0.35135135135135137,
+      "avgExitR": 1.407695099764287,
+      "totalR": 52.08471869127862,
+      "avgWinR": 5.852670668559894,
+      "avgLossR": -1,
+      "medianExitR": -1
+    }
+  }
+}

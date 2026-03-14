@@ -1,0 +1,123 @@
+{
+  "runDir": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/clickhouse-historical-pipeline-20260311T172051",
+  "parsedAt": "2026-03-12T00:28:04.779Z",
+  "logFiles": 4,
+  "parsedLines": 737,
+  "parsedEvents": 380,
+  "totals": {
+    "thetaDownloadDurationMs": 1972370,
+    "thetaDownloadRows": 13574885,
+    "thetaDownloadRequests": 170,
+    "tradeSyncJobs": 9,
+    "tradeParsedRows": 482853,
+    "tradeFetchedRows": 482853,
+    "tradeUpsertedRows": 482853,
+    "tradeStreamDownloadDurationMs": 53362,
+    "tradeInsertDurationMs": 7683,
+    "tradeWallDurationMs": 61337,
+    "quoteSyncJobs": 8,
+    "quoteParsedRows": 6871020,
+    "quoteInsertedRows": 6871020,
+    "quoteStreamDownloadDurationMs": 423494,
+    "quoteInsertDurationMs": 45281,
+    "quoteWallDurationMs": 433511,
+    "stockSyncJobs": 9,
+    "stockFetchedRows": 3654,
+    "stockInsertedRows": 3654,
+    "stockFetchDurationMs": 80700,
+    "stockInsertDurationMs": 1134,
+    "stockReloadDurationMs": 1134,
+    "deleteAuditOps": 19,
+    "deleteAuditDurationMs": 25654,
+    "enrichProgressBatches": 0,
+    "enrichProgressRows": 0
+  },
+  "derived": {
+    "avgThetaRowsPerRequest": 79852.26,
+    "avgThetaMsPerRequest": 11602.18,
+    "thetaRowsPerSec": 6882.52,
+    "quoteRowsPerSecInsertPhase": 151741.79,
+    "tradeRowsPerSecInsertPhase": 62846.93,
+    "stockRowsPerSecInsertPhase": 3222.22,
+    "deleteOpsPerSec": 0.74
+  },
+  "thetaByApi": [
+    {
+      "key": "/v3/option/history/greeks/first_order",
+      "requests": 129,
+      "okRequests": 129,
+      "errorRequests": 0,
+      "rows": 6192658,
+      "durationMs": 1351094
+    },
+    {
+      "key": "option_history_quote",
+      "requests": 8,
+      "okRequests": 8,
+      "errorRequests": 0,
+      "rows": 6871020,
+      "durationMs": 423494
+    },
+    {
+      "key": "stock_history_ohlc",
+      "requests": 9,
+      "okRequests": 9,
+      "errorRequests": 0,
+      "rows": 3654,
+      "durationMs": 80687
+    },
+    {
+      "key": "option_history_open_interest",
+      "requests": 9,
+      "okRequests": 9,
+      "errorRequests": 0,
+      "rows": 24694,
+      "durationMs": 58395
+    },
+    {
+      "key": "option_history_trade_quote",
+      "requests": 9,
+      "okRequests": 9,
+      "errorRequests": 0,
+      "rows": 482853,
+      "durationMs": 53362
+    },
+    {
+      "key": "/v3/calendar/on_date",
+      "requests": 6,
+      "okRequests": 6,
+      "errorRequests": 0,
+      "rows": 6,
+      "durationMs": 5338
+    }
+  ],
+  "deleteByTable": [
+    {
+      "key": "option_greeks_minute_raw",
+      "operations": 9,
+      "successful": 9,
+      "failed": 0,
+      "durationMs": 15527,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    },
+    {
+      "key": "option_open_interest_raw",
+      "operations": 9,
+      "successful": 9,
+      "failed": 0,
+      "durationMs": 5844,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    },
+    {
+      "key": "option_trades",
+      "operations": 1,
+      "successful": 1,
+      "failed": 0,
+      "durationMs": 4283,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    }
+  ]
+}

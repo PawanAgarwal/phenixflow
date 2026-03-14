@@ -1,0 +1,115 @@
+{
+  "runDir": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/clickhouse-historical-pipeline-20260311T070724",
+  "parsedAt": "2026-03-11T14:23:33.869Z",
+  "logFiles": 4,
+  "parsedLines": 371,
+  "parsedEvents": 312,
+  "totals": {
+    "thetaDownloadDurationMs": 2610692,
+    "thetaDownloadRows": 20166403,
+    "thetaDownloadRequests": 78,
+    "tradeSyncJobs": 19,
+    "tradeParsedRows": 1032221,
+    "tradeFetchedRows": 1032221,
+    "tradeUpsertedRows": 1032221,
+    "tradeStreamDownloadDurationMs": 523195,
+    "tradeInsertDurationMs": 273504,
+    "tradeWallDurationMs": 601402,
+    "quoteSyncJobs": 17,
+    "quoteParsedRows": 19078020,
+    "quoteInsertedRows": 19078020,
+    "quoteStreamDownloadDurationMs": 1806721,
+    "quoteInsertDurationMs": 1135686,
+    "quoteWallDurationMs": 2068069,
+    "stockSyncJobs": 19,
+    "stockFetchedRows": 7714,
+    "stockInsertedRows": 7714,
+    "stockFetchDurationMs": 68920,
+    "stockInsertDurationMs": 16019,
+    "stockReloadDurationMs": 15167,
+    "deleteAuditOps": 93,
+    "deleteAuditDurationMs": 562585,
+    "enrichProgressBatches": 0,
+    "enrichProgressRows": 0
+  },
+  "derived": {
+    "avgThetaRowsPerRequest": 258543.63,
+    "avgThetaMsPerRequest": 33470.41,
+    "thetaRowsPerSec": 7724.54,
+    "quoteRowsPerSecInsertPhase": 16798.67,
+    "tradeRowsPerSecInsertPhase": 3774.06,
+    "stockRowsPerSecInsertPhase": 481.55,
+    "deleteOpsPerSec": 0.17
+  },
+  "thetaByApi": [
+    {
+      "key": "option_history_quote",
+      "requests": 17,
+      "okRequests": 17,
+      "errorRequests": 0,
+      "rows": 19078020,
+      "durationMs": 1806721
+    },
+    {
+      "key": "option_history_trade_quote",
+      "requests": 19,
+      "okRequests": 19,
+      "errorRequests": 0,
+      "rows": 1032221,
+      "durationMs": 523195
+    },
+    {
+      "key": "option_history_open_interest",
+      "requests": 17,
+      "okRequests": 17,
+      "errorRequests": 0,
+      "rows": 48442,
+      "durationMs": 183992
+    },
+    {
+      "key": "stock_history_ohlc",
+      "requests": 19,
+      "okRequests": 19,
+      "errorRequests": 0,
+      "rows": 7714,
+      "durationMs": 68855
+    },
+    {
+      "key": "/v3/calendar/on_date",
+      "requests": 6,
+      "okRequests": 6,
+      "errorRequests": 0,
+      "rows": 6,
+      "durationMs": 27929
+    }
+  ],
+  "deleteByTable": [
+    {
+      "key": "option_trades",
+      "operations": 19,
+      "successful": 19,
+      "failed": 0,
+      "durationMs": 248995,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    },
+    {
+      "key": "option_download_chunk_status",
+      "operations": 57,
+      "successful": 57,
+      "failed": 0,
+      "durationMs": 242444,
+      "rowsBeforeDelete": 82,
+      "rowsAfterDeleteImmediate": 0
+    },
+    {
+      "key": "option_open_interest_raw",
+      "operations": 17,
+      "successful": 17,
+      "failed": 0,
+      "durationMs": 71146,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    }
+  ]
+}

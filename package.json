@@ -34,7 +34,8 @@
     "backfill:clickhouse:generate-symbol-days": "node scripts/backfill/generate-symbol-days-topn-range.js",
     "backfill:clickhouse:range": "bash scripts/backfill/run-clickhouse-backfill-range.sh",
     "enrich:option-trades": "node scripts/backfill/enrich-option-trades.js",
-    "enrich:option-trades:parallel": "bash scripts/backfill/enrich-option-trades-parallel.sh"
+    "enrich:option-trades:parallel": "bash scripts/backfill/enrich-option-trades-parallel.sh",
+    "research:option-rr": "node scripts/backfill/research-option-rr-strategies.js"
   },
   "engines": {
     "node": ">=20"

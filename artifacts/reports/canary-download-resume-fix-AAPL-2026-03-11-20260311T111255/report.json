@@ -1,0 +1,39 @@
+{
+  "startedAt": "2026-03-11T18:12:55.623Z",
+  "dbPath": "clickhouse://127.0.0.1:9000/options",
+  "inputPath": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/tmp-symbol-day-AAPL-2026-03-11-download.tsv",
+  "writeBackend": "clickhouse",
+  "mode": "download",
+  "force": true,
+  "workerIndex": 0,
+  "workerTotal": 1,
+  "jobLimit": 0,
+  "totalJobs": 1,
+  "loopUntilReady": false,
+  "loopSleepMs": 5000,
+  "loopMaxPasses": 200,
+  "passes": 1,
+  "skippedJobs": 0,
+  "completedJobs": 0,
+  "pendingJobs": 0,
+  "noDataJobs": 0,
+  "retriedJobs": 0,
+  "retryCount": 0,
+  "failedJobs": 1,
+  "totalFetchedRows": 0,
+  "totalEnrichedRows": 0,
+  "totalRawTradeRows": 0,
+  "totalRawStockRows": 0,
+  "totalRawOiRows": 0,
+  "totalRawQuoteRows": 0,
+  "totalRawGreeksRows": 0,
+  "failures": [
+    {
+      "symbol": "AAPL",
+      "dayIso": "2026-03-11",
+      "error": "thetadata_request_failed:400"
+    }
+  ],
+  "loopExitReason": "completed",
+  "completedAt": "2026-03-11T18:12:58.048Z"
+}

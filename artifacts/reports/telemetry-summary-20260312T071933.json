@@ -1,0 +1,151 @@
+{
+  "runDir": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/clickhouse-historical-pipeline-20260312T071933",
+  "parsedAt": "2026-03-12T15:12:17.709Z",
+  "logFiles": 5,
+  "parsedLines": 3468,
+  "parsedEvents": 3250,
+  "totals": {
+    "thetaDownloadDurationMs": 6483627,
+    "thetaDownloadRows": 112217047,
+    "thetaDownloadBytes": 33233914757,
+    "thetaDownloadRequests": 1527,
+    "tradeSyncJobs": 70,
+    "tradeParsedRows": 3835535,
+    "tradeFetchedRows": 3835535,
+    "tradeUpsertedRows": 3835535,
+    "tradeStreamDownloadDurationMs": 249095,
+    "tradeInsertDurationMs": 67419,
+    "tradeWallDurationMs": 283332,
+    "quoteSyncJobs": 70,
+    "quoteParsedRows": 54261480,
+    "quoteInsertedRows": 54261480,
+    "quoteStreamDownloadDurationMs": 1621468,
+    "quoteInsertDurationMs": 474257,
+    "quoteWallDurationMs": 1731269,
+    "stockSyncJobs": 70,
+    "stockFetchedRows": 28420,
+    "stockInsertedRows": 28420,
+    "stockFetchDurationMs": 215525,
+    "stockInsertDurationMs": 11059,
+    "stockReloadDurationMs": 9567,
+    "deleteAuditOps": 142,
+    "deleteAuditDurationMs": 17437,
+    "enrichProgressBatches": 39,
+    "enrichProgressRows": 394275
+  },
+  "derived": {
+    "avgThetaRowsPerRequest": 73488.57,
+    "avgThetaBytesPerRequest": 21764187.79,
+    "avgThetaMsPerRequest": 4245.99,
+    "thetaRowsPerSec": 17307.76,
+    "thetaBytesPerSec": 5125821.51,
+    "thetaMiBPerSec": 4.888,
+    "quoteRowsPerSecInsertPhase": 114413.66,
+    "tradeRowsPerSecInsertPhase": 56891.01,
+    "stockRowsPerSecInsertPhase": 2569.85,
+    "deleteOpsPerSec": 8.14
+  },
+  "thetaByApi": [
+    {
+      "key": "/v3/option/history/greeks/first_order",
+      "requests": 1231,
+      "okRequests": 1231,
+      "errorRequests": 0,
+      "rows": 53956436,
+      "bytes": 18632930340,
+      "durationMs": 4181825,
+      "rowsPerSec": 12902.6,
+      "bytesPerSec": 4455693.47,
+      "mibPerSec": 4.249
+    },
+    {
+      "key": "option_history_quote",
+      "requests": 70,
+      "okRequests": 70,
+      "errorRequests": 0,
+      "rows": 54261480,
+      "bytes": 12886884812,
+      "durationMs": 1621468,
+      "rowsPerSec": 33464.42,
+      "bytesPerSec": 7947665.21,
+      "mibPerSec": 7.579
+    },
+    {
+      "key": "option_history_trade_quote",
+      "requests": 82,
+      "okRequests": 82,
+      "errorRequests": 0,
+      "rows": 3835535,
+      "bytes": 1703502406,
+      "durationMs": 249095,
+      "rowsPerSec": 15397.88,
+      "bytesPerSec": 6838765.96,
+      "mibPerSec": 6.522
+    },
+    {
+      "key": "stock_history_ohlc",
+      "requests": 70,
+      "okRequests": 70,
+      "errorRequests": 0,
+      "rows": 28420,
+      "bytes": 2127378,
+      "durationMs": 215485,
+      "rowsPerSec": 131.89,
+      "bytesPerSec": 9872.51,
+      "mibPerSec": 0.009
+    },
+    {
+      "key": "option_history_open_interest",
+      "requests": 70,
+      "okRequests": 70,
+      "errorRequests": 0,
+      "rows": 135172,
+      "bytes": 8469585,
+      "durationMs": 212547,
+      "rowsPerSec": 635.96,
+      "bytesPerSec": 39848.06,
+      "mibPerSec": 0.038
+    },
+    {
+      "key": "/v3/calendar/on_date",
+      "requests": 4,
+      "okRequests": 4,
+      "errorRequests": 0,
+      "rows": 4,
+      "bytes": 236,
+      "durationMs": 3207,
+      "rowsPerSec": 1.25,
+      "bytesPerSec": 73.59,
+      "mibPerSec": 0
+    }
+  ],
+  "deleteByTable": [
+    {
+      "key": "option_open_interest_raw",
+      "operations": 70,
+      "successful": 70,
+      "failed": 0,
+      "durationMs": 8773,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    },
+    {
+      "key": "option_greeks_minute_raw",
+      "operations": 70,
+      "successful": 70,
+      "failed": 0,
+      "durationMs": 8416,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    },
+    {
+      "key": "option_trade_enriched",
+      "operations": 2,
+      "successful": 2,
+      "failed": 0,
+      "durationMs": 248,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    }
+  ]
+}

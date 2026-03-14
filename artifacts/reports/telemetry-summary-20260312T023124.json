@@ -1,0 +1,142 @@
+{
+  "runDir": "/Users/pawanagarwal/github/phenixflow/artifacts/reports/clickhouse-historical-pipeline-20260312T023124",
+  "parsedAt": "2026-03-12T10:40:44.634Z",
+  "logFiles": 4,
+  "parsedLines": 7687,
+  "parsedEvents": 6691,
+  "totals": {
+    "thetaDownloadDurationMs": 11623616,
+    "thetaDownloadRows": 196454694,
+    "thetaDownloadBytes": 57807755234,
+    "thetaDownloadRequests": 2853,
+    "tradeSyncJobs": 130,
+    "tradeParsedRows": 4914310,
+    "tradeFetchedRows": 4914310,
+    "tradeUpsertedRows": 4914310,
+    "tradeStreamDownloadDurationMs": 379458,
+    "tradeInsertDurationMs": 89712,
+    "tradeWallDurationMs": 436755,
+    "quoteSyncJobs": 131,
+    "quoteParsedRows": 96818280,
+    "quoteInsertedRows": 96818280,
+    "quoteStreamDownloadDurationMs": 2459515,
+    "quoteInsertDurationMs": 691838,
+    "quoteWallDurationMs": 2636815,
+    "stockSyncJobs": 133,
+    "stockFetchedRows": 53998,
+    "stockInsertedRows": 53998,
+    "stockFetchDurationMs": 365257,
+    "stockInsertDurationMs": 17815,
+    "stockReloadDurationMs": 15991,
+    "deleteAuditOps": 262,
+    "deleteAuditDurationMs": 29532,
+    "enrichProgressBatches": 0,
+    "enrichProgressRows": 0
+  },
+  "derived": {
+    "avgThetaRowsPerRequest": 68858.99,
+    "avgThetaBytesPerRequest": 20262094.37,
+    "avgThetaMsPerRequest": 4074.17,
+    "thetaRowsPerSec": 16901.34,
+    "thetaBytesPerSec": 4973302.22,
+    "thetaMiBPerSec": 4.743,
+    "quoteRowsPerSecInsertPhase": 139943.57,
+    "tradeRowsPerSecInsertPhase": 54778.74,
+    "stockRowsPerSecInsertPhase": 3031.04,
+    "deleteOpsPerSec": 8.87
+  },
+  "thetaByApi": [
+    {
+      "key": "/v3/option/history/greeks/first_order",
+      "requests": 2268,
+      "okRequests": 2268,
+      "errorRequests": 0,
+      "rows": 94426500,
+      "bytes": 32608068757,
+      "durationMs": 7928024,
+      "rowsPerSec": 11910.47,
+      "bytesPerSec": 4113013.38,
+      "mibPerSec": 3.922
+    },
+    {
+      "key": "option_history_quote",
+      "requests": 131,
+      "okRequests": 131,
+      "errorRequests": 0,
+      "rows": 96818280,
+      "bytes": 22997259559,
+      "durationMs": 2459515,
+      "rowsPerSec": 39364.79,
+      "bytesPerSec": 9350322.95,
+      "mibPerSec": 8.917
+    },
+    {
+      "key": "option_history_open_interest",
+      "requests": 131,
+      "okRequests": 131,
+      "errorRequests": 0,
+      "rows": 241558,
+      "bytes": 15145853,
+      "durationMs": 459933,
+      "rowsPerSec": 525.2,
+      "bytesPerSec": 32930.56,
+      "mibPerSec": 0.031
+    },
+    {
+      "key": "option_history_trade_quote",
+      "requests": 142,
+      "okRequests": 142,
+      "errorRequests": 0,
+      "rows": 4914310,
+      "bytes": 2183231297,
+      "durationMs": 379458,
+      "rowsPerSec": 12950.87,
+      "bytesPerSec": 5753551.9,
+      "mibPerSec": 5.487
+    },
+    {
+      "key": "stock_history_ohlc",
+      "requests": 133,
+      "okRequests": 133,
+      "errorRequests": 0,
+      "rows": 53998,
+      "bytes": 4046936,
+      "durationMs": 365172,
+      "rowsPerSec": 147.87,
+      "bytesPerSec": 11082.27,
+      "mibPerSec": 0.011
+    },
+    {
+      "key": "/v3/calendar/on_date",
+      "requests": 48,
+      "okRequests": 48,
+      "errorRequests": 0,
+      "rows": 48,
+      "bytes": 2832,
+      "durationMs": 31514,
+      "rowsPerSec": 1.52,
+      "bytesPerSec": 89.86,
+      "mibPerSec": 0
+    }
+  ],
+  "deleteByTable": [
+    {
+      "key": "option_open_interest_raw",
+      "operations": 131,
+      "successful": 131,
+      "failed": 0,
+      "durationMs": 14998,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    },
+    {
+      "key": "option_greeks_minute_raw",
+      "operations": 131,
+      "successful": 131,
+      "failed": 0,
+      "durationMs": 14534,
+      "rowsBeforeDelete": 0,
+      "rowsAfterDeleteImmediate": 0
+    }
+  ]
+}
