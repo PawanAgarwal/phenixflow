@@ -1,0 +1,164 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Home" [ref=e23] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e24]
+                - generic [ref=e26]: Home
+            - listitem [ref=e27]:
+              - link "My Dashboard" [ref=e28] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e29]
+                - generic [ref=e34]: My Dashboard
+            - listitem [ref=e35]:
+              - link "Market Maker’s Exposure" [ref=e36] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e37]
+                - generic [ref=e41]: Market Maker’s Exposure
+            - listitem [ref=e42]:
+              - link "Positional Insights" [ref=e43] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e44]
+                - generic [ref=e46]: Positional Insights
+            - listitem [ref=e47]:
+              - link "Depth View" [ref=e48] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e49]
+                - generic [ref=e54]: Depth View
+            - listitem [ref=e55]:
+              - link "Knowledge Base" [ref=e56] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e57]
+                - generic [ref=e59]: Knowledge Base
+            - listitem [ref=e60]:
+              - link "Data Shop" [ref=e61] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e62]
+                - generic [ref=e66]: Data Shop
+            - listitem [ref=e67]:
+              - link "API Units" [ref=e68] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e69]
+                - generic [ref=e73]: API Units
+        - button "PA" [ref=e75] [cursor=pointer]:
+          - generic [ref=e77]: PA
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e80]
+          - button [ref=e93] [cursor=pointer]:
+            - img [ref=e94]
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - link "Home" [ref=e99] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e100]
+              - generic [ref=e102]: Home
+          - listitem [ref=e103]:
+            - link "My Dashboard" [ref=e104] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e105]
+              - generic [ref=e110]: My Dashboard
+          - listitem [ref=e111]:
+            - link "Market Maker’s Exposure" [ref=e112] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e113]
+              - generic [ref=e117]: Market Maker’s Exposure
+          - listitem [ref=e118]:
+            - link "Positional Insights" [ref=e119] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e120]
+              - generic [ref=e122]: Positional Insights
+          - listitem [ref=e123]:
+            - link "Depth View" [ref=e124] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e125]
+              - generic [ref=e130]: Depth View
+          - listitem [ref=e131]:
+            - link "Knowledge Base" [ref=e132] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e133]
+              - generic [ref=e135]: Knowledge Base
+          - listitem [ref=e136]:
+            - link "Data Shop" [ref=e137] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e138]
+              - generic [ref=e142]: Data Shop
+          - listitem [ref=e143]:
+            - link "API Units" [ref=e144] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e145]
+              - generic [ref=e149]: API Units
+        - generic [ref=e154]:
+          - generic [ref=e155]: PA
+          - generic [ref=e226]:
+            - paragraph [ref=e227]: Pawan Agarwal
+            - paragraph [ref=e228]: pawan.agarwal@gmail.com
+          - img [ref=e156]
+    - button [ref=e158] [cursor=pointer]:
+      - img [ref=e160]
+    - generic [ref=e163]:
+      - button "06 Mar, 2026" [ref=e229] [cursor=pointer]:
+        - generic [ref=e166]:
+          - text: 06 Mar, 2026
+          - img [ref=e167]
+      - combobox [ref=e170] [cursor=pointer]:
+        - generic [ref=e171]:
+          - generic: SPX
+        - img [ref=e173]
+    - generic [ref=e178]:
+      - generic [ref=e179]:
+        - tablist [ref=e180]:
+          - tab "Gamma" [selected] [ref=e181] [cursor=pointer]
+          - tab "Charm" [ref=e182] [cursor=pointer]
+          - tab "Vanna" [ref=e183] [cursor=pointer]
+        - generic [ref=e184]:
+          - combobox [ref=e186] [cursor=pointer]:
+            - generic [ref=e187]:
+              - img [ref=e189]
+              - generic: Gradient
+            - img [ref=e191]
+          - combobox [ref=e194] [cursor=pointer]:
+            - generic [ref=e195]:
+              - img [ref=e197]
+              - generic: 1 min
+            - img [ref=e201]
+          - generic [ref=e203] [cursor=pointer]:
+            - img [ref=e204]
+            - generic [ref=e206]: How it works?
+          - button [ref=e208] [cursor=pointer]:
+            - img [ref=e209]
+          - button [ref=e212] [cursor=pointer]:
+            - img [ref=e213]
+      - tabpanel "Gamma" [active] [ref=e218]:
+        - generic [ref=e231]:
+          - generic [ref=e232]:
+            - generic [ref=e233]:
+              - text: Gamma
+              - text: (∆ / 2.5 pts)
+            - generic [ref=e236]:
+              - generic [ref=e237]: "1600"
+              - generic [ref=e238]: "1000"
+              - generic [ref=e239]: "0"
+              - generic [ref=e240]: "-1000"
+              - generic [ref=e241]: "-1600"
+          - generic [ref=e225]:
+            - img
+            - img:
+              - img
+            - img
+            - generic [ref=e243]:
+              - generic [ref=e247] [cursor=pointer]: Gamma / (∆ / 2.5 pts)
+              - generic [ref=e251] [cursor=pointer]: Gamma Peak
+              - generic [ref=e255] [cursor=pointer]: Gamma Trough
+              - generic [ref=e259] [cursor=pointer]: Gamma Zero
+              - generic [ref=e263] [cursor=pointer]: OHLC
+            - generic:
+              - img
+      - tabpanel "Charm"
+      - tabpanel "Vanna"
+  - region "Notifications Alt+T"

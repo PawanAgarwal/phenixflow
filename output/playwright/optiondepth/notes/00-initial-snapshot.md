@@ -1,0 +1,43 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e5] [cursor=pointer]
+      - paragraph [ref=e8]: We use cookies to make your experience smoother and better. Ready to enjoy?
+    - button "I love cookies" [ref=e9] [cursor=pointer]
+  - generic [ref=e10]:
+    - img [ref=e12]
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - heading "Let’s Get Started" [level=2] [ref=e32]
+        - paragraph [ref=e33]: Please enter your credentials below to get started.
+      - generic [ref=e36]:
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - generic [ref=e39]: Email
+            - textbox "Enter your email" [ref=e41]
+          - generic [ref=e43]:
+            - generic [ref=e44]: Password
+            - generic [ref=e45]:
+              - textbox "Enter your password" [ref=e46]
+              - button [ref=e47] [cursor=pointer]:
+                - img [ref=e48]
+          - link "Forgot password?" [ref=e52] [cursor=pointer]:
+            - /url: /forgot-password
+          - button "Log In" [disabled] [ref=e54]
+          - generic [ref=e55]:
+            - separator [ref=e56]
+            - generic [ref=e57]: Or continue with
+            - separator [ref=e58]
+          - button "Google" [ref=e60] [cursor=pointer]:
+            - img [ref=e61]
+            - text: Google
+        - paragraph [ref=e68]:
+          - generic [ref=e69]: Don't have an account?
+          - link "Sign Up" [ref=e70] [cursor=pointer]:
+            - /url: /sign-up
+    - generic [ref=e71]:
+      - generic [ref=e72]: Your browser does not support the video tag.
+      - generic [ref=e73]:
+        - heading "Revolutionize Your Trading Journey" [level=1] [ref=e74]
+        - paragraph [ref=e75]: Experience the edge - where data meets decision, and the unseen becomes your strategy.
+  - region "Notifications Alt+T"

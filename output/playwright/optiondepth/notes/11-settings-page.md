@@ -1,0 +1,183 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Home" [ref=e23] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e24]
+                - generic [ref=e26]: Home
+            - listitem [ref=e27]:
+              - link "My Dashboard" [ref=e28] [cursor=pointer]:
+                - /url: /settings
+                - img [ref=e29]
+                - generic [ref=e34]: My Dashboard
+            - listitem [ref=e35]:
+              - link "Market Maker’s Exposure" [ref=e36] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e37]
+                - generic [ref=e41]: Market Maker’s Exposure
+            - listitem [ref=e42]:
+              - link "Positional Insights" [ref=e43] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e44]
+                - generic [ref=e46]: Positional Insights
+            - listitem [ref=e47]:
+              - link "Depth View" [ref=e48] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e49]
+                - generic [ref=e54]: Depth View
+            - listitem [ref=e55]:
+              - link "Knowledge Base" [ref=e56] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e57]
+                - generic [ref=e59]: Knowledge Base
+            - listitem [ref=e60]:
+              - link "Data Shop" [ref=e61] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e62]
+                - generic [ref=e66]: Data Shop
+            - listitem [ref=e67]:
+              - link "API Units" [ref=e68] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e69]
+                - generic [ref=e73]: API Units
+        - button "PA" [active] [ref=e75] [cursor=pointer]:
+          - generic [ref=e77]: PA
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e80]
+          - button [ref=e93] [cursor=pointer]:
+            - img [ref=e94]
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - link "Home" [ref=e99] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e100]
+              - generic [ref=e102]: Home
+          - listitem [ref=e103]:
+            - link "My Dashboard" [ref=e104] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e105]
+              - generic [ref=e110]: My Dashboard
+          - listitem [ref=e111]:
+            - link "Market Maker’s Exposure" [ref=e112] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e113]
+              - generic [ref=e117]: Market Maker’s Exposure
+          - listitem [ref=e118]:
+            - link "Positional Insights" [ref=e119] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e120]
+              - generic [ref=e122]: Positional Insights
+          - listitem [ref=e123]:
+            - link "Depth View" [ref=e124] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e125]
+              - generic [ref=e130]: Depth View
+          - listitem [ref=e131]:
+            - link "Knowledge Base" [ref=e132] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e133]
+              - generic [ref=e135]: Knowledge Base
+          - listitem [ref=e136]:
+            - link "Data Shop" [ref=e137] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e138]
+              - generic [ref=e142]: Data Shop
+          - listitem [ref=e143]:
+            - link "API Units" [ref=e144] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e145]
+              - generic [ref=e149]: API Units
+        - generic [ref=e154]:
+          - generic [ref=e155]: PA
+          - generic [ref=e199]:
+            - paragraph [ref=e200]: Pawan Agarwal
+            - paragraph [ref=e201]: pawan.agarwal@gmail.com
+          - img [ref=e156]
+    - button [ref=e158] [cursor=pointer]:
+      - img [ref=e160]
+    - generic [ref=e428]:
+      - generic [ref=e430]:
+        - generic [ref=e433]:
+          - img [ref=e435] [cursor=pointer]
+          - generic [ref=e439]:
+            - button "Choose File" [ref=e440]
+            - button [ref=e441] [cursor=pointer]:
+              - img [ref=e442]
+        - paragraph [ref=e446]: Pawan A.
+        - text: pawan.agarwal@gmail.com
+      - generic [ref=e447]:
+        - generic [ref=e448]:
+          - generic [ref=e449]:
+            - paragraph [ref=e450]: Personal Info
+            - paragraph [ref=e451]: You can change your personal information settings here.
+          - generic [ref=e452]:
+            - generic [ref=e453]:
+              - generic [ref=e454]: Full Name
+              - textbox "Enter your name" [ref=e456]: Pawan Agarwal
+            - generic [ref=e457]:
+              - generic [ref=e458]: Email Address
+              - textbox "Enter your email" [disabled] [ref=e460]: pawan.agarwal@gmail.com
+        - generic [ref=e461]:
+          - generic [ref=e462]:
+            - paragraph [ref=e463]: Interface Theme
+            - paragraph [ref=e464]: You can change your UI theme here
+          - generic [ref=e466]:
+            - button "light" [ref=e467] [cursor=pointer]:
+              - img "light" [ref=e468]
+              - checkbox [checked] [ref=e469]
+            - button "dark" [ref=e470] [cursor=pointer]:
+              - img "dark" [ref=e471]
+              - checkbox [ref=e472]
+        - generic [ref=e473]:
+          - generic [ref=e474]:
+            - paragraph [ref=e475]: Email Preferences
+            - paragraph [ref=e476]: Choose what kind of mails you want to receive
+          - generic [ref=e478]:
+            - generic [ref=e479]:
+              - switch [checked] [ref=e481] [cursor=pointer]
+              - generic [ref=e483]:
+                - paragraph [ref=e484]: Email List
+                - paragraph [ref=e485]: Receive promotional updates and newsletters.
+            - generic [ref=e486]:
+              - switch [checked] [ref=e488] [cursor=pointer]
+              - generic [ref=e490]:
+                - paragraph [ref=e491]: Important Notices
+                - paragraph [ref=e492]: Choose whether to receive essential notifications and alerts.
+            - generic [ref=e493]:
+              - switch [checked] [ref=e495] [cursor=pointer]
+              - generic [ref=e497]:
+                - paragraph [ref=e498]: Daily Overview
+                - paragraph [ref=e499]: Choose whether to receive daily overview via email
+        - generic [ref=e500]:
+          - generic [ref=e501]:
+            - paragraph [ref=e502]: Current Plan
+            - paragraph [ref=e503]: View the details of your current subscription and available features.
+          - generic [ref=e507]:
+            - generic [ref=e508]:
+              - paragraph [ref=e509]: You are on a FREE plan
+              - paragraph [ref=e510]: You have access to basic features. Upgrade to unlock advanced tools and insights.
+            - button "Buy Subscription" [ref=e511] [cursor=pointer]:
+              - img [ref=e512]
+              - text: Buy Subscription
+        - generic [ref=e514]:
+          - generic [ref=e515]:
+            - paragraph [ref=e516]: Reset Settings/Cache
+            - paragraph [ref=e517]: Reset settings and cache here
+          - generic [ref=e519]:
+            - generic [ref=e520]:
+              - generic [ref=e521]:
+                - paragraph [ref=e522]: Reset Settings
+                - paragraph [ref=e523]: Revert all applied settings to their default state.
+              - button "Reset" [ref=e524] [cursor=pointer]
+            - generic [ref=e525]:
+              - generic [ref=e526]:
+                - paragraph [ref=e527]: Reset Cache
+                - paragraph [ref=e528]: Remove stored temporary data for a refreshed experience.
+              - button "Reset" [ref=e529] [cursor=pointer]
+  - region "Notifications Alt+T"

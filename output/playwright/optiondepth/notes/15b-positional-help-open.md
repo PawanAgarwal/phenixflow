@@ -1,0 +1,235 @@
+- generic:
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - img
+            - list:
+              - listitem:
+                - link:
+                  - /url: /home
+                  - img
+                  - generic: Home
+              - listitem:
+                - link:
+                  - /url: /positional-insight
+                  - img
+                  - generic: My Dashboard
+              - listitem:
+                - link:
+                  - /url: /market-makers
+                  - img
+                  - generic: Market Maker’s Exposure
+              - listitem:
+                - link:
+                  - /url: /positional-insight
+                  - img
+                  - generic: Positional Insights
+              - listitem:
+                - link:
+                  - /url: /depth-view
+                  - img
+                  - generic: Depth View
+              - listitem:
+                - link:
+                  - /url: /knowledge-base
+                  - img
+                  - generic: Knowledge Base
+              - listitem:
+                - link:
+                  - /url: /data-shop
+                  - img
+                  - generic: Data Shop
+              - listitem:
+                - link:
+                  - /url: /api-units
+                  - img
+                  - generic: API Units
+          - generic:
+            - button:
+              - generic:
+                - generic: PA
+        - generic:
+          - generic:
+            - img
+            - button:
+              - img
+          - list:
+            - listitem:
+              - link:
+                - /url: /home
+                - img
+                - generic: Home
+            - listitem:
+              - link:
+                - /url: /dashboard
+                - img
+                - generic: My Dashboard
+            - listitem:
+              - link:
+                - /url: /market-makers
+                - img
+                - generic: Market Maker’s Exposure
+            - listitem:
+              - link:
+                - /url: /positional-insight
+                - img
+                - generic: Positional Insights
+            - listitem:
+              - link:
+                - /url: /depth-view
+                - img
+                - generic: Depth View
+            - listitem:
+              - link:
+                - /url: /knowledge-base
+                - img
+                - generic: Knowledge Base
+            - listitem:
+              - link:
+                - /url: /data-shop
+                - img
+                - generic: Data Shop
+            - listitem:
+              - link:
+                - /url: /api-units
+                - img
+                - generic: API Units
+          - generic:
+            - generic:
+              - generic:
+                - generic: PA
+                - generic:
+                  - paragraph: Pawan Agarwal
+                  - paragraph: pawan.agarwal@gmail.com
+                - img
+      - button:
+        - generic:
+          - img
+      - generic:
+        - generic:
+          - generic:
+            - button:
+              - generic:
+                - text: 06 Mar, 2026
+                - img
+          - generic:
+            - combobox:
+              - generic:
+                - generic: SPX
+              - generic:
+                - img
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - paragraph: Exposure by Expiration
+                    - generic:
+                      - generic:
+                        - paragraph:
+                          - generic: GEX - $M/pt
+                          - img
+                        - paragraph:
+                          - generic: "Exp: Range"
+                          - img
+                        - paragraph:
+                          - generic: MM
+                          - img
+                      - generic:
+                        - button:
+                          - img
+                          - generic: How it works?
+                        - generic:
+                          - generic:
+                            - button:
+                              - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                - generic:
+                  - generic:
+                    - img
+                    - img
+                    - img
+                    - generic [ref=e272]:
+                      - generic [ref=e276] [cursor=pointer]: Calls
+                      - generic [ref=e280] [cursor=pointer]: Puts
+                      - generic [ref=e284] [cursor=pointer]: Net
+                    - generic:
+                      - img
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - paragraph: Breakdown By Strike
+                    - generic:
+                      - generic:
+                        - paragraph:
+                          - generic: GEX - $M/pt
+                          - img
+                        - paragraph:
+                          - generic: "Exp: ODTE"
+                          - img
+                        - paragraph:
+                          - generic: MM
+                          - img
+                      - generic:
+                        - button:
+                          - img
+                          - generic: How it works?
+                        - generic:
+                          - generic:
+                            - button:
+                              - img
+                        - button:
+                          - img
+                        - button:
+                          - img
+                - generic:
+                  - generic:
+                    - img
+                    - img
+                    - img
+                    - generic [ref=e285]:
+                      - generic [ref=e289] [cursor=pointer]: Calls
+                      - generic [ref=e293] [cursor=pointer]: Puts
+                      - generic [ref=e297] [cursor=pointer]: Net
+                    - generic:
+                      - img
+    - region "Notifications Alt+T"
+  - dialog [ref=e299]:
+    - generic [ref=e301]:
+      - iframe [active] [ref=e303]:
+        - generic "YouTube Video Player" [ref=f43e3]:
+          - generic [ref=f43e5]:
+            - link "Photo image of OptionsDepth" [ref=f43e8] [cursor=pointer]:
+              - /url: https://www.youtube.com/channel/UC-nHA5Op0il8oaR-EuzqcZQ?embeds_referring_euri=https%3A%2F%2Fapp.optionsdepth.com%2F
+            - 'link "1-Minute Tutorial: Breakdown by Expiration Module" [ref=f43e11] [cursor=pointer]':
+              - /url: https://www.youtube.com/watch?v=ELfqD53EQFk
+            - button "Share" [ref=f43e13] [cursor=pointer]:
+              - generic [ref=f43e14]:
+                - img
+              - generic [ref=f43e15]: Share
+          - button "Play" [ref=f43e18] [cursor=pointer]:
+            - img
+          - link "Watch on YouTube" [ref=f43e19] [cursor=pointer]:
+            - /url: https://www.youtube.com/watch?v=ELfqD53EQFk&embeds_referring_euri=https%3A%2F%2Fapp.optionsdepth.com%2F
+            - generic [ref=f43e20]: Watch on
+            - generic [ref=f43e21]:
+              - img
+      - heading "Breakdown by Expiration" [level=2] [ref=e304]
+      - paragraph [ref=e305]: "The Breakdown by Expiration chart provides a comprehensive view of market insights and outlooks across different contracts, aggregated by expiration date. This chart operates in two distinct modes: Net and Flow. The Net mode offers a snapshot of current positioning, showing the market's stance across expirations at a specific moment. The Flow mode highlights changes in positioning by comparing two selected moments, uncovering trends and shifts in market dynamics over time. You can refine your view by applying filters for specific expirations and strikes. For Pro Max users, the chart updates every 10 minutes, enabling tracking of positioning changes over time, making it an essential tool for staying up to date with market behavior. A PDF guide and video tutorial will be available soon, offering a step-by-step walkthrough of all features and functionalities."
+      - generic [ref=e306]:
+        - button "Close" [ref=e308] [cursor=pointer]
+        - link "Go to Knowledge Base" [ref=e309] [cursor=pointer]:
+          - /url: /knowledge-base
+    - generic [ref=e310]:
+      - paragraph
