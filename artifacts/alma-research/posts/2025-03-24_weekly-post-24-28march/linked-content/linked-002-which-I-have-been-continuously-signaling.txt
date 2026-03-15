@@ -1,0 +1,49 @@
+Intraday post (13/march)
+
++JPM Collar, stock/yields correlation, liquidity
+
+OptionsDepth Heatmap here:
+
+(Description is here)
+
+I code 5607 as the zero vanna lvl for the day where we should see lower vol to break through it. I see resistances and supports at 5531 and 5652, and from momentum wise 5689.49 is where if price can break through and manage to calm vol down, it can stabilize. As you can see, we have a long fly-like pattern with 5600 in the middle, and short gamma everywhere. I code 5615 as the net charm flip. Charm convexity is negative (we have longer charm below this flip and shorter charm above). This means that the gamma will decrease over the time, and this doesn’t favor for vol to cool off… mechanically.If we still see it, it is from the “outside”, and signals strong interest to take vol down and stabilize the spot.
+
+Stoch vol models still detect intraday mean reversion, yesterday trend kinda stopped the momentum effect kicking in. Also the intraday regime shifted to oscillating in the alternating hidden state sequence, while shows easing of the downward intraday bias. This favors for further vol suppression.I still like and hold my short skew trades, printed well…
+
+Fixed strike skew is now lower into March OpEx than it was on this Monday and 1 week ago. For this friday expo it is elevated, and customers are longer on the skew, but no real change, but still lower than this Monday. Slightly, but lower. VIX does the same into 17/3 and April expo too.Note, that the key here is, that “in this context”, bcs relative to the fear that is hinted, vol is underperforming.
+
+I wanna share a few things with you.I mentioned on Monday that spot/LTY correlation was getting longer ahead of CPI release (but still negative), and now it went to positive territory. This means that good news lifts both equities and yields, while bad news drags them both down. When equities fall due to concerns over growth and recession risk, investors often flock to safe-haven assets like long-term treasuries. This flight-to-quality pushes bond prices up and yields down. Conversely, if economic outlook improves and equities begin to rally, investors will demand higher yields as they expect stronger growth and rising inflation.
+
+Now, lets look at the JPM collar, in short. These things will get their own dedicated posts in the future. Here I coded march monthly expo. You can clearly see the collar: 6165 as the short call strike, and 5565/4700 as the long put debit spread (MMs take the opposite):
+
+(you can also see other funds’ short flies and collars too). The sold call covers the cost of the debit put spread, while setting an upper limit for the long stock leg.The purpose is to hedge their longer-term long stock positions. The worst that can happen here is if the spot falls below the long put strike and they have to exercise the put while selling the stocks. Unlike many things, the collar isn’t rolled after quarterly, but it is reset. Meaning, they let the old one expire, and open another one, while hedging the new collat through 0DTEs as it should be not activized yet. As you can see, the collar trade is huge, and have a huge impact. This impact is mechanical and psychological too (bcs the plp are told that it has an impact and they adjust their strategies to this position, otherwise the daily and weekly flows can cancel its impact out. But this way they can control another small part of the big chaotic system).Here, between the 5565/6165, the collar trade takes MMs into a a long vanna position: as spot moves up, they become longer vega, as spot moves down, they become shorter vega. This generates the classic negative spot/vol beta. And this added another layer to this spot decay, via the elevated vol lvls, forcing dealers to slowly sell as they become longer delta on the trade, and shorter vega as we moved down on spot, and forward in time (along with vomma decay).
+
+If vol can unclech from the elevated lvls that I predicted days before and we started to see, they need to buyback some deltas, slowly, adding some support. Also, the MM short gamma strike behaves a bit kinda like a vanna flip lvl as well. The exact vanna flip is highly determined by the vol surface on different tenors, but roughly it can say that it likes to move close to these huge speed flips. So whenever, the spot attempts to move through the short strike, the suppressive vanna turns around, and as the elevated vol pushed deltas up for MMs, now they go shorter and shorter deltas, so they start to buy back. This is why many thinks that this collar strike is a pin, but it is not. It is supportive, but not pinning!Pinning effects are generated at MM short fly structures with steep speed profiles + couple of other factors in the environment.
+
+And for the last: liquidity. When you see spot moving like some small cap crypto shit, you can know that liquidity is low. For any significant and strong momentum, market needs liquidity. Even to push it lower. This is why big investment funds and banks decided to buy small portion two days ago, in order to provide liquidity bcs everybody went to the same side of the trade. They need somebody on the other side too. Also they don’t want to let the spot through the collar’s put strike for now. This is why we started to see fixed strike vol down, only a slightly, but in such a tense bearish environment, it is an anomaly. They are still grinding up, level to level trading, day to day, but now they need liqudity for the coming vol events, to trigger QE and get a sustainable growth.
+
+SCRIPT INPUTS:SPX99.73%, 5742.703350431562, , 5706.739853870491, 95.4%, 5671.001577559531, Risk level, 5647.626799603249, 68.2%, 5635.0366481161045, 68.2%, 5563.333405426585, Risk level, 5550.972809771751, 95.4%, 5527.598031815469, , 5491.630124355165, 99.73%, 5455.896258943438
+
+ES=F99.73%, 5750.932499865543, , 5714.270012286396, 95.4%, 5677.8412499327715, Risk level, 5654.013502454688, 68.2%, 5641.1772481956905, 68.2%, 5568.084444352411, Risk level, 5555.486497545312, 95.4%, 5531.6587500672285, , 5494.991599170226, 99.73%, 5458.567500134457
+
+SPY99.73%, 573.6422896299729, , 569.9372509568194, 95.4%, 566.2561423735802, Risk level, 563.8482583679962, 68.2%, 562.5509466025279, 68.2%, 555.164638067997, Risk level, 553.8917318663788, 95.4%, 551.4838478607948, , 547.7783251841263, 99.73%, 544.0977006044021
+
+VIX99.73%, 26.21030605879657, , 25.71046331265058, 95.4%, 25.22015280051645, Risk level, 24.89736283831713, 68.2%, 24.7201191504338, 68.2%, 23.729759055285445, Risk level, 23.562636246155527, 95.4%, 23.239846283956208, , 22.73938094544187, 99.73%, 22.249693025676088
+
+IWM99.73%, 207.8208127467031, , 206.13376351595073, 95.4%, 204.46040942510936, Risk level, 203.3649179422698, 68.2%, 202.77324671493722, 68.2%, 199.41272608926252, Risk level, 198.83509426476144, 95.4%, 197.7396027819219, , 196.05220144225174, 99.73%, 194.37919946032815
+
+QQQ99.73%, 492.8441183386441, , 488.8468822222565, 95.4%, 484.8820658831892, Risk level, 482.28643678271095, 68.2%, 480.8845613781734, 68.2%, 472.9222314968313, Risk level, 471.5535900727578, 95.4%, 468.9579609722795, , 464.95989211394743, 99.73%, 460.99590851682467
+
+NQ=F99.73%, 20269.19507747771, , 20105.863233349904, 95.4%, 19943.847538738853, Risk level, 19837.78424110999, 68.2%, 19780.504870673754, 68.2%, 19455.14614597515, Risk level, 19399.21575889001, 95.4%, 19293.152461261147, , 19129.787040782296, 99.73%, 18967.80492252229
+
+NVDA99.73%, 124.33773845006237, , 122.16939630175855, 95.4%, 120.03886815691595, Risk level, 118.63743644135022, 68.2%, 117.86983644703494, 68.2%, 113.57022438544351, Risk level, 112.84255928618884, 95.4%, 111.44112757062311, , 109.27055395422776, 99.73%, 107.14225727747669
+
+AMZN99.73%, 208.15677076815243, , 205.82704053118746, 95.4%, 203.52338507890042, Risk level, 202.01290134420427, 68.2%, 201.19335459731687, 68.2%, 196.55965450800687, Risk level, 195.7670974350926, 95.4%, 194.25661370039646, , 191.92593923798597, 99.73%, 189.62322801114445
+
+GOOG99.73%, 175.90029013399635, , 174.16667462788263, 95.4%, 172.45014506699818, Risk level, 171.32539777515677, 68.2%, 170.7163569091219, 68.2%, 167.26603206771333, Risk level, 166.67460222484323, 95.4%, 165.54985493300182, , 163.81569965360032, 99.73%, 162.09970986600365
+
+TSLA99.73%, 271.70406700323775, , 265.73498171479343, 95.4%, 259.8970316705642, Risk level, 256.04793815211264, 68.2%, 253.92489762797763, 68.2%, 242.11451614987948, Risk level, 240.13205452366864, 95.4%, 236.28296100521706, , 230.30379152826728, 99.73%, 224.4759256725435
+
+TSM99.73%, 186.65768621611534, , 184.2704991970805, 95.4%, 181.91384219253032, Risk level, 180.36734904084162, 68.2%, 179.52625180779663, 68.2%, 174.78198252168835, Risk level, 173.972647297049, 95.4%, 172.4261541453603, , 170.03768950590728, 99.73%, 167.6823101217753
+
+AMD99.73%, 106.51440707958616, , 105.07356019138244, 95.4%, 103.65220399755675, Risk level, 102.71912579281516, 68.2%, 102.21108421208618, 68.2%, 99.34859250786512, Risk level, 98.86087603823952, 95.4%, 97.92779783349793, , 96.48608367916614, 99.73%, 95.06559475146852

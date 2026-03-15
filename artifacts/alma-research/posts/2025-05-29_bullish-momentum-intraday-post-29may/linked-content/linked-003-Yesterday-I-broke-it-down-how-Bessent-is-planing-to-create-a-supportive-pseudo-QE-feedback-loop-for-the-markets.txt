@@ -1,0 +1,89 @@
+Quick education on reflexivity, Hidden QE plan + Intraday post (28/May)
+
+What does Bessent want...?
+
+I extended the weekly post with further explainations. So even if you have read it, let’s re-read it again.
+
+As an introduction, here you can find a lecture from George Soros himself of the ‘Theory of Reflexivity”
+
+And here some researches for quant geeks:Mathematical analysis Berlin Institute’s researchI’ll break this down more in a dedicated educational post soon, but now how does it come to the current environment, and Bessent…
+
+Artificial QE?Markets in inflation swaps (e.g. 5y5y forwards) are only pricing in QE once the uncertainty around U.S.–China tariffs clears. Tariffs are the key blocker: until we know if they stay at 10%, snap back to 25–30%, or roll off entirely, neither the Fed nor swap markets believe cuts are safe.For now, the SPX/LTY beta tanked, signaling that the market is effectively rooting for “calmer growth” (i.e. neither strong inflation nor deep recession) so the Fed can pivot to cuts without being boxed in by too-hot or too-cold data.
+
+Bessent is pushing regulators to manually unleash QE‐style liquidity by exempting Treasuries from the SLR this summer—effectively to force the loosening cycle, rather than waiting for the Fed’s data‐driven cuts.And this is where Soros comes into play…
+
+Bessent cut his teeth at Soros Fund Management, mastering the reflexivity framework and policy-perception dynamics. He sees Treasury yields and bank behavior as prime targets for reflexive intervention—where regulatory tweaks can reshape market realities. Reflexivity posits that investor perceptions and economic fundamentals interact in a two-way feedback loop, so that market prices both reflect and shape reality—creating boom-bust cycles.With 10-year yields near 4.5%, swap spreads deeply negative, and CP issuance at record highs, the bond market is fragile. The Supplementary Leverage Ratio (SLR) forces banks to hold expensive capital against low-risk Treasuries, straining liquidity in the $29 trn U.S. bond market. Bessent’s plan is to announce SLR relief, that would make markets anticipate massive bank demand for Treasuries, it would free up to $2 trn of bank balance-sheet capacity. As a result yield spike expectations recede; long-bond yields fall, improving the equity discount rate (stocks rally). Lower yields and equity gains bolster bank capital ratios, validating further Treasury buying. Stronger bank balance sheets lead to more lending, fueling growth expectations and credit expansion. The cycle accelerates unless and until inflationary pressures force policy reversal.
+
+Now, the problem is…Price-level targeting (PLT) would commit the Fed to make up past inflation misses, anchoring expectations even if actual rates rise temporarily—in effect “calming” inflation on paper. Also yield-curve control (YCC) could place caps on 10- or 30-year yields, forcing them lower via Fed operation-twist or/and outright purchases, achieving an “on-paper” drop in yields that supports stocks. If growth doesn’t slows too much. Because if it doesn, SPX/LTY beta will spike.However, even if Bessent’s plan succeeds, the tariff-induced cost shock will reignite inflation pressures and unravel the fragile equilibrium.
+
+What does this mean for the market? Sustained positive drift for now, but the value of the drift is decreasing, the bullish trend flattens/cools. Expecting further reversion into tomorrow-Friday window, when rebalancing comes. For now, it is vol selling as said, and negative intraday speed to cap downside. But, do you remember what did I said about zomma risk and vol?
+
+INTRADAY POSTCoding positioning for today’s session:
+
+What we see is an IC at the 5880/85 5955/60 strikes, betting on vol crush. The net speed profile is however negative with an avg slope of -24.79%, but speed and vol-wise, it draws a short fly pattern (skewed towards the right wings), bcs local speed is positive below the downside pivot.The centroid is in the 5940.02 - 5951.80 zone aligning with the weekly zero speed line. But vol is expected to make higher lows above 5946.55, if this is the case, momentum will break out of the IC range.To the downside the same is with 5921.75Charm is net positive here, putting dealers longer delta as time is passing.
+
+Downside target is 5761.33, with vanna flip (negative convexity, so high vol is needed to break through this)Vanna flip to the upside is 5930 with positive convexity (low vol needed to break), this is possible especially in the first one hour (color wise).If vol catches up and momentum gets pushed out of the IC range, we have a zero vanna at ~5990/80 (with negative convexity = high vol needed to break through), but the local gamma bar can swallow vol especially after 1.55PM
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX closed at 5921.54===
+
+99.73%, 6046.921509161488, , 6015.494465599647, 95.4%, 5984.230754580744, Risk level, 5963.793568587422, 68.2%, 5952.802850966934, 68.2%, 5890.111218026357, Risk level, 5879.286431412578, 95.4%, 5858.849245419256, , 5827.419566187046, 99.73%, 5796.158490838512
+
+=== ES closed at 5940.25===
+
+99.73%, 6072.685307109825, , 6039.485728716754, 95.4%, 6006.467653554912, Risk level, 5984.880698496011, 68.2%, 5973.267069119676, 68.2%, 5907.048386967084, Risk level, 5895.619301503989, 95.4%, 5874.032346445088, , 5840.829681491828, 99.73%, 5807.814692890175
+
+=== SPY closed at 591.15===
+
+99.73%, 604.4879606570285, , 601.1442225130736, 95.4%, 597.8189803285143, Risk level, 595.6448927414186, 68.2%, 594.4751384382708, 68.2%, 587.806052009333, Risk level, 586.6551072585813, 95.4%, 584.4810196714857, , 581.1369631452129, 99.73%, 577.8120393429715
+
+=== VIX closed at 18.95===
+
+99.73%, 22.308773964650893, , 21.455252617382225, 95.4%, 20.634386524561773, Risk level, 20.08853621909272, 68.2%, 19.779483047196813, 68.2%, 18.10345770708076, Risk level, 17.831461949852592, 95.4%, 17.28561164438354, , 16.42709831007393, 99.73%, 15.61122420429442
+
+=== IWM closed at 207.7===
+
+99.73%, 213.8096928087042, , 212.27677444237784, 95.4%, 210.7548464043521, Risk level, 209.75896647653332, 68.2%, 209.2218478031965, 68.2%, 206.16691878624965, Risk level, 205.64103352346666, 95.4%, 204.64515359564788, , 203.1119872842481, 99.73%, 201.59030719129578
+
+=== QQQ closed at 521.22===
+
+99.73%, 536.0077221521258, , 532.2979537565599, 95.4%, 528.6138610760629, Risk level, 526.2034623652664, 68.2%, 524.9039118448876, 68.2%, 517.5098647658174, Risk level, 516.2365376347336, 95.4%, 513.8261389239372, , 510.1158122946473, 99.73%, 506.43227784787433
+
+=== NDX closed at 21414.99===
+
+99.73%, 22006.85915666474, , 21858.391051409326, 95.4%, 21710.92457833237, Risk level, 21614.44990579602, 68.2%, 21562.449599610474, 68.2%, 21266.507956513644, Risk level, 21215.530094203983, 95.4%, 21119.055421667632, , 20970.566114019904, 99.73%, 20823.120843335262
+
+=== NQ closed at 21477.0===
+
+99.73%, 22076.599473080616, , 21926.187210481625, 95.4%, 21776.79973654031, Risk level, 21679.065022428167, 68.2%, 21626.38037078041, 68.2%, 21326.573331370506, Risk level, 21274.934977571833, 95.4%, 21177.20026345969, , 21026.766083709368, 99.73%, 20877.400526919384
+
+=== NVDA closed at 135.5===
+
+99.73%, 143.70604353873273, , 141.63967637822114, 95.4%, 139.60302176936636, Risk level, 138.26543667255294, 68.2%, 137.5362114126645, 68.2%, 133.43271918930103, Risk level, 132.73456332744706, 95.4%, 131.39697823063364, , 129.329197113538, 99.73%, 127.29395646126727
+
+=== AMZN closed at 206.02===
+
+99.73%, 215.5115577056664, , 213.12545908835503, 95.4%, 210.76577885283322, Risk level, 209.21865494680958, 68.2%, 208.37937940031568, 68.2%, 203.63328568959278, Risk level, 202.82134505319044, 95.4%, 201.2742211471668, , 198.88717695230608, 99.73%, 196.52844229433362
+
+=== AAPL closed at 200.21===
+
+99.73%, 208.93223981934355, , 206.74018062553594, 95.4%, 204.57111990967178, Risk level, 203.14939481911878, 68.2%, 202.37881291557028, 68.2%, 198.01743429022764, Risk level, 197.27060518088123, 95.4%, 195.84888009032824, , 193.65604401202384, 99.73%, 191.48776018065647
+
+=== GOOG closed at 173.98===
+
+99.73%, 181.27732371052062, , 179.44371940918586, 95.4%, 177.6286618552603, Risk level, 176.43919809044544, 68.2%, 175.79486508307969, 68.2%, 172.1460025978582, Risk level, 171.52080190955454, 95.4%, 170.33133814473968, , 168.49713142345627, 99.73%, 166.68267628947936
+
+=== TSLA closed at 362.89===
+
+99.73%, 391.5372070229393, , 384.3086790197942, 95.4%, 377.21360351146967, Risk level, 372.5441087667305, 68.2%, 369.98249225913, 68.2%, 355.65609740551724, Risk level, 353.23589123326946, 95.4%, 348.5663964885303, , 341.3294682565159, 99.73%, 334.2427929770607
+
+=== TSM closed at 197.68===
+
+99.73%, 207.13348857011925, , 204.7564774406037, 95.4%, 202.40674428505963, Risk level, 200.8658256481302, 68.2%, 200.0294108631793, 68.2%, 195.30232868486084, Risk level, 194.49417435186982, 95.4%, 192.95325571494038, , 190.5752297447413, 99.73%, 188.22651142988076
+
+=== AMD closed at 114.56===
+
+99.73%, 121.67651632441208, , 119.88418647797042, 95.4%, 118.11825816220605, Risk level, 116.95826600132688, 68.2%, 116.32552452089921, 68.2%, 112.76683707960278, Risk level, 112.16173399867313, 95.4%, 111.00174183779396, , 109.20812166277213, 99.73%, 107.44348367558793

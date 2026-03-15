@@ -1,0 +1,37 @@
+Volatility flows, Sentiment read and OpEx - Weekly post (16-20/June)
+
+Last week, we had a sentiment shift towards growth concerns, inevitably suppressive vol selling feedback loop that ended up in a red 80%+ reversion signal to own the market on the short side. But spot closed above the sentiment-flip level. The June 2025 Israel–Iran escalation (“Operation Rising Lion”) triggered a flight to quality across multiple markets: U.S. Treasury yields fell amid a bull-steepening of the curve as investors sought safe havens, the yen reacted sharply, signaling unwinding of yen-funded carry trades. Persistent Middle East tensions could keep the yen bid, hindering a sustainable carry revival.Dark-pool data shows institutional equity outflows as a pre-OpEx defensive move, underscoring private-venue activity as a barometer of large-account risk aversion. Funds target convexity via structured-product hedges on oil and FX, anticipating what the vol market shows us…I posted this on Twitter, in case you missed it. Dropped some important infos.First, we will look at the volatility flows, because they are the ones that matter the most now…
+
+Here I exported a snapshot in a heatmap form of the monthly vanna flows:
+
+You can’t see too much on it, I need to scrutinize it from different aspects and during different vol conditions… but voilá… The exposure is net negative between 4804 and 5930, locally it forms negative until 5309.23 and positive until 5930.45 - 5941 zone and negative again above. Now, locally (above this “flip point”) vanna and zomma are negative, vomma is positive and veta is also negative. Below the local “flip point”, vanna is positive, zomma is negative, vomma is positive and veta remains negative. While net vega and gamma exposure remain positive and delta exposure remains net negative. The “flip point” is not a real vanna flip but close enough.
+
+Now, basically this tells me that as time goes on, volatility is mechanically doomed to be elevated. This is supported by the contango we can see in VIX futs:
+
+If vol grinds higher, gamma effects will decrease (short zomma) supporting vol further. However I expect supplied vvol and so any vol spikes to be capped due to long vomma - short veta’s local effects. Mechanically.
+
+This is how the OpEx positioning looks like now:
+
+We have a net short speed profile, forming a short fly pattern. The pivotal zone is the 5945.37 - 5953.01 zone.But vanna and vomma are net negative and veta is positive in this tenor. Net delta, gamma and vega are negative. And these effects again help to temper any vol spikes, and to suppress vvol. So favors for a slow grind-up in volatility, and this opens the door for more downside, especially if VIX call buying accelerates (triggering ES fut selling as beta hedge). All in all, upside seems capped, and I don’t expect market to fall, only after OpEx. Simply because market held firmly the sentiment lines, and short vanna flow with vol upward grind is actually good for the market if it can hold the pivot zone. Spot is trapped. And if any sell-off happens, it will be rather a grind lower, than a blackswan, unless nuclear attack and heavy oil problems happen. The former one is unlikely, the latter one is not expected to be that heavy… Watch for Hormuz. Any threat to close or mine the strait can instantly remove 3–4 million barrels per day (mb/d) of supply, spiking prices and squeezing OPEC+’s limited spare capacity. This would lead to further oil‐driven stagflation and heightened volatility (just look at the term-structure).
+
+The 22d Put/Call skew into this Friday expo went longer by 15.45% in the last one week, and by 10.8% into EOM expo (on a fixed strike basis). These sudden spikes are very important.By the way, because the puts were heavily sold and cheap before, this customer longer skew still keeps skew relatively down (local positive zomma effect at these strikes), and this is why you see constant net negative vanna and speed regimes, because skew is a ‘good enough’ proxy for dealer’s vanna exposure.
+
+We have FOMC this week, after VIX expo (and holiday on 19th). I don’t want to comment that yet. Any dovish hint would be supportive. Market didn’t decide yet how it will value the events:
+
+My guess is that Powell will maintain his “wait-and-see” stance. CME FedWatch shows just a 0.4% - 3.1% probability of a 25 bp rate cut. Tariff risk and geo risks (like Hormuz) are there.
+
+Okay, let’s see what the fixed delta skew tells us now about the week:
+
+Market is basically seems like betting on that net short vanna and short delta trade. They want to catch vol up on Wednesday, but expect lower velocity until like ~5870. Fear is real, but mostly vol trade, rather than delta trade. Let’s see what ranges the vol market projects for us:
+
+SPX: 6044.39 - 5909.54; 5876.92ES=F: 6048.32 - 5905.67; 5871.17SPY: 603.90 - 590.09; 586.75NDX: 21925.52 - 21336.55; 21194.12NQ=F: 21941.15 - 21344.84; 21200.62VIX: 22.77 - 18.86; 17.91
+
+SPX: 6044.39 - 5909.54; 5876.92ES=F: 6048.32 - 5905.67; 5871.17SPY: 603.90 - 590.09; 586.75NDX: 21925.52 - 21336.55; 21194.12NQ=F: 21941.15 - 21344.84; 21200.62VIX: 22.77 - 18.86; 17.91
+
+Sentiment-wise the key lines are:
+
+SPX: 5965.24 - 5848.08ES=F: 5975.93 - 5862.14SPY: 595.98 - 583.92NDX: 21587.05 - 21108.56NQ=F: 21630.02 - 21166.68VIX: 18.77 - 22.34VVIX: 103.21 - 104.85 (already above)
+
+SPX: 5965.24 - 5848.08ES=F: 5975.93 - 5862.14SPY: 595.98 - 583.92NDX: 21587.05 - 21108.56NQ=F: 21630.02 - 21166.68VIX: 18.77 - 22.34VVIX: 103.21 - 104.85 (already above)
+
+but these ones change dynamically. I will update them everyday. The upper bands make the sentiment shift, and the lower bands confirm them. I highly recomment to anyone who missed the Wednesday short to maintain a day-by-day approach now. Positioning reads will be updated on Thursday (market is closed) and Friday. Also don’t forget futures rollover into the U contract.

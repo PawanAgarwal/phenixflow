@@ -1,0 +1,79 @@
+Intraday post (23/June)
+
+Weekly post is out.
+
+I see people keep being lost in the noise of the spot moves, assigning too much significance to random 10 pts moves. My job as an analyst is to find the levels and the moves that actually matter from sentiment and dynamics perspective, and that have predictive matter in terms of the expected flows. Also knowing the hedging dynamics or skew mechanisms don’t matter at all in itself, won’t tell you anything about what the market wants. But reading between the lines, check the timing of a certain change, researching what is the actual underlying story that the market wants to tell us and then compare the changes in the output numbers of different metrics, will reveal where the flow wants to flow, and will give you estimations, distribution or a direct path. But one needs a creative approach, a creative mind. It is something that is over the algorhytmic thinking. Check the educational posts…
+
+Also, here I shared some free trading advice for you all. Before I jump in to the daily setup, let’s re-read this post again:
+
+Important trading advice + Intraday post (16/June)
+
+INTRADAY POST
+
+For the first glance this is a big mess (especially OD Heatmap), but lets clear it up… The net speed profile is negative, with some local positive speed below ~5959.97I code the very max today at 6021 (especially strong after 1.55pm), and the very min at 5842; both of these lvls are vanna flip lines with positive convexity. However, below the downside pivot, my main target would be 5884.4; where are the pivots?The centroid of the whole profile falls to 5981.48Upside pivot is 6008.64 - 6005.59 range, especially strong after 1.05pm with some local vol down effect (but can be feel after 11.23am too). Only high vol could break it. Then if 5995 can be hold into 3.20pm, the range is a pin. Downside pivot is at 5930.54 acting as a strong support in the power hour. Only vol down move can break it, and mostly in the first 20 min. If spot breaks towards it, holds, but cannot manage to break above to 5950 with higher vol to the upside, 5935 can be a local pin. Otherwise, check my min - max levels.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+All in all, just like in a textbook short speed environment: we need higher vol up, and lower vol down.
+
+SCRIPT INPUTS=== SPX closed at 5967.84===
+
+99.73%, 6080.376725957698, , 6052.17715247197, 95.4%, 6024.108362978849, Risk level, 6005.764876647744, 68.2%, 5995.908175824551, 68.2%, 5939.639187550058, Risk level, 5929.915123352256, 95.4%, 5911.571637021151, , 5883.370187314883, 99.73%, 5855.303274042302
+
+=== ES closed at 6025.0===
+
+99.73%, 6142.196222033311, , 6112.826951080448, 95.4%, 6083.598111016656, Risk level, 6064.495126825226, 68.2%, 6054.228160457396, 68.2%, 5995.62935655004, Risk level, 5985.504873174774, 95.4%, 5966.401888983344, , 5937.030538965029, 99.73%, 5907.803777966689
+
+=== SPY closed at 594.28===
+
+99.73%, 606.0357735216098, , 603.0896692351637, 95.4%, 600.1578867608049, Risk level, 598.2416956767825, 68.2%, 597.2117119951778, 68.2%, 591.3337533540504, Risk level, 590.3183043232175, 95.4%, 588.402113239195, , 585.4557932695792, 99.73%, 582.5242264783901
+
+=== VIX closed at 20.62===
+
+99.73%, 23.68877234592806, , 22.90873677126973, 95.4%, 22.15438659258073, Risk level, 21.6541768369895, 68.2%, 21.373429068161148, 68.2%, 19.837978704703165, Risk level, 19.585824841477297, 95.4%, 19.085615085886065, , 18.30234977605191, 99.73%, 17.551229332538735
+
+=== IWM closed at 209.21===
+
+99.73%, 214.83644449180568, , 213.425198177267, 95.4%, 212.02322224590284, Risk level, 211.1061117937385, 68.2%, 210.61191401738253, 68.2%, 207.79862818107023, Risk level, 207.3138882062615, 95.4%, 206.39677775409717, , 204.98534059930648, 99.73%, 203.58355550819434
+
+=== QQQ closed at 526.83===
+
+99.73%, 539.2535337361957, , 536.1386540929568, 95.4%, 533.0417668680979, Risk level, 531.016730869098, 68.2%, 529.9267817718973, 68.2%, 523.7149069492676, Risk level, 522.6432691309021, 95.4%, 520.6182331319022, , 517.5030295349848, 99.73%, 514.4064662638044
+
+=== NDX closed at 21626.39===
+
+99.73%, 22121.009972927994, , 21997.007422497383, 95.4%, 21873.699986463995, Risk level, 21793.076930876734, 68.2%, 21749.693484053172, 68.2%, 21502.379454700702, Risk level, 21459.703069123265, 95.4%, 21379.080013536004, , 21255.06533126667, 99.73%, 21131.770027072005
+
+=== NQ closed at 21874.0===
+
+99.73%, 22379.923044662133, , 22253.082844450324, 95.4%, 22126.961522331065, Risk level, 22044.49606605114, 68.2%, 22000.11718922128, 68.2%, 21747.151437844226, Risk level, 21703.50393394886, 95.4%, 21621.038477668935, , 21494.185586924454, 99.73%, 21368.076955337867
+
+=== NVDA closed at 143.85===
+
+99.73%, 150.19637243690266, , 148.60130966491047, 95.4%, 147.02318621845134, Risk level, 145.9887275112362, 68.2%, 145.42793864152867, 68.2%, 142.2545593732439, Risk level, 141.7112724887638, 95.4%, 140.67681378154865, , 139.08117129569072, 99.73%, 137.50362756309733
+
+=== AMZN closed at 209.69===
+
+99.73%, 217.10635552251145, , 215.24428133841622, 95.4%, 213.3981777612557, Risk level, 212.18931181108636, 68.2%, 211.53596359663695, 68.2%, 207.82764085954085, Risk level, 207.19068818891364, 95.4%, 205.9818222387443, , 204.11931285487174, 99.73%, 202.27364447748855
+
+=== AAPL closed at 201.0===
+
+99.73%, 207.61128564313952, , 205.95183216066363, 95.4%, 204.30564282156976, Risk level, 203.22800326173802, 68.2%, 202.64608115415288, 68.2%, 199.34032655954107, Risk level, 198.77199673826198, 95.4%, 197.69435717843024, , 196.03456819530842, 99.73%, 194.38871435686048
+
+=== GOOG closed at 167.73===
+
+99.73%, 173.92445816601037, , 172.3688871527069, 95.4%, 170.8272290830052, Risk level, 169.8175324019455, 68.2%, 169.27153078439522, 68.2%, 166.17416967118425, Risk level, 165.64246759805448, 95.4%, 164.6327709169948, , 163.07680354271065, 99.73%, 161.5355418339896
+
+=== TSLA closed at 322.16===
+
+99.73%, 347.8527202134291, , 341.3691164295919, 95.4%, 335.00636010671457, Risk level, 330.8184467119256, 68.2%, 328.5203935404607, 68.2%, 315.6714783252058, Risk level, 313.50155328807443, 95.4%, 309.3136398932855, , 302.8223463023251, 99.73%, 296.46727978657094
+
+=== TSM closed at 209.51===
+
+99.73%, 218.4449082685769, , 216.19964232141612, 95.4%, 213.97745413428845, Risk level, 212.52106408651042, 68.2%, 211.73194472179858, 68.2%, 207.26423662640215, Risk level, 206.49893591348956, 95.4%, 205.04254586571153, , 202.79651734154513, 99.73%, 200.57509173142307
+
+=== AMD closed at 128.24===
+
+99.73%, 134.8815922672957, , 133.21084663967684, 95.4%, 131.56079613364787, Risk level, 130.47821659407865, 68.2%, 129.88978595786122, 68.2%, 126.56871139353913, Risk level, 126.00178340592136, 95.4%, 124.91920386635216, , 123.2476218244616, 99.73%, 121.59840773270432

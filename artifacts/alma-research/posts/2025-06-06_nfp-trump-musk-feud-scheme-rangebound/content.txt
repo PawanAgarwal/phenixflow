@@ -1,0 +1,87 @@
+NFP, Trump-Musk feud, Scheme, Rangebound + Intraday post (06/June)
+
+Fed minutes at their May meeting warned of “risks that inflation could prove more persistent than expected and that unemployment could rise”.NFP is today. A weaker‐than‐expected NFP reading signals a slowing labor market and broadening economic softening. If job gains decline materially, it suggests firms are hiring less, which raises recession risks. If NFP shows job gains < 125k, recession risk is up sharply.
+
+SPX/LTY beta is negative in both window. Slower growth is interpreted as making Fed easing more likely. That pushes bond yields down and stocks up—reinforcing the negative beta (“good news are bad news”). Not a big euphoric happiness tho, but moderate reaction. CPI next week is pivotal along with NFP.
+
+Always wait for the volatility to settle before take any trades on data release days. Never rush, and never trade without a conception!
+
+Trump - Musk feud and its implicationsIn short, Trump publicly labeled Musk “crazy” and threatened to cut off Musk’s SpaceX/Starlink contracts; Musk fired back, forecasting a recession from Trump’s tariffs. Yesterday’s TSLA drop triggered VIX gamma squeeze, and dragged NDX and SPX down due to its weight. If 25–50 % tariffs on China/EU imports starting July 9, 2025 would pass, that would cause escalation, TSLA would sell off and drag broader indices down—re-amplifying volatility.The main implication is that the recent supportive Trump flow bailed the market out (tariff threats → volatility spike → Trump retreats → equities rebound) is now gone with the feud.
+
+What does it imply? Well, even tho I see a bit lower odds of a crash, a controlled pullback (up to –20% in a recession scenario) remains possible if NFP disappoints and CPI stays elevated. Trump won’t be that willing to reverse tariffs as quickly as before.Tariffs announced in early April 2025 will fully filter through to consumer prices by July–August 2025, adding roughly 0.2 pp to core PCE over that period. Businesses will exhaust pre‐tariff inventories and begin passing higher import costs onto end‐prices. I see repositioning into July-August window. Despite aggressive vol selling into June, traders are increasingly concerned of a vol squeeze for that period (similar to 2018 Oct). Then higher odds for another 25 bp cut in Sept.
+
+Momentum tradingFor now, market proved ranging. Market is scalped by momentum trading algos and vol market. But NFP and CPI matter. Key levels are:
+
+SPX : 5915.27; 5813.79 SPY : 590.38; 580.26ES=F : 5929.80; 5829.49 NDX : 21,385.39; 20,940.04NQ : 21,459.09; 21,015.30VIX : 19.02; 22.70
+
+SPX : 5915.27; 5813.79 SPY : 590.38; 580.26ES=F : 5929.80; 5829.49 NDX : 21,385.39; 20,940.04NQ : 21,459.09; 21,015.30VIX : 19.02; 22.70
+
+Coding today’s positioning:
+
+The net speed profile is negative, the pattern is a long fly (locally, speed is positive below the centroid). This means that the passage of time and vol decline doesn’t support the market now. The bet that the positioning is showing is basically rejection of 6000, and vol increase. The centroid falls at 5976.50Downside pivot is 5924.44, but here we can already feel some local slowdown towards 5912 if breaks. If vol catches up, we will see 5889.Upside pivot is 6008.39, but only if datas come as awaited and vol catches up. In this case, a squeeze towards 6045/50 is reliable, but 6000 pin if vol doesn’t catches up, or if datas isn’t that big.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+Wait for the data first! Then draw a plan.
+
+SCRIPT INPUTS: === SPX closed at 5939.3===
+
+99.73%, 6055.541494276274, , 6026.411054095829, 95.4%, 5997.420747138137, Risk level, 5978.473383571104, 68.2%, 5968.289624630957, 68.2%, 5910.16818174597, Risk level, 5900.126616428896, 95.4%, 5881.1792528618635, , 5852.046725041008, 99.73%, 5823.058505723727
+
+=== ES closed at 5939.75===
+
+99.73%, 6060.087665800922, , 6029.928201485217, 95.4%, 5999.918832900461, Risk level, 5980.303793374911, 68.2%, 5969.758612181946, 68.2%, 5909.589007475857, Risk level, 5899.196206625089, 95.4%, 5879.581167099539, , 5849.419386891631, 99.73%, 5819.412334199078
+
+=== SPY closed at 593.05===
+
+99.73%, 605.6338930625878, , 602.4797061756162, 95.4%, 599.341946531294, Risk level, 597.2907719620921, 68.2%, 596.1876729607749, 68.2%, 589.8956378967521, Risk level, 588.8092280379078, 95.4%, 586.758053468706, , 583.603600923738, 99.73%, 580.4661069374121
+
+=== VIX closed at 18.48===
+
+99.73%, 20.914635231120588, , 20.296852291943434, 95.4%, 19.697317615560294, Risk level, 19.30047207288764, 68.2%, 19.07895252721056, 68.2%, 17.86097339073226, Risk level, 17.65952792711236, 95.4%, 17.262682384439707, , 16.6428974565021, 99.73%, 16.045364768879413
+
+=== IWM closed at 208.53===
+
+99.73%, 214.6027303856202, , 213.07913935469676, 95.4%, 211.56636519281008, Risk level, 210.576510139954, 68.2%, 210.04269597788132, 68.2%, 207.0062503074323, Risk level, 206.483489860046, 95.4%, 205.49363480718992, , 203.96980224091544, 99.73%, 202.4572696143798
+
+=== QQQ closed at 524.79===
+
+99.73%, 538.5474414168548, , 535.0970278546648, 95.4%, 531.6687207084274, Risk level, 529.42625775748, 68.2%, 528.2181632058629, 68.2%, 521.3392947586287, Risk level, 520.1537422425199, 95.4%, 517.9112792915726, , 514.4604223605954, 99.73%, 511.03255858314515
+
+=== NDX closed at 21547.43===
+
+99.73%, 22102.798190659552, , 21963.517303410063, 95.4%, 21825.114095329776, Risk level, 21734.58908025227, 68.2%, 21685.827588799366, 68.2%, 21408.137728412257, Risk level, 21360.27091974773, 95.4%, 21269.745904670224, , 21130.447716501494, 99.73%, 20992.06180934045
+
+=== NQ closed at 21515.0===
+
+99.73%, 22071.22626542616, , 21931.72886436773, 95.4%, 21793.11313271308, Risk level, 21702.448251448615, 68.2%, 21653.610069693274, 68.2%, 21375.49112768355, Risk level, 21327.551748551385, 95.4%, 21236.88686728692, , 21097.372032511757, 99.73%, 20958.77373457384
+
+=== NVDA closed at 139.99===
+
+99.73%, 147.1027073241659, , 145.31365128646584, 95.4%, 143.54635366208294, Risk level, 142.3869823682439, 68.2%, 141.7570246906833, 68.2%, 138.2003840473861, Risk level, 137.5930176317561, 95.4%, 136.43364633791708, , 134.64372824337067, 99.73%, 132.87729267583413
+
+=== AMZN closed at 207.91===
+
+99.73%, 216.88263157639176, , 214.6277519457217, 95.4%, 212.3963157881959, Risk level, 210.93377684124403, 68.2%, 210.14118590967314, 68.2%, 205.65460895510267, Risk level, 204.88622315875597, 95.4%, 203.4236842118041, , 201.1680203514749, 99.73%, 198.93736842360823
+
+=== AAPL closed at 200.63===
+
+99.73%, 208.60945963669585, , 206.60496428791893, 95.4%, 204.6197298183479, Risk level, 203.3190778975665, 68.2%, 202.6150448349163, 68.2%, 198.6251177634512, Risk level, 197.9409221024335, 95.4%, 196.64027018165208, , 194.63518260499924, 99.73%, 192.65054036330415
+
+=== GOOG closed at 169.81===
+
+99.73%, 176.29300919442227, , 174.664737400154, 95.4%, 173.05150459721114, Risk level, 171.9947740985203, 68.2%, 171.42309061399058, 68.2%, 168.18143834664863, Risk level, 167.6252259014797, 95.4%, 166.56849540278887, , 164.93978027495433, 99.73%, 163.32699080557774
+
+=== TSLA closed at 284.7===
+
+99.73%, 311.62930778758295, , 304.8226446634936, 95.4%, 298.16465389379147, Risk level, 293.7751767244155, 68.2%, 291.35455541927337, 68.2%, 277.8861332208528, Risk level, 275.6248232755845, 95.4%, 271.2353461062085, , 264.4173271899402, 99.73%, 257.77069221241703
+
+=== TSM closed at 203.34===
+
+99.73%, 212.16593080867474, , 209.94785372390365, 95.4%, 207.75296540433737, Risk level, 206.31433868252338, 68.2%, 205.53463938061137, 68.2%, 201.12141411267484, Risk level, 200.36566131747662, 95.4%, 198.92703459566263, , 196.70817718479796, 99.73%, 194.51406919132526
+
+=== AMD closed at 115.69===
+
+99.73%, 122.34715644071206, , 120.67139101243933, 95.4%, 119.01857822035603, Risk level, 117.93346172051996, 68.2%, 117.34248725126372, 68.2%, 114.01356448110467, Risk level, 113.44653827948004, 95.4%, 112.36142177964396, , 110.68462098683398, 99.73%, 109.03284355928794

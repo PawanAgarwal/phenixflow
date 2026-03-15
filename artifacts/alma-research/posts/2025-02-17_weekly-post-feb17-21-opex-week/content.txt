@@ -1,0 +1,53 @@
+Weekly post (feb17-21), OpEx week
+
+We have monthly OpEx this week.Realized volatility came down during the past sessions, as expected despite the continous negative headlines. As I explained, market cleary signaled that they didn’t care about the news, they only wanted to catch volatility, but it reflexively led to lower vol, printed into realized volatility:
+
+Coding 3m RV at 12.97% and 20 day rolling RV at 14.29%Vol control strategies and CTAs are started to increase their exposure as their estimated net multipliers went above one. For simpliciy for now, here I give you two formulas:
+
+The first formula expresses that if target volatility is equals to current vol, the multiplier is one. But if the current vol value goes below the target vol, the multiplier will be greater than one, meaning, they will increase their exposures (and conversely, if the current vol goes above the target vol, the multiplier will be lower than one, making them proportionaly decrease their exposure).While the second formula expresses, that the weight of a certain asset’s in the portfolio is proportional to the reciproc of the vol, or in other words, the position size in each asset is inversely proportional to its volatility. This is called risk parity. The lower the volatility goes, the higher its weight becomes in the portfolio, resulting increased buying activity.
+
+Here is an other formula is:
+
+This is gamma derived from Black-Scholes model, where:
+
+If we consider an ATM contract (S=K), the d₁ term is near to zero meaning n(d₁) is near its max. As both time t and volatility σ shrinks, the gamma will increase.
+
+However, if we consider OTM and ITM contracts the term d₁ is non-zero, it is either positive (for OTM puts) or negative (for OTM calls), so the more d₁ moves away from zero its n(d₁) declines sharply because the standard normal density is highest at zero and falls off quickly. And as the denominator term is also falling, it reduces gamma for both OTM calls and OTM puts. The shift in the effect happens at 30 delta strikes (considering standard BS model).
+
+The other formula I want to show you is this:
+
+This is charm. Similarly when we look at ATM option, n(d₁) is at the maximum. This, along with the factors in the parenthesis, means that charm is the most pronunced for ATM strikes. And similarly for options that are deeper ITM or OTM, the sensitivity of delta to time decay is lower because the probability density (which weighs the impact of time on delta) is much lower.
+
+And lastly I must show you something very important:
+
+This is vega. Lets look at how vega and gamma relates to each other:
+
+This ratio shows us that when we decrease both vol and time, the vega will decrease for ATM contracts significantly contrary to gamma that explodes. Towards the OTM wings, the ratio still goes down, as vega decreases faster than gamma.
+
+What this tells? - Well, first, because near to expo, option’s price is basically entirely driven by gamma with little sensitivity to volatility changes, as the ‘compensation’ for volatility risk is gone. Second, that near expo, the protectiveness from vega evaporates, and the position is fully exposed to gamma risk, as delta changes rapidly for a smallest changes in spot. If traders sold gamma and vol into the OpEx, they put dealers into long gamma. As this gamma increases with vol crush and time passing, dealers have to hedge even more deltas that creates pins at huge long gamma strikes with negative speed convexity. This means that long gamma strikes with short charm below and long charm above become magnetic, as gamma increases, and its steepens the charm profile. As dealers become shorter delta below and longer delta above the momentum gets magnetized from both direction. And when the momentum reaches the long gamma strike, it can’t escape, as delta changes big whenever the spot moves, and dealers have a lot of delta they must buy or sell against the price momentum. Vanna effect is also interesting because vanna has inverse relationship with volatility but direct with time. So, the more volatility crushes as gamma eats it up, the more vanna will affect delta again pushing the price towards the highest gamma exposure with negative speed convexity.
+
+Apropo, speed… don’t ever forget that speed is not the gamma curvatory, but the derivative of the gamma curve, or in other words, the meassure of the slop of the gamma curve (the rate of change in gamma). Where gamma has local min or max, speed is zero. Here I coded Feb Opex gamma with speed (purple) and its polynominal trendline (yellow), a lower order and a higher order one. Take your time to scrutinize them:
+
+The first chart shows us that in average (as the exposures cancel out) the speed is positive between 6165.73 and 5893.12, and the second one (more nuanced curve) shows us zero values at 6079.97 and 6166.67This is somehow counterintutitive that what the eyes see in gamma, but look at the curvatory of the blue line and you will understand it, why speed goes longer to the upside. Also we can instantly see a local MM long fly at 6005/50/90, and a wider ‘hidden’ short fly in the range that the first chart yellow line shows us. Now, the takeaway is that SPX have supportive vanna and charm flows below 6166. This positioning will change a bit into Friday, but 6150 locally and 6166 can act as magnet during the week, as charm flows increase. As long as SPX is trading above the 6090 line, the shorter upside speed acts not just like a magnet but as a vacuum.This alongside with the expected increase in systematic buyback flows makes me maintain bull bias.
+
+I also coded skew for this week:
+
+Or in 3D:
+
+What we see is that ATM vol is bid into OpEx however, all the wings are sold into Friday, even the 22dP/22dC skew too, that you can see, by the way, on the SPX gamma/speed chart: 22dP is ~6050 into Friday and 22dC is ~6165 SPX, if you look at where the net speed is trending at those lvls and connect them with a linear line, you will see the negative slope in the speed that is the consequence of customers selling the skew.
+
+Now, looking at the skew curves: we can see that customers are longer skew into Thursday initial claims, but we also can tell that this comes from call selling, bcs the 22dP/ATM goes down and stagnant, while 22dP/22dC skew goes up, so the slope comes from call IV selling (and slight 22dP buying, as it remains roughly stagnant compared to ATM that increases hard), and the shorter skew into OpEx comes from call IV buying. Another noticable thing is the bid in the 5dP for Thursday, that gets dumped into expo again. This tells me that customers simply speculate on a natural event vol into Thursday as they assume, that the crowd still believes that trade war or inflation has anything to do with the market momentum, and they bet on the demand for left-tail hedges only to dump on them into Friday, as they bet on upside vol into Friday expo, and dump 5d put and 22d put vol. To realize upside vol, SPX should break above 6165 lvl, and this is what the market basically bets on.
+
+Lets look at where the smirk is shifting looking at it in a fixed strike basis now:
+
+Everything decreases except the ATM. What does it tell us about the vol smirk? I took the Friday delta strikes into account, so you can see how the Friday 5dP, 22dP, 22dC and ATM strike are priced days before. First, we see that the Friday 22dP/ATM decreases during the week but slowing, while ATM increases, so in the Friday 22dP/22dC chart, the 22dC IV must increase during the week, bcs 22dP IV also must increases but on a lower rate that 22dC IV does. This tells me like the smile is shifting towards the right wing, as it is priced, as customers a slowly selling the skew into Opex, that we could have seen in the fix delta skew as all the curve has negative returns into Friday. Hidden bullish sentiment, and spot up/vol up bet, again consistent with the ‘upside vacuum’ that we see in the speed profile into Friday.
+
+Now, finally lets look at GJR-GARCH output, I wanna show you something:
+
+α[1] is essentially zero, with p-value of 1.000, telling that new shocks don’t immediately alter the volatility level. γ[1] at 0.2137, with p-value: of 0.202 (not significant) tells that the model doesn’t find a statistically significant asymmetric (leverage) effect, meaning negative shocks don’t appear to have a noticeably larger impact on volatility than positive shocks. β[1] is at 0.8156, with p-value of ~ 3.74e-09 (very significant), tells that past volatility heavily influences current volatility. With β < 1, the process is mean-reverting, but the high value shows that once volatility is elevated, it tends to decay gradually. This output describes my perception of vol that I noted, that all the vol spikes on events, news, negative sentiment were transient, and we bought all those dips. Also it says that even if volatility rises, it will eventually come down.Volatility is pretty much controlled now. All these negative sentiment manipulations are fake, as described above. The model predicted it last week and describes it today too, however the market revealed itself for those who could read the tape between the lines.
+
+I expect to get some good reversion trade opportunity in Thursday. Until I still hold my ES longs, and watching the daily positionings, I’ll likely go for a weekly long call. Long bias remains led by tech giants, just as I covered in last Friday post:
+
+(Link here: Friday post)
+
+This post is just to give you an idea how consistent the system can be, and how the flows are derivated from the same formulas…

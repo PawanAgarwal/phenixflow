@@ -1,0 +1,1265 @@
+Chat Post
+2025-03-24T08:17:10.396Z | Alma
+MONDAY CHAT (24/march)
+
+Replies
+2025-03-24T08:17:49.553Z | Alma
+If you have or don't have OptionsDepth account, you can use my link https://optionsdepth.com/app?via=alma and coupon code ODALMA to get 10% off monthly sub fee.
+You can use it for the new month, or if you just start to create an account.
+
+2025-03-24T08:19:37.019Z | Alma
+
+2025-03-24T08:20:21.170Z | Alma
+TEACHER Qs :))
+After reading my weekly post... https://stochvoltrader.substack.com/p/weekly-post-24-28march
+1) considering the PnL, what is the 0DTE call position that the JPM uses on 31th of March in that last 2 housrs window: long or short? Is it an OTM, ATM or ITM call?
+
+2) based on the weekly post solely, what dynamics one should watch to be realized (and at what lvls) for upside interest confirmation, and for downside interest confirmation?
+
+for extra point:
++1) what one should see in the dynamics into Friday to prove or disprove the "hidden short put spread" thesis read from skew?
+
+2025-03-24T08:22:00.484Z | David P
+Morning Alma, when you say in the daily post Zomma is the convexity of vanna, do you mean price convexity not IV? Thank you!
+
+2025-03-24T08:22:26.442Z | David P
+*weekend post
+
+2025-03-24T08:34:03.808Z | Alma
+think like this:
+delta = premium to spot
+vanna = (premium to spot) to vol = delta to vol
+
+gamma = (premium to spot) to spot = delta to spot
+zomma = [(premium to spot) to spot] to vol = (delta to spot) to vol = gamma to vol
+
+but it can also be written as
+[(premium to spot) to vol] to spot = (delta to vol) to spot = vanna to spot
+
+...assuming the option pricing function is smooth
+
+2025-03-24T08:42:46.109Z | James
+2) over 5767.83 SPX  upside towards 5800
+    under 5614.39 SPX if the put start printing (but i don't know how recognize this) downside towards 5521
+
+2025-03-24T09:03:33.180Z | Alma
+@David Phelan this is called the Schwarz intergrability condition
+
+2025-03-24T09:07:46.577Z | Tan Eng Kiat
+1) long ITM 0dte call
+
+2025-03-24T09:13:13.250Z | Joe
+1) short OTM call
+2) we have two levels to watch 5767.83 level, if vol declines above it the SPX can stabilize and possibly go towards 5800.
+The other level is 5614.39, we need to see if puts are catching bid and if volatility is decreasing and if so so we could see more downside towards 5521.62
+
+Please correct me if i’m wrong. Thanks!
+
+2025-03-24T09:27:40.153Z | Taco
+Hmmm...
+1) I would say long OTM. Since they need +delta, and otm is cheaper.
+2) Lvls already on chart
+
+2025-03-24T09:39:49.829Z | Vman
+1.) Long ATM to hedge the delta/vega
+2.) MM longer vega above 5800 for upside, shorter vega under for downside bias and a fattening of tails.
+3.)  MM should be getting shorter charm
+
+2025-03-24T09:51:29.741Z | David P
+1. Likely long ATM call to get maximum gamma to neutralise their negative delta exposure for that 2 hour window.
+
+2. For upside: We should see vol decline , vix below 20.7 , mms would buy futures as delta compresses.
+We should see call ivs rise or stabilise
+
+For downside : vol spike, vix rise above 20.70 , otm puts get bid ,
+
+3.  Prove: Flattening put skew, 5d put iv falling, Also Pinning near the 5600 strike, ( as mms are buying futures near here to neutralise their negative delta)
+
+Disprove: longer put skew, break below 5600 , put open interest growing significantly  5550 and belwo
+
+2025-03-24T10:10:06.402Z | Leonida
+1) It could be that it depends on whether they are above or below the put’s strike, during the last two hours, which essentially acts as 0 Vanna . If they are above, they might opt for a long OTM call since it has long Vanna and the market makers become shorter Vega, thus increasing volatility. In other words, they choose an OTM call that has long Vanna (higher prob it can go ITM take advantage of the upside move, as stated in the brochure “investors may forgo some upside”). If they are below, they do the opposite: they would sell OTM calls because they are short Vanna and the market makers become longer Vega, thereby decreasing volatility.
+
+Both calls would hedge the delta but with different effects based on Vanna. (I thought like this, hope it makes sense)
+
+2025-03-24T11:10:50.877Z | J.K.
+Leonida's answer to #1 would be my answer too!
+
+2025-03-24T11:32:03.947Z | Jason Valvano
+Wonder if this pop gets sold at open
+
+2025-03-24T11:37:23.947Z | Carlos Cuervo
+There are orders sitting at 5800 ES . I hope there is a dip early in the week. I think this week looks like is going green. But we will see
+
+2025-03-24T11:54:27.243Z | Leonida
+2) in primis we should see at vol because this is the variable that can shift the mechanism, we want vol to declines in order to stabilise the spot around 5767 for bulls
+For bears we will look at the put if can catch a bid in order to see downside toward 5521 support.
+As said before vol in decisive as we know that above 5667 speed turns flat to positive, that creates a net longer gamma environment that favours stabilisation. We can see it from that hidden bullish behaviour that rate of changes for 22d put and 22d call relative to ATM is telling us. In fact even if IV is steadily declined we see put to call skew longer. This still favours for stabilization. In addition we want to see day by day the mkt above youre coded pivot to confirm the bullish thesis. Last but not least we need to pay attention at vix tails that gives stability in the short term but, call IV has increased compared to one month ago and IV put declined (shorter skew overall) this could be our warning sign so better to keep our eyes on that.
+
+2025-03-24T12:15:17.312Z | Galin
+So using ibkr python API we can generate the same graphics as OD , because we have access to the same options data through IBkR for less money
+
+2025-03-24T12:16:54.942Z | David P
+No we cannot, we only see the open interest, prices and IVs on IBKR we do not know if they were buys or sells etc.
+
+2025-03-24T12:20:25.922Z | Chris
+yes and more critically we don't know which buys and sells end up on the market makers books
+
+2025-03-24T12:26:12.875Z | Zebra
+1) Long 0DTE ITM call
+2) Upside level at 5767.83 if vol decreases (VIX below 19.03). Downside level at 5614.39 if vol increases (VIX above 22.52).
++1) to prove the "short put spread" thesis, I'm looking for put vs ATM skew shorter into Friday, vice verse.
+
+2025-03-24T12:43:42.918Z | Alma
+POST IS OUT!
+https://open.substack.com/pub/stochvoltrader/p/intraday-post-24march?r=3dyydu&utm_campaign=post&utm_medium=web
+
+2025-03-24T12:49:27.806Z | Osman Oksoy
+Hi Alma. Are the ES levels for ESM24?  The levels are lower than Spx and the June future should be higher in price. Given rates.
+
+Can you please let me know what I’m reading wrong?
+
+2025-03-24T12:52:10.357Z | Bruce W
+Wow what a gap. And held steady above 5700 for several hours before blasting higher. Give me a 5690/5700 retest so i can get long for end of month please :)
+
+2025-03-24T12:54:52.335Z | Tan Ton
+I think the script input levels for ES & NQ are off. Could you please help to run the script for futures again Alma?
+
+2025-03-24T12:57:01.687Z | Alma
+yepp, CME still sends the wrong contract.
+i updated
+
+99.73%, 5849.964653493742,  , 5816.942789256515, 95.4%, 5784.107326746871, Risk level, 5762.6378382273915,  68.2%, 5751.084395239762,  68.2%, 5685.225976496423, Risk level, 5673.8621617726085, 95.4%, 5652.392673253129,  , 5619.36753215712, 99.73%, 5586.535346506258
+
+2025-03-24T12:58:19.776Z | Alma
+99.73%, 20547.875352495696,  , 20400.628929188268, 95.4%, 20254.437676247846, Risk level, 20158.77699379105,  68.2%, 20107.183553535866,  68.2%, 19813.737949827053, Risk level, 19763.22300620895, 95.4%, 19667.562323752154,  , 19520.29210777681, 99.73%, 19374.124647504304
+
+2025-03-24T12:58:30.981Z | Tan Ton
+Thanks Alma.
+
+2025-03-24T12:58:55.288Z | Y O
+Hello I just joined :D
+
+2025-03-24T12:59:10.487Z | Alma
+welcome :))
+
+2025-03-24T13:00:23.909Z | Y O
+Thanks what script u guys talking about :)
+
+2025-03-24T13:02:01.619Z | Damien D
+mean revertsion threshold indicator, can find it in the home screen
+
+2025-03-24T13:03:25.881Z | Y O
+ah the tradingview one
+
+2025-03-24T13:05:07.689Z | Osman Oksoy
+Thank you very much
+
+2025-03-24T13:08:03.287Z | Y O
+I see thanks
+
+2025-03-24T13:12:03.173Z | James
+spx 5773 if the volatily continue to drop is a good level for scale in to put
+
+2025-03-24T13:13:46.221Z | J.K.
+THANKS ALMA!
+
+2025-03-24T13:17:58.408Z | Y O
+can someone explain what is % with the risk levels ?
+
+2025-03-24T13:18:04.458Z | Y O
+thanks
+
+2025-03-24T13:24:24.260Z | David P
+I had the opposite impression, seems like if vol drops there a squeeze up is possible. "move up towards 5773.88, but there if vol can decline, bears gonna be rekt hard."
+
+2025-03-24T13:27:02.436Z | David P
+Chance of reversion assuming gaussian distribution.
+
+2025-03-24T13:33:02.565Z | meager man
+Conclusion
+The data inputs provide mean reversion thresholds for SPX trading, likely based on a mean of 5667.56 and standard deviation of ~32, with levels at 1 SD (68.2%), 2 SD (95.4%), and 3 SD (99.73%). Use upper levels to identify sell opportunities, lower levels for buys, and Risk levels for stops. Leverage the 5-minute, 10-minute, and 15-minute timeframes to confirm signals, enhancing trade reliability by seeking confluence across intervals. This strategy capitalizes on price extremes, expecting reversion to the mean, tailored to your risk and trading style.
+
+2025-03-24T13:33:13.873Z | meager man
+Grok attempt for you lol
+
+2025-03-24T13:44:50.898Z | Y O
+Ah ok thanks
+
+2025-03-24T13:45:10.223Z | Y O
+I use 2-3SD indicator i made with VWAP
+
+2025-03-24T13:52:28.877Z | Teddy C
+beta >2 wow
+
+2025-03-24T13:53:44.130Z | meager man
+so the fact VIX is actually sticking at this 5750 area is the VOL increase to get the pop to 5775 she was writing about in the morning post
+
+2025-03-24T13:53:45.351Z | meager man
+interesting
+
+2025-03-24T13:53:46.936Z | Galin
+long at open 0DTE 70, because vol is low and expected to pin around 50 at 47 - 48 exit
+
+2025-03-24T13:53:59.128Z | David P
+Vix is not VOL
+
+2025-03-24T13:54:36.681Z | meager man
+Vol meaning realized vol or do I need to find a way to chart Vanna
+
+2025-03-24T13:54:45.280Z | David P
+When alma says vol she usually means ATM IV
+
+2025-03-24T13:54:53.148Z | meager man
+this is where I keep getting hung up, I keep interpreting VOL as vix
+
+2025-03-24T13:56:09.832Z | Galin
+IBKR IV chng is -0.963 so IV is decrease I think
+
+2025-03-24T13:56:44.884Z | meager man
+meaning the pinning at 5750 area, whereas if IV was increasing that's the thought behind increasing VOL meaning leg up to 5775 more likely
+
+2025-03-24T13:56:46.856Z | David P
+If you use IBKR tws you can see the SPX index option implied volatility
+
+2025-03-24T13:56:51.765Z | meager man
+?
+
+2025-03-24T13:57:58.743Z | David P
+So far atm IV is very slightly higher than it was at open, not crush but not a large increase
+
+2025-03-24T13:58:26.737Z | Alma
+
+2025-03-24T13:58:52.946Z | Alma
+(its not me, cboe messed up the rendering)
+
+2025-03-24T13:59:01.119Z | Eli
+Interest for the week is pointing to 5850spx
+
+2025-03-24T13:59:13.907Z | gwgj41
+thats what i am seeing on futu
+
+2025-03-24T13:59:15.978Z | Eli
+Fun stuff post opex we ripping
+
+2025-03-24T13:59:34.741Z | Eli
+Great money! Thanks Alma :)
+
+2025-03-24T14:04:02.216Z | Raju siruvuri
+
+2025-03-24T14:05:08.142Z | Y O
+seems like a trap ?
+
+2025-03-24T14:07:18.757Z | meager man
+I keep watching 5750-55 IV% on my option change and it just ranges from 20.-21.5%
+
+2025-03-24T14:07:32.624Z | meager man
+so not sure how much it should spike from there to know increasing VOL
+
+2025-03-24T14:11:00.354Z | Raju siruvuri
+I will be patient. wait for it to consolidate above the 200 ema. SPY Daily chart.  Sold my IWM 207c 3/25 for 300% profit this morning which i brought Friday.
+
+2025-03-24T14:12:53.271Z | Y O
+spy is used by retails i think spx is more for whales
+
+2025-03-24T14:13:06.477Z | RE
+very very nice Miss Alma
+
+2025-03-24T14:14:32.618Z | Terrence Chan
+I sold my puts at the open. Now I’m sitting in MSTR calls I opened with ibit above 50
+
+2025-03-24T14:15:21.052Z | Y O
+no Iron condor today right?
+
+2025-03-24T14:18:15.441Z | Y O
+RSI is still above 80% for SPX
+
+2025-03-24T14:18:36.371Z | Y O
+very interesting are they waiting for some news to dump it ?
+
+2025-03-24T14:19:10.568Z | RE
+they can dump now i am s ES
+
+2025-03-24T14:19:56.006Z | Y O
+or they activate the creep algo
+
+2025-03-24T14:20:07.627Z | Y O
+and kept creeping up
+
+2025-03-24T14:20:24.030Z | Y O
+like they did in Dec, Jan moves
+
+2025-03-24T14:20:48.254Z | Terrence Chan
+Setting exit for
+MSTR here
+
+2025-03-24T14:21:00.120Z | Raju siruvuri
+Wait and watch.
+
+2025-03-24T14:21:04.690Z | Terrence Chan
+I’m out
+
+2025-03-24T14:21:22.215Z | Terrence Chan
+Move from 325 to 330 and took profits
+
+2025-03-24T14:21:31.691Z | Terrence Chan
+331
+
+2025-03-24T14:21:32.658Z | Nevistrader
+In QQQ 485P, pharma turning up.
+
+2025-03-24T14:21:48.158Z | Raju siruvuri
+SPX
+
+2025-03-24T14:22:00.304Z | RE
+good q's put
+
+2025-03-24T14:22:38.235Z | Y O
+it seems like the creep algo is ON also weird timing
+
+2025-03-24T14:22:51.741Z | Y O
+to drop the spx
+
+2025-03-24T14:24:00.709Z | RE
+nice tap of gamma peak line on OD morning chart
+
+2025-03-24T14:24:06.701Z | Raju siruvuri
+The bulls are looking strong so far.
+
+2025-03-24T14:24:10.542Z | meager man
+its over 5750, I can see the pin happening, VIX keeps dropping, the IV on the ATM cons is now dropping below 20% IV (tradestation is what I'm looking at for options chain) but not sure how to really read that for VOL
+
+2025-03-24T14:24:16.580Z | meager man
+this looks like it wants to keep going up to test higher to me
+
+2025-03-24T14:24:29.768Z | Y O
+OD?
+
+2025-03-24T14:24:50.091Z | RE
+check alma AM post
+
+2025-03-24T14:24:56.893Z | RE
+is the options chart
+
+2025-03-24T14:25:12.702Z | Nevistrader
+SPX will test 5762, after that revert (probably)
+
+2025-03-24T14:25:47.826Z | Y O
+Options Depth I see thanks
+
+2025-03-24T14:25:52.049Z | RE
+yeah i see that node
+
+2025-03-24T14:26:01.474Z | meager man
+shorting up here seems a foolish endeavor
+
+2025-03-24T14:26:09.698Z | Y O
+Normally the next move would be around EU close
+
+2025-03-24T14:26:12.647Z | meager man
+even for a scalp
+
+2025-03-24T14:26:20.556Z | RE
+and it correlates with Alma's script line
+
+2025-03-24T14:26:24.443Z | RE
+usually powerful
+
+2025-03-24T14:27:32.898Z | Y O
+Theta time :D
+
+2025-03-24T14:27:42.908Z | Y O
+?
+
+2025-03-24T14:28:13.536Z | David P
+ATM IV drops as time runs out btw
+
+2025-03-24T14:29:39.534Z | meager man
+thanks. so when monitoring that what is the best way to do so in realtime knowing it should go down at a certain rate relative to time left to expiry, etc?
+
+2025-03-24T14:33:20.171Z | Y O
+White house no decision on the tariffs
+
+2025-03-24T14:33:22.172Z | Y O
+:D
+
+2025-03-24T14:33:26.626Z | David P
+This I can't speak to, I would love more insight into how Alma or others here who have a good handle on that manage it. What level of change in IV would be considered significant etc.
+
+2025-03-24T14:33:39.357Z | meager man
+slow grind higher it seems like
+
+2025-03-24T14:34:11.102Z | Y O
+here u go haha i knew it :D
+
+2025-03-24T14:34:28.566Z | Y O
+watch the news from white house
+
+2025-03-24T14:36:45.891Z | meager man
+looking at the reversion bands I see that mean range from 5690-5640. that would throw a wrench in things for bull case if that happened, but as we grind higher that will go higher as well so more likely than not a mean reversion would come after an even higher push to come back down that far it would seem
+
+2025-03-24T14:37:50.797Z | Terrence Chan
+Just went long some tlt calls. Back to 89.80
+
+2025-03-24T14:39:58.618Z | RE
+5m s signal, come on 10m s signeal
+
+2025-03-24T14:40:21.931Z | Terrence Chan
+Joined you here
+
+2025-03-24T14:40:35.156Z | Nevistrader
+5742 barrier should break (hopefully)
+
+2025-03-24T14:40:39.683Z | Terrence Chan
+@Nevistrader what’s the pharma relationship  to qqq
+
+2025-03-24T14:41:07.442Z | Nevistrader
+not all the times, but usually money if flowing into pharma comes out of tech
+
+2025-03-24T14:41:10.761Z | Nevistrader
+and viceversa
+
+2025-03-24T14:41:18.579Z | Nevistrader
+saw upticks in BIIB, UNH, etc
+
+2025-03-24T14:41:43.291Z | Nevistrader
+and lot of sell signals on tech..if course sometimes these signals etc do not work if buy algos are in full force :-)
+
+2025-03-24T14:41:49.664Z | Nevistrader
+of*
+
+2025-03-24T14:42:06.048Z | Nevistrader
+so kind of risky counter bet of puts on tech
+
+2025-03-24T14:42:48.427Z | Terrence Chan
+Nice!
+
+2025-03-24T14:43:07.371Z | Terrence Chan
+Long some spy 60% delta 0dte puts here
+
+2025-03-24T14:43:27.131Z | Terrence Chan
+Vvix starting to sustain rise
+
+2025-03-24T14:43:31.504Z | Nevistrader
+be careful, it is not 100% perfect. like mommy's picks
+
+2025-03-24T14:44:47.242Z | RE
+im not asking for much just somehting here ;)
+
+2025-03-24T14:44:56.476Z | Raju siruvuri
+We have to be careful. don't be in a hurry. wait for a gap up or down. the call to puts are almost the same.
+
+2025-03-24T14:46:04.904Z | Nevistrader
+by the way i have hedged my QQQ puts with BIIB 145C..
+
+2025-03-24T14:50:18.204Z | Velli
+Stellar analysis Alma, thank you! 🥳
+
+2025-03-24T14:54:29.554Z | Terrence Chan
+Loaded more of that spy out
+
+2025-03-24T14:54:32.073Z | Terrence Chan
+Put
+
+2025-03-24T14:55:00.586Z | Terrence Chan
+The 10:48-10:50 bars will retrace
+
+2025-03-24T14:55:22.186Z | Terrence Chan
+Setting exit order for that move
+
+2025-03-24T14:55:36.624Z | Ngok996
+Vol is decreasing here so I bought some 1DTE ES put. Might be too early but could wait to see.
+
+2025-03-24T14:56:29.853Z | Nevistrader
+if it helps anyway, i use these as risk on / risk off bias.
+
+2025-03-24T14:57:32.341Z | Y O
+We need trump to dump it :D
+
+2025-03-24T14:58:52.394Z | Terrence Chan
+Below 573.20 on spy and we might see some wash out
+
+2025-03-24T14:59:47.736Z | Terrence Chan
+Small caps rising though
+
+2025-03-24T15:00:09.025Z | Y O
+ES still creeping up
+
+2025-03-24T15:00:26.955Z | Terrence Chan
+Leadership may be rotating
+
+2025-03-24T15:00:43.854Z | Y O
+SPX +90,33
+
+2025-03-24T15:02:57.379Z | Terrence Chan
+Vvix just moved higher
+
+2025-03-24T15:03:04.579Z | Y O
+a lot of names are coming down
+
+2025-03-24T15:03:17.144Z | David P
+Now we are in positive gamma, vol decreasing can be supportive as it will reduce dealer hedging requirements.
+
+2025-03-24T15:04:06.472Z | Y O
+that's not good for the puts too right?
+
+2025-03-24T15:05:47.756Z | Yoda969
+Substack is what it is.   Bookmark in browser  The following two links.   Trades and main page      https://substack.com/chat/2679129/post/5ec8d5aa-9fac-4e6d-aef1-3f6a28632ae4?r=k0w7g&utm_medium=ios&utm_source=share
+ALMA TRADES
+
+https://stochvoltrader.substack.com/
+MAIN Entry PAGE
+
+2025-03-24T15:07:18.235Z | Terrence Chan
+New hod Spx
+
+2025-03-24T15:10:19.361Z | David P
+Which puts? If we are in positive gamma MM long options dominate (puts or /and calls)
+
+2025-03-24T15:13:56.566Z | Terrence Chan
+Already a $10 range on spy today. Playing the odds here that we can’t get higher than the hod
+
+2025-03-24T15:14:48.607Z | Y O
+what does it mean i should go long or short?
+
+2025-03-24T15:14:56.664Z | Terrence Chan
+I’d be happy with a 5750 pin
+
+2025-03-24T15:15:06.230Z | David P
+
+2025-03-24T15:15:19.998Z | David P
+idk 🤷‍♂️
+
+2025-03-24T15:16:57.818Z | Terrence Chan
+Thanks for the share David. 5790 strong resistance then with that positive gamma local max (green line)
+
+2025-03-24T15:17:27.733Z | Y O
+I thought positive gamma the MM sells the ES to hedge ?
+
+2025-03-24T15:17:54.982Z | David P
+Yes and steeply positive speed by the looks of it
+
+2025-03-24T15:18:34.558Z | David P
+They do but if IV is falling they that reduces their long delta exposure and they are hedging less.
+
+2025-03-24T15:18:55.483Z | Y O
+Hmm hmm
+
+2025-03-24T15:19:13.349Z | David P
+and as Alma says MM flow is not everything! Buy tape is still strong
+
+2025-03-24T15:20:57.726Z | Nevistrader
+if it doesn't revert here, we go to 5800 (will cut the QQQ puts)
+
+2025-03-24T15:21:10.398Z | Nevistrader
+waiting for EU close
+
+2025-03-24T15:21:42.148Z | Nevistrader
+little underwater, but BIIB calls making it up
+
+2025-03-24T15:22:00.928Z | meager man
+so Nevis you're just looking at that mean reversion line targeting what? The 95.4 or the risk level?
+
+2025-03-24T15:22:01.963Z | Hem
+Thinking to cut my loss on SPX puts waiting for the mean reversion
+
+2025-03-24T15:22:40.385Z | Ngok996
+My understanding is that currently SPX is in the center zone of a MM short fly. So a cooling vol could lead to reversion instead of a breakout. (The zero vanna mechanism, though I know the current area is more like a zero speed zone which is different)
+
+2025-03-24T15:23:15.224Z | meager man
+I tend to watch the 15m chart after the first hour, can see a pullback to 5750 spx and think the pinning seems like a high likelihhood
+
+2025-03-24T15:24:05.647Z | meager man
+that slow chop grind higher to 5775 area of interest also seems very plausible. seems like a day where the best entry was OVN on futures or a blind call right off the opening print on SPX
+
+2025-03-24T15:24:36.222Z | David P
+Reading the daily post again now, maybe I am thinking on the wrong tenor.
+
+2025-03-24T15:25:23.415Z | Terrence Chan
+Some profit taking maybe setting in
+
+2025-03-24T15:26:03.740Z | Nevistrader
+apart from the reversion line, QQQ at +1 ATR, usually it reverts back from this point
+
+2025-03-24T15:26:22.716Z | Terrence Chan
+Vvix coming slice a little with Vix rising
+
+2025-03-24T15:26:29.505Z | Terrence Chan
+Coming alive
+
+2025-03-24T15:27:13.783Z | Terrence Chan
+Lower prices can beget lower prices
+
+2025-03-24T15:28:40.990Z | Terrence Chan
+Let’s see if we can get to 5750
+
+2025-03-24T15:29:43.503Z | Jeffrey K
+200 day at 5752
+
+2025-03-24T15:29:50.594Z | Jeffrey K
+20 day 5735
+
+2025-03-24T15:30:36.016Z | Ngok996
+
+2025-03-24T15:31:05.272Z | Ngok996
+Alma said "Coding 5748.69 as the lvl where if we see further vol crush, spot will be pinned to 5750", and my trading was based on that if my understanding was correct.However the problem is that the 5750 was the center of the MM short fly at 9:30am, but then it kept moving upward (=more 0DTE positive gamma being added up a little bit above it), and now the center seems to be 5770-90 area... I'm using SpotGamma data but it looks similar to the OD chart you just posted.
+
+2025-03-24T15:33:51.691Z | David P
+Ah I see, I was considering that as we were past the 5748 level and deeper into postive gamma (as per OD chart) that we were now beginning to find vol crush supportive.)
+
+2025-03-24T15:34:30.610Z | Ngok996
+The daily post is same as what I said imo... the weekly post is opposite in longer timeframe(positive speed because of the JPM Collar)
+
+2025-03-24T15:34:59.866Z | Ngok996
+Positive speed *above*
+
+2025-03-24T15:36:26.695Z | RE
+thankx
+
+2025-03-24T15:37:51.654Z | RE
+i like 5715....
+
+2025-03-24T15:38:45.925Z | meager man
+Top of the 15m margin of error
+
+2025-03-24T15:38:49.866Z | meager man
+re: 5715?
+
+2025-03-24T15:39:08.453Z | RE
+check david OD Map above
+
+2025-03-24T15:39:48.435Z | meager man
+so the dark blue bands/lines framing that path are indicative of what?
+
+2025-03-24T15:40:50.779Z | meager man
+that's the positive gamma concentration range?
+
+2025-03-24T15:42:05.394Z | RE
+https://substack.com/chat/2679129/post/2aab643b-d095-4c00-8b42-4f35379fb002
+
+2025-03-24T15:46:54.920Z | meager man
+sorry I'm not seeing the solid blue line detailed there. Just the peak/trough and color/speed correlation
+
+2025-03-24T15:55:50.575Z | Terrence Chan
+Tough holding these puts vix made new LOD.
+Just expect though to see rejections off the highs and to close positions on moves down
+
+2025-03-24T15:56:51.317Z | Terrence Chan
+The down bars are large and brief in moments
+
+2025-03-24T15:58:12.584Z | Terrence Chan
+We could have a spot and theta decay rest of day
+
+2025-03-24T15:58:41.281Z | meager man
+I was going to take some spec shorts as well but the recovery bars on the 15m just destroy the premium even with a good R;R entry
+
+2025-03-24T15:58:48.453Z | David P
+Trying to puzzle this out. and figure which scenario will rule now. Struggling tbh 😂
+
+2025-03-24T15:59:29.235Z | Terrence Chan
+Let’s see if we get a drop here at noon
+
+2025-03-24T16:05:43.981Z | Hennessy
+heading 5750?
+
+2025-03-24T16:06:01.161Z | meager man
+looks more like the grind chop up to 5775
+
+2025-03-24T16:06:03.512Z | Hennessy
+5775?
+
+2025-03-24T16:06:41.364Z | Hoondoc
+Alma’s 10minutes signal on!
+
+2025-03-24T16:06:43.527Z | Terrence Chan
+Vol crush
+
+2025-03-24T16:07:13.546Z | Terrence Chan
+Let’s see how it does here at this risk level breakout
+
+2025-03-24T16:07:18.504Z | David P
+If 5750 was the centre of MM short fly this morning would we have expected the centre of the fly to have negative gamma rather than positve as they would sell the centre?
+
+2025-03-24T16:08:35.882Z | meager man
+really don't know how to use this as a reliable source given the fact it gave a sell signal earlier on the 10m as well
+
+2025-03-24T16:11:10.973Z | Ngok996
+Oh I think MM short fly means the center is positive gamma.
+
+2025-03-24T16:11:16.344Z | PylanceB
+we are getting closer to the uptrend threshold of 5767.83 now, with vol decreasing, it could go to 5800
+
+2025-03-24T16:11:27.056Z | Terrence Chan
+Price coming down now to test the risk level
+
+2025-03-24T16:11:44.217Z | Terrence Chan
+This could be the make or break pivot rest of day
+
+2025-03-24T16:11:57.403Z | Terrence Chan
+If it successfully tests and goes back up I’m closing puts
+
+2025-03-24T16:13:22.379Z | Yoda969
+T Chan   what risk leve do u have.  just ck my level input
+
+2025-03-24T16:14:25.843Z | meager man
+its not labeled, its just a price from what I can see in the input values
+
+2025-03-24T16:14:42.341Z | meager man
+99% is much higher, you've got 5763 and then 5731 is the 95.4% assuming SPX
+
+2025-03-24T16:16:08.484Z | Velli
+This is my stance as well, not seeing anything to take risk off
+
+2025-03-24T16:17:39.355Z | David P
+definitely not confident enough with this stuff to say that's wrong. I was just under the impression the centre of a MM short fly would be negative gamma (as they sell the centre) and the centre of a long fly would be positive gamma as they buy the centre strike)
+
+2025-03-24T16:18:04.018Z | meager man
+when looking at the 1hr chart with the mean reversion bands indicator I rarely see top tests of the 2D upper band NOT sell back to revert to the mean
+
+2025-03-24T16:18:29.503Z | Rooster
+It's been interesting watching the momentum measure indicator on the 30min today (7 period/1.5 SD).  We've had all green 30 min bars, yet measuring volatility and volume, it flipped red on the 11:30am bar (after the trend line went green to red on the preceding bar), and has held (so far) the red dot indicator through this slow grind even with changes on the 10.  Will continue to watch how this plays out.  I bought a 1DTE put that's treading water.
+
+2025-03-24T16:18:33.960Z | meager man
+I'd expect given where we are relative to that and the level you're mentioning above us being so close to be a decent spot to expect that reversion sooner than later.
+
+2025-03-24T16:21:03.853Z | meager man
+You'd have to go back to Jan15th-16th to see a gap up and test higher that ends up chopping for hours sideways before the mean "catches up" and the reversion to the mean isn't as drastic as it would be now on the 1hr for today if you expected to test that reversion band margin of error.
+
+2025-03-24T16:21:40.863Z | meager man
+most of the time on the 1hr on spx it seems you never really exceed the 1D band by too much before reversion occurs. Not a ton of 2D touches to go by in recent history that I can find.
+
+2025-03-24T16:22:32.316Z | David P
+If it's a MM short fly then the positive gamma peaks at 5725 and 5790 are the long wings and the new centroid is 5757
+
+2025-03-24T16:23:26.825Z | Terrence Chan
+5763 (risk level from Alma’s inputs today)
+
+2025-03-24T16:23:43.896Z | Terrence Chan
+It’s jumping below and above it now n
+
+2025-03-24T16:24:03.093Z | Terrence Chan
+Will wait for 5 min bar to decide
+
+2025-03-24T16:26:14.158Z | Terrence Chan
+Woh what happened
+
+2025-03-24T16:26:15.430Z | Nevistrader
+for transparency purpose, cut QQQ puts for 50% loss, BIIB calls up 60%, offloaded few to make up QQQ loss
+
+2025-03-24T16:26:25.679Z | Terrence Chan
+Big gap down
+
+2025-03-24T16:27:04.837Z | Hennessy
+What is that flush
+
+2025-03-24T16:27:34.220Z | meager man
+had to have been news?
+
+2025-03-24T16:27:40.115Z | Terrence Chan
+
+2025-03-24T16:27:44.732Z | meager man
+I guess not that big of a flush really
+
+2025-03-24T16:27:44.984Z | Terrence Chan
+Tariff?
+
+2025-03-24T16:27:54.411Z | Ngok996
+I will check it again too. But it doesn't matter because it's just about the definition. The shape that MM positive gamma in the center and shorter in both sides is what we are talking about.
+
+2025-03-24T16:28:05.042Z | Raju siruvuri
+
+2025-03-24T16:28:24.734Z | Jason Valvano
+Puts flipped
+
+2025-03-24T16:28:52.109Z | Terrence Chan
+Watching breath for follow through on this
+
+2025-03-24T16:29:10.207Z | Terrence Chan
+Breadth still going down after a reaction bounce
+
+2025-03-24T16:30:01.749Z | Terrence Chan
+Still down
+
+2025-03-24T16:30:23.079Z | Bull
+latest od chart
+
+2025-03-24T16:30:23.521Z | meager man
+lets see these mean reversion band of error come into play on the hourly lol
+
+2025-03-24T16:30:26.021Z | Terrence Chan
+Hold those outs tight
+
+2025-03-24T16:30:28.256Z | Terrence Chan
+Puts
+
+2025-03-24T16:30:43.768Z | Terrence Chan
+Setting exit for 5750
+
+2025-03-24T16:33:10.546Z | Jonathan Scholz
+Isnt that what vix gauges?
+
+2025-03-24T16:33:32.085Z | Terrence Chan
+My puts are green
+
+2025-03-24T16:33:37.505Z | RE
+yea im in via ES im going for more than that to
+
+2025-03-24T16:34:08.020Z | Terrence Chan
+I’m takin g print
+
+2025-03-24T16:34:28.613Z | RE
+my last sell was es 17.75
+
+2025-03-24T16:39:05.679Z | Nevistrader
+not a great day to play 0DTE options on indices..Futures better, as theta is out of picture..hmm..and mommy was long ES futures (that should have been the clue, well lesson learnt)
+equity options having decent R/R
+
+2025-03-24T16:39:09.570Z | Hennessy
+Trump vs market
+
+2025-03-24T16:39:34.343Z | Terrence Chan
+Wow
+
+2025-03-24T16:39:44.320Z | RE
+see ya at 5742  spx and i relvaulate S
+
+2025-03-24T16:39:44.708Z | Terrence Chan
+That was a wild hold
+
+2025-03-24T16:39:58.984Z | David P
+Got it. Yes makes sense and now that set up seems to have changed to MM bearish risk reversal? Long OTM puts, Short OTM Calls. Negative gamma to downside, positive gamma to upside.
+
+2025-03-24T16:40:26.804Z | David P
+
+2025-03-24T16:40:34.095Z | RE
+holding below margin of error 5m
+
+2025-03-24T16:41:05.192Z | Carlos
+Q to anyone: The MMGEX daily chart that we get in the Intraday report , only considers ODTEs right ?
+
+2025-03-24T16:41:23.312Z | David P
+No it is all expiries.
+
+2025-03-24T16:41:28.538Z | RE
+i have some wild path cooked up based off of your previous update
+
+2025-03-24T16:41:41.725Z | David P
+ha ha do share
+
+2025-03-24T16:41:52.707Z | David P
+Bored and flat so need some voodoo
+
+2025-03-24T16:42:00.308Z | Terrence Chan
+Exited tlt calls
+At profit
+
+2025-03-24T16:42:15.930Z | Terrence Chan
+Just holding qqq puts March 31 485
+
+2025-03-24T16:42:22.867Z | Terrence Chan
+Au exit that soon
+
+2025-03-24T16:43:40.831Z | Terrence Chan
+Now flat. Small
+Profit on qqq put
+
+2025-03-24T16:46:00.558Z | RE
+
+2025-03-24T16:46:07.579Z | RE
+and we can get below it
+
+2025-03-24T16:46:35.272Z | meager man
+wouldn't it make more sense that we just pin close to 5750 at this point given what Alma detailed?
+
+2025-03-24T16:46:39.446Z | RE
+
+2025-03-24T16:46:58.777Z | SirKen
+How is charm looking?
+
+2025-03-24T16:47:09.358Z | RE
+its voodoo tho.
+
+2025-03-24T16:48:31.294Z | Mike Houston
+Alma morning and weekend post chock full of good stuff.
+
+2025-03-24T16:48:53.285Z | RE
+100% she crushed the write ups
+
+2025-03-24T16:49:05.248Z | RE
+very very lucky she shares her time knowledge and efforts w us
+
+2025-03-24T16:50:10.216Z | Terrence Chan
+Yeah there’s a wealth of stuff to read there. I need to take some time today
+
+2025-03-24T16:51:14.249Z | David P
+
+2025-03-24T16:52:06.958Z | RE
+flush under that lower orange please
+
+2025-03-24T16:53:22.959Z | meager man
+VIX under 18
+
+2025-03-24T16:53:57.743Z | Nevistrader
+BIIB almost 2X exiting more to book little profit for the day and leaving runners, expecting 146 as final exit
+
+2025-03-24T16:56:58.469Z | Bruce W
+I'm rooting for you because i'd love to buy from lower, but seems ambitious for today :). A double trump tape bomb on chips and tariffs only hit for 15 pts. Market character just different today.
+
+2025-03-24T16:57:16.662Z | meager man
+sure seems that way
+
+2025-03-24T16:57:42.670Z | RE
+let me know your offer i ill place it there ;)
+
+2025-03-24T16:58:42.373Z | RNR
+Still feel like 5770 imo but I hope you're right.
+
+2025-03-24T17:00:54.151Z | Mike Houston
+VIX and IV are different. vix used a weighted average of a bunch of different instruments related to sp500. The IV is worked out from price SPY calls and puts. The VIX is more of a fudge. From what i  understand
+
+2025-03-24T17:01:11.644Z | Mike Houston
+but i am sure others know more
+
+2025-03-24T17:02:43.190Z | SirKen
+You are better off thinking VIX as a liquidity gauge more than anything due to how it is calculated. The market still functions in that window but a lot of the longer term positioning also moved closer to 0DTEs and weeklies and they are not included and VIX calculations. In short, no VIX is not gauging IV
+
+2025-03-24T17:03:16.762Z | SirKen
+"... how it is calculated and what it impacts..."
+forgot to add that little bit there
+
+2025-03-24T17:08:05.451Z | Jonathan Scholz
+So it's about the maturity of the options used to calculate it? Bc they are 23-37 days ahead?
+
+2025-03-24T17:08:19.118Z | Jonathan Scholz
+For vix i mean
+
+2025-03-24T17:09:03.822Z | Jonathan Scholz
+(weeklies are included)
+
+2025-03-24T17:09:13.541Z | Jonathan Scholz
+
+2025-03-24T17:09:36.037Z | RE
+just need this 10m to close below margin of error
+
+2025-03-24T17:10:18.943Z | SirKen
+Correct, so any contracts being bought or sold in shorter terms are not in the calculation
+
+2025-03-24T17:10:34.324Z | SirKen
+but there are other factors that could impact VIX calculations as well
+
+2025-03-24T17:12:44.702Z | Jonathan Scholz
+So when Alma says vol, i look at IV of 0dte?
+
+2025-03-24T17:17:11.545Z | David P
+huge iceberg order at 5800 es
+
+2025-03-24T17:17:28.801Z | RE
+yeah someon just messsaged me about that
+
+2025-03-24T17:18:56.380Z | Jeffrey K
+i believe VIX is 30 day options implied vol
+
+2025-03-24T17:19:12.461Z | RE
+strangley alligns perfectly w the alma od chart gamma trough from this AM
+
+2025-03-24T17:19:28.152Z | RE
+as far as implied pricing at this bar
+
+2025-03-24T17:19:49.880Z | RE
+** green gamma peak not trough
+
+2025-03-24T17:20:42.791Z | RE
+1045 EST bar was the one that crushed through,
+
+2025-03-24T17:20:55.446Z | Terrence Chan
+5750!
+
+2025-03-24T17:21:27.306Z | David P
+someones limit buying alright but that's a whole lot of market selling so idk
+
+2025-03-24T17:21:52.498Z | RE
+bruce ill hand it over at es 5781
+
+2025-03-24T17:21:52.556Z | David P
+4k lots absorbed
+
+2025-03-24T17:22:52.584Z | meager man
+looking at nothing else on the 1hr this would look like a great hourly pullback to long from for higher test
+
+2025-03-24T17:23:14.323Z | meager man
+assuming 5750 holds etc etc
+
+2025-03-24T17:24:18.324Z | SirKen
+no, it doesn't mean that. Just don't associate VIX with IV directly
+
+2025-03-24T17:24:40.332Z | SirKen
+When you open the option chain in your broker, you can see IV for each expiration, no?
+
+2025-03-24T17:25:06.873Z | SirKen
+If I were you, I would do a deeper dive on Skew and whatnot as homework
+
+2025-03-24T17:25:08.816Z | meager man
+
+2025-03-24T17:27:45.545Z | meager man
+when I look at the ATM IV% in my chain its hard to know how to decipher because it's been oscillating between 19-22% all day
+
+2025-03-24T17:28:00.434Z | meager man
+so that's where I struggle with how to really measure it
+
+2025-03-24T17:28:37.348Z | Rooster
+
+2025-03-24T17:36:46.118Z | gogumappa
+5790?
+
+2025-03-24T17:39:10.380Z | SirKen
+I like looking at multi-expiry skew on IBKR personally
+
+2025-03-24T17:50:37.905Z | Tom
+Just saw this on twitter
+
+2025-03-24T18:04:24.500Z | Terrence Chan
+Selling here
+
+2025-03-24T18:04:32.777Z | Terrence Chan
+I got long some
+Tlt calls we 89.84
+
+2025-03-24T18:04:38.636Z | Terrence Chan
+At
+
+2025-03-24T18:05:05.897Z | Terrence Chan
+VIX is finally rising
+
+2025-03-24T18:06:39.925Z | gogumappa
+really slow today
+
+2025-03-24T18:10:13.822Z | David P
+exactly as promised 😀
+
+2025-03-24T18:10:15.847Z | David P
+so far
+
+2025-03-24T18:17:08.781Z | Bruce W
+Fantastic. Buy button on standbuy.
+
+2025-03-24T18:24:45.360Z | David P
+
+2025-03-24T18:27:12.189Z | Terrence Chan
+Seems a good place to get long some spy. I just got long march 31 575 calls
+
+2025-03-24T18:41:12.941Z | Tom
+What was that
+
+2025-03-24T18:41:36.720Z | RE
+i chickened out at left them at 97.75
+
+2025-03-24T18:42:14.552Z | Jeff L
+Hello Alma, Hope you had a good weekend.
+
+Quick question for you, in your weekly post you wrote (inserted screenshot)
+
+Am I understanding this wrong? For JPM, wouldnt they be:
+- Above Long put: Short Delta, Short Vanna, Short Vega, Short Vomma, Long Charm, Long Theta ?
+
+- Below Long put: Long Delta, Long Vanna, Long Vega, Long Vomma, Short Charm and Short Theta ?
+
+2025-03-24T18:42:55.293Z | Terrence Chan
+VIX crushing all day
+
+2025-03-24T18:43:21.446Z | J.K.
+Up or down in the next couple days??? lol
+
+2025-03-24T18:45:56.660Z | Bruce W
+Positive news having larger impact => change in character
+
+2025-03-24T18:46:51.228Z | David P
+Finally getting some volume on ES
+
+2025-03-24T18:48:05.482Z | loosersgame
+the 5750 level was interesting today! they flipped the positoning intraday
+
+2025-03-24T18:50:45.229Z | RE
+heres a look with what Alma shared in her daily post. plotting all this has helped me learn
+
+2025-03-24T18:54:24.683Z | Lex
+
+2025-03-24T19:04:25.431Z | Carlos
+would be interesting to see the put wall on UVIX options, if anyone has access.
+
+2025-03-24T19:04:48.785Z | Bull
+pin around 5770?
+
+2025-03-24T19:08:03.754Z | J.K.
+The PA is similar to Friday.  Alma's call regard intraday oscillation remains true.  PA looks like it wants 5780 or higher.
+
+2025-03-24T19:10:02.884Z | Terrence Chan
+Just exited spy calls
+
+2025-03-24T19:10:55.887Z | Terrence Chan
+Waiting for tlt to
+Print
+
+2025-03-24T19:13:10.684Z | Lex
+can I ask why there?
+
+2025-03-24T19:14:18.141Z | Lex
+is that from the level she gave this am?
+
+2025-03-24T19:17:32.283Z | Jeff L
+im still holding ES for EoD. i think this could squeeze another 10pts
+
+2025-03-24T19:17:45.696Z | Terrence Chan
+Yes we risk level
+
+2025-03-24T19:18:04.460Z | Terrence Chan
+We are at the risk level
+
+2025-03-24T19:18:09.101Z | Terrence Chan
+
+2025-03-24T19:19:11.131Z | Lex
+thank you still learning
+
+2025-03-24T19:19:29.213Z | Jeff L
+no bro spx risk level was at 5710
+
+2025-03-24T19:19:46.809Z | Jeff L
+
+2025-03-24T19:20:06.865Z | futuredale
+there's a level at 5763 but it's not risk
+
+2025-03-24T19:20:10.653Z | meager man
+5763 is listed I the values without a percentage association
+
+2025-03-24T19:20:20.739Z | futuredale
+1.5 SD iirc
+
+2025-03-24T19:20:48.462Z | Jeff L
+? Where is this?
+
+2025-03-24T19:21:26.635Z | Paul
+she updated it this morn in chat
+
+2025-03-24T19:21:38.871Z | Jeff L
+5763 is ES brolos
+
+2025-03-24T19:36:38.370Z | Terrence Chan
+It’s a level she had in the input so I was referencing it. So sounds like I had the wrong name for it
+
+2025-03-24T19:37:50.283Z | meager man
+Show on the SPX values in the lines
+
+2025-03-24T19:38:43.485Z | Paul
+its the 2.5 SD on spx
+
+2025-03-24T19:39:25.571Z | Terrence Chan
+Meant to type “sorry sounds like”
+
+2025-03-24T19:40:17.951Z | Terrence Chan
+Hoping to see yields back off in the last 15 mins and I’ll close tlt calls
+
+2025-03-24T19:46:54.978Z | Eli
+today's volume is kinda questionable..
+
+2025-03-24T19:50:00.862Z | David P
+I was looking at the same, anemic!
+
+2025-03-24T19:52:41.399Z | meager man
+Cautious?
+
+2025-03-24T19:52:58.481Z | meager man
+Pretty good move on the day with low volume if that’s the case
+
+2025-03-24T19:53:06.882Z | Eli
+whats been throwing me off all day was theyve been buying delta ALL day lol
+
+2025-03-24T19:55:43.317Z | Eli
+all call buying/put selling,  thinking if dealers were short, they mustve bought futures to hedge
+
+2025-03-24T19:55:52.400Z | Eli
+mustve caused the big rip and chase from last night
+
+2025-03-24T19:55:56.500Z | Eli
+fun stuff
+
+2025-03-24T19:56:53.440Z | gsp
+A beautiful Alma-messaged move, TY!!
+
+2025-03-24T20:03:26.885Z | kk
+close right at the 5767 lvl...
+
+2025-03-24T20:03:29.342Z | kk
+hmmm
+
+2025-03-24T20:04:25.139Z | han
+SPX ending the day exactly at 5767 🏹💘
+
+2025-03-24T20:04:59.796Z | Jeff L
+aint much but its honest work
+
+2025-03-24T20:21:30.021Z | ratch
+I don't see this level anywhere? I thought we'd pin at $5750
+
+2025-03-24T20:24:49.423Z | RE
+any charmexperts on here that can help with a few questions
+
+2025-03-24T20:25:00.023Z | RE
+i plotted this to try and learn
+
+2025-03-24T20:25:25.417Z | RE
+its should be very close to being accurate scale
+
+2025-03-24T20:30:57.871Z | Natt Prom
+Hi, everyone i'm new here still learning this but how do you guys trade ES or SPX based on those mean reversion levels
+
+2025-03-24T20:32:39.460Z | David P
+Not an expert by any means but I like trying to answer the questions
+
+2025-03-24T20:34:39.998Z | Terrence Chan
+5773 was a level listed today as a possibility
+
+2025-03-24T20:34:46.032Z | Terrence Chan
+
+2025-03-24T20:35:46.644Z | Terrence Chan
+And the OD charts shared earlier by someone very nice also were pointing to a 5770 pin
+
+2025-03-24T20:38:14.506Z | RE
+so Alma made that wave pattern for us in the daily post, is that charm wave veiwed as suppprotive.  i really need visuals to learn and fully grasp so the thought was to plot it like this
+
+2025-03-24T20:43:20.121Z | RE
+and further the sum of the "area" was supposrtive in this location ?
+
+2025-03-24T20:44:12.842Z | RE
+or am i getting way into the weeds...... again
+
+2025-03-24T21:33:57.974Z | David P
+This is my understanding:: MMs are positive charm if it's time decay increases the magnitude of their delta exposure, they are in negative charm if it decreases the magnitude of their delta exposure. -- For example: If they are long OTM options charm is usually negative (as time decays these options have less delta) . If they are short ITM options charm is usually positve (as their delta exposure increases as time passes). If they were long ITM options do you think charm would be supportive? What if they were long OTM options?
+
+2025-03-24T21:35:51.959Z | David P
+You could guess whether or not it would be supportive based on if it would increase or decrease their hedging activity. Which will always be an attempt to neutralise their delta exposure. Please anyone correct me if I am mistaken or sharing inaccurate info.
+
+2025-03-24T21:43:33.773Z | RE
+Thanks David, i went through chat way back in Feb 13 chat and found is too.
+
+2025-03-24T21:43:47.233Z | RE
+Gamma is not a bout creating support or resistance lvls...the primal effect is to swallow or expand volatility... add or decreaseliquidity. and SOMETIMES they act as support/resistance lvls... sometimes...but it depends on many more things... read my OD chat post. the effect thatcreates the magnetic effect is positive chamr convexisty in a MM shortbutterfly pattern. you have negative charm below the price and positive charmabove it. as expo comes, gamma increases, the speed profile becomes steeper inthe fly pattern, and the charm effect increases. negative charm below the highgamma strike makes dealers shorter delta, triggering buyback flow... but aboveit is positive charm that makes them longer delta, forcing them to sellfutures. the momentum gets locked up to that zone, and gamma pins it at the end,no espcape as high gamma counter- adjusments needed for algos whenever theprice wants to go up or down. But only if vol is low
+
+2025-03-24T21:46:23.044Z | RE
+so that helps answer it. so much to learn.
+
+2025-03-24T21:47:29.421Z | David P
+Great to read this one again after today's price action. Thanks for the reminder.
+
+2025-03-24T21:48:03.024Z | RE
+yup it shows the PA to a T today.
+
+2025-03-25T01:44:42.653Z | Tom
+Seems like 27th may be showing some weakness coming from the skew
+
+2025-03-25T04:16:09.070Z | makoto.ohguro
+When Alma says longer vol/vvol correlation, how does she infer that IBKR chart says shorter vol/vvol correlation, while Bloomberg says long vol/vvol correlation? There seems to be no vvol on those IBKR or Bloomberg charts. And how do you calculate ‘vol of vol’ on Alma’s chart
+
+2025-03-25T07:32:55.710Z | Mike Houston
+Very large flow after hours in VOO and IVV after hours, similar in size to the flow at lows on Friday before last. Could be that some people are adding, but the opposite is a also a possibility
+
+2025-03-25T08:17:55.728Z | Alma
+One can fetch both via API

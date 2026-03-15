@@ -1,0 +1,75 @@
+Ahead of FOMC, Intraday post (05/May)
+
+Elaborating on the bulltrap
+
+I added very important levels and notes to the weekly post. Refresh and re-read it! Also on Sunday, I posted a list of books and researches that help you to think in distribution instead of constant duality.
+
+The U.S. Commerce Department’s Section 232 probe into semiconductors opened a public comment period that ends this Wednesday, May 7—after which the administration can impose tariffs without further notice. Only ten comments have been filed on semiconductor tariffs, versus ~300 for prior copper or lumber probes—suggesting limited industry or public resistance, which the Trump team could read as tacit approval. 25% - 100% duties may be imposed as soon as this week, keyed to the “wafer-out” location where chips are made. The probe covers everything from substrates and bare wafers to advanced chips and manufacturing equipment, underlining the broad reach of any final tariffs.With the comment window closing mid-week, tariffs could be announced immediately before or after the Fed’s May 6–7 meeting—adding a fresh growth-shock uncertainty. The lack of industry filings means minimal opposition, making it more likely that the Trump administration will see a clear runway to enact steep tariffs. Heavy chip duties would raise input costs, squeeze margins, and slow semiconductor-driven capex—potentially delaying Fed rate cuts or even forcing additional tightening, exactly as I warned you. If tariffs land just before the Fed, it amplifies reasons to “sell into strength” ahead of the rate-decision, as it adds another headwind to growth. Markets have already repriced Fed cuts out to July; an imminent chip-tariff shock could push that horizon even further—and steepen the yield curve’s back end. Risk/reward is still on the short delta side (while I hedge upside, and vol decay).
+
+The bulltrapHere I simply went on small alloc shorts via OTM puts also long downside vega on them, while scaled into ES shorts. The negative PnL was counterbalanced by short VIX and near-ATM call positions, ensuring green trades, and the early puts where simply stop-lossed, and call positions were sized up on intraday basis. This way I hedge the losses and even end up green. Not big gain, but still gain. The stop-loss are tight on right-tail hedges, because when underpriced left-tail materializes I want them to be unwound. Because left-tail is underpriced, and my positions are cheap, if I lose, I lose small, if I win, I win big, especially when the momentum gets confirmed and the puts get rolled and short futs get sized up. (You definitely need to prepare for strats like this one, but this is the goal, to trade consciously.)This way I could ensure steady portfolio growth even if it is flatter now. While on the intraday basis, I go for reversion tradings (if I do), using 55-65 delta 0DTE options (puts mostly, as they are undervalued).
+
+This way I definitely kind of underperformed the recent rally relative to its true potential, but I found it less risky to short VIX and short index vol (as posted since mid-April) than net long SPX. Simply because this rally needs to get a short-term but stable narrative in order to be sustained into mid-summer. And this is key. This is why I want to see, how the marked events unfold.
+
+INTRADAY POSTCoding intraday positioning:
+
+Net speed, net gamma and net charm are equally positive. The speed profile is pretty negative above 5634.94; this point can be magnetic from the downside, if downside pivot holds.The centroid of the positioning falls into the 5603.85 lvl; below this line, if downside move gains momentum, volatility should realize to the upside. 5569.96 would reinforce the momentum.To the upside, the main pivot is 5639.93, but here short speed dynamics (longer spot/vol correlation) should be expected if the positioning truly materializes. Upside vol can only be decreased at 5675 that also can pin the price, but the short fly pattern is strong and steep now. Vanna flows are locally suppressive in the local short speed territory, but dealer delta is expected to make lower highs if vol declines, because the overall profile is net supportive. The overall net charm profile is flat-to-positive, capping the upside for now, along with funds still selling into strenght at VWAP, MVWAP and AVWAP zones. If ES cannot close above 5715/20 zone, weakness is coming.
+
+SCRIPT INPUTS:=== SPX closed at 5686.67===
+
+99.73%, 5883.4118878201, , 5834.019083010133, 95.4%, 5785.0409439100495, Risk level, 5752.972016195374, 68.2%, 5735.644583175021, 68.2%, 5637.269959235147, Risk level, 5620.367983804626, 95.4%, 5588.299056089951, , 5538.8952045779515, 99.73%, 5489.9281121799
+
+=== ES closed at 5710.5===
+
+99.73%, 5913.511922152698, , 5862.539257220164, 95.4%, 5812.005961076349, Risk level, 5778.915017765459, 68.2%, 5761.0294254348755, 68.2%, 5659.519454801221, Risk level, 5642.084982234541, 95.4%, 5608.994038923651, , 5558.009337711533, 99.73%, 5507.488077847302
+
+=== SPY closed at 566.76===
+
+99.73%, 587.2183049182014, , 582.0812589864261, 95.4%, 576.9891524591008, Risk level, 573.6544487574339, 68.2%, 571.851704594574, 68.2%, 561.6221355611618, Risk level, 559.8655512425661, 95.4%, 556.5308475408992, , 551.3925510712883, 99.73%, 546.3016950817986
+
+=== VIX closed at 22.68 ===
+
+99.73%, 27.40026249942428, , 26.19362848944563, 95.4%, 25.04013140230003, Risk level, 24.270728664637524, 68.2%, 23.830866283998287, 68.2%, 21.467525237896908, Risk level, 21.08927194571404, 95.4%, 20.319869208051532, , 19.103390521708466, 99.73%, 17.959738110927283
+
+=== IWM closed at 200.48===
+
+99.73%, 209.32218039503348, , 207.09983815895083, 95.4%, 204.90109019751674, Risk level, 203.45981479312627, 68.2%, 202.67849062689942, 68.2%, 198.25713161750787, Risk level, 197.5001852068737, 95.4%, 196.05890980248324, , 193.835760345388, 99.73%, 191.6378196049665
+
+=== QQQ closed at 488.83===
+
+99.73%, 509.48338914229043, , 504.29360938164797, 95.4%, 499.1566945711452, Risk level, 495.79019214095183, 68.2%, 493.96636222238135, 68.2%, 483.6390914646862, Risk level, 481.86980785904814, 95.4%, 478.5033054288548, , 473.3117955638679, 99.73%, 468.17661085770953
+
+=== NDX closed at 20102.61===
+
+99.73%, 20944.938749948287, , 20733.287177907696, 95.4%, 20523.774374974142, Risk level, 20386.474788732572, 68.2%, 20312.100629627133, 68.2%, 19890.913142339672, Risk level, 19818.74521126743, 95.4%, 19681.44562502586, , 19469.724655104856, 99.73%, 19260.281250051714
+
+=== NQ closed at 20204.5===
+
+99.73%, 21051.96735920647, , 20839.02354001, 95.4%, 20628.233679603236, Risk level, 20490.09650005258, 68.2%, 20415.267506930777, 68.2%, 19991.51052623229, Risk level, 19918.90349994742, 95.4%, 19780.766320396764, , 19567.75253634994, 99.73%, 19357.03264079353
+
+=== NVDA closed at 114.5===
+
+99.73%, 124.08017162125692, , 121.66155645929096, 95.4%, 119.29008581062845, Risk level, 117.72851783636358, 68.2%, 116.87050451382915, 68.2%, 112.07936997807867, Risk level, 111.27148216363642, 95.4%, 109.70991418937155, , 107.28814178741047, 99.73%, 104.91982837874308
+
+=== AMZN closed at 189.98===
+
+99.73%, 201.26863237120762, , 198.42640594746752, 95.4%, 195.6243161856038, Risk level, 193.78426910909695, 68.2%, 192.78150219598612, 68.2%, 187.13656299894734, Risk level, 186.17573089090303, 95.4%, 184.3356838143962, , 181.49158504895786, 99.73%, 178.69136762879236
+
+=== AAPL closed at 205.35===
+
+99.73%, 217.2715158365583, , 214.2704101958003, 95.4%, 211.31075791827917, Risk level, 209.36755083692015, 68.2%, 208.3090591849491, 68.2%, 202.3476732297196, Risk level, 201.33244916307984, 95.4%, 199.38924208172082, , 196.38624914785856, 99.73%, 193.42848416344168
+
+=== GOOG closed at 165.81===
+
+99.73%, 173.0753625247621, , 171.24938974096906, 95.4%, 169.44268126238106, Risk level, 168.25842717084484, 68.2%, 167.6164997251625, 68.2%, 163.98360046018198, Risk level, 163.36157282915516, 95.4%, 162.17731873761895, , 160.35069131738067, 99.73%, 158.5446374752379
+
+=== TSLA closed at 287.21===
+
+99.73%, 314.5706388343479, , 307.65444901403816, 95.4%, 300.89031941717394, Risk level, 296.43053528717525, 68.2%, 293.9705914539863, 68.2%, 280.2863884675698, Risk level, 277.9894647128247, 95.4%, 273.529680582826, , 266.60178686440236, 99.73%, 259.84936116565206
+
+=== TSM closed at 179.28===
+
+99.73%, 190.8724950332414, , 187.95202881290518, 95.4%, 185.0762475166207, Risk level, 183.18667082620235, 68.2%, 182.15507035155446, 68.2%, 176.35806515501423, Risk level, 175.37332917379766, 95.4%, 173.4837524833793, , 170.56100845799602, 99.73%, 167.6875049667586
+
+=== AMD closed at 98.8===
+
+99.73%, 107.44792261041128, , 105.26374216035065, 95.4%, 103.12396130520564, Risk level, 101.7143499197086, 68.2%, 100.93882987708109, 68.2%, 96.61383246226019, Risk level, 95.8856500802914, 95.4%, 94.47603869479435, , 92.28873794713458, 99.73%, 90.15207738958871

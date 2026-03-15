@@ -1,0 +1,1261 @@
+Chat Post
+2025-04-29T08:39:21.554Z | Alma
+TUESDAY CHAT (29/April)
+
+Replies
+2025-04-29T08:39:34.072Z | Alma
+PERSONAL ANNOUNCEMENT
+I won’t work on May 24-26 (no weekly, no Monday post. If I see update, I will post it in short in the chat, but I won’t be at the desk)
+And July 24 - Aug 1
+
+And on this Tuesday - Wednesday window, I will have less time to write, so the daily market analysis will be thinner. You will need to stand, read the datas and a bit more on your own. Context is provided.
+
+2025-04-29T08:40:02.615Z | Alma
+
+2025-04-29T08:44:04.984Z | Alma
+As said on the weekend: heavy data, Fed decisions, and earnings coming up, we'll see a quick pullback today, followed by a bounce I'll buy into, on this week, and using that to scale into cheap puts.
+Signaled yesterday.
+Again: today and tomorrow I cannot be here to signal real time. Plan is shared.
+Be mindful.
+Probability is high for this scenario, but not 100%
+
+2025-04-29T08:44:19.145Z | Alma
+If you have or don't have OptionsDepth account, you can use my link https://optionsdepth.com/app?via=alma and coupon code ODALMA to get 10% off monthly sub fee.
+You can use it for the new month, or if you just start to create an account.
+
+2025-04-29T09:15:59.194Z | 0Mik
+GM
+
+2025-04-29T09:16:07.979Z | 0Mik
+
+2025-04-29T09:16:19.965Z | 0Mik
+Clear ma'am
+
+2025-04-29T09:20:16.297Z | lookm1
+nice :)
+
+2025-04-29T09:21:00.879Z | Leonida
+
+2025-04-29T09:44:10.846Z | Alma
+POST IS OUT
+https://stochvoltrader.substack.com/p/intraday-post-29april
+
+2025-04-29T10:33:43.648Z | kalless
+Good morning!
+
+2025-04-29T10:42:04.547Z | Stanley
+Good morning
+
+2025-04-29T10:48:31.988Z | J.K.
+Good morning
+
+2025-04-29T10:49:02.230Z | J.K.
+Thanks Alma
+
+2025-04-29T10:50:35.606Z | Stanley
+Hey @Mas , regarding your question about deriving the levels. I had a try of GIR-GARCH model, however my levels were far off with Alma's. @Mario mentioned a formula from Ornstein-Uhlenbeck process, but I don't know how to feed the GIR-GARCH result into the formula. Didn't get my levels close to Alma's after a few attempts.
+
+2025-04-29T10:51:41.092Z | David P
+Gona start buying up some  22 delta calls now
+
+2025-04-29T10:52:04.085Z | Mike Houston
+Goldman says CTA’s still short SPY, could provide flow to push much higher if forced back in thru momentum https://x.com/menthorqpro/status/1917165796591321143?s=61&t=qVpVUk0NccervXAFsNXI6w
+
+2025-04-29T10:52:13.666Z | Stanley
+I can help you with python part.
+
+2025-04-29T10:54:05.568Z | Leonida
+
+2025-04-29T10:58:29.051Z | Mas
+Hello, I have been looking for ways to get the Beta vol, rolling skew ect but i am not confident enough to execute properly and do not want to mess up what Alma made because of my lack of knowledge. So with Almas main.py for the sd returns when we want to add different models do we add to whats already in there or does it have to be separated?
+
+2025-04-29T11:11:01.332Z | Stanley
+main.py? what is that. Did Alma share it with us?
+
+2025-04-29T11:13:00.299Z | Stanley
+Hey guys, how do I check intraday vol? Will the GKYZ Vol indicator do the job?
+
+2025-04-29T11:14:10.343Z | Stanley
+I assume you may create functions/classes for different models, and call them in the main.
+
+2025-04-29T11:19:50.154Z | ppunkr
+Since the format of the levels from Alma changed, here is my updated version of Mean Reversion Threshold Levels that allow pasting the all the symbols. It maintains compatibility with previous format.
+https://drive.google.com/file/d/1sS6O1AefilWq7CsM9vjXvldkxGF9d9Rx
+
+2025-04-29T11:23:55.421Z | ppunkr
+First, recently Alma switched to a new algo, so maybe you will get similar GJR-GARCH from older levels, and she did not provide any tips about the new one that I am aware of.
+
+2025-04-29T11:39:49.818Z | J.K.
+Alma's primal target hit for the VIX. Interesting how VIX is reacting once it hits that gap.
+
+Also, a sell signal hit on Alma's Vol Based Momentum indicator for the SPX 2 hr chart (20 period, 2 std dev) at the EOD yesterday. Last 3 times this signal hit, there was at least a 200 point pullback.
+
+2025-04-29T11:40:53.048Z | David P
+On my chart sell signal was invalidated right after?
+
+2025-04-29T11:41:58.531Z | DIma
+
+2025-04-29T11:42:17.108Z | J.K.
+Hmm... I am using the SPX index chart.  You using the same one?
+
+2025-04-29T11:42:58.070Z | J.K.
+
+2025-04-29T11:45:56.313Z | David P
+I’m using the default settings
+
+2025-04-29T11:45:57.409Z | David P
+Yes same.
+
+2025-04-29T11:46:59.629Z | J.K.
+Ah yes, I shifted the settings to 20 and 2.  I use it more for short term trend, like next 1-3 days.
+
+2025-04-29T11:57:27.869Z | Y O
+
+2025-04-29T11:57:50.380Z | Y O
+BREAKING: Reports of large blast at a military factory in Isfahan, Iran.
+
+2025-04-29T11:58:07.253Z | Y O
+I guess negotiation are not going too well :D
+
+2025-04-29T12:09:34.616Z | lookm1
+maybe it's intentional, like recently in Moscow ?
+
+2025-04-29T12:18:11.159Z | ppunkr
+
+2025-04-29T12:20:11.511Z | ppunkr
+I forgot to open the access with the link, so try again those that requested access
+
+2025-04-29T12:21:39.227Z | Mas
+Yes it was the only python file Alma sent us that I am aware of I named it main.py I that I didn’t clarify
+
+2025-04-29T12:23:01.147Z | Mas
+I understand. I am just trying to figure out how to do it to begin with
+
+2025-04-29T12:26:07.986Z | Stanley
+Thank you for letting me know—I wasn’t aware of that. Would you be so kind as to share the original link?
+
+2025-04-29T12:30:50.424Z | Alma
+Bessent & Leavitt in short: economy is fine, wonderful
+https://www.youtube.com/watch?v=n7lgn77ur_I
+
+2025-04-29T12:31:28.149Z | Jeffrey K
+Record trade imbalance
+
+2025-04-29T12:32:11.776Z | Jeffrey K
+Predictable, it's their job description
+
+2025-04-29T12:32:24.716Z | Mas
+Currently afk will do later in the day
+
+2025-04-29T12:51:00.796Z | meager man
+Bessent essentially saying "we're talking but can say we are bc they have to perform for their population"
+
+2025-04-29T12:51:08.648Z | meager man
+*can't say we are*
+
+2025-04-29T12:54:15.488Z | Dominik
+This is freaking awesome haha: https://x.com/DeItaone/status/1917200468956295578
+
+2025-04-29T12:55:22.378Z | Dominik
+to paraphrase "The Day After Tomorrow" - "He is a politician and actor, if he tells you that everything is fine... it isn't!!!"
+
+2025-04-29T12:58:03.829Z | Jason
+'Deal contours' is my new favorite.
+
+2025-04-29T12:59:12.334Z | meager man
+same reaction
+
+2025-04-29T12:59:22.331Z | Jason
+AMZN getting smacked over their Temu move
+
+2025-04-29T13:02:31.625Z | Dominik
+all timeframes look bloood red haha
+
+2025-04-29T13:07:00.292Z | gwgj41
+remember alma's plan today
+
+2025-04-29T13:07:35.060Z | Mike Houston
+They are selling Bessent news conference
+
+2025-04-29T13:08:14.122Z | Jonathan Scholz
+nobody is buying this. lied too blatantly
+
+2025-04-29T13:09:09.786Z | Jonathan Scholz
+
+2025-04-29T13:10:46.535Z | Hoondoc
+
+2025-04-29T13:12:43.455Z | Jonathan Scholz
+Its so funny how admin always highlights the egg prices. It's about to introduce the EGG-index...
+
+2025-04-29T13:13:07.166Z | Jonathan Scholz
+^it's about time
+
+2025-04-29T13:13:21.781Z | Dominik
+and gasoline prices
+
+2025-04-29T13:15:52.499Z | Mike Houston
+https://x.com/Stocktwits/status/1917205981655871524
+
+2025-04-29T13:15:52.709Z | Sharcus Aurelius
+Big Ben Bernanke denying the housing bubble for 3 years up to the burst 😂
+
+https://youtu.be/INmqvibv4UU?si=SdbGg5WnioxFokEr
+
+2025-04-29T13:18:33.773Z | Mindus
+Terrible communication, they definitely never read The Art of the Deal 😂
+
+2025-04-29T13:20:15.055Z | Jason
+nah. chapter 5 is all about how to establish trust with partners by claiming organized chaos when things go sideways.
+
+2025-04-29T13:20:32.421Z | Hennessy
+WHITE HOUSE: AMAZON SHOWING TARIFFS ON EACH PRODUCT IS A HOSTILE AND POLITICAL ACT
+
+2025-04-29T13:20:43.134Z | Hennessy
+Daily clown show 🤣
+
+2025-04-29T13:21:51.922Z | David P
+Buying some more calls, good luck to me 😂
+
+2025-04-29T13:22:54.959Z | Leonida
+No need to luck😂 you’re according to the plan 👍🏻
+
+2025-04-29T13:24:11.287Z | Leonida
+Next crucial level is 485 pivot I will buy more there
+
+2025-04-29T13:27:24.599Z | meager man
+hard to be optimistic about future the more I read these posts back...I'm very pessimistic
+
+2025-04-29T13:29:24.790Z | J.K.
+As much as I dislike the dog and pony show by the White House, I do love how clear Karoline Leavitt is in her communication.  I think she is a stellar communicator.
+
+2025-04-29T13:44:34.153Z | Jonathan Scholz
+didnt know this, how convenient as i planned to do exactly this on the weekend.
+maybe you want to add the info and link as a comment in the script-blog-page? like that it would always be found easily
+
+2025-04-29T13:47:45.482Z | Tom
+Puts today?! for the Alma dump call
+
+2025-04-29T13:48:25.907Z | Raju siruvuri
+Earning this week.
+
+2025-04-29T13:48:40.065Z | Gil
+looks like the dump was short
+
+2025-04-29T13:49:20.617Z | David P
+As promised
+
+2025-04-29T13:50:08.267Z | Gil
+yes, every day since monday last week made a higher low. Same for today (as of now)
+
+2025-04-29T13:50:25.723Z | Gil
+looks like straight rip into BOM
+
+2025-04-29T13:50:29.880Z | David P
+Gold dumping also
+
+2025-04-29T13:50:51.183Z | Tom
+when are you getting puts for the dump today?
+
+2025-04-29T13:51:16.357Z | Orange Swan
+China waives tariffs on US ethane imports - Sources.
+
+2025-04-29T13:52:25.097Z | David P
+There was a dump this morning!
+
+2025-04-29T13:52:51.585Z | Leonida
+“Quick pullback” 📞
+
+2025-04-29T13:53:03.082Z | KDH
+I hope that wasn’t the lows
+
+2025-04-29T13:53:08.319Z | Leonida
+5560 is needed to get taken out
+
+2025-04-29T13:53:10.722Z | KDH
+Pretty ahitty pullback
+
+2025-04-29T13:53:14.445Z | Leonida
+Up there im out
+
+2025-04-29T13:54:51.559Z | David P
+I’ll be out of my futures but keep my calls I think
+
+2025-04-29T13:55:02.973Z | Leonida
+Why not now? To me because it is a hedge, so let it hedge (I could be wrong)
+
+2025-04-29T13:56:15.487Z | David P
+Should we get up there that is
+
+2025-04-29T13:58:22.642Z | Leonida
+I’Ve been too greedy in the past….. I learnt the lesson
+
+2025-04-29T13:58:28.335Z | Nevistrader
+probably we go up lot of bullish action at 09:39, 09:44, 09:55 EST in QQQ
+
+2025-04-29T14:00:23.379Z | Derek
+Good morning
+
+2025-04-29T14:01:11.610Z | Mario
+Now the levels I get are quite different from Alma's. I don't know if It is due to the new method of calculation, or because with high vol the differences magnifies
+
+2025-04-29T14:05:26.295Z | Nevistrader
+if 473.16 gets taken out, 474.8 next lvl
+
+2025-04-29T14:05:31.816Z | meager man
+lol why I had a downside bias at all today I don't know
+
+2025-04-29T14:07:23.391Z | ⚔️ 𝐖𝐢𝐥𝐝𝐜𝐚𝐭 𝐁𝐚𝐧𝐤𝐢𝐧𝐠 ⚔️
+quick pullback today, followed by a bounce
+
+2025-04-29T14:08:22.054Z | Aman
+When to start scaling into puts
+
+2025-04-29T14:09:04.232Z | Chad
+hardly any pullback lol
+
+2025-04-29T14:09:43.870Z | Jason Valvano
+I think it dumps now
+
+2025-04-29T14:09:47.712Z | David P
+Personally. I won’t be interested until around 5630 mentioned in Alma’s post
+
+2025-04-29T14:09:50.785Z | Jason Valvano
+That jolts
+Number was badddd
+
+2025-04-29T14:11:04.366Z | Jeffrey K
+not sure why stocks are so bullish here
+
+2025-04-29T14:13:01.906Z | Tom
+same.. bc she said pullback. thought that would be more than a few %
+
+2025-04-29T14:13:19.074Z | Leonida
+The funny thing is that there is not a reason, if not mechanical flow as described. Artificial
+
+2025-04-29T14:14:16.224Z | meager man
+I think they're taking the tChina removing tariffs on Ethane news as more of a sign for more to come if anything
+
+2025-04-29T14:14:32.967Z | meager man
+"chinas losing" sentiment or something perhaps
+
+2025-04-29T14:14:52.056Z | David P
+It was a 50 point pullback from the overnight highs
+
+2025-04-29T14:15:59.626Z | Jeffrey K
+I'm inclined to think it won't persist...but we'll see
+
+2025-04-29T14:16:41.760Z | J.K.
+I think a deeper pullback still possible if a rejection hits right here
+
+2025-04-29T14:16:47.329Z | Jeffrey K
+there's are friend Vol
+
+2025-04-29T14:18:07.429Z | Jeffrey K
+I remember sleepy summer trading where today's action would encompass an entire week LOL ... and it hasn't been a full hour
+
+2025-04-29T14:19:09.494Z | Praswell
+are the VIX script/reversion levels correct?
+
+2025-04-29T14:20:51.917Z | Rooster
+I was thinking the same thing.  I've reloaded them twice already.  We opened and have stayed above the 3 sigma lvl.  (and rising, at the moment) Seems off.
+
+2025-04-29T14:21:45.096Z | Chad
+here's the pullback ?
+
+2025-04-29T14:22:12.882Z | Vman
+Pullback into next week does align with the full moon/new moon cycle coincidentally lol
+
+2025-04-29T14:22:30.402Z | Jeffrey K
+HoowwwwLLLLLL
+
+2025-04-29T14:23:57.687Z | Jeffrey K
+my thought on pullback it probably deeper than most
+
+2025-04-29T14:24:37.767Z | J.K.
+I like it lol
+
+2025-04-29T14:24:38.491Z | Jason Valvano
+This looks weeek now
+
+2025-04-29T14:25:07.285Z | J.K.
+I think 5430 possible on SPX
+
+2025-04-29T14:26:24.095Z | Sharcus Aurelius
+I thought you’d interpret that chart as an inverse H&S
+
+2025-04-29T14:26:38.262Z | DIma
+strategic recession  😆
+
+2025-04-29T14:27:25.680Z | Taco
+So are we gonna get our early dip or what
+
+2025-04-29T14:28:40.960Z | Jason Valvano
+This thing looks week
+
+2025-04-29T14:29:25.252Z | Jason Valvano
+I’m taking 5/2 puts 540
+
+2025-04-29T14:30:37.260Z | Jeffrey K
+would need to come down lower for that also
+
+2025-04-29T14:31:43.054Z | Chad
+is this buy the dip moment
+
+2025-04-29T14:33:49.825Z | Jason Valvano
+Doubtful wasn’t really a dip
+
+2025-04-29T14:36:11.938Z | Jason Valvano
+Oh there squeezing it
+
+2025-04-29T14:36:19.990Z | Jason Valvano
+I’m bout to just be out this price action sucks
+
+2025-04-29T14:36:24.160Z | Jason Valvano
+It’ll chew your money up
+
+2025-04-29T14:36:50.950Z | Judy
+is this the dip?
+
+2025-04-29T14:37:59.062Z | Chad
+looks like we're heading to 5555
+
+2025-04-29T14:38:19.541Z | DIma
+
+2025-04-29T14:39:18.577Z | Jason Valvano
+I mean Thai is straight up corruption
+
+2025-04-29T14:39:25.697Z | Jason Valvano
+He might get impeached with all this shit
+
+2025-04-29T14:41:22.765Z | Taco
+Vix calls, qqq puts. Fock it I'm not touching the green button today
+
+2025-04-29T14:41:35.110Z | Vman
+I’d argue to be careful on the dip. She’s saying that dealer positioning is causing the “buy the dip” behavior. Need to also see where other players are
+
+2025-04-29T14:41:49.975Z | Vman
+Buttlick at 2 could be problematic
+
+2025-04-29T14:42:18.208Z | DeanGatsby
+This price action makes me want to work on some code today
+
+2025-04-29T14:42:25.383Z | Taco
+Who?
+
+2025-04-29T14:42:55.790Z | Vman
+Lutnick lol
+
+2025-04-29T14:42:57.882Z | DIma
+maybe this is the only way out for him to still keep face
+
+2025-04-29T14:43:02.738Z | Vman
+Was trying to be funny
+
+2025-04-29T14:43:49.971Z | Jeffrey K
+SPY 11M volume LOL
+
+2025-04-29T14:44:45.686Z | Jonathan Scholz
+I read that story the other Day, about how NVDA ceo bought six figure Tickets to a mar-a-lago Dinner, and next Day there were significant tariff exemptions for semis.
+
+2025-04-29T14:47:17.746Z | DIma
+i am sure these type of crime/lobby was also present in the past
+at least it wasnt so open like now, which imo doesnt help to overall image of the USA
+
+2025-04-29T14:51:37.881Z | Y O
+:D did u ever heard about A.I. PACMAN :D
+
+2025-04-29T14:51:57.280Z | DIma
+i enjoyed the article shared in the group yesterday from Ray Dalio, where he mentioned that there are big shifts that are already happening and not in the favor of USA
+
+2025-04-29T14:52:29.515Z | Y O
+Hmm ray dalio is cool :)
+
+2025-04-29T14:58:23.047Z | Leonida
+An easy game today 📞
+
+2025-04-29T15:01:19.815Z | Judy
+Is call wall 5550?
+
+2025-04-29T15:11:54.352Z | Jolene
+thats what i see and Almas upside level 5560
+
+2025-04-29T15:13:06.487Z | Rooster
+Gamma peak is about 5557 right now, that dark green line in left panel.
+
+2025-04-29T15:14:04.944Z | Rooster
+center panel is ODTE customer positions, so you can see the customer sold calls at that level creating the MM positive gamma
+
+2025-04-29T15:14:34.314Z | Doc McGraw
+
+2025-04-29T15:14:42.472Z | Chad
+who's scaling in puts
+
+2025-04-29T15:14:49.187Z | Doc McGraw
+my mean refversion script not working
+
+2025-04-29T15:14:57.554Z | Leonida
+My understanding is that As long as we are above the centroid, negative speed profile mechanism will hit
+
+2025-04-29T15:15:40.951Z | Judy
+Will Pension fund start buy back today?
+
+2025-04-29T15:18:54.137Z | Chad
+can you explain in laymen term
+
+2025-04-29T15:19:38.778Z | Paul
+watch VOLD and VOLDQ for net advancing volume
+
+2025-04-29T15:20:54.930Z | Jtearre
+Quick question sorry couldn't find the answer in other chats - when Alma says 20 delta is that 20 pts delta on SPY and thus about 200 on SPX?
+
+2025-04-29T15:22:57.668Z | kk
+why
+
+2025-04-29T15:23:01.398Z | Mario
+Delta is equivalent in SPX and SPY
+
+2025-04-29T15:23:50.728Z | Mario
+Delta range is (0-100), delta 200 doesn't exist
+
+2025-04-29T15:23:57.592Z | Jtearre
+Thanks Mario -then I am missing what delta is referring to, I assumed it was point delta. What does it actually refer to? Thanks.
+
+2025-04-29T15:24:21.097Z | Jtearre
+Surely it
+
+2025-04-29T15:24:42.720Z | Jtearre
+s not 20% delta for the recent calls... That wouldn't make sense.
+
+2025-04-29T15:24:53.747Z | splek
+Options contract deltas
+
+2025-04-29T15:25:14.823Z | Jtearre
+Ah got it ok thanks. Great .
+
+2025-04-29T15:26:21.222Z | Judy
+Tot there is a rebalance buy at month end
+
+2025-04-29T15:26:26.505Z | Jeffrey K
+really is just algos and dealer hedge trading with each other...
+
+2025-04-29T15:28:54.615Z | J.K.
+The Q is which way does it break...???
+
+2025-04-29T15:29:20.912Z | Jeffrey K
+within some larger contracting wedgie channel
+
+2025-04-29T15:31:42.722Z | Jeffrey K
+I'm sitting flat with sells significantly higher bc i don't have a clue with any level of confidence
+
+2025-04-29T15:35:42.299Z | Vman
+Yea this is all dealer positioning. It will stay as buy the dip until May 16th. Surprised though that none of these bad data points are bringing the market down.
+
+2025-04-29T15:36:08.614Z | Jeffrey K
+usually if we got a lower RSI here and price above the previous low, I'd say buy it...but this market is an absolute freak show right now
+
+2025-04-29T15:36:12.491Z | Vman
+
+2025-04-29T15:47:08.728Z | Vman
+We need a volatility spike large enough at 5450 to flip the trend. That should cause the change in delta via vanna to overcome the delta change via charm. Lutnick is probably the only chance today at that
+
+2025-04-29T15:48:03.770Z | Vman
+Doesn’t seem like other events have really materialized into anything. Also mag7 positioning is pretty supportive which could be causing this.
+
+2025-04-29T15:48:37.343Z | JSA
+That was the circumstance at 10:35 ET supported by an nice positive A/D line divergence
+
+2025-04-29T15:50:06.807Z | Doc McGraw
+Equities CTA Flows Report - April 29, 2025
+1-Week Outlook
+Flat Market: About $38B in buyers ($6B US-focused)
+Up Market: About $50B in buyers ($12B US-focused)
+Down Market: About $24B in buyers ($3B US-focused)
+1-Month Outlook
+Flat Market: About $50B in buyers ($12B US-focused)
+Up Market: About $112B in buyers ($41B US-focused)
+Down Market: About $5B in sellers ($5B US-focused)
+SPX Key Pivot Levels
+Short-Term: About 5,550
+Medium-Term: About 5,750
+Long-Term: About 5,470
+
+2025-04-29T15:50:48.029Z | Vman
+That would do it.
+
+2025-04-29T15:51:23.206Z | J.K.
+Does anyone think that the next pullback can start sooner than what Alma has mentioned? Like yesterday being the intermediate top? I mean I know anything can happen with updated headlines, but this just feels very complacent with the price and volume mix.
+
+2025-04-29T15:51:27.003Z | Vman
+@Trader McGraw where did you pull that from
+
+2025-04-29T15:52:15.709Z | Vman
+It’s ctas and dealer positioning. We’re following it pretty perfectly.
+
+2025-04-29T15:52:47.357Z | Vman
+It could start sooner though. I’d have to check a few things when I get off the bus
+
+2025-04-29T15:54:04.400Z | J.K.
+Like you mentioned Lutnick speaks today and he hasn't been in the headlines for a minute so that might be the trigger for the move.
+
+2025-04-29T15:54:07.981Z | Jain
+When did cta start
+
+2025-04-29T15:56:08.439Z | Vman
+Doesn’t matter when it started. Matters what they’re doing. Context is the key here
+
+2025-04-29T15:56:49.089Z | Vman
+If you buy 50B on a major downturn it’s just going to get absorbed by sellers. Here it’s the force absorbing the selling
+
+2025-04-29T15:57:16.192Z | Vman
+Look at cumulative volume delta.
+
+2025-04-29T16:01:17.791Z | Vman
+Omg it’s only Tuesday lol. Thought it was Thursday
+
+2025-04-29T16:01:21.182Z | Jain
+I think i saw the same post in march
+
+2025-04-29T16:01:31.934Z | Jain
+And market drilled
+
+2025-04-29T16:01:37.488Z | Jain
+Eom mar
+
+2025-04-29T16:02:10.718Z | Jain
+You bought something wrong then? Lol
+
+2025-04-29T16:09:31.497Z | Vman
+Nah just timing. I did get hammered by puts though. Just bad risk management
+
+2025-04-29T16:14:31.359Z | Jain
+:/
+
+2025-04-29T16:26:04.066Z | lookm1
+dead liquidity
+
+2025-04-29T16:26:49.033Z | RE
+its just straddling the gamma trough from daily model
+
+2025-04-29T16:28:17.989Z | RE
+
+2025-04-29T16:54:56.789Z | Mike Houston
+NYSE internals
+
+2025-04-29T16:56:42.271Z | Mike Houston
+shows the last two days and the difference...how there was conviction behind yesterdays moves of the lows but very little today
+
+2025-04-29T16:57:32.335Z | lookm1
+
+2025-04-29T17:07:38.282Z | Taco
+Thanks for the explanations added, this one is new to me
+
+2025-04-29T17:07:47.580Z | Marcus Carlsson
+I know the market doesn't have to do anything, but I could see it fill the tariff-gap before the big move down
+
+2025-04-29T17:09:47.987Z | tim
+FWIW my momentum indicators are showing we've probably topped out here or are very near the top
+
+2025-04-29T17:41:19.219Z | Rooster
+according to latest 0DTE positioning on OD, the sold calls creating the positive gamma at 5555 have been closed, now moved up to 5585, so maybe this time price will clear 5550 and run for a bit in that low positive gamma, supportive charm environment
+
+2025-04-29T17:42:41.089Z | Raju siruvuri
+broke the resistance.
+
+2025-04-29T17:43:50.851Z | Jason Valvano
+lol this thing is rigged
+
+2025-04-29T17:44:16.172Z | Rooster
+"And to the upside 5560.08 is needed to get taken out."  Watching for reaction at 5560
+
+2025-04-29T17:46:08.323Z | Praswell
+Anyone know if the vix level changed for a vanna squeeze?
+
+2025-04-29T18:10:07.825Z | Echo
+Anyone buying puts here?
+
+2025-04-29T18:10:31.438Z | Sharcus Aurelius
+The Canadian election results are exactly why Russian and ME investors cannot trust any sort of Trump deal. There is too much risk for the liberals to get voted right back in. As proven with Canada’s liberal PM, the western left is a representation of the current global world order.
+
+The fact that Canadians let a foreign world leader dictate their votes (and not the actual qualifications and track record of the people who were actually running for office) actually proves Trump’s point. And it’s crazier to think that Canadians would assume the Canadian Conservative Party would follow in line with Trump when Trump’s very bombastic and taunting rhetoric is what cost conservatives the majority vote. Why would Trump go against his own interests?
+
+It’s ridiculous no matter what way you slice it that Canadians are continuing to inflict pain upon themselves in this ignorant of a manner. Very concerning for the future of Western civilization.
+
+2025-04-29T18:15:28.936Z | Hunter Jacques
+I’m scaling into some puts, 5/9 and 5/16 but planning on adding a decent size toward EOW
+
+2025-04-29T18:17:28.361Z | meager man
+same, I'm giving this time now that we've closed this gap to see if it makes a push higher
+
+2025-04-29T18:30:35.909Z | Jason Valvano
+This feels fake push
+
+2025-04-29T18:30:36.844Z | Jeffrey K
+i was eyeing 5574 for a top here, so far 5572.  This think market get could wild though, hard to be too committed
+
+2025-04-29T18:30:38.484Z | Jason Valvano
+Just bots
+
+2025-04-29T18:30:45.835Z | Rooster
+It was really a beautiful thing that the gap fill on SPX coincided with tapping the VWAP from Feb ATH, almost like someone planned it that way
+
+2025-04-29T18:30:54.224Z | Jeffrey K
+thin market
+
+2025-04-29T18:32:38.930Z | Nevistrader
+USTR: Europe is not engaging well on tariff talks - PBS
+
+2025-04-29T18:33:35.423Z | meager man
+really surprised my June puts on spy haven't fallen off harder on premium so far today
+
+2025-04-29T18:34:02.176Z | Δboy
+Manitoba's finance minister on bloomberg yesterday was pathetic... not only did he struggle loosing the uhh, umm's between every sentence which was mildly annoying.  but his claim that the 3.5million hogs they normally would export will "cause sausage shortages across the U.S. with Americans to be unable to get their beloved Mcdonalds breakfast sandwiches". lmao..  we killed 128 million hogs here in 2023, and Mcdonalds for the whole country only goes through about 400k.      out of tough with reality.
+
+2025-04-29T18:35:37.128Z | Nevistrader
+talk about manipulation..lol..look at QQQ 476C at 01:37 PM EST
+
+2025-04-29T18:37:29.613Z | David P
+I’ve noticed June puts holding up quite well also, the market believes
+
+2025-04-29T18:38:14.725Z | meager man
+looks like MAG 7 call buying helped spark this move
+
+2025-04-29T18:38:19.896Z | Eli
+earnings flow
+
+2025-04-29T18:38:35.852Z | Eli
+cant stop earnings flow man
+
+2025-04-29T18:42:11.469Z | Jeffrey K
+it gets thin between 5570 and 5585 but flow will determine if we get there
+
+2025-04-29T18:56:38.282Z | Jason Valvano
+Time to dump
+
+2025-04-29T18:56:43.837Z | Jason Valvano
+3pm dumpage
+
+2025-04-29T19:06:03.965Z | Mas
+import numpy as np
+import math
+import pandas as pd
+import yfinance as yf
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+from scipy.stats import norm
+from datetime import datetime
+import datetime as dt
+
+symbol = "^GSPC"
+start_date = "2024-01-01"
+end_date = dt.datetime.now()
+price_data = yf.download(symbol, start=start_date, end=end_date)
+
+def standard_deviation(price_data, window=20, trading_periods=252, clean=True):
+    log_return = (price_data["Close"] / price_data["Close"].shift(1)).apply(np.log)
+    squared_log_return = log_return ** 2
+    rolling_squared_log_return = squared_log_return.rolling(window=window, center=False).sum() / (window - 1)
+    rolling_mean_log_return = log_return.rolling(window=window, center=False).mean()
+    squared_rolling_mean = (rolling_mean_log_return ** 2) / (window * (window - 1))
+    adjusted_variance = rolling_squared_log_return - squared_rolling_mean / window
+    adjusted_std_dev = adjusted_variance.apply(np.sqrt) * math.sqrt(trading_periods)
+
+    if clean:
+        return adjusted_std_dev.dropna()
+    else:
+        return adjusted_std_dev
+
+rolling_std_dev = standard_deviation(price_data)
+print(standard_deviation(price_data))
+
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(rolling_std_dev, label='Rolling SD')
+plt.title(f'Rolling SD of Logreturns for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized SD')
+plt.legend()
+plt.show()
+
+def parkinson(price_data, window=20, trading_periods=252, clean=True):
+    rs = (1.0 / (4.0 * math.log(2.0))) * (np.log(price_data["High"] / price_data["Low"])) ** 2.0
+
+    def f(v):
+        return (trading_periods * v.mean()) ** 0.5
+
+    result = rs.rolling(window=window, center=False).apply(func=f, raw=True)
+
+    if clean:
+        return result.dropna()
+    else:
+        return result
+
+p_volatility = parkinson(price_data)
+print(p_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(p_volatility, label='Rolling Parkinson vol')
+plt.title(f'Rolling Parkinson vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+def garman_klass(price_data, window=20, trading_periods=252, clean=True):
+    if not all(col in price_data.columns for col in ['High', 'Low', 'Close', 'Open']):
+        raise ValueError("price_data must contain 'High', 'Low', 'Close', and 'Open' columns.")
+
+    log_high_low = np.log(price_data['High'] / price_data['Low'])
+    log_close_open = np.log(price_data['Close'] / price_data['Open'])
+
+    gk_volatility = (
+        (0.5 * log_high_low ** 2) -
+        ((2 * np.log(2) - 1) * log_close_open ** 2)
+    )
+
+    gk_volatility = np.sqrt(trading_periods * gk_volatility.rolling(window=window).mean())
+
+    if clean:
+        gk_volatility = gk_volatility.dropna()
+
+    return gk_volatility
+
+gk_volatility = garman_klass(price_data)
+print(gk_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(gk_volatility, label='Rolling Garman-Klass vol')
+plt.title(f'Rolling Garman-Klass vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+def rogers_satchell(price_data, window=20, trading_periods=252, clean=True):
+    if not all(col in price_data.columns for col in ['High', 'Low', 'Close', 'Open']):
+        raise ValueError("price_data must contain 'High', 'Low', 'Close', and 'Open' columns.")
+
+    log_high_open = np.log(price_data['High'] / price_data['Open'])
+    log_low_open = np.log(price_data['Low'] / price_data['Open'])
+    log_close_open = np.log(price_data['Close'] / price_data['Open'])
+
+    rs_volatility = (
+        (log_high_open * (log_high_open - log_close_open)) +
+        (log_low_open * (log_low_open - log_close_open))
+    )
+
+    rs_volatility = np.sqrt(trading_periods * rs_volatility.rolling(window=window).mean())
+
+    if clean:
+        rs_volatility = rs_volatility.dropna()
+
+    return rs_volatility
+
+rs_volatility = rogers_satchell(price_data)
+print(rs_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(rs_volatility, label='Rolling Roger-Satchell vol')
+plt.title(f'Rolling Roger-Satchell vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+def yang_zhang(price_data, window=20, trading_periods=252, clean=True):
+
+    log_ho = (price_data['High'] / price_data['Open']).apply(np.log)
+    log_lo = (price_data['Low'] / price_data['Open']).apply(np.log)
+    log_co = (price_data['Close'] / price_data['Open']).apply(np.log)
+
+    log_oc = (price_data['Open'] / price_data['Close'].shift(1)).apply(np.log)
+    log_oc_sq = log_oc**2
+
+    log_cc = (price_data['Close'] / price_data['Close'].shift(1)).apply(np.log)
+    log_cc_sq = log_cc**2
+
+    rs = log_ho * (log_ho - log_co) + log_lo * (log_lo - log_co)
+
+    close_vol = log_cc_sq.rolling(
+        window=window,
+        center=False
+    ).sum() * (1.0 / (window - 1.0))
+    open_vol = log_oc_sq.rolling(
+        window=window,
+        center=False
+    ).sum() * (1.0 / (window - 1.0))
+    window_rs = rs.rolling(
+        window=window,
+        center=False
+    ).sum() * (1.0 / (window - 1.0))
+
+    k = 0.34 / (1.34 + (window + 1) / (window - 1))
+    result = (open_vol + k * close_vol + (1 - k) * window_rs).apply(np.sqrt) * math.sqrt(trading_periods)
+
+    if clean:
+        return result.dropna()
+    else:
+        return result
+
+yz_volatility = yang_zhang(price_data)
+print(yz_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(yz_volatility, label='Rolling Yang-Zhang vol')
+plt.title(f'Rolling Yang-Zhang vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+plt.style.use('dark_background')
+plt.figure(figsize=(14, 8))
+
+plt.plot(rolling_std_dev, label=f'Standard Deviation (Current: {rolling_std_dev.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(p_volatility, label=f'Parkinson (Current: {p_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(gk_volatility, label=f'Garman-Klass (Current: {gk_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(rs_volatility, label=f'Rogers-Satchell (Current: {rs_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(yz_volatility, label=f'Yang-Zhang (Current: {yz_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+
+plt.title(f'Volatility Estimators for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized Volatility')
+plt.legend(loc='upper left')
+plt.grid()
+
+plt.show()
+
+2025-04-29T19:07:41.701Z | Mas
+that is the Python one that shows
+
+2025-04-29T19:11:41.317Z | RSA
+*TRUMP TO UNVEIL MORE TARIFF RELIEF DURING TRIP TO MICHIGAN: FT
+
+2025-04-29T19:11:49.130Z | Gil
+Looks like the dump will not come anymore. Maybe with the data tomorrow. Hardly doubt the earnings of tonight will have an effect.
+
+2025-04-29T19:14:35.304Z | Jason Valvano
+This thing is so bloated lol
+
+2025-04-29T19:14:46.107Z | Jason Valvano
+Like just bots not investors
+
+2025-04-29T19:15:20.379Z | Jason Valvano
+The dump can come quick
+
+2025-04-29T19:15:24.513Z | Jason Valvano
+Book is thin
+
+2025-04-29T19:18:01.561Z | Raju siruvuri
+
+2025-04-29T19:19:51.442Z | Raju siruvuri
+GDP tomorrow and tariff news tonight. let's see how the market will react.
+
+2025-04-29T19:31:54.311Z | Doc McGraw
+I saw it and still do as
+IF > 5550/55 then target 5565/70 stall mean revert between
+IF > 5570 THEN 5585 next target
+Magnet back to 5565/ 70 area
+
+2025-04-29T19:32:21.913Z | Doc McGraw
+Always IF / THEN
+
+2025-04-29T19:32:58.032Z | kk
+IWM might be a good short
+
+2025-04-29T19:49:56.895Z | leon
+markets are itching to pump the hell outta it
+
+2025-04-29T19:50:15.206Z | leon
+next big dip will be bought with force iyam
+
+2025-04-29T19:51:15.823Z | Jeffrey K
+
+2025-04-29T19:52:46.458Z | Vman
+pump in MAGS coming from TSLA
+
+2025-04-29T19:54:35.453Z | JFinn81
+Mid week dip?   Hopefully tomorrow
+
+2025-04-29T19:58:30.169Z | Vman
+I see it from a technical perspective. My guess is that this is supportive into the May OPEX just given where we are which is why any dip will get bought barring any news
+
+2025-04-29T20:19:47.761Z | Taco
+Boink at 2024 trendline?
+
+2025-04-29T20:35:57.541Z | Vman
+Whats going on with NVDA?
+
+2025-04-29T20:36:22.885Z | Vman
+
+2025-04-29T20:37:13.524Z | Vman
+Something going on with SMCI bringing down semis
+
+2025-04-29T20:41:41.614Z | Jason
+SMCI put out a pre announcement. Pretty ugly.
+
+2025-04-29T20:46:31.470Z | tim
+I think we topped out here and I've started loading puts
+
+2025-04-29T20:48:26.582Z | Jonathan Scholz
+I'm hesitant bcs tomorrow msft, meta earnings
+
+2025-04-29T21:04:29.406Z | Tom
+That was the call from how I read it
+
+2025-04-29T21:18:48.847Z | Mike Houston
+A lot of leverage ETF’s after hours
+
+2025-04-29T21:25:15.647Z | Mike Houston
+for example 1,2,and 6 th largest ever trades in FNGB 3 x leverage FANG stocks
+
+2025-04-29T21:29:13.953Z | Mike Houston
+SMCI obliterated
+
+2025-04-29T21:40:15.247Z | Mike Houston
+that might be just money shuffling between ETF's ...FNGA closing or something
+
+2025-04-29T22:23:41.288Z | YJ
+I saw that as well. No sure if that's a loading or unloading. From past behavior, that's a unloading or short
+
+2025-04-29T22:26:26.641Z | YJ
+In a Bear Market, or if the market not going up, shorting FNGB or FNGA is better than longing put, because they rebalance everyday and it erode it's value every day.
+
+2025-04-29T22:42:51.184Z | Vman
+This rally is wild lol
+
+2025-04-29T22:42:55.736Z | Vman
+trump rally in michigan
+
+2025-04-29T22:43:01.595Z | Vman
+absolute nonsense
+
+2025-04-29T22:43:02.086Z | Vman
+lol
+
+2025-04-29T22:43:19.684Z | Vman
+But im not surprised lol
+
+2025-04-29T22:46:02.179Z | Δboy
+I grew up close to there… it’s defiantly a trump supporter stronghold type of community.   Kind of ironic though because just a couple miles away where I live now the rep is trying to impeach him.
+
+2025-04-29T22:55:44.725Z | DIma
+So much hope on Trump fixing things, but imo with all the leverage US still has the chances he succed is quite low..and not its not only about him, but also others playing cards carefully
+
+2025-04-29T23:00:33.879Z | Rooster
+Trump:  "My friend Jensen from Navidia . . . ." Wasn't even good for a bump in AH trading
+
+2025-04-29T23:15:49.099Z | KDH
+https://x.com/financialjuice/status/1917348407452053685?s=46
+
+2025-04-29T23:16:12.103Z | KDH
+India making deal with China & US & France ?
+
+2025-04-29T23:17:35.094Z | Jeffrey K
+
+2025-04-29T23:41:13.357Z | Hunter Jacques
+Tomorrow is also PCE / GDP
+
+2025-04-29T23:52:03.565Z | Vman
+GDP might not be as bad since everyone was front running tariffs
+
+2025-04-30T00:00:44.032Z | tim
+https://x.com/unusual_whales/status/1917324142858400199
+
+2025-04-30T00:02:50.401Z | Vman
+Unless nukes start being threatened this should only be contained to that region
+
+2025-04-30T02:31:59.660Z | Sb
+"The promised bulltrap is here" from trading signals chat room. "earnings coming up, we'll see a quick pullback today, followed by a bounce I'll buy into, on this week, and using that to scale into cheap puts." from the early comments from Alma. So are we expecting a rise this week from this point on then starting to drop next week? Am I getting this correct?
+
+2025-04-30T02:38:20.658Z | Jason Valvano
+She said I’ve rnext two days
+
+2025-04-30T02:38:28.227Z | Jason Valvano
+But Friday from what I saw
+
+2025-04-30T02:39:30.143Z | Sb
+thank you! so the consensus is friday for the start of drop?
+
+2025-04-30T02:39:53.586Z | Sb
+sorry for being short here, I'm catching up after being absent for a while lol
+
+2025-04-30T02:42:43.370Z | Jason Valvano
+No I think from reading  drop today or tomorrow then maybe rebound Thursday in Friday or tomrorow into Thursday from futures looks tomorrow into Thursday or Friday
+
+2025-04-30T02:43:01.138Z | Jason Valvano
+But rad yourself and see don’t listen to me lol I’m just as noob as anyone
+
+2025-04-30T02:43:27.718Z | Judy
+she mentioned 2 May is the important day
+
+2025-04-30T02:44:59.135Z | JFinn81
+Buyable dip midweek then up into early next week
+
+2025-04-30T02:45:04.896Z | JFinn81
+Perry simple
+
+2025-04-30T02:45:09.506Z | JFinn81
+Pretty
+
+2025-04-30T02:47:02.186Z | JFinn81
+Doesn’t mean it will happen of course
+
+2025-04-30T02:47:56.385Z | Judy
+But she has calls into EOW?
+
+2025-04-30T02:51:46.365Z | Sb
+now I'm even more confused but thank you guys!
+
+2025-04-30T02:52:15.612Z | Sb
+I think "a dip" is the agreed scenario soon
+
+2025-04-30T02:53:42.291Z | JFinn81
+Don’t even bother with her trades.   She isn’t transparent enough to pay attention.    I just go by what she says in her posts
+
+2025-04-30T02:54:00.719Z | Jolene
+Personally I think the dipped already happened Monday which is why she is long 20 delta end of week calls which she likely closes tomorrow since there's more major tech earnings Wednesday/thursday
+
+2025-04-30T02:54:21.014Z | Jolene
+But don't quote me just how I took it
+
+2025-04-30T02:54:42.807Z | JFinn81
+Well if the dip happened Monday that isn’t mid week but yeah possible that was it
+
+2025-04-30T02:55:32.385Z | Jolene
+Dynamic environment not static just how I interpreted doesn't mean it's right
+
+2025-04-30T02:56:23.909Z | Jolene
+We also closed above her upside intraday pivot today with gdp and pce in the am
+
+2025-04-30T02:56:24.585Z | Judy
+The calls already up 100% if bought at dip on Monday
+
+2025-04-30T02:56:36.322Z | Jolene
+Yeah they paid well
+
+2025-04-30T02:59:54.574Z | Jolene
+I had to turn this chat off once I saw moon cycle TA lol. Alma already give us a nice edge with quant levels. Moon cycles are redicolous
+
+2025-04-30T03:04:56.997Z | Vman
+Ya but moon cycles are fun
+
+2025-04-30T03:05:01.900Z | Vman
+REeEeeeeEe
+
+2025-04-30T03:07:30.884Z | Jolene
+Thanks for all the hard work Alma! 😘
+
+2025-04-30T03:07:37.037Z | Vman
+The dip is just entering the end of the month and then vanna should come in. It’ll be like this until May 16 or some sort of volatility event
+
+2025-04-30T03:08:03.809Z | Vman
+Greeks are more at play right now based on today.
+
+2025-04-30T03:08:24.025Z | Jolene
+Sounds like something Cem would tweet haha
+
+2025-04-30T03:09:26.523Z | Vman
+I mean trade your own plan. Just trying to give a perspective as to why she is saying what she’s saying
+
+2025-04-30T03:10:06.361Z | Jolene
+For sure was just messing
+
+2025-04-30T03:11:18.767Z | Jolene
+Pretty interesting we closed just above the intraday upside pivot. Hopefully tomorrow brings more fun
+
+2025-04-30T03:17:15.821Z | Vman
+Im very curious how trump gets out of the whole empty shelves problem. Even if you drop all tariffs there’s still about 30 days right?
+
+2025-04-30T03:20:23.365Z | JSA
+Adjusted somewhat:  https://substack.com/chat/2679129/post/5ec8d5aa-9fac-4e6d-aef1-3f6a28632ae4
+
+2025-04-30T03:22:23.078Z | Judy
+Haha, she now in straddle
+
+2025-04-30T03:22:32.652Z | Jolene
+Yeah
+
+2025-04-30T03:22:56.351Z | Judy
+Market up and Down…
+
+2025-04-30T03:24:01.192Z | Tom
+Who’s in puts heavier than calls?
+
+2025-04-30T03:24:39.602Z | Jolene
+I'm pretty flat after today's action. Would like to build more puts
+
+2025-04-30T04:00:38.669Z | tim
+My interpretation is that we saw the dip Monday and we're currently in the bulltrap.  Where we either top out today or tomorrow to scale into cheap puts and start to head down this week into next week for a buy the dip opportunity to go long
+
+2025-04-30T04:03:20.976Z | Sb
+this is my perspective as well. Thank you Tim
+
+2025-04-30T04:09:04.535Z | Vman
+Random thought. The India Pakistan issue could end up becoming a bigger deal than we think (i said earlier it wouldn't be). With China backing Pakistan, if it turns out that India asks for military support  from the U.S  as part of the trade deal then this could become bigger
+
+2025-04-30T04:17:38.899Z | tim
+https://x.com/agnostoxxx/status/1917325548960829505
+
+2025-04-30T04:17:44.027Z | tim
+meme post lol
+
+2025-04-30T05:16:40.389Z | Eric
+https://x.com/deitaone/status/1917418046655697124?s=46&t=kooBJ9E7D6sJvxhZ-Fp23w
+
+2025-04-30T05:17:04.916Z | Eric
+trump holding investing in america talk tomorrow at 11est
+
+2025-04-30T05:19:43.886Z | Vman
+I've got 5500 and 5430 as interesting areas to watch. Volatility would need to increase below 5430 to start a new leg down. 5430 is also around where the 9/21 EMA's converge so a close above it would likely pull in momentum traders
+
+2025-04-30T05:28:26.155Z | Vman
+if we gap down but are above 5500 its likely just buy the dip (market makers are short deltas up to 5650 which is interesting). But 5430 is sort of my "dip" target if volatility doesn't increase substantially
+
+2025-04-30T08:06:03.345Z | Tim Lam
+https://www.youtube.com/watch?v=lpgc_QHQBj4&t=246s&ab_channel=BridgewaterAssociates
+bridgewater macro
+
+2025-04-30T08:17:15.621Z | Gil
+Green by open again. These systematic buyers driving up prices overnight all the time. Next time they are positioned to buy this much, maybe just buy spy bull puts end of day?
+
+2025-04-30T09:54:30.595Z | Jason Valvano
+Bad earnings and a lot of data have to see how it shakes out
+
+2025-04-30T09:54:48.439Z | Jason Valvano
+GDP expectations are so low at .2%
+
+2025-04-30T10:00:55.192Z | Hoondoc
+Due to meta earnings, etc., I think a pullback will occur after Spx rises to 5700.
+
+2025-04-30T10:07:33.609Z | Jason Valvano
+Who knows all the data is backwards looking
+
+2025-04-30T10:07:57.287Z | Jason Valvano
+We are forsure in the a bad recession in the USA and inflation is gunna hit again with the China imports price hike
+
+2025-04-30T10:25:54.097Z | Jack
+gm
+
+2025-04-30T10:25:57.311Z | Jack
+https://x.com/gutyguty/status/1917358911599890534?s=46
+
+2025-04-30T10:45:31.988Z | Jason Valvano
+We won’t see empty grocery shelves just fyi we produce all our food really here and we export alot in the USA so that tweet isn’t true it would be like clothing and different things
+
+2025-04-30T10:45:43.246Z | Jason Valvano
+A lot necessities the USA actually is self reliant
+
+2025-04-30T11:10:46.852Z | V. Z.
+but who´s gonna harvest the food for low wages???!!! food prices will rise in the US
+
+2025-04-30T11:16:40.171Z | Jonathan Scholz
+EUR GDP came in stronger by the way:
+
+2025-04-30T11:21:48.496Z | Jason Valvano
+There not deporting the farmers
+
+2025-04-30T11:22:31.001Z | Jason Valvano
+GDP gunna come in high
+
+2025-04-30T11:22:47.816Z | Jason Valvano
+It’s backwards looking for whatever that matters lol

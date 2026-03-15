@@ -1,0 +1,113 @@
+CPI, credit spreads, Stagflation, QT + Intraday post (13/May)
+
+SPX/LTY correlation, Yields, Credit spreads, CPI, Stagflation, Intraday post
+
+Trump’s landed in Saudi. This is a pivotal event. Meanwhile the White House is weighing a deal to export hundreds of thousands of U.S. AI-grade chips to G42, a UAE AI champion—an unprecedented pivot in export controls. Signaling that geopolitical lines around technology are fluid, injecting fresh uncertainty into semis and tech valuations. Potentially broadening chip supply could ease tech-hardware inflation pressure—but may provoke pushback if national-security concerns rise. This is what I’m keep saying, that the stagflationary pressures can be eased, and economy can be bailed out if good deals are done. But the final boss is China.
+
+DYNAMICS1) SPX/LTY correlationEquity–yields correlation has jumped to ~70 bps over the past week (from -22% to 52%), signaling that inflation surprises (and hence inflation expectations) have become the primary driver of both yields and equity returns, rather than growth surprises. This abrupt flip resembles the mid-2021 shift documented by the BIS: once inflation is volatile enough, positive correlations persist and diversification benefits fade. Crucial, because the stock–bond correlation depends not on the level of inflation per se but on the relative volatility of growth vs. inflation surprises and their covariance. When inflation uncertainty rises, its shocks loom larger, flipping correlations positive and eroding bonds’ hedge role. With equities and bonds moving together, passive portfolios demand extra compensation for undiversified bond risk, pushing term premia—and long yields—higher over time.
+
+CPI expectations remain elevated above the Fed’s 2% goal: April headline is seen at +0.2% m/m (2.4% y/y), core at +0.3% m/m (2.8% y/y), with current‐quarter annualized CPI ≈ 3.0%, year‐ahead consumer survey at 3.6%, and 5-year breakevens near 2.39%So, basically consensus forecasts expect the April CPI to show inflation was firmer than previously thought, signaling that price pressures remain sticky and complicating the Fed’s calculus for rate cuts.Below-consensus CPI prints will now tend to lower long yields (bond prices up) and boost equities—unlike a growth regime, where yields and stocks would diverge. Good inflation news are good for both. While above-consensus inflation prints push yields up (bond prices down) and dent stocks, creating a one-two punch to multi-asset portfolios. Bad inflation news are bad for both.
+
+2) U.S. 10-Year Treasury YieldYields fell below 4.00 % in early April (betting on rapid Fed cuts and tariff relief), then surged back above 4.40 % as the Fed held rates and liquidity tightened.
+
+The rebound from 4.00 % to 4.40–4.50 % shows markets now price a delayed Fed easing cycle—term premia have widened as fixed-income investors demand extra compensation for holding long bonds in a volatile, policy-driven regime. Breakeven inflation (10-year TIPS spread) stood at 2.29 % on May 9, reflecting that markets still expect inflation near the Fed’s 2 % target over the next decade. With longer spiked SPX to LTY correlation, this means that good inflation news (below-expectation CPI) will now lower yields and lift equities—as both bond risk premia and equity discount rates ease; while bad inflation news (above-expectation CPI) will raise yields and hurt stocks in tandem, compressing traditional 60/40 diversification benefits.
+
+4.30–4.50 % likely holds as long as policy and tariff risks remain front-and-center; a sustained move below 4.20 % would require markedly weaker data or fresh Fed dovish signals.Any surprise in inflation prints or a sudden liquidity squeeze (e.g., repo-market stress) could send yields rapidly through the 4.50 % handle—and rip equity valuations.
+
+3) CDX High-Yield 5Y SpreadThe credit-default-swap spread on the 5-year high-yield index spiked from ~300 bps in December to a peak near 476 bps in early April (tariff shock/freight-bottle-neck worry), then retraced to ~350 bps today.
+
+It’s above its 100- and 200-day averages—indicating that, on balance, credit stress remains elevated vs. long-term norms. But it’s below its 50-day average, suggesting a partial cooldown from the spike but not a return to “healthy” levels.
+
+A steep curve in CDS spreads (with shorter tenors widening more) can foreshadow mounting default concerns; the high-yield 5-year contract’s stubborn elevation implies that near-term funding strains are priced into credit protections.Spreads north of both long-run averages demonstrate investors demand extra compensation for tail risks in the high-yield universe. If a fresh catalyst (e.g., hawkish Fed remarks or tariff escalations) hits, we will see renewed stress, since dealers and funds remain underhedged in face of a tighter liquidity backdrop. In a good-news regime, we’d expect spreads to compress back toward long-term averages and equity risk-premia to narrow. In a bad-news regime, spreads would re-widen sharply above short-term trends, denting high-yield debt and equity valuations in tandem.
+
+So the key is, that the primary concern has shifted away from recession toward managing inflation risks.
+
+Lose-lose for FedAs I kept explaining since April Fed datas, Trump’s tariff policy forced the Fed into a lose-lose situation of choosing between steering the economy into recession or managing a period of stagflation. At its May 7 meeting, Fed officials unanimously decided to keep the benchmark rate unchanged while cautioning that tariffs posed dual threats of higher unemployment and higher inflation. As Powell said that sustained tariff increases “are likely to generate a rise in inflation, a slowdown in economic growth, and an increase in unemployment”. Stagflation.
+
+Firmer-than-expected CPI readings imply the Fed may hold rates at restrictive levels longer, and any dovish pivot hinges on clear evidence of inflation easing back toward the 2 percent target. Get ready for sharp repricing of both rates and equities, if price‐report surprises.
+
+VOLATILITY REGIMECoding 1m, 3m realized volatility and vol of vol for SPX:
+
+On a monthly basis, RV has fallen down to its 23.36% by May 9, while catched up to 24.90% during yesterday session. However on a three monthly basis, RV is stagnant and grinding up, currently trending at 29.48%The sharp decrease in one monthly RV was simply caused by mathematics, once those four shock days began to roll off a 20-day window (by April 23, T+12; April 24, T+13; etc.), the 1m RV plunged—not because markets calmed, but because the biggest outliers left the sample. A 3m RV has longer memory.
+
+Risk-parity, vol-targeting, risk-controlled indices compare the observed RV to a target and scale exposure by min(1, target/RV). Volatility-managed portfolios outperform by de-leveraging in high-vol regimes and increasing leverage when volatility subsides. Until both windows fall below the vol-target threshold, vol-control strategies will remain cautious—hence minimal fresh buy flows even in the face of a low 1m RV.
+
+The real reason is the vol of vol (VoV). Look how much it spiked…This means that the mean of vol falls while its variance return distribution stays high, signaling fat tails, clustering, and higher sensitivity of risk measures to new shocks, also delta-hedged option returns are systematically negative when exposed to high VoV—investors pay up for the insurance against a volatile volatility regime. (Rough volatility models show that volatility paths are far more jagged than classical diffusions—implying persistent high VoV even if average vol is low.) There is a lot of mispricing risk here. The takeaway is clear: don’t trust a single‐scale vol measure. 1m RV may signal “buy”, but VoV and 3m RV still signal “sell/neutral.” The result: vol-targeters sit on their hands, missing opportunities or being caught off-guard when RV re-spikes.
+
+MEAN REVERSIONThe first reversion model, signaling red dot at 5844.18 highs, targeting 5491.06 as the projected “cool off” point. 5664.86 is pivot
+
+The model says 67.26% probability for reversion towards 5491.06Size accordingly. The odds are relatively underpricedMay OpEx:
+
+Jun OpEx:
+
+Based on the VIX at 18.52% as of May 13, 2025, the one-sigma move over the next three trading days (to May 16) is about ±118 points, corresponding to a 68.2% probability of SPX remaining within that range and 31.8% of ending outside it. The market assigns roughly a 17.3% chance of SPX < 5725 and a 15.7% chance of SPX > 5960 by May 16, as implied by the respective IVs. This aligns with what VIX is showing us, even overestimated by a small 1.2 pts, that is natural and gives a bit more room for short VIX.
+
+However, fo June OpEx, the VIX implies a one‐sigma move of ±5.98 % (≈±349 pts). By June OpEx, risk-neutral odds for SPX < 5495 ≈ 18.5%, and for > 6195 ≈ 8.3%This is an underpricing by 5%; not much but it is there. Note, VIX tends to underestimate the market moves, and these probabilities are derived from VIX. If my model estimates the odds right (usually does), then this is a serious mispricing, and one should monitor carefully how it evolves. Be careful, the divergence arises because the Q-measure strips out the mean-reversion drift and adds a volatility risk premium/skew. What I mean is that mean-reverting processes produce physical probabilities that account for a drift back toward a long-term mean, calibrated to historical data and true-world dynamics, while risk-neutral probabilities are derived from market option prices under an equivalent martingale (Q) measure and ignoring real-world drift in favor of no-arbitrage pricing.The market’s risk-neutral probabilities understate that physical likelihood by ~40 pp, if my model is right, but no arbitrage opportunity.
+
+The subject of this underestimationis coming from several risks. Market has run out of steam after Opex hedging flows, needs to fill key gap levels, is underpinned by rising trade deficits, tight credit/funding conditions, and inflationary supply shocks from tariffs and freight (these shocks push up costs for raw materials, shipping, and finished goods—even as demand cools, you won’t see these immediately in headline CPI; they show up first in wholesale prices, margin compression, then eventually feed into consumer prices), and likely to retest or breach prior lows before enough volatility and macro data calm down to rebuild a bullish technical structure.
+
+INTRADAY POSTCoding today’s positioning:
+
+The speed profile is net positive, while locally it goes net negative above 5850.I code 5818.14 as the centroid of this positioning.To the upside, 5847.67 must be taken, but here vol is expected to cool down. If it does too sharply, 5850 will reject. If vol catches up, we will see squeeze higher, but 5889.97 is a big lvl, and likely to reject back if vol is stagnant or cooling off, and pin at 5850. Otherwise 5935 is coming.To the downside 5785.77 is the pivot. Below that, market will revert. Coding zero vanna at 5754 with positive convexity.
+
+***update***: April’s CPI report showed headline inflation easing to 2.3% year-over-year, down from 2.4% in March, while monthly prices rose 0.2%, driven by higher import-tariff–affected goods. Core CPI (ex-food and energy) climbed 0.3% m/m and held around 2.8% y/y. Goods inflation and shelter costs remain sticky, underscoring that tariff-driven supply shocks are entering the price data. Markets have taken the slightly softer-than-expected print in stride—bond yields and equities barely budged—leaving the “higher-for-longer” Fed narrative intact and pushing back rate-cut expectations.Investor focus will turn to May CPI, retail sales, and PCE data to gauge supply-shock persistence before repositioning for a sustainable risk-asset rally.
+
+SCRIPT INPUTS:=== SPX closed at 5844.19===
+
+99.73%, 5983.541011656415, , 5948.601246641372, 95.4%, 5913.8655058282075, Risk level, 5891.151290928212, 68.2%, 5878.92453179203, 68.2%, 5809.247787940694, Risk level, 5797.228709071787, 95.4%, 5774.514494171792, , 5739.571014031133, 99.73%, 5704.838988343584
+
+=== ES closed at 5868.25===
+
+99.73%, 6015.717101529014, , 5978.736661146579, 95.4%, 5941.983550764507, Risk level, 5917.946413215278, 68.2%, 5905.001691089836, 68.2%, 5831.266685140217, Risk level, 5818.553586784722, 95.4%, 5794.516449235493, , 5757.531641918717, 99.73%, 5720.782898470986
+
+=== SPY closed at 582.99===
+
+99.73%, 597.556887894709, , 593.9040008049054, 95.4%, 590.2734439473545, Risk level, 587.899041220517, 68.2%, 586.6204182321547, 68.2%, 579.3368321737638, Risk level, 578.080958779483, 95.4%, 575.7065560526455, , 572.0532424965913, 99.73%, 568.423112105291
+
+=== VIX closed at 18.38===
+
+99.73%, 20.805060551635673, , 20.192270741590775, 95.4%, 19.597529970642057, Risk level, 19.203875001238135, 68.2%, 18.984166144414253, 68.2%, 17.775983542516443, Risk level, 17.57612377805874, 95.4%, 17.182468808654818, , 16.567705870668277, 99.73%, 15.9749382276612
+
+=== IWM closed at 207.87===
+
+99.73%, 214.38503372968466, , 212.75004071523415, 95.4%, 211.12751686484233, Risk level, 210.06556636690374, 68.2%, 209.49242690535326, 68.2%, 206.23481003289726, Risk level, 205.67443363309627, 95.4%, 204.61248313515767, , 202.97718995041078, 99.73%, 201.35496627031534
+
+=== QQQ closed at 507.85===
+
+99.73%, 523.9047919597672, , 519.8756003291435, 95.4%, 515.8773959798835, Risk level, 513.2604648904415, 68.2%, 511.8479613599959, 68.2%, 503.8203146476094, Risk level, 502.4395351095585, 95.4%, 499.82260402011644, , 495.792659815859, 99.73%, 491.7952080402329
+
+=== NDX closed at 20868.15===
+
+99.73%, 21509.260170019912, , 21348.380977003922, 95.4%, 21188.705085009955, Risk level, 21084.20412729671, 68.2%, 21027.81672023395, 68.2%, 20707.252179496187, Risk level, 20652.095872703292, 95.4%, 20547.594914990048, , 20386.68734139512, 99.73%, 20227.03982998009
+
+=== NQ closed at 20957.0===
+
+99.73%, 21610.967816359076, , 21446.852711844982, 95.4%, 21283.983908179536, Risk level, 21177.387154113007, 68.2%, 21119.859155868406, 68.2%, 20792.8652964492, Risk level, 20736.612845886993, 95.4%, 20630.016091820464, , 20465.871119042575, 99.73%, 20303.032183640924
+
+=== NVDA closed at 123.0===
+
+99.73%, 131.3514489735835, , 129.2467240807493, 95.4%, 127.17572448679175, Risk level, 125.81443830409764, 68.2%, 125.0704366022418, 68.2%, 120.8941102292606, Risk level, 120.18556169590236, 95.4%, 118.82427551320825, , 116.71774078670744, 99.73%, 114.64855102641651
+
+=== AMZN closed at 208.64===
+
+99.73%, 218.82535972095377, , 216.26402972892257, 95.4%, 213.73267986047688, Risk level, 212.07246622596142, 68.2%, 211.17098836272442, 68.2%, 206.07792912854617, Risk level, 205.20753377403855, 95.4%, 203.5473201395231, , 200.98485066803647, 99.73%, 198.4546402790462
+
+=== AAPL closed at 210.79===
+
+99.73%, 220.11604139294508, , 217.7720505984636, 95.4%, 215.45302069647252, Risk level, 213.93287594942248, 68.2%, 213.1087568182252, 68.2%, 208.44545081961024, Risk level, 207.6471240505775, 95.4%, 206.12697930352746, , 203.78213176381072, 99.73%, 201.4639586070549
+
+=== GOOG closed at 159.58===
+
+99.73%, 166.0509126621595, , 164.4252265295133, 95.4%, 162.81545633107976, Risk level, 161.76069756714776, 68.2%, 161.1896104633103, 68.2%, 157.95398785306529, Risk level, 157.39930243285227, 95.4%, 156.34454366892027, , 154.718358288212, 99.73%, 153.10908733784052
+
+=== TSLA closed at 318.38===
+
+99.73%, 344.5187298050311, , 337.92086971789547, 95.4%, 331.4493649025155, Risk level, 327.18875194429546, 68.2%, 324.8489630546216, 68.2%, 311.7768432747004, Risk level, 309.57124805570453, 95.4%, 305.31063509748446, , 298.7044823984426, 99.73%, 292.2412701949689
+
+=== TSM closed at 186.98===
+
+99.73%, 196.70187264719638, , 194.2562004808169, 95.4%, 191.84093632359819, Risk level, 190.25627108210517, 68.2%, 189.39487393746006, 68.2%, 184.53352683513532, Risk level, 183.7037289178948, 95.4%, 182.1190636764018, , 179.67215750506526, 99.73%, 177.2581273528036
+
+=== AMD closed at 108.12===
+
+99.73%, 115.05533484820862, , 113.30823641911854, 95.4%, 111.58766742410431, Risk level, 110.4572078438463, 68.2%, 109.84015022701925, 68.2%, 106.37203673008166, Risk level, 105.7827921561537, 95.4%, 104.6523325758957, , 102.90389316758582, 99.73%, 101.18466515179139

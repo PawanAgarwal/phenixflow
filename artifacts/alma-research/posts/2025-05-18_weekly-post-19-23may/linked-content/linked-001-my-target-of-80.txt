@@ -1,0 +1,87 @@
+Intraday vol breakdown + Intraday post (14/May)
+
+Speed profile with intraday vol breakdown
+
+Weekly post is here.CPI preview and review is posted here below the paywall.After tariff relief, many strategists cut recession odds and turned bullish, forecasting only modest corrections, a broad consensus of a ~10 % rebound by end-2025, warning investors “don’t buy the hype” of deeper sell-offs.
+
+However, lingering risks in trade-war dynamics is still there, despite the rally, meaning that any failure to extend or honor the pause, and if the Fed mishandles rate-cut expectations, can trigger sharp, even bigger reversal. QT regime along with maturing balance‐sheet roll‐offs pull liquidity out, there’s far less dry powder to absorb shocks. Also note, that we’re hitting the five‐year milestone of debt and equity refinancings, and the resulting cash‐scarcity is a major hidden vulnerability.You have to understand that structural forces fundamentally determine the distribution and risk premia. This is why it is important to assign a narrative to this current short vol-driven relief-rally. Stagflation is masked now, sentiment-wise. Market misprices the current state, and the risk of the looming bear market.
+
+As you already know, I expect May OpEx to be supportive, especially now as SPX is trading above the key levels while volatility is keep grinding lower. I see the OpEx as the possible peak. Heavy reliance on T-bills means rollover risk is rising, putting upward pressure on yields and downward on asset prices if new buyers don’t step up.But I will wait for the signal of the model to go above 80% probability. No rush to short.
+
+INTRADAY POSTCoding intraday positioning:
+
+The speed profile drawns a short fly pattern at 5830/5900/5960Below 5894.97, the speed profile is very steep with a slope of 121.29%, and above this, it is negative with a slope of -51.10%; but the net profile is positive with a slope of 38.84%
+
+This implies that i.e. in the shorter speed territory the intraday volatility is expected to naturally increase, but the ‘channel’ that it is moving within, is decreasing, vol upward grinds making lower highs, if the stabilizating interest is driving the spot. Also, if spot declines back down to the 5900, intraday vol should make lower lows. Why? Simply, bcs the positive speed profile is stabilizating to the upside. If this effect is in play when market is above the center of the fly, then local intraday vol should draw a declining channel. And if the channel declines steep enough, the spot can be pinned.Contrary, if the anxiety about these high levels is growing, the the channel should be ascending above 5900 (local negative speed), bcs positive speed means heavier left-tail risk. So, if you see intraday volatility realizing higher lows while decaying towards 5900, the gamma won’t be able to hold it, but it depends on the steepness of the channel. Especially bcs by the time that gamma will increase, and more vol will be needed to unclench.Below 5900, both local and the overall speed profile is positive, but the steepness is different!The steepness will decide if the local pin vs left-tail risk or the overall speed profile is in play or not.Because local speed is much steeper, the effect is way more stronger. if the local pinning forces are priced in, and customers are interested in pinning, you will see sharper decline in lower lows in vol, when market is going towards 5900, and shareper increase in hgiher highs, if it wants to unclench.But if no sharper decline in lower lows when spot approaches 5900, market will just go through that and grinding towards 5955; but in the afternoon, only higher vol can break through the 5900 gamma (due to positive color).
+
+This implies that i.e. in the shorter speed territory the intraday volatility is expected to naturally increase, but the ‘channel’ that it is moving within, is decreasing, vol upward grinds making lower highs, if the stabilizating interest is driving the spot. Also, if spot declines back down to the 5900, intraday vol should make lower lows. Why? Simply, bcs the positive speed profile is stabilizating to the upside. If this effect is in play when market is above the center of the fly, then local intraday vol should draw a declining channel. And if the channel declines steep enough, the spot can be pinned.
+
+Contrary, if the anxiety about these high levels is growing, the the channel should be ascending above 5900 (local negative speed), bcs positive speed means heavier left-tail risk. So, if you see intraday volatility realizing higher lows while decaying towards 5900, the gamma won’t be able to hold it, but it depends on the steepness of the channel. Especially bcs by the time that gamma will increase, and more vol will be needed to unclench.
+
+Below 5900, both local and the overall speed profile is positive, but the steepness is different!The steepness will decide if the local pin vs left-tail risk or the overall speed profile is in play or not.Because local speed is much steeper, the effect is way more stronger. if the local pinning forces are priced in, and customers are interested in pinning, you will see sharper decline in lower lows in vol, when market is going towards 5900, and shareper increase in hgiher highs, if it wants to unclench.But if no sharper decline in lower lows when spot approaches 5900, market will just go through that and grinding towards 5955; but in the afternoon, only higher vol can break through the 5900 gamma (due to positive color).
+
+The centroid of the positioning is 5874.06 zone; this is where vol behavior matters the most. To the upside, 5906.85 is the main lvl, and to the downside it is the 5854.92 - 5860.55 zone.Charm flows are supportive. Coding zero vanna at 5835 with positive convexity, meaning realtively low vol is needed to break through this. Below this line, only 5750 is the next support.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX closed at 5886.55===
+
+99.73%, 6021.798411208709, , 5987.8908449777355, 95.4%, 5954.174205604355, Risk level, 5932.128714577335, 68.2%, 5920.265548942912, 68.2%, 5852.640227709174, Risk level, 5840.9712854226655, 95.4%, 5818.925794395645, , 5785.014880392816, 99.73%, 5751.301588791292
+
+=== ES closed at 5900.75===
+
+99.73%, 6043.533373960646, , 6007.731485285209, 95.4%, 5972.141686980323, Risk level, 5948.867997024738, 68.2%, 5936.338522982761, 68.2%, 5864.94552963204, Risk level, 5852.632002975262, 95.4%, 5829.358313019677, , 5793.552504085242, 99.73%, 5757.966626039354
+
+=== SPY closed at 586.84===
+
+99.73%, 601.0097428207639, , 597.4568053183501, 95.4%, 593.9248714103819, Risk level, 591.6152033305974, 68.2%, 590.3718078791268, 68.2%, 583.286807378267, Risk level, 582.0647966694027, 95.4%, 579.7551285896182, , 576.2018037028328, 99.73%, 572.6702571792362
+
+=== VIX closed at 18.21===
+
+99.73%, 20.578316704835064, , 19.980040473389685, 95.4%, 19.399158009094776, Risk level, 19.014752274283445, 68.2%, 18.80033631628334, 68.2%, 17.620559138458525, Risk level, 17.42524635242554, 95.4%, 17.040840617614208, , 16.440693220115328, 99.73%, 15.861681921873922
+
+=== IWM closed at 208.63===
+
+99.73%, 214.90969099100587, , 213.33399179842766, 95.4%, 211.76984549550295, Risk level, 210.74625586396897, 68.2%, 210.19406001532673, 68.2%, 207.05412561519566, Risk level, 206.51374413603102, 95.4%, 205.49015450449704, , 203.91418847714084, 99.73%, 202.35030900899412
+
+=== QQQ closed at 515.59===
+
+99.73%, 531.3366616165098, , 527.3853038057819, 95.4%, 523.4633308082549, Risk level, 520.8966249647639, 68.2%, 519.5117503304696, 68.2%, 511.63819000204813, Risk level, 510.28337503523625, 95.4%, 507.71666919174515, , 503.76462249918666, 99.73%, 499.8433383834903
+
+=== NDX closed at 21197.7===
+
+99.73%, 21837.788734861675, , 21677.17591262096, 95.4%, 21517.744367430838, Risk level, 21413.409903648386, 68.2%, 21357.122694255628, 68.2%, 21037.069206581782, Risk level, 20981.990096351616, 95.4%, 20877.655632569164, , 20717.015437117927, 99.73%, 20557.611265138326
+
+=== NQ closed at 21254.75===
+
+99.73%, 21907.802651058395, , 21743.926570370226, 95.4%, 21581.276325529197, Risk level, 21474.82874340668, 68.2%, 21417.390900388444, 68.2%, 21090.854941062924, Risk level, 21034.67125659332, 95.4%, 20928.223674470803, , 20764.31867874316, 99.73%, 20601.697348941605
+
+=== NVDA closed at 129.93===
+
+99.73%, 138.82360361655378, , 136.58210669590815, 95.4%, 134.3768018082769, Risk level, 132.92714441877862, 68.2%, 132.13469589380912, 68.2%, 127.68724267150021, Risk level, 126.93285558122139, 95.4%, 125.48319819172312, , 123.23974243642326, 99.73%, 121.03639638344625
+
+=== AMZN closed at 211.37===
+
+99.73%, 221.58082163808766, , 219.01324022470948, 95.4%, 216.47541081904382, Risk level, 214.81104689203553, 68.2%, 213.90747435473423, 68.2%, 208.8016911214531, Risk level, 207.92895310796447, 95.4%, 206.2645891809562, , 203.69588921919495, 99.73%, 201.15917836191235
+
+=== AAPL closed at 212.93===
+
+99.73%, 221.59429869228677, , 219.4175326101757, 95.4%, 217.2621493461434, Risk level, 215.84986865930065, 68.2%, 215.08516792255648, 68.2%, 210.75279438177253, Risk level, 210.01013134069936, 95.4%, 208.59785065385663, , 206.4204114303904, 99.73%, 204.26570130771324
+
+=== GOOG closed at 160.89===
+
+99.73%, 167.52466968287396, , 165.85770868071467, 95.4%, 164.20733484143696, Risk level, 163.1258836831285, 68.2%, 162.54020457301877, 68.2%, 159.22269341196687, Risk level, 158.65411631687147, 95.4%, 157.572665158563, , 155.90517474729322, 99.73%, 154.255330317126
+
+=== TSLA closed at 334.07===
+
+99.73%, 361.5639162755826, , 354.6238310257225, 95.4%, 347.8169581377913, Risk level, 343.33544978487134, 68.2%, 340.87418676850837, 68.2%, 327.124316728225, Risk level, 324.80455021512864, 95.4%, 320.3230418622087, , 313.3741911849292, 99.73%, 306.5760837244174
+
+=== TSM closed at 193.99===
+
+99.73%, 204.0451638207387, , 201.5156944362116, 95.4%, 199.01758191036936, Risk level, 197.37859020758896, 68.2%, 196.48771135822352, 68.2%, 191.45970721070125, Risk level, 190.60140979241106, 95.4%, 188.96241808963066, , 186.43168028892865, 99.73%, 183.9348361792613
+
+=== AMD closed at 112.46===
+
+99.73%, 119.70890522970058, , 117.88274995398088, 95.4%, 116.08445261485028, Risk level, 114.9028810624091, 68.2%, 114.25785548952886, 68.2%, 110.63293207238944, Risk level, 110.0171189375909, 95.4%, 108.83554738514971, , 107.00797676022287, 99.73%, 105.21109477029941

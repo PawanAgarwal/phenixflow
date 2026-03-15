@@ -1,0 +1,79 @@
+Fed, QE, Bulltrap? + Intraday post (30/April)
+
+Here is the big landscape and weekly post again…And chinese plane landed in Beirut. This post is playing out…
+
+Derivatives markets now price in a 44–50% chance of a rate cut at the next June FOMC. Traders expect rapid‐fire cuts if JOLTS and CPI disappoints. Job openings fell by 288,000 in March 2025—the steepest drop since 2021—dropping to 7.192 million. This single datum sent markets scrambling to price in softer NFP and higher recession odds. U.S. import volumes from China plunged 36–43%, and booking cancellations hit more than 50% on key lanes. ‘Empty shelves’If inventories run out → sales disappointments → layoffs begin: continuing claims jumped 41,000 to 1.885 million.So we can expect a broad economic pullback. Our beloved Bessent publicly lean into the rhetoric of “strategic uncertainty,” signaling to markets that a downturn (and thus rate cuts) is desirable, plus IMF, JPM, Fed governors, and Trump himself create a chorus of easing demands. This sequence is magnified by the bullwhip effect.
+
+Now, listen…The May 2 de minimis tariff change and April 9 steep tariffs both landed just before key data releases, amplifying their impactPowell has stressed that rate cuts are not on a preset path and depend on clear evidence of slack.So the string of weakening data is not purely coincidental but rather part of a coordinated effort (by policymakers, fiscal authorities) to generate enough economic stress to justify Federal Reserve rate cuts. A sharp JOLTS collapse signals cooling NFP, which feeds into a freight‐volumes slump, leading to empty shelves within weeks, and ultimately rising joblessness. Each step reflects how weakening labor demand ripples through goods movement and inventory, then back into hiring, completing a negative feedback loop.Be careful…
+
+If they really pull off that rate cut in June, we’ll likely see a modest bull run—much like last October’s—provided, as I’ve said, that GDP and NFP data align. That said, inflationary pressures will reemerge by mid-summer. And while QE could stave off a deflationary spiral in the short term, it isn’t sustainable—stagflation today runs deeper than before. Best to sit back and let the events unfold. See my note at the bottom of the post…
+
+Coding intraday positioning for today session:
+
+This is a net negative speed environment. Pretty steep, with avg slope of -52.68%Expect low volume day today. Big players are scalping, but they are waiting for the aftermath. The centroid of the positioning is 5547.03Downside pivot is 5473.65; while upside pivot is the 5557.95 - 5610.36 zone (where intraday vol trend channel should point upward if calls catch a bid. If vol is relatively lower, 5570 will reject.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+So this week is bulltrapish. For the next week, market prices 50% chance for cut. If no cut, market will reprice itself. Depending on the stock/bond correlation, the slowing growth will support the market, and lead to a June cut, emergency QE. However note, that while pandemic liquidity interventions were truly crisis‐driven, today’s orchestrated bailouts and cut expectations feel pre‐emptive and politically charged. Powell has stressed that rate cuts are not on a preset path and depend on clear evidence of slack.If data orchestrated to look worse do trigger cuts, the Fed risks losing credibility and could inadvertently reignite inflation later.Whether truly orchestrated or organically deteriorating, markets are already front‐running that scenario, setting up a clash between traders’ easing bets and the Fed’s caution against pre‐emptive action. Keep your eyes on CME FedWatch tool, especialy today and Friday.
+
+SCRIPT INPUTS=== SPX ===
+
+99.73%, 5766.76188873865, , 5715.047033715607, 95.4%, 5663.795944369324, Risk level, 5630.229046504925, 68.2%, 5612.076834945087, 68.2%, 5509.106477140619, Risk level, 5491.430953495075, 95.4%, 5457.8640556306755, , 5406.135951214871, 99.73%, 5354.89811126135
+
+=== ES ===
+
+99.73%, 5793.261437486694, , 5740.392337340682, 95.4%, 5688.005718743347, Risk level, 5653.692354433016, 68.2%, 5635.132112587461, 68.2%, 5529.871716295558, Risk level, 5511.807645566984, 95.4%, 5477.494281256653, , 5424.611138479246, 99.73%, 5372.238562513306
+
+=== SPY ===
+
+99.73%, 575.6536497045597, , 570.2952987367208, 95.4%, 564.9868248522798, Risk level, 561.5094399504367, 68.2%, 559.6279985419919, 68.2%, 548.9606798741457, Risk level, 547.1305600495634, 95.4%, 543.6531751477203, , 538.2933416349409, 99.73%, 532.9863502954404
+
+=== VIX ===
+
+99.73%, 29.469843113396006, , 28.1136778403976, 95.4%, 26.819921594844974, Risk level, 25.95604717979734, 68.2%, 25.4605087732669, 68.2%, 22.80658458389809, Risk level, 22.38395297279055, 95.4%, 21.520078557742917, , 20.15160693047467, 99.73%, 18.870157039191884
+
+=== IWM ===
+
+99.73%, 205.24011372893887, , 202.93969323985806, 95.4%, 200.66505686446945, Risk level, 199.1735883266524, 68.2%, 198.36433903439857, 68.2%, 193.78897078896463, Risk level, 193.0064116733476, 95.4%, 191.51494313553056, , 189.21358748505568, 99.73%, 186.93988627106114
+
+=== QQQ ===
+
+99.73%, 497.00165266454104, , 491.6044337894311, 95.4%, 486.2658263322705, Risk level, 482.7659469479503, 68.2%, 480.8679531802723, 68.2%, 470.1314426883352, Risk level, 468.29405305204966, 95.4%, 464.79417366772947, , 459.3949002184499, 99.73%, 454.0583473354589
+
+=== NDX ===
+
+99.73%, 20422.226389164403, , 20201.71681262736, 95.4%, 19983.588194582204, Risk level, 19840.592143148406, 68.2%, 19763.052195541546, 68.2%, 19324.386378907366, Risk level, 19249.307856851596, 95.4%, 19106.311805417798, , 18885.719279137727, 99.73%, 18667.673610835598
+
+=== NQ ===
+
+99.73%, 20489.081649609012, , 20269.19382449865, 95.4%, 20051.665824804506, Risk level, 19909.068265918235, 68.2%, 19831.75197515771, 68.2%, 19394.308951876275, Risk level, 19319.431734081765, 95.4%, 19176.834175195494, , 18956.864673385826, 99.73%, 18739.418350390988
+
+=== NVDA ===
+
+99.73%, 118.2627442742076, , 115.92903230865151, 95.4%, 113.6413721371038, Risk level, 112.13480482040796, 68.2%, 111.30670415741837, 68.2%, 106.68429317201732, Risk level, 105.90519517959203, 95.4%, 104.39862786289619, , 102.06178809769123, 99.73%, 99.77725572579239
+
+=== AMZN ===
+
+99.73%, 200.36181432987226, , 197.0921827836317, 95.4%, 193.87590716493614, Risk level, 191.76150142916694, 68.2%, 190.60536782482643, 68.2%, 184.11848890419074, Risk level, 183.01849857083303, 95.4%, 180.90409283506384, , 177.63153901430957, 99.73%, 174.4181856701277
+
+=== AAPL ===
+
+99.73%, 224.7215598632104, , 221.31789368018022, 95.4%, 217.9657799316052, Risk level, 215.7633956739019, 68.2%, 214.5613021477879, 68.2%, 207.8046578415548, Risk level, 206.65660432609812, 95.4%, 204.45422006839482, , 201.04795544074943, 99.73%, 197.69844013678963
+
+=== GOOG ===
+
+99.73%, 169.71512799213573, , 167.79043225373806, 95.4%, 165.88756399606785, Risk level, 164.63977813334975, 68.2%, 163.9626134861321, 68.2%, 160.13478253895138, Risk level, 159.48022186665025, 95.4%, 158.23243600393215, , 156.30693851739187, 99.73%, 154.40487200786427
+
+=== TSLA ===
+
+99.73%, 321.3906832753658, , 313.9647213725704, 95.4%, 306.71034163768286, Risk level, 301.92455026379827, 68.2%, 299.28017152570015, 68.2%, 284.5951874708134, Risk level, 282.1354497362017, 95.4%, 277.3496583623171, , 269.90969833601855, 99.73%, 262.66931672463414
+
+=== TSM ===
+
+99.73%, 175.45262376411517, , 172.68768158504216, 95.4%, 169.9663118820576, Risk level, 168.1777742085068, 68.2%, 167.20065483831345, 68.2%, 161.71357958328412, Risk level, 160.78222579149318, 95.4%, 158.99368811794238, , 156.22645070874492, 99.73%, 153.5073762358848
+
+=== AMD ===
+
+99.73%, 104.76595734332179, , 102.56637772794312, 95.4%, 100.4129786716609, Risk level, 98.99390762469945, 68.2%, 98.21237565195003, 68.2%, 93.85827863753019, Risk level, 93.12609237530056, 95.4%, 91.70702132833911, , 89.50407282929997, 99.73%, 87.35404265667822

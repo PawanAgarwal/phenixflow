@@ -1,0 +1,26 @@
+[
+  {
+    "pattern": "drive.google.com/file/d/1fHY4pxnVLCicnOSzS1PARdwQG5K4EKwS",
+    "reason": "Approved by user on 2026-03-15: inaccessible Google Drive script bundle from \"Reversion scripts\"."
+  },
+  {
+    "pattern": "drive.google.com/",
+    "reason": "Approved by user on 2026-03-15: skip Google Drive links we do not have access to."
+  },
+  {
+    "pattern": "drive.usercontent.google.com/",
+    "reason": "Approved by user on 2026-03-15: skip Google Drive download endpoints we do not have access to."
+  },
+  {
+    "pattern": "substack.com/chat/2679129/post/24686a67-0b4b-4278-a0fd-d483915e9ba8/reply/1f596330-a54c-44c0-98c3-96928214ceb6/card.png",
+    "reason": "Approved by user on 2026-03-15: broken Substack chat reply preview image returned 404; skip this specific card asset."
+  },
+  {
+    "pattern": "substack.com/api/v1/community/posts/744104d4-017d-458d-b532-39b69fcc60c2/comments",
+    "reason": "Approved by user on 2026-03-15: January 29, 2026 founding-only Alma chat replies endpoint returns 402; archive thread without reply bodies."
+  },
+  {
+    "pattern": "www.gchq.gov.uk/files/gchq%20christmas%20challenge%202025.pdf",
+    "reason": "Approved by user on 2026-03-15: broken GCHQ Christmas Challenge 2025 PDF link returns 404; skip this external attachment."
+  }
+]

@@ -1,0 +1,95 @@
+Fed pivot is looming? Tariff risk, Sentiment + Intraday post (26/June)
+
+Yesterday I revised my weekly post after the market broke out of the weekly range and unwound a lot of geo risk positions from Monday to Tuesday. It is half-free, and educational on distributions. Take your time on it…
+
+Fed, Distribution, Revision of weekly post + Intraday post (25/June)
+
+Let me show you something…
+
+FFF6 is the June 2025 Fed-funds futures contract. Its implied rate has fallen to 0.6350%
+
+The 5-yr vs 30-yr Treasury spread keeps widening, a bear-steepening sign as the belly price moves on front-end rate-cut bets even while long-end yields stay elevated on fiscal concerns.
+
+This tells us demand held, but only at current yields—so any “dovish shock” (e.g. weak NFP → Fed cut) would likely drive 5-year yields sharply lower.
+
+Also note, that the Nasdaq/Russell ratio (not shown here) sitting at multi-year highs underscores that mega-caps are front-running any dovish pivot, even as broader cyclicals lag. Fed driven deltas. In dovish regimes, frontrunning pivots, mega-cap tech often outperforms, lifting this ratio, whereas in reflationary or risk-on phases, small caps can lead.
+
+Market prices a Fed pivot on a bad NFP print. As I mentioned in the weekly post and earlier, sentiment is artificially shifted towards “bad news are good news”. But with hgiher lows, as recession fears are looming into August-Sept window.
+
+With no August FOMC meeting, the Fed can use July data to gauge tariff-driven inflation before acting.I expect a potential stagflationary slowdown into August, cutting their 2025 GDP at ~1.3% and recession fears coming back, driven mostly by tariff-induced growth drag and persistent inflation. Bessent’s buybacks help temporaly mitigate a yield shock, supporting equities if tariffs spark a rise in long-end yields. If August inflation prints show only a temporary tariff bump, markets may still price in Fed cuts by Q4, bolstering risk assets.
+
+My thoughts on these…To me this market seems like aims to be supported into July 4, and tries to swallow any impact of the July 8-9 reciprocal-tariff deadline—when the 90-day pause on Trump’s “Liberation Day” duties expires.The NQ/RTY ratio spikes not just on fundamentals but also because rapid, vol-sensitive flows concentrate in mega-caps (lower gamma cost); dealer hedges and ETF rebalances then narrow breadth by reinforcing the winners. Every dip in tech (or bounce in vol) triggers a wave of vol-control and gamma-hedge buying—lifting the ratio further, even if small-caps or cyclicals lack fundamental momentum.But once July 8’s tariff cliff and August catalysts arrive, volatility control funds will sell into rising vol, CTAs will squeeze out of steepeners, and buybacks can’t absorb a broad sell-off—so both yields and equities may snap back sharply. However these sentiment-driven interventions mitigate the raw auction, curve and Fed-futures signals in the near term. So, no vol squeeze event… Vol of vol supply, you know…I will signal short, when I see that.
+
+Let’s jump in to the daily setup…
+
+INTRADAY POST Coding today’s positioning:
+
+As I explained in the revised weekly post on vol mechanics, market is still in a mild short vanna regime but flatter, and the range is compressed as a result of vol selling that I predicted for this week. This effect is reinforced buy the constant intraday negative speed exposure. Because, as you know, longer gamma naturally compresses the range of potential returns. If upward gamma is longer, then it happens upwards (positive speed), if downwards gamma is the higher, then it happens downward (negative speed). This is why negative speed environment manages downside, and supports the market like a stunt mats, while positive speed helps to stabilize upside momentums with its upward stickiness. Because we are heading into a negative color territory, charm’s response is that the peak influential area expands a bit further on vol selling (intraday towards 6180 - short charm, and 5995 - long charm). Inbetween it is flat. And this influence is also coded into the daily centroid lvl.
+
+So I code the centroid at 6090.99 (and 6087 towards the powerhour) for today’s session. Downside gamma is in effect below heavily, the only potential pivot where vol could temporally catch up is at 6075.17, but the downside max is at 6037, retesting the weekly upperline/pivot. Vanna flip is there. For the opening, watch 6111, at which side the momentum will be (seems unbreakable from any side after 1.50pm). If below, the momentum is likely to get pinned to the centroid. If above, then the upside pivot is 6124.73 (especially crucial into the powerhour), and can easily result in a pin to 6140, coding 6145 as main resistance for today. But if local vol catches up, I code 6160 (as mentioned yesterday), then pin back to 6140
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+Take this trading advice:
+
+SCRIPT INPUTS=== SPX closed at 6092.16 ===
+
+99.73%, 6190.371045383222, , 6165.769398354143, 95.4%, 6141.265522691611, Risk level, 6125.257122294146, 68.2%, 6116.6634832007, 68.2%, 6067.557561694744, Risk level, 6059.062877705854, 95.4%, 6043.054477308388, , 6018.45163368078, 99.73%, 5993.948954616778
+
+=== ES closed at 6146.0 ===
+
+99.73%, 6246.185368858714, , 6221.088608079391, 95.4%, 6196.092684429357, Risk level, 6179.762469305387, 68.2%, 6170.9955143803845, 68.2%, 6120.902413982531, Risk level, 6112.237530694613, 95.4%, 6095.907315570643, , 6070.8093067200025, 99.73%, 6045.814631141286
+
+=== SPY closed at 607.12 ===
+
+99.73%, 617.0490444460044, , 614.5617703354909, 95.4%, 612.0845222230022, Risk level, 610.4660879783034, 68.2%, 609.5972072869339, 68.2%, 604.6326435679528, Risk level, 603.7739120216966, 95.4%, 602.1554777769978, , 599.6680791618961, 99.73%, 597.1909555539957
+
+=== VIX closed at 16.76 ===
+
+99.73%, 18.948277552776883, , 18.39307415851968, 95.4%, 17.854138776388442, Risk level, 17.49744953528581, 68.2%, 17.29842090747795, 68.2%, 16.203698161460853, Risk level, 16.022550464714193, 95.4%, 15.66586122361156, , 15.108890814589362, 99.73%, 14.571722447223118
+
+=== IWM closed at 211.97 ===
+
+99.73%, 217.1398278519557, , 215.8435013491905, 95.4%, 214.55491392597784, Risk level, 213.71223198610906, 68.2%, 213.25854052039634, 68.2%, 210.67357854061927, Risk level, 210.22776801389094, 95.4%, 209.38508607402215, , 208.08861536696537, 99.73%, 206.8001721480443
+
+=== QQQ closed at 541.16 ===
+
+99.73%, 552.3172284195186, , 549.5208422528327, 95.4%, 546.7386142097594, Risk level, 544.9199859773778, 68.2%, 543.9421554409562, 68.2%, 538.3634671244387, Risk level, 537.4000140226221, 95.4%, 535.5813857902406, , 532.7847772560159, 99.73%, 530.0027715804813
+
+=== NDX closed at 22237.74 ===
+
+99.73%, 22686.68827856594, , 22574.172193555827, 95.4%, 22462.21413928297, Risk level, 22389.035569876723, 68.2%, 22349.695251920068, 68.2%, 22125.218253420724, Risk level, 22086.44443012328, 95.4%, 22013.265860717034, , 21900.741196309278, 99.73%, 21788.791721434063
+
+=== NQ closed at 22472.5 ===
+
+99.73%, 22927.063710350707, , 22813.13974017317, 95.4%, 22699.781855175355, Risk level, 22625.68797038819, 68.2%, 22585.85503673545, 68.2%, 22358.570275390415, Risk level, 22319.31202961181, 95.4%, 22245.218144824645, , 22131.285454353965, 99.73%, 22017.936289649293
+
+=== NVDA closed at 154.31 ===
+
+99.73%, 161.02052185133684, , 159.33405973638628, 95.4%, 157.6652609256684, Risk level, 156.57144586390052, 68.2%, 155.97860883287777, 68.2%, 152.62314957620325, Risk level, 152.04855413609948, 95.4%, 150.9547390743316, , 149.26768140303832, 99.73%, 147.59947814866317
+
+=== AMZN closed at 211.99 ===
+
+99.73%, 218.9690802763272, , 217.21730299959904, 95.4%, 215.4795401381636, Risk level, 214.34195005312228, 68.2%, 213.72764845449757, 68.2%, 210.23799011147034, Risk level, 209.63804994687774, 95.4%, 208.50045986183642, , 206.74832777820433, 99.73%, 205.01091972367283
+
+=== AAPL closed at 201.56 ===
+
+99.73%, 207.39048619243198, , 205.92770595536666, 95.4%, 204.475243096216, Risk level, 203.52487384684957, 68.2%, 203.012388780767, 68.2%, 200.09706944762263, Risk level, 199.59512615315043, 95.4%, 198.644756903784, , 197.18174786019162, 99.73%, 195.72951380756803
+
+=== GOOG closed at 171.49 ===
+
+99.73%, 177.99473074023862, , 176.36105089550466, 95.4%, 174.7423653701193, Risk level, 173.68209425946043, 68.2%, 173.10854466871865, 68.2%, 169.85603304763197, Risk level, 169.2979057405396, 95.4%, 168.23763462988072, , 166.60351571631443, 99.73%, 164.9852692597614
+
+=== TSLA closed at 327.55 ===
+
+99.73%, 354.5280351775263, , 347.7181226577327, 95.4%, 341.03901758876316, Risk level, 336.6415978548264, 68.2%, 334.226465455983, 68.2%, 320.7345862061038, Risk level, 318.45840214517364, 95.4%, 314.06098241123686, , 307.2424556558254, 99.73%, 300.5719648224737
+
+=== TSM closed at 222.74 ===
+
+99.73%, 231.9761766574079, , 229.65552478142124, 95.4%, 227.35808832870396, Risk level, 225.85259153354647, 68.2%, 225.0371982458356, 68.2%, 220.41886172844755, Risk level, 219.62740846645355, 95.4%, 218.12191167129606, , 215.80051458839682, 99.73%, 213.5038233425921
+
+=== AMD closed at 143.4 ===
+
+99.73%, 151.85477430582284, , 149.7261619005299, 95.4%, 147.6273871529114, Risk level, 146.2492589410623, 68.2%, 145.4983412885779, 68.2%, 141.27049473358727, Risk level, 140.55074105893772, 95.4%, 139.1726128470886, , 137.04261983448328, 99.73%, 134.94522569417717

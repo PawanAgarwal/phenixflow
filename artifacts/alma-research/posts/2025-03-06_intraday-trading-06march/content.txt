@@ -1,0 +1,53 @@
+Intraday trading (06/march)
+
+Coding gamma for today session:
+
+3D chart here, and 2D projection here. OptionsDepth Heatmap is here:
+
+(Description is here)
+
+Gamma is net positive but locally it is still very low. And as we can see, a new day’s dawned for our iron condor martingale whale, bringing fresh opportunities, aiming 5770/5775/5900/5905 today.The pivot is 58465882 is the line above the upside gamma magnet (upside wing of the IC) can affect spot vol and theta, and 5804.23 is to the downside wing of the IC.Coding zero vanna at 5830.96; and estimating this into PM at 5834.97 (lower vol needed). We have negative charm convexity locally, meaning color is negative, meaning this low gamma will decrease further, giving room for volatility to increase.
+
+From momentum perspective the main pivot is 5807.05
+
+It is a pivot in terms of confirming further up into Friday. Note that statistics don’t show us clear evidence on mean reversion, it is skewed towards it, but not clear.
+
+Here I coded SPX/VIX beta:
+
+and SPX/VIX intraday beta for the past session alone:
+
+What we can see is that since the Feb OpEx market is longer SPX/VIX beta, sharply, still negative, but increasing. And on intraday basis, the beta value increased mostly when spot went upwards. This is a very unstable squeeze-ish behavior to the upside where the whole smirk gets bid. And this is the reason I like intraday long call side better. And also a clear sign of the constant short speed environment we see on intraday basis where traders are long the skew.
+
+As seen into Friday
+
+traders bet longer vol and longer skew. However as much as the spot can hold 5701, put decay can hold the market.
+
+Market doesn’t show increased fear, despite the bearish sentiment is as high as it was around Covid. Market is hedged for now, but what I see is nothing extraordinal convexity at the left tail besides event-vol… paradoxically it is the right tail where we can see bid that simply doesn’t fit into this picture. As I code, into March OpEx, 5717 is the key (rolling lvl), as MMs are short the skew, so above this lvl the tail puts will provide supportive vanna/charm flows. This post still holds. I still think that market will have a net upward momentum now, in order to get a supportive March OpEx before a flush.
+
+I still don’t like longer-term trades on options side, but I will likely hit long ES on this pattern. Seems like short-term bottom. On intraday basis, I look for reversion opportunities from key lvls as showed in the past sessions.
+
+SCRIPT INPUTS:SPX99.73%, 5965.048309754065, , 5934.364786760631, 95.4%, 5903.839096283282, Risk level, 5883.884892691807, 68.2%, 5873.154750835487, 68.2%, 5811.944697586667, Risk level, 5801.374872933193, 95.4%, 5781.420669341718, , 5750.734626460998, 99.73%, 5720.211455870935
+
+ES=F99.73%, 5978.2795729955615, , 5946.437378985264, 95.4%, 5914.764786497781, Risk level, 5894.058966099505, 68.2%, 5882.92167693869, 68.2%, 5819.4059549068115, Risk level, 5808.441033900495, 95.4%, 5787.735213502219, , 5755.890212228018, 99.73%, 5724.2204270044385
+
+SPY99.73%, 595.5698356218176, , 592.4341212346853, 95.4%, 589.3149165902056, Risk level, 587.2758129859002, 68.2%, 586.1791141181407, 68.2%, 579.9241051014577, Risk level, 578.8441821312873, 95.4%, 576.8050785269819, , 573.6690941224819, 99.73%, 570.5501594953699
+
+VIX99.73%, 23.568257469967694, , 23.155071298524877, 95.4%, 22.749128887571736, Risk level, 22.482092969710656, 68.2%, 22.335809890105427, 68.2%, 21.516538367569453, Risk level, 21.377907640640906, 95.4%, 21.110871722779827, , 20.69725552985809, 99.73%, 20.29174314038387
+
+IWM99.73%, 214.6964503504761, , 213.13415383243816, 95.4%, 211.5832257855896, Risk level, 210.5683145774366, 68.2%, 210.02084500782814, 68.2%, 206.9075336475638, Risk level, 206.37168786396964, 95.4%, 205.35677665581665, , 203.79421963543558, 99.73%, 202.24355209093014
+
+QQQ99.73%, 515.8119873974478, , 512.3498741941506, 95.4%, 508.9109985815364, Risk level, 506.66127622754925, 68.2%, 505.44872674461357, 68.2%, 498.5475749033534, Risk level, 497.35874330370075, 95.4%, 495.1090209497136, , 491.64641848543266, 99.73%, 488.2080321338023
+
+NQ=F99.73%, 21245.270180456526, , 21099.703947208945, 95.4%, 20955.135090228265, Risk level, 20860.55105081385, 68.2%, 20809.5619040759, 68.2%, 20519.419664318797, Risk level, 20469.44894918615, 95.4%, 20374.864909771735, , 20229.277219477277, 99.73%, 20084.729819543474
+
+NVDA99.73%, 125.57550751199274, , 123.48930217083043, 95.4%, 121.43775528187527, Risk level, 120.08884805485698, 68.2%, 119.35094915903512, 68.2%, 115.21255299107904, Risk level, 114.51115804865864, 95.4%, 113.16225082164036, , 111.07410884322903, 99.73%, 109.02449859152289
+
+AMZN99.73%, 217.09454492969348, , 214.89981497465934, 95.4%, 212.72727277002252, Risk level, 211.3035420459698, 68.2%, 210.53231268430108, 68.2%, 206.16480064378374, Risk level, 205.41645917473332, 95.4%, 203.9927284506806, , 201.7972782200373, 99.73%, 199.62545629100964
+
+GOOG99.73%, 182.4210496168334, , 180.55373136247505, 95.4%, 178.70552755499872, Risk level, 177.49426736284062, 68.2%, 176.83800849508572, 68.2%, 173.12227700815157, Risk level, 172.4857436234875, 95.4%, 171.2744834313294, , 169.40653633449415, 99.73%, 167.55896136949474
+
+TSLA99.73%, 302.24131228004893, , 296.3995301538637, 95.4%, 290.67065919178225, Risk level, 286.89862628500737, 68.2%, 284.82658365142, 68.2%, 273.2534429049808, Risk level, 271.3013859220239, 95.4%, 267.529353015249, , 261.68008214247, 99.73%, 255.95869992698232
+
+TSM99.73%, 193.77442759353693, , 191.3861019896675, 95.4%, 189.0272131864169, Risk level, 187.47962128969579, 68.2%, 186.6385132153779, 68.2%, 181.89090489892152, Risk level, 181.08037626889796, 95.4%, 179.53278437217685, , 177.14327546905238, 99.73%, 174.78556996505682
+
+AMD99.73%, 107.92169461388583, , 106.34728643015788, 95.4%, 104.79584639141558, Risk level, 103.77681987089026, 68.2%, 103.22109043566773, 68.2%, 100.09487271892796, Risk level, 99.56317646700036, 95.4%, 98.54414994647504, , 96.96863117899689, 99.73%, 95.41830172400479

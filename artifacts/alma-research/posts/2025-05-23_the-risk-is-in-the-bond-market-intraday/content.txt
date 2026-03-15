@@ -1,0 +1,89 @@
+The risk is in the bond market! + Intraday post (23/May)
+
+Further addition to yesterday's post
+
+“Roses are blue,Violets are red,The economy is stable,and this is a bull market…”~A
+
+Here you can find my weekly post, and here is yesterday post. Please, re-read its section about the bond market, as it is crucial to understand for the coming weeks. Let me show you these two charts:
+
+and
+
+Swap spread is the fixed rate you receive in an interest‑rate swap minus the yield on the corresponding Treasury (e.g. 30‑year swap rate minus 30‑year UST). When spreads turn negative, it means swap dealers are willing to pay fixed at a rate below what the U.S. government offers—because they desperately want to receive floating SOFR or obtain Treasury collateral.Last print for 30y is –93 bp, well below its long‑run average around –80 bp, and near its worst (–97 bp on April 8). Short tenors (2Y at –24 bp) are “only” modestly negative; the long end (20Y, 30Y) is far more inverted. This tells that stress is concentrated in longer‑dated funding. (see my ‘hidden QE’ call) This signals signals severe funding and liquidity stress: banks would rather pay to receive floating (SOFR) than hold Treasuries, reflecting concerns over collateral scarcity, repo market strains and heightened credit risk.Historically, extreme negative swap spreads have preceded bond‑market meltdowns (2008, 2020…), foreshadowed equity drawdowns, as funding strains propagate to risk‑assets via leveraged hedge funds and delta‑hedged positions and force central banks to adjust regulatory ratios (e.g., SLR waivers) or deploy liquidity backstops (standing repo, QE) to restore market functioning.It is the weighing machine, not the voting one.
+
+The key is again the timing…
+
+Bonds are telling the story.SPX popped late because volatility‐selling by systematic funds and options dealers (especially on zero‐DTE and short‐dated gamma, calls going from OTM to ITM, etc.) and ‘hidden QE’ generated mechanical, buy-the-dip flows into equities. While at the same time, funding and credit strains—continued to build behind the scenes.This disconnect creates a classic bear‐market rally setup: a fleeting spike in stocks, but with rising tail‐risk for a sharper pullback once these mechanical flows unwind. Because the rally is only mechanical and not backed by any fundamental setup, once vol-selling fades, the rally fades fast, resuming the downtrend. Especially knowing that vol market accumulated a lot of zomma and vomma risks during the aggressive vol selling. This is why the drawdown started after VIX expo, and this is why I called topish but supportive May OpEx. You’ve caught the short-lived vol-sell squeeze, but the underlying cracks in credit and funding suggest any further equity upside is likely transient without a genuine policy pivot or major data surprise.
+
+Sentiment-wise the key inflection point for SPX is 5880.80 (comfirmation at 5774.12), the primal downside target is 5743.15and 5896.39 (confirmation at 5794.77) for ES, and 20.66 (confirmation at 23.03) for VIX.
+
+Sentiment-wise the key inflection point for SPX is 5880.80 (comfirmation at 5774.12), the primal downside target is 5743.15and 5896.39 (confirmation at 5794.77) for ES, and 20.66 (confirmation at 23.03) for VIX.
+
+INTRADAY POSTCoding today’s positioning:
+
+The speed profile is net negative again with an avg slope of -46.79%.; this may seems contraintuitive, but when we scrutinize the vol impact, we should look at the aggregated gammas, before going into it locally. So the net impact on vol is the negative speed, and charm is positive below the upside pivot. Favoring for stairstepping down. The centroid of the profile falls to 5849.86And I code 5865.09 as the point, where upside shorter gamma should take effect in vol. At 5871.58 we should already see it. To the downside the pivot is 5813.10But locally we have positive speed there, so the vol should not calm down instantly, but should definitely make lower highs.
+
+If momentum holds 5837.48 and vol decreases, we likely gonna see rangebound below 5850.To break through 5800, we should have relatively lower intraday vol, that is possible if 5822 swallows vol sharply. If 5800 would break, i would not expect momentum to break through the 95.4% line too much, only if vol catches up.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX 5842.01===
+
+99.73%, 5970.195321754036, , 5938.062518681244, 95.4%, 5906.102660877018, Risk level, 5885.20845343111, 68.2%, 5873.968914275096, 68.2%, 5809.87528905138, Risk level, 5798.811546568891, 95.4%, 5777.917339122982, , 5745.781642313442, 99.73%, 5713.824678245965
+
+=== ES 5868.0===
+
+99.73%, 6001.538998180767, , 5968.060873852131, 95.4%, 5934.769499090384, Risk level, 5913.0026423869185, 68.2%, 5901.290318283144, 68.2%, 5834.519738533552, Risk level, 5822.9973576130815, 95.4%, 5801.230500909616, , 5767.749133763574, 99.73%, 5734.461001819233
+
+=== SPY 583.09===
+
+99.73%, 596.5834372038079, , 593.2004863219004, 95.4%, 589.836718601904, Risk level, 587.6372883376832, 68.2%, 586.4536573759125, 68.2%, 579.7068258615003, Risk level, 578.5427116623168, 95.4%, 576.3432813980961, , 572.9599916879312, 99.73%, 569.5965627961922
+
+=== VIX 20.28===
+
+99.73%, 22.943805998709564, , 22.2678986363807, 95.4%, 21.611902999354783, Risk level, 21.177702621565125, 68.2%, 20.93536225688285, 68.2%, 19.602739787414542, Risk level, 19.382297378434878, 95.4%, 18.94809700064522, , 18.270012389668366, 99.73%, 17.616194001290438
+
+=== IWM 203.2===
+
+99.73%, 209.30712371172848, , 207.77473327464534, 95.4%, 206.25356185586423, Risk level, 205.2581006908525, 68.2%, 204.7210877489459, 68.2%, 201.66743968942626, Risk level, 201.14189930914748, 95.4%, 200.14643814413574, , 198.61378897921546, 99.73%, 197.0928762882715
+
+=== QQQ 514.0===
+
+99.73%, 528.7932182704686, , 525.0818897466663, 95.4%, 521.3966091352344, Risk level, 518.985314557148, 68.2%, 517.6850945270787, 68.2%, 510.28829391285234, Risk level, 509.01468544285206, 95.4%, 506.6033908647657, , 502.8914876659452, 99.73%, 499.2067817295313
+
+=== NDX 21112.47===
+
+99.73%, 21713.205667907794, , 21562.498737906008, 95.4%, 21412.837833953898, Risk level, 21314.91792008493, 68.2%, 21262.12351540214, 68.2%, 20961.748081149708, Risk level, 20910.022079915074, 95.4%, 20812.102166046105, , 20661.372425913494, 99.73%, 20511.73433209221
+
+=== NQ 21214.5===
+
+99.73%, 21820.57806764965, , 21668.52879895802, 95.4%, 21517.539033824825, Risk level, 21418.74830879793, 68.2%, 21365.482251357604, 68.2%, 21062.4354875433, Risk level, 21010.25169120207, 95.4%, 20911.460966175175, , 20759.388498046195, 99.73%, 20608.42193235035
+
+=== NVDA 132.83===
+
+99.73%, 141.04752683180448, , 138.9779619479959, 95.4%, 136.93876341590226, Risk level, 135.59930654231812, 68.2%, 134.86873597885574, 68.2%, 130.75948093911092, Risk level, 130.0606934576819, 95.4%, 128.72123658409777, , 126.6501939991125, 99.73%, 124.61247316819555
+
+=== AMZN 203.1===
+
+99.73%, 212.52892372897006, , 210.1584733370846, 95.4%, 207.81446186448503, Risk level, 206.2775472966629, 68.2%, 205.44370811654687, 68.2%, 200.72892864588076, Risk level, 199.9224527033371, 95.4%, 198.38553813551496, , 196.0141338968, 99.73%, 193.67107627102993
+
+=== AAPL 201.36===
+
+99.73%, 209.79232732316026, , 207.67354626126502, 95.4%, 205.57616366158013, Risk level, 204.20169430790503, 68.2%, 203.45716088379828, 68.2%, 199.24076612255894, Risk level, 198.518305692095, 95.4%, 197.1438363384199, , 195.02436136892013, 99.73%, 192.92767267683976
+
+=== GOOG 171.98===
+
+99.73%, 179.64909254562738, , 177.72147786419117, 95.4%, 175.8145462728137, Risk level, 174.56448418787642, 68.2%, 173.8867035399731, 68.2%, 170.0519189306651, Risk level, 169.39551581212356, 95.4%, 168.1454537271863, , 166.21712332440723, 99.73%, 164.3109074543726
+
+=== TSLA 341.04===
+
+99.73%, 367.55218866972916, , 360.8632773086177, 95.4%, 354.29609433486456, Risk level, 349.9746075816987, 68.2%, 347.6048618934468, 68.2%, 334.34626241074955, Risk level, 332.10539241830134, 95.4%, 327.7839056651355, , 321.08745605853716, 99.73%, 314.5278113302709
+
+=== TSM 196.19===
+
+99.73%, 205.5316480024863, , 203.18281466726674, 95.4%, 200.86082400124315, Risk level, 199.33813537683787, 68.2%, 198.5116748727991, 68.2%, 193.84051985897094, Risk level, 193.04186462316213, 95.4%, 191.51917599875685, , 189.16934849834817, 99.73%, 186.8483519975137
+
+=== AMD 110.71===
+
+99.73%, 117.50230132761347, , 115.79177560877405, 95.4%, 114.10615066380673, Risk level, 112.99900554740573, 68.2%, 112.39524874295195, 68.2%, 108.99869843264163, Risk level, 108.42099445259426, 95.4%, 107.31384933619326, , 105.60212241566178, 99.73%, 103.91769867238652

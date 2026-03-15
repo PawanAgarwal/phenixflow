@@ -1,0 +1,75 @@
+FOMC day, Intraday post (07/May)
+
+Before you continue reading:1. Weekly post2. Monday post about Fed pt. 13. Tuesday post about Fed pt. 2 + Big sum and geo post
+
+Most major ports have seen 20–30 percent declines in 20-foot container loadings from China (TEUs booked) between Feb–Mar versus Mar–May—steep, but nowhere near a 50–60 percent collapse. Some ports even bucked the trend (e.g. Miami +18 percent, Jacksonville +33 percent), suggesting pockets of resilience or rerouting. Powell & colleagues have repeatedly promised “ample” liquidity and a willingness to step in if markets seize up—softening any sell-off. The Fed’s repo operations, bank liquidity lines, and extensions of FIMA swap facilities have quietly flooded funding markets with cash, keeping credit spreads tight and preventing a shipping-finance crunch. Even as real volumes dip, shipping companies and traders still get credit, which cushions the volume drop and keeps P-L’s from blowing up. This is not just the Fed in isolation. Other central banks (ECB, BoE, SNB) have been conducting back-to-back repo operations and verbal easing guidance in lockstep—so trade finance stays liquid worldwide. Governments are back-stopping cargo liens, export-credit agencies are guaranteeing bills of lading, all to avoid a cascade of defaults that would amplify the volume shock.
+
+Cutting rates now would risk reigniting cost-push inflation (tariff shock still working through the system). Instead, the Fed can keep injecting liquidity to “peg” financial conditions in a wide range, letting real-economy volumes gently drift down rather than crash—and buying time until the worst tariff effects hit in mid-summer/Q3.Once those May–June shipments (front-run pre-tariff orders) clear, you’ll see real supply-chain shortages, steeper volume declines at ports, and a sharper hit to GDP and corporate earnings. That’s when the Fed will face real “fight or cut” pressure—by then, only a rate cut (or more aggressive measures) can avert a financial-and-trade spiral.
+
+Now, think about the last days events…Trump told reporters on May 6 that a “very big” and “earth-shattering” announcement was coming before his Middle East trip. Markets jumped on the hope of a positive catalyst—pushing ES higher—but quickly retraced as no concrete details emerged. On May 7, India conducted airstrikes on militant infrastructure in Pakistan-administered Kashmir. Pakistan claimed to have shot down five Indian jets amid civilian casualties. Despite this dangerous flare-up, India’s rupee and equities barely budged—only to serve as an excuse to sell ES into the close, driving futures to session lows. Also on May 6–7, Bessent confirmed urgent U.S.–China trade negotiations in Switzerland over the weekend. That news immediately reversed the late-session sell-off—pushing ES back up—despite scant detail on the talks’ scope or timeline.This is how they are messing with sentiment reading algos. Confusion over which “surprise” matters most keeps algorithmic strategies stuck in volatility neutral mode, reducing the risk of a sharp Fed-induced gap. Because by mixing bullish (Trump tease, trade talks) and bearish (geopolitical risk) headlines, “they” can pin ES within a tight range, discouraging directional bets just before the Fed. The sell right after ER reports were telling. Some funds have started to short. But I would still wait for the marked events to unfold. (see the posts I linked)
+
+INTRADAY POSTCoding positioning for today session:
+
+We see a clear short fly pattern at 5540/5620/5700The overall net speed profile is negative with an avg slope of -71.06%, but below 5627.42 local speed flips to positive until 5534.94The centroid of the positioning is at the 5658.43 lineTo the upside, we should see 5691.72 - 5702.12 zone to be cleared out. Here the vol should mechanically catch up, but in order to break above this line, we should see vol cooling off. And to the downside I code 5582.23 lvl where downside shorter gamma should be realized in the vol curve. If not, then 5620 can pin, but not too much impact.
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX closed at 5606.91===
+
+99.73%, 5789.427851745946, , 5743.61714282927, 95.4%, 5698.168925872973, Risk level, 5668.418516038384, 68.2%, 5652.355290687806, 68.2%, 5561.0933425032135, Risk level, 5545.401483961616, 95.4%, 5515.651074127027, , 5469.831293468171, 99.73%, 5424.392148254054
+
+=== ES closed at 5615.0===
+
+99.73%, 5801.382920344994, , 5754.598547518661, 95.4%, 5708.1914601724975, Risk level, 5677.811044156263, 68.2%, 5661.403982129219, 68.2%, 5568.209312798094, Risk level, 5552.188955843737, 95.4%, 5521.8085398275025, , 5475.014534217462, 99.73%, 5428.617079655006
+
+=== SPY closed at 558.8===
+
+99.73%, 577.7823822996096, , 573.0171360984041, 95.4%, 568.2911911498047, Risk level, 565.1970628349684, 68.2%, 563.5256139826396, 68.2%, 554.0340805270819, Risk level, 552.4029371650315, 95.4%, 549.3088088501952, , 544.5425351387635, 99.73%, 539.8176177003903
+
+=== VIX closed at 24.76===
+
+99.73%, 29.58148778004128, , 28.35050320087122, 95.4%, 27.170744004461557, Risk level, 26.38484153362257, 68.2%, 25.937378968765483, 68.2%, 23.523766596765476, Risk level, 23.135158924141102, 95.4%, 22.349256453302115, , 21.10949864709802, 99.73%, 19.938512677722393
+
+=== IWM closed at 196.77===
+
+99.73%, 204.56765499818687, , 202.60886326300047, 95.4%, 200.66882749909342, Risk level, 199.39780973438897, 68.2%, 198.70985176129696, 68.2%, 194.81083289438345, Risk level, 194.14219026561105, 95.4%, 192.8711725009066, , 190.9118062109977, 99.73%, 188.97234500181315
+
+=== QQQ closed at 481.41===
+
+99.73%, 500.3509150136012, , 495.5930649997262, 95.4%, 490.8804575068006, Risk level, 487.79308835958363, 68.2%, 486.1221667938512, 68.2%, 476.6512510753026, Risk level, 475.0269116404164, 95.4%, 471.93954249319944, , 467.1803167790031, 99.73%, 462.46908498639885
+
+=== NDX closed at 19791.35===
+
+99.73%, 20562.887036311855, , 20369.08954291076, 95.4%, 20177.118518155927, Risk level, 20051.357981237095, 68.2%, 19983.303395192328, 68.2%, 19597.516553397643, Risk level, 19531.3420187629, 95.4%, 19405.58148184407, , 19211.728975713882, 99.73%, 19019.812963688142
+
+=== NQ closed at 19846.75===
+
+99.73%, 20622.847524537945, , 20427.901741588197, 95.4%, 20234.798762268972, Risk level, 20108.294865769287, 68.2%, 20039.835137422207, 68.2%, 19651.767828618835, Risk level, 19585.205134230713, 95.4%, 19458.701237731028, , 19263.699772593314, 99.73%, 19070.652475462055
+
+=== NVDA closed at 113.54===
+
+99.73%, 122.49375875990123, , 120.23448403999592, 95.4%, 118.01687937995062, Risk level, 116.55741670208671, 68.2%, 115.75679887073413, 68.2%, 111.27904886006354, Risk level, 110.5225832979133, 95.4%, 109.06312062004939, , 106.80122585235844, 99.73%, 104.58624124009879
+
+=== AMZN closed at 185.01===
+
+99.73%, 194.93033006210314, , 192.43426662487914, 95.4%, 189.97016503105155, Risk level, 188.35315123092875, 68.2%, 187.47367877223417, 68.2%, 182.513067936532, Risk level, 181.66684876907124, 95.4%, 180.04983496894843, , 177.55243219141207, 99.73%, 175.08966993789684
+
+=== AAPL closed at 198.51===
+
+99.73%, 209.08338078053364, , 206.42311163888766, 95.4%, 203.79669039026683, Risk level, 202.07322932303984, 68.2%, 201.13597641737758, 68.2%, 195.84881717954826, Risk level, 194.94677067696014, 95.4%, 193.22330960973315, , 190.56163192639139, 99.73%, 187.93661921946634
+
+=== GOOG closed at 165.2===
+
+99.73%, 172.13460216942454, , 170.3921323629923, 95.4%, 168.66730108471225, Risk level, 167.53696093109605, 68.2%, 166.92464808767596, 68.2%, 163.45715604036897, Risk level, 162.86303906890393, 95.4%, 161.73269891528773, , 159.989655715739, 99.73%, 158.26539783057544
+
+=== TSLA closed at 275.35===
+
+99.73%, 299.7812430051029, , 293.6099103565304, 95.4%, 287.56562150255144, Risk level, 283.5833288927197, 68.2%, 281.39153128821687, 68.2%, 269.17290190372523, Risk level, 267.11667110728035, 95.4%, 263.1343784974486, , 256.95398649408924, 99.73%, 250.91875699489714
+
+=== TSM closed at 172.28===
+
+99.73%, 182.50871282395113, , 179.9333644741377, 95.4%, 177.39435641197556, Risk level, 175.72707622167152, 68.2%, 174.81847649105958, 68.2%, 169.7035564664007, Risk level, 168.83292377832848, 95.4%, 167.16564358802444, , 164.58860141289244, 99.73%, 162.05128717604887
+
+=== AMD closed at 98.62===
+
+99.73%, 106.81532408516651, , 104.746457507398, 95.4%, 102.71766204258326, Risk level, 101.38182421670112, 68.2%, 100.64797976432294, 68.2%, 96.54943277596425, Risk level, 95.85817578329889, 95.4%, 94.52233795741675, , 92.45080733293666, 99.73%, 90.4246759148335

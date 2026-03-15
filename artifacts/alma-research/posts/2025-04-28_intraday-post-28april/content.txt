@@ -1,0 +1,89 @@
+Intraday post (28/April)
+
+Here is the big summary post about all these events that most of you is lost in, and the expectations. Always zoom out btw. Read it!
+
+I’m expecting a very short-term, buyable dip around mid-week into next week—but don’t get married to the upside. Like I said, any upside is a right-tail event that I hedge; the base case is still down for the overall trend. That said, events will matter in how they play out. Market has no real support.
+
+This isn’t an investors’ market right now, it’s a traders’ market—so be adaptive and versatile, or better yet, sit in cash until things clear up. You aren’t forced to try to surf every wave out of pointless recklessness. It won’t make you any less of a person—if anything, you’ll be more thoughtful if you properly admit and size up the risks.
+
+And I’d also like to remind you that I’m personally not optimistic about global events, as I’ve already explained. However, I strive to describe the probability distribution of those events and their implications in a factual way. It’s not my job to blind you with my own personal bias.
+
+***
+
+Bessent performed a nice stand-up yesterday, and on his twitter platform. He defended Trump’s volatile tariff strategy as deliberate “strategic uncertainty,” calling it a game-theoretic tool that gives the U.S. maximum leverage over trading partners. He framed it as using both “the stick” of steep levies and “the carrot” of potential relief. Bessent also pushed back on gloomy market headlines—pointing out that the Nasdaq is up for April despite reports of it being the worst April since the Depression. He said he didn’t know if Trump had spoken with Xi, only that his own talks with China’s treasury team focused on financial-stability issues. He reaffirmed there is a path to de-escalation and used social media to broadcast the same “leverage” message.
+
+Well…1) Tariffs have pressured both ends of that barbell—tech and energy stocks have seen large swings amid supply-chain shocks and commodity volatility. Game-theory “strategic uncertainty” (the stick-and-carrot tariff threats) may create negotiation leverage, but it also injects acute volatility into asset prices, exactly as markets have endured;2) Freight-volume collapses (imports down ~36–43%… and even worse based on my algos, but don’t want to make you panic), blanked sailings, and layoffs in logistics presage real economic drag—far beyond the veneer of market-level reassurance. Even Fed Governor Waller called the tariff shock “one of the biggest shocks… in many decades,” warning it could have long-lasting impacts on output and employment;3) As I keep telling you, this rebound is driven by short-covering and liquidity injections from algorithmic traders (+retail FOMO), not by renewed fundamental confidence+ you know, in a freight-shock, tariff-hit market, holes appear in the tape—periods with no resting bids—so a TWAP order can push prices artificially higher (or lower), producing a misleading fake bounce… these algos slice large orders into equal pieces over time to minimize market impact;4) The next de minimis deadline (May 2) and potential further tariff announcements mean fresh supply shocks will hit just as seasonal liquidity ebbs. Stagflation and recession risks surging, driven in large part by tariffs and policy uncertainty. Summer months typically see lower trading volumes and higher volatility, exacerbating any underlying stress.Get it? This is how you should read it…
+
+Coding positioning for today session:
+
+Behind the bearish positioning, speed profile is positive both locally and on a net base.
+
+Lets recall, positive speed is higher upside gamma, lower downside gamma. With that said, lower vol up, higher vol down. In other words: more artificial liquidity up, and less artificial liquidity down. From a momentum perspective this means stabilizing upward, and accelerating downward (left-tail risk). This is called a positive vanna environment. But also, charm is net negative, meaning dealers getting shorter delta in every five minutes, forcing them to buyback. Any deviation from these theoretical flows (that are manifested in volatility) reveal the real hands of the underlying customer flows.
+
+Lets recall, positive speed is higher upside gamma, lower downside gamma. With that said, lower vol up, higher vol down. In other words: more artificial liquidity up, and less artificial liquidity down. From a momentum perspective this means stabilizing upward, and accelerating downward (left-tail risk). This is called a positive vanna environment. But also, charm is net negative, meaning dealers getting shorter delta in every five minutes, forcing them to buyback. Any deviation from these theoretical flows (that are manifested in volatility) reveal the real hands of the underlying customer flows.
+
+Based on these mechanisms, the centroid of the whole positioning is 5555.37To the downside, I mark 5514.31 from where downside speed effects (printed into intraday vol) should start to kick in in theory. (below 5412 vol decrease is natural)To the upside it is 5561.91, but around 5590.16 it is natural to see some vol increase. Some vol decrease is needed to go higher, by the way, and then the upside 5630 lvl can have its magnetic effect on the momentum.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX ===
+
+99.73%, 5734.894596310209, , 5682.231648008868, 95.4%, 5630.052298155105, Risk level, 5595.87370895654, 68.2%, 5577.384804573696, 68.2%, 5472.537786978764, Risk level, 5454.54629104346, 95.4%, 5420.367701844895, , 5367.690585018495, 99.73%, 5315.525403689791
+
+=== ES ===
+
+99.73%, 5777.468987751125, , 5720.255956650795, 95.4%, 5663.609493875562, Risk level, 5626.491298872129, 68.2%, 5606.390709595247, 68.2%, 5492.525224007997, Risk level, 5473.008701127871, 95.4%, 5435.890506124438, , 5378.659484739994, 99.73%, 5322.031012248875
+
+=== SPY ===
+
+99.73%, 572.2242422500184, , 566.8024965414133, 95.4%, 561.4321211250092, Risk level, 557.9138896382563, 68.2%, 556.0098768693548, 68.2%, 545.2172374601934, Risk level, 543.3661103617437, 95.4%, 539.8478788749908, , 534.424577118164, 99.73%, 529.0557577499816
+
+=== VIX ===
+
+99.73%, 30.559179983644523, , 29.09427359521552, 95.4%, 27.69958999182226, Risk level, 26.767363654488204, 68.2%, 26.230856169726238, 68.2%, 23.36650133424204, Risk level, 22.912636345511796, 95.4%, 21.98041000817774, , 20.500816170388564, 99.73%, 19.120820016355477
+
+=== IWM ===
+
+99.73%, 203.37042723732839, , 201.04451995764975, 95.4%, 198.7452136186642, Risk level, 197.23739397897967, 68.2%, 196.41899314387877, 68.2%, 191.79345122382284, Risk level, 191.00260602102034, 95.4%, 189.4947863813358, , 187.16789307750216, 99.73%, 184.86957276267162
+
+=== QQQ ===
+
+99.73%, 494.3650947771002, , 488.8834299308158, 95.4%, 483.4625473885501, Risk level, 479.90831693988275, 68.2%, 477.98018933208226, 68.2%, 467.0769163703841, Risk level, 465.21168306011725, 95.4%, 461.6574526114499, , 456.17360872514257, 99.73%, 450.7549052228998
+
+=== NDX ===
+
+99.73%, 20314.682752926834, , 20092.941880537044, 95.4%, 19873.62137646342, Risk level, 19729.835367736345, 68.2%, 19651.85334301597, 68.2%, 19210.763558270974, Risk level, 19135.284632263658, 95.4%, 18991.498623536583, , 18769.672438372276, 99.73%, 18550.43724707317
+
+=== NQ ===
+
+99.73%, 20479.407925178515, , 20241.992276406592, 95.4%, 20007.328962589258, Risk level, 19853.431220785158, 68.2%, 19769.880452759997, 68.2%, 19297.767021305295, Risk level, 19217.068779214842, 95.4%, 19063.171037410742, , 18825.651861079692, 99.73%, 18591.092074821485
+
+=== NVDA ===
+
+99.73%, 120.05816204665359, , 117.7744005351323, 95.4%, 115.53408102332679, Risk level, 114.05923060972226, 68.2%, 113.24945180617655, 68.2%, 108.72443085894032, Risk level, 107.96076939027775, 95.4%, 106.48591897667322, , 104.19932828484419, 99.73%, 101.96183795334642
+
+=== AMZN ===
+
+99.73%, 202.11652938893283, , 198.80781466210246, 95.4%, 195.5532646944664, Risk level, 193.41364040407038, 68.2%, 192.2436253679357, 68.2%, 185.67937070496765, Risk level, 184.56635959592964, 95.4%, 182.4267353055336, , 179.11504348623998, 99.73%, 175.86347061106719
+
+=== AAPL ===
+
+99.73%, 222.90871820004097, , 219.47509334146534, 95.4%, 216.09435910002048, Risk level, 213.8728780334138, 68.2%, 212.65988684388103, 68.2%, 205.84462423767036, Risk level, 204.6871219665862, 95.4%, 202.46564089997952, , 199.02929975893298, 99.73%, 195.65128179995904
+
+=== GOOG ===
+
+99.73%, 171.7657664691425, , 169.77529173395786, 95.4%, 167.80788323457125, Risk level, 166.51761330010103, 68.2%, 165.81713321603561, 68.2%, 161.85896123482166, Risk level, 161.18238669989896, 95.4%, 159.89211676542874, , 157.90077477784425, 99.73%, 155.93423353085748
+
+=== TSLA ===
+
+99.73%, 313.91152495714846, , 306.5856605725893, 95.4%, 299.4307624785742, Risk level, 294.71003391055905, 68.2%, 292.10066033521684, 68.2%, 277.6152179397417, Risk level, 275.18996608944093, 95.4%, 270.4692375214258, , 263.12926036287297, 99.73%, 255.98847504285152
+
+=== TSM ===
+
+99.73%, 176.18974513600972, , 173.3951458562887, 95.4%, 170.64487256800487, Risk level, 168.8372441108353, 68.2%, 167.8495411402057, 68.2%, 162.30388639531216, Risk level, 161.3627558891647, 95.4%, 159.55512743199512, , 156.75817631198066, 99.73%, 154.01025486399027
+
+=== AMD ===
+
+99.73%, 105.44221450793812, , 103.21820626804454, 95.4%, 101.04110725396906, Risk level, 99.60634628917515, 68.2%, 98.81605438906965, 68.2%, 94.4138051080266, Risk level, 93.67365371082485, 95.4%, 92.23889274603094, , 90.01144413379428, 99.73%, 87.83778549206188

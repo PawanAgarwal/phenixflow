@@ -1,0 +1,81 @@
+Momentum, Trading, Intraday post (05/June)
+
+Momentum weakens at these zones of SPX
+
+The thing is that the momentum keeps weakening since June 2.So the primal target is 5935/40 zone, and short target is 5911.48 into the next two sessions. I wouldn’t force it too much, bcs for me the reversion model still doesn’t give enough % for shorting (sits at 71.63%, one can hedge, but it is not enough for a short). I generaly prefer long delta trades. Short only when confidence is high, and leave fast when market disproves it.Same with ES of 5945/55 and target of 5932.55 But if VIX doesn’t catch up to 18.35, and break 18.92, I’d leave. If VIX goes below 17.2s, ES will go through the 6k line.I will revise these levels tomorrow, as they are dynamically changing, if market closes below these, next week gonna be weak before stabilizing into OpEx. NFP and CPI will dictate where the market and yields are heading. Market is waiting for it. Now, the events are happening on the vol market. This is why price action is this choppy and uncertain. No green light and no red light for the market. If pullback happens, I’ll buy it, especially if next week plays out.
+
+I feel like citate a snippet from yesterday’s post:
+
+I haven’t followed the chat in the past few days or anything. However, I know that the tendency to “overtrade” exists in the chat room too, which is nothing other than gambling.Whenever—before you start trading—have a plan for what you can and want to do that day. Calculate how much risk you can take, how much capital you can use for a single trade. Determine exactly what that trade will be and why. Define which signals you need to see that will confirm or refute your trade idea. And if you’re not a swing trader or an investor but a day trader, at most two trades per day is healthy. Set a daily loss limit and a profit limit that you don’t exceed. And remember that day trading and scalping are nothing more than making small gains at high risk, which you can lose in the blink of an eye.With this I only want to say: if you don’t have a plan, then don’t trade. If you don’t have a read, don’t force it.Wait. Watch. Wait for the right moment.Minimizing risk should always be first. And risk is minimized primarily through caution and careful thought.This is the most important thing. Profit is only secondary. There is no other way to build wealth.Because the goal is not to win a “how many times was I right” contest, but to build real wealth.
+
+I haven’t followed the chat in the past few days or anything. However, I know that the tendency to “overtrade” exists in the chat room too, which is nothing other than gambling.Whenever—before you start trading—have a plan for what you can and want to do that day. Calculate how much risk you can take, how much capital you can use for a single trade. Determine exactly what that trade will be and why. Define which signals you need to see that will confirm or refute your trade idea. And if you’re not a swing trader or an investor but a day trader, at most two trades per day is healthy. Set a daily loss limit and a profit limit that you don’t exceed. And remember that day trading and scalping are nothing more than making small gains at high risk, which you can lose in the blink of an eye.With this I only want to say: if you don’t have a plan, then don’t trade. If you don’t have a read, don’t force it.Wait. Watch. Wait for the right moment.Minimizing risk should always be first. And risk is minimized primarily through caution and careful thought.This is the most important thing. Profit is only secondary. There is no other way to build wealth.Because the goal is not to win a “how many times was I right” contest, but to build real wealth.
+
+Please, take it…Educational posts about trading are coming.
+
+Coding positioning for today’s session:
+
+This is a clear short fly pattern around 5985, with net short speed exposure.Upside is capped. Above the centroid, suppressive vanna/charm flows come against the momentum. The centroid is 5974.24Upside pivot is 5986.17, but high vol would be needed to break through this against that huge long gamma bar. If it happens, a squeeze up to 6022 is possible. Dealer flow headwind is relatively weak from SPXWs today.Downside pivot is 5957.21; if this line breaks, downside target is the same as above. If something would happen, and vol would catch up, 5887 is where long gamma starts to come in play strongly.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+SCRIPT INPUTS=== SPX closed at 5970.81===
+
+99.73%, 6087.133573250233, , 6057.982880014121, 95.4%, 6028.971786625117, Risk level, 6010.0110441853285, 68.2%, 5999.820416754082, 68.2%, 5941.657940247057, Risk level, 5931.608955814672, 95.4%, 5912.648213374884, , 5883.49545010018, 99.73%, 5854.486426749768
+
+=== ES closed at 5976.75===
+
+99.73%, 6097.585603806353, , 6067.301498742918, 95.4%, 6037.167801903177, Risk level, 6017.471598482741, 68.2%, 6006.882940429655, 68.2%, 5946.464366745603, Risk level, 5936.028401517259, 95.4%, 5916.332198096823, , 5886.045777217434, 99.73%, 5855.914396193647
+
+=== SPY closed at 595.93===
+
+99.73%, 608.3270523688835, , 605.2198538390835, 95.4%, 602.1285261844417, Risk level, 600.1078066483137, 68.2%, 599.0212455406689, 68.2%, 592.8226355250831, Risk level, 591.7521933516862, 95.4%, 589.7314738155582, , 586.6240237378922, 99.73%, 583.5329476311164
+
+=== VIX closed at 17.61===
+
+99.73%, 19.903337900639528, , 19.321498906882145, 95.4%, 18.756668950319764, Risk level, 18.38285487251552, 68.2%, 18.174293389706545, 68.2%, 17.027015586557408, Risk level, 16.83714512748448, 95.4%, 16.463331049680235, , 15.879649829825016, 99.73%, 15.316662099360471
+
+=== IWM closed at 208.44===
+
+99.73%, 214.39654823073732, , 212.90220337806485, 95.4%, 211.41827411536866, Risk level, 210.44735675375847, 68.2%, 209.9238553776284, 68.2%, 206.94550525051892, Risk level, 206.43264324624153, 95.4%, 205.46172588463133, , 203.96715290357469, 99.73%, 202.48345176926267
+
+=== QQQ closed at 528.77===
+
+99.73%, 542.3741292700897, , 538.9623662351729, 95.4%, 535.5720646350449, Risk level, 533.3545915640202, 68.2%, 532.1601644402488, 68.2%, 525.3579590935377, Risk level, 524.1854084359798, 95.4%, 521.9679353649551, , 518.555750055267, 99.73%, 515.1658707299102
+
+=== NDX closed at 21721.92===
+
+99.73%, 22268.044216806073, , 22131.092023164543, 95.4%, 21994.982108403034, Risk level, 21905.963861063647, 68.2%, 21858.024653663513, 68.2%, 21584.95715104938, Risk level, 21537.87613893635, 95.4%, 21448.857891596963, , 21311.88951020544, 99.73%, 21175.795783193924
+
+=== NQ closed at 21748.0===
+
+99.73%, 22297.40040802684, , 22159.624647426263, 95.4%, 22022.700204013418, Risk level, 21933.147937505044, 68.2%, 21884.91910053322, 68.2%, 21610.213417805855, Risk level, 21562.852062494956, 95.4%, 21473.299795986582, , 21335.50759399735, 99.73%, 21198.59959197316
+
+=== NVDA closed at 141.92===
+
+99.73%, 148.99555051062904, , 147.21603615169423, 95.4%, 145.45777525531452, Risk level, 144.304460522082, 68.2%, 143.6779992352143, 68.2%, 140.13994910718984, Risk level, 139.53553947791798, 95.4%, 138.38222474468546, , 136.60188474106613, 99.73%, 134.84444948937093
+
+=== AMZN closed at 207.23===
+
+99.73%, 216.01933808240585, , 213.8107128471089, 95.4%, 211.6246690412029, Risk level, 210.19200693377076, 68.2%, 209.4158068661687, 68.2%, 205.02089072724152, Risk level, 204.26799306622922, 95.4%, 202.83533095879707, , 200.62596376276417, 99.73%, 198.44066191759413
+
+=== AAPL closed at 202.82===
+
+99.73%, 210.82103009125242, , 208.81119229084032, 95.4%, 206.8205150456262, Risk level, 205.51634714075206, 68.2%, 204.81049011599455, 68.2%, 200.8097804850304, Risk level, 200.12365285924793, 95.4%, 198.8194849543738, , 196.8090629432467, 99.73%, 194.81896990874756
+
+=== GOOG closed at 169.39===
+
+99.73%, 176.14564451151307, , 174.4485580395859, 95.4%, 172.76782225575653, Risk level, 171.6666522003799, 68.2%, 171.07057436012366, 68.2%, 167.69258417740897, Risk level, 167.11334779962007, 95.4%, 166.01217774424344, , 164.31458709035897, 99.73%, 162.6343554884869
+
+=== TSLA closed at 332.05===
+
+99.73%, 357.2116225893926, , 350.8648333715952, 95.4%, 344.6308112946963, Risk level, 340.5294668126253, 68.2%, 338.28192516066224, 68.2%, 325.6988549405664, Risk level, 323.57053318737474, 95.4%, 319.46918870530374, , 313.11560317948675, 99.73%, 306.8883774106074
+
+=== TSM closed at 202.4===
+
+99.73%, 211.19034115664743, , 208.98120160431486, 95.4%, 206.7951705783237, Risk level, 205.36234496979017, 68.2%, 204.58578280284465, 68.2%, 200.19035310161, Risk level, 199.43765503020984, 95.4%, 198.0048294216763, , 195.79491176653946, 99.73%, 193.60965884335258
+
+=== AMD closed at 118.58===
+
+99.73%, 125.50884731389058, , 123.7645140348045, 95.4%, 122.04442365694528, Risk level, 120.91502154478113, 68.2%, 120.2997413016361, 68.2%, 116.83494786560838, Risk level, 116.24497845521887, 95.4%, 115.11557634305471, , 113.37013182857241, 99.73%, 111.65115268610941

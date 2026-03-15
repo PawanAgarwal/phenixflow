@@ -1,0 +1,47 @@
+Intraday post (19/feb)
+
+First, lets look at CME FedWatch tool:
+
+A quick walkthrough: Fed funds futures are quoted as 100 minus the expected effective rate:
+
+Fed always sets a target range for the fed funds rate. The FedWatch tool compares the implied rate to the current target range. If the implied rate is lower than the current range, the market expects rate cuts (or a lower effective rate), and if it’s higher, it expects rate hikes.As cuts/hikes typically occur in increments of 25 basis points, the tool uses the difference between the implied rate and the current target rate (often the midpoint of the target range) to estimate the probability of a change. Of course, they consider the term structure of the futures, etc. So this way, looking at the current pricing of fed funds futures, the tool tells us how many basis points the market expects the fed funds rate to change by a given date.Here you can read their methodology more in depth.
+
+As you can see, market prices 97.5% probability for no cuts in March, 55.4% into June, and 18.6% into Dec, betting with 37% probability for a 25bps cut, and this is the highest bet. The sentiment turns in July. So basically the market only expects only one rate cut this year. Here I explained that the current higher inflation prints were natural and don’t actually reflect the inflation trend. Of course, this reports are mostly fake, but we have to follow the narrative that they want to sell us, we can’t be bearish if they want to boost the market and economy. The key takeaway here is that we already saw last week, that the market prices in sticky inflation, and doesn’t really expect further easing. This is something to keep in mind, everything else is just temporal market speculation to collect premium and catch alpha through event vol spikes. Bad news are no news, but in an evironment like this, good news are very good news.
+
+Here I coded today gamma exposure for you:
+
+Here you can check it in 3D, and here its 2D projection. And here below I attached OptionsDepth Heatmap:
+
+Lets dissect it first as usual:
+
+I code 6126 as the local upside zero vanna. We should see low vol to break above this lvl, and as you can conclude from the pic, it is possible.6100 is a strong support, zero vanna also oscillates near to this, and also as written it is a strong pin. (Pls, keep in mind that my coded profile differs from OD’s one in a lot of points today. Mine is more about the “underlying, longer-term trades”)
+
+I want to add, that monthly RV dumped another -3.53%, triggering more institutional buying flows.
+
+VIX options technically expired yesterday session end. More than 175k OTM VIX calls are added into March VIX expo at 24-25s strikes. I already posted about March short call gamma building into March on twitter. However market isn’t yet pricing in a steep risk premium for extreme moves, as skew is relatively flat. But still this accumulating short call gamma hides a ‘time bomb’ into Q1 Opex, if vol gets realized. I mark VIX 16.73s as pivot. A settlement below this can trigger some mild buyback flows on ES futs, as hedges unwinding. I don’t expect too significant/trend-changer reaction for now. But spot up/vol up bets have an increased odds to materialize soon.
+
+Bull bias remains, but I don’t look for intraday edge, personally. Rather, I would take month-end (30/40 delta) call and a further OTM (20/22 delta) weekly call.
+
+SCRIPT INPUTS:
+
+SPX99.73%, 6222.42230972215, , 6199.168300178718, 95.4%, 6176.001193923576, Risk level, 6160.86791017324, 68.2%, 6152.746856547095, 68.2%, 6106.325407930992, Risk level, 6098.29224607676, 95.4%, 6083.158962326424, , 6059.90395421586, 99.73%, 6036.73784652785
+
+ES99.73%, 6244.5794039326, , 6220.073969943683, 95.4%, 6195.6647019663, Risk level, 6179.718509125286, 68.2%, 6171.158886855154, 68.2%, 6122.243797676522, Risk level, 6113.781490874714, 95.4%, 6097.8352980337, , 6073.328702260635, 99.73%, 6048.9205960674
+
+SPY99.73%, 621.7181486336773, , 619.1558289223434, 95.4%, 616.6040694340262, Risk level, 614.9368796149399, 68.2%, 614.0417057470027, 68.2%, 608.9275818329988, Risk level, 608.0431008538101, 95.4%, 606.3759110347238, , 603.8134571615633, 99.73%, 601.2618318350727
+
+VIX99.73%, 17.63793319610729, , 17.056361990748904, 95.4%, 16.49396678878851, Risk level, 16.121033740002588, 68.2%, 15.911706272422597, 68.2%, 14.766943723140171, Risk level, 14.578967022936867, 95.4%, 14.206033974150944, , 13.622047409514947, 99.73%, 13.062067566832162
+
+IWM99.73%, 232.63754474766225, , 231.2766798990275, 95.4%, 229.9237757307647, Risk level, 229.03908703125612, 68.2%, 228.56286362282202, 68.2%, 225.84904621088486, Risk level, 225.38092639647826, 95.4%, 224.49623769696967, , 223.13522762177695, 99.73%, 221.78246868007213
+
+QQQ99.73%, 552.1191117682879, , 548.9225793308062, 95.4%, 545.7445534427377, Risk level, 543.6664474286083, 68.2%, 542.547912285764, 68.2%, 536.1732426555699, Risk level, 535.0735428057667, 95.4%, 532.9954367916373, , 529.7985703469081, 99.73%, 526.6208784660871
+
+NVDA99.73%, 151.27587122238867, , 148.27718087955924, 95.4%, 145.33793255943652, Risk level, 143.40216455531413, 68.2%, 142.33800234551947, 68.2%, 136.39871584793843, Risk level, 135.39782323765462, 95.4%, 133.46205523353223, , 130.45930664138208, 99.73%, 127.52411657058006
+
+AMZN99.73%, 234.67842876044278, , 232.66266285296092, 95.4%, 230.66421132846358, Risk level, 229.35557644563835, 68.2%, 228.64829343280402, 68.2%, 224.6339185804743, Risk level, 223.9444113473304, 95.4%, 222.63577646450517, , 220.61953799944163, 99.73%, 218.62155903252597
+
+GOOG99.73%, 193.2486653815896, , 191.37744027106888, 95.4%, 189.5243342166737, Risk level, 188.31020225691114, 68.2%, 187.65292930258335, 68.2%, 183.92841105230613, Risk level, 183.28980384660449, 95.4%, 182.07567188684192, , 180.20388506872916, 99.73%, 178.35134072192602
+
+TSM99.73%, 215.43640530889158, , 212.2385718103206, 95.4%, 209.08820540102784, Risk level, 207.01869223106422, 68.2%, 205.88964012684124, 68.2%, 199.54066187916735, Risk level, 198.4613187552639, 95.4%, 196.3918055853003, , 193.19163247649362, 99.73%, 190.04360567743655
+
+TSLA 99.73%, 378.70465528811326, , 372.5052455157719, 95.4%, 366.4073203198379, Risk level, 362.3983891201801, 68.2%, 360.2061782245872, 68.2%, 347.90698846129055, Risk level, 345.8215815829449, 95.4%, 341.8126503832871, , 335.60766276098343, 99.73%, 329.51531541501174

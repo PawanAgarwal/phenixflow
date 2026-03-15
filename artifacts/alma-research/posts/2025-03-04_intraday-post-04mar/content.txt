@@ -1,0 +1,39 @@
+Intraday post (04/mar)
+
+Coding positioning for today’s session:
+
+3D chart, and 2D projection.OD Heatmap screenshot:
+
+(Description is here)
+
+As you can see we have an IC again at 5775/5780/5905/5910, very low gamma inbetween. Upside wing can functionate as a magnet, while downside wing is more like a support and ‘vol decayer’. The whale using Martingale strategy (adding to a position if it moves against him), that work on the short-run, and also ensures slowing downside momentum down. I code 5841.63 as the daily pivot. And coding 5809.22 the lvl from where the downside gamma should have an effect on the price, and 5874.22 for upside gamma. Coding zero vanna line at 5876.47, vol should cool off a bit in order to break through this line. Downside zero vanna is at 5747.98, where vol should increase in order to break below.The speed is net negative within the IC range increasing the probability for a losing trade on the condor. Charm is positive here (usually it is in short speed environment), meaning, MMs become longer delta as time passes forcing them to sell. The charm convexity (color) is positive below the pivot and negative above. This means that the negative speed profile will become more pronunced during the session, making it tough for the price to break through the vanna flips, bcs the more pronunced the speed is, the stronger its effect on vol and charm: faster delta decay, and more flows against vol if price falls, and more mechanical flows supporting vol when price goes up.
+
+Trump will have another speech to the Congress today. And I want to remind you to the importance of my weekend post and post-OpEx ‘spot decay’ call.The index still shows strong mean reverting nature according to the models. While the reversion models start to signal mean reversion back up, market still keeps underpricing this possibility, currently the behavior shifts toward intraday vol trades and some bid in the call side (market is preparing for teh reversion), but put side remains convex. 5881.34 remains the key line for SPX to close above for bullish continuation. Note, that SPX reversion model still not showing green dot:
+
+While NVDA and QQQ and NDX do. I still lean towards fast intraday reversion trading from the marked lvls using ATM strikes, instead of taking longer term positions. If this model shows me green dot, I will go for ES long with tight stop-loss. I see edge still on the ATM and slightly ITM call side + 30-40 delta OTM put side.
+
+SCRIPT INPUTS:SPX99.73%, 5976.585532839706, , 5944.784598223219, 95.4%, 5913.152873841728, Risk level, 5892.473827008387, 68.2%, 5881.351026726204, 68.2%, 5817.917435331121, Risk level, 5806.966602679113, 95.4%, 5786.287555845772, , 5754.483823379941, 99.73%, 5722.854896847794
+
+ES=F99.73%, 5991.475563179037, , 5958.704550112931, 95.4%, 5926.112781589519, Risk level, 5904.804514791335, 68.2%, 5893.340774526853, 68.2%, 5827.976976644574, Risk level, 5816.695485208665, 95.4%, 5795.387218410481, , 5762.613155707394, 99.73%, 5730.024436820963
+
+SPY99.73%, 596.8275401100587, , 593.554183449439, 95.4%, 590.2987798206543, Risk level, 588.1704039663085, 68.2%, 587.0253233253029, 68.2%, 580.4964609554959, Risk level, 579.3696350961915, 95.4%, 577.2412592418457, , 573.9675962633846, 99.73%, 570.7124989524413
+
+VIX99.73%, 24.67015489863396, , 24.19300196599345, 95.4%, 23.725077792639734, Risk level, 23.416982656085615, 68.2%, 23.247737274991973, 68.2%, 22.302456684412334, Risk level, 22.1430187172054, 95.4%, 21.83492358065128, , 21.35715808308012, 99.73%, 20.889846474657055
+
+IWM99.73%, 215.06757367332435, , 213.4898932206321, 95.4%, 211.92378622631063, Risk level, 210.89891151858413, 68.2%, 210.34601928639654, 68.2%, 207.20214272765932, Risk level, 206.66108604000962, 95.4%, 205.63621133228312, , 204.05826342311528, 99.73%, 202.4924238852694
+
+QQQ99.73%, 511.2962048710861, , 507.7221590128504, 95.4%, 504.17309633202746, Risk level, 501.8509629482943, 68.2%, 500.59887272883213, 68.2%, 493.47558131340526, Risk level, 492.2490126376432, 95.4%, 489.92687925391004, , 486.3522845411004, 99.73%, 482.8037707148514
+
+NQ=F99.73%, 21063.517887079586, , 20914.171460657224, 95.4%, 20765.883943539793, Risk level, 20668.855277945822, 68.2%, 20616.529873559186, 68.2%, 20318.88806253043, Risk level, 20267.644722054178, 95.4%, 20170.616056460207, , 20021.246017583897, 99.73%, 19872.982112920414
+
+NVDA99.73%, 122.79947157337983, , 120.59481258859692, 95.4%, 118.42973456598679, Risk level, 117.00520030157666, 68.2%, 116.22433151221546, 68.2%, 111.85379229454611, Risk level, 111.11479481561084, 95.4%, 109.69026055120071, , 107.48318784307214, 99.73%, 105.32052354380767
+
+AMZN99.73%, 213.83909558758072, , 211.62283796024883, 95.4%, 209.4295499300208, Risk level, 207.9920380456563, 68.2%, 207.21304790343788, 68.2%, 202.80324721839975, Risk level, 202.04797049926557, 95.4%, 200.61045861490106, , 198.39343519641596, 99.73%, 196.20091295734116
+
+GOOG99.73%, 176.16237866091777, , 174.27669248288606, 95.4%, 172.41119116151356, Risk level, 171.1883040367078, 68.2%, 170.52528297202593, 68.2%, 166.773863473615, Risk level, 166.13170328751096, 95.4%, 164.9088161627052, , 163.0224332981624, 99.73%, 161.15762866330098
+
+TSLA99.73%, 308.58477923522753, , 302.5419156922802, 95.4%, 296.61738656585595, Risk level, 292.7160165556408, 68.2%, 290.57208619473766, 68.2%, 278.6020473273216, Risk level, 276.58397123732794, 95.4%, 272.6826012271128, , 266.6317708919815, 99.73%, 260.7152085577412
+
+TSM99.73%, 182.7818496765675, , 180.3122033208867, 95.4%, 177.87592544863531, Risk level, 176.27659415032943, 68.2%, 175.4058124521082, 68.2%, 170.49939472794597, Risk level, 169.66340829107682, 95.4%, 168.06407699277094, , 165.59294776127436, 99.73%, 163.15815276483875
+
+AMD99.73%, 104.43333290117064, , 102.87081136625804, 95.4%, 101.33166812905212, Risk level, 100.32052541334149, 68.2%, 99.76878319635091, 68.2%, 96.66673170499715, Risk level, 96.1394813005257, 95.4%, 95.12833858481507, , 93.56465457259237, 99.73%, 92.02667381269654

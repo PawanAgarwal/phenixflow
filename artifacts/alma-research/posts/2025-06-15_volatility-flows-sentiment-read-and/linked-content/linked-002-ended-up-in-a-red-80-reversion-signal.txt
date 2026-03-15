@@ -1,0 +1,81 @@
+CPI day + Intraday post (11/June)
+
+This data is the last CPI before FOMC, and this is a pivotal data. May’s NFP beat (+139 K vs. 130 K est., unemployment steady at 4.2%) signaled a still‐resilient labor market, though underlying revisions and participation dips imply mild cooling rather than a hard landing. The April CPI reading of 2.3% y/y appears to have been the trough, and economists now forecast May’s headline CPI at 2.5% y/y with a 0.2% m/m increase; core CPI (ex-food and energy) is seen at 2.9% y/y and up 0.3% m/m. Also short-term inflation swaps have surged to about 3.07% over the next 12 months, reflecting the market’s view that current tariff-driven pressures will lift consumer prices further (~3%) and that Fed rate cuts won’t come until at least September.
+
+My suspicion came true with the SPX/LTY beta, it went neutral-to-positive ahead of CPI:
+
+Prices paid indexes (PMI surveys) typically lead CPI by 6 months—rising since January, this suggests a June CPI uptick and stronger summer prints. Seems like +0.2% m/m, 2.5% y/y. But the thing is, market has no fear of inflation now. It is priced in. Note, that the paradox of this situation is, that if CPI comes in line with expectations, traders will start to sell vol that is net suppressive for equities in the current environment.
+
+The reversion model shows…
+
+81.49% probability for a reversion. This is where I start to take short swing positions, and playing upsticks intraday, keeping the weekly ranges in mind.
+
+INTRADAY POSTCoding today’s posititioning:
+
+Coding the centroid at 6039.94 - 6053.06 zone. The speed profile is very steep negative. The upper line is a strong resistance zone after 1 pm, can be broken only if volatility declines steeply, but overall the vol crush is suppressive in this regime. If vol catches up, spot is pushed upward even towards 6085 (because negative vanna makes dealers shorter delta if vol catches up).Zomma is also positive here, so if vol goes down, gamma decays. And also vol up/gamma up, this caps any upward squeeze around 6075/80.Coding 5993.93 for downside pivot here, we should start to see the downside gamma manifesitng, with downside target of 5968 especially during the PM. Charm is flat to suppressive, and color is negative (counterbalancing the long zomma into the afternoon)
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+This is also a nice setup for reversion trade.. Be patient and wait for the right lvl, right setup and right time to jump in. If the environment doesn’t fit, leave it. Only trade when you have a clear vision, and 2 trades at max. And determine the max amount of money you can put into work, before start to trading.
+
+SCRIPT INPUTS:=== SPX closed at 6038.81===
+
+99.73%, 6141.189589291547, , 6115.541132039444, 95.4%, 6089.999794645774, Risk level, 6073.311921591252, 68.2%, 6064.350885288948, 68.2%, 6013.160630840919, Risk level, 6004.308078408749, 95.4%, 5987.6202053542265, , 5961.970368497081, 99.73%, 5936.430410708454
+
+=== ES closed at 6040.5===
+
+99.73%, 6145.7024089790975, , 6119.345287739928, 95.4%, 6093.101204489549, Risk level, 6075.953211825956, 68.2%, 6066.7435932070775, 68.2%, 6014.141890102102, Risk level, 6005.046788174044, 95.4%, 5987.898795510451, , 5961.540178198093, 99.73%, 5935.2975910209025
+
+=== SPY closed at 603.08===
+
+99.73%, 613.9445292988713, , 611.2223620686567, 95.4%, 608.5122646494357, Risk level, 606.7413463737197, 68.2%, 605.790043302778, 68.2%, 600.3577235575623, Risk level, 599.4186536262804, 95.4%, 597.6477353505644, , 594.9254028061822, 99.73%, 592.2154707011288
+
+=== VIX closed at 16.95===
+
+99.73%, 19.092175634489855, , 18.54890242074966, 95.4%, 18.021088198714654, Risk level, 17.671913694651938, 68.2%, 17.477341294293378, 68.2%, 16.405718302167802, Risk level, 16.22808783122697, 95.4%, 15.878913327164252, , 15.33402047387134, 99.73%, 14.807825891389049
+
+=== IWM closed at 214.51===
+
+99.73%, 219.9789456045, , 218.60743369209663, 95.4%, 217.24447280225, Risk level, 216.3530346687165, 68.2%, 215.8729067317403, 68.2%, 213.13837838172023, Risk level, 212.66696533128348, 95.4%, 211.77552719775, , 210.40384858785387, 99.73%, 209.04105439549997
+
+=== QQQ closed at 534.21===
+
+99.73%, 546.0511442392665, , 543.0827901384239, 95.4%, 540.1305721196333, Risk level, 538.2004656086328, 68.2%, 537.1621290932834, 68.2%, 531.2414660660168, Risk level, 530.2195343913672, 95.4%, 528.2894278803668, , 525.3208009896047, 99.73%, 522.3688557607336
+
+=== NDX closed at 21941.92===
+
+99.73%, 22418.28920509629, , 22298.87888615057, 95.4%, 22180.104602548145, Risk level, 22102.456422117448, 68.2%, 22060.690850033305, 68.2%, 21822.50273896321, Risk level, 21781.38357788255, 95.4%, 21703.735397451852, , 21584.314550458912, 99.73%, 21465.550794903706
+
+=== NQ closed at 21951.0===
+
+99.73%, 22430.187039818473, , 22310.06865018904, 95.4%, 22190.593519909235, Risk level, 22112.486032418827, 68.2%, 22070.47163871963, 68.2%, 21830.874550610024, Risk level, 21789.513967581173, 95.4%, 21711.406480090765, , 21591.2773833088, 99.73%, 21471.812960181527
+
+=== NVDA closed at 143.96===
+
+99.73%, 150.82336892868327, , 149.0976539150951, 95.4%, 147.39168446434164, Risk level, 146.27295532896628, 68.2%, 145.66573686178444, 68.2%, 142.23380858471512, Risk level, 141.64704467103374, 95.4%, 140.52831553565838, , 138.80186825135223, 99.73%, 137.09663107131675
+
+=== AMZN closed at 217.61===
+
+99.73%, 225.16150841294768, , 223.26564974995085, 95.4%, 221.38575420647385, Risk level, 220.15485833516337, 68.2%, 219.48975824140584, 68.2%, 215.71386192623143, Risk level, 215.06514166483666, 95.4%, 213.83424579352618, , 211.93796054752227, 99.73%, 210.05849158705234
+
+=== AAPL closed at 202.67===
+
+99.73%, 209.66032356450575, , 207.9053980227445, 95.4%, 206.16516178225285, Risk level, 205.02573904123844, 68.2%, 204.41011065602694, 68.2%, 200.9148189198368, Risk level, 200.31426095876154, 95.4%, 199.17483821774712, , 197.41952258209082, 99.73%, 195.67967643549423
+
+=== GOOG closed at 180.01===
+
+99.73%, 186.56407967071047, , 184.91830061530388, 95.4%, 183.28703983535522, Risk level, 182.21872484902943, 68.2%, 181.64112981580547, 68.2%, 178.3639542038629, Risk level, 177.80127515097055, 95.4%, 176.73296016464477, , 175.0867735092463, 99.73%, 173.4559203292895
+
+=== TSLA closed at 326.09===
+
+99.73%, 352.46555300789163, , 345.80880428171736, 95.4%, 339.2777765039458, Risk level, 334.9785613636595, 68.2%, 332.6185354729524, 68.2%, 319.4280608522493, Risk level, 317.20143863634047, 95.4%, 312.90222349605415, , 306.23735382497176, 99.73%, 299.7144469921083
+
+=== TSM closed at 212.46===
+
+99.73%, 220.5422928738761, , 218.51237778447504, 95.4%, 216.50114643693806, Risk level, 215.18373269849624, 68.2%, 214.47105532446997, 68.2%, 210.42972610353354, Risk level, 209.73626730150377, 95.4%, 208.41885356306196, , 206.38838972450458, 99.73%, 204.3777071261239
+
+=== AMD closed at 123.24===
+
+99.73%, 129.79588255995355, , 128.14643127337948, 95.4%, 126.51794127997678, Risk level, 125.44933242270434, 68.2%, 124.86821486408915, 68.2%, 121.58998361976886, Risk level, 121.03066757729565, 95.4%, 119.96205872002321, , 118.31173630725286, 99.73%, 116.68411744004642

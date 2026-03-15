@@ -1,0 +1,51 @@
+Intraday post (26/feb)
+
+Coding today’s gamma:
+
+We can see an obvious long fly spread at 5885/5965/6050The 5965 is fully aligns with my coded 5965.94 as the centroid point, kind of a turning point: below the downside gamma magnetic effect kicks in, and so does the upside gamma bove the line. Coding 5925.33 the lvl where the longer downside gamma starts to affect the price by swallowing volatility, and slowing the momentum down by increasing repel. This can push the price back temporary towards the centroid. I code zero vanna at 5988.5, vol should decrease to break through this lvl (as MMs have net positive vanna convexity), but charm convexity is negativ, so into the PM gamma will decrease, below this region giving more room for volatility.
+
+Here is NVDA 1 vs 3m RV + realized vol of vol:
+
+Dumped from 82.35% to 59.28% despite a 10.21% fall. GARCH says for SPX:
+
+Not dump, but relatively stagnant vol for these two days.
+
+Here you can see NVDA skew into Feb28 expo
+
+and March07 expo:
+
+and its term-structure:
+
+This makes me think that traders are short calendar out-there, meaning long short-term vol, selling longer-term vol. Bcs longer-dated options have more vega, one can say, that this is a bet on sharp spot move but overall event vol crush. Or can be a part of a diagonal + buying short-term against short stock positions. But note that vomma is not the same for these contracts, as shorter-dated vega is more convex than longer-dated one. So if vol crushes too fast, the spread between the two positions can even tighten. This would force traders to cover their losses, sell their short-term vol exposures supplying dealers with vega, leading to a reinforcing supporting cycle and net vol crush. The implied move is priced to ~8.5%, marking significant pivot at 121.32 to the downside, and 133.86 to the upside. Mark these.Investors expect a more modest beat than the ‘normal’.Me personally, I find the best edge on buy a risk reversal on NVDA into March expo, weighted on the short put side. But straddle priced high, the best edge in overall is on SPY 0DTE side.
+
+GARCH for NVDA:
+
+It also expects slight vol down move.
+
+SCRIPT INPUTS:
+
+SPX99.73%, 6060.186573050027, , 6033.89539971203, 95.4%, 6007.718286525013, Risk level, 5990.613625117859, 68.2%, 5981.426612926726, 68.2%, 5928.957817287277, Risk level, 5919.886374882141, 95.4%, 5902.781713474987, , 5876.489012556519, 99.73%, 5850.313426949973
+
+ES=F99.73%, 6081.775008480837, , 6053.766763528831, 95.4%, 6025.887504240419, Risk level, 6007.668177858042, 68.2%, 5997.878658352076, 68.2%, 5941.990541871023, Risk level, 5932.331822141958, 95.4%, 5914.112495759581, , 5886.102413763674, 99.73%, 5858.224991519163
+
+SPY99.73%, 605.241708049173, , 602.4850005779634, 95.4%, 599.740849141774, Risk level, 597.947569137962, 68.2%, 596.9840838223106, 68.2%, 591.4831659906616, Risk level, 590.532411330788, 95.4%, 588.739131326976, , 585.982247052714, 99.73%, 583.238272419577
+
+VIX99.73%, 20.898131831943175, , 20.52781797875186, 95.4%, 20.164066068559478, Risk level, 19.924760629696394, 68.2%, 19.79363053776884, 68.2%, 19.059433723292166, Risk level, 18.93523998065517, 95.4%, 18.695934541792084, , 18.32522640867998, 99.73%, 17.961868778408387
+
+IWM99.73%, 221.20249207901392, , 219.74959855569057, 95.4%, 218.30624787056166, Risk level, 217.36207225860622, 68.2%, 216.85329062123785, 68.2%, 213.95698096150286, Risk level, 213.45793506561253, 95.4%, 212.5137594536571, , 211.06066950545937, 99.73%, 209.61751524520483
+
+QQQ99.73%, 525.9158450325762, , 522.7574014207611, 95.4%, 519.6179261783975, Risk level, 517.5648046319352, 68.2%, 516.4593669125292, 68.2%, 510.1613295487827, Risk level, 509.0752100165023, 95.4%, 507.02208847004005, , 503.8632892224443, 99.73%, 500.7241696158613
+
+NQ=F99.73%, 21687.91384814173, , 21552.76428974677, 95.4%, 21418.456924070866, Risk level, 21330.613966823763, 68.2%, 21283.302034392473, 68.2%, 21013.839642312523, Risk level, 20967.386033176237, 95.4%, 20879.543075929134, , 20744.377108178865, 99.73%, 20610.08615185827
+
+NVDA99.73%, 137.022566048434, , 134.39931318438153, 95.4%, 131.82628165092598, Risk level, 130.13229293733838, 68.2%, 129.20201888277543, 68.2%, 124.00463993502915, Risk level, 123.12770156949756, 95.4%, 121.43371285590996, , 118.80716523226602, 99.73%, 116.23742845840194
+
+AMZN99.73%, 220.99767550703268, , 218.9386656141848, 95.4%, 216.89883927939525, Risk level, 215.56261866918544, 68.2%, 214.83964638906394, 68.2%, 210.74062004530174, Risk level, 210.03738743433018, 95.4%, 208.70116682412038, , 206.6415861592734, 99.73%, 204.60233059648294
+
+GOOG99.73%, 184.51365764251693, , 182.71901435226656, 95.4%, 180.94182637985222, Risk level, 179.77740938822353, 68.2%, 179.14700907771075, 68.2%, 175.57499672291854, Risk level, 174.96258084615147, 95.4%, 173.79816385452278, , 172.00297684678088, 99.73%, 170.22633259185807
+
+TSLA99.73%, 326.1243940287661, , 320.24020899281965, 95.4%, 314.46219091086743, Risk level, 310.6603126944325, 68.2%, 308.57599966484895, 68.2%, 296.91163272206626, Risk level, 294.939662891505, 95.4%, 291.13778467507007, , 285.2470888288463, 99.73%, 279.4755815571714
+
+TSM99.73%, 199.2113506245313, , 196.7356280808153, 95.4%, 194.2906728708594, Risk level, 192.68653192316236, 68.2%, 191.81455568561455, 68.2%, 186.89346250871782, Risk level, 186.05345831121264, 95.4%, 184.4493173635156, , 181.97234686412185, 99.73%, 179.5286396098437
+
+AMD99.73%, 110.09306594433113, , 108.54897098499436, 95.4%, 107.0265325144019, Risk level, 106.02684261624496, 68.2%, 105.48212276121251, 68.2%, 102.41525568525232, Risk level, 101.89315555270035, 95.4%, 100.89346565454342, , 99.3483680112233, 99.73%, 97.82693222461418

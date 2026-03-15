@@ -1,0 +1,85 @@
+OpEx pt 2, momentum - Intraday post
+
+...and what to watch
+
+PM OPEXSupportive OpEx is playing out with upside capped, but at the same time also slowly pushed due to dealer long-call hedging flows. (To be honest, I expected slower grind up into OpEx, but we take, what we get.)
+
+The OpEx is overall dealer long-call heavy. This means, that whenever the price grinds higher, the net dealer long delta exposure increases, capping the upside, while the shorter put positions are decaying below this provides some mild supportive effect for the index. Also the long call gammas help to dampen vol here, and stabilize the momentum.
+
+Now, coding PM OpEx positioning:
+
+In this range locally, between the 5d Puts and Calls, the speed profile is already negative. The highest long gamma bar is 5935, then gamma simply lowers, this canThe centroid is 5905.86Upside pivot is 5939.50 and downside pivot is the 5883.50 - 5894.72 zone, both needs hightened vol to break out of the gamma magnets. The downside pivot is very strongly expected to swallow any vol up.Charm flows are net suppressive above ~5885, and color is slightly negative, so and overall very sligh gamma decay is likely. It does not effect the local gammas, but effect the vol profile, bcs it gives a little bit room for vol to catch up, if price remains too long above 5915, (mechanically not too much tho, but adds a gentle push to the vol if customers want to fomo into long calls and gamma squeeze it up). The overall local negative speed indicates that the mentioned vol dampening effect locally caps the upside, as triggers sell back towards the centroid. However, the gamma cluster below 5935 is strong enough to hold up the momentum, mechanically, plus charm flows are alos supportive. A nice vol spike would be necessary to break through this cluster. However this is not indicated by any dealer hedging mechanisms.
+
+Coding upside vanna flip at 5972, and another one at 6010-6005, and a downside one at 5842. All of these need low vol to break through, but 5972 is tricky, bcs it is oscillating just right below a significant gamma lvl at 5976. If vol declines, zomma makes it a strong resistance.
+
+Also important to note, that the skew has fallen since Wednesday, but also became longer due to heavy call selling (since May 9).
+
+MOMENTUMCurrently the model estimates the reversion probability at 70.63%
+
+So I consider taking bets on reversion, but size accordingly, taking the probability value into account. (Personally, I’d be happy for a 5972 touch… that is likely if SPX can hold above 5920/25 after the opening bell)Yesterday I made a very important point saying: “over the past few weeks, whenever the quant models suggested a healthy pullback, the government literally intervened and released benign announcements to trigger supportive buying. Why? Simply because the deflationary risk is real. They need to keep it going until the planned events unfold and investment interest strengthens.” During overnight trends, future markets and RTH, any attempt for a pullback is bought up very heavily, and more and more aggresively. Put premiums are very low, and so they offer hgih convexity, while positioning is very much call heavy. Lets re-read my analyses on the vol profile and momentum from the past week. The key part is the the aggresiveness of the upside is increased, while the downside risk is definitely growing both strucuraly (bonds, USD/JPY, Fed Funds, etc.) and mechanically (crowded long delta / short vol trade, mean reversion). Blow-off topish. The deals are on the way, so market doesn’t need to be pushed up anymore like this. When OpEx calls unwind, this very much likely gonna pull back down. I still want 80%+ on my model, and jumping in fast, because the more stretched it becomes, the better put payoffs one can get.
+
+And if the pullback starts, we need to check if the market believes in Trump and in the effect of the deals in terms of deflationary risk, or not. If it does, market will create a supportive strucutre, fills the gaps and grind back up (this is my initial bias). If it does not, it will grind lower and lower with suppressed vol, and accelerate after June OpEx. Be adaptive.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+SCRIPT INPUTS=== SPX closed at 5916.93===
+
+99.73%, 6049.3024462002995, , 6016.118317013092, 95.4%, 5983.11622310015, Risk level, 5961.539514369501, 68.2%, 5949.931081445227, 68.2%, 5883.743823098694, Risk level, 5872.320485630499, 95.4%, 5850.743776899851, , 5817.5565411960215, 99.73%, 5784.557553799701
+
+=== ES closed at 5934.0===
+
+99.73%, 6074.457532458982, , 6039.2410661961185, 95.4%, 6004.228766229491, Risk level, 5981.334188438677, 68.2%, 5969.011098901207, 68.2%, 5898.781103007146, Risk level, 5886.665811561323, 95.4%, 5863.771233770509, , 5828.551077480134, 99.73%, 5793.542467541018
+
+=== SPY closed at 590.46===
+
+99.73%, 604.1463657064958, , 600.7150298982973, 95.4%, 597.3031828532479, Risk level, 595.0723052430891, 68.2%, 593.87173476057, 68.2%, 587.0284370049472, Risk level, 585.847694756911, 95.4%, 583.6168171467522, , 580.1851365387946, 99.73%, 576.7736342935043
+
+=== VIX closed at 17.83===
+
+99.73%, 20.025950488461145, , 19.469224306268078, 95.4%, 18.927975244230574, Risk level, 18.570035314611406, 68.2%, 18.37078655378237, 68.2%, 17.272289987010083, Risk level, 17.08996468538859, 95.4%, 16.732024755769423, , 16.173722622203982, 99.73%, 15.634049511538851
+
+=== IWM closed at 208.13===
+
+99.73%, 214.2131559888041, , 212.68692996354233, 95.4%, 211.17157799440204, Risk level, 210.18002356822697, 68.2%, 209.64527308760123, 68.2%, 206.60361388907285, Risk level, 206.07997643177302, 95.4%, 205.08842200559795, , 203.56195226384366, 99.73%, 202.0468440111959
+
+=== QQQ closed at 519.25===
+
+99.73%, 534.6127832820694, , 530.7581915372647, 95.4%, 526.9313916410347, Risk level, 524.4272579660574, 68.2%, 523.0765958343072, 68.2%, 515.3949940486352, Risk level, 514.0727420339426, 95.4%, 511.5686083589653, , 507.7133859041577, 99.73%, 503.8872167179307
+
+=== NDX closed at 21335.82===
+
+99.73%, 21956.848658915864, , 21801.038665444423, 95.4%, 21646.33432945793, Risk level, 21545.106658054647, 68.2%, 21490.51634822056, 68.2%, 21179.993796780604, Risk level, 21126.533341945353, 95.4%, 21025.305670542068, , 20869.471000669662, 99.73%, 20714.791341084136
+
+=== NQ closed at 21396.5===
+
+99.73%, 22030.948064313558, , 21871.760935857066, 95.4%, 21713.724032156777, Risk level, 21610.30899767367, 68.2%, 21554.528439612, 68.2%, 21237.295690505358, Risk level, 21182.69100232633, 95.4%, 21079.275967843223, , 20920.06267703393, 99.73%, 20762.051935686442
+
+=== NVDA closed at 134.83===
+
+99.73%, 143.67591323250642, , 141.44714812313035, 95.4%, 139.25295661625321, Risk level, 137.81107275935466, 68.2%, 137.02363351104592, 68.2%, 132.60008167203588, Risk level, 131.84892724064537, 95.4%, 130.4070433837468, , 128.1764887518388, 99.73%, 125.98408676749361
+
+=== AMZN closed at 205.17===
+
+99.73%, 215.23979614231513, , 212.70745029018633, 95.4%, 210.20489807115754, Risk level, 208.5635212999602, 68.2%, 207.67219105421745, 68.2%, 202.63691386995757, Risk level, 201.77647870003977, 95.4%, 200.13510192884243, , 197.60161736533354, 99.73%, 195.10020385768485
+
+=== AAPL closed at 211.45===
+
+99.73%, 220.01801380239002, , 217.8654807628598, 95.4%, 215.73400690119502, Risk level, 214.33742065140544, 68.2%, 213.5812626595734, 68.2%, 209.2970359100728, Risk level, 208.56257934859454, 95.4%, 207.16599309880496, , 205.01279997230884, 99.73%, 202.88198619760996
+
+=== GOOG closed at 165.4===
+
+99.73%, 172.38685354681044, , 170.63120003740804, 95.4%, 168.89342677340522, Risk level, 167.75456964527513, 68.2%, 167.13758640210534, 68.2%, 163.64396478843568, Risk level, 163.04543035472489, 95.4%, 161.9065732265948, , 160.15033467426355, 99.73%, 158.41314645318957
+
+=== TSLA closed at 342.82===
+
+99.73%, 370.91395720379654, , 363.82268102551365, 95.4%, 356.86697860189827, Risk level, 352.28766357767944, 68.2%, 349.7729800946648, 68.2%, 335.7230513320425, Risk level, 333.35233642232055, 95.4%, 328.7730213981017, , 321.67286488414913, 99.73%, 314.72604279620344
+
+=== TSM closed at 194.22===
+
+99.73%, 203.9833368803379, , 201.52772193142144, 95.4%, 199.10166844016896, Risk level, 197.51024452867387, 68.2%, 196.6456865645662, 68.2%, 191.76363251552777, Risk level, 190.92975547132613, 95.4%, 189.33833155983103, , 186.88155832015806, 99.73%, 184.4566631196621
+
+=== AMD closed at 114.99===
+
+99.73%, 122.37671773401331, , 120.51589068580243, 95.4%, 118.68335886700666, Risk level, 117.47932387636249, 68.2%, 116.82208453934169, 68.2%, 113.12824918596992, Risk level, 112.5006761236375, 95.4%, 111.29664113299333, , 109.43438166814717, 99.73%, 107.60328226598668

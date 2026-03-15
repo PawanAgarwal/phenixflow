@@ -1,0 +1,49 @@
+Weekly post (03/feb - 07/feb)
+
+Setting the tone...
+
+tl;dr: I still see long-side edge, 5940.51 SPX as pivot. Patience is required before blindly jumping on any trades. Observe first, before decide.Below I coded projected gamma change for the week:
+
+Weekly net zero speed output is 5934.13 for SPX. For the Friday expo the GEX is:
+
+From a positioning perspective what we see is a short butterfly spread pattern with 5900 as center. This means we are positive speed (spot up/gamma up, spot down/gamma down) from 5900 up to 5974.40Also you can see on the animated gif how we MMs have a bull put spread pattern on until Tuesday PM at 5945/25This sets a sticky but supportive strike. But it is more like sticky if SPX can’t get over 5967Supportive in the sense that if spot falls towards it from above, it has the potential to grab and hold the momentum. But sticky, because MMs hedge it by selling futures as the long strike decays, but whenever the spot approaches the level, they have to buy back futures. However note, that majority of dealer desks are closed until Monday open. So, these effects will be revealed during RTH. Overall, into Friday expo, vanna and charm flows are net supportive towards 6000. Meaning, if volatility crushes, positive flows will be triggered along with charm decay forced buyback flows. Coding 6040.51 SPX as the turning point from dealer flow perspective into Friday expo. Kinda like a net breakeven for dealer flows in this landscape: Above this line they book losses, triggering buy, below this line they book wins triggering sell. (Not for one particular firm, but an overall, as much as I can see)
+
+Above 6k, I expect longer spot/vol correlation (longer = increasing, ‘more positive’).
+
+Can volatility crush? First, note that vol of vol decreasing sharply, that says to me that traders roll their long VIX positions into March OpEx now after Fed.
+
+Lets look at the leaders of the index momentum, the tech sector alpha:
+
+We can see a steady growing trend in alpha. The key is that AI boom can realize the expectations, and so it pushes GDP higher. Companies leverage AI for improving operations and developing products, the improved production make them able maintain or even improve profit margins despite higher input costs from sticky inflation. Don’t forget that companies can pass along cost increases to their consumers without significantly hurting profit margins. Don’t forget that investors, institutions, companies watch real (inflation-adjusted) growth and earnings—so if corporate earnings grow faster than inflation, that can keep real profit margins healthy, stocks can still look attractive. This is something that many tend to miss about this inflation narrative…
+
+But don’t forget that this growth was boosted by fake fundamentals since Covid, that resulted in stagflation. How? I covered this already on X, but, the key stations are:
+
+During the pandemic, governments and the Fed flooded the economy with liquidity (“Fed put” of 2020),
+
+During the pandemic, governments and the Fed flooded the economy with liquidity (“Fed put” of 2020),
+
+Lockdowns, factory shutdowns, and shipping bottlenecks caused significant supply shortages,
+
+Lockdowns, factory shutdowns, and shipping bottlenecks caused significant supply shortages,
+
+Businesses started to panick, leading to over-ordering in an attempt to meet future demand,
+
+Businesses started to panick, leading to over-ordering in an attempt to meet future demand,
+
+Once the supply chains normalized, the delayed influx of goods hit the market all at once,
+
+Once the supply chains normalized, the delayed influx of goods hit the market all at once,
+
+And this is the key, because as a result businesses suddenly found themselves with too much inventory as demand began to slow,
+
+And this is the key, because as a result businesses suddenly found themselves with too much inventory as demand began to slow,
+
+At this point, it was clear that inflation will resurge in critical areas like services, housing, and wages leading to stagflation (while the narrative was the victory over inflation, the reality was that policymakers underestimated structural inflation risks caused by massive debt, wage pressures, and persistent supply-side issues)
+
+At this point, it was clear that inflation will resurge in critical areas like services, housing, and wages leading to stagflation (while the narrative was the victory over inflation, the reality was that policymakers underestimated structural inflation risks caused by massive debt, wage pressures, and persistent supply-side issues)
+
+This is very important to remember during this big cycle. So the growth can be sustained on the short run, AIs can support the bull market narrative until summer at least (and the momentum can be stabilized after the new gov took everything to their place… different environment now, the shift naturally causes uncertainity), but on the long run, market knows that something is just off with this inflation cycle, and if it breaks out of control, the pivot will be nasty, even deflational spiral.So from momentum perspective, I don’t expect vol to be sold in general, only temporary and not that much to see vanna squeezes.
+
+From momentum perspective, what I think is…the more it goes down the stronger buyback flow I expect for now, as this strong selling momentum was very coordinated-like panic selling and with this gap-down, when dealers open their eyes in the morning and turn their computer on, they will find their delta hedges decreased a lot. There were MOC imbalances into EOD Friday, and to me this tariff + EOD selling with positive charm in that region + increased VIX call deltas, just telling me that it was only to make plp believe that market is shifted. This is my gut feeling about it all tho… but as a mature adult, I’m cautious, and watch for further signals that potentially drive the flows:I watch COR3M 8.68 - 10.98 range, where I don’t want to see implied correlation index for tomorrow. When correlation bets increase, this means that the expectations of diversification benefits lowers meaning, investors position themselves for increased risk that is reflexive. I also watch CBOE SKEW index 160.77 - 163.64 range. If it doesn’t rejects this ranges, the tails start to realize and risk jumps. Looking at ATM vol on the chain it is very much elevated. So market is currently dancing on a rope, and this post-Fed week will set the tone for this Q1. If market can’t hold above the put spread, or more like above the pivot I marked, those vol bets gonna realize, and shorter gamma will accelerate the move to the downside. Also watching VIX 16.75s to not to break it, and 15.82s to confirm downward trend if there’s any. Both of these levels are to confirm the direction.
+
+As always: intraday positioning will come tomorrow, I will leverage OptionsDepth heatmap (I spoke with them) until I find a way to share my 3D gamma charts here (that you could see last year in some of my X posts) in an interactive way. The HTML code is just too long to embed it in a post, attaching it via link is jsut so awkward.OD is the only platform I find accurate and useful.

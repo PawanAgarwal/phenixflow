@@ -1,0 +1,25 @@
+Vega and vomma suppressing feedback loop, Weekly post (09-13/June)
+
+Let’s look at the weekly positioning in the 5 delta range:
+
+What we see is a customer short IC pattern at the 5950/55 - 6040/45 strikes betting on ranging within this range. But this position also implicit tells me that “if price starts to goes up, we expect vol to increase”. The projected zomma is flat-to-negative there locally, so if vol increases, gamma decreases to the upside (clearing the way out for the upside momentum). The overall MM positioning is long skew, meaning, customers are selling the skew, shorting vega and vomma and long theta, and the whole positioning’s speed exposure is net negative. So basically, whenever vol catches up it would trigger more mechanical vol selling both to the upside and to the downside. We should see, if VVIX can hold below 93.07, and potentially retest or even break below 86s. But all things point to vol decay through the week. You can see, that the vol and vvol selling actually got realized:
+
+IV is currently trending at 13.3%, and I still see room to go down to 11.71% during the week, even tho it is already very cheap. However MM long skew also means vanna is negative and charm is positive. So mechanically, this vol decay would indicate increase in the net MM delta positioning triggering delta slow selling, and so is the passage of time. And bcs long vomma and short veta (as written above), this is a reinforcing cycle, because the vol selling is mechanically triggered even at 5850s strike, that results in more delta selling. Zomma effect is not too strong. The coded 11.71% lvl for IV is still reasonable for the weekly IC. Also momentum doesn’t favor for too much upside move. Reversion model shows 77.41% chance for a reversion, it is something I start to hedge and consider.
+
+But with going net short, I would wait for the 80% signal.
+
+I code 5938.77 as the main pivot for SPX where the spot falls into the gravitational field of the downside gamma, and 5882.45 is already magnetizing. But this is only if the CPI print pushes the spot out of the IC range, bcs momentum would need elevated vol for that. Otherwise 5938.77 - 6043.81 is the main range where vol is expected to push the momentum to range. Let’s see what ranges the market prices in for the next week:
+
+SPX: 6058.65 - 5942.06; 5913.86 (…pretty much the range of the IC)ES=F: 6070.32 - 5949.67; 5920.49NDX: 22033.15 - 21490.42; 21359.17NQ=F: 22085.89 - 21533.10; 21399.42VIX: 17.79 - 15.74; 18.29
+
+SPX: 6058.65 - 5942.06; 5913.86 (…pretty much the range of the IC)ES=F: 6070.32 - 5949.67; 5920.49NDX: 22033.15 - 21490.42; 21359.17NQ=F: 22085.89 - 21533.10; 21399.42VIX: 17.79 - 15.74; 18.29
+
+Let’s look at the skew as well:
+
+We can see, that market is not pricing too much fear in. On Tuesday, we see a spike at the 5d puts, but also put/call skew is sold pretty much, this tells me more like a bet on put IV increase, rather than spot move. 6050 for that day is critical. CPI day doesn’t show fear. It doesn’t show up on a fix strike basis either:
+
+Upside seems pretty much capped, but so is downside, market is set for further ranging, and trapped in a vol suppressing feedback loop. A very significant CPI print could shoot the market out of the range and vol up.Ahead of CPI, SPX/LTY beta is going longer:
+
+“Good news are not that bad news, bad news are not that good news”. We will need to monitor it on Tuesday to check, what is the expectation (narrative) about CPI currently. Note that speed profile is very steep, as it looks now. This means, that bears got a serious headwind because of vol.
+
+My strategy to sell vol, and also to use the 77.41% probability level to size on a short vega short delta trade (like i.e. 3.5x1 short ratio spread).

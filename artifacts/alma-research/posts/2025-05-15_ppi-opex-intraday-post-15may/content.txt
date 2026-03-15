@@ -1,0 +1,83 @@
+PPI, OpEx, Intraday post (15/May)
+
+PPI + SPX/LTY correlationEconomists forecast the April PPI to rise 0.2% month-over-month, a modest uptick after recent tariff-related shocks and y/y PPI to hold near 2.5%, given the lagged effects of commodity swings and tariff pass-through. Fed‐funds futures now price near‐zero odds of a June cut and push the first easing into July, even as ECB insiders now see a June rate reduction as probable but expect only a 25 bp move, not a large adjustment, and the BoE just cut to 4.25%, setting the stage for additional quarter‐point moves later in the year. PPI outcomes could nudge but not derail the Fed’s hold decision.
+
+Now, you have to understand, that the market wants to get rid of recessionary fears. They concentrate on growth now that is equal to inflation as well now (stagflation). This is why, over the past few weeks, whenever the quant models suggested a healthy pullback, the government literally intervened and released benign announcements to trigger supportive buying. Why? Simply because the deflationary risk is real. They need to keep it going until the planned events unfold and investment interest strengthens. If you followed my April post, you know.A stronger PPI print suggests robust demand and firmer pricing power, alleviating some recession fears even as it keeps inflation risks alive. This is why we see increased SPX/LTY correlation. Soft print now means growth concerns, while strong print means growth optimism. But upside is capped due to stagflation. Rollover risk, supply‐shock inflation, and layoff fears are looming there that will roil fixed-income more than equities.
+
+OPEXWe have AM OpEx tomorrow, and the positioning will effect today’s price action.
+
+The first we see is and IC at 5850/5855/5900/5905; but in fact we have a short fly structure with 5848.63 - 5853.26 as the centroid of the profile. The speed profile above and below is equally positive and negative, and putting the net profile into flat-to-positive with a slope of 1.59% Very low vanna tailwind. Charm decay favors for buyback flow, but only until SPX holds the support. Position-wise, more things points down, than up. To the upside, the key inflection point would be 5939.42, with vol up scenario. And to the downside, it is 5772.91 again, with vol up. Now, yesterday SPX close indicates a 64.81% probability for reversion, simply based on momentum only, and 63.72% for ES=F.
+
+Look at realized vol metrics:
+
+The trend is going on, and vol of vol doesn’t show sign of cooling. With correlation violently decreased, the volatility is getting more and more sensitive to any spikes.
+
+For now, I don’t think we will see any vol squeeze in the next montly window. But I do think, that a slower pullback will start, and we should see if SPX can build a stable supporting structure filling the gaps. Odds favors for benign outcome until June FOMC and OpEx window. But we will see, when we are there. (I still think, the pivot will come when supply shocks hit.)
+
+But what is more interesting is the VIX complex. VVIX troughed at 85.16 on May 13, 2025, followed by spot VIX at 17.65 and front-month VIX futures at 17.83 on the same day. The VIX9D and VIX3M indices bottomed on May 13 at 16.83 and 19.50. May VIX futures expire on May 21, 2025, and the June contract trades at 19.7440, roughly 1.12 vol points above spot VIX at 18.62, offering a buffer against mild selling.With term structure in moderate contango (June > spot), a measured equity pullback towards 5749.62 could rebuild bullish setup into June.
+
+INTRADAY POSTCoding intraday positioning:
+
+Today’s intraday positioning shifts the speed profile towards heavy negative. The centroid is at 5821.33 For the calls 5913.52 is the key pivot. But below the centroids (AM expo and today’s), market can fall towards 5782.90, and if volatility catches up, 5768.68 is the downside pivot where we should see the longer gamma taking into effect. Coding zero vanna at 5915, close to the speed profile given pivot. The volatility has a slight chance to cool off, and it is needed to break above the vanna flip. This reinforces the AM expo’s suppressive effect, but also it prevents a larger sell-off. Favoring for spot down/vol down. If intraday vol diverges from this, thats a red flag.
+
+***update***: meanwhile PPI came out, softer than expected, and retail sales is stalling. Means easing wholesale inflation pressures but consumer demand is weakening. The data are bad news for growth prospects.
+
+SCRIPT INPUTS:=== SPX closed at 5892.58===
+
+99.73%, 6030.227720051088, , 5995.717038615614, 95.4%, 5961.4038600255435, Risk level, 5938.9672816572165, 68.2%, 5926.892031875503, 68.2%, 5858.066998190673, Risk level, 5846.192718342783, 95.4%, 5823.756139974456, , 5789.241936600134, 99.73%, 5754.932279948912
+
+=== ES closed at 5906.0===
+
+99.73%, 6051.167267818801, , 6014.765963313098, 95.4%, 5978.5836339094, Risk level, 5954.921369254936, 68.2%, 5942.180992015383, 68.2%, 5869.59598764098, Risk level, 5857.078630745064, 95.4%, 5833.4163660906, , 5797.010948947417, 99.73%, 5760.832732181199
+
+=== SPY closed at 587.59===
+
+99.73%, 601.9285029760825, , 598.3331395463334, 95.4%, 594.7592514880413, Risk level, 592.4220755029398, 68.2%, 591.1637578386028, 68.2%, 583.9943729336284, Risk level, 582.7579244970602, 95.4%, 580.4207485119588, , 576.8249847121942, 99.73%, 573.2514970239175
+
+=== VIX closed at 18.62===
+
+99.73%, 21.141876754149145, , 20.501715755637246, 95.4%, 19.88093837707457, Risk level, 19.469872466148264, 68.2%, 19.240142218318674, 68.2%, 17.978479563602466, Risk level, 17.77012753385174, 95.4%, 17.35906162292543, , 16.716707613587474, 99.73%, 16.098123245850857
+
+=== IWM closed at 206.78===
+
+99.73%, 213.02315723531112, , 211.45660780833703, 95.4%, 209.90157861765556, Risk level, 208.88394398829985, 68.2%, 208.33494288419027, 68.2%, 205.21327533432427, Risk level, 204.67605601170015, 95.4%, 203.65842138234444, , 202.09160503706224, 99.73%, 200.53684276468888
+
+=== QQQ closed at 518.68===
+
+99.73%, 534.7475070035177, , 530.7154290102474, 95.4%, 526.7137535017589, Risk level, 524.0947498601854, 68.2%, 522.6814418613811, 68.2%, 514.647447417849, Risk level, 513.2652501398145, 95.4%, 510.64624649824106, , 506.6134453326097, 99.73%, 502.61249299648216
+
+=== NDX closed at 21319.21===
+
+99.73%, 21971.299007227386, , 21807.667431122285, 95.4%, 21645.25450361369, Risk level, 21538.963995435628, 68.2%, 21481.61367928364, 68.2%, 21155.559642378026, Risk level, 21099.45600456437, 95.4%, 20993.165496386307, , 20829.50530701858, 99.73%, 20667.120992772612
+
+=== NQ closed at 21399.75===
+
+99.73%, 22065.260442542083, , 21898.250792614723, 95.4%, 21732.505221271043, Risk level, 21624.027019136684, 68.2%, 21565.485818986203, 68.2%, 21232.720539678965, Risk level, 21175.472980863316, 95.4%, 21066.994778728957, , 20899.954940092128, 99.73%, 20734.239557457917
+
+=== NVDA closed at 135.34===
+
+99.73%, 144.87305508838057, , 142.46985885846587, 95.4%, 140.1065275441903, Risk level, 138.55263956478424, 68.2%, 137.7026413611254, 68.2%, 132.93537438232642, Risk level, 132.12736043521576, 95.4%, 130.5734724558097, , 128.16805240061547, 99.73%, 125.80694491161944
+
+=== AMZN closed at 210.25===
+
+99.73%, 220.63769177689892, , 218.02530326630765, 95.4%, 215.44384588844946, Risk level, 213.75065212881495, 68.2%, 212.8310799625997, 68.2%, 207.63683777681047, Risk level, 206.74934787118505, 95.4%, 205.05615411155054, , 202.4425752555189, 99.73%, 199.86230822310108
+
+=== AAPL closed at 212.33===
+
+99.73%, 221.23820292181563, , 218.99982883379565, 95.4%, 216.78410146090783, Risk level, 215.3320643846519, 68.2%, 214.54549229288077, 68.2%, 210.09114578393218, Risk level, 209.32793561534814, 95.4%, 207.8758985390922, , 205.63678865919022, 99.73%, 203.4217970781844
+
+=== GOOG closed at 166.81===
+
+99.73%, 173.9945943892521, , 172.18907800257176, 95.4%, 170.40229719462604, Risk level, 169.23120830917796, 68.2%, 168.59658120802916, 68.2%, 165.00407572228158, Risk level, 164.38879169082205, 95.4%, 163.21770280537396, , 161.41156096501368, 99.73%, 159.62540561074792
+
+=== TSLA closed at 347.68===
+
+99.73%, 376.90371927310343, , 369.5255733496472, 95.4%, 362.2918596365517, Risk level, 357.52839339503583, 68.2%, 354.91074055096766, 68.2%, 340.295652398857, Risk level, 337.8316066049642, 95.4%, 333.0681403634483, , 325.6802745159241, 99.73%, 318.4562807268966
+
+=== TSM closed at 194.76===
+
+99.73%, 204.9690024055237, , 202.40066064073923, 95.4%, 199.86450120276183, Risk level, 198.20043381066148, 68.2%, 197.29574312247564, 68.2%, 192.190803489007, Risk level, 191.3195661893385, 95.4%, 189.65549879723815, , 187.08583992998587, 99.73%, 184.55099759447629
+
+=== AMD closed at 117.72===
+
+99.73%, 125.99818461754819, , 123.91135706644393, 95.4%, 121.8590923087741, Risk level, 120.50974821611373, 68.2%, 119.7716675453293, 68.2%, 115.63193526621922, Risk level, 114.93025178388626, 95.4%, 113.5809076912259, , 111.49215546626787, 99.73%, 109.44181538245181

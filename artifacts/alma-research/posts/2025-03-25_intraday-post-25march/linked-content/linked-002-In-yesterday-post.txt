@@ -1,0 +1,53 @@
+Intraday post (24/march)
+
+For context, read my weekly post, where I derived the whole thinking process.
+
+Coding gamma for today:
+
+The overall speed profile is net flat-to-positive. I code the centroid at 5739.30In a net positive speed environment the spot/vol beta is mechanically negative. So the behavior of vol will reveal you the underlying customer interest at this lvl. Coding 5748.69 as the lvl where if we see further vol crush, spot will be pinned to 5750. But if you see vol increase here, you can see a longer spot/vol beta move up towards 5773.88, but there if vol can decline, bears gonna be rekt hard. Basically, above 5688.5 one should see net vol decline, in order to see stabilization, if the customers are serious about their sold calls, and very important to see the vol decline to get realized not just implied!To the downside, the pivot is 5695.60 where if you see vol increase, the puts can pull the price downwards, and if vol goes up and gets realized, the move will gain momentum.
+
+OptionsDepth profile:
+
+(Description is here)
+
+Coding 5610 as the zero vanna line (low vol needed to break through this). Hope this lvl sounds familiar…Above 5614.97 charm is net supportive, with zero color around 5677.Above 5677 color (charm convexity, see Schwarz theorem) is positive, below it is negative, steepening the more positive speed profile. If the customer longer skew through call selling is really a thing, we should see intraday spot/vol beta realizing lower.
+
+Now I show you something interesting.Coding 30-day RV at 20.01%
+
+IBKR 30-day RV is trading at 16.5%
+
+While Bloomberg Terminal gives us a third trend with its value at 18.26%
+
+The interesting part is that all these three gives us different vol profiles.Mine says longer vol/vvol correlation, but currently the vol is consolidating and trending lower while vvol supports the deacceleration, potentially setting for a grinding-lower phase.IBKR chart says shorter vol/vvol correlation, while still realizing higher, stabilizing at those sticky high lvls, while Bloomberg says long vol/vvol correlation, vol realized to the upside during the past few sessions while ready to mean revert.
+
+I’m not sure about how they exactly code RV, but I know how I do:
+
+(I tried with different annualize factors etc. and didn’t get close to their vol trend. Not the value, but the characteristic!) Their estimations don’t seem to react to the past week’s intraday positive drifting oscillation, even tho if it happened in a net negative gamma environment, naturally making vol realizing at higher ranges. This hints me that from the Street’s perspective there is way more room to be short vomma and short vol, long dispersion and short VIX to boost liquidity. (This is my personal short-term bet too)We have to monitor if the theoretical expectations of short vol that I dropped in the weekly post and in the intraday posts can be realized or not. However note, that it only matters at those lvls with those dynamics that I said! This is crucial. Take your time to study those posts.
+
+SCRIPT INPUTS:SPX99.73%, 5795.503750968686, , 5763.429070697083, 95.4%, 5731.531904781218, Risk level, 5710.677082924103, 68.2%, 5699.456228281238, 68.2%, 5635.48336324761, Risk level, 5624.443034263397, 95.4%, 5603.588212406282, , 5571.5104748171, 99.73%, 5539.616366218814
+
+ES=F99.73%, 5849.964653493742, , 5816.942789256515, 95.4%, 5784.107326746871, Risk level, 5762.6378382273915, 68.2%, 5751.084395239762, 68.2%, 5685.225976496423, Risk level, 5673.8621617726085, 95.4%, 5652.392673253129, , 5619.36753215712, 99.73%, 5586.535346506258
+
+SPY99.73%, 577.5127465057035, , 574.1195867897653, 95.4%, 570.7463634872267, Risk level, 568.5405226232033, 68.2%, 567.3530848881817, 68.2%, 560.5865801166908, Risk level, 559.4194383142967, 95.4%, 557.2135974502733, , 553.8200723701004, 99.73%, 550.4472144317965
+
+VIX99.73%, 21.953316327538293, , 21.274492375213608, 95.4%, 20.616658507091902, Risk level, 20.180908057626375, 68.2%, 19.93713094136335, 68.2%, 18.59966835137215, Risk level, 18.37909331566464, 95.4%, 17.943342866199114, , 17.262081092583323, 99.73%, 16.606685045752723
+
+IWM99.73%, 209.88980699276954, , 208.35927317658107, 95.4%, 206.83990013945117, Risk level, 205.84563050526938, 68.2%, 205.30928342557513, 68.2%, 202.2592911744748, Risk level, 201.73435606699624, 95.4%, 200.74008643281445, , 199.20929630844705, 99.73%, 197.6901795794961
+
+QQQ99.73%, 495.42089751273403, , 491.76216214653016, 95.4%, 488.13044692531236, Risk level, 485.75376003381285, 68.2%, 484.471508256141, 68.2%, 477.18084815347027, Risk level, 475.9262326419684, 95.4%, 473.5495457504689, , 469.89018154935485, 99.73%, 466.2590951630472
+
+NQ=F99.73%, 20547.875352495696, , 20400.628929188268, 95.4%, 20254.437676247846, Risk level, 20158.77699379105, 68.2%, 20107.183553535866, 68.2%, 19813.737949827053, Risk level, 19763.22300620895, 95.4%, 19667.562323752154, , 19520.29210777681, 99.73%, 19374.124647504304
+
+NVDA99.73%, 125.21018870608562, , 123.31834856258958, 95.4%, 121.45509282716391, Risk level, 120.23093157063542, 68.2%, 119.5628038108243, 68.2%, 115.80722994755888, Risk level, 115.16906232584896, 95.4%, 113.94490106932047, , 112.05162404564996, 99.73%, 110.18980519039876
+
+AMZN99.73%, 204.78775051371733, , 202.6319676947381, 95.4%, 200.49887861379227, Risk level, 199.1007063744167, 68.2%, 198.3428504356409, 68.2%, 194.0537223306386, Risk level, 193.3193070533177, 95.4%, 191.9211348139421, , 189.76458264430192, 99.73%, 187.63226291401705
+
+AAPL99.73%, 226.37686242876126, , 224.3409933255649, 95.4%, 222.32343335061108, Risk level, 221.00201547113414, 68.2%, 220.28739579763993, 68.2%, 216.23379195420443, Risk level, 215.53799307378773, 95.4%, 214.2165751943108, , 212.18018143329374, 99.73%, 210.16314611616062
+
+GOOG99.73%, 172.7568898166344, , 171.12243557045966, 95.4%, 169.5034449083172, Risk level, 168.44282186820578, 68.2%, 167.86884081331988, 68.2%, 164.61524013283906, Risk level, 164.05717813179422, 95.4%, 162.9965550916828, , 161.36163317071288, 99.73%, 159.7431101833656
+
+TSLA99.73%, 271.7306897909464, , 265.9132466205225, 95.4%, 260.22034825240684, Risk level, 256.4679769108429, 68.2%, 254.40008758045064, 68.2%, 242.88666146637772, Risk level, 240.95203651689147, 95.4%, 237.19966517532757, , 231.3729284084295, 99.73%, 225.68932363678792
+
+TSM99.73%, 186.017253045252, , 183.68076486997387, 95.4%, 181.37362438639553, Risk level, 179.85980144360832, 68.2%, 179.03675561988928, 68.2%, 174.392726100649, Risk level, 173.6001900114698, 95.4%, 172.0863670686826, , 169.74867464866622, 99.73%, 167.44273840982612
+
+AMD99.73%, 111.94241148373608, , 110.5582517056503, 95.4%, 109.19120696257117, Risk level, 108.2943142886714, 68.2%, 107.80682879890388, 68.2%, 105.05539445348329, Risk level, 104.5856905941411, 95.4%, 103.68879792024133, , 102.30394774646929, 99.73%, 100.93759339907642

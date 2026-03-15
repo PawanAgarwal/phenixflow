@@ -1,0 +1,51 @@
+Intraday post (12/feb), CPI day
+
+SPX is trading at 6010 during asia after CPI came pretty hot. After open funds will offload their positions. The Fed’s refusal to ease policy combined with high global liquidity and extreme retail exuberance creates an environment where valuations may be overstretched. Signs of distribution by institutional players, along with defensive moves by CTAs, indicate that professionals might be bracing for a downturn.
+
+Coding MM gamma for today:
+
+And OptionsDepth’s Heatmap:
+
+(For explaination click here: OptionsDepth Chat)
+
+What we see here is still that big MM long fly at 5900/6010/6160, with a very steep speed profile between 6010 and 6160, but it is net increasing. Let’s look at the chart:
+
+I code charm flip at 6015 and vanna flip at ~6008.71, below these levels vanna flips to negative and charm to positive (meaning, as time passes, MMs are getting longer delta, triggering selling pressure into close). Overall gamma exposure is very low leaving more room for volatility. The speed profile is expected to be steeper on this long speed territory, bcs color is negative at 6010 and positive on 6160, and also the net color exposure is negative until 6047, making the speed curve even more steeper, and all the effects of the long speed environment (support vanna&charm flows) more pronunced. This environment creates a magnetic effect to the upside if price can hold above the charm and vanna flips, but mostly above charm flip here. To break below that zero vanna, vol should decrease, that won’t be easy with negative local gamma and steepening speed profile. Coding 6048 and 6086 as local support and resistance lines from gamma perspective. If spot would break below the vanna flip, the only support would be at 5945 first (derived from positioning), with further vol crush, and 5925, however vol traders should cover, if you remember, anyway the market approaches the wings. I code 5952.19 as the lvl where this effect is expected to kick in.To the upside, magnetic effect would start to kick in at 6085.73 And coding 6047.10 as pivotal that will tell me what the market wants.
+
+Still reversion trading environment, better risk/reward on the call side, meaning puts are expensive, no edge, too slow gains. But if the market doesn’t give the downside level to fade, it is better to stay out. As I keep saying since last week, high risk environment, I don’t take new swing positions, but going day by day, to see what the market wants, because it is at crossroads.
+
+The 3D vol surface is telling us: “Yay, it’s CPI day!”:
+
+After CPI:
+
+The same activity covered in the weekly post is still there, with relatively increased tail call demand, heding right-tails. There is more activity to hedge upward than downward for this day alone, then the excitement passes, and vol is expected to be sold. Interesting to see that call side wing is increased after the premarket sell for CPI.
+
+VIX is also relatively sold for today, then increased tail call demand into expo:
+
+We can see this being realized on vol of vol (white line), while realized vol (purple line) is going down as expected. This will take systematic flow into bullside providing tailwind for the market:
+
+Both RV (for VIX and SPX) are underpriced currently due to the environment I descripted for you.
+
+For further bull bias, the index must close in the “margin of error” area.
+
+SCRIPT INPUTS:SPX99.73%, 6169.292912301633, , 6144.043012385152, 95.4%, 6118.896456150816, Risk level, 6102.46721144565, 68.2%, 6093.646128891243, 68.2%, 6043.249238269821, Risk level, 6034.53278855435, 95.4%, 6018.103543849184, , 5992.85234034107, 99.73%, 5967.707087698367
+
+ES99.73%, 6196.835843170147, , 6170.633988203789, 95.4%, 6144.542921585074, Risk level, 6127.49542914834, 68.2%, 6118.340593169578, 68.2%, 6066.047189972506, Risk level, 6057.00457085166, 95.4%, 6039.957078414926, , 6013.753778399629, 99.73%, 5987.664156829853
+
+SPY99.73%, 615.9259460720324, , 613.266216238048, 95.4%, 610.617971815313, Risk level, 608.8875722076225, 68.2%, 607.9581918427949, 68.2%, 602.6501665643252, Risk level, 601.732422909565, 95.4%, 600.0020233018745, , 597.342140379094, 99.73%, 594.6940490451551
+
+VIX99.73%, 18.442680686069984, , 17.826724655998493, 95.4%, 17.231340571916828, Risk level, 16.836443694702897, 68.2%, 16.614634628844215, 68.2%, 15.402426610229545, Risk level, 15.203557220824445, 95.4%, 14.808660343610516, , 14.190070361394909, 99.73%, 13.597320229457361
+
+QQQ99.73%, 541.4066345091834, , 538.0420185997976, 95.4%, 534.6983123717793, Risk level, 532.5113993549854, 68.2%, 531.3335644654048, 68.2%, 524.6251069553175, Risk level, 523.4685811137646, 95.4%, 521.2816680969707, , 517.9166459383619, 99.73%, 514.5733459595666
+
+NQ_F99.73%, 22325.1014014888, , 22190.1054024721, 95.4%, 22055.9257007444, Risk level, 21968.174422301723, 68.2%, 21920.92468990971, 68.2%, 21651.743852731746, Risk level, 21605.325577698277, 95.4%, 21517.5742992556, , 21382.562886231935, 99.73%, 21248.3985985112
+
+IWM99.73%, 231.36315150676933, , 229.94300431210974, 95.4%, 228.53157422750576, Risk level, 227.60848003446583, 68.2%, 227.11137269129662, 68.2%, 224.27973969832414, Risk level, 223.79151386201855, 95.4%, 222.86841966897862, , 221.44810528055532, 99.73%, 220.03684238971505
+
+AMZN99.73%, 240.99037948796996, , 238.9239234689318, 95.4%, 236.87518699740295, Risk level, 235.5336342454781, 68.2%, 234.8085757043836, 68.2%, 230.69322240005957, Risk level, 229.98635476819376, 95.4%, 228.64480201626893, , 226.57786325410143, 99.73%, 224.52960952570191
+
+NVDA99.73%, 144.235660165594, , 141.34783651256907, 95.4%, 138.51783160867592, Risk level, 136.6538194991206, 68.2%, 135.6287892018322, 68.2%, 129.90963459550926, Risk level, 128.94618660439502, 95.4%, 127.08217449483972, , 124.19035787022698, 99.73%, 121.36434593792161
+
+TSM99.73%, 222.01119647914928, , 218.66823012809266, 95.4%, 215.37560098615668, Risk level, 213.21239685544109, 68.2%, 212.03184697809868, 68.2%, 205.39541293229618, Risk level, 204.26761413088704, 95.4%, 202.10441000017144, , 198.75892289254924, 99.73%, 195.46881450717885
+
+GOOG99.73%, 194.5887318325996, , 192.6998832969992, 95.4%, 190.82936957840917, Risk level, 189.60381748354308, 68.2%, 188.94033863817714, 68.2%, 185.18078657316872, Risk level, 184.53619716489442, 95.4%, 183.31064507002833, , 181.42122664154363, 99.73%, 179.5512828158379

@@ -1,0 +1,27 @@
+Weekly post (24-28/feb)
+
+Setting the tone
+
+In the last two hours of Friday we saw VIX down by 2.25% along with CBOE Implied Correlation Index, while SPX hit 6009 then closed at 6013 huge long gamma strike.
+
+In order to see longer spot/vol correlation you need to see the P/C skew moving down. This is bcs the supply and demand disbalance is shifting towards the OTM calls from OTM puts, reflecting in their IVs on a fixed strike basis. This was no surprise as we saw the shorter downside speed in the SPX positioning.However, in order to see longer spot/VIX beta, you need to see the whole smirk shifting, including the far OTM contracts as well. Coding chain datas from IBKR, we can see that the current ATM strike moved from 11.4% to 10.4% into Monday expo, and a feb24 5delta put moved from 18.8% to 17.2%, and a feb24 10 delta put (essentially a synthetic VIX call) from 16.2% to 14.7% This is why you saw longer spot/VIX beta… from mechanical perspective.
+
+To me, the interesting part was timing.
+
+It happened just right when Trump opened his mouth again. So, what I’m gonna do now is simulate IV using Heston-Nandi model, to look for IV expectations for volatility
+
+and look for the distirbution it gives me, and use it in a Black-Scholes model to calculate fair value for a Monday contract first. It gives me significant probability in 14.33 - 12.9 range skewed towards the 13.6% - 12.9% territory expecting a flat mean reversion in vol. Putting it into Black-Scholes it gives me a delta of 0.4953 for a 6015 feb24 call and delta of -0.5047 for the put
+
+The chain says:
+
+This is not yet a huge discrepancy for me, but it was a tendency since Friday as vol on a fixed strike basis declined into Monday. If this tendency continous into US open, it will be more visible that calls are slightly undervalued, and puts priced slightly above their theoretical fair value, giving short skew strategy a theoretical edge. This is certainly not something you would see after a sudden crash, full of red headlines on the news… a ‘crash’ that behaved exactly as the projected dealer flows prescripted, while hitting high probability mean reversion range:
+
+For me this is the biggest discrepancy and this made me say this morning that on futures market open I lean towards more bullish again. However the thing that makes me cautious is that white dot appearing on the vol adjusted regression line. Its purpose is to show the local max or min of the regression line’s curve spotting out potential shift in the trend (the zero of its derivative function). In order to cancel that signal out, ES should take out 6116.36 lvl, and SPX the 6090.53 lvl to confirm bottom.
+
+Why? - Bcs, look:
+
+The model still says that immediate shock effects are minimal, the high beta value means that vol shocks decay slowly over time. It predicts a vol increase into the next weak, pretty much align with what the skew is pricing in currently:
+
+Note, that the left side of the skew is net decreasing into Friday, while the 22dP/22dC curve is net going up. This is bcs of call selling, not put side bid. This pattern aligns with my assumption about put delta marked higher. What we see is some vol expectation into Wednesday, but only on the tail put side as traders potentially aims to catch some leverage effect, through near peak vomma. But this positioning seems to unwind right after ER, with some slight call buying activity, then vanna selling into Friday again. So, this telling me more again that market is speculating on smirk wing momentums than actually spot movements.This puts me assuming that on NVDA ER we can catch some good bottom to buy, especially if call selling remains this elevated. This will provide us edge on short skew strategies on Wednesday. However we can expect gap up into Thursday in order to avoid speculants to catch bottom if it is formed. Until, I would go day by day on daily mean reversion trading, before taking longer-term positions.The interesting part of this is that GARCH predictions is roughly aligns with what the skew tells us.
+
+So, the distribution for this week shifts toward that that the Wall Street tries to lure speculants on the wrong side again making them sell NVDA ER as a vol catalist event. The flows, that they use for narrative is the Friday flush, that was strickly the result of the positioning as I derived for you premarket last week. I was scrutinizing fix strike vol on NVDA, and despite traders are heavy long skew on NVDA contracts, the hedging interest is slightly decreased over the past week into Feb28 expo. But into March, ATM IV falls from 82.5% to 68.4%, and chain shows me slight call side edge. However, after this OpEx and VIX expo, I would recommend patience until ER hits. Keep your eyes on the reversion bands you have on my provided script, and lets monitor how the positioning evolves.

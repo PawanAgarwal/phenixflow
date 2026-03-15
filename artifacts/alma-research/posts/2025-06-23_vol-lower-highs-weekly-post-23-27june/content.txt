@@ -1,0 +1,41 @@
+Vol higher lows - Weekly post (23-27/June)
+
+The volatility landscape didn’t changed significantly since last Sunday.
+
+Volatility flows, Sentiment read and OpEx - Weekly post (16-20/June)
+
+Last week, we had a sentiment shift towards growth concerns, inevitably suppressive vol selling feedback loop that ended up in a red 80%+ reversion signal to own the market on the short side. But spot closed above the sentiment-flip level.
+
+You can see how vol of vol realized to the downside, along with realized volatility, with a weekly spot down/vol down move that is a typical short vanna behavior, as I kept explaining it publicly too.
+
+And term structure also keeps developping as expected:
+
+The setup favors for a natural grind up in volatility into August, until the positions expire, and market collapses when tariff effects hit the economy and the vol market… Bessent’s machniations are not that succesful yet. What causes this, is the dealer short veta effect that naturally builds a floor for the vol suppressing moves, making it shape higher lows. While long vomma makes sure to dampen any spikes in volatility. This also causes short zomma in the index, meaning, that as vol grinds slowly higher, gamma decreases giving more room for vol to grow. These are mechanical effects. The short vanna position in the index, swallows every downside vol, also coming hand-in-hand with short speed (longer downside gamma). But gamma effects are more significant in the front-end tenors, and mostly locally. Another important layer is that the growing vol expands the range of the short vanna and flattens its curve, decreasing its impact. So while the flip points slide farther, the vol effect on deltas decreases and the moves can slowly accelerate as local gammas will also be eaten up by the zomma. But here, the local, daily positions, sharp short speed exposures, etc. can manage the downside vol. Why it is happening? 1) Bessent put, 2) geo risk.Market is all about the illusion of growth now, but we know since April that we are in a bear market… Let’s look at the weekly positioning, and the levels that actually have meaning within the noise…
+
+Here I code the weekly exposure:
+
+You can see a big short fly spread at the 5855/5905/5955 strikes. This is basically a long theta bet on a vol down rangebounding centered around 5905. The net impact is a dealer long delta, short vanna, short theta, long vega, short zomma, short vomma, and listen: long veta impact, centered around 5917.31 level. So, listen… vol is supplied for the week. As dealers must sell vol by the time, and as vol is suppressed, it creates a feedback loop. The effect should be realized, bcs of short vanna, pushing the spot towards the center of the fly, but at least my centroid at 5917.31; zomma helps to increase the local gamma impact to hold the index. This is all mechanical and caps any upside for the index. Below 6024.11 the spot is in this ‘gravitational field’. If the move plays out, and geo risks materialize, vol can catch up locally, but I code heavy support at 5836.02But again, this vol selling is the ‘higher low’ of the big pic. Odds favor for downside grind.
+
+Sentiment-based pivots are:
+
+SPX: 5880 - 5723.71ES=F: 5931.48 (U-contract)NDX: 21,241.27 - 20,278.78NQ=F: 21,479.37VIX: 20.76 - 23.65VVIX: 102.38 - 105.63
+
+SPX: 5880 - 5723.71ES=F: 5931.48 (U-contract)NDX: 21,241.27 - 20,278.78NQ=F: 21,479.37VIX: 20.76 - 23.65VVIX: 102.38 - 105.63
+
+Let’s follow the daily updates of these dynamics changing lines. These are weekly projections. Dailies are naturally different.
+
+And let’s check, what ranges the vol market prices in:
+
+SPX: 6034.30 - 5901.37; 5869.23ES=F: 6088.33 - 5947.66; 5913.65SPY: 601.14 - 587.41; 584.09NDX: 21917.84 - 21334.93; 21193.96NQ=F: 22150.93 - 21538.56; 21390.46VIX: 22.29 - 18.94; 18.12
+
+SPX: 6034.30 - 5901.37; 5869.23ES=F: 6088.33 - 5947.66; 5913.65SPY: 601.14 - 587.41; 584.09NDX: 21917.84 - 21334.93; 21193.96NQ=F: 22150.93 - 21538.56; 21390.46VIX: 22.29 - 18.94; 18.12
+
+This pretty much aligns with what the positioning tells us.
+
+Let’s look at the skew…On a fix strike basis, we have a very slight change of -0.091%, skew was sold (remember the weekly net short speed). On a fix delta basis, we can see fear, but also some spot down/vol down bet into Wednesday:
+
+While skew is net sold on both sides, put hedges are there, to capitalize on downside grind.
+
+GEO RISKIn a further escalation case, the conflict could broaden – for example, Iran might refuse to back down and continue or increase missile attacks on U.S. bases or Gulf infrastructure, prompting direct U.S. military action. In this worst-case scenario, stagflationary shock would hit: Oil would skyrocket well above $120-130, add roughly 2% points to U.S. CPI in the short run, equity markets would lurch into the bear market territory and safe havens (Treasuries, gold, the U.S. dollar) would surge. Volatility would almost certainly overshoot prior highs – even VIX above 40s if U.S. and Iran enter open conflict. Credit spreads would widen significantly as risk aversion spiked. Essentially, an escalation risks importing a Middle East war premium into all asset prices: higher energy and defense stocks, but broadly lower everything else. Potential triggers for this scenario in coming weeks include: Iran activating Hezbollah or other proxies against Israel (expanding the warfront), a high-casualty event that hardens positions, or a mistake at sea (like an Iranian missile hitting a U.S. warship or commercial tanker).
+
+My base case however is that the conflict will not expand to fully choke off oil. The probability of a deliberate Hormuz closure seems low-risk as Iran would be damaging its own positions especially by irritating its main customer: China. For now, it is all controlled.

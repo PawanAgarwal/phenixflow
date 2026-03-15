@@ -1,0 +1,61 @@
+Bottom? JPM collar, OpEx, systematics + intraday post (14/march)
+
+Yesterday I dropped a very important free post about the current state. I want to elaborate further on it a bit first.
+
+In yesterday premarket post, I explained how the JPM collar works, in short.You have to understand that the collar has rather a vol impact for now, and that effect will mitigate as we are moving forward in time (veta decay + gamma effect of the OpEx positions). The effect as I said is that below the long put strike (5565) that MMs are short, it creates longer downside vega, meaning, if the vol comes down, dealers will get longer delta on that position.This is a slow and relatively weak effect, but significant and its there.
+
+Here I coded March OpEx position as it looks now. I marked the 10> delta put and call territory, the 25> delta put/call territories, and I meassured their net gamma exposures (weighted), and meassured the net slopeness of the speed profile:
+
+You can see the slopeness between tail puts vs ATM (white) being 9.51%, and the tail puts vs tail calls (blue) being 6.93%, (didn’t market but ATM vs calls slopeness is 1.98%).All these speed profiles are positive, and steepening to the downside. I code 5495.58 as the lvl of pivot into March OpEx, above this lvl we can expect put decay and supportive vanna and charm tailwind (with local margin of error at 5470.26), significantly reinforcing above 5653.24This aligns with the skew being long (but decrease compared to yesterday, this Monday, and post Feb OpEx):
+
+This is wild. A 5250 March 21 expo 8 delta put trades with lower implied vol as it traded post-OpEx. We can blame the skew going lower on the local shorter vanna environment (if we want to force it that much), but I have two problems with that 1) this tendency along with VIX underperforming + short implied correlation, started already when SPX was trading above the JPM long put strike and intraday we saw longer speed, 2) the shape of the skew is a bit flatter, traders are actually shorter skew shorter vol. This is a tendency that I keep flagging since Monday (hence I went short vol), and my models also predicted the regime shift into a rangebounding vol compressing environment.As said, the JPM long put strike can be imagine as a synthetic vanna flip there, and if vol is down, it can be broken from both direction. That line is important more locally from momentum and psychological perspective than from flow perspective. The OpEx flows and futures roll overs outweight this position impact. Post-OpEx its effect will be more pronunced.
+
+Very important to understand the the very recent decay has been flow driven, not fundamental driven. By “flow” I don’t necessary mean hedging flows only. Those are NOT the only flows happening on the market! CTAs sold into a vaccum, and with the ES rollover essentially complete and CTAs now short (rather than ‘long and forced to sell’), one overhang on the market is removed. Systematic flows will become net buyers if the market finds a floor. For instance, if vol stabilizes and calms down further (and VIX expo is a good opportunity for that), trend followers would start covering shorts and re-building longs. All in all the key is that systematic positioning is now much lighter in equities than a few weeks ago, and eyes on vol.
+
+Investement funds are cautiously bought the dip, speculating on a short-term stabilization, and they set their algos for mean reversion trading, causing low variance rangebounding. I wrote about that yesterday…BlackRock reduces its exposures overweight positions in high‑beta tech names, limiting downside risk, increases its cash holdings expecting post-OpEx vaccum, others are shifting part of their allocation to short-duration fixed income, aiming to mitigate risk during the rollover and expiry period, also increasing their exposures into China and EU… while eastern sovereign investors (especially funds linked to MBS like Saudi Arabia’s Public Investment Fund) are modest buying in major tech names speculating on a short-term stabilization and upside gap fill on Nasdaq before OpEx.
+
+This makes me still hold my supportive OpEx narrative, but I want to see how the market is dancing around the two key SPX spot lvls: 5650 and 5495.58 (this one is way more important than the overhyped JPM!)
+
+INTRADAYI code gamma today:
+
+OptionsDepth Heatmap is here:
+
+(Description is here)
+
+For the first glance, it is a mess. But lets do some coding on it to reveal hidden structures…The underlying speed profile is net negative but kinda flat with like -0.14% to the upside. I code 5605.67 as the lvl from where the upside shorter gamma starts to actually effect the trend accelerant. Even tho above 5423.88 the aggregated gamma exposure is negative. I code 5604 as the zero vanna line (very close to the coded pivot above), vol should be lower to break through it. Downside vanna flip is at 5460.70 (low vol needed to break it).At 5573 we have a significant gamma line, mechanically favoring vol a local intraday vol cool off. And I code 5631.93 as the lvl that if broken, we should see intraday vol calming in order to see some stabilization at relatively higher lvls.Well, the thing is that locally we have a short risk reversal from MM side at 5560/5600 this favors for higher upside vol as dealers are shorter gamma. Also we have negative but flat color exposure, reducing gamma as time passes that is net negative, but charm flows are neutral to supportive above 5482.70
+
+Okay, so I described what means what in this mess, and what to watch… but most importantly: I want to see intraday vol cooling off (vol of vol calming) above 5585.92; this can presign a break above the zero vanna lvl and stabilization above the 5631.93 Above 5605.67 we might can see a squeeze from structural perspective, but I wouldn’t be happy about it. I want intraday vol down.
+
+My personal take is that we will get it through rangebounding today, potentially retesting the lows. I think, volume will be low, and vol will keep underperforming despite the negative gamma. Lots of HFs are inactive today, and in such a rangebounding environment quant strats are buy ETH and sell RTH, then mean reversion trading. For long vol reversion trades you scope one move in such an environment and you need to be fast with it. DoN’t overtrade here.
+
+Smirk today:
+
+Smirk into Monday:
+
+Seems faked right? …
+
+SCRIPT INPUTS:SPX99.73%, 5666.228449055593, , 5629.935108577403, 95.4%, 5593.874234293422, Risk level, 5570.286760280954, 68.2%, 5557.57938057489, 68.2%, 5485.223612650407, Risk level, 5472.753278781546, 95.4%, 5449.165804769078, , 5412.867803203002, 99.73%, 5376.811590006907
+
+ES=F99.73%, 5675.534268341104, , 5638.404246742585, 95.4%, 5601.517134170552, Risk level, 5577.387548430952, 68.2%, 5564.385496991355, 68.2%, 5490.3667036794795, Risk level, 5477.612451569048, 95.4%, 5453.482865829448, , 5416.347865021085, 99.73%, 5379.465731658896
+
+SPY99.73%, 566.3111221592899, , 562.5760199227395, 95.4%, 558.8655525347231, Risk level, 556.4382968371143, 68.2%, 555.1302850933032, 68.2%, 547.6845457720183, Risk level, 546.4016689831982, 95.4%, 543.9744132855894, , 540.2388017731608, 99.73%, 536.5288436610226
+
+VIX99.73%, 26.673994554793076, , 26.165651980795353, 95.4%, 25.666997201102593, Risk level, 25.338716063799495, 68.2%, 25.15846074509959, 68.2%, 24.151253339858233, Risk level, 23.981283631024723, 95.4%, 23.653002493721626, , 23.144027654018853, 99.73%, 22.646005140031143
+
+IWM99.73%, 204.7756350981602, , 203.09987111351361, 95.4%, 201.4378206008379, Risk level, 200.34969307471084, 68.2%, 199.76194204729006, 68.2%, 196.42400908728285, Risk level, 195.8503191323204, 95.4%, 194.76219160619334, , 193.08607203155321, 99.73%, 191.42437710887106
+
+QQQ99.73%, 484.4134538734968, , 480.3782829743601, 95.4%, 476.3767251056937, Risk level, 473.7567515273899, 68.2%, 472.3412682494056, 68.2%, 464.3042436249037, Risk level, 462.92324114839136, 95.4%, 460.30326757008754, , 456.26720857772074, 99.73%, 452.26653880228446
+
+NQ=F99.73%, 19906.1230356308, , 19741.158737806254, 95.4%, 19577.5615178154, Risk level, 19470.45046300758, 68.2%, 19412.585650974695, 68.2%, 19084.012165778226, Risk level, 19027.54953699242, 95.4%, 18920.4384821846, , 18755.43826128018, 99.73%, 18591.8769643692
+
+NVDA99.73%, 124.00571391898887, , 121.88108492784286, 95.4%, 119.79285787502178, Risk level, 118.41946680468851, 68.2%, 117.66757723579717, 68.2%, 113.45402114509172, Risk level, 112.74053685742086, 95.4%, 111.3671457870876, , 109.2404110553138, 99.73%, 107.1542897431205
+
+AMZN99.73%, 203.2668235255536, , 200.90894185609798, 95.4%, 198.57841145760102, Risk level, 197.04998912344848, 68.2%, 196.22020302790338, 68.2%, 191.53144820191832, Risk level, 190.7300096558484, 95.4%, 189.20158732169585, , 186.84267617376517, 99.73%, 184.51317525374327
+
+GOOG99.73%, 171.61147103106123, , 169.8823914936274, 95.4%, 168.17073337930015, Risk level, 167.04905290482603, 68.2%, 166.44147377102027, 68.2%, 163.0005484460738, Risk level, 162.4109385502521, 95.4%, 161.28925807577798, , 159.55961502695152, 99.73%, 157.8485204240169
+
+TSLA99.73%, 263.87544601499894, , 258.0114255452877, 95.4%, 252.2777193453901, Risk level, 248.4968604510976, 68.2%, 246.4106321657231, 68.2%, 234.80953580405748, Risk level, 232.8631249004649, 95.4%, 229.0822660061724, , 223.20808921839844, 99.73%, 217.48453933656359
+
+TSM99.73%, 181.03282376255507, , 178.65652079605036, 95.4%, 176.31141005022286, Risk level, 174.77222918000254, 68.2%, 173.93468373169875, 68.2%, 169.21282304136577, Risk level, 168.4077634957787, 95.4%, 166.8685826255584, , 164.49093669043611, 99.73%, 162.14716891322618
+
+AMD99.73%, 103.75122724774155, , 102.33120277807048, 95.4%, 100.93061392904656, Risk level, 100.01109398715198, 68.2%, 99.51031400906098, 68.2%, 96.68940916845263, Risk level, 96.20890723355114, 95.4%, 95.28938729165657, , 93.86848680731029, 99.73%, 92.46877397296157

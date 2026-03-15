@@ -1,0 +1,79 @@
+Intraday post (12/May)
+
+US- ChinaThe 90-day pause in U.S.–China tariffs represents a truce to halt escalating duties and buy time for negotiations until Washington and Beijing agree next steps.
+
+This pause freezes further escalation, clearing away “noise” so negotiations can proceed without daily headline shocks. Final outcomes now depend on bilateral diplomacy, not unilateral tariff hikes. U.S. equities jumped roughly 3–4% on the pause news, lifting the S&P 500 to fresh highs within days. Quant models and momentum-based funds use measured-move targets; once that objective was reached, buying interest naturally waned. Fast moves tend to exhaust one-way flows, increasing the odds of a corrective pullback that “cools off” excessive valuations.After an up-move, a base forms when supply and demand find equilibrium, often accompanied by declining volume, creating a launchpad for a sustainable advance. Prices trading sideways within a defined corridor signal indecision and allow volume and volatility to normalize before a breakout. A retracement off the high can help wash out weaker hands and test key support levels without invalidating the uptrend. Once a pullback establishes a higher-low above critical support, buyers regain confidence for the next push—avoiding “blow-off” tops.
+
+5760 is critical pivot momentum wise for SPX, and bullish until 5580, same with 5783 for ES=F, and 5590. Momentum wise!For more quantitatively computed ranges, check the weekly post.
+
+NO HIGH CONVICTION LONG YET… not rushingI see that I need to explain it again. As many of you know, I short VIX, short vol, and long delta for a while as a “hedge” while the risk/reward is on the short side. What does it mean?
+
+I have a base trade, a hedge, that capitalizes on this slow grind upward. But because no real progress was achieved, and the structure is still unstable without an actual narrative, the levels are fragile. While my base bias is a grind up into summer, I find long-side intraday scalping much riskier.
+
+So in this case I capitalize on both sides: the grind up on the monthly window, and the intraday (or 1–2 DTE) window on the fast short-side trades. I will go net long once OpEx has passed and the narrative is clear. This is the week I marked weeks ago. Patience—you missed out on nothing.
+
+INTRADAY POSTCoding today’s positioning:
+
+Speed profile is net positive, but here the local effects are more pronunced. Above 5821.80 the speed profile is locally negative with a slope of -56.78%;and below, it is positive with a slope of 71.98%; both are pretty steep. The centroid of the positioning falls to 5802.47Here 5821.80 is magnetic to the upside, and if vol is catching up (locally unlikely, mechanical-flow-wise), we will see a squeeze up towards 5870.5838.36 would confirm it. But if vol declines at 5870, that will be a hard stop and a nice spot to fade the move back to 5821, or even lower.To the downside 5787.87 is the pivot. Locally vol is expected to be crushed. In this case, positioning is supportive. But if vol catches up, the whole structure’s gonna just mean revert towards 5732.44 as first target, and lower.Vanna-wise, we are in a net long fly positioning with vanna flip at 5717 (positive convexity). So market should rangebound and reject below 5820 if the momentum is healthy.
+
+Note, again:This is derived solely from positioning and the evolution of positioning. Market is heavily headline driven, deep learning AI quant algos are working hard, repo facilities, hidden QE is underway, and gov is playing for the sentiment, triggering algo trades. Positioning, dealer flow is a reflexive thing. But as vol is coming down, VIX hit under 20s, it gets more pronunced again.This is why I keep emphatizing: you should learn and understand what the geo and eco situation really is, and watch for announcement timings, in order to read the market properly. It gives you a better chance to spot the move. But if you are uncertain, wait until headline-driven environment goes away.Soon we are out of it. This week is the week I’ve been waiting for, for weeks. This is where the bullrun is either gets a narrative or not, but odds favors that it will get, and then we are back into regular environment, for a while. If truce is done, bottom is confirmed and bear market is cancelled.Never forget, what is the original plan behind all of this. If you are lazy to read, and lazy to think and still risk a lot without rational sizing, that’s only your fault…
+
+SCRIPT INPUTS:=== SPX closed at 5659.91===
+
+99.73%, 5805.539661418047, , 5769.017366300547, 95.4%, 5732.724830709024, Risk level, 5708.987195897882, 68.2%, 5696.201067077804, 68.2%, 5623.384729824351, Risk level, 5610.832804102118, 95.4%, 5587.095169290976, , 5550.568353043446, 99.73%, 5514.2803385819525
+
+=== ES closed at 5684.0===
+
+99.73%, 5836.568647930255, , 5798.301034649631, 95.4%, 5760.284323965127, Risk level, 5735.4156343524955, 68.2%, 5722.015038202694, 68.2%, 5645.728996558568, Risk level, 5632.5843656475045, 95.4%, 5607.715676034873, , 5569.442907860021, 99.73%, 5531.431352069745
+
+=== SPY closed at 564.34===
+
+99.73%, 579.4977434677656, , 575.6958360249062, 95.4%, 571.9188717338828, Risk level, 569.448159548637, 68.2%, 568.1167979159738, 68.2%, 560.5377553079727, Risk level, 559.231840451363, 95.4%, 556.7611282661172, , 552.9587080159051, 99.73%, 549.1822565322344
+
+=== VIX closed at 21.89===
+
+99.73%, 24.935953539445013, , 24.165048643887463, 95.4%, 23.41797657898764, Risk level, 22.92311608987854, 68.2%, 22.64627294162508, 68.2%, 21.127382432205653, Risk level, 20.876883147182006, 95.4%, 20.382022658072906, , 19.60835043627389, 99.73%, 18.864045697615534
+
+=== IWM closed at 200.81===
+
+99.73%, 207.33264444807483, , 205.69551986546733, 95.4%, 204.07132222403743, Risk level, 203.00813117900123, 68.2%, 202.434093511466, 68.2%, 199.17266374729, Risk level, 198.61186882099878, 95.4%, 197.54867777596257, , 195.91123040262684, 99.73%, 194.28735555192517
+
+=== QQQ closed at 487.97===
+
+99.73%, 503.86504357339754, , 499.8754882206831, 95.4%, 495.9175217866988, Risk level, 493.326629684235, 68.2%, 491.9277112607659, 68.2%, 483.9799259202231, Risk level, 482.61337031576505, 95.4%, 480.02247821330127, , 476.03213177928853, 99.73%, 472.0749564266025
+
+=== NDX closed at 20061.45===
+
+99.73%, 20705.084111560103, , 20543.545430580332, 95.4%, 20383.267055780052, Risk level, 20278.354695595754, 68.2%, 20221.71834627757, 68.2%, 19899.890937611224, Risk level, 19844.545304404248, 95.4%, 19739.63294421995, , 19578.06318858548, 99.73%, 19417.815888439898
+
+=== NQ closed at 20146.5===
+
+99.73%, 20802.5223738685, , 20637.865128453104, 95.4%, 20474.51118693425, Risk level, 20367.579539993683, 68.2%, 20309.843417111093, 68.2%, 19981.821360237136, Risk level, 19925.420460006317, 95.4%, 19818.48881306575, , 19653.79894053044, 99.73%, 19490.4776261315
+
+=== NVDA closed at 116.65===
+
+99.73%, 124.71564585157148, , 122.68266464492939, 95.4%, 120.68282292578574, Risk level, 119.36812265197959, 68.2%, 118.64927852411454, 68.2%, 114.61585276787454, Risk level, 113.93187734802042, 95.4%, 112.61717707421427, , 110.58238303917477, 99.73%, 108.58435414842853
+
+=== AMZN closed at 193.06===
+
+99.73%, 201.95381089336027, , 199.71798174604015, 95.4%, 197.50690544668015, Risk level, 196.0572142710624, 68.2%, 195.27079445102913, 68.2%, 190.82359401935582, Risk level, 190.0627857289376, 95.4%, 188.61309455331985, , 186.376379510643, 99.73%, 184.16618910663973
+
+=== AAPL closed at 198.53===
+
+99.73%, 207.49992566926863, , 205.24519409217834, 95.4%, 203.0149628346343, Risk level, 201.55286495054352, 68.2%, 200.75995759005318, 68.2%, 196.27470858070342, Risk level, 195.50713504945648, 95.4%, 194.0450371653657, , 191.78944618663525, 99.73%, 189.56007433073137
+
+=== GOOG closed at 154.38===
+
+99.73%, 160.90058700011025, , 159.26209768500644, 95.4%, 157.64029350005512, Risk level, 156.57743781903716, 68.2%, 156.00162983295562, 68.2%, 152.74115453754266, Risk level, 152.18256218096283, 95.4%, 151.11970649994487, , 149.48067131170328, 99.73%, 147.85941299988974
+
+=== TSLA closed at 298.26===
+
+99.73%, 322.5905881471161, , 316.4494875820319, 95.4%, 310.42529407355806, Risk level, 306.45940820557814, 68.2%, 304.2818565251294, 68.2%, 292.1140307989682, Risk level, 290.06059179442184, 95.4%, 286.0947059264419, , 279.945985019707, 99.73%, 273.9294118528839
+
+=== TSM closed at 176.52===
+
+99.73%, 185.7093379903543, , 183.39761525013486, 95.4%, 181.11466899517714, Risk level, 179.6168069027494, 68.2%, 178.80257652234397, 68.2%, 174.2075182906046, Risk level, 173.42319309725062, 95.4%, 171.92533100482288, , 169.61243896974207, 99.73%, 167.33066200964572
+
+=== AMD closed at 102.84===
+
+99.73%, 109.40305866815271, , 107.74980231856597, 95.4%, 106.12152933407636, Risk level, 105.05175077116746, 68.2%, 104.46788059837537, 68.2%, 101.18593342596385, Risk level, 100.62824922883254, 95.4%, 99.55847066592365, , 97.90395824169507, 99.73%, 96.2769413318473

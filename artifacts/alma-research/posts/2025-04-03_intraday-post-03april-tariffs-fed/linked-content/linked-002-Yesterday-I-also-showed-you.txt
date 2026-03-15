@@ -1,0 +1,47 @@
+Intraday post (02/April), Bulltrap? Stagflation
+
+Market is trading at 5600 during asia…After my weekly post, we can see investors gravitating toward value stocks with lower beta, as a defense against further selloffs.As I keep saying, volatility is simply too high now in a short tenor, and market needs to solve first the liquidity issue before continuing its path to the downside. Thus, funds are in mean reversion mode during RTH.As RV comes down (still not visible in every metrics), the risk parity based funds slightly increase their long exposures, that provides a short-term support and bull-trap, until the adverse impact of tariffs on growth, corporate earnings, and consumption becomes apparent.
+
+Treasury curves are bull-flattening, especially at the front-end. This, coupled with front-end real yields hitting new multi-year lows means that market is increasingly pricing in a slowdown in growth, while still expects higher inflation:
+
+This is what I keep talking about: stagflation. And this is what Trump needs to fight.
+
+Coding intraday gamma
+
+Speed profile breakdown:
+
+Coding zero vanna at 5663.34; vanna convexity is positive, so we need to see lower intraday vol to break through this. Above 5722.62 we should see vol to decrease in order to see stabilization, otherwise any upside move is trapish.To the downside, we should see longer gamma taking effect below 5558.39; derived from positioning.Charm flip is at 5665.26 and its convexity (color) is also negative, meaning MM gamma exposure will net decay into the close, providing room for volatility. If short speed mechanics get realized, 5550 is a potential magnet.
+
+The intraday mean reversion regime is starts to arrive to an end. In earlier elements, we observed very low or even slightly negative Hurst values (sometimes near 0, –0.078, or even –0.005), which indicated extremely strong short‑term mean reversion. After March OpEx I got 0.2956, that is while still below 0.5 (so it remains in the mean‑reverting zone), is notably higher than some of the earlier values. This suggests that the strength of the rapid “snap‑back” is now reduced—intraday movements are slightly more persistent than before, though mean reversion still dominates.Also the Markov said that the active state’s drift was either modestly negative or near zero. Here, we see a small positive drift in the active regime. The active state variance is ≈ 5.97e–05, which remains very low, indicating that intraday volatility is stable.Market is making its decision now.
+
+SCRIPT INPUTS(I modified the IV calculation formula. Please, give me feedbacks in the chat, how the new lvls worked for you this day)
+
+SPX99.73%, 5765.115333628639, , 5732.00889867786, 95.4%, 5699.092578923694, Risk level, 5677.569160889882, 68.2%, 5665.98503631664, 68.2%, 5599.961147836978, Risk level, 5588.570487547618, 95.4%, 5567.047069513806, , 5533.937232304037, 99.73%, 5501.024314808861
+
+ES=F99.73%, 5809.270161107228, , 5775.479345211693, 95.4%, 5741.885080553614, Risk level, 5719.9175442931355, 68.2%, 5708.093104496587, 68.2%, 5640.7068360621715, Risk level, 5629.0824557068645, 95.4%, 5607.114919446386, , 5573.320538902996, 99.73%, 5539.729838892772
+
+SPY99.73%, 574.6781644479418, , 571.2408361485299, 95.4%, 567.8240675755334, Risk level, 565.5896319951282, 68.2%, 564.3866144340918, 68.2%, 557.5323896501025, Risk level, 556.3503094111218, 95.4%, 554.1158738307166, , 550.6781616819426, 99.73%, 547.2617769583082
+
+VIX99.73%, 24.643498351753852, , 23.914336509837298, 95.4%, 23.20674940475876, Risk level, 22.738369248038364, 68.2%, 22.476898032531203, 68.2%, 21.039365358709276, Risk level, 20.80163166748898, 95.4%, 20.333251510768584, , 19.601717764091234, 99.73%, 18.896502563773492
+
+IWM99.73%, 205.73771832949288, , 204.17485128829142, 95.4%, 202.6238564181644, Risk level, 201.60873743507133, 68.2%, 201.06089744388862, 68.2%, 197.94694070708323, Risk level, 197.41125157860054, 95.4%, 196.39613259550748, , 194.83298093919004, 99.73%, 193.282270684179
+
+QQQ99.73%, 487.39997857308066, , 483.71102681985735, 95.4%, 480.049995390056, Risk level, 477.6539008723899, 68.2%, 476.3608282393345, 68.2%, 469.01062290761627, Risk level, 467.7461235416726, 95.4%, 465.3500290240065, , 461.6604105022405, 99.73%, 458.00004584098184
+
+NDX99.73%, 20038.402807533177, , 19887.33766254105, 95.4%, 19737.41136470409, Risk level, 19639.288154341804, 68.2%, 19586.33746914355, 68.2%, 19285.337002597134, Risk level, 19233.551689408196, 95.4%, 19135.42847904591, , 18984.336249909302, 99.73%, 18834.437036216823
+
+NQ=F99.73%, 20196.48319836846, , 20047.941146716214, 95.4%, 19900.491599184228, Risk level, 19803.99833785017, 68.2%, 19751.941361704354, 68.2%, 19455.941327620025, Risk level, 19405.00166214983, 95.4%, 19308.508400815772, , 19159.941032919534, 99.73%, 19012.51680163154
+
+NVDA99.73%, 117.12255685825487, , 115.36624970429341, 95.4%, 113.6362791920669, Risk level, 112.4997526728896, 68.2%, 111.87956170097097, 68.2%, 108.39284730046019, Risk level, 107.80025037886821, 95.4%, 106.66372385969092, , 104.90610387070866, 99.73%, 103.17744619350294
+
+AMZN99.73%, 201.6862125587939, , 199.29295952747043, 95.4%, 196.9281053638696, Risk level, 195.3769624183243, 68.2%, 194.53450502979848, 68.2%, 189.77603311618725, Risk level, 188.96303391956633, 95.4%, 187.41189097402102, , 185.01754244287346, 99.73%, 182.65378377909673
+
+AAPL99.73%, 231.80634439468565, , 229.64215627037098, 95.4%, 227.49817341804595, Risk level, 226.0937096796614, 68.2%, 225.3337921408796, 68.2%, 221.0254204814476, Risk level, 220.2862952031511, 95.4%, 218.88183146476655, , 216.71704084298545, 99.73%, 214.57366048812685
+
+GOOG99.73%, 166.29761895909715, , 164.4327591808982, 95.4%, 162.5888119209548, Risk level, 161.37974082652042, 68.2%, 160.7237108577698, 68.2%, 157.01465113559647, Risk level, 156.38026893910458, 95.4%, 155.1711978446702, , 153.30557918701618, 99.73%, 151.46239080652785
+
+TSLA99.73%, 295.1258826771315, , 288.38236645782547, 95.4%, 281.7929370661048, Risk level, 277.4463967969101, 68.2%, 275.04568616298616, 68.2%, 261.708625282495, Risk level, 259.47358611324614, 95.4%, 255.12704584405145, , 248.3711225061643, 99.73%, 241.79410023302478
+
+TSM99.73%, 177.4466823449343, , 175.2311808405811, 95.4%, 173.04334086729136, Risk level, 171.60785154557976, 68.2%, 170.82748285402656, 68.2%, 166.42376600124908, Risk level, 165.6721472337171, 95.4%, 164.2366579120055, , 162.02002874389245, 99.73%, 159.8333164343626
+
+AMD99.73%, 108.86990809818077, , 107.336633799322, 95.4%, 105.82495343873882, Risk level, 104.83229821976074, 68.2%, 104.29136390541991, 68.2%, 101.2460750493164, Risk level, 100.727699338833, 95.4%, 99.73504411985493, , 98.20076546690971, 99.73%, 96.69008946041298

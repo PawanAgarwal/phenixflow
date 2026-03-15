@@ -1,0 +1,37 @@
+Intraday post (24/feb)
+
+Here I coded intraday GEX profile:
+
+Here you can find the 3D color projected chart, and here is the 2D projection of the surface.Here is OptionsDepth Heatmap for today:
+
+As you can see we have a customer short iron condor at 5955/60/6055/60 territory. I code upside zero vanna at 6053, and vol should calm down in order to break above this line otherwise the negative speed environment will cause 5974 to be hit. Now the problem is that the speed profile is not that steep as it can be seen on the OD chart (in my calculations). It is more like a MM net long butterfly with ~6009.83 as center, setting the stage for vol expansion towards this point, but relatively calm vol towards the upward wing. However, the color profile is net negative here, meaning that with the passage of time this net negative speed profile becomes even steeper causing longer spot/vol beta making it impossible for the price to break out of the iron condor, except if they close it during the day, bcs IV increase cause them loses. I code 6041.77 into the AM as the lvl where vol traders should feel this effect. The key pivot is the center 6009.83 to the downside, pinning at 5965The delta distribution of this local positioning skewed towards shorter OTM put deltas that can provide supportive flows to knock on the door of the vanna flip lvl, but these flows will fade away into the PM due to net positive charm exposure. If the condor is closed, simple hedge unwind can occur. So, the momentum has a chance to break through the vanna flip during the AM session only, if you see intraday vol cooling off on a fix strike basis in the 6041/50 area. I estimate low probability for this tho.
+
+If price would able to open above the vanna flip, it would easily gravitate towards 6090, the lvl I marked that should be taken off this week. However, in this session it is unlikely.I didn’t take any futures positions nor SPY positions on Friday or at Sunday open despite I explained all day yesterday in the chat why I still expect some support. Think outside of the intraday box: to me, for now, as explained in the weekly post, seems like set for a stage to lure traders into the bear side of the NVDA ER trade, but still not allowing bears to get edge on the put trade, as a result of the short skew positioning. Nasty.I will re-vise it when I think it necessary…
+
+SCRIPT INPUTS
+
+SPX99.73%, 6117.100575175704, , 6091.052442376994, 95.4%, 6065.115228994102, Risk level, 6048.1680061389, 68.2%, 6039.066618788504, 68.2%, 5987.080786909404, Risk level, 5978.0917594861, 95.4%, 5961.144536630898, , 5935.09494652184, 99.73%, 5909.159190449296
+
+ES99.73%, 6138.320704008272, , 6110.92941334305, 95.4%, 6083.660352004135, Risk level, 6065.841077250788, 68.2%, 6056.268509753587, 68.2%, 6001.607596116816, Risk level, 5992.158922749212, 95.4%, 5974.339647995865, , 5946.946672155689, 99.73%, 5919.679295991728
+
+SPY99.73%, 610.8953210575424, , 608.1503242195566, 95.4%, 605.4176617494744, Risk level, 603.6319448150441, 68.2%, 602.672608858284, 68.2%, 597.1948924687308, Risk level, 596.2480600677684, 95.4%, 594.4623431333381, , 591.7171750223398, 99.73%, 588.98468382527
+
+VIX99.73%, 19.870722511737284, , 19.451111175007576, 95.4%, 19.04036079810497, Risk level, 18.769662879460835, 68.2%, 18.620551890358154, 68.2%, 17.789974159943835, Risk level, 17.650335289484477, 95.4%, 17.379637370840342, , 16.959375273645872, 99.73%, 16.549275657208028
+
+IWM99.73%, 223.38300223032104, , 221.98286448835006, 95.4%, 220.59150264103943, Risk level, 219.68147377493364, 68.2%, 219.1913090165991, 68.2%, 216.39975210309552, Risk level, 215.918532328582, 95.4%, 215.0085034624762, , 213.60819369131437, 99.73%, 212.21700387319459
+
+QQQ99.73%, 539.181643058223, , 535.8962269906203, 95.4%, 532.6308300740334, Risk level, 530.4952650411875, 68.2%, 529.3452901348279, 68.2%, 522.794350174689, Risk level, 521.6647691385, 95.4%, 519.5292041056541, , 516.2434069920248, 99.73%, 512.9783911214645
+
+NQ_F99.73%, 22223.865848936355, , 22087.292239849965, 95.4%, 21951.557924468176, Risk level, 21862.78554109155, 68.2%, 21814.97907709349, 68.2%, 21542.665781907617, Risk level, 21495.71445890845, 95.4%, 21406.942075531824, , 21270.35234920607, 99.73%, 21134.634151063645
+
+NVDA99.73%, 146.01726231794234, , 143.09112550882637, 95.4%, 140.2236274968618, Risk level, 138.33490254518955, 68.2%, 137.29625347173393, 68.2%, 131.50127240542804, Risk level, 130.52508280637295, 95.4%, 128.6363578547007, , 125.70616723136, 99.73%, 122.84272303362016
+
+AMZN99.73%, 224.46209667076016, , 222.48284669810985, 95.4%, 220.52104925090742, Risk level, 219.23626779203542, 68.2%, 218.54164191418448, 68.2%, 214.60043135029267, Risk level, 213.92373587007395, 95.4%, 212.63895441120195, , 210.65921468202328, 99.73%, 208.6979069913492
+
+GOOG99.73%, 188.9368433255783, , 187.08859281480304, 95.4%, 185.2584225783165, Risk level, 184.05925741470915, 68.2%, 183.4099907611061, 68.2%, 179.7313812859141, Risk level, 179.10074624740022, 95.4%, 177.90158108379288, , 176.05276392401237, 99.73%, 174.22316033653107
+
+TSLA99.73%, 360.83356034510825, , 355.02847107746015, 95.4%, 349.3167740690385, Risk level, 345.56230174303977, 68.2%, 343.5101192343545, 68.2%, 331.9916587648841, Risk level, 330.03767384289773, 95.4%, 326.283201516899, , 320.47307795628547, 99.73%, 314.76641524082925
+
+TSM99.73%, 210.4685941830644, , 207.38891533105698, 95.4%, 204.35429983811423, Risk level, 202.36103988166047, 68.2%, 201.27393652050299, 68.2%, 195.15891481918004, Risk level, 194.11897110466765, 95.4%, 192.1257111482139, , 189.04384606491126, 99.73%, 186.01141680326373
+
+AMD99.73%, 117.23966355690517, , 115.62867851497573, 95.4%, 114.0398299473979, Risk level, 112.99668419069853, 68.2%, 112.42852989229759, 68.2%, 109.2283628121559, Risk level, 108.68330848508272, 95.4%, 107.64016272838334, , 106.02817560328828, 99.73%, 104.44032911887608

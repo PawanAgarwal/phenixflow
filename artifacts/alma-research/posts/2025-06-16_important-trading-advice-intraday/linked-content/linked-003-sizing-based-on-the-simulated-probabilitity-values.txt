@@ -1,0 +1,53 @@
+Odds, Fair Bet and Kelly Criterion (position sizing)
+
+Moderate but necessary-math warning!
+
+In my previous posts, you encountered the concepts of "fair play" or "fair bet." In this post, I’m going to introduce this concept in more detail, as it is one of the fundamental principles of option pricing and a key concept in risk management. I will also introduce a bet sizing mathematical model known as the Kelly criterion.
+
+When the expected value over 100 bets is exactly zero, we refer to it as a fair bet. This means that the growth curve has no trend, or in other words, over 100 bets, the PnL theoretically becomes zero for both parties. “Neither the seller nor the buyer has an edge”
+
+Let's assume a bet with odds for a win of 6:4, or 3:2Odds are a multiplier that indicates how much profit is earned per $1 wagered. In our example, the odds are 3 to 2 in favor, meaning that for every $3 wagered, the profit is $2. In this case, the profit per $1 wagered is 2/3 ≈ $0.67Betting $1 to win only $0.67 may seem like a poor bet at first glance. However, if you recall what I previously wrote about the concept of probability, this means that the probability of winning is 60%, while the probability of losing is 40%—in other words, out of 100 bets, we theoretically win 60 times and lose 40 times (or equivalently, out of 5 bets, we win 3 times and lose 2 times).
+
+So, what could be the fair price of this bet, where if we play it 100 times, winning 60 times and losing 40 times, the PnL ultimately breaks even and neither the better nor the house will have an edge?
+
+Thus, for example, in the case of 8:2 in favor odds, the fair bet is 1/4 = $0.25, or in the case of 3:7 in favor odds, the fair bet is 7/3 = $2.33, and so on. So, as you can see, when our probability of winning increases, the risk/reward ratio also increases, because at 8:2 odds, I am risking $4 to win $1. On the other hand, this makes sense, as my winning probability is four times higher than my losing probability, so the seller demands a higher price relative to the expected profit—not only because their risk has increased, but also because demand for such odds is higher.
+
+Conversely, when our probability of winning is lower than our probability of losing, the risk/reward ratio decreases. For example, at 3:7 odds, we can only win 30 times out of 100, but for every $3 wagered, the profit is $7. This means that the expected reward is 2.33 times greater than the amount risked. In this case, the seller takes on less risk, and the trade becomes less crowded.However, these prices represent the fair prices, meaning that this is the exact point where risk/reward is balanced, the bet is fairly priced, and neither the seller nor the buyer gains an advantage from mispricing.
+
+Because what happens if the market offers only $0.6 reward for each dollar wagered on a bet with an estimated 60% probability of winning? - Well, this essentially means that the market has overestimated the risk of a 3:2 odds-on bet, as it is priced above its fair value. In theory
+
+over one hundred bets, this results in a $4 loss. This implies that the house has an edge over the bettor, meaning the bet is overpriced.
+
+The opposite happens if, for example, at 3:4 in favor odds, the market offers $1.5 for every $1 wagered, underestimating the risk of the bet. In this case, in theory
+
+over one hundred bets, this results in a $0.5 win. This means that the bet is underpriced, and the bettor has an edge over the house.
+
+In practice, accurately estimating probabilities is literally impossible, as we have no true benchmark to rely on. However, by analyzing historical pricing trends, we can make approximate estimates to determine whether a given bet is over- or underpriced.In the options market, this is primarily executed through the so-called "volatility risk premium", as volatility is one of the key inputs in pricing models and the only input that is not explicitly defined. But more on that later.
+
+KELLY CRITERION Right now, dear reader, you’re probably wondering: if I have a reasonably accurate estimate of the odds, the expected return, and the potential loss (since I can use limit buy/sell orders), is there a way to leverage probability to ensure that my long-term PnL fluctuation trends positively on average?In other words, if I see that in 100 bets, I lose 55 times and win 45 times, is it possible to size my bets in such a way that I still end up with a net positive return after 100 trades?My short answer to you is yes. And I will show you how.
+
+Let's define n as the number of bets, W as the number of winnings, L as the number of losses, and C₀ as the initial capital.Assuming compounding returns, meaning that previous gains are reinvested, we can express Cₙ final capital using the following formula:
+
+From this, we can express the average G growth rate as the geometric mean of this compounded series:
+
+Let’s substitute according to the definitions above:
+
+Let's take the logarithm of the equation:
+
+We now have a logarithmic function. However, what we want to determine is how it changes with respect to the variable f, and we need to find its maximum value. This will be the point where the growth function's rate of change is maximized in relation to f.
+
+Let's differentiate the equation with respect to f (i.e., measure the rate of change of the curve as a function of f), and find the zero point of the derivative. The point where the slope of the function is zero (means that an imaginary tangent line is horizontal) is where the function changes curvature—meaning, in this case, it reaches its local maximum. Then, we rearrange the equation for f to see how it can be expressed based on the given variables.
+
+This function shows us the degree of curvature of the original function in relation to the variable f. We want this to be zero:
+
+And this is the formula for the Kelly betting fraction. So, this shows us the f fraction for a single bet with odds b (the net gain multiple, as defined earlier) and a probability of winning Pᵥᵥ, which maximizes the long-term growth rate of a portfolio.
+
+We can modify the formula if we want to include the estimated loss odds as well. In this case, the formula adjusts as follows. Let g represent the estimated gain, and l represent the estimated loss:
+
+So, if I input this formula into Excel, it will provide me with a percentage fraction of my capital that I should allocate based on the estimated odds for winning and estimated odds for losing, in order to achieve the maximum growth rate over the long run:
+
+Now if I copy these parameters but manually change the fraction value, either higher or lower, we will see that the projected growth over 100 trades—based on the given odds—decreases.Why? Because, remember, we are at the maximum (peak) of the derivative of the growth function. This means that whether if we go right or left on the x-axis (increasing or decreasing the fraction size) the growth rate will decrease.
+
+The Kelly criterion is widely used but often with modifications, and typically only fractions of the Kelly fraction are applied. Crypto quant funds use it in yield farming, just as Global Macro & CTA Funds do—when their model’s forecasted Sharpe ratio is high, they scale up closer to a fraction of the Kelly value; when signals are weaker, they scale down.Moreover, the Kelly Criterion serves as the foundation for the log-optimal portfolio, which I will introduce later. Very important.
+
+Finally, as a farewell, I am linking Edward O. Thorp’s 2011 study on the impact of the Kelly Criterion on systematic strategies here..

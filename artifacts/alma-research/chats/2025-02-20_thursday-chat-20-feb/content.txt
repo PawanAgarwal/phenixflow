@@ -1,0 +1,1279 @@
+Chat Post
+2025-02-20T09:11:19.002Z | Alma
+THURSDAY CHAT (20/feb)
+
+Replies
+2025-02-20T09:12:13.611Z | Dominik
+good morning alma and gang! :)
+
+2025-02-20T09:12:41.404Z | Alma
+@Alec Pradhan you asked me about speed.
+now, as it is a mathematical concept, i must talk a bit about it. i will cover this in the dedicated posts, but voilá a bit forwards
+
+2025-02-20T09:12:51.308Z | Alma
+so how to meassure the slope of a line
+
+2025-02-20T09:12:57.933Z | Alma
+
+2025-02-20T09:13:46.536Z | Alma
+the line (purple) that we want to meassure its slope... so its basically delta y divided by delta x, that is nothing else but the tangent of the lien vs x-axis angle
+
+2025-02-20T09:14:18.921Z | Alma
+so slope is equals to the tangent value of the angle of line/x-axis
+
+2025-02-20T09:14:43.142Z | Alma
+when we derivate a function, a curve, we want to know how the curvature changes
+
+2025-02-20T09:15:13.534Z | Alma
+basically the rate of change due to the x-axis
+
+2025-02-20T09:15:57.079Z | Alma
+
+2025-02-20T09:17:28.595Z | Alma
+we do this by sliding a tangent line along on the surface of the function curve
+
+2025-02-20T09:17:42.855Z | Alma
+and we put the tangent values (slope) of that tangent line into another graph, that will be the derivative function
+
+2025-02-20T09:18:00.089Z | Alma
+what will it show? the delta.. the rate of change
+
+2025-02-20T09:18:22.911Z | Alma
+delta refers to the rate of change of something in math.
+
+2025-02-20T09:19:07.651Z | Alma
+here, you can see the f' functions values:
+
+2025-02-20T09:19:30.657Z | Alma
+(red)
+
+2025-02-20T09:22:17.518Z | Alma
+you can instantly recognize two things:
+first is: when the tangent line is horizontal (paralell to x-axis), its value is zero... and when is it horizontal? - when the function that we derivate, has local min or max.
+second is, that there is an inflexion point on the original function from were the rate of change starts to slow down, and the slope starts to go back towards zero. This is when the derivative has local max or min.
+
+2025-02-20T09:24:19.936Z | Alma
+Now, here, we simply meassure how the slope of the tangent line changes due to the x-axis, that give us the rate of change of the curve of the original function.
+
+2025-02-20T09:25:51.127Z | Alma
+the function and the x-axis can be anything:
+it can be an acceleration of the car vs engine performance...
+it can be the climate change vs population change... anything that you want to meassure together..
+
+2025-02-20T09:26:15.072Z | Alma
+and it can be an options premium vs the spot... or vs the implied vol... or vs the time
+
+2025-02-20T09:26:53.065Z | Alma
+or it can be the (options premium vs spot) vs spot
+but bcs the name "delta" is already in use, we call it gamma
+
+2025-02-20T09:27:18.049Z | Alma
+or it can be the [(options premium vs spot) vs spot] vs spot
+that is speed
+
+2025-02-20T09:27:42.566Z | Alma
+you can derivate anything here
+
+2025-02-20T09:27:58.468Z | Alma
+or (options premium vs time) vs spot
+that is charm
+
+2025-02-20T09:28:39.775Z | Alma
+that is equals to (options premium vs spot) vs time
+
+2025-02-20T09:29:34.672Z | Alma
+and now listen..
+
+[(options premium vs spot) vs time] vs spot = [(options premium vs spot) vs spot] vs time
+this is color, they are equal
+
+2025-02-20T09:29:41.543Z | Alma
+this is why i say that color is charm convexity
+
+2025-02-20T09:30:12.421Z | Alma
+i created jsut now an animation of the derivation of the yesterday gamma curvature, just to make it easier to see:
+
+2025-02-20T09:30:26.328Z | Alma
+
+2025-02-20T09:30:45.989Z | Alma
+this is speed, the purple one
+
+2025-02-20T09:31:04.208Z | Alma
+i let you digest it
+
+2025-02-20T09:42:21.926Z | Doc McGraw
+So far, so good
+Basic
+
+I have A question of terminology not theory :
+When we / you say speed is negative or speed flips then the MM is selling in the direction of the move , correct? What we usually associate with MM long Gamma
+So is it correct to say (basically without nuance for the moment) that IF mm are long Gamma THEN speed is negative?
+
+2025-02-20T09:55:12.484Z | Alma
+No.
+it has nothing to do with that.
+look at the gif charts I shared.
+The problem we want to solve by derivating the functions is to gain as much informations about the rate of change of the original function, as we can... why? bcs we want to get a very nuanced pic about how our risk exposure will change.
+
+2025-02-20T09:55:45.551Z | Alma
+speed is negative if the gamma curve decreases against the x-axis (spot).
+
+2025-02-20T09:55:55.772Z | Alma
+look at the charts, imagine it, you will see it
+
+2025-02-20T09:57:26.111Z | Alma
+this is a nice animation to see that.
+just change the f(x) to the gamma exposure, and f'(x) to speed exposure, x-axis is the spot axis, and thats it
+
+2025-02-20T10:03:31.075Z | David P
+this is SO helpful
+
+2025-02-20T10:22:03.075Z | N8
+Alma when do you plan on starting the series on options? Is there a syllabus or timeline for teaching certain subjects?
+
+2025-02-20T11:02:30.133Z | Gamma
+Yes am interested to learn basics first
+
+2025-02-20T11:09:34.343Z | Leonida
+Alma cannot wait to study your math section, if there will be one 🤞🏻
+
+2025-02-20T11:14:38.049Z | Italy
+
+2025-02-20T11:16:07.842Z | Italy
+
+2025-02-20T11:18:37.526Z | Italy
+
+2025-02-20T11:18:51.716Z | David P
+lots of basics here https://open.substack.com/chat/posts/2aab643b-d095-4c00-8b42-4f35379fb002
+
+2025-02-20T11:20:15.868Z | Italy
+Hello
+Is there a pre market commentary for Feb 20?
+
+2025-02-20T11:20:45.744Z | David P
+Expected around 30 mins before market open usually
+
+2025-02-20T11:24:33.772Z | Italy
+Thank you David.
+Learning my way around.
+
+So those will show up under market analysis section?
+
+Any othere active channel to follow, not to miss things?
+
+2025-02-20T11:34:47.222Z | David P
+Alma usually posts a notice here when the daily post goes up, you should get an email. Otherwise it'll appear on the main publication page. https://stochvoltrader.substack.com
+
+2025-02-20T12:23:08.449Z | 0Mik
+GM
+
+2025-02-20T12:23:21.554Z | 0Mik
+What an awesome read
+
+2025-02-20T12:24:08.100Z | 0Mik
+To be honest, I’ve never seen anyone properly explain what this whole 'rate of change' thing actually means
+
+2025-02-20T12:25:13.363Z | RNR
+I can’t see the animation..
+
+2025-02-20T12:25:57.873Z | RNR
+Could you post this one more time?
+
+2025-02-20T12:26:27.402Z | 0Mik
+Try to refresh
+
+2025-02-20T12:28:15.704Z | RNR
+Tried..its not loading..
+
+2025-02-20T12:29:16.640Z | Bull
+Blank nothing visible
+
+2025-02-20T12:31:27.622Z | Ziggy
+Good Morning/Afternoon Alma! Thank you for all your detailed information.
+
+Do you think you could give your thoughts on NVDAs directional trend for the rest of the week leading up to their earnings next week?
+
+2025-02-20T12:37:56.632Z | 0Mik
+She is long NVDA and wrote "momentum led by tech"
+
+2025-02-20T12:48:15.966Z | Bull
+Check your dm
+
+2025-02-20T12:48:19.789Z | Bull
+Cmik
+
+2025-02-20T12:52:33.069Z | Ziggy
+Thank you, appreciate it! Was just curious if she has maybe seen any weakness building during this week.
+
+2025-02-20T12:54:58.374Z | Ziggy
+Getting the reversion Levels on NVDA daily is a major help regardless of whether she has had any time to look into it all that much. As always, thank you @almatrk18499
+
+2025-02-20T13:00:04.935Z | Leonida
+amazing
+
+2025-02-20T13:07:56.469Z | Lex
+congratulations you have hit 1000 subscribers very grateful to be here learning from you and others!
+
+2025-02-20T13:10:58.875Z | Hunter Jacques
+Could someone repost this, for some reason I’m getting an error when it tried to load in chat.
+
+2025-02-20T13:13:05.476Z | Hunter Jacques
+Rough I was reading from the top down. Glad I’m the 20th person to post about the graph not loading.
+
+2025-02-20T13:16:36.774Z | David P
+Am I just not understanding this or should it be  "[(options premium vs spot) vs time] vs spot = [(options premium vs time) vs spot] "
+
+2025-02-20T13:36:56.410Z | JFinn81
+Did jobless claims get released
+
+2025-02-20T13:40:49.791Z | Tom
+Yes. It rose
+
+2025-02-20T13:53:00.203Z | JFinn81
+219
+
+2025-02-20T14:02:28.136Z | April
+Gm. 3rd order deriv
+
+2025-02-20T14:04:58.543Z | Alma
+https://open.substack.com/pub/stochvoltrader/p/intraday-post-20feb?r=3dyydu&utm_campaign=post&utm_medium=web
+MORNING POST IS OUT
+
+2025-02-20T14:06:07.110Z | Jeffrey K
+EMA 6125,  10 DAY 6094
+
+2025-02-20T14:07:46.758Z | Bull
+im sorry to ask again but when you say vol drop thats the IV ATM right ? or RV in your script ???
+
+2025-02-20T14:08:08.226Z | Jeffrey K
+small thing, I wonder if it would be easy to put a few more spot numbers on the GEX chart
+
+2025-02-20T14:08:51.008Z | Jeffrey K
+I think they are shown in 5 pt. increments
+
+2025-02-20T14:15:35.705Z | vorsage
+zero vanna flip at 6151 and 6072.5 (vol must go down to break through these lines both ways).
+
+2025-02-20T14:16:02.757Z | vorsage
+But if SPX falls to 6072.5, wouldn't vol increase and therefore not break that level?
+
+2025-02-20T14:18:28.631Z | Alma
+this is why zero vanna is important
+
+2025-02-20T14:18:36.745Z | Alma
+mechanically it catches up
+
+2025-02-20T14:18:46.290Z | Alma
+but if customers trade against vol, they can dump it
+
+2025-02-20T14:18:57.211Z | Alma
+it happened sometimes
+
+2025-02-20T14:19:06.127Z | Alma
+some members catched it here too
+
+2025-02-20T14:19:40.417Z | Alma
+and not always that visible if the vol actually should go down or up in a certain environment, as it was yesterday and previous day
+
+2025-02-20T14:19:47.683Z | David P
+It seems like the vacuum towards 6200 might get pushed a little later in time, more of a premium decay day perhaps. Tempted to roll my Friday calls to next week
+
+2025-02-20T14:19:50.194Z | Bull
+Vol meaning you’re saying iv atm ?
+
+2025-02-20T14:19:51.781Z | Alma
+where i explained why the vol will go down, and it broke the zero vanna upside
+
+2025-02-20T14:19:56.798Z | Alma
+IV
+
+2025-02-20T14:20:04.542Z | Alma
+RV has nothing to do with options
+
+2025-02-20T14:20:06.996Z | Alma
+its vega
+
+2025-02-20T14:20:24.045Z | Alma
+6145 is strong
+
+2025-02-20T14:20:29.350Z | craig
+Up or Down ?
+
+2025-02-20T14:20:36.626Z | Alma
+strong charm decay above, but net charm is negative, supportive
+
+2025-02-20T14:22:54.691Z | 0Mik
+Bro, vol decay, more things pointing up than down, 6145 acting as a magnet and a pin…
+What do you think? C’mon, man
+
+2025-02-20T14:23:26.988Z | 0Mik
+
+2025-02-20T14:23:41.795Z | 0Mik
+Alma has been bullish since Feb 3rd
+
+2025-02-20T14:24:38.059Z | Alkhaiary
+is that meaning we are headed to down side.
+
+2025-02-20T14:25:08.527Z | 0Mik
+But what if the market dips first and tests the support levels shown on the charts? Where will you go long?
+I hope you realize that the market doesn’t move up or down in a straight line—and trading isn’t just about direction. There’s also premium collection, vol strats, pair trading etc.
+
+2025-02-20T14:25:43.155Z | 0Mik
+I don’t think Alma is just some retail up down up down up up down shitposter
+
+2025-02-20T14:26:19.527Z | craig
+
+2025-02-20T14:26:20.451Z | 0Mik
+It isn't as easy as "up or down"
+
+2025-02-20T14:26:22.479Z | 0Mik
+Period.
+
+2025-02-20T14:26:24.794Z | 0Mik
+Sorry
+
+2025-02-20T14:30:17.472Z | David P
+Here here!
+
+2025-02-20T14:32:38.877Z | craig
+ok , higher or lower ?
+
+2025-02-20T14:34:52.285Z | David P
+Hey Craig, why don’t you offer your view of today’s post then we can critique our understandings. — My take on today’s beautiful analysis. No intraday edge unless you are premium selling. The weekly post is still very important so taking that into mind. Mean reversion longs are still on the cards Maybe you could look to go long with a tight stop at the support around 6015 or even at 6072 ☠️  but you want to see vol getting eaten there before you go long if we get that low.
+
+2025-02-20T14:36:53.194Z | 0Mik
+Read these aloud to yourself a few times, and lo the answer to your own question shall reveal itself
+
+2025-02-20T14:37:09.114Z | 0Mik
+Good idea
+
+2025-02-20T14:37:10.529Z | 0Mik
+Discuss
+
+2025-02-20T14:41:21.624Z | Sharcus Aurelius
+You guys know what the best real time chart/indicator to use to see if volatility is getting eaten up? VIX?
+
+2025-02-20T14:48:41.556Z | Jeffrey K
+EMA 6117 and a voodoo line
+
+2025-02-20T14:50:56.065Z | 0Mik
+Check ivol on your brokerage
+
+2025-02-20T14:51:40.534Z | Jeffrey K
+or the slope off your long losses LOL
+
+2025-02-20T14:52:07.219Z | Leonida
+Let’s discuss, it is the only way to better understand the dynamic !!!! This is mine, correct me if I am wrong, would appreciate that !
+As time passes trough the session, that 6275 is getting bigger, MM sold premium there, and they will sell more as time passes. Furthermore we have that positive speed environment 6100-6145 that eats vol as spot goes up and gex exp increase = the tangent line of the curve become steeper to the upside, so MM will sell again the price.
+But what if spot moves down? That environment will favour for acceleration in fact as spot moves down we have less gex there and the speed curve is steeper to the downside. Then we have that 6107-6115 which become supportive as gex increases there as spot moves down.
+
+2025-02-20T14:52:08.283Z | dee
+613 spy  puts in the $
+
+2025-02-20T14:53:46.420Z | Jeffrey K
+down goes sparky
+
+2025-02-20T14:54:18.310Z | 0Mik
+THURSDAY REVERSION yeeeaaah, Alma said it on weekend we will get vol this day
+
+2025-02-20T14:54:48.161Z | Bruce W
+I said it yesterday and i'll say it again. The constant failure to sustain ATHs is NOT bullish. This looks like distribution to me, but lets see how we close the week into Monday.
+
+2025-02-20T14:55:12.557Z | Jeffrey K
+10 day 6090 and also a voodoo line
+
+2025-02-20T14:55:20.702Z | Bruce W
+Also hitting Alma's 6107 level so could be meaningful
+
+2025-02-20T14:56:37.392Z | Jten0887
+Went long here with tight stops.
+
+2025-02-20T14:57:42.541Z | dee
+Yen carry trade part 2 is coming
+
+2025-02-20T15:00:19.791Z | JSA
+time for a rousing game of "catch the knife"?
+
+2025-02-20T15:01:47.282Z | dee
+High risks going longs
+
+2025-02-20T15:01:48.187Z | Leonida
+The trade could be buying at 6072 as vol must cool to break
+
+2025-02-20T15:03:10.785Z | 0Mik
+Some people are still thinking in two dimensions...
+Alma didn’t say bullish moon rocket emoji, etc. She said the market is supported until February OPEX. And SPX was at 5969 when she said that. But she also mentioned in chat the other day that things don’t look great after that—she’ll write more about it later.
+She also pointed out today that these vol-suppressive long skew positions are expiring today and tomorrow, meaning they’ll disappear from the market.
+She literally predicted this Thursday volatility in her Sunday post. So… yeah. And that’s probably why she tightened her stop-losses... maybe not yesterday, but recently... and bought OTM puts, because she expected this
+
+2025-02-20T15:03:59.772Z | 0Mik
+Reversion trade is all about patience. We’re talking about a reversion trade when there’s actual volatility in the market
+
+2025-02-20T15:05:56.839Z | 0Mik
+"Vol regime is shifting now"
+
+2025-02-20T15:06:13.033Z | 0Mik
+From yesterday
+
+2025-02-20T15:07:35.970Z | JSA
+5137?
+
+2025-02-20T15:08:00.815Z | 0Mik
+Typo. This was another topic yesterday
+
+2025-02-20T15:09:29.701Z | Leonida
+I’ll bring it up again guys!!
+
+2025-02-20T15:09:47.491Z | Jeffrey K
+flow trump all, and the Bears ain't playing around
+
+2025-02-20T15:10:02.354Z | Georgiana
+Pay attention to USDYEN below 150
+
+2025-02-20T15:10:04.337Z | JSA
+Closed above yesterday, then 6144 vs 6137
+
+2025-02-20T15:10:32.930Z | James
+
+2025-02-20T15:10:49.836Z | David P
+Seems to have played out this way Leonida
+
+2025-02-20T15:11:51.093Z | craig
+Lower ?
+
+2025-02-20T15:13:24.245Z | Leonida
+Cmon bro, it doesn’t need … let’s make this place formative for everyone. We all have the same goal don’t forget !
+
+2025-02-20T15:14:18.883Z | Bull
+6135
+
+2025-02-20T15:14:23.140Z | Bruce W
+I'm sure she doesn't need you defending her. I'm also not criticizing her work. Just stating my view.
+
+2025-02-20T15:14:44.751Z | Vman
+looks like that 5DP/22DP was a great call. Vol realized on that, should go up now
+
+2025-02-20T15:16:22.018Z | 0Mik
+Insane call. Yes, it is opex. But supportive.
+
+2025-02-20T15:16:30.924Z | 0Mik
+Remember Cem's gif?
+
+2025-02-20T15:16:46.585Z | Carlos
+seems like breakdown is failing
+
+2025-02-20T15:17:06.603Z | 0Mik
+Probably oversized
+
+2025-02-20T15:18:31.171Z | Vman
+I do not but i can go look for it lol.
+
+2025-02-20T15:22:52.503Z | Jten0887
+Yeah Alma is on a different plane. She called this before the week started. Flawless execution.
+I still struggle with understanding the posts. But it will make more sense with more effort.
+
+2025-02-20T15:23:56.571Z | Sunshine
+Good morning, I can't seem to find Alma's post on her intraday long/short positions, could someone please share?Thanks!
+
+2025-02-20T15:24:56.001Z | JSA
+https://open.substack.com/chat/posts/5ec8d5aa-9fac-4e6d-aef1-3f6a28632ae4
+
+2025-02-20T15:31:38.646Z | EZ
+thanks. How did you get all her msg in one post
+
+2025-02-20T15:39:18.280Z | Jten0887
+Nasdaq showing more strength.
+
+2025-02-20T15:42:23.585Z | 670583
+The visuals really help, been a couple years since I’ve taken calculus and this helps me see how to apply the concepts. Thank you Alma!
+
+2025-02-20T15:44:03.470Z | Jeffrey K
+0 dte
+
+2025-02-20T15:45:01.034Z | 670583
+Try viewing from a computer
+
+2025-02-20T15:47:47.895Z | Jolene
+come on market
+
+2025-02-20T15:52:33.579Z | Alma
+Listen,
+I don't like how it keeps rejecting my reversion model's trendline.
+Vol is realized today as expected typicall opex flow that was predicted by the skew.
+Markets prices vol crush after opex.
+But vol regime is shifted. Very sensitive.
+This is why I kept the puts from yesterday as hedge.
+Now i took 1dte and intraday position but keep in mind that we are far from the mean, so a reversion isn't inherently bearish, i would probably add more át the vanna flip and closed my puts from yesterday, but any rebound would be used to closed my longs.
+Not too much tho.
+Note that i took small alloc position now and that i was long since the bottom. We faded those downsticks pretty accurate ☝️
+
+2025-02-20T15:54:46.914Z | Jolene
+so long is ok here?
+
+2025-02-20T15:56:01.584Z | Jolene
+is 6145 still possible for today?
+
+2025-02-20T15:56:13.079Z | Gil
+Read the intraday post and her message: at vanna flip 6071 you take more longs 1dte /0dte
+
+2025-02-20T15:58:05.851Z | Alma
+Don't rush
+
+2025-02-20T16:02:17.116Z | Nicola T
+the calls for tmr opex are gone in this environment... I must closed them yesterday
+
+2025-02-20T16:04:32.282Z | Bull
+Always take profit and roll
+
+2025-02-20T16:04:41.280Z | Bull
+That’s what I have learned
+
+2025-02-20T16:04:47.929Z | dee
+Spy puts very expensive 3 weeks out
+
+2025-02-20T16:05:19.209Z | Line Dnalsi
+Problem from banking System?
+
+2025-02-20T16:05:25.216Z | Jolene
+ty!
+
+2025-02-20T16:08:06.988Z | Leonida
+Alma that d0.6 ITM CALL is now OTM, how do u deal with this ? Close and reopen ITM lower ?
+
+2025-02-20T16:14:27.411Z | Jolene
+AAPL trying to go for it. See a gamma wall at 250 on the weekly
+
+2025-02-20T16:15:44.820Z | John
+Where'd you see that?
+
+2025-02-20T16:20:18.801Z | Alma
+Coding 6080.42 the level that the market should close above, or downside magnet kicks in into opex.
+I will cover the opex positioning more maybe this evening
+
+2025-02-20T16:20:25.943Z | TTFTRADE
+Is your reversion model trendline different from the indicator we have?
+
+2025-02-20T16:21:00.603Z | Alma
+no. i let it run for now
+
+2025-02-20T16:21:16.847Z | Alma
+yes. thats not a mean. this is a mean
+
+2025-02-20T16:22:22.800Z | Leonida
+Okay
+
+2025-02-20T16:22:27.193Z | Alma
+and basically added the same contract
+
+2025-02-20T16:22:43.935Z | Alma
+if one has a read on the tape, one should not jump in and out, otherwise they own you
+
+2025-02-20T16:23:04.176Z | Alma
+we have to see where the risk is that would change everything.
+
+2025-02-20T16:23:11.487Z | Alma
+i posted here
+
+2025-02-20T16:23:20.012Z | Leonida
+Alma that is the most crucial point, it’s hard to bear losses -20pt drawdown
+
+2025-02-20T16:23:34.306Z | Leonida
+Especially on ES
+
+2025-02-20T16:23:49.416Z | Alma
+this is why i emphatized during the weeks the stop-loss
+
+2025-02-20T16:24:23.594Z | Alma
+on swing trade thats different. but on an intraday basis one shouldn't be scared of noises
+
+2025-02-20T16:24:41.612Z | Alma
+and if i'm wrong and market disproves me, then i take the loss, and wait until the picture clears out
+
+2025-02-20T16:24:45.565Z | Alma
+after opex
+
+2025-02-20T16:24:51.244Z | Leonida
+I’m good with understand the analysis, I’m good at math, I’m not good to manage loss position
+
+2025-02-20T16:25:02.278Z | Alma
+i took put
+
+2025-02-20T16:25:17.309Z | Alma
+and that put covers a significant % of the losses on this intraday itm call
+
+2025-02-20T16:25:19.768Z | Jolene
+that is so helpful
+
+2025-02-20T16:25:34.178Z | Jolene
+having your guidance really cuts through the noise
+
+2025-02-20T16:25:42.369Z | Alma
+it is mostly on psychology
+
+2025-02-20T16:25:42.575Z | Jolene
+thanks a bunch for everything you do, blessings to you
+
+2025-02-20T16:25:53.292Z | Alma
+1) you shouldn't let it stick into your head
+
+2025-02-20T16:26:01.135Z | Alma
+or it will eat your soul up
+
+2025-02-20T16:26:17.802Z | Alma
+2) as i said many times: always have a daily limit of profit. a target profit
+
+2025-02-20T16:26:29.204Z | Alma
+once you hit it, take it, and shut down the PC
+
+2025-02-20T16:26:32.387Z | dee
+Mkt expect spike in vix
+
+2025-02-20T16:27:04.065Z | Leonida
+Okay, but I feel like I am chasing your trades. We have different book, I ain’t got that puts, this means I should not open call intraday ?
+
+2025-02-20T16:27:10.794Z | dee
+5.7 M order really :)
+
+2025-02-20T16:27:51.640Z | Alma
+we know about it since weeks, we saw it on the skew, and i wrote about it yesterday that positions are rolling further into march vix 24 25s range, huges short call gamma on dealer side. its not like expecting vix spike, tis hedging against it, but again it is reflexive, bcs it is liek a time bomb
+
+2025-02-20T16:28:13.187Z | Alma
+yes, this is why i don't want to post trades. it confuses plp
+
+2025-02-20T16:28:24.128Z | Alma
+and if you miss once, you can't necessary take the other
+
+2025-02-20T16:28:26.799Z | 670583
+You may like premium collection better. Recently switched to only that (think credit spreads, butterfly’s, condors). I may miss out on large moves but I don’t care
+
+2025-02-20T16:28:37.456Z | Jolene
+please dont stop, i FIND THEM SO USEFUL
+
+2025-02-20T16:28:51.697Z | Jolene
+mostly people that dont know how to think for themselves
+
+2025-02-20T16:28:55.636Z | Jolene
+those are the ones that have issues
+
+2025-02-20T16:29:06.450Z | Jolene
+Please continue to post, seeing you execute is helping me
+
+2025-02-20T16:29:17.770Z | Alma
+thats another stlye. on longer term time frame, you have vega, theta etc.
+i will cover those, but thats very advanced. i don't post those trades purposely
+
+2025-02-20T16:30:23.174Z | Alma
+no, its not about that.
+simply, i want plp to understand the market setup and be able to creatively solve to get alpha... there are many ways to own the market not just one, and i don't want to influence anyone
+
+2025-02-20T16:30:24.815Z | 670583
+The trades with reasoning behind it (before or after you’ve exited) I think would be a good route to go. I’d like to understand the logic behind it than blindly follow.
+
+obviously a work in progress on our end haha
+
+2025-02-20T16:30:27.733Z | Pak
+I would love to learn how to do that someday
+
+2025-02-20T16:30:33.082Z | dee
+Everyone need to manage their own risks
+
+2025-02-20T16:30:46.639Z | Alma
+if somebody is completely beginner, they won't understand my posts either.
+if somebody is not a beginner, they already have a stlye
+
+2025-02-20T16:30:49.367Z | Alma
+so this is why
+
+2025-02-20T16:31:07.957Z | Alma
+the logic is in the intraday posts
+
+2025-02-20T16:31:10.901Z | Jeffrey K
+who's got a GEX update intraday?
+
+2025-02-20T16:31:50.769Z | Jolene
+exactly this is not hand holding, everyone has their own book to manage, do not complain, add value by asking good thought out questions. Alma i cant begin to thank you for all the work you already do for us for a steep discount.
+
+2025-02-20T16:32:21.302Z | Alma
+i'm glad :))
+but he is not about holding hand, he didn't complained
+
+2025-02-20T16:32:31.131Z | Alma
+but for sure, this is why i don't like to post trades
+
+2025-02-20T16:32:36.059Z | Tom
+Please post them. If ppl chase it’s on them.
+
+2025-02-20T16:32:40.785Z | Alma
+bcs everybody has his own stlye
+
+2025-02-20T16:33:02.799Z | Alma
+i tell you guys something, if you let me
+
+2025-02-20T16:33:24.400Z | Leonida
+Mute us
+
+2025-02-20T16:33:32.537Z | SIMON
+Bingo
+
+2025-02-20T16:33:33.482Z | Alma
+i know that the internet is full of shit.
+i mean, literally ...
+
+2025-02-20T16:34:17.971Z | Alma
+there are a lot of providers who dump their fake naive gex and poor math based models on retails, then the other animals are the copy traders...
+not necessary the fake ones, who promise you 1k bucks per hour
+
+2025-02-20T16:34:27.159Z | Alma
+but in usual the trading gurus
+
+2025-02-20T16:34:46.419Z | Alma
+the problem with them is that they don't know you, they don't see what are your possibilities
+
+2025-02-20T16:34:48.268Z | Alma
+for example
+
+2025-02-20T16:35:23.642Z | Alma
+i have an algo set to monitor the chain on IBKR, check the charts of individual contracts in a certain range, etc. intraday vol, heston based vol forecast etc.
+
+2025-02-20T16:35:35.949Z | Alma
+it can even execute trades trhough API
+
+2025-02-20T16:35:49.169Z | Alma
+but there are plp who can't do that
+
+2025-02-20T16:35:50.857Z | Alma
+then what?
+
+2025-02-20T16:35:55.471Z | Alma
+they never can be as fast
+
+2025-02-20T16:36:07.841Z | Alma
+or catch as good gamma vega, theta profile as the algo does
+
+2025-02-20T16:36:13.943Z | Alma
+and also
+
+2025-02-20T16:36:34.939Z | Alma
+for instance i took the OTM put yesterday in order to hedge against this vol i expected
+
+2025-02-20T16:36:47.004Z | Alma
+all my positions were deep green
+
+2025-02-20T16:37:07.086Z | Alma
+but what if somebody just came in, was not brave enough to take a position in time, and only bought at ATH?
+
+2025-02-20T16:37:13.449Z | Alma
+so
+
+2025-02-20T16:37:16.035Z | Alma
+my point is
+
+2025-02-20T16:37:17.296Z | Alma
+that
+
+2025-02-20T16:37:29.024Z | Alma
+many plp out-there don't teach you how to THINK
+
+2025-02-20T16:37:38.208Z | Alma
+they want to make you be dependent on them
+
+2025-02-20T16:37:59.056Z | Alma
+the reason i write such long posts is bcs i want to teach you how to read the tape
+
+2025-02-20T16:38:20.103Z | Alma
+this is why i posted educational posts, those are basics yet, the harder things are about to come
+
+2025-02-20T16:38:25.043Z | Alma
+think about this service as a course
+
+2025-02-20T16:38:33.677Z | Jolene
+looks like we're gonna get a shot at 6072.5
+
+2025-02-20T16:38:36.259Z | Alma
+not as a furu, copytrading service
+
+2025-02-20T16:39:01.927Z | Alma
+bcs my goal was to teach you to think independently.
+
+2025-02-20T16:39:43.592Z | Alma
+otherwise i would charge $100+ per month, and would make copytrade posts, some bs premarket posts, and blame you if my trade went red
+
+2025-02-20T16:40:07.687Z | Alma
+and this is why i posted on twitter originally that i WON'T post trades
+
+2025-02-20T16:40:10.870Z | Alma
+trading signals
+
+2025-02-20T16:40:11.271Z | Jolene
+im looking at markets at a new and more exciting way because of you. I finally feel like if i put in the work, i can get some good output. The other grifters on X and social media just want your money and dont care about teaching
+
+2025-02-20T16:40:51.725Z | Alma
+i will leave, bcs this is not my job/lifegoal... you asked me for this for a year now. i'm here, and i want to give you as much as i can
+
+2025-02-20T16:41:00.340Z | Alma
+but i don't want to influence anybody's style
+
+2025-02-20T16:41:07.088Z | Alma
+there is Doc for example
+
+2025-02-20T16:41:22.101Z | Alma
+he shorted the hell out of the volatility over this week based on my posts
+
+2025-02-20T16:41:34.824Z | Alma
+i never signaled those trades, i jsut signaled vol crush
+
+2025-02-20T16:41:45.991Z | Alma
+and he took a trade that he was familiar with based on my insights
+
+2025-02-20T16:41:49.084Z | Alma
+you know what i mean?
+
+2025-02-20T16:42:22.050Z | Alma
+so think abotu this as a course, and not like a copytrading furu service.
+this is why you see me lazy to post trades
+
+2025-02-20T16:43:43.483Z | 670583
+Alma, why do you do anything with financial markets if it’s not your passion/what you want to do with your life? Professors are usually professors because they love teaching not money, but I’ve hardly seen one that still practices something outside of it because that alone is a ton of work
+
+2025-02-20T16:44:25.083Z | Jeffrey K
+a trader can see something, and change their view and position in a hot second.  It's impossible to journal everything a trader is seeing or thinking
+
+2025-02-20T16:45:26.469Z | FrankG
+I would be very grateful if you were willing to teach us for one year. I could learn a great deal of knowledge every day. Although it is difficult to digest this knowledge.
+
+2025-02-20T16:46:49.442Z | Alma
+exactly.. + posting it
+
+2025-02-20T16:47:15.345Z | Alma
+trust me on the way.
+first digest those psots i already dropped
+
+2025-02-20T16:47:47.469Z | Jolene
+please continue to post as you can. I understand if not but i love seeing how the master executes even if its not all the trades
+
+2025-02-20T16:47:57.690Z | Alma
+i love it. i didn't see it. but its not my lifegoal to make any market related service. I like solving puzzles. thats it
+
+2025-02-20T16:48:27.318Z | 670583
+Is this the greatest puzzle on the planet or is there another you want to solve later in life?
+
+2025-02-20T16:49:23.697Z | Tom
+Alma, I like NVDA here thru ER. Do you still like it🟢 long thru ER?
+
+2025-02-20T16:49:39.682Z | Alma
+wait
+
+2025-02-20T16:49:48.666Z | Alma
+sometimes a trader must sit on the sidelines
+
+2025-02-20T16:50:04.300Z | Alma
+i'm currently working on way bigger puzzles
+
+2025-02-20T16:50:48.929Z | FrankG
+Now, except for working hours, I am studying your posts. I have just come into contact with your theoretical methods. At present, I can only understand a little. I hope I can keep up with everyone's learning pace.
+
+2025-02-20T16:51:36.331Z | Alma
+i started like this too.. and everybody on the planet :)) don't worry
+
+2025-02-20T16:52:32.929Z | Alma
+Listen.
+I coded the net centroid of the gammas of that big 'IC' i mentioned in the intraday post
+
+2025-02-20T16:52:55.968Z | Alma
+Now I coded the net zero speed at 6076.32
+
+2025-02-20T16:53:00.824Z | Alma
+very close
+
+2025-02-20T16:54:04.509Z | Alma
+below this point the market would just accelerate to the downside very fast, and if it would close below this, the supportive OpEx flows wouldn't be as supportive tomorrow, but i will cover this more
+
+2025-02-20T16:54:44.350Z | Alma
+this lvl is pretty close to the intraday vanna flip at 6072.5
+
+2025-02-20T16:54:54.176Z | Alma
+its not a coincidence
+
+2025-02-20T16:55:04.005Z | Alma
+that these pivot points are clustered here
+
+2025-02-20T16:55:44.963Z | Alma
+along with the volume weighted rolling  daily mean
+
+2025-02-20T16:56:51.855Z | Alma
+The mechanical flows are net suppressive now towards 6060, but volatility decay to the downside
+
+2025-02-20T16:56:57.528Z | Alma
+locally
+
+2025-02-20T16:57:30.002Z | Alma
+however after 2PM the 6080/85 range becomes supportive as projected from color
+
+2025-02-20T16:57:39.382Z | Alma
+and can pin the price towards 6100
+
+2025-02-20T16:58:08.552Z | Alma
+personally i'm not a fan of this setup
+
+2025-02-20T16:58:51.752Z | Alma
+it's not a good day to enter any trades today. this is one of those days when you should rather watch the market what it wants
+
+2025-02-20T16:59:50.699Z | Alma
+even tho the distribution is favoring to the upside, i wouldn't recommend any trades...
+"But Alma, you took calls!!!!!"
+yes, darling, but 1) small alloc, 2) i have an ITM put sitting in green, 3) all my longs from the bottom printed
+
+2025-02-20T17:00:16.351Z | Alma
+this opex is a mess bcs of the december positions. a lot of them will expire
+
+2025-02-20T17:00:28.228Z | Alma
+but the vol regime shifts, vomma gonna be elevated again
+
+2025-02-20T17:00:41.329Z | Alma
+and the market gonna be pretty vulnerable
+
+2025-02-20T17:01:05.909Z | Alma
+however...
+don't forget that the mean is trending at 6069 now!
+
+2025-02-20T17:01:48.982Z | Alma
+since last wednesday the market was up like 2.3%
+
+2025-02-20T17:02:02.645Z | Alma
+so a reversion isn't inherently bearish
+
+2025-02-20T17:02:16.915Z | Alma
+but the close can change the distribution into opex
+
+2025-02-20T17:02:44.750Z | Alma
+so yepp, be careful.. i bet on upside for now, but small bet size
+
+2025-02-20T17:03:39.857Z | Alma
+chat is on. refresh
+
+2025-02-20T17:03:44.431Z | Jeffrey K
+20 day MA sits at 6072 also
+
+2025-02-20T17:04:39.395Z | Terrance
+she call us darling 🥰 … i feel the love 💗
+
+2025-02-20T17:05:39.370Z | Terrance
+vix futures can’t catch a bid . dxy , 10y staying down .
+
+2025-02-20T17:07:03.217Z | Alma
+everything is cheao
+
+2025-02-20T17:07:06.521Z | Alma
+*cheap
+
+2025-02-20T17:07:11.934Z | Alma
+despite the pullback
+
+2025-02-20T17:07:14.972Z | Alma
+isn't it shady?
+
+2025-02-20T17:07:20.184Z | Alma
+this elevates the odds that i bet on
+
+2025-02-20T17:08:50.690Z | JFinn81
+Meaning?
+
+2025-02-20T17:09:34.222Z | Bull
+Upside remains in play
+
+2025-02-20T17:09:55.688Z | Bull
+Until 6072-6070
+
+2025-02-20T17:11:19.943Z | Jonopop
+on alma's weekly post or yesterday she was looking at reversion play for thursday so as usual she nailed it
+
+2025-02-20T17:14:47.588Z | Jeffrey K
+vol isn't pricing in a big collapse
+
+2025-02-20T17:21:44.981Z | 0Mik
+It isn't a collapse. It wasn't even a mean reversion. Just a retest of the local low. Alma is awesome
+
+2025-02-20T17:23:17.934Z | Marcus Carlsson
+maybe we hit the mean reversion tomorrow, and then we can vol crush starting next week
+
+2025-02-20T17:24:14.825Z | Jeffrey K
+i was replying to Jfinn's question
+
+2025-02-20T17:29:01.309Z | Jolene
+hopefully this bounce has more legs
+
+2025-02-20T17:29:24.993Z | Mas
+i need one more low to long this
+
+2025-02-20T17:29:36.651Z | Mas
+6090 would be ideal for me in ES
+
+2025-02-20T17:30:14.644Z | Mas
+i was short since yesterday and cut my position early in the AM big mistake
+
+2025-02-20T17:55:43.065Z | Carlos
+All day, USD down, yields down, BTC (risk on) up, and SP500 down. Correlations not working today. The only one that kind of correlates is the JPY strength.
+
+2025-02-20T17:57:02.455Z | Jolene
+premium decay session
+
+2025-02-20T17:58:17.246Z | Jolene
+need us president to tweet good news :)
+
+2025-02-20T17:59:38.902Z | N8
+
+2025-02-20T18:21:52.531Z | TTFTRADE
+Will you code this in tradingview eventually?
+
+2025-02-20T18:23:16.926Z | Jeffrey K
+META still near LOD
+
+2025-02-20T18:23:22.226Z | Vman
+When using the options chains to derive the SKEW, is it important to distinguish between sold/bought or does the IV already account for that since sold options short IV
+
+2025-02-20T18:25:43.926Z | Jonopop
+best to sell put right now
+
+2025-02-20T18:25:44.413Z | Vman
+As in, can i just use options IV from the chain to build a vol surface
+
+2025-02-20T18:26:19.105Z | Jeffrey K
+i'LL Buy it
+
+2025-02-20T18:33:39.946Z | Jonopop
+why would you short the hole?
+
+2025-02-20T18:33:55.383Z | Professor
+Alma, could you write a post on different strategies you run with your algo?
+
+2025-02-20T18:34:24.508Z | Jeffrey K
+scalped it for a quick buck
+
+2025-02-20T18:35:36.351Z | Jonopop
+i'm collecting premium as we chop, will exit around ES 6129
+
+2025-02-20T18:36:45.114Z | Jeffrey K
+i hope you make some bucks...mkt could rally here...got out of my shorts
+
+2025-02-20T18:40:07.346Z | Jeffrey K
+according to my 'approach' yesterday's high wasn't a proper high so i do expect new ATH.  makes me hesitant to push shorts
+
+2025-02-20T18:41:19.975Z | Jeffrey K
+but the sell monster from yesterday and all day today is equally worrisome short term
+
+2025-02-20T18:43:28.554Z | Jolene
+approaching 2pm hopefully we dont just pin 6100 for 2 hours
+
+2025-02-20T18:46:43.493Z | Jeffrey K
+you jinxed it
+
+2025-02-20T18:50:14.955Z | Jolene
+technically alma did hehe
+
+2025-02-20T18:57:25.264Z | Jolene
+Are we seeing any vol decrease?
+
+2025-02-20T18:59:29.116Z | Jeffrey K
+yes, I like to watch UVXY (short term vol)
+
+2025-02-20T19:00:31.607Z | mahogany_trade
+Does anyone know where the 'IC' like structure is on this Heat Map?
+
+2025-02-20T19:01:05.624Z | Jeffrey K
+UVXY
+
+2025-02-20T19:01:53.497Z | Jeffrey K
+Going to have to crack that wedge to go lower though
+
+2025-02-20T19:08:42.037Z | 0Mik
+Two low gamma wings, gold, two long gamma bars purple
+
+2025-02-20T19:14:07.483Z | Alma
+6112 is key upside lvl. above that the pressure eases
+
+2025-02-20T19:15:46.564Z | Pak
+Interesting that it is also risk lvl
+
+2025-02-20T19:16:17.870Z | Jolene
+yaaaaas pls
+
+2025-02-20T19:16:35.733Z | Jonopop
+i took profit on alma's odte
+
+2025-02-20T19:16:43.022Z | Jeffrey K
+break thru 6110 matters too
+
+2025-02-20T19:18:43.604Z | Terrance
+vix of vix RED 😆
+
+2025-02-20T19:20:33.234Z | Jeffrey K
+bulls are feeling themselves, but can they do it?
+
+2025-02-20T19:22:04.407Z | 0Mik
+
+2025-02-20T19:22:18.569Z | Mas
+6130/6135 looking to short
+
+2025-02-20T19:30:20.505Z | Zebra
+Hi Alma, I just go back to watch your weekly post and have an interpretation about why MSFT goes up today, and want to ask you if my thoughts are correct or not.
+So MSFT today's RV change is -3.86%, means RV goes -3.86% from yesterday, I assume CTAs use yesterday's RV as Vol(target), today's RV as Vol(current) and Vol(asset), that make MSFT's exposure multiplier > 1 and Weight(asset) goes up, which resulting today's buying.
+Am I right about it? please correct me if I am wrong
+
+2025-02-20T19:32:34.617Z | Professor
+How do you interpret this?
+
+2025-02-20T19:33:07.758Z | mahogany_trade
+Thank you!
+
+2025-02-20T19:33:37.437Z | Jeffrey K
+sell monster came back
+
+2025-02-20T19:38:24.615Z | 0Mik
+Bid prices approaches ask. Sellers are coming
+
+2025-02-20T19:39:26.795Z | Professor
+Can't it be that buyers are aggressively bidding?
+
+2025-02-20T19:40:47.120Z | ulises
+Is that Bloomberg terminal ?
+
+2025-02-20T19:43:08.277Z | DocMoney
+What strike did you purchase?
+
+2025-02-20T19:46:52.634Z | Jonopop
+607
+
+2025-02-20T19:47:05.486Z | Jonopop
+gonna load some her puts again
+
+2025-02-20T19:52:38.902Z | Jolene
+ohh  my
+
+2025-02-20T19:52:41.620Z | Jolene
+are we gonna go?
+
+2025-02-20T20:09:01.962Z | Tom
+Charm in effect
+
+2025-02-20T20:09:25.083Z | 0Mik
+MOC imbalance is positive but suppressive charm
+
+2025-02-20T20:11:32.891Z | Jolene
+Hey Alma, reading your weekly notes, do you still expect 6150 and 6166 will likely act as magnet
+
+2025-02-20T20:38:35.196Z | Ryan
+Seems like AMD is getting ready for a big move
+
+2025-02-20T21:02:44.343Z | kalless
+Not bad.  Closed out both calls in the green.  Thank you, Alma.
+
+2025-02-20T21:04:18.662Z | Jonopop
+Thank you alma on your trade calls for the day
+
+2025-02-20T21:05:35.926Z | Jolene
+Great calls Alma
+
+2025-02-20T21:14:00.195Z | Stevo
+what a day!
+
+2025-02-20T21:22:02.569Z | Schrödingers Trader
+I know that on 01/22 ( 1 month ago) Alma posted that her models showed the trend line into Fed Opex was 6117.77.....where did we close today..6117.52 i think, The only problem today was trying to get the 6115 cheap enough to make money as its 2:30 low was .90 I think...I didn't trade, but I glanced at the numbers earlier and I have been staring at that 6177.77 on my chart for a month.
+
+2025-02-20T21:32:17.614Z | April
+That was intense. You are amazeballz, Alma! <3 Ty so much for your analysis and insight.
+
+2025-02-20T21:48:16.666Z | Mike Houston
+test
+
+2025-02-20T21:53:12.670Z | Alma
+we catched that bottom... 0DTE printed hard
+
+2025-02-20T21:53:39.342Z | Alma
+gonna talk a bit about tomorrow soon here,
+
+2025-02-20T21:55:42.629Z | Alma
+we are basically green
+
+2025-02-20T21:57:00.398Z | Prasad
+Alma can you explain  "Locally the 6135 lvl will be hard to go through, as it is also ver sensitive for vol, not estimated as a vanna flip, but pretty close.Charm is also net supportive."  from letter .
+
+2025-02-20T22:03:01.353Z | 670583
+Should be around 700 but today was great for the short vol on the spike down. Thank you Alma
+
+2025-02-20T22:06:18.435Z | Alma
+so if you look at the chart, there was a sudden negativ gamma there, 10 pts below the 6145 long gamma bar. the speed was locally negative there, steeple decerased above 6100, suddenly and steep.
+this creates a net suppressive effect there, a magnet from the 6100 bar, and the local effect at 6130/35 is similar to a vanna flip, but it wasn't that.
+
+2025-02-20T22:06:37.637Z | Alma
+but the sell was due to the opex flows, hedge unwinds mostly from ES
+
+2025-02-20T22:06:44.108Z | Alma
+and the day was lazy
+
+2025-02-20T22:06:46.647Z | Alma
+low vol
+
+2025-02-20T22:07:23.292Z | Alma
+realized vol catched up only like 0.07%
+
+2025-02-20T22:08:44.661Z | Alma
+nice to see you printing :))
+
+2025-02-20T22:09:51.688Z | Jolene
+Hey Alma, reading your weekly notes, do you still expect 6150 and 6166 will likely act as magnet
+
+2025-02-20T22:12:43.385Z | Alma
+"This positioning will change a bit into Friday"
+i will look at the positioning when its time.
+investors open and close positions
+
+2025-02-20T22:15:43.644Z | Mike Houston
+I see today the largest trade in its history in VIOG a small cap growth ETF. Not sure wether it’s up or down. But there has been large flows in certain ETFs like XLG. Looks like distribution, but that can go on for a longtime
+
+2025-02-20T22:32:39.286Z | Jeffrey K
+FWIW dept.  --  with trading you don't want to get too predictive, but this is the general path i see toward a final top to the market.  There would be 3 new ATH's ending in the TOP.  The two down legs shown would be very sharp, possibly with gaps down.  I don't expect anyone to believe it.  It involves a pattern I've used for years in top formations.  like i said, FWIW
+
+2025-02-20T22:34:54.961Z | Jten0887
+What price do you see it topping out at?
+
+2025-02-20T22:36:33.767Z | Jeffrey K
+not sure, in the spirit of not being too predictive.  even if it plays out like this, gotta take each leg at a time.
+
+2025-02-20T22:37:54.155Z | Jten0887
+I had a 6450 top for Spx. Was thinking it may hit it in March. But not looking likely now.
+
+2025-02-20T22:39:13.710Z | Jeffrey K
+really guessing 1 leg to 6160, 2nd up leg 6195, top 6270 ish
+
+2025-02-20T22:40:01.311Z | Jeffrey K
+seems high, but the market loves extremes.
+
+2025-02-20T22:40:49.884Z | Jten0887
+I’ve backed it off to 6300.
+
+2025-02-20T22:41:12.943Z | Ryan
+This has been my guess
+
+2025-02-20T22:41:18.607Z | Jeffrey K
+above that would certainly be GREEDY LOL
+
+2025-02-20T22:42:01.298Z | Ryan
+If they choose extreme it’ll be close to a meme number 😂
+
+2025-02-20T23:34:36.146Z | Jain
+Over what time frame
+
+2025-02-20T23:41:22.380Z | Ryan
+Alma are you still in AMD or was that a weekly trade you got out of yesterday? I like the look of it right now. Seems like a big move is coming. And for an earnings month, the range is extremely small
+
+2025-02-20T23:49:41.819Z | Jeffrey K
+whatever time frame mr. market decides is appropriate, it's all about price
+
+2025-02-21T01:59:27.985Z | 670583
+Alma, I'm reviewing your OD heatmap chat and I'm having trouble understand how this impacts your analysis of SPX. in this example from 02/04/2025, I went back and looked at the 1min bars and the range was only from 5990.87 to 6040.99, yet you're talking about strikes, GEX, and color wayyyyy beyond those daily levels. How do these impact daily fluctuations if they're no where near where the range currently is?
+
+2025-02-21T06:04:36.102Z | Noor888
+That’s what am waiting for))))
+
+2025-02-21T08:34:37.158Z | Alma
+this wasn't an analysis. this was an example, a guide to read the heatmap

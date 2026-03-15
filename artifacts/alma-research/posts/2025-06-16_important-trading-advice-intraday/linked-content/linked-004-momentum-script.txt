@@ -1,0 +1,41 @@
+Reversion scripts
+
+Here, I have attached three TradingView scripts that I coded for you.
+
+Installation:
+
+Open your TradingView chart.
+
+Open your TradingView chart.
+
+Click on "Pine Editor" at the bottom left.
+
+Click on "Pine Editor" at the bottom left.
+
+Copy and paste the code from the provided text file.
+
+Copy and paste the code from the provided text file.
+
+Click "Add to Chart" and save it.
+
+Click "Add to Chart" and save it.
+
+Script 1st: Mean Reversion Threshold LevelsEvery morning, you will receive an input phrase via email. Simply copy and paste it into the input window that appears when you run the script. The levels will be automatically plotted on the chart.
+
+Script 2nd: SD-Based Reversion BandsThis script only runs on charts that contain volume data for the candles. It is based on a straightforward calculation, using a 20-period rolling mean and computing the rolling 1.5 and 2.5 standard deviation levels.
+
+The purpose of this script is to help identify when momentum reaches an extreme, increasing the probability of mean reversion.The brighter rolling area around the mean is marked as the "Margin of Error", representing the range within the mean can be overshot (since price does not always revert exactly from the mean line).Whenever the price breaks out of this area, it reinforces the existing momentum.
+
+The main use of this script is to provide a visual representation of how stretched a particular price move is, giving you an idea of whether the momentum is trending at an extreme—nothing more, nothing less.This, combined with an understanding of the environment created by dealer flow, is a powerful tool.
+
+A table on the chart displays the values of the reversion lines and "Margin of Error" range, the 20-days realized volatility and its percentage change, the last closing price and its percentage change.(On timeframes smaller than 15 minutes, the indicator displays the previous day's realized volatility. I will update it once I have mastered all the tricks of Pine Script.)Link here: Indicators.zip
+
+Script 3rd: Vol Based MomentumThe basic idea behind this script is to capture shifts in momentum as defined by the direction of volatility-adjusted bands.
+
+When both bands start moving up (indicating increasing bullish momentum), and this represents a reversal from a previous downtrend, a buy signal is generated. Similarly, when both bands start declining (indicating bearish momentum) after an uptrend, a sell signal is produced. This approach combines volatility measurement (through the GKYZ formula) with a moving average envelope to highlight momentum shifts in the market.
+
+You can manually set the moving average period, as well as the deviation value that the function uses as a multiplier for volatility to create new bands. This increases the script’s sensitivity. Everyone needs to experiment to find the settings that work best for them.You can also configure which timeframe the script should use—either the one you’re currently on, or a different one entirely.
+
+The script’s purpose is to give you an overview of the main momentum trend and help determine probabilities. Be aware that the center of the signal circles does not exactly align with the point where the trendline color changes.You can download it from here.
+
+ATTENTION!These scripts cannot be shared. They are considered intellectual property, and all rights are reserved.

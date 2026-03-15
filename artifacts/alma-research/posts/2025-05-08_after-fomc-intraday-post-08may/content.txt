@@ -1,0 +1,91 @@
+After FOMC and US-UAE deal, Intraday post (08/May)
+
+FOMC is unfolded as we all expected, and also we got the pre-Fed pullback. Traders see only about a one-in-four chance that the Fed will cut at its June meeting, and by July 30, the odds jump to over 60%
+
+The gap between yesterday’s fed-funds rate and the falling implied curve creates room for 2s10s steepening trades as longer maturities come down later in the year. However, listen…When investors buy 4-, 8-, 13- and 17-week bills, bank reserves fall—pushing money-market rates up toward the Fed’s target. If demand slackens, dealers absorb bills then monetize them via the Fed’s RRP and repo facilities, stabilizing yields. By selling more bills (and fewer notes), the Treasury reduces long-end supply, which buys down those yields—a hidden QE. And meanwhile just before the minutes I warned you all that market is building ‘crash mats’ for the momentum by selling OTM puts, vol carry trades:
+
+Let me show you something interesting…
+
+This is how a 25 delta put has been quoting into May OpEx:
+
+And this is a 25 delta call:
+
+This is a 22 delta put for tomorrow Friday expo:
+
+And this is a 22 delta call for Friday expo:
+
+Look how, the bets reacted to and after the may 5-6 reversal:Into OpEx, while puts made higher lows, and reversed back to were they’ve been on May 2, when SPX hit 5701, calls made lower highs back to their Apr 30 lvls, when SPX first touched 5600.Into tomorrow Friday expo, the puts barely catched up on the reversals and been rangebounding, while calls are being monoton sold event the day after.FOMC was nothing but a liquidity hunt, but literally nothing changed, but IV catched up on the short speed positioning. To me this tells me that the general belief is that the market is capping around 5700, alongside with some dealer long deltas expiring today. Let’s consider what Trump’s just tweeted:
+
+The timing is definitely is not a coincidence. Market is setting for a healthy pullback now, that will provide a nice dip to buy. But I would not rush into it to short. Remember, the range I gave you in the weekly post:
+
+If one misses it, then let it go. Don’t chase it. I still maintain that first this bulltrap bearmarket rally needs to get a narrative, before going on a net position on it.
+
+INTRADAY POSTCoding positioning for today session:
+
+Net speed profile is positive today, but, if you already get how things work, you could have assume it from the charts above. Coding the centroid at 5651.48; above this line longer gamma will have a stabilization effect, but we should expect it to be realized in the vol above 5709.63 and magnetized toward 5730; if it doesn’t, the move is fake. To the downside, I code 5615.51; were downside vol is expected to catch up. However below 5564, we should see vol down, and pulled beyond 5500 and stabilize there. I code two zero vanna lines:5624 and 5781 (very close to the weekly marked line). Both needs relatively lower vol to break through it. Distribution wise, strictly derived from projected dealer flow: the upper flip has 3:2 more chance to be broken than the lower.
+
+OptionsDepth Heatmap:
+
+(Description is here)And one more thing… As Trump “stop-starts” tariff rollouts, Abu Dhabi’s heavy U.S. investments via XRG and MGX act as a counterbalance, helping to soften reprisals on Emirates’ imports and create a favored-nation channel.Abu Dhabi has secured trade-off policy gestures from the Biden and now Trump administrations, from easing Nvidia chip curbs to prioritizing UAE gas exports. Abu Dhabi’s use of XRG to channel energy investments into key U.S. regions gives it direct leverage over Trump’s energy-first agenda—encouraging policy moves like accelerated LNG export approvals and softened export controls. By pairing XRG’s gas-and-chemicals strategy with MGX’s AI-infrastructure fund, the UAE cements itself as a trusted U.S. partner in both tech and energy—making it politically costly for the administration to impose heavy sanctions or curbs on either front. Semiconductor stocks may enjoy eased export restrictions—reflected in (recently widened) U.S.–UAE chip-export windows, plus sovereign-wealth inflows into U.S. infrastructure bode well for long-duration and EMG (energy-midstream) bond sectors.For markets, this signals an uptick in UAE capital flowing into U.S. sectors (energy, AI, semis).
+
+Good news, very good news.
+
+SCRIPT INPUTS: === SPX closed at 5631.28===
+
+99.73%, 5801.8950763635075, , 5759.083355133671, 95.4%, 5716.587538181753, Risk level, 5688.777280734502, 68.2%, 5673.773442076458, 68.2%, 5588.463456513593, Risk level, 5573.782719265498, 95.4%, 5545.972461818246, , 5503.153395073121, 99.73%, 5460.664923636492
+
+=== ES closed at 5645.75===
+
+99.73%, 5821.111119150469, , 5777.104498035369, 95.4%, 5733.430559575235, Risk level, 5704.846697153708, 68.2%, 5689.421374948588, 68.2%, 5601.738171610497, Risk level, 5586.653302846292, 95.4%, 5558.069440424765, , 5514.054884192686, 99.73%, 5470.388880849531
+
+=== SPY closed at 561.15===
+
+99.73%, 578.8892542170953, , 574.4373219298811, 95.4%, 570.0196271085476, Risk level, 567.1281286711611, 68.2%, 565.5674263533584, 68.2%, 556.697522221932, Risk level, 555.1718713288388, 95.4%, 552.2803728914523, , 547.8276091200632, 99.73%, 543.4107457829047
+
+=== VIX closed at 23.55===
+
+99.73%, 27.742181144321012, , 26.673554136945082, 95.4%, 25.646090572160507, Risk level, 24.962765045636182, 68.2%, 24.57570818866427, 68.2%, 22.477534718594477, Risk level, 22.13723495436382, 95.4%, 21.453909427839495, , 20.378932564054, 99.73%, 19.35781885567899
+
+=== IWM closed at 197.42===
+
+99.73%, 204.7919346226244, , 202.94058270793914, 95.4%, 201.1059673113122, Risk level, 199.90434196782442, 68.2%, 199.2544605939833, 68.2%, 195.5683326446302, Risk level, 194.93565803217555, 95.4%, 193.73403268868776, , 191.88219852357943, 99.73%, 190.04806537737556
+
+=== QQQ closed at 483.3===
+
+99.73%, 501.1974377953213, , 496.7029259723934, 95.4%, 492.2487188976607, Risk level, 489.3314365370233, 68.2%, 487.7538373434282, 68.2%, 478.8047348938402, Risk level, 477.2685634629767, 95.4%, 474.3512811023393, , 469.8556178339262, 99.73%, 465.4025622046787
+
+=== NDX closed at 19867.97===
+
+99.73%, 20604.858205371773, , 20419.80516976174, 95.4%, 20236.414102685885, Risk level, 20116.301325210286, 68.2%, 20051.345797719918, 68.2%, 19682.885854011853, Risk level, 19619.638674789716, 95.4%, 19499.525897314117, , 19314.425305920646, 99.73%, 19131.08179462823
+
+=== NQ closed at 19957.5===
+
+99.73%, 20703.246994408855, , 20515.963150707965, 95.4%, 20330.37349720443, Risk level, 20208.816737115783, 68.2%, 20143.07397271969, 68.2%, 19770.18420322741, Risk level, 19706.183262884217, 95.4%, 19584.62650279557, , 19397.293808118255, 99.73%, 19211.753005591145
+
+=== NVDA closed at 117.06===
+
+99.73%, 126.01947211384577, , 123.75933653163129, 95.4%, 121.53973605692288, Risk level, 120.07934210236603, 68.2%, 119.27883929190203, 68.2%, 114.79828264036274, Risk level, 114.04065789763398, 95.4%, 112.58026394307713, , 110.3176593379737, 99.73%, 108.10052788615424
+
+=== AMZN closed at 188.71===
+
+99.73%, 198.30329664059946, , 195.89029144852626, 95.4%, 193.50664832029975, Risk level, 191.942940967882, 68.2%, 191.09327461876768, 68.2%, 186.29623881194232, Risk level, 185.477059032118, 95.4%, 183.91335167970027, , 181.4991825233546, 99.73%, 179.11670335940056
+
+=== AAPL closed at 196.25===
+
+99.73%, 206.57656024655125, , 203.97858366956407, 95.4%, 201.41328012327563, Risk level, 199.73005080308778, 68.2%, 198.81487928269564, 68.2%, 193.65115227079636, Risk level, 192.76994919691222, 95.4%, 191.08671987672437, , 188.48740077438677, 99.73%, 185.92343975344875
+
+=== GOOG closed at 152.8===
+
+99.73%, 160.26681188141634, , 158.38910923121216, 95.4%, 156.53340594070818, Risk level, 155.31631560403733, 68.2%, 154.65543775677662, 68.2%, 150.92175314466698, Risk level, 150.2836843959627, 95.4%, 149.06659405929184, , 147.18805439510234, 99.73%, 145.33318811858368
+
+=== TSLA closed at 276.22===
+
+99.73%, 299.6104708686666, , 293.70464630091163, 95.4%, 287.9152354343333, Risk level, 284.10258868274065, 68.2%, 282.0069969551669, 68.2%, 270.30913870664546, Risk level, 268.3374113172594, 95.4%, 264.52476456566677, , 258.61104320719636, 99.73%, 252.82952913133346
+
+=== TSM closed at 174.54===
+
+99.73%, 184.52375114231882, , 182.01070059204312, 95.4%, 179.53187557115942, Risk level, 177.90452413496143, 68.2%, 177.01834244560692, 68.2%, 172.02595629093253, Risk level, 171.17547586503855, 95.4%, 169.54812442884057, , 167.03353961664519, 99.73%, 164.55624885768117
+
+=== AMD closed at 100.36===
+
+99.73%, 107.81986626029857, , 105.93848530697481, 95.4%, 104.08993313014929, Risk level, 102.87397492972062, 68.2%, 102.20795315894836, 68.2%, 98.47737563043715, Risk level, 97.84602507027938, 95.4%, 96.63006686985071, , 94.74674736098028, 99.73%, 92.90013373970143

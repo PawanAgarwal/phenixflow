@@ -1,0 +1,87 @@
+Sum, and bias... Intraday post (09/May), Bear market? Balance?
+
+Now that we’re beyond the 20-day window during which the market hit the level (last year April’s lows) below which I had anticipated volatility selling and consolidation, realized volatility fell from 42.29% to 27.67%.
+
+As many of you know, I’ve found an edge on the short-volatility side since April 12 and was heavily short VIX (signaled in real time in the chat room), and hinted long delta, short vega on April 7 bottom day, with less confidence, short side was owned realtime in the chatroom.
+
+As mentioned earlier, the “vol-down” scenario has serious implications. Risk-parity funds and CTAs and vol controls re-increase their exposure to the index, while other shorts are squeezed out. Also, the declining VIX has provided a vanna tailwind, as predicted.Another significant implication is that, with lower volatility, the derivatives markets can again exert a stronger effect on index momentums which consequently become less sensitive to headlines, monitored by algos, making it less risky to determine entry and exit points. The path forward is becoming clearer. After the April chaos, the market is finally digesting risks and information more efficiently, and we can see the end of the woods (market-wise). A very important sign of this is Abu Dhabi’s IHC teaming up with BlackRock (and Lunate) to launch a $1 billion AI-driven reinsurance platform headquartered in the ADGM. This collaboration provides a serious tailwind for US markets and is naturally expected to cap volatility in the near future, signaling that investor confidence might be returning.You’re probably expecting me to say “however” soon… and you’re right, dear reader—but no worries…
+
+Speaking about local spot and dynamics, we should recognize that the vol selling that happened just after the tariffs shock was purely speculative and not rational, investor-driven. This is very important from momentum perspective, because this means the balance is getting skewed toward a crowded short-vol trade now. The market needs to rebalance this in order to reprice its vol expectations, taking into account the skipped future rate cuts and midsummer liquidity-crisis risk. The liquidity crisis can be managed by effective government diplomacy if partnerships unfold and China folds. In this case, the bear market will be skipped (the odds are roughly 51–49% that it will be skipped now; it’s up to you whether to bet on this or not).One thing is certain. Despite the seemingly stabilizing spot at this point, we can see the VIX skew catching a bid—even above its post-April Opex levels on the 22- and 5-delta strikes into May 13 expo.
+
+May 20 expo is way moderated, but 5 delta calls are trading at the IV of April 8 levels, while 22 delta strikes are stagnant.
+
+This foreshadows a rebalancing movement coming soon in the very near-term (signaled yesterday first), basically part of a wider timeframe range-bound period, to stabilize its support and continue grinding higher with more confidence and less FOMO speculation.We caught the move, I signaled short realtime in the chatroom and so was shorted the last Friday high catching the move down to 5586 SPX.
+
+If SPX can make it below 5624.22 and rejects it from below, we can see a healthy pullback back to 5539-5517 zone. This will be coded during the weekend, if this even doesn’t unfold today (I doubt it, but be adaptive). But this zone still falls into the margin of the weekly range:
+
+May 13-14 window is the risky window, then I expect supportive OpEx flows. The post-OpEx hedge unwind is uncertain, because I need more datas to model how much gammas are expected to be rolled into the next window. But the main bias is rebalancing before the stable grind up into summer happens. Ultimate green-light would be the benign deals as said above.
+
+(from the weekly post)
+
+INTRADAY POSTCoding today’s positioning:
+
+Speed profile is net negative, net charm and gamma are both positive. I code the centroid of the gamma landscape at 5679.26Below this point, we should expect the move slightly to slow down, but to the downside, 5643.91 is the main pivot. Below this line, if vol catches up, that means, downside move gains momentum. From positioning wise, that would be the case. To the upside I code 5706.96 as the main lvl. Locally we have a huge long gamma bar that should reject the price if vol declines sharply. However, the speed profile makes it possible to catch upside bid towards 5741.97, and if vol doesn’t calm down 5800 is coming. But for that we need catalysts, like headlines.5710 is also potential to pin, but less probability due to the net positive charm. Positioning is not too supportive today. It favors for rangebounding between the pivots, and skewed towards suppressive.Also coding zero vanna at 5626 with positive convexity, locally lower vol needed to break through this line. And it is possible to get…
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX closed at 5663.94===
+
+99.73%, 5822.067407523094, , 5782.400425857285, 95.4%, 5743.003703761547, Risk level, 5717.228936335282, 68.2%, 5703.334848830391, 68.2%, 5624.269219135657, Risk level, 5610.651063664717, 95.4%, 5584.876296238453, , 5545.203534520212, 99.73%, 5505.812592476906
+
+=== ES closed at 5684.5===
+
+99.73%, 5850.537480658082, , 5808.879802568904, 95.4%, 5767.518740329041, Risk level, 5740.454630981773, 68.2%, 5725.858911936308, 68.2%, 5642.837958031363, Risk level, 5628.545369018227, 95.4%, 5601.481259670959, , 5559.816938019663, 99.73%, 5518.462519341918
+
+=== SPY closed at 565.06===
+
+99.73%, 581.8440232580717, , 577.6327774561211, 95.4%, 573.4520116290358, Risk level, 570.7162158379701, 68.2%, 569.2405411520713, 68.2%, 560.8482981242761, Risk level, 559.4037841620298, 95.4%, 556.667988370964, , 552.4560480663187, 99.73%, 548.2759767419282
+
+=== VIX closed at 22.48===
+
+99.73%, 26.113759391151998, , 25.18894341424503, 95.4%, 24.296879695576, Risk level, 23.704576914818222, 68.2%, 23.370790648939295, 68.2%, 21.552423168717052, Risk level, 21.25542308518178, 95.4%, 20.663120304424, , 19.73378161900925, 99.73%, 18.846240608848003
+
+=== IWM closed at 201.18===
+
+99.73%, 208.1696222508734, , 206.4148204859598, 95.4%, 204.6748111254367, Risk level, 203.53550269854435, 68.2%, 202.91988197861576, 68.2%, 199.42493900659628, Risk level, 198.82449730145566, 95.4%, 197.68518887456332, , 195.92999133098255, 99.73%, 194.1903777491266
+
+=== QQQ closed at 488.29===
+
+99.73%, 505.3467384789509, , 501.06440954392286, 95.4%, 496.81836923947543, Risk level, 494.03812086740646, 68.2%, 492.5357261315604, 68.2%, 484.007031647327, Risk level, 482.5418791325936, 95.4%, 479.7616307605246, , 475.4783254954313, 99.73%, 471.23326152104914
+
+=== NDX closed at 20063.56===
+
+99.73%, 20759.85128709709, , 20585.04247447812, 95.4%, 20411.705643548547, Risk level, 20298.210163751723, 68.2%, 20236.884169300247, 68.2%, 19888.725420838942, Risk level, 19828.90983624828, 95.4%, 19715.414356451456, , 19540.566205399962, 99.73%, 19367.26871290291
+
+=== NQ closed at 20156.25===
+
+99.73%, 20868.913859324588, , 20689.980795603955, 95.4%, 20512.581929662294, Risk level, 20396.417720592388, 68.2%, 20333.635423105126, 68.2%, 19977.28957104152, Risk level, 19916.082279407612, 95.4%, 19799.918070337706, , 19620.943213284292, 99.73%, 19443.586140675412
+
+=== NVDA closed at 117.37===
+
+99.73%, 125.807214473879, , 123.67992556691601, 95.4%, 121.58860723693951, Risk level, 120.21334127769722, 68.2%, 119.46068320330163, 68.2%, 115.241394336412, Risk level, 114.52665872230278, 95.4%, 113.1513927630605, , 111.02205366430739, 99.73%, 108.93278552612101
+
+=== AMZN closed at 192.08===
+
+99.73%, 201.3159127772503, , 198.99353917098878, 95.4%, 196.69795638862516, Risk level, 195.19250260593336, 68.2%, 194.37526453519524, 68.2%, 189.75697440903954, Risk level, 188.96749739406667, 95.4%, 187.46204361137487, , 185.13866763329895, 99.73%, 182.84408722274972
+
+=== AAPL closed at 197.49===
+
+99.73%, 207.11300054321958, , 204.69311355208814, 95.4%, 202.3015002716098, Risk level, 200.732951183065, 68.2%, 199.88127298133816, 68.2%, 195.0694156226439, Risk level, 194.247048816935, 95.4%, 192.67849972839022, , 190.25754020223943, 99.73%, 187.86699945678043
+
+=== GOOG closed at 155.75===
+
+99.73%, 162.456650050807, , 160.77124492760444, 95.4%, 159.1033250254035, Risk level, 158.01014106712196, 68.2%, 157.41773366653007, 68.2%, 154.0642142981082, Risk level, 153.48985893287804, 95.4%, 152.3966749745965, , 150.71068628114003, 99.73%, 149.043349949193
+
+=== TSLA closed at 284.82===
+
+99.73%, 308.38719913479713, , 302.43801567244975, 95.4%, 296.6035995673986, Risk level, 292.76214610842663, 68.2%, 290.6520896687076, 68.2%, 278.86596703652015, Risk level, 276.87785389157335, 95.4%, 273.0364004326014, , 267.0796217444719, 99.73%, 261.25280086520286
+
+=== TSM closed at 175.22===
+
+99.73%, 184.55544041499635, , 182.20663387523646, 95.4%, 179.88772020749818, Risk level, 178.36604341985378, 68.2%, 177.53852070679713, 68.2%, 172.87038631657583, Risk level, 172.07395658014622, 95.4%, 170.55227979250182, , 168.20222893766146, 99.73%, 165.88455958500364
+
+=== AMD closed at 101.7===
+
+99.73%, 108.71241268054585, , 106.9449415363738, 95.4%, 105.20620634027293, Risk level, 104.06318307334395, 68.2%, 103.43824817158186, 68.2%, 99.93152062884985, Risk level, 99.33681692665606, 95.4%, 98.19379365972708, , 96.42475517927889, 99.73%, 94.68758731945415

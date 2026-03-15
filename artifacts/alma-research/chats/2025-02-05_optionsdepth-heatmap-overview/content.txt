@@ -1,0 +1,371 @@
+Chat Post
+2025-02-05T09:55:56.467Z | Alma
+OptionsDepth Heatmap Overview
+
+Replies
+2025-02-05T10:01:06.851Z | Alma
+Hello everybody,
+
+In this chat I'm gonna introduce you the gamma heatmap of OptionsDepth that I will attach into my morning posts with the permission of the developpers, besides my own coded things.
+We are not partners, it's not about promoting. It's only about that I wanted to find a dataservice that I can honestly recommend you to use, bcs there are sooo many inaccurate dataproviders out-there, and I'm telling you, OD is the only platform I found good, reliable, trustworthy and accurate.
+Bcs I won't create any website to provide metrics, so when I'm gone, you will still have dataservice... and they will likely develop more positioning datas for more assets as they grow.
+So let's start it.
+
+(I use yesterday heatmap for this)
+
+2025-02-05T10:05:49.917Z | Alma
+GAMMA, CHARM, VANNA
+
+So, in yesterday (tuesday 04/feb) chat I introduced you to the 3 dimensions of options trading.
+These are:
+- Spot
+- Time
+- Volatility
+Find here: https://open.substack.com/chat/posts/1f9c1f19-f1da-4229-9300-c63e885806a9?target_reply_id=2ea927ad-36d3-42cf-bc2a-dd97677cb461&showTarget=true
+
+2025-02-05T10:14:14.378Z | Alma
+In short, and over-simplified:
+Options is a bet that the spot will reach the strike before the option expires.
+
+The idea of the pricing model is based on determining the probability that the option ends up ITM.
+The option premium has two components: intrinsic and extrinsic value.
+The sum of this two will give you the premium.
+
+The intrinsic value is simply the strike-spot difference. But it is always non-negative.
+If your call strike is 100
+and the spot is trading at 90
+your intrinsic value is zero, bcs if you'd exercise the call, you would have to buy it above its spot price that is not a good deal.
+But if spot is at 110,
+your intrinsic value is $10, bcs in this case you can buy the underlying $10 cheaper than its market value.
+
+everything else is the extrinsic value.
+So, if your call strike is 100
+the spot is 110
+and you see that the call premium is $11.58
+this means that the extrinsic value is 11.58 - 10 = 1.58
+
+2025-02-05T10:19:26.922Z | Alma
+(I will go into details more when I write educational post about black scholes and IV and stuff, but now I just keep it short)
+
+Extrinsic value is the time and volatility value.
+It is the probability of your contract landing ITM or not.
+
+For now, think about it this way:
+As time passes, the probability changes, depending on if the contract is already have intrinsic value or not.
+If it does, then with time passing, the probability of the contract ending ITM will increase.
+If it doesn't have intrinsic value, the probability will decrease.
+
+2025-02-05T10:21:16.576Z | Alma
+However, another layer is the volatility.
+Bcs volatility is the SD of logreturns, thus the higher the vol, the higher the probability that the contract will move out of its current state.
+So if you have and already ITM contract and the volatility increases, the probability that the option falls out of the ITM territory is increasing.
+But if your contract doesn't have intrinsic value (OTM or ATM), the probability that the option goes ITM is increasing.
+
+2025-02-05T10:26:53.411Z | Alma
+
+2025-02-05T10:28:27.604Z | Alma
+Here the contract is OTM.
+And bcs volatiltiy is low and time is passing continously, the probability is low and getting lower as expo is coming.
+But if it grinds up, it corrects the probability a bit positively. but not much.
+
+2025-02-05T10:29:25.113Z | Alma
+
+2025-02-05T10:30:16.784Z | Alma
+Here the contract is already ITM, so with low volatility the probability that the contract can hold ITM into its expo increases, increasing its value.
+
+2025-02-05T10:31:03.103Z | Alma
+
+2025-02-05T10:32:17.806Z | Alma
+Here we look at OTM again. With high vol, the probability is higher to finish ITM, bcs the SD of returns is higher, so price movements are bigger.
+This increases its value, but only until it reaches ITM territrory, bcs:
+
+2025-02-05T10:32:43.417Z | Alma
+
+2025-02-05T10:33:30.102Z | Alma
+with vol is high when option is ITM, the probability that it leaves the ITM territory increases.
+
+2025-02-05T10:36:15.089Z | Alma
+If you understand this, you maybe ask me:
+"Okay Alma, but if the contract is ITM and vol is high, and vol works both ways, why does it deflate the premium? Bcs high vol also means that price can move upwards too gaining more intrinsic value..."
+
+2025-02-05T10:41:57.740Z | Alma
+But the thing is that returns are scaling in a log scale.
+So what I mean is, that if you have $1 and you gain $1 this is a 100%
+If you gain another dollar, it is only 50%, bcs from 2 to 3 it is 3/2
+if you gain another dollar, it is only 33.33% increase, bcs from 3 to 4 it is 4/3
+gaining another dollar is only 25% return, bcs from 4 to 5, it is 1/4
+etc.
+
+So you gain another $1 everytime, but the returns are going smaller and smaller.
+And this is the reason for the ITM contract premium doesn't goes up when vol goes up. Bcs the downside probability, losing the intrinsic value has a higher impact.
+
+2025-02-05T10:44:21.837Z | Alma
+So the extrinsic value is determined by
+- where the spot currently is
+- how much time is remained
+- how big the price swings are (volatility)
+
+2025-02-05T10:49:28.965Z | Alma
+Just think about it:
+1) if you are .99 delta ITM (so very much ITM), so spot is very much above for that call
+high vol has less impact, bcs price should go down very much to lose the intrinsic value totally.
+
+2) but if you would be only like .70 delta ITM (not too much high ITM), spot is above the strike but not much,
+her high vol has higher impact, bcs your intrinsic value is in higher danger, as it is closer to the ATM line where intrinsic is zero.
+
+And time gives it another layer:
+bcs if the 1st case has a lot of time to expo, the price have more time with that high vol to go out of the ITM range, so higher danger.
+but if your time to expo is small in the 2nd case, the price should move faster (in regards to time) to go out of the ITM range.
+
+so its again messing with the probability.
+
+2025-02-05T10:50:02.097Z | Alma
+I hope it makes some clue about how spot, vol and time effects options premium TOGETHER, hand-in-hand
+
+2025-02-05T10:50:48.929Z | Alma
+now lets jump to delta
+
+2025-02-05T11:00:47.160Z | Alma
+DELTA
+
+In math the symbol of delta is used to express "change".
+Something changes relative to something.
+
+In finance delta expresses the change of an asset price relative to another asset. it can be literally anything you want to meassure.
+This is delta. Nothing more, nothing less.
+If you want to compare a stock to itself it is one delta bcs a stock price is always equvivalent with itself. This is why MMs like to call them "one delta assets".
+
+In the option pricing formula, delta is a number expressing the change of the options premium with respect to changes in the underlying asset's price.
+The idea is to see how the premium will react to the spot changes.
+Originally the delta is in the [0; 1] interval, but bcs a contract covers 100 options, broker platforms multiply the delta by 100, and we say i.e. "22 delta" instead of "0.22 delta"
+
+If your delta is 1, this means that if the spot moves up (increases by a positive number), you simply add the delta to your options premium. If spot moves down (increased by a negative number), you extract the delta value from your options premium.
+If you have delta of -1, you do the same, but the effect will be reversed bcs extracting a negative number is addition, and adding a negative number is extraction.
+
+2025-02-05T11:03:05.241Z | Alma
+When you bet on that the price of the underlying is gonna go up, you long a call.
+In this case you'll have positive delta.
+Why? Bcs your option premium will increase if spot goes up, and decrease if it goes down. Logic.
+
+If you bet on the opposite, so that the underlying will go down, you long a put,
+so you will have negative delta.
+Why? bcs your option premium will gain value if spot moves down, and lose value if spot moves up.
+
+2025-02-05T11:04:54.549Z | Alma
+Delta is the most important greeks out of any of them, bcs premium can directly change to vol changes (vega), and to time changes (theta), but at the end of the day it is all about going ITM or not.
+
+2025-02-05T11:06:20.234Z | Alma
+However, we are talking about the same formula. Delta is not only relying on spot changes.
+It MEASURES how the premium change when spot moves, but this rate of change is also changing, due to the reasons written above.
+
+And how many factors? Three factors: spot, time and vol.
+
+2025-02-05T11:12:42.186Z | Alma
+GAMMA
+
+Gamma is the rate of change in the delta with respect to spot.
+Basically the delta of delta.
+Gamma can also be negative and positive.
+
+Lets give you an example:
+We have an XY stock currently trading at 100
+
+Now lets bet on this that this stock will go up to 110.
+I long a call with strike of 110.
+
+Lets say I have delta of 20
+If spot moves up, I add the positive 20 to my premium, so my premium will increase.
+If spot moves down, I extract the positive 20 from my premium, so my premium will decrease.
+
+But how will the delta change?
+(Now, I simply this for you guys, I want to make you understand the probability factor here)
+If spot moves up, the probability of my contract ending ITM will increase, so my delta should increase too. Logic.
+If spot moves down, the probability of my contract ending ITM will decrease, so my delta should decrease too.
+This means gamma must be a positive number. Bcs if I add it, it increases the value, and if I extract it, it decreases the value.
+
+2025-02-05T11:18:35.710Z | Alma
+Now same underlying trading at 100, but we now bet on that this will go down to 90.
+We long a put, we have lets say -20 deltas.
+
+What is gamma here?
+If spot moves up, the probability of this contract ending ITM will decrease, so my delta should also goes towards zero, but MY DELTA IS A NEGATIVE NUMBER!!!
+So if my delta goes from -22 to -18, it is an increase!! A decrease of its absolute value, but it is an increase, bcs you go right on the number line!! Keep this in mind. (for advanced members: "longer delta")
+
+And if spot moves down, the probability of this contract ending ITM will increase, so my delta should goes farther from zero, but again, my delta here is a negative number,
+so if my delta goes from -22 to -30, it is decrease!! bcs we moved left on the number line.
+
+And bcs we are longer delta up, and shorter delta down, this is again positive gamma.
+
+2025-02-05T11:18:46.770Z | Alma
+Conclusion: both long calls and long puts have positive gamma.
+
+2025-02-05T11:22:41.462Z | Alma
+And what happens when somebody bets on my bet that the underlying will go up?
+In this case, he will short the call that I long.
+And here everything will be mirrored, bcs my gain is his loss, and my loss is his gain.
+I can lose only the premium, so he can win only the premium.
+i can win infinity dollar in theory, so he can lose infinity dollar in theory.
+
+So If I have long delta (positive delta) and long gamma (positive gamma) he will have negative delta (short delta), and negative gamma (short gamma).
+
+And if he bets on my other bet that the underlying will go down,
+I have short delta and long gamma, he will have long delta and short gamma.
+
+2025-02-05T11:23:02.535Z | Alma
+Conclusion: whenever you short a contract, you will have negative gamma.
+
+2025-02-05T11:34:56.242Z | Alma
+CHARM
+
+As I explained earlier, as time passes the probability will change for having intrinsic value or not.
+Or in otherwords: if my delta is above 50 (ITM), or lower-equals 50 (ATM/OTM)
+
+Time passing is a positive vector, so we handle it as a positive number, there is no negative time = time doesn't goes back... sadly.
+So we handle delta the same way.
+
+If my contract is ITM, the probability will increase by the time, that it will stay ITM into expo, so my delta must increase.
+If my contract is ATM or OTM, the probability will increase that it remains so as time passes, so my delta must decrease.
+
+This means that my delta is positive for ITM contracts, and negative for ATM and OTM contracts.
+Bcs if you add a positive number as time passes, you becomes longer delta,
+and if you add a negative number to your premium as time passes, you becomes shorter delta.
+
+This is charm.
+(Of course, if somebody short a contract, it is again the reverse, bcs he will profit from the premium of the contract he shorted decays away. This will be an important layer later when I'll talk about dealers hedging)
+
+2025-02-05T11:46:23.926Z | Alma
+VANNA
+
+(I won't talk about it that much now, bcs vanna is crazy compex and conditional. But I want you to understand it to from this probability perspective, bcs beyond any sophisticated smartass speech, thats the goal at the end of the day)
+
+ So as time passes and the spot is trading in OTM territory your delta decays by gamma and charm, as explained above.
+However, I also said, that in this case your last savior is volatility. Bcs if the price starts to move in a wider range, and the rate of returns go higher, this is good for you, bcs it gives you hope that your contract will go ITM in time.
+
+So if vol increases for your OTM contract, your delta will increase, bcs probability expressed by the extrinsic value, will increase.
+However, if even vol goes down, sadly, the your last hope is also gone, so your delta will decrease, as the probability will decrease.
+
+Different picture if the spot is trading in ITM territory.
+With time passing, your chances will increase that it will finish ITM.
+But then comes volatility.
+You don't want big price swings here, bcs your spot can leave the ITM territory, and then bye-bye for intrinsic value.
+(The upside move doesn't matter that vol gives you, bcs of the log scaling showed above. While the downside negative returns increasing, so they have way much bigger weight)
+
+So if volatility increases for an ITM contract, your delta must go down a bit, bcs the odds are not in your favor.
+But if vol decreases, then your chances are better that the spot won't go out of the ITM territory, so your delta can stay as it is, and even increase, as odds are in your favor now with low vol.
+
+This is the key concept for vanna.
+So for OTM contract vanna is positive: vol up/delta up, vol down/delta down
+And for ITM contracts vanna is negative: vol down/delta up, vol up/delta down
+
+2025-02-05T11:57:34.848Z | Alma
+One last thing I want to clarify before showing you the OptionsDepth Heatmap finally.
+It is the change in gamma.
+
+Just think about it logically:
+I said, returns are scaling logarithmically.
+So if the spot is already trading in the ITM territory, the further upsward movements shouldn't have the same weight as they did when the contract was OTM, right?
+So the delta will increase, sure, but not that much. Less and less, as spot moves up, when the contract is already ITM.
+What is the delta change to spot? It is gamma.
+So what I'm talking about is that the rate of change in delta will go lower, as spot moves up in ITM territory.
+In otherwords: gamma will decrease.
+And this rate of change in gamma with respect to spot, is called SPEED.
+And for now, you can also say that speed is negative for an ITM contract, bcs it lowers the gamma as spot moves up, and increases gamma as spot moves down.
+
+And whats the thing with OTM contracts?
+Well, think deductically here.
+If we got the conclusion that gamma increases for OTMs when spot moves up, bcs the contract has increased probability to reach ITM territory, so delta goes up, and the closer it gets to ITM, the faster the delta changes,
+this means that gamma value also increases when contract approaches ITM territory.
+Now, if this is the case (and it is), then it also means, that if you go backwards, it is the opposite: if something increases into a way, it will decreases to the other way.
+ So speed is positive for OTM contracts.
+
+2025-02-05T12:04:23.846Z | Alma
+And gamma also changes to time, it is called COLOR.
+Lets think about it differently a bit.
+
+Delta is either 1 or 0 in the momentum of expiration.
+So the battle is going hotter between ITM and OTM territory.
+ATM is the borderline.
+
+For OTM contracts, the delta decays away with time
+for ITM contracts the delta increases with time.
+
+So the delta will make its biggest jump at the borderline when it goes from OTM to ITM, or from ITM back to OTM.
+So here the rate of change in delta is the steepest at expo and near to expo, bcs of time.
+
+So gamma will increase around the ATM level,
+And decrease anywhere else.
+
+(This is the reason you see pins at expirations, bcs gammas increases pretty much, and the charm exposure magetize the momentum, and gamma traps it)
+
+2025-02-05T12:06:02.536Z | Alma
+(I won't talk about zomma here bcs unnecessary. It is important for quantitative brainstorms like what i do day by day, but it is the gamma change to vol)
+
+2025-02-05T12:06:32.861Z | Alma
+And now, as you are familiar with the dimensions of the premium and delta, let me introduce you the OptionsDepth Heatmap
+
+2025-02-05T12:06:36.256Z | Alma
+There it is:
+
+2025-02-05T12:06:44.057Z | Alma
+
+2025-02-05T12:07:56.290Z | Alma
+this is a two dimensional chart, with spot axis and time axis
+
+2025-02-05T12:11:08.426Z | Alma
+with gamma on it with different shades
+
+2025-02-05T12:11:10.598Z | Alma
+and the nerds who listened to me during this chat, can insantly say that the vertical axis is the speed, and horizontal axis is the color
+
+2025-02-05T12:11:22.386Z | Alma
+
+2025-02-05T12:12:31.317Z | Alma
+blue means positive gamma,
+white is near zero gamma,
+and orange/red is negative gamma.
+
+2025-02-05T12:14:23.780Z | Alma
+the green lines are the local max gamma values, and the yellow lines are the local min gamma values. ("local" means these are relative numbers)
+
+2025-02-05T12:30:26.497Z | Alma
+from the heatmap you can read a lot of thing.
+I show you how much infos this pic covers to me:
+
+2025-02-05T12:30:31.414Z | Alma
+
+2025-02-05T12:31:20.444Z | Alma
+Also if you are a subscriber, you can see the exact values at certain lvls
+
+2025-02-05T12:38:48.112Z | Alma
+
+2025-02-05T12:41:23.392Z | Alma
+Now, I finish this here.
+This is the introduction of the Heatmap created by OptionsDepth.
+
+Later I will do maybe a video to show you the whole platform for those who subscribed to OD, but I'm not a sub yet either tho...
+
+This introduction is for the purpose of giving you an idea what you will see in my morning emails.
+
+2025-02-05T12:41:29.192Z | Alma
+Some basic stuff
+
+2025-02-05T12:41:37.921Z | Alma
+I let you digest it, before I start to write the morning post.
+
+2025-02-05T13:15:17.893Z | Alma
+APPENDIX:
+I want to add something very important here.
+This is the pre-projected dealer flow only, that is predestined, will happen no matter what, you can expect that and it takes a significant percentage (more than 70%) of the daily volume.
+Anybody who has basic knowledge about the greeks can describe what I described from this chart.
+However things are changing intraday too (especially if CBOE actually launches its 0.25DTE options, imagine how much gamma it will have), and these flows can shift if some big transaction hits.
+So it is only one part of the puzzle. A very big part if not the biggest, but only one.
+
+In order to frontrun the market, you have to watch how the momentum evolved recently, how the pricings, the positionings shifted at certain events, at certain levels, in order to be able to see the story that the market wants to tell you. Just like I did on Sunday with the PS.
+It wasn't the put spread itself, and the hedging flow derived from that, what made me bullish. It was the timing and the spot lvl of that PS with its dealer flow effect that made me bullish.
+Dealer flow is an algorhytmic process. It is reflexive. It reacts to the customer flows. Market is stochastic. And big players can manipulate price actions through transactions into their favor. Manipulation is not always there. Herd also can have reflexive effects on it. The key is to see the flow of this ALL, in order to be able to frontrun the market.
+
+2025-02-25T15:05:37.287Z | Alma
+
+2025-03-04T14:08:19.673Z | Alma
+Use this link: https://optionsdepth.com/app?via=alma
+And the coupon code: ODALMA to get 10% off

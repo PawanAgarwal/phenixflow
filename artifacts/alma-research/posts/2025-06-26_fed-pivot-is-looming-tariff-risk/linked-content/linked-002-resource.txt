@@ -1,0 +1,97 @@
+Fed, Distribution, Revision of weekly post + Intraday post (25/June)
+
+Free short education on distribution
+
+FedPowell reaffirmed a “wait-and-see” approach as expected, unwilling to look through tariff-driven price increases until clearer data on pass-through and magnitude arrive. He signaled rate-cut flexibility later this year—“sooner rather than later” if inflation remains contained—but declined to target a specific meeting, leaning toward a September cut over July. Market prices only 15.9% probability to hold rates. A significant majority of FOMC participants penciled in cuts later this year under scenarios of subdued inflation or labor-market weakness. Also, the LEI dipped 0.1% in May 2025 to 99.0, marking its sixth consecutive monthly drop and triggering the Conference Board’s formal recession signal. Although the Board does not forecast a recession, it expects a significant growth slowdown, projecting ~1.6% real GDP growth for 2025. Fed policy moves hinge on June and July inflation prints. They aren’t yet ready to ‘look through’ tariff increases without clearer data on their size and pass-through to consumer prices.The divergence is shady. Downside remains managed for now, but Augustus window will be a surprise and pivot.
+
+DistributionI try to explain this through tools you can also use without purchasing thousands of datas to model vol surfaces… So, a little bit of theory here first. At the beginning there was the constant volatility and normal distribution mathematically measured by vega. But vega has got a convexity as tail OTM contracts (let’s say ~5-10 deltas now) get higher risk premium, because higher change in IV elevates the risk for the seller that the contract will end up ITM, elevating the kurtosis (“tailedness” or the propensity for extreme values) of the distribution, so as a result this draws the known vol smile.
+
+This vega convexity is called vomma or volga (vol gamma).
+
+But the distribution is not symmetrical at all, it’s median, mode and mean are constantly moving. Equity markets typically have occasional large negative returns, occuring more often than a Gaussian model predicts, I wrote an educational post about it. Thus, left tail is fatter, and skewness is negative. As a result, investors and traders spend more on buying downside protection than betting on upside, and this skewness appears in the vol surface too, creating the smirk (“left-skewed smile” basically).
+
+What we are seeing is basically that, as we slide left or right on the x-axis (spot), we get higher/lower vol risk premium. This change of vol vs spot, and thus the skewness is described by vanna. This convexity is highest typically at the 15-35 delta ranges (I like 22 deltas to measure vanna).
+
+Here you can see the past one month, simplified:
+
+We can see leptokurtic behavior (kurtosis of 0.8605, but moderate-excess as 1 > kurtosis > 0), and also fatter right tail with skewness of 0.644542, while downside moves are clipped by mean reversion. The kurtosis was higher after Friday close and skewness was lower than today. This is the realization of the short vanna and vol of vol supply dynamics I was writing about. Scrutinizing the trend in the numbers as I code the “rolling realized distribution”, Monday was a pivotal day, squeezed right to the marked weekly level that I provided as the border of the downside gamma “gravitational field”, and interestingly it showed that Tuesday was a squeeze, but moderated as right tail was actually sold a bit, that flattened the short vanna regime.
+
+We can also see this tendency in the past month looking simply at the SPX/VIX realized beta making higher lows and catched up a bit after yesterday session:
+
+And if you look at the realized vol didn’t broke its support yet, vol of vol remains suppressed, while RV realized up by an insignificant 0.11 step from 12.88% to 12.99%
+
+Now, I scrutinized the rolling distribution of VIX too…The skewness monoton fell since Friday, while kurtosis kept going up. Shorter-dated options have more vomma, while medium-term it is vanna effect that dominates. This reinforces the SPX tail put selling bcs it means that VIX traders sold the right-tail and also explains why both SPX/VIX beta and SPX RV catched up a bit, on this yesterday squeeze. But also don’t forget, that in the near-term, traders buy VIX vomma, telling me, they expect a sharper move in the VIX IV in the near-term, potentially down, because they buy downside VIX vega and sell upside. This would create a vaccum effect at the SPX upside tails, while compressing the SPX short vanna range (pushing the flip zone down). I think this is what we are seeing materializing now. And if I’m correct, we should see VIX IV selling below 17s - 16.5s, and that would shift the SPX regime and stabilize the price upward around 6120 even 6170 (some output even told me 6240… not that irreal given the coming July 4th). But this squeeze should happen here around 6100 to get the unclench. This would be reinforced by the accumulated negative zomma too. If not, I will short only, when my model shows, will signal in real-time. Otherwise it will just chop.And that would be the squeeze I’d be short. Reversion model doesn’t give red dot yet. We are in a negative-to-neutral, flat-short vanna regime, market is illiquid at these levels. Algos are trading, while VIX is foreshadowing a regime shift up.But vol selling now still caps upside, and elevates the odds of retesting the weekly upside bound at 6024/34 zone.
+
+Reassuming weekly postWhat’s behind the squeeze? 1) Managed war risk premium, as said, that got unwound as Putin came to mediate between US and Iran as it was foretold in March as a part of the slowly-forming US/RUS alliance (Putin-Xi negotiation is next soon to solve US trade war), and 2) artificially created optimistic outlook for growth, even shifting sentiment towards “bad news are good news”, even tho metrics show that the underlying concern is still the recession, and August. They will try to solve it. August-Sept window will be the pivot for bear-market. I marked 6024 and 6034 as the lvls for the week, below the effects I described was in effect, along with steady geo risk. These levels were broken during the overnight, when ceasefire agreements were managed in the Middle-East, through the Russians. The thing I overestimated when I was writing the weekly post, is the unwound and profit taking effect. It literally flattened the skew positions as I showed above, and pushed the market into a flat-to-neutral vol regime. Market should break below 6048.96 daily in order to get back into the previous regime. No short yet.We have GDP and PCE datas tomorrow and on Friday. No trades in an illiquid algo-mess… We made enough through the last weeks… Market is literally in a regime shifting-repricing mode.
+
+INTRADAY POST Coding today’s positioning:
+
+We have an IC 6050/55-6120/25 range, where the trader bets on the momentum to oscillate, and IV decay. However the net charm exposure is positive, and net speed is negative with a centroid of 6090.83To the downside 6077.98 is the pivot, then the 50/55 gamma can be magnetic as short speed swallows downside-vol (but should be felt below 6082.67).To the upside the pivot is 6111.91, where vol has a chance to catch up. To the upside, momentum has a chance to break above during the AM session, later it gets too much resistance with 6095 as pivot, and 6115 as ressitance or support in the power hour. 6095 can pin at the EOD, beside the IC wings. If momentum breaks above the upside pivot and vol catches up, I code 6133 as max.Also downside is 6033, also during the AM session, then 6068 is pivot. Expecting chop.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+Check my trading advice:
+
+Important trading advice + Intraday post (16/June)
+
+SCRIPT INPUTS=== SPX closed at 6092.18 ===
+
+99.73%, 6192.577042767036, , 6167.426709698698, 95.4%, 6142.378521383518, Risk level, 6126.013803412491, 68.2%, 6117.227769210677, 68.2%, 6067.028821787298, Risk level, 6058.346196587509, 95.4%, 6041.9814786164825, , 6016.829867254971, 99.73%, 5991.782957232965
+
+=== ES closed at 6143.5 ===
+
+99.73%, 6247.335790566359, , 6221.322685307194, 95.4%, 6195.41789528318, Risk level, 6178.4926614208625, 68.2%, 6169.404334266981, 68.2%, 6117.485975490895, Risk level, 6108.5073385791375, 95.4%, 6091.58210471682, , 6065.5676087802885, 99.73%, 6039.664209433641
+
+=== SPY closed at 606.78 ===
+
+99.73%, 617.4614846926627, , 614.7853140571435, 95.4%, 612.1207423463313, Risk level, 610.3796603414273, 68.2%, 609.4445208884127, 68.2%, 604.1037268210592, Risk level, 603.1803396585726, 95.4%, 601.4392576536686, , 598.7629318310369, 99.73%, 596.0985153073373
+
+=== VIX closed at 17.47 ===
+
+99.73%, 19.825751753303084, , 19.230373945347882, 95.4%, 18.652875647769704, Risk level, 18.270518037365825, 68.2%, 18.056917172773584, 68.2%, 16.883379703387558, Risk level, 16.68948104710683, 95.4%, 16.307123436702952, , 15.709743452742137, 99.73%, 15.134247331169572
+
+=== IWM closed at 214.47 ===
+
+99.73%, 219.8391805262968, , 218.49276228510246, 95.4%, 217.15459026314838, Risk level, 216.279413837362, 68.2%, 215.8081207316755, 68.2%, 213.1234778860897, Risk level, 212.660586162638, 95.4%, 211.78540973685162, , 210.43883369889141, 99.73%, 209.1008194737032
+
+=== QQQ closed at 539.78 ===
+
+99.73%, 551.245315567235, , 548.3714955993348, 95.4%, 545.5126577836174, Risk level, 543.6438113461581, 68.2%, 542.6387586769314, 68.2%, 536.9060200645537, Risk level, 535.9161886538418, 95.4%, 534.0473422163825, , 531.173279707484, 99.73%, 528.3146844327649
+
+=== NDX closed at 22190.52 ===
+
+99.73%, 22652.128928458344, , 22536.43122835815, 95.4%, 22421.324464229172, Risk level, 22346.08220889046, 68.2%, 22305.62370681364, 68.2%, 22074.81612133685, Risk level, 22034.95779110954, 95.4%, 21959.71553577083, , 21844.00846990122, 99.73%, 21728.911071541657
+
+=== NQ closed at 22407.75 ===
+
+99.73%, 22877.78931910876, , 22759.976139539187, 95.4%, 22642.76965955438, Risk level, 22566.153250539654, 68.2%, 22524.953314910104, 68.2%, 22289.930423537, Risk level, 22249.346749460346, 95.4%, 22172.73034044562, , 22054.907463286152, 99.73%, 21937.71068089124
+
+=== NVDA closed at 147.9 ===
+
+99.73%, 154.012706128836, , 152.4768718291106, 95.4%, 150.95635306441798, Risk level, 149.95998196541774, 68.2%, 149.42036212721283, 68.2%, 146.3638458833758, Risk level, 145.84001803458227, 95.4%, 144.84364693558203, , 143.30732267901212, 99.73%, 141.78729387116402
+
+=== AMZN closed at 212.77 ===
+
+99.73%, 219.67079223790495, , 217.9387659721049, 95.4%, 216.22039611895246, Risk level, 215.09556698417398, 68.2%, 214.48826001026146, 68.2%, 211.03775045657233, Risk level, 210.44443301582604, 95.4%, 209.31960388104756, , 207.58723713192683, 99.73%, 205.86920776209507
+
+=== AAPL closed at 200.3 ===
+
+99.73%, 206.1769277614804, , 204.7024232535942, 95.4%, 203.2384638807402, Risk level, 202.2805246556189, 68.2%, 201.76388258385657, 68.2%, 198.82533964434148, Risk level, 198.31947534438112, 95.4%, 197.36153611925982, , 195.88679433290048, 99.73%, 194.4230722385196
+
+=== GOOG closed at 167.74 ===
+
+99.73%, 173.98301021047155, , 172.41519360920827, 95.4%, 170.86150510523578, Risk level, 169.84389444092892, 68.2%, 169.29355825415286, 68.2%, 166.1719180055636, Risk level, 165.6361055590711, 95.4%, 164.61849489476424, , 163.05027258237652, 99.73%, 161.49698978952847
+
+=== TSLA closed at 340.47 ===
+
+99.73%, 368.36260745841776, , 361.32217447517104, 95.4%, 354.4163037292089, Risk level, 349.8698087134868, 68.2%, 347.3731695607532, 68.2%, 333.4239386566542, Risk level, 331.07019128651325, 95.4%, 326.52369627079116, , 319.47445216067507, 99.73%, 312.5773925415823
+
+=== TSM closed at 220.09 ===
+
+99.73%, 229.2444348005894, , 226.94428671185293, 95.4%, 224.6672174002947, Risk level, 223.17504452779863, 68.2%, 222.36683178394853, 68.2%, 217.7893668716844, Risk level, 217.00495547220137, 95.4%, 215.5127825997053, , 213.21189133199522, 99.73%, 210.9355651994106
+
+=== AMD closed at 138.43 ===
+
+99.73%, 145.78484390759567, , 143.93438896818665, 95.4%, 142.10742195379783, Risk level, 140.90858239685974, 68.2%, 140.25665909704335, 68.2%, 136.57891264370122, Risk level, 135.95141760314027, 95.4%, 134.7525780462022, , 132.90114823153277, 99.73%, 131.07515609240434

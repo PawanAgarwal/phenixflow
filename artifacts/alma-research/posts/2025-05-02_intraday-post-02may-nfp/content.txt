@@ -1,0 +1,75 @@
+Intraday post (02/May), NFP
+
+NFP print today. Here you can get some educational content about it. Soft print gonna cause sell like 90-100 pts for ES.And current event summary.The May ’25 SOFR futures contract is relatively flat, while longer‐dated SOFR from September ’25 through December ’26 are rallying—signalling back-loaded Fed easing. Gold seems buy-the-dip setup into the summer.
+
+*update: Stronger-than-expected jobs gains and stable unemployment diminish near-term rate-cut bets, supporting Fed Chair Powell’s commitment to hold rates at 4.25–4.50%Market will need to reprice itself then… get ready for liquidity hunt and reversion. Very much likelyhood.
+
+This beat isn’t a green light for risk‐on. Because a 177 000 payroll increase is 25% above the 12-month average of 152 000, and wage growth at 3.8% y/y underscores broad hiring and pay momentum. Meaning that, even amid policy shocks, firms continue “hoarding labor,” a hallmark of a strong economy. Despite market pressure for cuts, Powell has repeatedly emphasized data dependence and the Fed’s higher-for-longer bias, warning that pre-emptive easing could reignite inflation . By beating jobs forecasts, April’s report further consolidates his authority to maintain rates until clear slack emerges, underscoring that markets must dance to Powell’s tune.CME Fed‐funds futures show June cut odds plummeting, with traders now pushing the first cut out to late 2025. However most of April’s hiring decisions occurred under pre‐tariff conditions, meaning the 177 000 payroll gain overstates underlying strength once tariff‐driven headwinds fully materialize.
+
+Coding intraday positioning for today’s expo:
+
+Net gamma is positive for dealers today, and so is net charm.
+
+Market net speed exposure is flat-to-negative, with avg slop of -0.71%It is -36% below 5619.90; and 34.89% above.This is setting for a rangebound, with more suppression towards the downside.5616.65 is the centroid of the position.Downside pivot is 5551.79, where longer gamma should take into effect, and so is 5684.56 to the upside. (But above 5660 you should see upside longer gamma to materialize, and magnetic towards 5720/23Zero vanna is 5608.47 with positive convexity (relatively low vol is needed to break trhough this, down towards 5533, and -100 pts more, if vol doesn’t pull the brake.
+
+Slightly more flows are pointing down than up.
+
+SCRIPT INPUTS:=== SPX closed at 5604.14===
+
+99.73%, 5809.768472648147, , 5758.1318843042645, 95.4%, 5706.9542363240735, Risk level, 5673.436795282426, 68.2%, 5655.313476187964, 68.2%, 5552.494913572349, Risk level, 5534.843204717575, 95.4%, 5501.325763675927, , 5449.6761877126455, 99.73%, 5398.511527351854
+
+=== ES closed at 5611.75===
+
+99.73%, 5818.2591802726565, , 5766.400777075858, 95.4%, 5715.004590136328, Risk level, 5681.343593751885, 68.2%, 5663.1419732068825, 68.2%, 5559.883012825221, Risk level, 5542.156406248115, 95.4%, 5508.495409863672, , 5456.623887045525, 99.73%, 5405.2408197273435
+
+=== SPY closed at 558.47===
+
+99.73%, 579.8972631554188, , 574.5154742779135, 95.4%, 569.1836315777094, Risk level, 565.6909876833762, 68.2%, 563.8013681494605, 68.2%, 553.0872436359355, Risk level, 551.2490123166239, 95.4%, 547.7563684222906, , 542.3730996477938, 99.73%, 537.0427368445812
+
+=== VIX closed at 24.6===
+
+99.73%, 29.975904105788768, , 28.600367724575214, 95.4%, 27.287952052894383, Risk level, 26.411679683650817, 68.2%, 25.909141639606702, 68.2%, 23.217157007239244, Risk level, 22.788320316349186, 95.4%, 21.91204794710562, , 20.52411535179319, 99.73%, 19.224095894211235
+
+=== IWM closed at 196.07===
+
+99.73%, 205.28296174513434, , 202.9666532859804, 95.4%, 200.67648087256717, Risk level, 199.17476810811027, 68.2%, 198.35986893695065, 68.2%, 193.75307015713517, Risk level, 192.96523189188972, 95.4%, 191.46351912743282, , 189.14625589211624, 99.73%, 186.85703825486564
+
+=== QQQ closed at 481.68===
+
+99.73%, 503.2097591254057, , 497.7982213982761, 95.4%, 492.44487956270285, Risk level, 488.9355288252617, 68.2%, 487.0326986843519, 68.2%, 476.26714689577034, Risk level, 474.4244711747383, 95.4%, 470.91512043729716, , 465.50156401532195, 99.73%, 460.1502408745943
+
+=== NDX closed at 19786.71===
+
+99.73%, 20672.27571863822, , 20449.685915340306, 95.4%, 20229.492859319107, Risk level, 20085.145647181078, 68.2%, 20006.876534192386, 68.2%, 19564.065952500314, Risk level, 19488.27435281892, 95.4%, 19343.92714068089, , 19121.254086857367, 99.73%, 18901.14428136178
+
+=== NQ closed at 19799.0===
+
+99.73%, 20661.176375400122, , 20444.496084178, 95.4%, 20230.08818770006, Risk level, 20089.55343850984, 68.2%, 20013.383422806688, 68.2%, 19582.269683867762, Risk level, 19508.44656149016, 95.4%, 19367.91181229994, , 19151.154794589504, 99.73%, 18936.823624599878
+
+=== NVDA closed at 111.61===
+
+99.73%, 121.27029532065036, , 118.83068246016165, 95.4%, 116.44014766032518, Risk level, 114.86551952305918, 68.2%, 113.9994950882191, 68.2%, 109.168215702333, Risk level, 108.35448047694082, 95.4%, 106.77985233967482, , 104.33683152048661, 99.73%, 101.94970467934964
+
+=== AMZN closed at 190.2===
+
+99.73%, 203.54745946883787, , 200.1827852828399, 95.4%, 196.87372973441893, Risk level, 194.69809384099835, 68.2%, 193.5080964597773, 68.2%, 186.83333911407115, Risk level, 185.70190615900162, 95.4%, 183.52627026558105, , 180.15850562956132, 99.73%, 176.8525405311621
+
+=== AAPL closed at 213.32===
+
+99.73%, 227.10729536396784, , 223.63391050395077, 95.4%, 220.2136476819839, Risk level, 217.96631853765714, 68.2%, 216.73941801970588, 68.2%, 209.8448700265965, Risk level, 208.67368146234284, 95.4%, 206.4263523180161, , 202.9502608674456, 99.73%, 199.53270463603215
+
+=== GOOG closed at 162.79===
+
+99.73%, 170.3429145177122, , 168.44410286609468, 95.4%, 166.5664572588561, Risk level, 165.335332192469, 68.2%, 164.66740289799066, 68.2%, 160.8906915356846, Risk level, 160.244667807531, 95.4%, 159.01354274114388, , 157.11396795749377, 99.73%, 155.2370854822878
+
+=== TSLA closed at 280.52===
+
+99.73%, 308.0383407432525, , 301.0801676573478, 95.4%, 294.2791703716262, Risk level, 289.7936808304761, 68.2%, 287.3172338594547, 68.2%, 273.5539214256513, Risk level, 271.2463191695239, 95.4%, 266.76082962837376, , 259.7901701771741, 99.73%, 253.00165925674747
+
+=== TSM closed at 172.72===
+
+99.73%, 184.24841207615071, , 181.34340777427752, 95.4%, 178.48420603807537, Risk level, 176.6050748696628, 68.2%, 175.5784498931927, 68.2%, 169.81344096714966, Risk level, 168.8349251303372, 95.4%, 166.95579396192463, , 164.04837561466326, 99.73%, 161.19158792384928
+
+=== AMD closed at 96.65===
+
+99.73%, 105.45912487567475, , 103.23335565304735, 95.4%, 101.05456243783738, Risk level, 99.61867508310239, 68.2%, 98.82774640563743, 68.2%, 94.42203948434401, Risk level, 93.68132491689762, 95.4%, 92.24543756216264, , 90.01622054766946, 99.73%, 87.84087512432527

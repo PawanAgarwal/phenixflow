@@ -1,0 +1,55 @@
+Intraday post (21/march) + OpEx
+
+In this post you can read the overall bias from geo perspective. Crucial.This is the weekly post, covering the weekly positioning and more geo context.In this post I covered how the greeks interact near to expo (gamma, vega, vanna and charm).And this is from yesterday where I covered the current Fed and the tech situation.Very important to read through them.
+
+After Thursday’s price action, the SPX would need a roughly 4% rally to trigger both medium-term and short-term systematic buying levels. Once that occurs, nearly $70 billion of U.S. equities could be unlocked for purchase. Despite recent declines, market breadth is strong—which isn’t surprising if you understand the context I keep writing about.
+
+On the institutional side, however, hedge fund gross leverage is at an all‑time high. When prices dip, forced de‑grossing (i.e., selling) may happen, making trading choppy. The ratio of short sales to long sales is about 5.2 to 1, meaning there are over five short sales for every long sale. This large imbalance reflects a heavy bear skew in market sentiment. Of the 11 U.S. sectors, 7 were net sold. The recent drop in U.S. Fundamental L/S Net leverage to roughly two-year lows shows that the overall aggressiveness of long and short positions has fallen sharply.More importantly, the aggregate long/short ratio (longs divided by shorts) has hit its lowest level in over five years. The top sectors being sold were Information Technology, Consumer Discretionary, Industrials, and Financials—generally more cyclical or growth-oriented.All in all, the market remains full of uncertainty and high institutional leverage.
+
+In April, there are new tariffs scheduled for April 2nd and 15th, and Trump has already started discussing nuclear issues with Iran, which is a highly sensitive topic.There’s talk on Wall Street that real QE might arrive in May. I think this is still early, but if everything goes according to plan, it’s possible—though the market must drop significantly first. Meanwhile, funds plan to offset their significant losses through tax loss harvesting around April OpEx week—no coincidence there.A personal meeting between Putin and Trump is scheduled for after Ramadan and Eid.Volatility on a fixed-strike basis has significantly decreased going into April, and the skew is shorter. Complacency is always what leads to sharp declines, not when the market is hedged.
+
+I’m not sure what will happen between March OpEx and end of month. For now, I’m taking it day by day. But in any case, the bottom isn’t in yet—only a temporary one.
+
+SPX is oscillating around 5652 during asia. I code 5636.35 as pivot for AM expo. As long as the spot holds this line we will see buyback flow from the decaying AM puts.
+
+Here I code positioning into PM expo:
+
+The net slopeness of the speed profile is -0.32% that counts as netural-to-suppressive.
+
+Why is it suppressive?This means that dealers are net longer puts and shorter calls, creating a net short delta exposure, which they hedge by buying futures. However, vanna and charm exposures are shifted: the former is net negative, and the latter is net positive.This implies that while short delta does induce a buying flow, if volatility falls, dealers become longer delta. On one hand, that reduces the buying flow; on the other hand—if vol becomes high enough—it can lead to cutting back long ES exposure. Moreover, as time passes, they inevitably become longer delta, which also cancels out the supportive buyback flow effect.So we shouldn’t really expect a rally—at most a squeeze, where increasing volatility could help the bull move, temporary.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+The centroid of the speed profile is at 5599. That is the main pivot to watch for whether the call or put side can catch a bid.5696 is the level above which the net suppressive charm flips to net supportive.And 5729.53 is the level where we might see a weaker squeeze on the call side, if they can catch a bid. Similarly, 5501.58 is the level where puts can stabilize the price at a lower level if volatility falls. From a vol profile perspective, 5599 is the primary pivot. However, be on the lookout at 5616.25 and at 5698.83 signs (not far from the net charm flip line).
+
+However, as I said, the profile is neutral-to-suppressive because the speed profile slope is barely above zero. This is why we should examine local positioning, since it’s what really matters.Coding vanna flip at 5630.49; due to positive vanna convexity, low volatility is needed for the price to break through that line. 5656.71 is where the price can stabilize if the oscillation pattern holds and volatility declines. Both vanna and charm can help locally at this level, and 5700 could also become a potential pinning level.Between 5623 and 5663, charm convexity (color) is locally positive, and on average remains so up to 5725, raising gamma as we approach expiration. The gamma profile is net negative between 5532 and 5738, so theoretically, gamma levels in these ranges can increase, leading to lower volatility. Local hedging flows could be supportive, but the overall neutral-to-suppressive speed profile doesn’t strongly favor a rally—or much else, really.If the price can move above the upside pivot (5698.83) before 1 PM and calls catch a bid, we may see a minor squeeze. But it can only stabilize if volatility decreases above 5738. (By “squeeze,” I mean spot up/vol up.)For the bears, 5532 is the level where they should begin to feel the longer downside gamma effect, and from there, 5500 acts as a strong magnet.
+
+So, there are two different processes at work. One operates slowly in the background, while the other locally determines portfolio values. For example:The neutral-to-suppressive overall speed profile gradually reduces the total net portfolio value over time when volatility falls. Yet, because the speed profile slope is only -0.32%, the effect is quite small. It doesn't support any major, strong, sustained bull rally, and it doesn't directly push prices down either—it's weak but sets the tone, preventing any strong bull run.Local effects within the overall net MM portfolio define the immediate momentum moves. For instance, above the vanna flip line, net vanna is longer; between 5625 and 5700, charm is short; and past the net charm flip level, net charm becomes negative.In other words, if volatility can decline (and the locally positive color suggests it might), that could be supportive up to 5700. However, if volatility does fall, the overall portfolio delta increases slightly, which compresses every upside move. Is it clear?
+
+As always, watch for deviations, because they reveal the hands of hidden customer flow.
+
+SCRIPT INPUTSSPX99.73%, 5791.912766745846, , 5759.5667882721, 95.4%, 5727.4014517322985, Risk level, 5706.370763037881, 68.2%, 5695.054450138601, 68.2%, 5630.542088560348, Risk level, 5619.409510399619, 95.4%, 5598.3788217052015, , 5566.029702722141, 99.73%, 5533.867506691654
+
+ES=F99.73%, 5845.447354619968, , 5812.178341669275, 95.4%, 5779.098677309984, Risk level, 5757.46900850693, 68.2%, 5745.828571129025, 68.2%, 5679.4787750459445, Risk level, 5668.03099149307, 95.4%, 5646.401322690016, , 5613.128952514251, 99.73%, 5580.052645380032
+
+SPY99.73%, 579.014951469259, , 575.6237804663984, 95.4%, 572.2524708518171, Risk level, 570.047902170531, 68.2%, 568.8611817953401, 68.2%, 562.0985802837045, Risk level, 560.932078298219, 95.4%, 558.7275096169329, , 555.3359758277179, 99.73%, 551.965028999491
+
+VIX99.73%, 22.58662040016042, , 21.878876659827572, 95.4%, 21.193309818610484, Risk level, 20.739090569025205, 68.2%, 20.484811891722984, 68.2%, 19.09063700707551, Risk level, 18.86090790509589, 95.4%, 18.40668865551061, , 17.69632597987178, 99.73%, 17.013378073960673
+
+QQQ99.73%, 493.81361129018313, , 490.16170743173313, 95.4%, 486.5368105279041, Risk level, 484.1645734794011, 68.2%, 482.8847031796921, 68.2%, 475.60769270077475, Risk level, 474.3554460518489, 95.4%, 471.9832090033459, , 468.3306757047179, 99.73%, 464.70640824106687
+
+NQ=F (June contract)99.73%, 20466.92363764991, , 20319.474093995945, 95.4%, 20173.086818824955, Risk level, 20077.29601588802, 68.2%, 20025.62948181969, 68.2%, 19731.78463753023, Risk level, 19681.20398411198, 95.4%, 19585.413181175045, , 19437.939550600942, 99.73%, 19291.57636235009
+
+NVDA99.73%, 126.25165144944506, , 124.30625001563497, 95.4%, 122.39082511437097, Risk level, 121.13219572913681, 68.2%, 120.44494323716346, 68.2%, 116.58360463562923, Risk level, 115.92780182945694, 95.4%, 114.66917244422278, , 112.72223094070262, 99.73%, 110.80834610914869
+
+AMZN99.73%, 203.703613707842, , 201.50332640966926, 95.4%, 199.3268053280421, Risk level, 197.89996579622732, 68.2%, 197.12625418853946, 68.2%, 192.7491699848137, Risk level, 192.00002810025705, 95.4%, 190.57318856844228, , 188.37207296319565, 99.73%, 186.19638018864237
+
+AAPL99.73%, 222.22202641064905, , 220.18215894221626, 95.4%, 218.16101625708234, Risk level, 216.83712694701958, 68.2%, 216.12097286517684, 68.2%, 212.0597800500141, Risk level, 211.36288526001167, 95.4%, 210.0389959499489, , 207.9985801020405, 99.73%, 205.9779857963822
+
+GOOG99.73%, 171.65198137425944, , 169.99347452089285, 95.4%, 168.35099221300862, Risk level, 167.27486974644086, 68.2%, 166.69232669359297, 68.2%, 163.391172455084, Risk level, 162.82513635707477, 95.4%, 161.749013890507, , 160.0900114087567, 99.73%, 158.4480247292562
+
+TSLA99.73%, 258.4164906956646, , 252.81669380768358, 95.4%, 247.33824260125027, Risk level, 243.7267337224712, 68.2%, 241.7356652178198, 68.2%, 230.65436950215891, Risk level, 228.79325529120067, 95.4%, 225.1817464124216, , 219.5727662171651, 99.73%, 214.10349831800727
+
+AMD99.73%, 112.74858012446609, , 111.33760623841832, 95.4%, 109.94428975705726, Risk level, 109.03009109728198, 68.2%, 108.53308775422565, 68.2%, 105.72855716863485, Risk level, 105.24990768201489, 95.4%, 104.33570902223961, , 102.92401349240913, 99.73%, 101.53141865483079

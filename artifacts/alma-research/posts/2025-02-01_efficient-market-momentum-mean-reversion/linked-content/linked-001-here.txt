@@ -1,0 +1,63 @@
+Game of probabilities
+
+Moderate math warning!
+
+In the following post, I will define the concepts of determinism and stochasticism to clarify and refine the approach. I will also explain what 'probability' actually means from a mathematical perspective, as an introduction to the fundamentals of risk management.
+
+Determinism means that the final output of a process is causally inevitable. It implies that a process is entirely driven by causality, and the outcome depends solely on the variables involved. There is no randomness, and thus the system will always produce the same output from a given starting condition or initial state.For example, imagine a computer running a well-defined algorithm. It will always produce the same output for the same inputs, calculated deterministically. Our classical physical laws have also been viewed as deterministic because they are based on differential equations and function algorithmically.
+
+However, in the real world, no system is truly deterministic—not even a computer. Using deterministic models is a simplification we often employ when analyzing processes at a macro level. This simplification works because it is easier and "good enough" to describe certain systems this way (e.g., the path of a thrown rock).Why is it "good enough"? Simply because complex systems tend to exhibit properties that their individual parts do not possess. When these parts interact with one another, they create a larger unit or system that produces well-observed, repeating patterns, unified behaviors, or properties that can be described deterministically. This phenomenon is known as emergence.
+
+Take the example of a thrown rock: beyond the macro level, countless variables and forces (wind, temperature, air pressure, momentum of small particles, molecules, etc.) influence its path. However, on a macro scale, the rock follows a clear trajectory that can be described reasonably well using deterministic models. If you throw it again with the same force, the path will be almost identical.Similarly, society is composed of thousands of individuals, each with their unique inner world. Yet, as a collective, society exhibits regular behavioral patterns.(This additive effect of random processes is a primary subject of chaos theory.)
+
+On the other hand, when we discuss random processes, we refer to stochasticism. Stochastic systems are entirely random, meaning there is a 50-50% probability for various outcomes, as discussed in my previous article on volatility.
+
+To describe a stochastic system and understand how it operates, we use probability calculus to identify patterns and regularities in its behavior. In a stochastic system, the process is influenced by numerous independent variables. Unlike deterministic systems, where variables interact to create predictable outcomes, the variables in stochastic systems do not necessary interact, and so it is not necessary causality to exists between them.
+
+Consider the stock market, for example: the price action results from decisions made by millions of individuals, with each action carrying a different weight. These weights also change continuously and randomly, and decisions are influenced by sentiments, knowledge, intelligence, etc. In other words, the stock market consists of innumerable random variables determined by other random variables, which in turn are influenced by other randomly changing variables, and so on.
+
+In such a system, deterministic calculus cannot be applied, as there are billions (if not infinite) determinants, and each determinant is itself a multivariable random function. What we can do instead is analyze the system at a macro level (e.g., the overall price action of the market) and search for patterns in its behavior. By identifying these patterns, we can infer possible outcomes and assign probability values to each of them.Probability theory, being tautological—as you will see—can function effectively if likelihoods are estimated with sufficient accuracy. However, the key takeaway here is that we have no benchmark in the present. A benchmark only exists once the outcome has occurred, at which point we can evaluate how accurate or close our estimations were.
+
+This is why strategy testing on historical data is crucial. The closer a model fits historical data, the more reliable it may be in the future, provided events remain within the main body of the distribution and do not fall into the tails.This also explains why no one can truthfully claim, after making an accurate prediction, "I knew it." They merely assumed the outcome with sufficient accuracy but did not know anything with certainty.
+
+PROBABILITY At the very basics, probability is simply the ratio of the set of observed outcomes to the set of all possible outcomes. For example, if you come across a question in your child's math homework like this: "given a square with an area of 20 × 20 m, and a circle with an area of 120 m inside it, what is the probability that, if I throw a pebble onto the square, it will land within the circle?" You should know that the probability is just the ratio of the two areas: the area of the circle divided by the area of the square—nothing more.If you multiply this ratio by 100, you'll get the probability in percentage format. Thus the answer is 30%. This means that 30 out of 100 times, your pebble will hit the circle, but 70 out of 100 times, it won’t.
+
+Is this true? Well, a basic assumption of probability calculus is that, in the long run, this ratio becomes accurate. How does this happen? Let’s say the experiment involves rolling a die, and the event we are interested in is getting a 6. We can start rolling the die continuously and record the number of times the result is a 6. If we divide this number by the total number of rolls, we get what is called the relative frequency—the ratio of the number of outcomes in which the specified event occurs to the total number of trials.Then, we roll again and recalculate it. If we plot the values of this ‘rolling ratio’ on a chart, alongside a straight horizontal line representing the theoretical probability value, we’ll notice that the relative frequency begins to converge toward this value:
+
+Does this hold true for n = infinity (an infinite number of experiments)? Nobody knows, because we can only conduct a finite number of experiments. In theory, it’s possible to create a ‘semi-stochastic’ experiment in which it can be demonstrated that the relative frequency does not have a limit (i.e., it does not converge).To address this, Kolmogorov described probability as a measure normalized to one. I will demonstrate this below...The key idea here is that we accept that the curve of relative frequency converging toward the probability value as its limit. This is known as the law of large numbers.So all-in-all: probability is a mathematical measure that assigns a value between 0 and 1 to events in a given sample space, that reflects the likelihood of the event occurring relative to all possible outcomes in the space.math’s coming…
+
+What is a measure?We all know that if an abstract structure is true, then it will be true for all of its models as well.A measure is a mathematical abstract structure: a function that assigns a non-negative real number to every element of a set. Formally written:
+
+μ is a measure of the omega set if:
+
+The first line tells us that the function assigns non-negative numbers (zero or higher) to every subset of the omega set. The second line explains the property of additivity: if two subsets of the omega set do not overlap (their intersection is empty), then the size of their union is equal to the size of the first subset plus the size of the second subset. The third line tells us that the omega set is not empty.
+
+Now first, before we move on, let’s generalize the second property to more than two subsets. For three subsets (A, B, and C), we want their intersections to be empty. Formally written:
+
+For n subsets:
+
+This simply means that every distinct subset (where the indexes are not equal) has no intersection.So what I want to prove is that:
+
+Let’s prove it using mathematical induction that it is true for the n+1 case as well, because if it holds for this case, it will be true for an infinite number of cases.
+
+So, a function is a measure if it satisfies these three properties written above.
+
+In probability calculus, we call "elementary events" the different possible outcomes of an experiment.For example, imagine an n-sided die. When we roll the die, the number we get (1, 2, ..., n) will be the outcome of the experiment. Every experiment has only one outcome. We denote these outcomes using ω. The set of all possible outcomes is denoted by Ω, which is called the event space.Events are subsets of the event space.
+
+What is the difference between an elementary event and an event? Well, if I roll the die, the elementary event is getting a specific outcome, like 1, 2, or 3, etc. An event, on the other hand, can be defined as a set of outcomes that satisfy a certain condition. For example, an event could be rolling an odd number, which would include the subset {1, 3, 5}. So I can define any subset A I want.
+
+The definition of probability through measurement is as follows: if A is a subset of the event space, and we conduct the experiment N times, then a(N) is the number of times the defined event A occurred.
+
+From this, the law of large numbers follows:
+
+Now, the problem, as I mentioned above, is that this convergence cannot be proven physically (since we cannot perform an infinite number of experiments) nor mathematically (as there are scenarios where it can be shown that there is no convergence in the relative frequency).However, the idea remains that as N increases, a(N) gets closer to the theoretical probability value.For example, if a company claims that only 3% of their TVs will break within 2 years, and we buy 100 TVs and observe them over 2 years, we might see ~2 to ~4 of them break. But if we buy 1000 TVs and observe them for the same period, we might see closer to ~28 to ~32 break. The expected probability value is approached as the number of experiments increases.
+
+Probability as a measureThe fact that convergence could not be proven challenged even great mathematicians such as Pascal, Gauss, and others. They struggled to define probability calculus rigorously and often regarded the existing concept of probability as pseudoscience.Then Kolmogorov came along and proposed treating probability as a measure.Let me show you how and why:
+
+Now, let’s abstract what I just showed you:
+
+What this means is that a function is considered a probability if it satisfies the two properties mentioned above.It can be derived from measurements, as shown above in the case of finite experiments. However—and this is the key part—it is also possible to define probability values independently of any measurement, as long as the function fulfills the two criteria outlined earlier. For example, this allows us to model a rigged game where the actual probability values differ from what we might observe during an experiment.
+
+What Kolmogorov conveyed through this abstract definition is that it doesn’t actually matter how one derives the probability values—whether they are the results of finite measurements or based on assumptions—as long as the function satisfies the two criteria outlined above. With this, the philosophical debates surrounding probability theory came to an end.And if we add a third statement following from the two above, namely:
+
+then we can see that probability is indeed a measure function normalized to one. Now that probability is established as a measure function, we can extend it to infinite models as well (i.e. such as geometric models, financial models, etc.). And it follows from exactly this that we can also think of probability as the ratio of the sizes of two sets. This is something crucial to understand in order to grasp the key ideas behind risk management.

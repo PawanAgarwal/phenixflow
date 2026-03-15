@@ -1,0 +1,1626 @@
+Chat Post
+2025-04-20T23:08:49.119Z | Alma
+MONDAY CHAT (21/April)
+
+Replies
+2025-04-20T23:10:26.604Z | Alma
+Thank you for all your birthday wishes :)))
+Hope you had a nice weekend. It is spring.
+Never forget that money is a tool, not a goal.
+It is to make life easier, not more complicated.
+
+Who started to do the April challenge? :))
+
+2025-04-20T23:11:05.553Z | Alma
+Weekly post is here
+https://stochvoltrader.substack.com/p/bonds-currency-market-sentiment-education
+
+And my longer study on the fresh geo processes:
+https://stochvoltrader.substack.com/p/us-china-war-trump-putin-xi-and-the
+very important
+
+2025-04-20T23:11:13.612Z | Alma
+If you don't have an OptionsDepth account yet, or if you already have one but want a 10% discount for next month, then use this link: https://optionsdepth.com/app?via=alma
+or my promo code ODALMA
+
+2025-04-20T23:11:47.136Z | Alma
+PERSONAL ANNOUNCEMENT
+I won’t work on May 24-26 (no weekly, no Monday post. If I see update, I will post it in short in the chat, but I won’t be at the desk)
+And July 24 - Aug 1
+
+2025-04-20T23:46:33.931Z | Sean McDonald
+Happy birthday Alma!!! You’re amazing
+
+2025-04-21T00:03:21.461Z | jo
+Happy birthday, loved the geo article.
+Looks like your lean is, the US still possesses the upper hand in this current spat. The implications being .. China will agree to a trade??
+
+2025-04-21T01:38:39.440Z | Nevistrader
+SD reversion bands for TOS. @DeanGatsby
+
+# Input Variables
+input src = close;
+input mult = 1.5; # 1.5 Sigma
+input mult2 = 2.5; # 2.5 Sigma
+input mult3 = 0.674; # Epsilon
+input window = 20;
+input trading_periods = 252;
+
+# Custom VWMA Function
+def sumPriceVol = fold i = 0 to window
+                  with p = 0
+                  do p + GetValue(src, i) * GetValue(volume, i);
+def sumVol = fold j = 0 to window
+             with v = 0
+             do v + GetValue(volume, j);
+def VWMA = if window > 0 and sumVol != 0 then sumPriceVol / sumVol else Double.NaN;
+
+# Daily Realized Volatility Calculation
+def log_hoD = Log(high("period" = "DAY") / open("period" = "DAY"));
+def log_loD = Log(low("period" = "DAY") / open("period" = "DAY"));
+def log_coD = Log(close("period" = "DAY") / open("period" = "DAY"));
+
+def log_ocD = Log(open("period" = "DAY") / close("period" = "DAY")[1]);
+def log_oc_sqD = log_ocD * log_ocD;
+
+def log_ccD = Log(close("period" = "DAY") / close("period" = "DAY")[1]);
+def log_cc_sqD = log_ccD * log_ccD;
+
+def rsD = log_hoD * (log_hoD - log_coD) + log_loD * (log_loD - log_coD);
+
+def close_volD = Sum(log_cc_sqD, window) / (window - 1);
+def open_volD = Sum(log_oc_sqD, window) / (window - 1);
+def window_rsD = Sum(rsD, window) / (window - 1);
+def kD = 0.34 / (1.34 + (window + 1.0) / (window - 1.0));
+def rvD = Sqrt((open_volD + kD * close_volD + (1 - kD) * window_rsD) * trading_periods);
+
+# Standard Deviation Bands
+def basis = VWMA;
+def dev = mult * StDev(src, window);
+def dev2 = mult2 * StDev(src, window);
+def dev3 = mult3 * StDev(src, window);
+
+def upper = basis + dev;
+def lower = basis - dev;
+def upper2 = basis + dev2;
+def lower2 = basis - dev2;
+def upper3 = basis + dev3;
+def lower3 = basis - dev3;
+
+# Plotting
+plot Basi = basis;
+Basi.SetDefaultColor(Color.ORANGE);
+Basi.SetLineWeight(2);
+
+plot Uper = upper;
+plot Lowr = lower;
+Uper.SetDefaultColor(Color.MAGENTA);
+Lowr.SetDefaultColor(Color.MAGENTA);
+
+plot UPER2 = upper2;
+plot Lowr2 = lower2;
+UPER2.SetDefaultColor(Color.VIOLET);
+Lowr2.SetDefaultColor(Color.VIOLET);
+
+plot Uper3 = upper3;
+plot Lowr3 = lower3;
+Uper3.SetDefaultColor(Color.GRAY);
+Lowr3.SetDefaultColor(Color.GRAY);
+Uper3.SetStyle(Curve.SHORT_DASH);
+Lowr3.SetStyle(Curve.SHORT_DASH);
+
+2025-04-21T01:39:44.540Z | Nevistrader
+cannot generate the table in TOS, so if anyone wants to add code to display those values as labels, can enhance it
+
+2025-04-21T02:00:38.220Z | Nevistrader
+ok labels added as well.
+
+# Input Variables
+input src = close;
+input mult = 1.5; # 1.5 Sigma
+input mult2 = 2.5; # 2.5 Sigma
+input mult3 = 0.674; # Epsilon
+input window = 20;
+input trading_periods = 252;
+input showLabels = yes;
+
+# Custom VWMA Function
+def sumPriceVol = fold i = 0 to window
+                  with p = 0
+                  do p + GetValue(src, i) * GetValue(volume, i);
+def sumVol = fold j = 0 to window
+             with v = 0
+             do v + GetValue(volume, j);
+def VWMA = if window > 0 and sumVol != 0 then sumPriceVol / sumVol else Double.NaN;
+
+# Daily Realized Volatility Calculation
+def log_hoD = Log(high("period" = "DAY") / open("period" = "DAY"));
+def log_loD = Log(low("period" = "DAY") / open("period" = "DAY"));
+def log_coD = Log(close("period" = "DAY") / open("period" = "DAY"));
+
+def log_ocD = Log(open("period" = "DAY") / close("period" = "DAY")[1]);
+def log_oc_sqD = log_ocD * log_ocD;
+
+def log_ccD = Log(close("period" = "DAY") / close("period" = "DAY")[1]);
+def log_cc_sqD = log_ccD * log_ccD;
+
+def rsD = log_hoD * (log_hoD - log_coD) + log_loD * (log_loD - log_coD);
+
+def close_volD = Sum(log_cc_sqD, window) / (window - 1);
+def open_volD = Sum(log_oc_sqD, window) / (window - 1);
+def window_rsD = Sum(rsD, window) / (window - 1);
+def kD = 0.34 / (1.34 + (window + 1.0) / (window - 1.0));
+def rvD = Sqrt((open_volD + kD * close_volD + (1 - kD) * window_rsD) * trading_periods);
+
+# Daily RV Rate of Change
+def dailyRV_yester = rvD[1];
+def dailyRoc = if dailyRV_yester != 0 then (rvD - dailyRV_yester) / dailyRV_yester * 100.0 else 0;
+
+# Standard Deviation Bands
+def basis = VWMA;
+def roc = Round((close - close[1]) / close[1] * 100, 2);
+def rv_rounded = Round(rvD, 4);
+def roc2 = Round(dailyRoc, 2);
+def dev = mult * StDev(src, window);
+def dev2 = mult2 * StDev(src, window);
+def dev3 = mult3 * StDev(src, window);
+
+def upper = basis + dev;
+def lower = basis - dev;
+def upper2 = basis + dev2;
+def lower2 = basis - dev2;
+def upper3 = basis + dev3;
+def lower3 = basis - dev3;
+
+# Plotting
+plot Basi = basis;
+Basi.SetDefaultColor(Color.ORANGE);
+Basi.SetLineWeight(2);
+
+plot Uper = upper;
+plot Lowr = lower;
+Uper.SetDefaultColor(Color.MAGENTA);
+Lowr.SetDefaultColor(Color.MAGENTA);
+
+plot UPER2 = upper2;
+plot Lowr2 = lower2;
+UPER2.SetDefaultColor(Color.VIOLET);
+Lowr2.SetDefaultColor(Color.VIOLET);
+
+plot Uper3 = upper3;
+plot Lowr3 = lower3;
+Uper3.SetDefaultColor(Color.GRAY);
+Lowr3.SetDefaultColor(Color.GRAY);
+Uper3.SetStyle(Curve.SHORT_DASH);
+Lowr3.SetStyle(Curve.SHORT_DASH);
+
+# Fill Between Bands
+#AddCloud(Uper2, Lowr2, Color.LIGHT_GRAY, Color.LIGHT_GRAY);
+#AddCloud(Uper3, Lowr3, Color.DARK_GRAY, Color.DARK_GRAY);
+
+# Labels (Replacement for Table)
+addlabel(showLabels, "Change %: " + roc + "%", Color.LIGHT_GRAY);
+addlabel(showLabels, "20D RV: " + (rv_rounded * 100) + "%", Color.LIGHT_GRAY);
+addlabel(showLabels, "RV Change %: " + roc2 + "%", Color.LIGHT_GRAY);
+addlabel(showLabels, "1 SD Upper: " + uper, Color.LIGHT_GRAY);
+addlabel(showLabels, "1 SD Lower: " + lowr, Color.LIGHT_GRAY);
+addlabel(showLabels, "2 SD Upper: " + uper2, Color.LIGHT_GRAY);
+addlabel(showLabels, "2 SD Lower: " + lowr2, Color.LIGHT_GRAY);
+addlabel(showLabels, "Margin of Error: " + uper3 + " - " + lowr3, Color.LIGHT_GRAY);
+
+2025-04-21T02:26:08.539Z | Vman
+Right at the low of the Yen carry trade on USD/JPY
+
+2025-04-21T02:27:23.799Z | Vman
+BOJ CPI coming out tomorrow. Likely indicating a rise in inflation. If we see that it could trigger an unwind scare
+
+2025-04-21T03:02:01.625Z | RE
+
+2025-04-21T03:22:50.302Z | SirKen
+Happy Birthday and thank you for the fascinating book you have posted over the weekend. It was fascinating to read
+
+2025-04-21T07:12:31.138Z | DIma
+Good Morning! Thank you for the latest posts Alma
+
+2025-04-21T07:50:48.020Z | Norbert Kállai
+Hello Alma, thank you for everything lately, also happy birthday for you :)
+
+2025-04-21T09:32:24.698Z | Cryptian
+Happy belated birthday Alma. Spent most of Sunday reading some of your older posts. Fascinating stuff, and brilliantly well written. One thing I don't agree with is the likelihood of China invading soon. The naval power gap between US/Japan and China is huge. I haven't done the digging myself, but the deepwater capabilities of China's fleet are still small. I assume you're referring to the use of jetski drones and how Ukraine used them so effectively against Russia's fleet? If so, you're correct as it will definitely change the calculus in a conflict. Still think US and Jap have the edge tho, as their navies are known to be the strongest. Also, food supplies of China can run out quite quickly as they import so much of what they need, what makes you think they'll be able to survive if all imports are blockaded?
+
+2025-04-21T09:35:35.710Z | Mike Houston
+Pope passed away.
+
+He was 88 years old. He became Pope in 2013 and was the first in history to come from the New World — Francis was born in Argentina. In recent months, he had been suffering from pneumonia.
+
+❗️According to a medieval prophecy about the popes, the current one is said to be the last before the apocalypse and the Second Coming of Christ. I am not looking forward to an apocalypse
+
+2025-04-21T09:49:56.836Z | Dmitrii
+Thanks Alma for your job, great as usual, and especially this post is Huge! 👏(in every meaning).
+
+2025-04-21T09:57:43.663Z | Hennessy
+Food is a huge category , even 190 countries are  “persuaded “ by US to ban everything they won’t starve. Ppl won’t die just because they lack meat or beans
+
+2025-04-21T09:59:58.426Z | Hennessy
+Even to  Ukraine , the US only supplied arms but not officially participated in the war, 0% chance they will fight for Taiwan. Jap may be different story
+
+2025-04-21T10:00:16.508Z | Dmitrii
+I also have a couple questions)
+1. Chinese 10Y yield started to raise a little bit, but still near it minimums, so thats happens because of deflation dynamic in China overall?(and not because China is considered as safe heaven, as in Japan case)
+2. Related to tradewar, is logistic question could be, an important factor?  I mean warehouse capacities, freight prices/routes and so on?
+
+2025-04-21T10:04:10.432Z | David P
+In Alma’s weekly post the trump double bluff is trump actually being genuine about these tariffs?
+
+2025-04-21T10:25:51.098Z | Cryptian
+Is rare it well above zero. Advanced chips is the most valuable commodity. Much of it comes from Taiwan
+
+2025-04-21T11:24:27.033Z | Rooster
+I had the same question and came to the same tentative conclusion.
+
+2025-04-21T11:32:47.875Z | Waka Flocka
+did alma top tick the overnight session. lmao
+
+2025-04-21T11:32:50.053Z | Waka Flocka
+weapon
+
+2025-04-21T11:49:54.407Z | David P
+People trading the short since last night, how are you deciding your stop positioning? I’ve taken profit on half my position and stop is guaranteeing green trade but pretty far off. Doesn’t feel methodically placed though
+
+2025-04-21T11:58:39.973Z | Raju siruvuri
+
+2025-04-21T12:00:32.604Z | Raju siruvuri
+let's see how it plays out. 1hr chart.
+
+2025-04-21T12:27:34.079Z | Jeffrey K
+If Alma GEX has pos. gamma at 5200 and OD has big neg. gamma at 5200, does anyone know which is more likely to be correct this morning?
+
+2025-04-21T12:29:26.790Z | Jeffrey K
+
+2025-04-21T12:32:36.625Z | Stanley
+My OD shows positive gamma for MM.
+
+2025-04-21T12:35:32.647Z | Jeffrey K
+if i switch to Odte it is positive.  If I select all expirations then it's negative.
+
+2025-04-21T12:37:35.923Z | Chad
+anyone scalling in lifeboat?
+
+2025-04-21T12:44:36.238Z | Jten0887
+Listened to a podcast this weekend on thoughtful money. Felix Zulauf was the guest. One of his scenarios was retest of the 4800 lows in May.
+
+2025-04-21T12:49:12.240Z | Chad
+so ceasefire over easter didn't happen - I guess this whole thing is going south
+
+2025-04-21T12:49:23.867Z | loup
+Excuse me, but what does the “Risk level” correspond to in the levels provided by Alma?
+I have read the educational content articles but have not found any mention of this level.
+
+2025-04-21T12:52:40.755Z | Allan I
+it's the prove/disprove level of directional momentum
+
+2025-04-21T12:56:40.133Z | Fred
+Thank you!!
+
+2025-04-21T13:12:58.117Z | loup
+Ok thx Allan
+
+2025-04-21T13:18:37.231Z | DeanGatsby
+Thanks mate. Will try it out. Any specific reasons the fill between bands was commented out?
+
+2025-04-21T13:20:58.246Z | Jten0887
+https://x.com/deitaone/status/1914265774778155428?s=46&t=J_s0UUte2RS6NYmR_AgrzQ
+
+2025-04-21T13:21:04.720Z | Jten0887
+China is dug in.
+
+2025-04-21T13:26:02.330Z | tim
+I started scaling in last week, but I'm hoping for a bounce towards $545 on SPY to load the boat
+
+2025-04-21T13:28:34.438Z | Alma
+https://go.cboe.com/l/77532/2025-04-21/fmdtfx/77532/17452394710GVLFQNI/Macro_Volatility_Digest_Apr21.pdf
+
+2025-04-21T13:31:31.102Z | Alma
+https://www.bloomberg.com/news/articles/2025-04-21/goldman-gs-gathers-hedge-fund-tycoons-in-abu-dhabi-in-hunt-for-gulf-cash?utm_source=chatgpt.com&embedded-checkout=true
+
+2025-04-21T13:34:05.624Z | Alma
+https://www.reuters.com/world/middle-east/gulf-issuers-plan-more-debt-sales-undeterred-by-recent-market-turmoil-sources-2025-04-21/?utm_source=chatgpt.com
+
+2025-04-21T13:41:07.508Z | Nevistrader
+i wanted the fill only between the margin of error range, but it was filing everything, so commented it
+
+2025-04-21T13:44:58.590Z | Nevistrader
+tested it; Line#86 comment can be removed now. "AddCloud(Uper3, Lowr3, Color.DARK_GRAY, Color.DARK_GRAY);"
+
+2025-04-21T13:46:49.164Z | Sebb
+which is the daily pivots she referes to?
+
+2025-04-21T13:46:55.734Z | Sebb
+because I have severals
+
+2025-04-21T13:47:46.956Z | meager man
+read the intraday post
+
+2025-04-21T13:48:15.237Z | Sebb
+I did
+
+2025-04-21T13:50:02.559Z | Alma
+QUESTION
+Based on the posts...
+what do you think, what is this meeting is all about?
+
+2025-04-21T13:51:35.087Z | Sebb
+buy their debt in exchange for tech
+
+2025-04-21T13:51:38.272Z | meager man
+taking wait and see approach to what happens with US; seems like tentatively optimistic things turn around but making plans for US failing and exploring alternative paths
+
+2025-04-21T13:58:00.271Z | Alma
+there is a direct answer about the hidden meaning of this event.
+one should dig into it a bit to answer it.
+
+2025-04-21T13:58:41.227Z | meager man
+I'll re-read, I went back on geos posts but think I need to take some better notes lol. I know the answer is always in there.
+
+2025-04-21T14:02:06.735Z | meager man
+Gulf states are already looking for (temporal) alternatives, and keep building the already existing alliances, because investors cannot remain stagnant.
+
+2025-04-21T14:03:50.511Z | Chad
+Gulf and Eurasia are forging new investment linkages that don’t center on Wall Street. For instance, at the 2019 FII, Abu Dhabi’s ADIA and RDIF announced a joint tech investment fund, and China’s CIC sovereign fund joined an infrastructure co-investment with Middle East and Russian partners. These semi-public deals convey that major investors were allocating capital in line with geopolitical realignment – i.e., Gulf money into Russia and Asia, Russian money into Middle East, Chinese money into Gulf, etc., all of which lessens the traditional U.S.-Europe dominance in capital flows.
+
+2025-04-21T14:04:09.361Z | Chad
+they're preparing for alternatives market ?
+
+2025-04-21T14:16:32.429Z | Raju siruvuri
+
+2025-04-21T14:17:40.453Z | Chad
+Mexico's President Sheinbaum: I didn't reach final agreement in Trump call.
+
+2025-04-21T14:17:43.477Z | Chad
+We're going down ?
+
+2025-04-21T14:18:13.970Z | meager man
+don't think thats as big of a deal as the China/EU negotiations but we'll see
+
+2025-04-21T14:18:20.547Z | Sebb
+so we now at 95.4%? already lost 2 levels?
+
+2025-04-21T14:18:46.685Z | meager man
+read the intraday and weekly post
+
+2025-04-21T14:18:59.509Z | Raju siruvuri
+The white dots represent the puts are calls from 10-10:10 the 5180 puts went up.
+
+2025-04-21T14:19:04.595Z | Chad
+it is big - the current pricing was factoring a deal made with the USMCA
+
+2025-04-21T14:19:46.398Z | kalless
+Holy cow.  We’re testing the bottom of Alma’s weekly range in the first hour of trading…
+
+2025-04-21T14:20:14.093Z | meager man
+it was a phone call, she's just stating "no final agreement on this call" its not the headline saying no deal possible or something that would lead to much more panic I would think
+
+2025-04-21T14:20:40.342Z | Raju siruvuri
+sorry 5185 puts.
+
+2025-04-21T14:20:55.052Z | Mario
+Big fish needs safe haven, currently UST and USD are not.  Besides middle east needs cash because of oil declaine, so maybe is win-win situation.
+
+2025-04-21T14:21:12.074Z | Sebb
+is it the 95.4%?
+
+2025-04-21T14:21:21.486Z | Sebb
+I am pretty new here
+
+2025-04-21T14:21:22.015Z | Mario
+
+2025-04-21T14:22:00.047Z | meager man
+READ THE POSTS
+
+2025-04-21T14:22:37.664Z | meager man
+the mean reversion levels are not the same as what she details in her posts that have more context behind them
+
+2025-04-21T14:22:37.978Z | Sebb
+eh I am not speaking with u
+
+2025-04-21T14:22:50.337Z | Mario
+read the posts
+
+2025-04-21T14:22:53.017Z | meager man
+you are not trying or listening.
+
+2025-04-21T14:23:25.904Z | Mario
+well, here we are. Just at the level
+
+2025-04-21T14:26:29.331Z | Hennessy
+Another day that Trump is tired of winning
+
+2025-04-21T14:26:35.637Z | kalless
+No, it is in her weekly post.
+
+2025-04-21T14:27:09.341Z | DeanGatsby
+read. the. posts.
+
+2025-04-21T14:29:04.309Z | loup
+a clue :
+"Always keep in mind, that this is a headline-driven market currently, not dealer flow driven. If price can hold the daily pivots, it can be stabilized until TSLA ER."
+🤣
+
+2025-04-21T14:29:46.197Z | Sebb
+yeah it is actually the same with 0.7 difference. the low of the range is the 95.4%
+
+2025-04-21T14:38:09.564Z | yogesh
+worth gold sort here ?
+
+2025-04-21T14:38:22.168Z | Nevistrader
+crazzyyyy, exact bounce at weekly lower boundary, have to see if it deadcat or retuch ORBL 5207
+
+2025-04-21T14:39:39.939Z | Chad
+dead cat bounce
+
+2025-04-21T14:40:25.173Z | Jeffrey K
+
+2025-04-21T14:43:44.254Z | Jeffrey K
+Thur. low will be interesting if it gets there
+
+2025-04-21T14:44:14.214Z | Chad
+a break below the lower bound would signal further selling ahead.
+
+2025-04-21T14:49:29.395Z | Chad
+boom down we go
+
+2025-04-21T14:49:37.976Z | Sebb
+is 510 next?
+
+2025-04-21T14:50:27.212Z | Chad
+man should have held my 5200 may puts
+
+2025-04-21T14:50:41.135Z | Chad
+but i added back some 5170
+
+2025-04-21T14:54:11.352Z | Chad
+exited
+
+2025-04-21T15:01:28.479Z | Alma
+Potential reversion level at 5153/50 for SPX (except if vol is relative low there), intraday only, then pin to 5200
+What did I told you on 16th April...? well, we are there
+ES is sub 5200
+You are welcome ;))
+
+2025-04-21T15:01:54.003Z | Alma
+https://x.com/alma18499/status/1914324714568241608
+
+2025-04-21T15:04:19.120Z | Chad
+thank you Alma <3
+
+2025-04-21T15:04:37.137Z | Sebb
+thanks. how would you define vol relative low? thanks
+
+2025-04-21T15:10:10.349Z | Mark
+Thanks Alma, your trading insights are as reliable as ever!
+
+2025-04-21T15:12:39.700Z | Kingsize648
+Use linear derivatives, she said, if i remember correctly
+
+2025-04-21T15:22:11.835Z | Chad
+mmm no reversion ?
+
+2025-04-21T15:22:54.787Z | Sebb
+3/4 level lost
+
+2025-04-21T15:23:48.585Z | loup
+"Potential reversion"
+
+2025-04-21T15:23:53.448Z | gogumappa
+i'd wait for this 15 minute candle to close
+
+2025-04-21T15:24:02.625Z | Chad
+could 5150 be it
+
+2025-04-21T15:29:16.679Z | Mike Houston
+no it appears not.... every level smashed
+
+2025-04-21T15:29:21.006Z | Sebb
+seems market wonna retest Trump puts lol
+
+2025-04-21T15:29:23.413Z | Chad
+at this rate its going 5080>?
+
+2025-04-21T15:29:33.499Z | Sebb
+4.8
+
+2025-04-21T15:31:03.263Z | Hem
+Vix at 99.73 reversion level
+
+2025-04-21T15:32:18.969Z | DeanGatsby
+Anyone else see how much Trump is trying post a ton to stabilize this market selloff?
+
+2025-04-21T15:32:30.465Z | Mike Houston
+i was setup short and got out because of these levels...all they done is cost me money TBH
+
+2025-04-21T15:32:57.817Z | Hennessy
+Market must really trust the orange man
+
+2025-04-21T15:35:20.887Z | meager man
+we broke the weekly lower bound level already, the potential for lower as a result was there. I entered a 0dte on the break below the risk level and held through it testing slightly over since I missed it off the open.
+
+2025-04-21T15:35:44.384Z | Sebb
+can confirm
+
+2025-04-21T15:35:54.486Z | Sebb
+also I read on twitter alma is short Vix
+
+2025-04-21T15:37:30.783Z | Sebb
+guess maybe after midday some turnaround
+
+2025-04-21T15:39:03.136Z | Raju siruvuri
+5069?
+
+2025-04-21T15:39:10.885Z | JSA
+It's Trump's way of kicking, screaming, and holding his breath until Powell gives him what he wants.  Very adult behavior
+
+2025-04-21T15:40:11.441Z | Sharcus Aurelius
+
+2025-04-21T15:40:22.977Z | Ziggy
+and yet it tends to work
+
+2025-04-21T15:42:04.919Z | Hem
+Nice !! I missed it
+
+2025-04-21T15:42:21.145Z | Sebb
+also because as Alma said vol went up like 5% since the level is broken
+
+2025-04-21T15:42:50.282Z | Sebb
+ok but then why we have other reversion levels?
+
+2025-04-21T15:43:05.336Z | Sebb
+if weekly range get broken, the other levels are still in play?
+
+2025-04-21T15:44:11.992Z | Stevo
+It’s clearly news driven now.  Market pressing trumps hands.
+
+2025-04-21T15:44:36.625Z | Stevo
+Can go to 5000 by tomorrow for all we know.
+
+2025-04-21T15:44:43.116Z | Chad
+Trump: Good chance of Russia, Ukraine deal this week.
+
+2025-04-21T15:45:30.697Z | DeanGatsby
+cluster of puts below starting at 5115 and following through till 5100. Followed by a "hole" of no positioning
+
+2025-04-21T15:45:57.311Z | ratch
+am i missing some headlines? this selling has been relentless. vix keeps grinding higher.
+
+2025-04-21T15:47:11.778Z | Hem
+added some NFLX puts as a lotto missed the SPX this morning
+
+2025-04-21T15:47:41.057Z | Jason Valvano
+Guess there is no one to buy anything lol
+
+2025-04-21T15:47:52.478Z | Mike Houston
+Christ i wish i hadnt read this stuff today...completely threw me off
+
+2025-04-21T15:47:54.893Z | Jason Valvano
+There is no bid just feels like a perfect for a rip higher
+
+2025-04-21T15:49:12.795Z | Chad
+wow
+
+2025-04-21T15:49:17.725Z | Chad
+3% SPX
+
+2025-04-21T15:49:34.093Z | Boom
+do you have a twitter?
+
+2025-04-21T15:50:53.817Z | Mike Houston
+we had 4 huge SPXU.SPXS,SH ETFs no 1 trades on Friday and we are down 3% ...its that simple
+
+2025-04-21T15:51:36.681Z | Chad
+who's holding on to their life boat
+
+2025-04-21T15:51:52.532Z | billy
+holding till spy 2500
+
+2025-04-21T15:51:59.954Z | Chad
+whats your exp
+
+2025-04-21T15:52:09.371Z | Jten0887
+Retest of 4800 still in the cars.
+
+2025-04-21T15:52:18.811Z | billy
+june 20
+
+2025-04-21T15:52:29.029Z | billy
+jk bout 250 but 480 possible
+
+2025-04-21T15:52:54.898Z | Sebb
+https://x.com/traderpodcaste/status/1914309900831789565
+
+2025-04-21T15:52:55.235Z | loup
+bad day, tomorrow will be another day
+
+2025-04-21T15:52:59.833Z | Sebb
+some anticipated it
+
+2025-04-21T15:53:21.848Z | Sharcus Aurelius
+As I said, those puppies were not being shorted, especially at that volume
+
+2025-04-21T15:54:05.532Z | Sharcus Aurelius
+And thanks again for sharing that stuff. It has definitely helped to build a better context of short term market action.
+
+2025-04-21T15:55:52.596Z | Sebb
+crazy if we knew it, we would have print so much
+
+2025-04-21T15:57:40.075Z | billy
+Alma said even 4300 is possible if these conflicts escalates
+
+2025-04-21T15:57:48.889Z | Sharcus Aurelius
+Also, another general thought, and I’ve had this thought before, how come Alma does not account for the other vol… volume… when it comes to determining when liquidity levels are reaching proper saturation before a trend reverses or continues? Seems volume in conjunction with volatility would give a clearer picture.
+
+2025-04-21T15:58:34.664Z | Jeffrey K
+never change sharcus
+
+2025-04-21T15:59:28.490Z | David P
+Alma signalled a short last night dude
+
+2025-04-21T15:59:48.671Z | Jten0887
+Bad earnings can accelerate the decline to sub 4800.
+
+2025-04-21T16:00:38.725Z | Sharcus Aurelius
+I don’t know if that’s a compliment or an insult 😂. I’ll give you a tentative thanks.
+
+2025-04-21T16:06:57.474Z | han
+Interestingly, BSF raised funds through a dollar-bond issued in Taiwan.
+
+2025-04-21T16:08:02.776Z | Mike Houston
+well if you say enough things that are diametrically opposed you can never be wrong
+
+2025-04-21T16:08:45.197Z | Sebb
+oh wow, good. sorry was Easter here. did not have the time to read all. compliments who printed, well deserved
+
+2025-04-21T16:13:24.981Z | Terrance
+if i read alma weekly post correctly… below 5168 spx MORE SELLING .
+
+2025-04-21T16:14:53.270Z | Chad
+we did get to 5124
+
+2025-04-21T16:15:06.309Z | Chad
+now we're at a local gamma flip
+
+2025-04-21T16:20:01.484Z | Mike Houston
+well if we stay inside this range all week, fair enough...but if we plunge like a rock here Alma's read was dead wrong. I mean i seen a lot of ITM call selling last week which would make me think there was others thought the week would work out as Alma described. But so far its helped me turn a handsome profit into a lose
+
+2025-04-21T16:20:36.971Z | Chad
+how did you turn profit into a lose ?
+
+2025-04-21T16:21:43.811Z | Jack
+market does not believe Trump
+
+2025-04-21T16:21:56.207Z | Jack
+no Japan deal is bad
+
+2025-04-21T16:29:24.486Z | kk
+vol not expected to rise much acoording to Alma this week?
+
+2025-04-21T16:29:33.731Z | kk
+consolidation in the low
+
+2025-04-21T16:31:28.205Z | JSA
+Trump has a history of making folks look bad and using main street residents as collateral damage.  That's why Alma included the prospect for SPX 4000 - 4300..... and the statement "If anything bad happens, hell is the limit"  And, Trump always has the potential to be "the something bad that happens"
+
+2025-04-21T16:34:25.271Z | JSA
+might get that tradable counter-trend after 12:35
+
+2025-04-21T16:35:05.782Z | Alexander K
+So much for "post OpEx buy back flows" 🤷
+
+2025-04-21T16:35:43.329Z | Jack
+i think 4300-4500 hits
+
+2025-04-21T16:35:49.659Z | Jack
+
+2025-04-21T16:36:09.182Z | Jack
+look at the time stamp...market didn't like it
+
+2025-04-21T16:39:24.471Z | gogumappa
+christ why does our president have such shit grammar
+
+2025-04-21T16:39:50.223Z | Chad
+hey he's the guy that came up with covfefe lol
+
+2025-04-21T16:41:34.563Z | JSA
+A testament to the quality of a Wharton education
+
+2025-04-21T16:42:33.177Z | Nevistrader
+he is not typing that..some intern is typing that :-)
+
+2025-04-21T16:43:00.042Z | Mike Houston
+the problem is USA is running a 7% of GDP budget deficit, DOGE has not cut the size of the deficit at all. It trending at higher levels than last year...receipts are on collapsing because of a recession. Foregeiners no longer want US debt...so bond markets want more for their funds....doesnt matter what FED does
+
+2025-04-21T16:44:23.935Z | Ziggy
+Why is it Trumps fault for calling out Powell for this? WS and banks run the markets. They don't want rate cuts! The average day American who isn't in the market want the rate cuts. It benefits the average day person who isn't affected by a bearish market nearly as much as you seem to think. Bear markets will typically bring things forward that help the avg "main street resident" while hurting WS and Bankers. Things like RATE CUTS. Something Powell has massively failed at implementing correctly.
+
+2025-04-21T16:45:33.753Z | Y O
+the big banks also chooses Powell too :D
+
+2025-04-21T16:46:55.929Z | Kingsize648
+Trump needs 10yr yield down. Anybody care to explain how Fed rate cuts will help achieve that?
+
+2025-04-21T16:51:19.154Z | Chad
+Rate cut = less interest rate for new bond = investor buying older bonds with higher rate = yield down since demand is high
+
+2025-04-21T16:51:25.281Z | Ziggy
+you seem to think DOGE and their actions were going to cause an overnight reaction to decades of ridiculous spending by the gov't. I've never seen so much distain for a group of people literally just doing what congress has failed to do for decades. Why does any taxpayer have an issue with there being SOME sort of oversight that has been more transparent than congress ever has been? There is absolutely nothing that DOGE can truly do that is more effective than bringing forward all the incredible misuse of our taxpayer dollars. The actual recovery of the deficit and our debt can only be fixed if congress decides to do their job and stop pretending they are fighting a "nazi". Their failing at that too!
+
+2025-04-21T16:53:37.329Z | RE
+no cut may, 2x cut june?
+
+2025-04-21T16:54:21.706Z | Mike Houston
+i agree with DOGE and what its trying to do, but most of it requires congress to sign off and courts are holding it up. I am just making the statement it has not cut spending relative to last year...thats a fact...maybe spending would be even higher if they were not there. You are mistaking a statement of fact for sentiment on the activity
+
+2025-04-21T16:54:24.324Z | RE
+zqz5 waking back up w 5 cut ..
+
+2025-04-21T16:57:48.702Z | Alexander K
+"March 27 (Reuters) - Tech billionaire Elon Musk, whom U.S. President Donald Trumphas tapped to shrink the government, said on Thursday he would finish most of the work to cut $1 trillion in federal spending when his tenure ends in as soon as 64 days."
+
+2025-04-21T16:58:52.820Z | Mike Houston
+if we dont see a significant reversal inside Almas range today, i would say my original prognosis that this market is going down hard is accurate....based on Bear ETF flow etc last week
+
+2025-04-21T17:01:45.073Z | Ziggy
+Now tell me, do you think that is $1 Trillion overnight that immediately goes into effect? Or is it an accumulation over years that the cuts they suggest will bring?
+
+2025-04-21T17:02:14.649Z | Alexander K
+64 nights, to be precise.
+
+2025-04-21T17:03:43.800Z | Jason Valvano
+Dude what the fuck is going on lol
+
+2025-04-21T17:04:09.894Z | Jason Valvano
+This is like good game stock market
+
+2025-04-21T17:05:46.611Z | Alexander K
+No one wants to touch US equities rn. Other indexes like Nikkei, FTSE have stayed relatively far from lows
+
+2025-04-21T17:06:37.393Z | Jeffrey K
+WITH dollar in downtrend, foreigners losing on the currency end as well...if they are in us assets
+
+2025-04-21T17:07:53.152Z | Alexander K
+I liked this more when I considered the con-artist was simply engineering scenarios for inside-trading. This rather looks like a loss of control.
+
+2025-04-21T17:09:14.918Z | Jten0887
+VIX forming a bull flag on the daily time frame. Looks like it coiled to rally back to the highs in Early April.
+
+2025-04-21T17:09:34.272Z | kk
+maybe head straight to a retest of april 7
+
+2025-04-21T17:09:38.633Z | kk
+or within this week at least
+
+2025-04-21T17:09:56.479Z | kk
+might be good area to long...assuming Alma's thesis is unchanged
+
+2025-04-21T17:10:20.993Z | Ziggy
+The "statement of fact" included with your input that what doge is doing has no, or little, effect on the budget deficit implicates a sentiment on the manner. Otherwise there isnt much of a reason to include the aspect of DOGE in your "the problem is USA is..." statement. DOGE can do nothing other than essentially be a consultant to Trump allowing his administration to find misuse of funds and put a publiic spotlight on them so that Congress may finally do their job. Pathetic that they want to spend more time trying to impeach Trump than work on the damn budget.
+
+2025-04-21T17:11:28.072Z | Jten0887
+If that 4800 level doesn’t hold on Spx, then 4300 is definitely in the cards.
+
+2025-04-21T17:11:38.063Z | Jten0887
+If Trump caves in, we rip.
+
+2025-04-21T17:12:17.080Z | Jeff L
+Anyone has any thoughts on Peter zeihan work?
+
+2025-04-21T17:12:30.700Z | Jeff L
+He seems quite bearish on China. I'm not sure what he's missing
+
+2025-04-21T17:13:28.820Z | Jeff L
+Why would US and Russia become so fearful of China if China is doomed to fail?
+
+2025-04-21T17:14:16.841Z | Sharcus Aurelius
+I’ve commented on him. And stated how he and Ray Dalio are on opposite ends of the China spectrum. The truth is, as with most things, somewhere in between.
+
+2025-04-21T17:16:32.099Z | Jeff L
+Pz seems quite knowledgeable and I agree with quite a few of his forecasts relating to demographics, but I find it difficult to contend with the opposing view of China doom and gloom
+
+2025-04-21T17:16:33.119Z | RE
+5081 spx lets go
+
+2025-04-21T17:24:54.526Z | Lex
+what is this level?
+
+2025-04-21T17:26:55.741Z | RE
+2025 feb mopex to march mopex , linest extrapolated to next bar
+
+2025-04-21T17:27:16.922Z | Lex
+thank you
+
+2025-04-21T17:28:40.295Z | Jeffrey K
+It's 1:30 pm  Do you know where your portfolio is?
+
+2025-04-21T17:29:12.972Z | Vince
+all in to 5081
+
+2025-04-21T17:29:20.073Z | RE
+also this
+
+2025-04-21T17:29:21.980Z | DeanGatsby
+As green as my USD
+
+2025-04-21T17:29:26.524Z | Vince
+at the lows of the day if you have the cajones
+
+2025-04-21T17:31:18.468Z | RE
+so watch for spx 5110 first as that centroid of the current gamma node that we are contending with
+
+2025-04-21T17:32:09.582Z | Jeffrey K
+substack being weird today...won't let me emoji any comments
+
+2025-04-21T17:32:16.050Z | Lex
+same
+
+2025-04-21T17:32:44.024Z | Hem
+noticed the same thing, can't use Emoji's
+
+2025-04-21T17:33:04.383Z | RE
+i that that on the weekeend, maybe try a browser update and restart
+
+2025-04-21T17:33:41.302Z | Rooster
+seems to be working for me (I'm on web interface).  Screwy app
+
+2025-04-21T17:34:34.698Z | RE
+i dunnnnno about that but Ill try offering ES at 153
+
+2025-04-21T17:36:16.919Z | Jeffrey K
+recent big selloff day, sellers backed off until spot got to top of pos. gamma (5125 today) then slammed 'em back thru the pos. gamma below...gaming liquidity
+
+2025-04-21T17:38:51.036Z | Jeffrey K
+then late in the day past 2:30 they just murdered every bid
+
+2025-04-21T17:40:30.599Z | Jason Valvano
+This is honestly just rediculous there is nonne buying anything
+
+2025-04-21T17:40:37.394Z | Jason Valvano
+lol
+
+2025-04-21T17:40:53.604Z | Jason Valvano
+We gunna go to like sub 4k gg to boomers retirement funds
+
+2025-04-21T17:41:28.577Z | Doc McGraw
+Was put credit spreads at 5110/00 and also 5125/x
+So it’s a mess
+
+2025-04-21T17:41:51.956Z | Hem
+my 401K dropped to 2022 low's
+
+2025-04-21T17:45:16.714Z | RE
+So when does panic set in
+
+2025-04-21T17:45:49.081Z | Jeffrey K
+sub 5 handle...my guess
+
+2025-04-21T17:46:28.540Z | Doc McGraw
+Welcome to the club
+
+2025-04-21T17:46:35.328Z | RE
+A few stinker ER and poor guidance perhaps?
+
+2025-04-21T17:47:42.427Z | RE
+@Vince your plan may just work out 😂
+
+2025-04-21T17:47:49.103Z | Jeffrey K
+i firmly believe the market doesn't trade on fundamentals...but i read somewhere given analyst SPX earnings being lowered, we're still trading at 6100 valuation levels
+
+2025-04-21T17:48:02.804Z | futuredale
+Trump double bluff is everyone thinking it's a negotiating tactic but he's serious about tariffs?
+
+2025-04-21T17:48:17.054Z | Vince
+yes yes
+
+2025-04-21T17:48:31.060Z | Vince
+the play thats hard to do is the play that wins
+
+2025-04-21T17:49:12.108Z | kalless
+Think about it.  If you could get the bad news out there and blame “economic and trade uncertainty” for it, why not?  So I think we’ll get some poor earnings announcements/guidance.
+
+2025-04-21T17:49:21.378Z | meager man
+I believe the double bluff was the immediate strength of overzealous tariffs then the pullback of the tariffs from extremes was the "sucker them in" move
+
+2025-04-21T17:51:01.333Z | Sharcus Aurelius
+Ya what I’m most confused about is, given where AI and automation is heading, how much population collapse is actually a good thing?
+
+If labor is continually being suppressed due to wage inflation, some natural population decline might help to relieve some of those pressures.
+
+2025-04-21T17:51:27.263Z | Sharcus Aurelius
+Wage deflation*
+
+2025-04-21T17:52:15.462Z | futuredale
+sucker them into a fight by projecting weakenss
+
+2025-04-21T17:52:31.250Z | kk
+i have no position but this is selling is resentless lol
+
+2025-04-21T17:53:01.443Z | kk
+that'd make sense
+
+2025-04-21T17:54:11.577Z | RE
+ohh boy that live model
+
+2025-04-21T17:55:57.672Z | kalless
+Is that charm or gamma?
+
+2025-04-21T17:56:55.002Z | RE
+Gamma, u want both?
+
+2025-04-21T17:56:57.234Z | DeanGatsby
+If you zoom out it looks even more like a hidden butterfly structure with the mid contract at 5050
+
+2025-04-21T17:57:30.227Z | RE
+here
+
+2025-04-21T17:59:13.341Z | kalless
+Thank you!
+
+2025-04-21T18:00:44.299Z | RE
+0dte break down by strike fixed too
+
+2025-04-21T18:01:01.358Z | gogumappa
+5050 looks all but inevitable
+
+2025-04-21T18:01:39.969Z | Vince
+vince continues to print
+
+2025-04-21T18:02:29.736Z | Vince
+we all need to change our last names to Powell with the printing we're doing
+
+2025-04-21T18:02:37.481Z | RE
+u took short <122s SPX?  ncie work
+
+2025-04-21T18:03:56.254Z | Kingsize648
+One just has to love the internet: mkt down 4%: oh my God, i can‘t post any emojis today🤣🤣🤣🤣🤣
+
+2025-04-21T18:06:17.384Z | Jason Valvano
+I just really can’t believe there is none to buy
+
+2025-04-21T18:06:30.918Z | Vince
+yes
+
+2025-04-21T18:07:18.270Z | Sharcus Aurelius
+Also, the population collapse argument PZ brings up is kinda like saying one form of fiat currency is worse than the other. All fiats are being devalued. Same with population collapse, all first world developed countries are also facing population collapse. So it’s all relative.
+
+And right now, China is in the best position to handle that issue well, particularly with their full embracement of industrial automation. Just compare their ports to ours.
+
+2025-04-21T18:07:40.611Z | RE
+God money, just tell me what you want me to
+
+2025-04-21T18:07:41.807Z | Jonathan Scholz
+This:
+
+2025-04-21T18:07:50.837Z | Jonathan Scholz
+
+2025-04-21T18:08:45.267Z | Jonathan Scholz
+https://open.substack.com/pub/stochvoltrader/p/whos-bluffing-usa-vs-china-poker?utm_source=share&utm_medium=android&r=j0h7u
+
+2025-04-21T18:13:47.981Z | Zebra
+JPY gets stronger when DXY is relative flat
+
+2025-04-21T18:13:59.908Z | RE
+nice trade, i no fill.  good luck with tapping 80s.  tempted for a bounce play in the 72.x spx too. maybe 20+ pts. have a good line there. Voodoo special.
+
+2025-04-21T18:15:08.595Z | RE
+well its 5075.16 for start of powerhour.
+
+2025-04-21T18:21:10.120Z | Jason Valvano
+I think we bout to bounce here
+
+2025-04-21T18:22:40.015Z | meager man
+5m mean reversion MOE zone
+
+2025-04-21T18:39:04.209Z | Vince
+no sir
+
+2025-04-21T18:39:11.985Z | Vince
+bounce into the dumpster if thats what u mean
+
+2025-04-21T18:39:27.492Z | meager man
+bounced to a mean reversion level
+
+2025-04-21T18:39:36.434Z | meager man
+and rejected it...so far
+
+2025-04-21T18:39:56.719Z | meager man
+
+2025-04-21T18:40:28.889Z | Jeffrey K
+looking to short 5127 to 5131 personally
+
+2025-04-21T18:41:21.489Z | Vince
+here come the donald dump special after taco bell style
+
+2025-04-21T18:41:24.731Z | RE
+Still no fill on my offer 🫴
+
+2025-04-21T18:41:46.650Z | Jeffrey K
+it just cant get there
+
+2025-04-21T18:43:27.902Z | DeanGatsby
+Looking for 5090 target to the downside. Last trade of the day
+
+2025-04-21T18:43:55.047Z | Jeffrey K
+the clock on the wall says it's about whack-every-bid time
+
+2025-04-21T18:45:15.512Z | DeanGatsby
+my favorite timezone
+
+2025-04-21T18:47:04.696Z | Vince
+donny droping taco bell
+
+2025-04-21T18:47:05.826Z | Jeffrey K
+if we get 5090, i wouldn't be surprised to see 5070 in the AH after 4:00
+
+2025-04-21T18:47:16.816Z | Vince
+RIP boys
+
+2025-04-21T18:48:43.707Z | RE
+It's called the monkey hammer
+
+2025-04-21T18:49:30.920Z | Vince
+RIP- Rest in Piss for the markets
+
+2025-04-21T18:49:43.676Z | DeanGatsby
+The only worry I have is how big of a wall 5100 might be
+
+2025-04-21T18:49:45.758Z | Vince
+yes youre correct
+
+2025-04-21T18:50:05.349Z | Vince
+eliminate that worry and eliminate longs
+
+2025-04-21T18:50:08.712Z | RE
+They're really tempting me to get a fill in your area.  I'm holding strong for now. 🤣🤣
+
+2025-04-21T18:50:27.100Z | Vince
+nq wants the 500s
+
+2025-04-21T18:50:33.528Z | Vince
+this is the pump to thunder drop it
+
+2025-04-21T18:50:35.411Z | Vince
+17500
+
+2025-04-21T18:50:47.072Z | Vince
+taco bell style incoming
+
+2025-04-21T18:51:15.412Z | Jeffrey K
+don't drop the chalupa
+
+2025-04-21T18:51:37.645Z | Vince
+chalupa, mexican pizza, gordita even the chihuahua from back in the day
+
+2025-04-21T18:51:41.629Z | Vince
+its all dropping
+
+2025-04-21T18:51:59.164Z | Jeffrey K
+LOL
+
+2025-04-21T18:52:13.057Z | RE
+Haha give us a nice wick up to clear the shirts from past 1.5 hours
+
+2025-04-21T18:52:33.017Z | Vince
+no chance till another drop for that possibility
+
+2025-04-21T18:53:07.312Z | Vince
+collission course is 17,574 next
+
+2025-04-21T18:54:02.250Z | kk
+what is that in qqq lvl
+
+2025-04-21T18:54:19.373Z | kk
+im watching spx 5050 for potential dead cat bounce lol
+
+2025-04-21T18:54:26.619Z | Vince
+i dunno but lets call it RIP
+
+2025-04-21T18:55:08.104Z | Jeffrey K
+Rigormorris the cat
+
+2025-04-21T18:55:15.418Z | gogumappa
+highly technical and sophisticated explanation of US economic policy :
+
+https://x.com/Nanamaxamed/status/1914170566098981020
+
+2025-04-21T18:57:22.063Z | Vince
+the cats are all dead
+
+2025-04-21T18:57:24.249Z | Vince
+all 9 lives used
+
+2025-04-21T18:57:39.838Z | Mindus
+🩸🩸🩸
+
+2025-04-21T18:58:16.278Z | DeanGatsby
+New game for power hour. Every time a candle closes on your screen you have to take a shot
+
+2025-04-21T19:00:28.196Z | RE
+Not good for West Coast traders 😂
+
+2025-04-21T19:03:37.992Z | Vince
+its good for us west coasters
+
+2025-04-21T19:03:44.265Z | Vince
+more hours to continue
+
+2025-04-21T19:04:22.463Z | DeanGatsby
+I used to be a west coast trader. Loved those hours!
+
+2025-04-21T19:04:54.940Z | Stevo
+Jeez The 0dte 515 gang got wiped out.
+
+2025-04-21T19:09:35.092Z | DeanGatsby
+5090 move looks to be invalidated based on new positioning rolling in. Closing it out
+
+2025-04-21T19:14:57.578Z | Vince
+more taco bell coming
+
+2025-04-21T19:15:35.530Z | meager man
+so what is charm saying for a finish?
+
+2025-04-21T19:17:26.162Z | billy
+calls might finally work towards closing
+
+2025-04-21T19:18:59.889Z | Vince
+yes calls will work in tricking
+
+2025-04-21T19:20:47.343Z | billy
+gotta get in and out quick, could go back to 5130
+
+2025-04-21T19:20:58.012Z | Amine Zreik
+Hey guys
+
+2025-04-21T19:21:07.463Z | Amine Zreik
+Where’s the link to Almas private chat
+
+2025-04-21T19:21:10.073Z | Amine Zreik
+Thanks
+
+2025-04-21T19:23:14.873Z | Raju siruvuri
+
+2025-04-21T19:26:31.965Z | meager man
+you're...in it
+
+2025-04-21T19:26:53.306Z | kk
+lol
+
+2025-04-21T19:27:08.091Z | Vince
+3 minutes till RI{
+
+2025-04-21T19:27:10.437Z | Vince
+RIP
+
+2025-04-21T19:27:22.938Z | Vince
+he wants the private private one
+
+2025-04-21T19:27:38.188Z | meager man
+what's in 3 minutes?
+
+2025-04-21T19:27:47.456Z | kk
+the SVIP one
+
+2025-04-21T19:27:55.872Z | Vince
+the death drop
+
+2025-04-21T19:28:08.483Z | meager man
+why that time?
+
+2025-04-21T19:29:42.052Z | RE
+Finally foined ya Vince. Let's get it
+
+2025-04-21T19:30:18.470Z | meager man
+where is death drop? lol
+
+2025-04-21T19:30:25.742Z | meager man
+still confused as to what the expectations are here
+
+2025-04-21T19:30:58.686Z | Vince
+on delivery
+
+2025-04-21T19:31:47.767Z | Vince
+10 minute candle close..i prefer for it to have closed green tho
+
+2025-04-21T19:31:57.766Z | Vince
+the red is a fake sometimes after 2 greens
+
+2025-04-21T19:32:19.072Z | meager man
+not sounding super scientific here
+
+2025-04-21T19:33:20.684Z | gogumappa
+he said delivery
+
+2025-04-21T19:33:24.278Z | gogumappa
+probably ict
+
+2025-04-21T19:34:18.697Z | Vince
+i stay short
+
+2025-04-21T19:35:55.309Z | DeanGatsby
+We call this voodoo pattern TA "SPY's Oddyssey to Mean." You can read it about it no technical analysis book ever written
+
+2025-04-21T19:37:32.979Z | Raju siruvuri
+
+2025-04-21T19:38:02.872Z | Sharcus Aurelius
+Vinny you’re full of bologna… get outta er’! What are ya doin’? Tryna call it down to the minute like Vito Corleone. Nothin doin… scrap it.
+
+Time to make some money on theta decay. Calls are being sold like crazy er’
+
+2025-04-21T19:43:48.758Z | Vince
+taco bell coming
+
+2025-04-21T19:45:20.746Z | Stevo
+Are you trying to get the room to pay power hour?
+
+2025-04-21T19:46:39.465Z | David P
+Caught a nice long from the bottom after trying for a few reversions today.
+
+2025-04-21T19:46:48.809Z | David P
+Looking forward to loading up lifeboat again
+
+2025-04-21T19:48:16.491Z | Vince
+MOC taco time
+
+2025-04-21T19:48:22.855Z | RE
+hahah
+
+2025-04-21T19:48:34.225Z | RE
+fill my 73 offer
+
+2025-04-21T19:49:01.147Z | RE
+probably shouldnt be fading this though
+
+2025-04-21T19:49:21.885Z | RE
+but i was told to have a shot every candle close by MOC
+
+2025-04-21T19:51:13.369Z | Sharcus Aurelius
+Seems NVDA will pop back up to $97/$98… Will reenter a put there for a target of $90/$91 over the next two weeks. So many calls sold above $100 that it would have to really pump to make it through… or gap.
+
+NVDA’s SEC filing had more disclaimers than a Prednisone commercial. Might be the first quarter that actually sells into earnings instead of pumping.
+
+2025-04-21T19:51:13.629Z | meager man
+lol death drop
+
+2025-04-21T19:51:36.167Z | meager man
+10 min candle system of yours needs some refining there Vince
+
+2025-04-21T19:52:26.984Z | Sharcus Aurelius
+In a while.
+
+2025-04-21T19:53:11.054Z | Stevo
+87-88 nvda seems inevitable.  That’s where the mega bounce will come.
+
+2025-04-21T19:54:43.468Z | Vince
+correct lol
+
+2025-04-21T19:55:00.353Z | meager man
+gamma squeeze to end the day
+
+2025-04-21T19:55:03.180Z | meager man
+interesting
+
+2025-04-21T19:57:46.849Z | kk
+Should’ve held those 0dte calls lol
+
+2025-04-21T19:57:58.592Z | Sharcus Aurelius
+Common Vinny whattaya doin’ er’?!?! That taco turned into a burrito, entering the opposite hole.
+
+Just bustin’ your balls. This ain’t over yet.
+
+2025-04-21T19:58:31.751Z | Stevo
+Woot 515 gang might be saved.  Nice work!
+
+2025-04-21T19:58:37.726Z | kk
+lol
+
+2025-04-21T19:58:58.994Z | meager man
+still below her weekly pivot...doesn't seem likely to stay under it at this rate wow
+
+2025-04-21T20:07:21.560Z | RE
+for future notes..
+
+2025-04-21T20:11:20.886Z | David P
+Great day thanks for the amazing posts Alma
+
+2025-04-21T20:14:23.096Z | Allan I
+TY Alma
+
+2025-04-21T20:16:15.141Z | Yoda969
+RE  can you squeeze the chart to show full day  Thank you
+
+2025-04-21T20:16:30.495Z | RE
+thanks Alma, Baba Vanga 3.0 max, new model , better eyesight, more current predictions ;)
+
+2025-04-21T20:16:45.541Z | RE
+here i sent this to others, i hope it helps
+
+2025-04-21T20:17:09.299Z | RE
+now u get my tricks ^^^
+
+2025-04-21T20:18:59.001Z | Mike Houston
+Just had 2nd largest trade and 19th largest trade ever in UVXY. So either it has topped out folks expect market to be thrown of the edge tomorrow
+
+2025-04-21T20:19:13.966Z | Mike Houston
+
+2025-04-21T20:20:25.995Z | Mike Houston
+Or not out
+
+2025-04-21T20:27:35.164Z | Yoda969
+RE,  u are using volume bars,   have not tried that before.
+
+2025-04-21T20:31:18.745Z | Sharcus Aurelius
+Ya that’s quite the spot to see two massive trades. How are the bear ETF’s and other index ETFs looking?
+
+2025-04-21T20:33:41.644Z | RE
+not in this chart, that is just annotated with the built in screen shot.  i have tracked / traded volume and deltas, lately i have some key areas i watch regressions, open candle high lows with alma's levels, her 20P averages with regressisons, a little bit of session avwap, some near tearm High Lows AVWAPs, contract roll VWAP and some OD confirmation and send it
+
+2025-04-21T20:40:56.399Z | RE
+is there something that you are seeing with volume bars?
+
+2025-04-21T20:43:47.200Z | Yoda969
+No have not used,   I flip back between normal candles and HHeikin Ashi bars
+
+2025-04-21T20:46:04.198Z | Yoda969
+I do like the following ema's    8, 34,89, 377  on one minute chart.   89 and 377 provide reistence points
+
+2025-04-21T20:47:00.840Z | Yoda969
+as does the 34,,   they are longer time periods
+
+2025-04-21T20:48:06.153Z | RE
+Have you used Alma's reversion script?  i am quite enjoying it.
+
+2025-04-21T20:49:16.878Z | Yoda969
+I use TOS which does not provide volume on the SPX,   I use it on everything else
+
+2025-04-21T20:51:00.616Z | Yoda969
+plus her Momentum study
+
+2025-04-21T20:52:24.382Z | Yoda969
+Ema's I use are all Fib numbers, exp i use the 20 on her study.   When ever I can i used a fib number.
+
+2025-04-21T20:52:30.751Z | RE
+yes both a great together.  i am typically just futs trading contracts so it works great for me
+
+2025-04-21T20:57:10.257Z | Yoda969
+SPX 1min  after the open, only 3 times did price cross the 34 ema        I like the Momentum  cross the 8ema  for confirmation.
+
+2025-04-21T20:57:51.629Z | Yoda969
+Catch u later. Thanks
+
+2025-04-21T21:00:21.638Z | RE
+yah HAGN!
+
+2025-04-21T21:04:18.028Z | Sharcus Aurelius
+
+2025-04-21T21:09:33.053Z | Mike Houston
+I think there is a chance the bear party is over...i see huge trades after hours in SH,SPXU,SPXS SDS as we saw after hours on Friday...either they are adding or selling...maybe news event coming in.... the trades whilst not exactly the sae size where big round numbers very close in size to Fridays trade. Here you have the SPXS example...15.5 mill Friday 15.1 million today. 2 largest trades ever in that name....others the same. I would think it was people removing the friday positions...but maybe they are doubling down LOL.... THE uvxy TRADE NEAR THE PEAK MAKES METHINK THOUGH aLMA MAY WELL PROVE RIGHT AND THIS BEARISH TRADE IS OVER FOR NOW
+
+2025-04-21T21:11:18.840Z | Mike Houston
+MY GUESS WOULD BE NEWS COMING IN
+
+2025-04-21T21:26:12.565Z | kk
+When did Alma said bear trade is over
+
+2025-04-21T21:26:43.414Z | kk
+I think she said post OPEX we go lower and bottom not in
+
+2025-04-21T21:29:40.169Z | RE
+some solid put buying for month end in the flows today
+
+2025-04-21T21:29:47.151Z | RE
+and put selling for May Mopex
+
+2025-04-21T21:32:55.242Z | David P
+We also just got a green signal on the 2hr vol based momentum, though it’s mainly from that squeeze so probably not reliable
+
+2025-04-21T21:34:42.089Z | Mike Houston
+I paraphrase….she indicated the market would trade in a range this week and vol would be under pressure
+
+2025-04-21T21:35:01.382Z | Mike Houston
+Potentially
+
+2025-04-21T21:40:00.839Z | Sharcus Aurelius
+Lots of calls sold today as well. Could be just taking profits on SPXS. I think those leveraged ETF’s are more prone to volatility decay. Would also explain the potential large block sale on UVXY. Seems like a good region to chop here to burn some time and vol, but it might not last long.
+
+2025-04-21T21:46:26.282Z | kk
+but we broke down her lower bound
+
+2025-04-21T21:46:40.797Z | kk
+so I think that thesis might have changed a bit and closed below it...
+
+2025-04-21T21:48:39.523Z | kk
+though she said mid day that 5150 might get back to 5200 and pin?
+
+2025-04-21T21:48:57.671Z | kk
+but not much upside from this close so not attractive r/r...dunno
+
+2025-04-21T21:52:09.520Z | Mike Houston
+She isnt perfect I suppose
+
+2025-04-21T21:54:41.717Z | kk
+No, yeah it’s a good data point you shown
+
+2025-04-21T21:54:43.147Z | Mike Houston
+All sorts of people doing all sorts of stuff, but when. You get really large money doing something rare I am more inclined to pay attention. The fact UVXY trade 2 happened at 3pm before the rally makes me tend to bullish
+
+2025-04-21T21:55:07.028Z | kk
+But I think its always one piece of the whole picture
+
+2025-04-21T22:03:54.193Z | meager man
+We need to stop conflating what she says with absolutes. She’s giving probabilities and potential within a range or at certain levels the weakly bound was broken. We traded over 100+ range on the day and gave some back at close saying nothing of the gap down to open.
+
+2025-04-21T22:04:27.657Z | meager man
+To me the potential for more to the downside is there given everything around the geos and headlines.
+
+2025-04-21T22:06:22.829Z | Jack
+this
+
+2025-04-21T22:16:38.673Z | Andreas H
+She said reversal at 5150 EXCEPT vola is relative low, which it was. Because when dealers are short delta, they become even shorter delta when market falls more and so they would need to buy spx to not end up exposed. But when vola falls too fast this is reducing or even eliminating the previous effect, dealers become not shorter and thus dont need to buy spx for hedging. BUT maybe the downwards dynamic was also just flow-driven
+
+2025-04-21T22:19:10.239Z | Sharcus Aurelius
+Were there any other blocks that could be determined as “buys” on any of the long ETF’s or Mag7 names? If profit is being taken on leveraged and volatility instruments then it could be just volatility selling. Usually if there are multiple legs down in a correction volatility spikes less and less with each subsequent leg down. What kind of bounce would you be expecting here? More than 5300?
+
+2025-04-21T22:55:43.681Z | Stanley
+Wow RE, you improved it again! Is it still OD screenshot on TradingView? What are these green horizontal bars?
+
+2025-04-21T23:03:26.779Z | Alexander K
+No:- "post OpEx buy back flows" was the message last Thursday, having called for a supportive OpEx week (we saw a week of full-selling Monday onwards).
+
+2025-04-21T23:03:56.373Z | Alexander K
+then volatility to come back into the market a little time after post OPEX
+
+2025-04-21T23:08:43.809Z | kk
+This was here Thursday post? “As vol declines and hedges unwind into next week, along with risk parity following funds, we can see a bit of a slow bounce, then they will cut the move down again.l
+
+2025-04-21T23:10:00.434Z | Alexander K
+"post OpEx buy back flows" was a quote lifted from this chatstream on Thursday. Not referring to weekly/intraday posts.
+
+2025-04-21T23:10:01.993Z | kk
+Aren’t we post OPEX
+
+2025-04-21T23:18:23.895Z | kk
+I was under the impression that she implied supportive OPEX then risks unwind after
+
+2025-04-21T23:18:23.904Z | kk
+That’s been the takeaway from her posts
+
+2025-04-21T23:23:02.394Z | Alexander K
+Supportive OpEx -> brief (how brief, unknown) period of "post OpEx buy back flows" -> resumption of volatility / decline was my takeaway. Up for interpretation, it seems. Regardless, we will see what the future holds. I do not consider it a blemish against a commentator to be unable to read these tea leafs, given how the ground shifts (enough merely to recognise the difficulty of the task with such shifting tides).
+
+2025-04-21T23:35:45.626Z | kk
+Yeah appreciate pointing that out though
+
+2025-04-21T23:36:02.318Z | kk
+I think for me the best way to trade this market is not force trade when no conviction
+
+2025-04-21T23:36:04.698Z | kk
+And manage risks
+
+2025-04-21T23:36:12.206Z | kk
+Very easy to lose money in this regime
+
+2025-04-21T23:48:14.729Z | loosersgame
+I would track sentiment much more than analysing MM or bigger orders :)
+
+2025-04-21T23:48:49.642Z | loosersgame
+a crowded trade can rip off some faces
+
+2025-04-21T23:49:46.587Z | loosersgame
+today was a simple move watching the daily or 30min timeframe
+
+2025-04-21T23:53:38.339Z | Alexander K
+correct; would add an emoji thumbs up, but won't let me. but yes - rooting oneself to any one bias is surefire way to lose in the medium/long term
+
+2025-04-22T00:10:56.643Z | kk
+I might short if we get a bounce tomorrow
+
+2025-04-22T00:11:03.857Z | kk
+Re-read Alma’s weekly post she said
+
+2025-04-22T00:11:05.410Z | kk
+I’ve been saying since February that the bottom confirmation will only come with a cease‑fire and the start of sustainable US QE, likely around June.
+Right now, investors are pulling money out of US equities; upcoming earnings (TSLA, GOOG this week) will be weak, and the retail “buy‑the‑dip” crowd will lose its support.
+
+2025-04-22T00:11:31.277Z | kk
+Also she said Fed will keep low vol and against bull?
+
+2025-04-22T00:12:56.614Z | Lex
+to where?
+
+2025-04-22T00:13:07.944Z | kk
+Substack is so shitty though
+
+2025-04-22T00:13:21.949Z | kk
+I’ve been missing her trading alerts for the past 2 weeks lol
+
+2025-04-22T00:13:33.389Z | kk
+Depends on if we bounce and to what lvl
+
+2025-04-22T00:14:25.359Z | meager man
+Read. Re read. I had to do it myself across the broader geo post,the weekly, then the intraday. Her guidance is consistent and across more than just one intraday post here and next one there that’s why she links back to weekly or other posts for reference bc she’s consistent. If things change or fork she notes that potential or drops what to look for in the chat.
+
+2025-04-22T00:14:36.593Z | kk
+if the down move has been front run already then market might just chop before next move
+
+2025-04-22T00:14:56.734Z | kk
+Or we get a shortable bounce
+
+2025-04-22T00:23:03.205Z | Alexander K
+not convinced GOOGL earnings will be weak .. its running a 19 PE .. NFLX was strong through earnings last week ..
+
+2025-04-22T00:23:16.271Z | Alexander K
+as ever, we'll see what happens.
+
+2025-04-22T00:48:20.939Z | Doc McGraw
+https://youtu.be/dUwgobvt-Jo?si=oj3G3TntkqR6C5sJ
+
+2025-04-22T00:48:52.667Z | Doc McGraw
+I don’t usually listen to these videos but this is very good from a macro pov
+
+Ignore the click bait headline
+
+2025-04-22T01:45:32.404Z | meager man
+See how long this ovn move sustains
+
+2025-04-22T02:02:04.202Z | Lex
+thoughts?
+
+2025-04-22T02:12:02.923Z | RE
+I'll re evaluate if todays open gets rejected similar to last Wednesday .  5245-5250 ES
+
+2025-04-22T02:16:49.389Z | Lex
+thanks that makes sense
+
+2025-04-22T04:38:42.805Z | N8
+@Alma What’s the Lagrangian theory of everything?
+
+2025-04-22T04:47:58.427Z | Jain
+Where she say its over
+
+2025-04-22T05:09:47.452Z | Waka Flocka
+mike with all due respect you are dreaming pal. uncertainty from the white house is getting worse and we are at the beginning of earnings
+
+2025-04-22T08:03:05.833Z | Jonopop
+same the alert does not alert
+
+2025-04-22T08:41:32.594Z | Jordi
+Do you have the alarm on? I mean the alarm on trading signals chanel
+
+2025-04-22T13:29:20.162Z | marco ibares sanchez
+"Excuse me, I'm new here, where is the signal channel located?"
+
+2025-04-22T15:48:12.922Z | Boom
+dont marry yourself to this idea we have to go lower despite what anyone says. NO ONE KNOWS. if you're forecasting moves, you're doing so using probabilities on a distribution curve. People in here are taking what Alma posts as Bible and that is dangerous
+
+2025-04-22T15:48:34.850Z | Boom
+we get new information every day and all that matters is price and volume
+
+2025-04-22T15:48:45.622Z | Waka Flocka
+you have a view on economy and earnings ?
+
+2025-04-22T15:49:15.857Z | Boom
+Alma will get some right and she will get some wrong. control your risk and let your winners run further than losers
+
+2025-04-22T15:51:15.034Z | Boom
+you asking me? no, but a lot of charts are looking a lot better. lots of earnings could surprise and set up EP's that are playable to the upside. certainly not a trending market, but would not be surprised to see SPX 5600+ easy
+
+2025-04-22T15:53:58.680Z | Leonida
+Alma got everything right, This is a fact. The crucial part is recognize what are the unpredictable events, but if the story goes on according to the plan , Alma is always right. This what her history tell us since the beginning of this sub.
+
+2025-04-22T15:54:22.865Z | Leonida
+
+2025-04-22T15:56:42.432Z | Boom
+and you think she will continue to get everything right?
+
+2025-04-22T15:57:53.707Z | Boom
+that line of thinking will bankrupt people. every trade should be taken with skepticism in this environment. guilty until proven innocent. dont blindly think something has to happen bc Alma posted it. control your risk. i GUARANTEE she doesnt get every call right
+
+2025-04-22T15:58:29.528Z | Boom
+if she did, she'd be a deca millionaire. dont put that pressure on her to be right every time. its not fair to her tbh

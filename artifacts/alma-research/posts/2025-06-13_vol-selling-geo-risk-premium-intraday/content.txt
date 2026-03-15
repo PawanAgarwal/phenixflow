@@ -1,0 +1,89 @@
+Vol selling, geo-risk premium + Intraday post (13/June)
+
+SPX is trading at 5987.3 when I’m writing these lines…Got a nice 130 pts profit on Wednesday shorts during the overnight. Today is again a wait-and-observe day.
+
+The reason is because, after profiting this much, I simply don’t feel the need to gamble if the market is trading in a pivotal zone. The overnight decline is explained by the Iran - Israel conflict, but in fact, it was an inevitable result of the weekly volatility flows as I explained on Sunday, reinforced by the data releases (sentiment shift) and amplified by the attack.
+
+Look where realized vvol is trading and where implied vomma is trading:
+
+Synthetic tail OTM SPX put selling is still there but MM delta is making higher lows in a net basis. Market is still complacent, despite SPX fix strike skew spiked yesterday on weekly, monthly, quarterly basis. But again: vol selling is still on (suppressive for any upside move, but stabilizing for any downside move).
+
+The U.S. dollar has fallen to its lowest in over three years amid cooling inflation prints and tariff relief hopes, as traders push out Fed-cut expectations to September and beyond. Because despite near-target inflation, uncertainties from tariffs and a swelling federal deficit are keeping the Fed cautious on policy shifts. If Israel refrains from additional attacks, the risk premium in oil is likely to fade—making a sustained jump above current levels unlikely. These Middle East tensions inject a clear downside risk into global equities by threatening the U.S. disinflation narrative—a sudden oil shock could undo recent gains against inflation and force investors into safer, less risky assets.Basically near-term volatility hinges on the next moves in Jerusalem and Tehran; without a fresh cycle of strikes, the geo-premium should recede, but any new escalation will keep energy markets jittery and equity risk premia elevated.
+
+Here are the levels that matter from sentiment-wise:
+
+SPX: 5968ES=F: 5976.81SPY: 595.89NDX: 21,585NQ=F: 21,620.68VIX: 18.60 - 22.33VVIX: 96.00 - 103.15
+
+SPX: 5968ES=F: 5976.81SPY: 595.89NDX: 21,585NQ=F: 21,620.68VIX: 18.60 - 22.33VVIX: 96.00 - 103.15
+
+Continued vol selling will keep market swings contained, favoring premium-selling strategies and liquidity-providing chops, supportive from the downside for now. Except if vol-of-vol event happens (e.g., credit shock, geopolitical flashpoint), reversing vol positioning and swallowing all the downside gammas.
+
+INTRADAY POST Coding today’s positioning:
+
+Today we have longer vanna positioning than before, and also longer speed (despite that 5910 gamma bar). This only shifts locally above 5990, but the net exposure remains longer. Coding the centroid at 5974.75 - 5961.44 zone, a very important pivotal area. Until 1.20pm, momentum can grind below this keeping vol low (vol up, would reverse the momentum), but after 1.20pm, it is a strong supportive area. To the downside, momentum should take out 5951.27, with target of 5910 (also a local pin). To the upside, the pivot is 6011.71, it is also easier to break during the am, with primal target of 6020/25, but if vol catches up here (less likely), then upside target is 6047.Coding vanna flip at 5995.98, most effective during the am.Delta decay is flat-to-supportive today.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+Before you trade, always make a plan, what levels you watch, what conditions you monitor to make a certain trade you already decided. Calculate the amount of money you can afford for that day, and determine the max loss limit you can afford to take. If you intraday trade, never take more than two trades a day, bcs you can’t beat the algos. There is no too many edges during the day (especially now where globex dominates). If you are prepared, just wait for the right moment. But if the moment doesn’t come, if you “don’t feel the trade”, simply avoid to take it. it is not gambling, but trading. Be patient, conscious and calculated. No need to unresponsibly throw your money for the MMs.You get the levels, dynamics, charts, probabilities (reversion lvls) and a script from me to be able to make better decisions. Without conception, you are just a gambler…
+
+SCRIPT INPUTS=== SPX closed at 6045.26===
+
+99.73%, 6149.713631162479, , 6123.54454426629, 95.4%, 6097.48681558124, Risk level, 6080.460873701756, 68.2%, 6071.317249721073, 68.2%, 6019.089946864007, Risk level, 6010.059126298244, 95.4%, 5993.03318441876, , 5966.862635476837, 99.73%, 5940.806368837521
+
+=== ES closed at 6042.5===
+
+99.73%, 6149.847959751753, , 6122.952156634198, 95.4%, 6096.173979875876, Risk level, 6078.67626243634, 68.2%, 6069.277656640861, 68.2%, 6015.603147366025, Risk level, 6006.32373756366, 95.4%, 5988.826020124124, , 5961.928628559007, 99.73%, 5935.152040248247
+
+=== SPY closed at 603.75===
+
+99.73%, 614.8390564271006, , 612.0605140123113, 95.4%, 609.2945282135503, Risk level, 607.4870120159329, 68.2%, 606.5159284049604, 68.2%, 600.9713417385799, Risk level, 600.0129879840671, 95.4%, 598.2054717864497, , 595.4267539835851, 99.73%, 592.6609435728994
+
+=== VIX closed at 18.02===
+
+99.73%, 20.55918991698227, , 19.914277445422993, 95.4%, 19.289594958491133, Risk level, 18.875707002023024, 68.2%, 18.643993701779944, 68.2%, 17.373609263707692, Risk level, 17.164292997976975, 95.4%, 16.750405041508866, , 16.10310029966967, 99.73%, 15.48081008301773
+
+=== IWM closed at 212.78===
+
+99.73%, 218.127929519488, , 216.78682441469473, 95.4%, 215.453964759744, Risk level, 214.58225224806745, 68.2%, 214.1128081679803, 68.2%, 211.43879061899136, Risk level, 210.97774775193255, 95.4%, 210.106035240256, , 208.76477171768641, 99.73%, 207.432070480512
+
+=== QQQ closed at 533.66===
+
+99.73%, 545.6198769962094, , 542.6216701031925, 95.4%, 539.6399384981047, Risk level, 537.6904785477226, 68.2%, 536.641639810869, 68.2%, 530.6616074497018, Risk level, 529.6295214522773, 95.4%, 527.6800615018952, , 524.6815729489521, 99.73%, 521.7001230037905
+
+=== NDX closed at 21913.32===
+
+99.73%, 22395.56987800255, , 22274.681136657444, 95.4%, 22154.444939001274, Risk level, 22075.83820888686, 68.2%, 22033.552627089335, 68.2%, 21792.4240385067, Risk level, 21750.80179111314, 95.4%, 21672.195060998725, , 21551.295368257346, 99.73%, 21431.07012199745
+
+=== NQ closed at 21909.0===
+
+99.73%, 22393.610056061043, , 22272.12803102972, 95.4%, 22151.30502803052, Risk level, 22072.31358889257, 68.2%, 22029.81937872212, 68.2%, 21787.51064580071, Risk level, 21745.68641110743, 95.4%, 21666.69497196948, , 21545.201829545615, 99.73%, 21424.389943938957
+
+=== NVDA closed at 145.0===
+
+99.73%, 151.65133269624357, , 149.97928181835996, 95.4%, 148.32566634812179, Risk level, 147.2414991186341, 68.2%, 146.6534064400744, 68.2%, 143.32752136112012, Risk level, 142.7585008813659, 95.4%, 141.67433365187821, , 140.00162589014843, 99.73%, 138.34866730375643
+
+=== AMZN closed at 213.24===
+
+99.73%, 220.53616361454544, , 218.70451640396826, 95.4%, 216.88808180727273, Risk level, 215.6988071381018, 68.2%, 215.05630556806008, 68.2%, 211.40809027900792, Risk level, 210.7811928618982, 95.4%, 209.5919181927273, , 207.75987030222322, 99.73%, 205.94383638545457
+
+=== AAPL closed at 199.2===
+
+99.73%, 206.1548321655474, , 204.4087295011909, 95.4%, 202.6774160827737, Risk level, 201.54377843978946, 68.2%, 200.93118544339632, 68.2%, 197.45363687790476, Risk level, 196.8562215602105, 95.4%, 195.72258391722627, , 193.9760835622781, 99.73%, 192.2451678344526
+
+=== GOOG closed at 176.97===
+
+99.73%, 183.2268935009754, , 181.65593555522128, 95.4%, 180.0984467504877, Risk level, 179.0785731098287, 68.2%, 178.52737079068243, 68.2%, 175.3988018162216, Risk level, 174.8614268901713, 95.4%, 173.8415532495123, , 172.27022840247193, 99.73%, 170.7131064990246
+
+=== TSLA closed at 319.11===
+
+99.73%, 344.4864468618115, , 338.08281687298773, 95.4%, 331.79822343090575, Risk level, 327.66186259243045, 68.2%, 325.39227261727706, 68.2%, 312.70154000414465, Risk level, 310.5581374075696, 95.4%, 306.4217765690943, , 300.010595130499, 99.73%, 293.73355313818854
+
+=== TSM closed at 215.43===
+
+99.73%, 223.79012893856608, , 221.69024480970663, 95.4%, 219.61006446928303, Risk level, 218.24736345229678, 68.2%, 217.50999100872963, 68.2%, 213.3297297879092, Risk level, 212.61263654770323, 95.4%, 211.24993553071698, , 209.1494607023451, 99.73%, 207.06987106143393
+
+=== AMD closed at 118.5===
+
+99.73%, 124.21907157451284, , 122.78097923622721, 95.4%, 121.35953578725642, Risk level, 120.42732712061083, 68.2%, 119.92124495180111, 68.2%, 117.06150096940546, Risk level, 116.57267287938917, 95.4%, 115.64046421274358, , 114.20174656049505, 99.73%, 112.78092842548716

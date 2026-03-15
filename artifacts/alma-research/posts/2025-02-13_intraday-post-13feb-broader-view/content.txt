@@ -1,0 +1,43 @@
+Intraday post (13/feb), + broader view
+
+Crucial to remember that market knew about Trump’s victory last year February, I posted that months before furus started to post about “Trump trade” and stuff…
+
+The key point here is that the market has already known about the coming inflationary pressures after Trump takes the chair. But also remember that Trump wants weak dollar too.
+
+However rising yields cause contraction in equity valuations. As yields rise, investors demand for lower PE that provides pressure on equity prices, even if the economy itself is strong. Economy not equals to market. Also if interests rates are high it eventually leads to profit squeeze/margin squeeze, causing a potential 10% decline in equities.I still believe in a bigger decline, I’m just not sure about the timing yet. Market is hedged =thus supported) into Feb OpEx for sure, and also some hedges remained until Q1 OpEx, but after the long-dated tail risk is very much underpriced as selling those contracts was to cover the price of the hedges since December. I still lean towards March OpEx cycle, but I will talk about later…The take here is that nothing is a surprise about what Trump is doing and sticky inflationary pressures. Also I dropped yesterday pre-market that components like used cars, airfares, and car insurance and post serivces drove the increase. Also core PCE inflation is being revised up modestly.How did the market reacted? - They bought back GOLD and positive reversion in equities, futs as called and further volatility decline both in RV and IV. The moves are results of near-term speculative volatility trades, not fear or something, because, again: market is hedged and expected all of this. However, in order to sustain the growth without letting inflation out of hands, market needs to experience a broader de-risking to price all the lies out that are still in the prices today, in order to price in the new regime, and also to provoke negative wealth effect in order to avoid recession risk due to less dovish - more hawkish forced Fed responses. More in details later. Lets skip to today…
+
+Coded MM gamma for today:
+
+And OptionsDepth Heatmap:
+
+(Heatmap overview can be found here: OD chat)
+
+Coding zero vanna at 5997.47, below vanna regime is negative, so vol should cool off in order to break below this line. And coding charm to be net supportive above 6012.43Also coding 6047.43 as the main daily pivot that will show us what the market wants. This can also pin the market, very close to the adjusted rolling mean, only to mess with the algos. But further vol decline would still pull institutional flows in to increase exposure. Coding 6089.14 the lvl above the upside gamma magnetic effect starts to kick in. I code 3M rolling realized volatility at 13.09% and monthly at 14.95%If market can manage to break above 89s, the supportive flows will accelerate fast.
+
+Below you can see the SPX vol surface into Feb and March OpEx from now:
+
+And VIX:
+
+That skew is still bid but the smile after event vol clears out. The skew bid tells me persistent net long vanna environment that means, if that event vol crush happens this would provide another layer for further buyback flows. The vol trade narrative is explained in the weekly post.
+
+SCRIPT INPUTS: SPX99.73%, 6154.434848578022, , 6128.765156953812, 95.4%, 6103.2025317108855, Risk level, 6086.5007964122, 68.2%, 6077.532388813181, 68.2%, 6026.299612999554, Risk level, 6017.4396332753, 95.4%, 6000.7378979766145, , 5975.066829315554, 99.73%, 5949.505581109478
+
+ES99.73%, 6179.328958193207, , 6152.626524681672, 95.4%, 6126.039479096603, Risk level, 6108.6671089111105, 68.2%, 6099.3365415169455, 68.2%, 6046.046549466528, Risk level, 6036.8328910888895, 95.4%, 6019.460520903397, , 5992.756548293371, 99.73%, 5966.171041806793
+
+SPY99.73%, 614.1425588694224, , 611.4409734135862, 95.4%, 608.7512721104924, Risk level, 606.9937126270813, 68.2%, 606.0496337952295, 68.2%, 600.6582932279747, Risk level, 599.7262580760437, 95.4%, 597.9686985926326, , 595.2669516860394, 99.73%, 592.5774118337026
+
+VIX99.73%, 18.2567261455485, , 17.65513288358756, 95.4%, 17.07336324443563, Risk level, 16.68758693867283, 68.2%, 16.471057883929504, 68.2%, 15.286872603833599, Risk level, 15.092413747972676, 95.4%, 14.70663744220988, , 14.102549262717746, 99.73%, 13.523274541097006
+
+IWM99.73%, 229.26992408875063, , 227.85306383380697, 95.4%, 226.44495960296905, Risk level, 225.52402118060428, 68.2%, 225.02804438720003, 68.2%, 222.20302354309732, Risk level, 221.71596905377072, 95.4%, 220.79503063140595, , 219.3780012475105, 99.73%, 217.97006614562437
+
+QQQ99.73%, 541.7583738822682, , 538.3832640323715, 95.4%, 535.0291808376185, Risk level, 532.8354639050626, 68.2%, 531.6539379195793, 68.2%, 524.9246083950588, Risk level, 523.7645116808749, 95.4%, 521.570794748319, , 518.1952753258952, 99.73%, 514.8416017036693
+
+NQ_F99.73%, 22347.506342366632, , 22211.40279947257, 95.4%, 22076.128171183318, Risk level, 21987.658887377554, 68.2%, 21940.019501828378, 68.2%, 21668.636075775295, Risk level, 21621.841112622446, 95.4%, 21533.371828816682, , 21397.25251642746, 99.73%, 21261.993657633368
+
+NVDA99.73%, 142.42445856124144, , 139.57483620849246, 95.4%, 136.78222897544495, Risk level, 134.94286213047528, 68.2%, 133.93140566855337, 68.2%, 128.28786947907187, Risk level, 127.3371366488216, 95.4%, 125.49776980385194, , 122.64421305549575, 99.73%, 119.85554021805542
+
+AMZN99.73%, 237.05583751976602, , 235.01559655621682, 95.4%, 232.99291509777365, Risk level, 231.66840238820413, 68.2%, 230.95251968065264, 68.2%, 226.88943727336508, Risk level, 226.19158296335837, 95.4%, 224.86707025378885, , 222.8263490317529, 99.73%, 220.80414783179648
+
+GOOG99.73%, 192.93923190875157, , 191.05269897236428, 95.4%, 189.18461229226642, Risk level, 187.96060629729226, 68.2%, 187.29789446687724, 68.2%, 183.54308239689965, Risk level, 182.89937905427024, 95.4%, 181.67537305929608, , 179.78826228848678, 99.73%, 177.92075344281093
+
+TSM99.73%, 219.40054535842762, , 216.12089779327155, 95.4%, 212.89027512062006, Risk level, 210.76792702309478, 68.2%, 209.60986622508221, 68.2%, 203.09878584561395, Risk level, 201.99208274253022, 95.4%, 199.86973464500494, , 196.58765180490562, 99.73%, 193.35946440719738

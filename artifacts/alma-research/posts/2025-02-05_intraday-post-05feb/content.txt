@@ -1,0 +1,33 @@
+Intraday post (05/feb)
+
+SPX is currently trading at 6019 in the overnight.
+
+Coded MM gamma and charm for today:
+
+In the order flow we can see a customer long IC again with 5995/6000 put spread and 6050/55 call spread. But in my chart, it isn’t that visible, telling me that this is more like a smaller player trade than one big whale, hoping to earn volatility.
+
+For us what is important is that it creates a short speed environment from 5995 to 6055, that is suppressive towards 5995 that is a potential pin (look at the huge positive charm above, and huge negative charm below). Lets look at this using OptionsDepth Heatmap:
+
+(I explained how to read the heatmap in a separated chat, here: OD chat)We can see almost the same landscape.
+
+This setup is nice for intraday long-side reversion trades towards 6055 line.The question is, if momentum can break out of this 5995 - 6055 range.Remember from this morning: to break 5995, we need to see vol bid, and to break above 6055 we need to see vol offer. Net dealer skewness is still longer but moderately that is good to have some stabilization.
+
+Here I animated you how the positioning shifted in the last 3 days for this day alone:
+
+We can also see this trend in the risk premium too.5D put vs 25D put ratio is roughly ~1.17 for today, but it is ~0.88 into this Friday. Telling me that in reality Street doesn’t expect this fear to persist.I still maintain bullish bias. Like AMD, everybody expects it go down, and this is when Wall Street catches bears offguard.
+
+I code zero vanna at 6050.37 and 5985.52 for SPX. 5993 is still the inflexion point, and also net zero speed btw.
+
+SCRIPT INPUTS:
+
+SPX99.73%, 6146.396758031252, , 6119.2074014629525, 95.4%, 6092.138320421876, Risk level, 6074.450069761219, 68.2%, 6064.948425847196, 68.2%, 6010.689440518234, Risk level, 6001.309695863781, 95.4%, 5983.621445203124, , 5956.430445210624, 99.73%, 5929.363007593748
+
+SPY99.73%, 613.1794428629662, , 610.322935928208, 95.4%, 607.4797360799206, Risk level, 605.6216316686478, 68.2%, 604.6231664230478, 68.2%, 598.92339572408, Risk level, 597.9384269251022, 95.4%, 596.0803225138294, , 593.223623796894, 99.73%, 590.3806157307838
+
+ES99.73%, 6173.388872033733, , 6145.729692090697, 95.4%, 6118.194436016866, Risk level, 6100.201049875368, 68.2%, 6090.534694554351, 68.2%, 6035.339686747527, Risk level, 6025.798950124632, 95.4%, 6007.805563983134, , 5980.144668385846, 99.73%, 5952.611127966267
+
+VIX99.73%, 19.94032876670461, , 19.245645626262288, 95.4%, 18.575163925588633, Risk level, 18.130120187384826, 68.2%, 17.87955687799085, 68.2%, 16.513315318911264, Risk level, 16.289877981560487, 95.4%, 15.84483424335668, , 15.14687959868657, 99.73%, 14.479669402240702
+
+IWM99.73%, 233.03217585594862, , 231.5016036060761, 95.4%, 229.98108426586495, Risk level, 228.98642840749767, 68.2%, 228.4504448847079, 68.2%, 225.39928434588984, Risk level, 224.87355694406483, 95.4%, 223.87890108569755, , 222.34812191480233, 99.73%, 220.82780949561388
+
+GOOG99.73%, 217.15472651799868, , 214.7805681993931, 95.4%, 212.43236661593292, Risk level, 210.8928772878595, 68.2%, 210.05791652789028, 68.2%, 205.3352514355764, Risk level, 204.52713613987487, 95.4%, 202.98764681180145, , 200.61257197462453, 99.73%, 198.2652869097357

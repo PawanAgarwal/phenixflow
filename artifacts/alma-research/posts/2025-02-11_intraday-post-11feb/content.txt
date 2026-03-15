@@ -1,0 +1,43 @@
+Intraday post (11/feb)
+
+SPX is trading around 6044 overnight.
+
+Coded GEX for today session:
+
+Attaching OptionsDepth Heatmap:
+
+(Find the description here: OptionsDepth Chat)
+
+The gamma exposure is strickly monotonic increasing from 5998 towards 6137.65 zero speed line, and have supportive vanna and charm flows in this range. However this effect will diminish into EOD, bcs form 6026 to 6077 we have positive charm convexity (long color) and negative charm convexity below and above (short color), flattening the speed profile a little bit, as it pushes GEX down on the tails and elevating it in the ‘middle’ zone. Even tho this effect is small, it can provoke some reaction from volatility.
+
+Today’s ATM strike at 6065 is trading with 11.3% IV today, it was priced with 10.9% yesterday. This means that relatively the vol risk premium was asked higher for today as it was priced in yesterday, meaning the skew is elevated by , meaning fixed strike vol went up by 3.67% Coding main local zero vanna at 6082 SPX. Only with decreasing vol can be broken to the upside. The speed profile favors for it, but this is a local effect and crucial. Coding 6107.76 the lvl from where the upside long gamma starts to kick in.
+
+Here you can see coded SPX skew for next Monday:
+
+and VIX:
+
+You can see the skew flattening for SPX and also for VIX. Even tho ATM vol is high for today and relatively dumps into tomorrow, the near ATM territory is especially bid for today. This means that the vol trade, that I referred to on Sunday is still there and even more pronunced. while VIX vol is sold even on the tails into VIX expo.The effect starts to be visible on the RV too. Nice setup for reversion trades, risk/reward is still on the long call side. 6035 is my first intraday target, and 6000 for long.
+
+SCRIPT INPUTS:
+
+SPX99.73%, 6167.792480734844, , 6142.402084724032, 95.4%, 6117.116211070546, Risk level, 6100.595747159986, 68.2%, 6091.725380305815, 68.2%, 6041.048668593567, Risk level, 6032.284135652514, 95.4%, 6015.763671741954, , 5990.371949402171, 99.73%, 5965.087402077656
+
+ES99.73%, 6193.720769981443, , 6167.422245749192, 95.4%, 6141.235384990721, Risk level, 6124.125149483746, 68.2%, 6114.936381546602, 68.2%, 6062.450509046465, Risk level, 6053.374850516254, 95.4%, 6036.264615009279, , 6009.96462803139, 99.73%, 5983.779230018557
+
+SPY99.73%, 615.5203343056296, , 612.8469389338263, 95.4%, 610.1851549457836, Risk level, 608.4458864744737, 68.2%, 607.5117085882861, 68.2%, 602.1764773392928, Risk level, 601.2540646974013, 95.4%, 599.5147962260914, , 596.841245162618, 99.73%, 594.1796168662454
+
+VIX99.73%, 18.24597214222842, , 17.626462019360574, 95.4%, 17.027986280922562, Risk level, 16.63092289013685, 68.2%, 16.40769545812614, 68.2%, 15.188803649068197, Risk level, 14.989077949096549, 95.4%, 14.592014558310838, , 13.969753807779274, 99.73%, 13.374028697004976
+
+IWM99.73%, 232.7307231325653, , 231.2986373173161, 95.4%, 229.8753637025131, Risk level, 228.94451652831611, 68.2%, 228.44322281450602, 68.2%, 225.58780691752452, Risk level, 225.09549201660576, 95.4%, 224.16464484240876, , 222.73238957275206, 99.73%, 221.3092854123566
+
+QQQ99.73%, 542.7584936347413, , 539.3707978602663, 95.4%, 536.0042468173707, Risk level, 533.8023623549078, 68.2%, 532.616416972002, 68.2%, 525.862032639652, Risk level, 524.6976376450922, 95.4%, 522.4957531826293, , 519.1076447287784, 99.73%, 515.7415063652587
+
+NQ_F99.73%, 22386.05838965012, , 22250.759928981253, 95.4%, 22116.27919482506, Risk level, 22028.33117731209, 68.2%, 21980.975716053774, 68.2%, 21711.19137841713, Risk level, 21664.66882268791, 95.4%, 21576.72080517494, , 21441.406911363905, 99.73%, 21306.94161034988
+
+NVDA99.73%, 145.14616538221316, , 142.22268401760888, 95.4%, 139.35808635321595, Risk level, 137.47117258976286, 68.2%, 136.4333559467338, 68.2%, 130.64391718826997, Risk level, 129.66884205867464, 95.4%, 127.78192829522155, , 124.85435234462092, 99.73%, 121.99384926622436
+
+AMZN99.73%, 241.38411415716718, , 239.3142106047122, 95.4%, 237.2620567734078, Risk level, 235.91826606630224, 68.2%, 235.19199767708727, 68.2%, 231.06977919985883, Risk level, 230.36173271299464, 95.4%, 229.01794200588907, , 226.94755487062207, 99.73%, 224.8958846221297
+
+GOOG99.73%, 195.75142269989848, , 193.85437400761597, 95.4%, 191.97570982407035, Risk level, 190.74482742655036, 68.2%, 190.07847853722595, 68.2%, 186.30257566552876, Risk level, 185.65516646993402, 95.4%, 184.42428407241403, , 182.52666493319506, 99.73%, 180.6485711965859
+
+TSM99.73%, 221.3655472425397, , 217.9858600684012, 95.4%, 214.65777209539095, Risk level, 212.47103739742045, 68.2%, 211.2772658194748, 68.2%, 204.56861785082006, Risk level, 203.42895649906393, 95.4%, 201.24222180109342, , 197.85991069816572, 99.73%, 194.53444665394468

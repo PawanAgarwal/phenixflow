@@ -1,0 +1,39 @@
+Intraday post (06/feb)
+
+Futures are green in overnight, ES holds the 6082.14 lvl firmly…
+
+Coding gamma exposure for today:
+
+In the order flow I can see a customer long IC again at 30/35/80/85, but I don’t think this is the main characteristic for today. The player keeps betting on the probability on a vol increase.Attaching the heatmap below:
+
+(Heatmap description can be found here: OptionsDepth Chat)
+
+I code downside net zero vanna at 6064.9 where MM positioning shifts form long vanna to short vanna. To break below this lvl volatility must be cooled. And upside net vanna flip at 6123.5 where positioning shifts from long back to short. Here one should see elevated vol to break this. Now, lets look at my chart a bit closer:
+
+Market makers take the opposite, they long the fly. It is essencially a short vol smile / short skew MM trade, and has an indirect effect on vol in our favor in this particular context: The left wing of the fly is just right at my coded net zero speed lvl of 6029.63, and above this positioning is net long speed, short skew. At the towards both wings dealers are longer gamma that naturally suppresses volatility. This setup favors for reversion trades towards the center from both direction, where the vol can increase a bit. Considerint the placing of the pattern, the key is that it don’t let vol to increase to the downside to break through the zero speed line shifting the whole net regime, while simultanously keeps the higher upside gamma (long speed) pattern both locally and in average.
+
+And here I want to show you something important as an addition:
+
+Here you can see the ratios of IV over the chain. It is not quite the skew, but simply a ratio between the IVs of certain delta contracts. The first “x/y ratio” simply takes the IV of today’s x; y delta contract IVs, and tomorrow’s x; y delta contract IVs, the strike is not fixed here.The second “Fixed strike x/y ratio” takes the same strike, so today’s x; y delta contract IVs and check these contracts IVs tomorrow and Monday. We can see that 5 delta Put to 25 delta Put ratio on a fixed strike basis declines by 55.89%,while 25 delta Put to 25 delta Call ratio on a fixed strike basis goes down by 5.57% into Monday. We can see the declining tendency in pricing in the ATM fix strike vol as well, a 44.30% decline into Monday. Tail hedges are being unwound slowly, and into the OpEx it is even steeper. It tells us that market is slowly shifting short left tail-risk at least for now, and isn’t concerned about valuation, datas or the slowing tech alpha either in this short window.Customer flow is about selling the skew, triggering dealer flow to do so too.Bull bias remains.
+
+Selling “insurance premium” is basically selling tail risk. I don’t want to see customer side shifting towards short skew trade. We aren’t quite there yet looking at the skew relatively, but the earlier mentioned longer spot/vol beta is one of the early symptom of this shift.
+
+SCRIPT INPUT:SPX99.73%, 6167.665886765326, , 6141.062033134692, 95.4%, 6114.572933617038, Risk level, 6097.264630890696, 68.2%, 6087.968579603195, 68.2%, 6034.875117267227, Risk level, 6025.695330046804, 95.4%, 6008.387027320462, , 5981.7816458923435, 99.73%, 5955.294074172174
+
+ES99.73%, 6195.508585469467, , 6168.196237073112, 95.4%, 6141.004292734733, Risk level, 6123.23589330321, 68.2%, 6113.691407630086, 68.2%, 6059.186568531295, Risk level, 6049.76410669679, 95.4%, 6031.995707265267, , 6004.681719513796, 99.73%, 5977.491414530533
+
+SPY99.73%, 615.2835584088186, , 612.5114165809928, 95.4%, 609.7517645559718, Risk level, 607.9483997599438, 68.2%, 606.9795658143593, 68.2%, 601.4477140007953, Risk level, 600.4915416463062, 95.4%, 598.6881768502782, , 595.9158611111451, 99.73%, 593.1563829974314
+
+VIX99.73%, 18.234650335635507, , 17.607710200406874, 95.4%, 17.00232539669959, Risk level, 16.60058746660648, 68.2%, 16.37457417122654, 68.2%, 15.14130607268519, Risk level, 14.939413448920863, 95.4%, 14.537675518827754, , 13.907870771427028, 99.73%, 13.305350579891838
+
+QQQ99.73%, 540.7592102409099, , 537.2706488231358, 95.4%, 533.8045929134237, Risk level, 531.5373876646631, 68.2%, 530.3158839258905, 68.2%, 523.3611151066798, Risk level, 522.1625635072119, 95.4%, 519.8953582584513, , 516.4063422070449, 99.73%, 512.9407409309651
+
+IWM99.73%, 235.4544852255786, , 233.93596568985475, 95.4%, 232.42723956103148, Risk level, 231.44035747438912, 68.2%, 230.90865582883058, 68.2%, 227.88134426217695, Risk level, 227.35963031857963, 95.4%, 226.37274823193727, , 224.85403092100285, 99.73%, 223.34550256739016
+
+NVDA99.73%, 136.2398004852607, , 133.35684793122036, 95.4%, 130.53490115815768, Risk level, 128.6751039775221, 68.2%, 127.65058539070381, 68.2%, 121.94419528494527, Risk level, 120.98489968458726, 95.4%, 119.12510250395168, , 116.23765882647984, 99.73%, 113.42020317684869
+
+GOOG99.73%, 201.34717192004769, , 199.32522743848716, 95.4%, 197.32358748590275, Risk level, 196.0118989603715, 68.2%, 195.30143384831766, 68.2%, 191.2776314585957, Risk level, 190.58810714314413, 95.4%, 189.27641861761288, , 187.25381970205387, 99.73%, 185.25283418346794
+
+AMZN99.73%, 246.93075839356715, , 244.2257523260879, 95.4%, 241.55037828125623, Risk level, 239.79637436464287, 68.2%, 238.845038458814, 68.2%, 233.46430920773935, Risk level, 232.54362197324775, 95.4%, 230.7896180566344, , 228.0835634841043, 99.73%, 225.40923794432348
+
+TSM99.73%, 222.3661484059253, , 218.88994170423655, 95.4%, 215.46807786507202, Risk level, 213.21930686875385, 68.2%, 211.99098702174442, 68.2%, 205.0919728609482, Risk level, 203.92070777968365, 95.4%, 201.67193678336548, , 198.19289301060118, 99.73%, 194.7738662425122

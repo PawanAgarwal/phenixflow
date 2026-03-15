@@ -1,0 +1,622 @@
+Chat Post
+2025-02-08T12:37:47.910Z | Alma
+WEEKEND CHAT (08-09/feb)
+
+Replies
+2025-02-08T12:38:06.645Z | Investor
+Good morning
+
+2025-02-08T12:38:12.141Z | Leonida
+GM Alma
+
+2025-02-08T12:38:16.425Z | Riaan Lourens
+Morning and afternoon!
+
+2025-02-08T12:38:19.859Z | Abdullah Albaadi
+Goood morning 🇸🇦
+
+2025-02-08T12:38:34.252Z | jc
+gm!
+
+2025-02-08T12:38:39.676Z | Chien
+Good morning
+
+2025-02-08T12:38:48.290Z | SrLex
+Gm ☕️
+
+2025-02-08T12:38:52.338Z | Alma
+Hello
+
+2025-02-08T12:39:58.543Z | Alma
+I'll drop two educational posts this weekend. One is about hte concept of risk + sortino, sharpe, treynolds,
+and the second one is about my trading 'phylosophy'
+
+2025-02-08T12:40:50.359Z | Alma
+and i will discuss a bit of the opex flow, jsut here in the chat, thinking loud a bit... but i have to code a lot before..
+then i must supervise some papers, tests, preparing for educations slides etc. so pretty busy
+
+2025-02-08T12:41:25.100Z | leo
+
+2025-02-08T12:44:25.407Z | leo
+Happy to help you code as well, something I really want to learn to be able to run this on my own. Was wondering where you get the market data ?? Thxxxx
+
+2025-02-08T12:51:35.296Z | Arelys Rodriguez
+Good morning! Wondering what you think about Mon 2/10 spx reaching 1 sigma 2 sigma levels down to 5840-ish as per this chart
+
+2025-02-08T12:58:53.652Z | Line Dnalsi
+☕
+
+2025-02-08T13:38:01.217Z | Doc McGraw
+@DeanGatsby
+
+2025-02-08T13:38:04.919Z | Doc McGraw
+
+2025-02-08T13:48:24.675Z | Mike Houston
+pretty early yesterday the 8th,9th and 19th largest trades(in $ terms) ever happened in UVIX. (2X long vix). priced between 27.95 -27.65. later in the day no24 and  and No 26 happened at $28.90 and 28.75. We closed day at 29.81. I have looked back 12 months an this is the by far greatest number of big trades on a single day. Now UVIX doesn't get huge trades and the total $ sum is around $13 mill for those 5 trades. However i wouldnt be surprised if the selling here was sustained
+
+2025-02-08T13:49:52.639Z | Mike Houston
+so we had 6 of the top 30 trades in $ terms ever in UVIX yesterday
+
+2025-02-08T13:56:18.251Z | Arelys Rodriguez
+Oh nice! And that is in all history? Thats pretty interesting
+
+2025-02-08T13:56:37.345Z | Arelys Rodriguez
+I swung SPX puts but hope i dont regret it
+
+2025-02-08T13:57:01.034Z | April
+I saw this as well. Would coincide w/ the pattern I was talking about. If the trend continues, would be a BTD opp. Just unsettling w/ the headline risks of what Trump might say next.
+
+2025-02-08T14:14:46.271Z | Mike Houston
+test
+
+2025-02-08T14:15:01.702Z | Garik
+Looking forward learning over the weekend
+
+2025-02-08T14:15:48.992Z | Investor
+There’s a bunch of providers. There’s historical and current live data.
+
+2025-02-08T14:16:56.828Z | Investor
+You mean we keep on going down
+
+2025-02-08T14:17:47.473Z | Mike Houston
+yup, i think so
+
+2025-02-08T14:18:26.645Z | Riaan Lourens
+Very much respect your opinion and appreciate all your posts, and I hope you don’t mind me jumping in and adding another perspective.
+
+I use both OD and ConvexValue, and I find them to be very complimentary but it’s an apples to oranges comparison in respect to which is “better”.
+
+OD provides a TON of value with their out of the box functionality, namely the calculation of the MM book/positions/gex as well as their visual maps of gamma and charm.  It’s very intuitive and easy to understand, and it’s a very active community.  It’s well worth the money, but it’s limited to spx (which, for me, is ideal).
+
+ConvexValue on the other hand is effectively an application that lets the user view/graph/display/etc realtime option data across many many tickers, futures, vix, etc etc etc.  They calculate all the Greeks, volatility, buy/sell data, etc on the fly and provide access to that data and more (from memory, well over 100 parameters).  For example, a user can easily watch the buying and selling across any strike and any/many expiration in real time, and it’s visually easy to see (but the user will have a learning curve on how to do it). Or, charting volatility, etc.  You have to create your own “dashboards” based on the data that you want to see.  They also have a “map”, but it’s based on buy/sell volume vs. ODs approach (MM positioning and the potential impact of gamma/charm).
+
+In short, OD provides targeted value and easy to interpret spx positional data and mapping of gamma and charm.  Super helpful.  ConvexValue on the other hand provides a suite of tools to interrogate, view and query many many data points related to options as it relates to Greeks/volatility, buy/selling, etc.  An important difference is that OD provides the specific positions of customers and MMs, whereas convex provides standard OI but processes data “live” and provides all the data as close to realtime as what retail can get, at least at this point.  Convex’s API is amazing, as a side.
+
+Apologies for the long message, but wanted to make sure people understand it’s two totally different tools but highly complimentary IMO.
+
+2025-02-08T14:33:03.462Z | DeanGatsby
+Thanks Doc! I’ve been using CT since about May of last year, and back then OD was still being built. Trying to learn more about the differences between the two
+
+2025-02-08T14:35:42.897Z | DeanGatsby
+Very helpful! Thanks, Riaan! I utilize the CT api and use it for not only SPX MM positioning, but also tracking high volatility low priced equities which has proven to be very fruitful. I know not everyone is into coding their own models though so I get why OD might help simplify things. I didn’t know OD was only for SPX, but their heatmap, gamma/charm position contour maps do look quite beneficial.
+
+2025-02-08T16:15:07.167Z | John
+Alma, I'd like to make a request.  When you post trades, could you please tell how you're sizing the position?
+In trying to understand the concepts you're discussing about risk and using Kelly, it would help to see how you're applying it.
+
+2025-02-08T16:33:18.466Z | Mario
+Alma, which are the main differences between BJS-Garch that you posted to vomma study and another GARCH models?
+
+2025-02-08T16:56:42.115Z | Teddy C
+Alma, if I want to use your Rolling SD script for 5 min chart (intraday), what would you recommend as the value of window & trading_periods for the f_calcDailyRV function?
+
+2025-02-08T17:25:07.680Z | Jten0887
+This post has aged like fine wine.
+
+https://x.com/alma18499/status/1878787422890131911?s=46&t=J_s0UUte2RS6NYmR_AgrzQ
+
+2025-02-08T19:35:04.658Z | Doc McGraw
+well thought reply i pretty much see it the same way
+
+2025-02-08T22:16:45.842Z | Alma
+oh cboe...
+
+2025-02-08T22:17:34.549Z | Doc McGraw
+The source
+
+2025-02-08T22:18:02.463Z | Alma
+i'm coding and coding skews, term structures, etc. monitoring fix strike skews, on different tenors...
+and i'm surprised that i doN't see what I see few weeks ago, even on this week
+
+2025-02-08T22:18:10.334Z | Alma
+checked the code, the formulas, all is ok..
+
+2025-02-08T22:18:15.225Z | Alma
+they sent me wrong datas
+
+2025-02-08T22:18:19.971Z | Alma
+bad values
+
+2025-02-08T22:18:20.952Z | Alma
+fck
+
+2025-02-08T22:18:43.994Z | Alma
+but i got last week vix term.
+i will make an animated gif to show you how it changed during the week
+
+2025-02-08T22:19:08.108Z | Doc McGraw
+Files corrupted?
+
+2025-02-08T22:19:43.005Z | DeanGatsby
+CBOE vs OPRA?
+
+2025-02-08T22:20:34.419Z | DeanGatsby
+I’ve never felt like I can fully trust CBOE data
+
+2025-02-08T22:20:36.575Z | Alma
+just bad values. not the first time
+
+2025-02-08T22:45:21.436Z | Investor
+Hi Alma, Cem Karsan looking at the same option data mention that he sees a potential 10% draw down starting about now to march Opex. Do you see the same thing?
+
+2025-02-08T22:51:53.797Z | Alma
+i haven't watched any of his interview since last summer
+
+2025-02-08T22:52:10.478Z | Alma
+i coding the exposures currently and vol effects on deltas, including skewness etc.
+
+2025-02-08T22:52:45.283Z | DeanGatsby
+Cem’s on one victory lap. Just remember no one has a 100% hit rate
+
+2025-02-08T22:54:59.914Z | Mike Houston
+Cem’s vol fund is down 22% since mid 2022. He has been wrong on almost every call in the last 13-14 months. I have noticed he has started hedging his bets recently with a “well it could go down or it could go up”
+
+2025-02-08T22:58:25.731Z | Mike Houston
+I mean I am sure he is a smart guy and knows his maths but I would look elsewhere for confirmation on his calls.
+
+2025-02-08T22:59:43.544Z | Alma
+mmm, be careful with this.
+there are times when one cannot be sure, what the market wants.
+i also had this period, and will have.
+market isn't always clear, sometimes you have to sit back, stay out of trading and just observe from the sideline and wait.
+
+ooor.. if you have the inner urge to trade, then you estimate probability, and adjust your position sizes to the estimated % probs.
+like in a log optimalized portfolio model i thouched in the "fair bet" educational post.
+i will talk abotu that more, and also the real risk of the skewness.
+
+he is a high lvl knowledge man relatively. his fund can be down due to sizing issues not necessary due to bad calls.
+it is one thing to predict a market move and other to trade on it
+
+2025-02-08T22:59:50.716Z | Alma
+thats a different part of the game
+
+2025-02-08T23:00:12.968Z | Alma
+i know very good quants, or high knowledge MMs who are very bad traders
+
+2025-02-08T23:00:40.771Z | Alma
+and also know plp with simple volume indicators and moving avgs who are very good traders
+
+2025-02-08T23:01:03.742Z | Doc McGraw
+I invested in his funds
+Lost about 2 % in 18 months
+
+2025-02-08T23:01:05.649Z | Alma
+not bcs they understand the market moves, but bcs they size accordingly, and on the long avg their portfolio return is positive
+
+2025-02-08T23:12:43.143Z | Alma
+and other problem is that vol effects the delta and gamma (vanna and zomma effects).
+so you might been calculated a nice hedge ratio for your stock position, but if vol gets bid on a certain tenor, your option's convexity changes and will react differently to the underlying movements, and won't necessary work the way you expected.
+
+2025-02-08T23:13:00.722Z | Alma
+it can make you over- or underhedged (depends on, where the momentum goes of course)
+
+2025-02-08T23:13:08.609Z | Alma
+no matter what: loss
+
+2025-02-08T23:13:19.567Z | Alma
+despite you might have been right on the market
+
+2025-02-08T23:21:06.013Z | Tommyyyyyssss
+Hi
+
+2025-02-08T23:24:22.736Z | DeanGatsby
+Great points. It’s so hard to find that sweet spot of trading vs sitting on the sideline with the data you’re looking at. Position sizing is everything. Pretty sure that’s how Renaissance found their groove
+
+2025-02-08T23:27:30.615Z | Alkhaiary
+Hi Alma, I just joined this group& I am Pleases to be  member of the same  .
+
+2025-02-08T23:28:26.206Z | Jeffrey K
+I remember a buddy bought calls and the price movement went against him but vol spiked up so high he didn't lose any money on the position
+
+2025-02-08T23:34:02.891Z | 670583
+
+2025-02-08T23:34:08.507Z | 670583
+
+2025-02-08T23:34:10.363Z | Alma
+welcome :)
+
+2025-02-08T23:34:12.640Z | 670583
+
+2025-02-08T23:35:28.916Z | 670583
+His firms performance. Disclaimer: I’m not the originator (legal reasons)
+
+2025-02-08T23:36:27.414Z | Alma
+he should get better quants
+
+2025-02-08T23:36:48.060Z | 670583
+
+2025-02-08T23:36:51.978Z | 670583
+
+2025-02-08T23:36:55.138Z | 670583
+
+2025-02-08T23:36:59.695Z | 670583
+His other funds
+
+2025-02-08T23:38:03.706Z | 670583
+Is it still justifiable? This is over a decent period of time
+
+2025-02-08T23:40:00.644Z | Doritos
+Hey Alma , I just joined today , I love your SPX levels , so how does it work here ? Everything happens in chat or their is a different channel got signals? Can you pls guide . Thanks
+
+2025-02-08T23:46:34.633Z | Alma
+we have the daily, weekly and educational posts, on the website itself.
+we have daily chatrooms where plp share thoughts freely. no rules, only respect.
+i don't always provide signals. I have a separated chatroom for that, but as I emphatized it on X too, i won't always share signals if any.
++ check the chatroom called "OptionsDepth", where I introduce OD's heatmap
+
+2025-02-08T23:46:44.868Z | Alma
+and greeks basics
+
+2025-02-08T23:58:26.879Z | Doc McGraw
+Yup
+Sounds about right
+
+2025-02-08T23:59:30.715Z | Doc McGraw
+Website?
+
+2025-02-09T00:17:00.511Z | 670583
+I think she’s referring to the Substack website
+
+2025-02-09T00:21:20.423Z | Alma
+current ATM IV
+
+2025-02-09T00:22:22.933Z | 670583
+
+2025-02-09T00:25:00.213Z | Leonida
+Hi Alma, I have a question about Friday. We knew that at 6080 (where vol must decrease to break through), there was the zero Vanna, however, At 16:00 as the data came out, the mkt pushed lower fast toward zero speed area with increased vol.
+At the same time in that area (6075 zero speed), we knew before that volatility would have increased since we were at the critical zero speed point. (🎯)
+So the data was just a pretext to shuffle the cards and increase volatility?
+How do you interpret this dynamic, I am trying to understand didactically the mechanism happened.
+
+correct me if I’m wrong.
+
+2025-02-09T00:28:15.517Z | Alma
+Next week
+
+2025-02-09T00:29:46.516Z | Alma
+which part: the dynamics around zero vanna vs vol, or the news impact on vol?
+
+2025-02-09T00:30:54.905Z | Leonida
+The dynamics around zero vanna vs vol
+
+2025-02-09T00:37:25.272Z | Alma
+in very simplified terms for now:
+what is vanna? delta change to vol.
+positive vanna = positive correlation (vol up/delta up, vol down/delta down)
+negative vanna = negative relationship (vol up/delta down, vol down/delta up)
+
+if something goes from positive to negative and vice versa, it must have a zero too.
+thats the flip point.
+
+if we are in positive vanna regime, it also means positive speed, where MMs short downside gamma+vega, and long upside gamma+vega
+(bcs vanna is vega convexity too, vega change to spot, the delta of vega)
+Now, in this regime if spot moves down, MMs are shorter vol, so they buy vol, bidding up IV
+20-22delta strikes.
+
+logical: vol up/delta up... if dealers are longer delta, they must sell futs, that increases vol.
+also bcs it is shorter donwisde gamma so less resistance from gamma = more vol.
+
+2025-02-09T00:37:26.801Z | Alma
+but
+
+2025-02-09T00:38:23.596Z | Alma
+when spot reaches zero vanna line (that is not a stationary line but an oscillating territory),
+it all shifts.
+now vanna works reversely.
+so the higher the vol, the lower the delta will be pushed
+
+2025-02-09T00:38:40.688Z | Alma
+bcs spot went to negative vanna territory
+
+2025-02-09T00:38:54.837Z | Alma
+and if MMs are shorter delta, they buy back
+
+2025-02-09T00:39:59.763Z | Alma
+this is the mechanical dynamics.
+if an anomaly happens, that volatility gets dumped at the zero vanna territory, where it switches from positive to negative, then the lower the vol the higher the delta in negative vanna territory, MMs remain longer delta = selling
+
+2025-02-09T00:40:31.980Z | Alma
+opposite happens, when the vanna flips leads from negative to positive.
+there vol has to be up in order to break above the vanna flip
+
+2025-02-09T00:53:24.001Z | Carlos Cuervo
+That makes sense with CPI wednesday
+
+2025-02-09T01:05:54.561Z | Leonida
+Okay, so going back to the fact that volatility was supposed to decrease to break through the 0 Vanna, but instead it increased, does that make it an anomaly?
+Now MM is shorter or longer delta ?
+A bit lost here 🤯🤯
+
+2025-02-09T01:08:18.362Z | Alma
+anomaly bcs it deviates from what mechanically could be derived.
+so it is not the dealer flow, it is a flow outside of it.. a stronger customer flow
+
+2025-02-09T01:18:51.551Z | Leonida
+Thank you Alma
+
+2025-02-09T01:32:27.188Z | John
+So is this due to quarterly expiration or am I missing something?
+
+2025-02-09T02:18:57.355Z | Doritos
+Where to find the options depth and website
+
+2025-02-09T02:31:22.333Z | Dickson POON
+
+2025-02-09T02:31:57.856Z | Dickson POON
+"Vol remains crushed into next week, long bias remains as long as we hold the mean that you can read from the indicators on daily. This is why I provide lvls and charts."As the indicator also contains Margin of Error, may i know if the long bias remains even if we touched and hold the lower limit of the MoE? Thank you!
+
+2025-02-09T02:45:55.614Z | SrLex
+sorry for the very basic question, when Alma writes BCS she means BLACK-SCHOLES yes?
+
+2025-02-09T03:51:42.609Z | SrLex
+I asked GPT and it is (because) please correct me, I don't speak English at all, so it is more complicated for me to study when you speak with diminutives hehe. Thank you very much in advance
+
+2025-02-09T04:43:44.090Z | NS
+bcs=because
+BS=Black-Scholes
+
+My understanding of her usage.
+
+2025-02-09T06:42:30.835Z | Nicola T
+For the new members, check here my diary notes. could be useful to understand terms and meaning above the words. https://docs.google.com/document/d/17DdlVTQbrwGUDzyWZ7sQTdqM1BYkep2D/edit?usp=drive_link&ouid=117235126619551904473&rtpof=true&sd=true
+
+2025-02-09T07:11:57.571Z | Alma
+lower limit?
+
+2025-02-09T07:46:33.081Z | RNR
+Hi,Alma or if anyone can help me understand this"This means, by the time you become shorter skew. and bcs both vanna and charm goes towards zero around the ATM strike, your short skew exposure will be shorter vanna and longer charm into any direction the spot moves."  So by the time means what time?Is that expo time? And "you" referring to "MM"?  I don't know if it's because English is my secondary language..I just getting confused.
+
+2025-02-09T07:54:57.972Z | RNR
+Oh I think I get it now..
+
+2025-02-09T08:24:18.186Z | Alma
+as time is passing
+
+2025-02-09T08:27:11.544Z | Alma
+Hey, members,
+do you remember that I predicted that MMs short vol smile positioning will be realized against customers long vol smile trade? (06/feb intraday post and 07/feb, same pattern)
+look at this.
+during the last week
+(5dP - 5dC range into feb opex)
+
+2025-02-09T08:27:14.894Z | Alma
+
+2025-02-09T08:27:56.069Z | Doritos
+What are your thoughts about next week ?
+
+2025-02-09T08:30:05.709Z | Alma
+and the most dump happened on feb 6 when I signaled it
+
+2025-02-09T08:30:18.994Z | Alma
+please, be patient. I will drop the post when i'm there
+
+2025-02-09T08:30:32.427Z | Doritos
+🙏🏻
+
+2025-02-09T08:32:32.083Z | 0Mik
+Genius.
+
+2025-02-09T08:54:52.317Z | 0Mik
+Don’t think many ppl really get how big this is. Absolute killer call.
+
+2025-02-09T09:36:01.091Z | Ebdwcui
+Can you explain what data points this chart is composed of?
+
+2025-02-09T09:56:26.992Z | 0Mik
+this is vol smile. the IV across the chain. u can see top right she’s looking at Feb opex. ATM vol dropped compared to what the smile was pricing a week ago.. was 13.5%, now 12% → means fixed strike vol got sold off.
+she called the vol smile drop, even though the setup originally suggested the opposite, but she broke down how the context shifted the outcome.. and she was spot on. IV got sold throughout the week, especially on Feb 6 when she first posted this.
+
+2025-02-09T10:43:31.932Z | Nicola T
+From 15m time frame of 06 Feb: the moment where SPX passed from negative to positive vanna (6064 0vanna lvl). Then with MM short delta, IV down and Long speed setup ->  MM bought spot. Is it correct Alma?
+
+2025-02-09T13:53:26.442Z | Leonida
+
+2025-02-09T14:25:30.222Z | Zebra
+"I code downside net zero vanna at 6064.9 where MM positioning shifts form long vanna to short vanna. To break below this lvl volatility must be cooled." I think at that time the Vol went up, MM had short vanna, and their delta went down so they bought spot.
+
+2025-02-09T14:25:37.409Z | Zebra
+
+2025-02-09T14:29:59.336Z | Investor
+So does that mean volatility is too low on Friday that’s why the zero vanna line broke?
+
+2025-02-09T14:32:26.434Z | Zebra
+This is Thursday's case, I think Friday is different.
+
+2025-02-09T14:32:57.909Z | Leonida
+Alma wrote about this yesterday, check the messages
+
+2025-02-09T15:25:47.075Z | Nicola T
+in my opinion the situation was: 1) when Price went down below 6064 Vol UP-> Vanna shifted from Long to short -->MMs that were delta long they must sell spot. 2) Price reverting UP and passed 6064 zero vanna lvl -> Vanna shifted from short to long and MMs that were delta short they need to buy back the spot
+
+2025-02-09T15:29:27.148Z | Nicola T
+I try to put all this situations in a table
+
+2025-02-09T15:30:51.956Z | Peter Toth
+Really appreciate Alma starting this Substack and having chats open. I’ve been trying to fully understand all of these concepts for a year and for whatever reason just can’t fully grasp it yet
+
+2025-02-09T15:31:09.881Z | Peter Toth
+Doing my best to read everything provided and finally understand it
+
+2025-02-09T15:36:41.292Z | Nicola T
+Also this, but I need to complete the part below where I describe the long/short fly MM setup... I need some help to complete and check where I wrong before to insert on my drive file for all . Alma If you could have a look, when you have time. Many thanks
+
+2025-02-09T16:27:43.226Z | Alma
+i'm working on the weekly post ;))
+
+2025-02-09T16:28:15.647Z | Alma
+to catch the zero vanna effect, you need to look at fix strike vol, not vix or RV
+
+2025-02-09T16:29:36.898Z | Alma
+fix strike vol is basically checking how the vol risk premium changed relative to the expectations earlier.
+
+2025-02-09T16:30:12.409Z | Investor
+Oh is there a way to check this in tradingview or just look at option chain in real time?
+
+2025-02-09T16:30:33.448Z | Alma
+brokerages usually provide skew.
+
+2025-02-09T16:30:48.616Z | Alma
+check todays current ATM strike IV and compare it to yesterday's one
+
+2025-02-09T16:30:55.407Z | Alma
+same strike, hence fix strike
+
+2025-02-09T16:31:01.937Z | Investor
+In the beginning of the week when we approached the zero vanna line and go underneath MM bought. In this case, are you saying because vol was low MM had to sell underneath the zero vanna line?
+
+2025-02-09T16:31:21.444Z | Alma
+vol went down on friday
+
+2025-02-09T16:31:56.670Z | Alma
+i called this last week, thrusday
+
+2025-02-09T16:32:17.423Z | Alma
+in these messages you can see it visually
+
+2025-02-09T16:32:36.142Z | Alma
+how current ATM strike's IV changed, went down
+
+2025-02-09T16:32:52.818Z | Alma
+spot down/vol down... typicall negative speed, short vanna environment as written
+
+2025-02-09T16:32:55.382Z | Alma
+:))
+
+2025-02-09T16:32:59.032Z | Alma
+i go back now
+
+2025-02-09T16:59:02.339Z | Leonida
+I would add in the last part that Vanna above Vanna flip(0) is Vanna positive that means positive correlations : vol up/ delta up ,
+vol down/delta down.
+I didn’t get the part where above 0 Vanna, Vanna is negative .
+
+Appreciate your work, well done!
+
+2025-02-09T17:21:33.603Z | Nicola T
+maybe this little table you refer about vanna change? https://open.substack.com/chat/posts/0503358b-2365-4419-9913-7f55f5c44c99?target_reply_id=db0c513e-0b83-46a9-a801-caaaa4d11fd1&showTarget=true
+
+2025-02-09T17:26:38.418Z | Nicola T
+I don't want to create confusion..I am a bit confusing sometimes with these things, I need to improve and understand better
+
+2025-02-09T17:28:15.432Z | venz
+@Nicola T Hey man, thank you for the chat aggregations you do! I guest you keep all in a single folder. You you mind to share a link to that folder so we can find those even if we miss a link from you.
+
+2025-02-09T17:31:37.962Z | N8
+800 members!!  It would be nice to have multiple unlocked chat channels besides daily to discuss different topics in depth to help each other understand the concepts better. Tagging and search by topic or person would help a lot. Anyone want to be discord friends? I started a discord server called Float Club. ☠️
+https://discord.gg/fS9RPskg
+
+2025-02-09T18:13:02.297Z | Nicola T
+I put all on unique file. "Last page is the last update". Save this url https://docs.google.com/document/d/17DdlVTQbrwGUDzyWZ7sQTdqM1BYkep2D/edit?usp=drive_link&ouid=117235126619551904473&rtpof=true&sd=true
+
+2025-02-09T18:46:27.898Z | Riaan Lourens
+This is great, Nicola :)
+
+2025-02-09T19:16:40.850Z | John
+Alma, I have a practical question.
+
+In learning all of this, how will we be able to practically apply this if you aren't calculating levels?  Would we need to download data and learn to calculate?
+
+2025-02-09T19:19:12.411Z | John
+That is, you've said you don't plan to do this long so can we apply this knowledge without you?
+
+2025-02-09T19:51:01.390Z | Ngok996
+I've taken similar notes and have drawn some charts as well. I will share mine tomorrow to help you finish this!
+
+2025-02-09T19:56:31.305Z | Tom
+Where are the scripts to copy and paste into Pine Editor?
+
+2025-02-09T19:57:25.417Z | Zebra
+https://stochvoltrader.substack.com/p/reversion-scripts
+
+2025-02-09T19:57:35.368Z | Zebra
+In Alma's educational post
+
+2025-02-09T19:58:32.031Z | Tom
+Thanks. Is it that link on the bottom of that educational post page?
+
+2025-02-09T19:58:54.874Z | Ngok996
+I assume it's proprietary... but we can still gather some data from option depth or spotgamma
+
+2025-02-09T20:03:34.568Z | Ngok996
+GEX and gamma heatmap provide gamma data.
+They also have a charm heatmap, so I assume vanna could approximately(really?I'm not sure) be the opposite of charm. And it's only in terms of positive/negative direction, I’m unsure about the quantitative relationship.
+
+2025-02-09T20:44:54.332Z | Zebra
+Yeah. That’s the download link
+
+2025-02-09T21:47:22.917Z | Investor
+mm long vanna above zero vanna line then short vanna below line then as it’s below the line it’s vol down/delta up. Therefore they have to sell as spot goes down
+
+2025-02-09T22:41:17.818Z | Alma
+Okay, post is out https://stochvoltrader.substack.com/p/weekly-post-09feb-14feb
+
+2025-02-09T22:41:27.532Z | Alma
+take your time with it
+
+2025-02-09T22:46:38.546Z | Jonopop
+futures looking like another ugly gap down again
+
+2025-02-09T22:56:03.697Z | Investor
+
+2025-02-09T22:58:13.565Z | Investor
+
+2025-02-09T22:58:18.389Z | Investor
+
+2025-02-09T23:06:53.732Z | Jeffrey K
+ES opened at 6016  but have bounced to 6041
+
+2025-02-09T23:23:07.135Z | Investor
+Nvm I got it. Spot up gamma up. Net long vanna. Spot up gamma down net short vanna.
+
+2025-02-09T23:38:16.870Z | John
+Welp, /es is almost back flat and vix futs are red.  *knock on wood*
+
+2025-02-10T00:11:49.998Z | Ryan
+Very good. So if I were to summarize this as best I could:
+- The market is set for wide, choppy movements rather than a straight directional move.
+- Traders are reducing tail hedges (deep OTM puts) because they expect volatility to rise but not a major crash.
+- Bullish bias remains, but a retest (pullback or rangebound action) is expected before a more significant move up.
+- Expect volatility-driven price action
+
+2025-02-10T00:12:36.453Z | Ryan
+Just wanted to see if I’m understanding it all correctly
+
+2025-02-10T00:29:38.952Z | Investor
+At least for tomorrow it seems like we’re at 6037 so long vanna. That means spot up/ gamma up and vol down/delta down, their algos must switch and start to buy back futures. This probably means bullish for tomorrow
+
+2025-02-10T00:40:09.196Z | Tom
+@Trader McGraw do you have any data on COIN? They have ER this week. I’ve seen some large call BTO blocks hit short dte 1-2week exp.
+
+2025-02-10T00:41:27.398Z | Tom
+The  2/21 chain is net bullish unless they are selling those calls
+
+2025-02-10T00:41:42.323Z | Doc McGraw
+I can look later when I get home from the Super Bowl party
+It'll be naive gex though
+
+2025-02-10T00:42:19.345Z | Tom
+
+2025-02-10T01:49:03.864Z | EZ
+
+2025-02-10T04:40:03.321Z | April
+Hi, Alma. Thx for the update. What you described made me think of Thurs'. price action where there was more reward on calls, and they bled out premium on the p's until we had that violent spike down in the afternoon, followed by a violent rally up, and back down in after hours. Is that kind of price action the result of these MM long fly strats where we see these violent moves that happen very quickly?

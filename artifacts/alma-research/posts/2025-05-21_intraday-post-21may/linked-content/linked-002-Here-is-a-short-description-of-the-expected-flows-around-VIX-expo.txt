@@ -1,0 +1,75 @@
+Intraday post (20/May), Vix expo
+
+Bear market - biasHere is a summary of key points for my high probability bear market bias:Powell faces a no‑win between cutting too soon (fueling inflation) or too late (triggering a pull‑back). Higher import levies now hitting CPI, yet high rates won’t blunt cost‑push inflation.Warehouses are near capacity even as demand slows, squeezing margins and retail credit quality. Q1 saw vacancy tick up to 7% even as new supply slows, a sign inventories are piling up. Target and Walmart hiked inventories by 7 %/2.8% ahead of tariffs, then saw gross margins compress. 90‑day credit‑card delinquency jumped to 12.3%, while overall serious delinquencies climbed from 2% to 2.8% in Q1.Growth slowing with commodity prices down, but persistent inflation keeps real GDP growth subdued. A large June refinance of maturing debt and an unresolved debt‑ceiling fight threaten market liquidity and Treasury yields. Markets expect rate cuts only “after unemployment hits” and data turn—yet cuts too early risk reigniting inflation. 90‑day US/CN truce = supply shock, bcs pausing new tariffs doesn’t remove duties already in place; goods prices rose 0.2% m/m in April CPI. Reduced sailings and port congestion pushed container rates to multi‑year highs—even as global PMI shows only modest easing in supply‑chain pressures.Tariff‑shock effects on margins, credit, and growth can trigger sizable drawdowns (even 30%)—but only if data confirm a one‑two punch of slowdown plus sticky prices.Next week’s gonna be vol driven, likely vol down, spot up slow grind.
+
+*Note, if it turns out to be right that it is a bearmarket rally, what it implies is that in a bear market one should be very adaptive. While in a bull market one simply buys every dips, during a bear market you look for reversion trades and headlines and bonds in order to determine entries and exists. (Not shortin every tops, like my would think.) Bear market requires high ability to be adaptive. If you are unsecure about it, better wait for a clear setup. Wait for the events to unfold, datas to come out.
+
+VIX expoRemember the bet I showed you in the weekly post, built up? VIX was heavily sold - short calls, long puts. This forced VIX dealers to sell VX futs and long ES (as beta hedge), and vanna/charm is supportive towards 19sAfter Wednesday, this mechanical force will disappear and the hedge unwind can fulfill the bet into Friday. However, Trump with his tax bill, can fake pum the market up once again.
+
+INTRADAY POSTCoding today positioning:
+
+Big short fly structure with 5952 in the center. Speed profile is net negative, but it is slightly positive below the speed line. The centroid falls to 5926.46; above this line vol can catch up. If it doesn’t, the 50/55 gammas can pin. To the downside 5909 is a pivot, to the upside it is 5944.26I code an upside zero vanna lvl at 5975, and a downside one at 5920 (both needs relatively lower vol to break through). I personally simply stay out of trading today, and look for exits for the remained short vols since April, then wait for a next entry. Not rushing, got enough.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+SCRIPT INPUTS: === SPX 5963.6===
+
+99.73%, 6096.784582777643, , 6063.397017623368, 95.4%, 6030.192291388822, Risk level, 6008.483204396066, 68.2%, 5996.8037110552805, 68.2%, 5930.210381687451, Risk level, 5918.716795603935, 95.4%, 5897.007708611179, , 5863.61702874307, 99.73%, 5830.415417222358
+
+=== ES 5980.5===
+
+99.73%, 6120.864057063442, , 6085.671873274102, 95.4%, 6050.682028531721, Risk level, 6027.80268723038, 68.2%, 6015.488664409065, 68.2%, 5945.305427677038, Risk level, 5933.19731276962, 95.4%, 5910.317971468279, , 5875.122162079338, 99.73%, 5840.135942936558
+
+=== SPY 594.85===
+
+99.73%, 608.598731797173, , 605.1517875519643, 95.4%, 601.7243658985865, Risk level, 599.4833226156472, 68.2%, 598.2773094934942, 68.2%, 591.4028288275479, Risk level, 590.2166773843528, 95.4%, 587.9756341014136, , 584.528345462128, 99.73%, 581.1012682028271
+
+=== VIX 18.14===
+
+99.73%, 20.424414110238757, , 19.845094654677904, 95.4%, 19.28220705511938, Risk level, 18.90984755515046, 68.2%, 18.702385836568165, 68.2%, 17.55961172748801, Risk level, 17.37015244484954, 95.4%, 16.997792944880622, , 16.416758692687555, 99.73%, 15.855585889761244
+
+=== IWM 208.97===
+
+99.73%, 215.12251196616538, , 213.57884548826758, 95.4%, 212.0462559830827, Risk level, 211.04339653259774, 68.2%, 210.50250856648904, 68.2%, 207.42616924393897, Risk level, 206.89660346740226, 95.4%, 205.8937440169173, , 204.3498274121917, 99.73%, 202.81748803383462
+
+=== QQQ 522.01===
+
+99.73%, 538.8126900154763, , 534.595514027518, 95.4%, 530.4113450077381, Risk level, 527.6725065352155, 68.2%, 526.193905521044, 68.2%, 517.7922884637339, Risk level, 516.3474934647845, 95.4%, 513.6086549922619, , 509.39066243248897, 99.73%, 505.2073099845237
+
+=== NDX 21447.05===
+
+99.73%, 22073.59224955534, , 21916.396960443286, 95.4%, 21760.32112477767, Risk level, 21658.19473810015, 68.2%, 21603.117718958136, 68.2%, 21289.838238601933, Risk level, 21235.90526189985, 95.4%, 21133.778875222328, , 20976.55850867225, 99.73%, 20820.50775044466
+
+=== NQ 21517.0===
+
+99.73%, 22151.45106932121, , 21992.266335408865, 95.4%, 21834.225534660603, Risk level, 21730.81001036125, 68.2%, 21675.032429717197, 68.2%, 21357.79827535385, Risk level, 21303.18998963875, 95.4%, 21199.774465339397, , 21040.563861070947, 99.73%, 20882.54893067879
+
+=== NVDA 135.57===
+
+99.73%, 144.22912956114226, , 142.0478526915645, 95.4%, 139.89956478057113, Risk level, 138.48812666210495, 68.2%, 137.71776935930245, 68.2%, 133.3876523621957, Risk level, 132.65187333789504, 95.4%, 131.24043521942886, , 129.05749831169143, 99.73%, 126.91087043885774
+
+=== AMZN 206.16===
+
+99.73%, 216.1830419301407, , 213.6625886093384, 95.4%, 211.17152096507036, Risk level, 209.53776513045742, 68.2%, 208.65071474154817, 68.2%, 203.63882350338085, Risk level, 202.78223486954258, 95.4%, 201.14847903492964, , 198.62691357993248, 99.73%, 196.1369580698593
+
+=== AAPL 208.78===
+
+99.73%, 217.2303299988602, , 215.10737384917297, 95.4%, 213.0051649994301, Risk level, 211.6277612096159, 68.2%, 210.88200100667913, 68.2%, 206.6566196651319, Risk level, 205.9322387903841, 95.4%, 204.5548350005699, , 202.43122929232476, 99.73%, 200.3296700011398
+
+=== GOOG 167.87===
+
+99.73%, 174.96147822567116, , 173.17953431721577, 95.4%, 171.41573911283558, Risk level, 170.25982816205118, 68.2%, 169.63360552930456, 68.2%, 166.08766864258254, Risk level, 165.48017183794883, 95.4%, 164.32426088716443, , 162.54172312700965, 99.73%, 160.77852177432885
+
+=== TSLA 342.09===
+
+99.73%, 369.93809446311354, , 362.9092975316876, 95.4%, 356.01404723155673, Risk level, 351.4748078340692, 68.2%, 348.9825861234959, 68.2%, 335.0556532615988, Risk level, 332.7051921659307, 95.4%, 328.1659527684432, , 321.12847013350193, 99.73%, 314.2419055368864
+
+=== TSM 193.5===
+
+99.73%, 203.2572051085768, , 200.80308839390355, 95.4%, 198.37860255428842, Risk level, 196.7881781215904, 68.2%, 195.92411692860787, 68.2%, 191.04512662129122, Risk level, 190.2118218784096, 95.4%, 188.62139744571158, , 186.16611599053408, 99.73%, 183.7427948914232
+
+=== AMD 114.74===
+
+99.73%, 122.05811570096897, , 120.21466591893085, 95.4%, 118.39905785048448, Risk level, 117.20620499122654, 68.2%, 116.55517104686771, 68.2%, 112.89564784452679, Risk level, 112.27379500877345, 95.4%, 111.08094214951551, , 109.23609346462648, 99.73%, 107.42188429903102

@@ -1,0 +1,51 @@
+ECB day, OpEx, Post-OpEx flows, Short Vol + Intraday post (17/April)
+
+Stagflation in the EU, Taylor rule
+
+Weekly post is here, Geopost is here.
+
+Very important: ECB set to cut interest rates as insurance against trade tariffs
+
+Now if we know the assumed “neutral” real interest rate, current inflation rate, the central bank’s inflation target and the real GDP nad its potential, we can assume a benchmark of how a central bank (like ECB) should set its short‑term nominal interest rate based on two “gaps”: the inflation gap (current inflation rate minus central bank’s inflation target) and output gap (real GDP minus its potential):
+
+If inflation is above target, central bank should raise rates more. If output is above potential, central bank should raise rates a bit more. If either is below, cut rates. Now, the current ECB deposit facility rate is 2.50%, the main refinancing operations is 2.65%, and the marginal lending facility is 2.90%; while this formula, called the Taylor estimator, says it should be higher by ~52.83% (around ~4.1)Now, as showed above, markets have sharply increased expectations for ECB easing, largely because 1) Trump’s erratic tariff hikes threaten euro‑area growth and inflation, and 2) a rising euro exerts additional disinflationary pressure by making imports cheaper. As a result, Euribor futures and OIS curves now fully price in a 25 bp cut at the next ECB meeting, with roughly 150 bp of total easing by end‑2025.Now… Trump’s tariff escalations combined with a strong euro are creating a classic stagflation mix (rising prices and slowing growth), yet markets are betting on ECB rate cuts. They simply don’t dare to hike as much as they should. Similar trap that the US faced back in 2021/22Lose-lose for Madame Lagarde… ECB is checkmated by Trump…(Btw, this is totally Europe’s fault. They should have raise rates since 2015, but all they have cared is the GDP growth, nothing else…)
+
+PM OPEXLets look at today’s positioning, PM expo:
+
+This is a net positive speed profile with an overall avg slope of 2.95%But locally below 5300-5314.48 the speed profile is negative with a slope of -11.99% towards 5184.89Coding main pivot at 5305.18, this is the centroid of the whole profile. Coding main downside pivot at 5245.81; this is the line beyond the volatility should start to compress, and downside puts start to act like a magnet. To the upside it is 5355.83, where upside longer gamma can start to stabilize the price action. However, if vol decline too sharply, these lines repell the prices. Now, think strategically a little bit. What is volatility? - The SD of the log returns of a given period, right? So if vol is compressed, this indirectly indicates that liquidity is higher.
+
+Market needs liquidity here, as I said it in the last couple of posts. In order to get it, they set the algos to mean reversion trading, and this produces compressed intraday ranges. Today, dealers are long downside puts, they net short delta. Listen, if price rises and puts are decaying, their short delta exposure will decay, so they need to sell. If price goes towards the puts, their short delta exposure will increase forcing dealers to buy. Lose-lose for volatility. This environment favors for rangebounding. Not a coincidence. Insiders are playing here the same game they did back in 2022: they sell deep OTM puts, and sell ATM calls. Just like the hawkish Fed yesterday. I said, they will temper any upside, because they don’t want the negative wealth effect to be taken back. Its effect should run on the economy for now. Plus the beta hedging of the VIX positions are cutting the upside down. No time for rally. What I see is a stabilization. As vol declines and hedges unwind into next week, along with risk parity following funds, we can see a bit of a slow bounce, then they will cut the move down again.Me personally I like short vega trades more than delta trades. If you still want to play direction, better to be familiar with linear derivatives.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+Coding zero vanna at 5303.33, with positive convexity so basically low vol is needed to break through this. Charm flip is above 5245.11 with negative convexity (color), meaning we should see slight gamma decay here until 5345 (and positive color above).
+
+SCRIPT INPUTSSPX99.73%, 5496.922861558357, , 5441.336139233823, 95.4%, 5386.311528435429, Risk level, 5350.252233837354, 68.2%, 5330.718974264238, 68.2%, 5220.101562140332, Risk level, 5201.148156787646, 95.4%, 5165.088862189571, , 5109.483886809859, 99.73%, 5054.477529066643
+
+ES=F99.73%, 5545.642706781617, , 5485.341685929268, 95.4%, 5425.696353390808, Risk level, 5386.593842185405, 68.2%, 5365.3880033976375, 68.2%, 5245.433985667603, Risk level, 5224.906157814595, 95.4%, 5185.803646609192, , 5125.479609204748, 99.73%, 5065.857293218383
+
+SPY99.73%, 548.6115872407103, , 542.8433594834249, 95.4%, 537.1357801926207, Risk level, 533.3946670949435, 68.2%, 531.3668975303409, 68.2%, 519.8904066643265, Risk level, 517.925279194119, 95.4%, 514.1841660964418, , 508.41388492741584, 99.73%, 502.70835904835224
+
+VIX99.73%, 37.70950735019089, , 36.42008540275732, 95.4%, 35.174753369919664, Risk level, 34.348423572351244, 68.2%, 33.88368233420346, 68.2%, 31.347012485838082, Risk level, 30.93157520694563, 95.4%, 30.10524540937721, , 28.810005389280416, 99.73%, 27.570491429105985
+
+IWM99.73%, 194.50150459975814, , 192.10385060536345, 95.4%, 189.73575291023064, Risk level, 188.18211785944467, 68.2%, 187.3377229695514, 68.2%, 182.57157570596098, Risk level, 181.75788458196158, 95.4%, 180.2042495311756, , 177.80540723620012, 99.73%, 175.43849784164811
+
+QQQ99.73%, 466.6192473578161, , 460.97530079091445, 95.4%, 455.3996200167987, Risk level, 451.742021503627, 68.2%, 449.7548219681643, 68.2%, 438.5342995745019, Risk level, 436.6179638479355, 95.4%, 432.9603653347638, , 427.3137301776358, 99.73%, 421.7407379937464
+
+NDX99.73%, 19164.039075619694, , 18936.083703580316, 95.4%, 18710.839850309847, Risk level, 18563.096902858837, 68.2%, 18482.85123510131, 68.2%, 18029.61709533552, Risk level, 17952.184347141163, 95.4%, 17804.441399690153, , 17576.381154992814, 99.73%, 17351.242174380306
+
+NQ=F99.73%, 19359.873984193047, , 19114.66510106468, 95.4%, 18872.561992096522, Risk level, 18713.698282673056, 68.2%, 18627.312483694277, 68.2%, 18139.95768351755, Risk level, 18056.801717326944, 95.4%, 17897.938007903478, , 17652.600519745083, 99.73%, 17410.626015806953
+
+NVDA99.73%, 113.58786331447763, , 111.29015744311886, 95.4%, 109.03893058912358, Risk level, 107.55597852065816, 68.2%, 106.74023432766688, 68.2%, 102.190223029485, Risk level, 101.4240172068809, 95.4%, 99.94106513841548, , 97.64011122067676, 99.73%, 95.39213241306143
+
+AMZN99.73%, 187.043323777045, , 183.83752058013525, 95.4%, 180.68666280404983, Risk level, 178.61439132685342, 68.2%, 177.47987564080938, 68.2%, 171.1221575932056, Risk level, 170.04561233525595, 95.4%, 167.97334085805954, , 164.76435797429556, 99.73%, 161.61667988506437
+
+AAPL99.73%, 208.11909438690049, , 204.627533343081, 95.4%, 201.1945493296807, Risk level, 198.93714764102708, 68.2%, 197.70196245326682, 68.2%, 190.7763170893365, Risk level, 189.6028609038948, 95.4%, 187.34545921524116, , 183.85058883497797, 99.73%, 180.4209141580214
+
+GOOG99.73%, 164.23036039242214, , 162.03307118555537, 95.4%, 159.86518019621107, Risk level, 158.44213145224626, 68.2%, 157.66748403050903, 68.2%, 153.3018736985598, Risk level, 152.55786854775374, 95.4%, 151.13481980378893, , 148.93623815162758, 99.73%, 146.76963960757786
+
+TSLA99.73%, 267.95441703095156, , 261.2699369023878, 95.4%, 254.7522100413547, Risk level, 250.4482905627461, 68.2%, 248.0632925544029, 68.2%, 234.85614923965085, Risk level, 232.65171554076952, 95.4%, 228.34779606216094, , 221.64841776384358, 99.73%, 215.14558907256406
+
+AMD99.73%, 96.82973935686636, , 94.6707351835473, 95.4%, 92.55987013619685, Risk level, 91.16789277025859, 68.2%, 90.39972908734799, 68.2%, 86.12861025386238, Risk level, 85.4121090607961, 95.4%, 84.02013169485784, , 81.85736103601668, 99.73%, 79.75026247418833

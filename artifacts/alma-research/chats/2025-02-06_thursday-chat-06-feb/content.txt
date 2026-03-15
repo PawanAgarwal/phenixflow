@@ -1,0 +1,1392 @@
+Chat Post
+2025-02-06T07:16:29.158Z | Alma
+THURSDAY CHAT (06/feb)
+
+Replies
+2025-02-06T07:17:05.930Z | Mario
+Morning ,🥐
+
+2025-02-06T07:17:54.747Z | Leonida
+Good morning
+
+2025-02-06T07:18:20.985Z | Alma
+Good morning :))
+
+2025-02-06T07:19:12.341Z | Abdullah Albaadi
+Gooood morning
+
+2025-02-06T07:19:19.056Z | Sebastian
+GM
+
+2025-02-06T07:22:13.097Z | Mario
+Alma I've posted a question in volatility post, I appreciate if you could ask when have time. No Rush at all just let you know because there is missing ;)
+
+2025-02-06T07:25:25.325Z | Pak
+☕️
+
+2025-02-06T07:25:44.852Z | Noor888
+🌞
+
+2025-02-06T07:28:59.006Z | NasCraicNow
+Early start - love it!
+
+2025-02-06T07:31:32.687Z | Noor888
+Morning profit taking for me on indices, thanks for a perfect read, Alma 🌹🌺
+
+2025-02-06T07:33:16.297Z | George
+Good morning,
+
+2025-02-06T07:39:46.410Z | Alma
+@Jeffrey K for your yesterday question.
+schematically, speaking:
+think about gamma as the amount dealers have to trade when spot moves by one unit.
+if you are long lets say 10 gamma,
+if spot moves up, you have to sell 10 shares of stocks to adjust your initial hedge (doesn't matter if you hedge call or put, the ending result is the same)
+
+okay, now we now that gamma changes relative to spot (called "speed").
+so lets say one unit higher you only long 8 gamma
+means, if spot moves up, you will still sell against the price move, but only 8 shares of stocks this time.
+
+on the next lvl, you only long 5 gamma
+again, if spot moves up, you short sell only 5 shares of stocks. and so on...
+so price has less and less resistance from gamma based delta hedging, and it lets the range of returns expand slowly to the upside, causing RV to expand a bit.
+
+now, if it reaches zero gamma line, then there is no gamma impact on that lvl when spot moves up or down, but then it flips to negative.
+And when you have negative gamma, lets say you short 5 gamma, if spot moves up, you have to BUY 5 more shares of stock. buying this time.
+
+quick math:
+if you are long ATM put: you have -50 delta, you long 50 shares of stock.
+in positive gamma exposure, lets say you long 2 gamma, if spot moves up by one unit, you will have -50 + 2 = -48 delta to hedge, you only need to hedge 48 delta, so you sell 2 shares of stock
+now, in negative gamma exposure, if you would have short that 2 gamma, if spot moves up by one unit, you would have -50 + -2 = -52, so you would have buy 2 more shares of stocks.
+
+if you are long ATM call: you long 50 delta, you short 50 shares of stock,
+long 2 gamma, spot up: 50 + 2 = 52, sell 2 shares of stock
+short 2 gamma, spot up: 50 -2 = 48, buy back 2 shares of stock.
+
+same thing happens with calls and puts
+
+2025-02-06T07:57:23.632Z | Sebastian
+the question for me is, how constantly does a mm hedge his position in the real world
+
+2025-02-06T08:11:14.024Z | Alma
+yes, they must be directional risk neutral, they play for trading revenue... they hedge on a very high frequency
+
+2025-02-06T08:22:40.630Z | David P
+When you are making the gex profile like in yesterdays example are you just looking at 0DTE gex? Or all expiration weighted
+
+2025-02-06T08:23:16.266Z | Alma
+all
+
+2025-02-06T08:24:48.568Z | Alma
+i tell you all in advance that i won't be here tomorrow during the day.
+I will  write the morning post, but then i will go, and come back only saturday.
+i go out with my friends a bit at evening
+
+2025-02-06T08:26:18.076Z | David P
+Going to get in the routine of attempting my own analysis of the MM profile before I read yours to see how my thinking is going. My data not as good as yours I’m sure but it’s fun like a cryptic crossword.
+
+2025-02-06T08:26:39.267Z | Alma
+one of my female friend aksed me if i want to accompany her to her pole dancing class, just watch her how it is going to her... i said, you mean watching multiple pole dancing girls for free for hours?? lesbo paradise :D
+
+2025-02-06T08:28:45.437Z | Alma
+one thing, and this is very important.
+if you read my posts, you can see how i think about the market.
+dealer flow is only one part of the puzzle.
+however, the whole market is revolving around over- and underpricing the odds.
+this is what its all about, and this is what will tell the next step.
+
+then the anomalies I wrote about in my educational post.
+dealer flow is a reactive/reflexive thing, a response to the customer flows.
+
+shouldn't be overemphatized
+
+2025-02-06T08:29:46.026Z | David P
+Understood. Can’t wait for the next step.
+
+2025-02-06T08:30:00.792Z | David P
+No royal road 😃
+
+2025-02-06T08:30:57.887Z | Noor888
+This is most important I think, levels keep leveling but key is understanding the flow and sticking with it 👌 thanks again 🙏🏻
+
+2025-02-06T08:46:59.147Z | Alma
+yes, this is why i don't like things like "eli5" and stuff... 1) we are not 5 yrs old, 2) you can't explain complex concepts in simplified terms without losing some aspects of the meaning
+
+2025-02-06T08:49:19.301Z | George
+Alma what is the framework / consept you use in order to decide if you will trade 0DTE, or longer exirings ?
+
+2025-02-06T09:00:49.863Z | Alma
+this is why i advised to read about gambling strategies. thats the primal thing to understand.
+dealer flow is just an addition, it shades the pic more, and more accurate. you can see the reflexive natures...
+
+but you know, lets say, you see the MM long risk reversal positioning, you pre-project all the gamma, hamma, jamma, kamma, etc. you do the simulation,
+but then boom, suddenly a big customer comes and sells a butterfly? the whole profile is messed up now
+
+2025-02-06T09:01:02.195Z | Alma
+
+2025-02-06T09:04:32.028Z | Alma
+theta profile usually, and the expected vol
+
+2025-02-06T09:04:52.231Z | Alma
+if vol is low, i don't like 0dte, perhaps not even trade that day
+
+2025-02-06T09:12:55.468Z | George
+Usaully you sell or you buy options?
+
+2025-02-06T09:13:30.590Z | Alma
+https://x.com/alma18499/status/1865396323828297984
+
+2025-02-06T09:14:13.506Z | Mario
+I think she prefers long side
+
+2025-02-06T09:15:21.868Z | Noor888
+Very true, as we trade probabilities - risk management comes first and understanding that anything from outside can happen. Nevertheless, I like your reads and your outlooks. Keep it up 👍🏼
+
+2025-02-06T09:42:17.256Z | Alma
+i very rarely shorted premium, tbh its just not my style
+
+2025-02-06T09:42:21.522Z | Alma
+i like fast alpha
+
+2025-02-06T09:44:18.654Z | Alma
+everyday i have a target i want to earn for xy amount of money.
+like, i.e. before starting a session, i determine that here i have $1000 for today, i wanna earn 15% today.
+i go for it (not all in), and if i got $150 profit as target, I'm gone, and don't touch it anymore on that day
+
+2025-02-06T09:44:32.702Z | Alma
+even if i see high probability setups
+
+2025-02-06T09:44:51.256Z | Nicola T
+Here the file with major Alma tips from 05 Feb Chat. feel free to donwload it https://docs.google.com/document/d/10p4QUrLpUBVbAI2TOaBdedp_qK77UO4C/edit?usp=sharing&ouid=117235126619551904473&rtpof=true&sd=true
+
+2025-02-06T09:48:17.350Z | Alma
+its more about the mindset, to analyse the market. not the risk management directly.
+risk management is a bit different in market space...
+but you know, if you go to vegas, you have to accept first that the maffia don't want you to take their money. the house wants your money.
+they cheat, they always do. they manipulate the games, the bets etc. to their own favor. (Michael Franzese, ex-capo regime has a good story about it how it was done under him with a baseball player)
+
+and if you wanna win, you have to learn to think with their head. recognizing when the odds are over or underpriced, and what side they want you to push in... and you bet against it, with prober sizing (like Kelly. thats the best)
+
+2025-02-06T09:49:12.200Z | Alma
+my father has a friend since his childhood who is a very good poker player. he also won competitions even in vegas and texas too, and made a lot of money from poker
+
+2025-02-06T09:49:14.930Z | David P
+Thanks Nicola, so helpful!
+
+2025-02-06T09:49:38.887Z | David P
+Poker is my favourite, got me into trading.
+
+2025-02-06T09:49:52.039Z | Alma
+i loved chess since i was little kiddo, and i also wanted to learn poker, after i saw how it is played and that it is all about sizing, timing, and forward thinking on probabilities
+
+2025-02-06T09:49:57.780Z | Alma
+and i asked him to teach me
+
+2025-02-06T09:50:31.495Z | Alma
+he taught me well, i practiced a lot, and i was able to beat every boys in high school and even in the uni lol, they were ashamed
+
+2025-02-06T09:50:51.296Z | Alma
+but the priciple is very similar
+
+2025-02-06T09:52:11.607Z | Alma
+i also like maffia movies (Godfather, Donnie Brasco, Casino, Goodfellas, Gotti (1996), etc.) and i asked him a lot about how this casino cheating is going
+
+2025-02-06T09:52:21.825Z | Alma
+he showed me some tricks etc. i loved them..
+
+2025-02-06T09:52:35.280Z | Alma
+but the key is that he always said,
+
+2025-02-06T09:53:40.348Z | Sebastian
+poker is easy :-) You've got to know when to hold 'em, know when to fold 'em, know when to walk away, and know when to run
+
+2025-02-06T09:53:48.475Z | David P
+Nicola just checking did you make one of these for the 3rd and 2nd also?
+
+2025-02-06T09:57:30.403Z | Noor888
+There is a good video on youtube I think about bankroll management, very much applicable to trading in my eyes 👀
+
+2025-02-06T09:57:31.205Z | Alma
+is that you have to learn to think with their heads.
+you get the common cards on the table.
+you watch the people around you how they reacted in the first 2-3 rounds.
+you know your cards, (but he was like didn't even watched them, but took the bets before... he has read so good the plp), and then you make assumption of the probabilities of their cards.
+you watch how they react, and it helps you to assume what they likely have in their hand.
+and so you can decide how much you should bet on that.
+
+2025-02-06T09:58:30.529Z | Alma
+once he dealt cards for me in a way that i always had big hands like three of kind, flush, full house etc. always big cards
+
+2025-02-06T09:58:37.010Z | Alma
+he had nothing
+
+2025-02-06T09:58:37.590Z | Nicola T
+Nope.. I will provide
+
+2025-02-06T09:59:01.486Z | Alma
+but i still didn't win anything
+
+2025-02-06T09:59:07.813Z | Alma
+and the reason was the bet sizing
+
+2025-02-06T09:59:18.432Z | Alma
+he wanted to teach me that
+
+2025-02-06T10:01:13.286Z | Alma
+and when he went to vegas, he was always aware of events when the estimated probability is deviates too much from the odds the book makers provided
+
+2025-02-06T10:01:35.778Z | Alma
+when the bet was too good to be true, then it was not
+
+2025-02-06T10:01:58.693Z | Alma
+and the key is that the crowd has never learned it, they fell for it over and over again
+
+2025-02-06T10:04:11.357Z | Alma
+you can get this edge by (odds × your estimation) - (1 - your estimation)
+and if this is positive, then the bet is mispriced in my favor, otherwise its not
+
+2025-02-06T10:05:15.131Z | Noor888
+Bet if you feel it, stay small if you don’t, practice matters a lot. Monday and yesterday I felt that indices were on a run, taking big sizes since Globex (gut feeling mostly, levels and tons of screentime showing me the crowd is on the opposite side), my bet paid huge (thks Alma for overall sentiment into Feb Opex), it made me feel the momentum right. Today I take a break or keep it light into NFP
+
+2025-02-06T10:06:55.249Z | Alma
+if a bet is crowded, the odds on that side becomes very unattractive, especially if the estimated probability is higher for the other side
+
+2025-02-06T10:07:10.551Z | Alma
+but it is not always this easy
+
+2025-02-06T10:07:29.015Z | Alma
+what i learned to check is to meassure the ratio between my estimation vs their pricings
+
+2025-02-06T10:07:41.366Z | Alma
+and watch its trend (again ,the MOMENTUM)
+
+2025-02-06T10:08:00.030Z | Alma
+and when i see a constant diverge between them, i must know that something is going on
+
+2025-02-06T10:08:11.574Z | Alma
+it is a clear sign that they aggressively misprice the other side
+
+2025-02-06T10:08:16.267Z | Alma
+this is the key
+
+2025-02-06T10:08:35.089Z | Doc McGraw
+In this example (and others) YOU = MM correct ?  Just so that its clear for everyone
+
+2025-02-06T10:08:38.533Z | Alma
+bcs normally it should fluctuate
+
+2025-02-06T10:09:04.192Z | Alma
+but when its not, then it is shady that some mispricing occurs purposely
+
+2025-02-06T10:09:11.714Z | Alma
+and this works the same way with markets
+
+2025-02-06T10:09:32.203Z | Alma
+if you have read carefully my last three intraday post, you can recognize that logic
+
+2025-02-06T10:09:40.389Z | Alma
+think about it
+
+2025-02-06T10:11:07.473Z | jj
+morning Alma, can you please share some insight on how you assessed AMD was a very strong name for a bounce after the pre-market sell off yesterday
+
+2025-02-06T10:13:14.089Z | Alma
+i just explained it :))
+
+2025-02-06T10:15:16.986Z | Alma
+so guys, this what i just explained here, is the primal key to understand the markets, and frontrun it.
+second is the anomalies: momentum, mean reversion, mostly (read my post about efficient market, there i explained the most important ones)
+and the third is the positioning.
+
+so like in poker: first you check the odds, how they move,
+second, you check the reactions, the patterns,
+third, you check the cards.
+
+2025-02-06T10:23:44.713Z | Nicola T
+Done . Here some points from 02-03 feb Chat. For the rest check other files posted. https://docs.google.com/document/d/1kgIbrVo-PuQkgzvPf3Mx6C9U7RAAkxwg/edit?usp=sharing&ouid=117235126619551904473&rtpof=true&sd=true
+
+2025-02-06T10:23:49.036Z | Alma
+and this is why i didn't start to post about greeks and all of these 'fancy stuffs" yet, bcs it's not the most important thing.
+it is important if you are a market maker, otherwise it is secondary.
+i know a some good traders who don't even understand options market, and have 60%+ win rate. all they watch is momentum, mean reversion, and good risk management, and intuition for sentiment.
+
+I don't like when somebody wants to explain everything through positioning, bcs thats just not how it works. i showed a simple example above, with the risk reversal.
+And if you understand what i dropped in my educational posts, you will get the options market significance. it is huge, but different from how some interprete it, overemphatizing it, like if this would be the only driver of the market...
+no. its customer sentiment.
+the supply/demand ratio for VOLATILITY
+
+2025-02-06T10:23:56.972Z | Alma
+i let you digest all of these :))
+
+2025-02-06T10:24:53.547Z | SrLex
+Thank you very much, buddy 🙌🏽🙌🏽✍🏽
+
+2025-02-06T10:25:16.744Z | Alma
+* 2) this is a LONG butterfly
+
+2025-02-06T10:36:52.194Z | Nicola T
+ok correct
+
+2025-02-06T11:10:08.841Z | Ngok996
+
+2025-02-06T11:10:32.296Z | Ngok996
+Hi Alma~
+Always appreciate your insights, and hope you enjoy the pole dancing;)
+I have two questions about your vol related posts yesterday.
+
+1. Why do MMs hedge vol?
+What's the purpose of setting a vol target / why do they need a multiplier to scale the portfolio exposure? Hedging delta and gamma is easier to understand since they directly impact PnL, but I struggle to understand what hedge volatility achieve.
+
+2. Predict or observe?
+When you analyze the market, do you try to figure out MMs' targets like "today they are focusing on delta-neutral because of XXX", or is it impossible to know, so we should just observe various greek flows and find trading opportunities like yesterday's gap between vol-of-vol and RV?
+
+2025-02-06T12:02:28.763Z | Tom
+What would you consider low vol ? VIX under 15?
+
+2025-02-06T12:15:40.788Z | Doc McGraw
+do we have the mean reversion levels for today?
+
+2025-02-06T12:16:10.490Z | Leonida
+We have to wait for the intraday post
+
+2025-02-06T12:16:34.753Z | Doc McGraw
+usually at waht time?
+
+2025-02-06T12:17:09.116Z | Leonida
+There is not a scheduled time, when Alma drops
+
+2025-02-06T12:17:24.546Z | Leonida
+Close the opening I guess
+
+2025-02-06T12:22:16.574Z | Tom
+I noticed that they moved AMD down from 125 to 106.50 on little to no volume, then yesterday bought 3x more than they sold btwn 108-106.5 before breaking it up. You can see on that 1hr.
+
+2025-02-06T12:27:29.611Z | gsp
+Good ☕️always makes for a good morning!
+
+2025-02-06T13:04:05.367Z | Line Dnalsi
+Good morning
+
+2025-02-06T13:10:47.602Z | The Patient Trader
+Good morning
+
+2025-02-06T13:12:50.556Z | damian44
+Good morning
+
+2025-02-06T13:16:08.926Z | LG
+Good morning
+
+2025-02-06T13:21:02.558Z | Punklandia
+good morning
+
+2025-02-06T13:33:09.863Z | Tom
+Gm
+
+2025-02-06T13:34:21.661Z | Samuel
+it's like the MMs are the "House". they had to pay out on PLTR so they manipulated AMD up pre-earnings and then dumped it (honestly earnings weren't that bad) to burn all the ER option speculators
+
+2025-02-06T13:35:38.439Z | David P
+Hi Alma, for your GEX charts are you using delta adjusted gamma? What would the advantages and disadvantages of using DAG be?
+
+2025-02-06T13:44:40.828Z | Mario
+DAG from Volland is bullshit, OptionsDepth is the only reliable source.
+
+2025-02-06T13:45:21.194Z | David P
+Fair enough was curious about the theory behind it.
+
+2025-02-06T13:47:49.309Z | Sharcus Aurelius
+Alma, I really appreciate what you are doing here. However, considering users cannot search for specific posts in threads, it will likely save you a lot of time to have a highly vetted “questions” thread where current and future subscribers can go to for answers. Having answered questions spread out across multiple “day” threads does not seem like an organized way to help your subs and yourself be more self sufficient and organized. Also, having posts related to market movement and trades be in your “trading signals” thread would also be extremely helpful. These daily threads can be very chaotic and hard to follow.
+
+2025-02-06T13:49:04.639Z | Mario
+Because DAG is an interpretation of the data. He has a model to do that. He suppose if It IS customer or MM using BID/ask. OD has the data from the source without make any interpetation
+
+2025-02-06T13:49:50.446Z | David P
+Makes sense, thank you.
+
+2025-02-06T13:54:15.828Z | Doc McGraw
+I get lost on Substack Is there a Feb 06 note from alma ?
+
+2025-02-06T13:54:32.273Z | David P
+not yet
+
+2025-02-06T13:54:52.563Z | Doc McGraw
+good  Its not me then
+
+2025-02-06T13:57:35.999Z | Pak
+Glad to see you here too doc
+
+2025-02-06T13:58:17.537Z | Jeffrey K
+constantly, with SPY  or futures.  Most likely the computer is doing it
+
+2025-02-06T14:00:30.234Z | Pawan Agarwal
+What about convexvalue?
+
+2025-02-06T14:02:38.013Z | Alma
+i post soon
+
+2025-02-06T14:03:00.789Z | VincentiusTrading
+Do you have any opinions on GexBot?
+
+2025-02-06T14:03:26.043Z | Ekzotika
+
+2025-02-06T14:03:43.843Z | Doc McGraw
+Volland totally bull
+
+2025-02-06T14:04:14.976Z | Doc McGraw
+I subscribed for a while had long text conversations with him, and the service wasn't helpful. His conversations were convoluted. His understanding of market dynamics was somewhat twisted. I was very unimpressed and considered it a total waste of money.
+
+2025-02-06T14:04:58.892Z | Doc McGraw
+It seems like his goal is to launch a "different product" instead of Gamma he's selling Vanna, which is misunderstood by more. Traders and Gamma is and so it makes him look like "a wizard"
+
+2025-02-06T14:06:30.049Z | Teddy C
+Alma, could you give an example of this? I don't quite understand 😂
+
+2025-02-06T14:10:10.319Z | Tom
+Alma for a ER IV flush play do think MSTR ARM  would be a good one to watch? They are both within their Implied move
+
+2025-02-06T14:10:13.954Z | Jeffrey K
+Here's to getting short and then being gifted a tape bomb.  I'm looking to short between 606.52 and 606.85 and just above for overthrow.  I have a prop method looking for a 'top' of some degree in that area.  FWIW dept.  - not based on greeks at all
+
+2025-02-06T14:13:21.253Z | Doc McGraw
+Not based on Greeks ?
+Based on voodoo lines and chart squiggles?
+
+2025-02-06T14:13:52.499Z | Doc McGraw
+Teasing
+
+2025-02-06T14:14:42.618Z | Doc McGraw
+I'm a recovering TA addict   Try not to touch the stuff anymore
+
+2025-02-06T14:15:17.665Z | Alma
+POST IS OUT
+https://stochvoltrader.substack.com/p/intraday-post-06feb?r=3dyydu
+
+2025-02-06T14:18:16.593Z | Jeffrey K
+I'm amazed how often simple lines work, at least for a scalp.  I suppose because other traders doing the same thing
+
+2025-02-06T14:19:55.103Z | Jeffrey K
+one thing I have struggled with in the past, which TA can induce, is having too much confidence (bias) in a predictive setup.  BC when you're wrong you take pain and if you're too 'predictive' you're not seeing with clear eyes
+
+2025-02-06T14:20:09.695Z | Alma
+hit refresh button pls!
+
+2025-02-06T14:20:28.784Z | Jeffrey K
+yes Queen
+
+2025-02-06T14:22:55.260Z | Sb
+Is it just me cuz I believe need even more dumbed down version of intraday post. The only thing I understood was "bull bias remains" lol
+
+2025-02-06T14:24:26.316Z | Scott
+Are the levels in the intraday post all ES in terms of the beginning break down? I know at the end you provide the levels for multiple instruments. Just making sure I am interpreting correctly. TY
+
+2025-02-06T14:24:39.533Z | Doc McGraw
+yep   Too much data increases certainty not accuracy
+
+2025-02-06T14:25:23.832Z | Alma
+always SPX. thats the benchmark. spx charts, spx lvls
+
+2025-02-06T14:25:42.019Z | crawtrader
+Alma - Are these iron condor Levels correct? In the order flow I can see a customer long IC again at 30/35/80/85,
+
+2025-02-06T14:25:53.441Z | Alma
+TO BE CLEAR:
+not the short fly, but the MM long fly is the short vol smile trade!
+
+2025-02-06T14:26:39.733Z | Alma
+yes
+
+2025-02-06T14:27:38.513Z | crawtrader
+6030/
+
+2025-02-06T14:28:01.184Z | John
+So basically, it suppresses vol?
+
+2025-02-06T14:28:07.859Z | crawtrader
+ah -- 6030/6035/6080/6085
+
+2025-02-06T14:28:48.163Z | crawtrader
+I Misinterpreted 80/85 as 5080/5085
+
+2025-02-06T14:28:54.613Z | crawtrader
+sorry
+
+2025-02-06T14:32:59.101Z | Alma
+not directly. not like the short fly pattern that is pinning and theta burning.
+MMs are longer gamma towards both wings, so in simulation, the momentum pingpongs between, the vol increases only when the momentum goes into the middle, but suppresses when it approaches the wings.
+vanna lvls are near to them. this is why I wrote, we should see custoemr interest to boost itnraday vol to break out of this fly.
+one of the wing will be magnetic. (basod on the price, it is the upper one). and from there, it is vol burning.
+
+2025-02-06T14:33:00.226Z | Alma
+but
+
+2025-02-06T14:33:25.355Z | Alma
+but it also tells you intraday reversion potential to the zero vana
+
+2025-02-06T14:34:10.112Z | Riley Hall
+Is there a post that goes over the meaning of your reversion threshold levels?
+
+2025-02-06T14:34:10.293Z | aa2300
+with the expected move so low today...is this a sit on hands day alma for you?
+
+2025-02-06T14:35:08.435Z | Alma
+the thing i emphatized is the placing again, just like in the case of the PS on Monday.
+it basically prevets vol to expand too much to the downside by the dealer flow, while simultanously keeps the upside long speed profile.
+and this telling me that the mass interest is up
+
+2025-02-06T14:35:14.962Z | Alma
+this is the key conclusion
+
+2025-02-06T14:35:39.544Z | KDH
+I’d also like if someone can point to an explanation of what the 68% , 95% , risk level etc mean in dummy down version !
+
+2025-02-06T14:37:48.724Z | Alma
+i will attach this note to the intraday post in a few mins, so you can read it back ;)
+
+2025-02-06T14:38:53.791Z | EZ
+They are selling dows, pushing up tech
+
+2025-02-06T14:39:39.576Z | Sukhavati
+doesn't look like an intra-day play anyway, more like a 1-2day bet no?
+
+2025-02-06T14:39:55.026Z | Alma
+Near 6060 i will hit 0DTE on SPY
+60 delta ITM
+
+2025-02-06T14:40:06.940Z | Alma
+6060/65 near to that zone
+
+2025-02-06T14:40:39.015Z | David P
+Yay that's what I understood as a good entry from your post!
+
+2025-02-06T14:41:18.507Z | Stefanie
+SPY call right?
+
+2025-02-06T14:44:59.117Z | Alma
+hit it earlier.
+
+2025-02-06T14:45:17.881Z | Alma
+will weight the position if it gives me 6065, if not, then not
+
+2025-02-06T14:45:37.617Z | Alma
+at 6070
+
+2025-02-06T14:46:05.789Z | Leonida
+
+2025-02-06T14:46:30.632Z | Leonida
+
+2025-02-06T14:46:44.794Z | Jain
+She hit it at 6070 from wat it seems
+
+2025-02-06T14:46:58.919Z | Doc McGraw
+call?
+
+2025-02-06T14:47:40.611Z | Doc McGraw
+
+2025-02-06T14:48:23.299Z | Sukhavati
+oh if you have OD you can view the chart on top of it? That's insane
+
+2025-02-06T14:48:28.502Z | Jeffrey K
+the line saved the market Doc!!  LOL
+
+2025-02-06T14:48:42.158Z | Leonida
+
+2025-02-06T14:53:28.283Z | John
+Target to take profit at 6080?
+
+2025-02-06T14:58:07.605Z | Doc McGraw
+
+2025-02-06T14:58:47.683Z | Doc McGraw
+
+2025-02-06T14:59:11.264Z | Doc McGraw
+alma  when u have a chance can u walk us thru ur chart?
+
+2025-02-06T15:00:29.670Z | Riley Hall
+i'm guessing 68.2% means there is a 68.2% chance that the market will revert at that price level?
+
+2025-02-06T15:01:18.191Z | KDH
+I feel like a tech fool here, why can’t I figure out how to have both of her indicators on one chart like you have?
+
+2025-02-06T15:02:31.248Z | Gamma
+you need subscription for that?
+
+2025-02-06T15:03:19.897Z | SrLex
+
+2025-02-06T15:03:50.527Z | KDH
+I do have a TV subscription , is that what you are referring to?
+
+2025-02-06T15:04:20.521Z | KDH
+In line script I load the one, then how do I add the second without disrupting the first pinescript?
+
+2025-02-06T15:05:32.236Z | Gamma
+just add another indicator
+
+2025-02-06T15:05:36.649Z | aa2300
+create new. its like a text editor..........
+
+2025-02-06T15:08:35.381Z | Brian
+Long at 6070? Is that what Alma said
+
+2025-02-06T15:09:38.825Z | Jain
+Hi alma in your email today do you say you seeing customers unwind hedges?
+
+2025-02-06T15:10:05.201Z | 0Mik
+imo, if we keep asking her the same questions over and over, we’re gonna piss her off lol. Jk aside, have you actually read her educational posts? Volatility mean reversion, Efficient Market Hypothesis.. she explained all that stuff super well, including what these levels mean. Take some time to read them too
+
+2025-02-06T15:10:08.572Z | 0Mik
+feels like people here are doing the same thing they do in every other Discord I’m in, expecting someone to hold their hand. But alma is teaching us, we gotta pay attention and actually absorb the knowledge she’s dropping
+
+2025-02-06T15:12:59.383Z | George
+start here: https://stochvoltrader.substack.com/p/efficient-market-momentum-mean-reversion
+
+2025-02-06T15:20:50.279Z | newbie123
+Hi McGraw. what's the black line in the left pane? there's no indication for that in the top left box...
+
+2025-02-06T15:22:09.754Z | SrLex
+Exactly, the most important thing that people do not realize is that Alma is teaching us how to fish, (LITERAL) and for this value, that even though I live in LATAM and with a minimum salary I could access her teachings, it is the only way I could finally access information (AND OF HIGH QUALITY) and I owe everything first to God and to Alma for placing her talents at the disposal of others, thank you very much Alma for so much.
+
+2025-02-06T15:27:01.861Z | Taco
+Yup, this stuff is worth thousands of dollars. But it's like university, spend your time and pay attention or there's no point
+
+2025-02-06T15:27:52.870Z | 0Mik
+it’s insane that furus charge $200, $500, even $1000 for teaching, and alma gives us charts, market calls, and actual education for $35 lol. Ridiculous
+
+2025-02-06T15:27:56.799Z | Alma
+I updated the intraday post, I attached the strategical explaination of the fly pattern.
+
+2025-02-06T15:29:28.313Z | Bull
+link?
+
+2025-02-06T15:29:31.830Z | Bull
+please
+
+2025-02-06T15:29:40.292Z | Gamma
+$240
+
+2025-02-06T15:30:22.487Z | Doc McGraw
+Alma can tell u what they are 'technically' (speed ? )  Generically they are flip levels
+
+2025-02-06T15:31:14.455Z | Alma
+i don't always have price target on intraday trades. I rather have daily profit target.
+i already got that. i'm out now, and won't touch it.
+ES is running, and my feb21 calls are running (posted on X, weeks ago)
+
+2025-02-06T15:31:26.152Z | Gamma
+https://stochvoltrader.substack.com/p/intraday-post-06feb
+
+2025-02-06T15:32:15.842Z | Alma
+speed is the rate of change in gamma. the y axis itself, as explained
+
+2025-02-06T15:32:26.906Z | Leonida
+still valid?
+
+2025-02-06T15:32:27.460Z | Alma
+look at the spectrum OD shows you. its 0 gamma
+
+2025-02-06T15:32:48.286Z | Alma
+nope. i already reached my daily profit limit. its enough for me
+
+2025-02-06T15:33:14.593Z | Leonida
+ok thanks Alma!
+
+2025-02-06T15:35:43.211Z | Alma
+if i would be you, I would take any 0DTE again only if i woudl see this pattern at 6071, or 6065
+and only 25d 1-2DTE call
+but i'm not you, non fin adv. i already done for today.
+
+2025-02-06T15:35:45.186Z | Alma
+
+2025-02-06T15:38:02.230Z | Doc McGraw
+I know ur not an IC seller usually but I am   TLDR my short strikes are 6020 and lower / 6115 and higher   both sides green   Any thoughts?
+
+2025-02-06T15:38:19.019Z | Sebastian
+Speed , remembers me at McQueens first race , tx for everything so far, i lke the chat
+
+2025-02-06T15:38:30.933Z | Doc McGraw
+sold very close to open and added on drops and pops
+
+2025-02-06T15:39:02.705Z | VincentiusTrading
+
+2025-02-06T15:39:08.485Z | VincentiusTrading
+SPX Gamma profile
+
+2025-02-06T15:40:18.926Z | JFinn81
+I’m confused.   Are we long from 6060
+
+2025-02-06T15:40:27.108Z | JFinn81
+Or short
+
+2025-02-06T15:40:52.695Z | JFinn81
+Nevermind
+
+2025-02-06T15:41:00.130Z | Mehul Vora
+Nice - I also sell IC when possible. I have 6110 upside
+
+2025-02-06T15:41:40.281Z | Doc McGraw
+
+2025-02-06T15:41:51.976Z | Tom
+She said long
+
+2025-02-06T15:41:52.805Z | 0Mik
+have you read the post?
+
+2025-02-06T15:43:17.937Z | 0Mik
+her target was hit i took long 0dte call
+
+2025-02-06T15:43:26.752Z | Doc McGraw
+this is a better visual of speed for some reason i have trouble orating is   other people ae good at zooming it in and out  BUT this at least gives the idea
+
+2025-02-06T15:44:04.168Z | Mas
+was there a large position that just executed on the es? can anyone confirm
+
+2025-02-06T15:45:31.281Z | Mas
+had to be maybe spx related because spx is running this sell right now
+
+2025-02-06T15:45:39.746Z | Doc McGraw
+
+2025-02-06T15:45:54.583Z | Doc McGraw
+looks like the 20W pcs gang closed and rolled
+
+2025-02-06T15:46:06.611Z | Doc McGraw
+i talk about them on X and here all the time
+
+2025-02-06T15:46:28.974Z | Mas
+yeah i follow you for a long time
+
+2025-02-06T15:46:35.520Z | Mas
+thank you for everything you do
+
+2025-02-06T15:47:31.372Z | Doc McGraw
+My pleasure We learn and do what we can and pass it on   Alma is great example
+
+2025-02-06T15:48:58.937Z | Doc McGraw
+
+2025-02-06T15:49:12.630Z | Doc McGraw
+looks like they closed Fri pcs
+
+2025-02-06T15:49:34.457Z | Alma
+from now, i put a limit buy order.
+I will take long only if 6037/35 zone hits. 2DTE 25delta call.
+no other trades for today.
+
+Bcs if you turn my provided indicator on, you will see in 1h timeframe that this can mean revert back to 35
+and this is what positioning also tells.
+this is still bullish for the overall trend, but market went up in three consecutive days. Also this is my donwisde mean reversion lvl
+If you are unsecure about it, better wait for a better setup, or wait until the market gives it to you (like i do)... my opinion (no fin adv)
+
+i see no other edge.
+
+2025-02-06T15:50:11.644Z | Alma
+☝️🟢
+
+2025-02-06T15:51:05.642Z | Jtearre
+Alma thanks- 37/35 always refers to ES? Or SPX? Thank you!
+
+2025-02-06T15:52:07.694Z | SIMON
+Spx
+
+2025-02-06T15:52:18.278Z | Mario
+SPX is the reference
+
+2025-02-06T15:52:29.856Z | Jtearre
+Thanks.!
+
+2025-02-06T15:54:22.489Z | TTFTRADE
+What trade did you took? For learning purposes
+
+2025-02-06T15:57:15.665Z | Alma
+but again, this is me.
+1) i always have a daily limit for myself. Once I hit that, I don't trade anymore. No overtrading
+2) I have ES runner very green, also feb contract green running.
++1) I closed the 0DTE call at 79
+
+if i'd take any position here, (bcs I feel like I need to be in, and cant wait for a better setup) i would take at 65 (as said first) 25delta 1-2dte (depends on how much you wanna risk), but not 0dte here. with tight stop-loss. for reference you can use my indicator
+
+2025-02-06T15:57:49.368Z | Alma
+https://open.substack.com/chat/posts/e81b46a0-a316-49c0-91a0-c32ef6e0a6aa?target_reply_id=a4df9039-a374-4036-9ea1-8e8ee5f32944&showTarget=true
+
+2025-02-06T15:58:47.151Z | Doc McGraw
+A 25 D put or call ?
+
+2025-02-06T15:59:28.417Z | Mario
+Call, still bullish
+
+2025-02-06T16:01:08.156Z | Mario
+Could you place a 25D call límit order if SPX touch 35 in IB? I mean now
+
+2025-02-06T16:05:22.238Z | gogumappa
+this PA is disgusting
+
+2025-02-06T16:06:37.987Z | Mas
+idk im bullish into tomorrow amazon earnings tonight
+
+2025-02-06T16:09:21.551Z | Jeffrey K
+10 day and EMA at 6049 and change.  If we get there with 3 minute chart RSI under 30, I will long there
+
+2025-02-06T16:09:28.825Z | Jeffrey K
+
+2025-02-06T16:09:55.789Z | Mas
+6075/6080 ES is a key area for me
+
+2025-02-06T16:10:40.475Z | Mas
+the fact we have not traded it ON or now just price making a loud statement imo
+
+2025-02-06T16:11:49.155Z | Bull
+Anyone can point where she added the notes
+
+2025-02-06T16:12:28.547Z | 0Mik
+i bought 25 delta call LFG!!! thx girl
+
+2025-02-06T16:21:14.133Z | Mehul Vora
+Just refresh the daily note - she appended it with additional notes. Not what you got in email but on substack
+
+2025-02-06T16:22:41.844Z | EZ
+Hi Alma, on X post last year, you wrote" For intraday trading I typically use 70-75 delta contracts.".   is that still valid?  For 1-2dte 25delta?
+
+2025-02-06T16:29:50.443Z | gogumappa
+lots of charm above spot. i would imagine if we stay above 6080 we'll rocket to 6100/6120 :O
+
+2025-02-06T16:33:29.912Z | Mas
+curious if anyone can help me out here. I redid the whole BSM by scratch and made charm, vanna,gex,dex, speed. not the same data that alma gets or OD but just something i can keep my eyes on. anyhow when trying to get dealer positioning from charm speed and vanna in the final calculation are we doing the same calcs like if we were to figure out the gex by oi * 100 ect?
+
+2025-02-06T16:34:13.307Z | Mas
+or do we not figure that into the calculations?
+
+2025-02-06T16:43:36.643Z | EZ
+Hi Alma, is it possible to include zero vanna line on the daily script input?
+
+2025-02-06T16:45:01.637Z | gsp
+For the ES runner you did in the Trading Signals chat thread, may I ask when you sell if you will update only in that thread or both ther and whatever daily thread is current? I don't recall seeing a target (other than perhaps a particlular reversion level, maybe from the weekly post??)
+
+2025-02-06T17:19:35.595Z | EZ
+for 0dte she tp, and suggested call back in at spx 6065, for swing, she still holding es and 2/21 call.
+
+2025-02-06T17:23:31.906Z | EZ
+Hi Alma, do you plan to put an educational post on how zero vanna is calculated? Math is fine.
+I really like the spx iv ratio you posted today, would appreciate if you can post it daily.
+
+2025-02-06T17:24:15.969Z | 0Mik
+using Alma’s logic, price should’ve dropped at the vanna flip, but it held, so i’m guessing buying flows from customers r stronger. Staying long, holding my calls.
+
+2025-02-06T17:26:17.382Z | 0Mik
+that’s pretty proprietary i guess. It’s like asking SG to drop his fix strike matrix algo. Not gonna happen
+
+2025-02-06T17:30:17.001Z | David P
+Only if vix got low enough?
+
+2025-02-06T17:31:58.708Z | gogumappa
+these hourly candles on NQ.....
+
+2025-02-06T17:32:10.383Z | gogumappa
+whatever happens seems like it'll be pretty explosive
+
+2025-02-06T17:32:51.686Z | David P
+Was busy today, so didn’t get to take any trades as of yet. Will sit on hands now and just try to deepen my understanding of todays post
+
+2025-02-06T17:37:38.743Z | 0Mik
+VIX /= volatility
+
+2025-02-06T17:44:02.866Z | David P
+I know that's what I was referring to
+
+2025-02-06T17:45:35.859Z | David P
+Unless you are saying vix not equal to vol here.
+
+2025-02-06T17:54:08.998Z | Ngok996
+Do you mean vanna flip at 6064.9, from positive to negative?
+I think it means the price goes to a negative speed zone. If spot price keeps going down, we see longer GEX and less vol, so it should be supportive isn't it? Not 100% sure, correct me if I'm wrong.
+
+2025-02-06T17:56:16.530Z | Ngok996
+Here
+
+2025-02-06T18:04:51.218Z | ratch
+anyone here: is MM's "long speed" suppressive or enhancing? I get "speed" but don't understand the long/short terminology
+
+2025-02-06T18:06:59.966Z | Ngok996
+I have a related question for Almo or anyone who understands.
+I understand that spot/vol beta is positive below the zero vanna zone. But how should I interpret "To break below this lvl volatility must be cooled"?
+Does this mean MMs need to sell vol to push the spot price lower? Isn't it that the spot price movement drives vol changes, rather than the opposite?
+
+2025-02-06T18:08:16.574Z | Ngok996
+In short: which is the driver, vol or spot?
+
+2025-02-06T18:13:55.502Z | Ngok996
+In a long speed zone and spot goes up,
+Vanna effect: spot/vol beta is negative, so the vol goes down, which means it's suppressive.
+Gamma effect: there will be more GEX which cause MMs to hedge opposite, so it's suppressive as well.
+
+(again, I'm not 100% certain. Correct me if I'm wrong)
+
+2025-02-06T18:14:15.438Z | Jain
+Can you explain the ratio?
+
+2025-02-06T18:16:21.072Z | Ngok996
+Talking about the terminology, "long speed" just mean the GEX gets longer while spot price goes up. It's MMs' Vanna and Gamma hedges that cause the suppressive effect.
+
+2025-02-06T18:19:58.751Z | EZ
+she explained the ratio really well in her daily post.  Read again.  If you still don't understand, we can help.
+
+2025-02-06T18:20:02.048Z | Brian
+@Trader McGraw any charm/color effect in afternoon session?
+
+2025-02-06T18:22:32.920Z | 0Mik
+logically thinking vanna flip doesn’t mean speed goes negative, it means VANNA goes negative. Speed is speed.It’s just the rate of gamma change due to spot. If vol is high when spot flips from positive to negative, delta would dump hard due to the inverse reaction, and MMs would buy back = support
+
+2025-02-06T18:25:39.111Z | 0Mik
+mms don’t hedge vol on such a short timeframe. Alma literally said this just yesterday.
+
+2025-02-06T18:27:57.356Z | 0Mik
+from what I get is speed isn’t inherently suppressive or supportive. Negative speed just means gamma drops more on the way down than it rises on the way up, and positive speed means the opposite = more gamma up than down. Also, vol and gamma move inversely
+
+2025-02-06T18:29:05.156Z | David P
+They don't hedge vol but if IV is falling and they are short vanna then they are buying?
+
+2025-02-06T18:29:42.894Z | 0Mik
+Closed my calls, theta decay is brutal today. Alma was right to sit this one out after the first hit 'n' run
+
+2025-02-06T18:30:37.162Z | Ngok996
+Thanks!
+Do you know how to understand the "To break below this lvl volatility must be cooled"? I'm struggling to figure out why a lower vol could help to break down that level...
+
+2025-02-06T18:31:02.207Z | 0Mik
+I guess it’s more about delta hedging than vega hedging. She literally said no vega hedging in the short term, so no effect. Just yesterday.
+
+2025-02-06T18:31:15.956Z | 0Mik
+Answered.
+
+2025-02-06T18:31:33.127Z | David P
+Ah okay thanks I am going to revise yesterdays stuff, lots of moving parts to get our heads around
+
+2025-02-06T18:32:42.481Z | 0Mik
+
+2025-02-06T18:34:05.373Z | 0Mik
+*Vanna flips sryy
+
+2025-02-06T18:35:50.454Z | 0Mik
+Have you seen her morning post? It's on her chart. Blue curve.
+
+2025-02-06T18:36:35.653Z | Ngok996
+I got it now. Lower vol makes the vanna flip causing less delta dump, which means less MMs buy back. Thank you very much!!
+
+2025-02-06T18:40:25.975Z | Ngok996
+I have subscribed spotgamma's heatmap. Just screenshotted.
+
+2025-02-06T18:40:39.262Z | EZ
+looks like 6080 is hard to break.
+
+2025-02-06T18:48:46.062Z | Mithril
+6080 is the 0DTE call resistance and gamma wall
+
+2025-02-06T18:49:22.790Z | Mithril
+But if we break it, a move towards 6100/6120 is likely, but right now we are in a narrow range. Likely major move happens towards the close of the cash session.
+
+2025-02-06T18:52:08.250Z | Mithril
+
+2025-02-06T19:00:37.377Z | EZ
+thanks, what's the zero line on this chart
+
+2025-02-06T19:03:28.889Z | EZ
+
+2025-02-06T19:04:06.339Z | EZ
+Oh I see. zero line is net of daily put and call premium
+
+2025-02-06T19:06:10.057Z | Jeffrey K
+SPY volume 13.6M   LOL
+
+2025-02-06T19:17:23.568Z | Bull
+i didnt find can you screenshot and show where?
+
+2025-02-06T19:22:23.490Z | N8
+Alma, Doc, friends. Lots of great info. I’m overwhelmed and already falling behind. 500+ chat replies per day to sift through for trading signals and a mountain more homework every time I look away from Substack to try to trade. Hopefully we can evolve the format over time. Maybe something more like a discord?
+
+2025-02-06T19:31:18.456Z | 0Mik
+I like it this way. Free. Alma trusts in us
+
+2025-02-06T19:35:15.156Z | Doc McGraw
+news?
+
+2025-02-06T19:35:31.624Z | Doc McGraw
+let me look
+
+2025-02-06T19:35:55.321Z | Doc McGraw
+the 6035 long p prpb in paly
+
+2025-02-06T19:36:53.144Z | Doc McGraw
+
+2025-02-06T19:37:17.920Z | Doc McGraw
+my hunch is teh wahle dumped his long calls
+
+2025-02-06T19:37:33.306Z | 0Mik
+Alma said not to take positions. Wait for a better setup. And mean reversion potential. Gosh. Lucky me
+
+2025-02-06T19:38:20.598Z | Doc McGraw
+
+2025-02-06T19:38:37.093Z | Doc McGraw
+gonna go long here
+
+2025-02-06T19:41:13.615Z | Doc McGraw
+waiting for retest to put on a fly
+
+2025-02-06T19:43:20.612Z | Tom
+that's what Alma said i think. long 6035
+
+2025-02-06T19:47:04.719Z | VincentiusTrading
+from now, i put a limit buy order.
+I will take long only if 6037/35 zone hits. 2DTE 25delta call.
+no other trades for today.
+
+Bcs if you turn my provided indicator on, you will see in 1h timeframe that this can mean revert back to 35
+and this is what positioning also tells.
+this is still bullish for the overall trend, but market went up in three consecutive days. Also this is my donwisde mean reversion lvl
+If you are unsecure about it, better wait for a better setup, or wait until the market gives it to you (like i do)... my opinion (no fin adv)
+
+i see no other edge.
+
+2025-02-06T19:47:14.086Z | VincentiusTrading
+That’s what Alma said
+
+2025-02-06T19:47:22.380Z | 670583
+Will you eventually go into risk management parameters like that in the future?
+
+2025-02-06T19:48:39.122Z | VincentiusTrading
+Keep in mind she mentioned this morning things could have changed since then
+
+2025-02-06T19:53:43.949Z | Jain
+I read it like 5x lol
+
+2025-02-06T19:55:12.110Z | EZ
+I don't know what you don't know, lol
+
+2025-02-06T19:59:27.728Z | Leonida
+6046.51 Alma rolling mean 1H TF 🎯👸🏼
+
+2025-02-06T20:01:49.241Z | Jeffrey K
+bought the 10 day MA and sold out the scalp.  Will long again if/when we make a new local low
+
+2025-02-06T20:02:46.690Z | 670583
+Where did you study or learn gambling strategies? I think you mentioned in the volatility post about martingale’s and I saw them mentioned yesterday on a couple X profiles about the IC guy. That strategy seems like a pretty high risk one
+
+2025-02-06T20:04:06.134Z | TTFTRADE
+Who is the ‘’IC guy’’?
+
+2025-02-06T20:05:13.120Z | Jeffrey K
+Eddie the EAgle
+
+2025-02-06T20:07:13.109Z | EZ
+In her simple term: firstyou check the odds, how they move, second, you check the reactions, thepatterns, third, you check the cards.
+
+2025-02-06T20:23:53.719Z | 670583
+How do you find your estimation? Are you estimating options prices/premiums or just the price of the underlying asset, or something entirely different?
+
+Idk if I’m understanding this at all, but you’re trying to find where the odds are overpriced and underpriced and where MM/the house is trying to push you, but how do you do that? Just looking at momentum? Changing GEX/DEX and measuring volatility? Greek changes? OI?
+
+How do yo measure momentum? Are you literally just looking at the chart or is that measured using vol too? I feel like I learn something and 100 other things pop up that. I don’t know and it’s incredibly confusing.
+
+Apologies for the lack of understanding, it took me 3 days to get through your 1st post about volatility
+
+2025-02-06T20:24:10.040Z | 670583
+What does checking the odds mean?
+
+2025-02-06T20:24:47.463Z | 670583
+Don’t know them by name but a market participant has been putting on decent sized IC’s agains SPX this past week
+
+2025-02-06T20:33:43.521Z | EZ
+evaluating the probability of different outcomes before making a decision.
+
+2025-02-06T20:45:33.804Z | 670583
+And how do you come to the conclusion of what the probabilities are of x outcome vs y outcome? That’s what I’m trying to understand among a myriad of other things lol
+
+2025-02-06T20:51:06.479Z | EZ
+In intra day post, she put analysis on mm gex and spx iv ratio.  She also provided her conclusion and bias.
+
+2025-02-06T20:51:19.260Z | EZ
+Odds are in favor of bulls.
+
+2025-02-06T20:52:56.466Z | 670583
+I get that. I want to learn how to fish, not just rely on her providing fish in the metaphorical sense.
+
+I probably just need to read and digest more in all honesty, I appreciate the responses!
+
+2025-02-06T21:00:51.008Z | EZ
+I learned how to read spx iv ratio to draw conclusion today, never thought about that before.
+
+2025-02-06T21:00:56.174Z | EZ
+Thanks, Alma
+
+2025-02-06T21:25:53.203Z | Michael E.
+day4withAlmasSubstack-4trades(only trade verticals)-4winners! Thank you Alma!
+
+2025-02-06T21:29:38.925Z | gsp
+Yes, and watching the VIX get (and stay) below her weekly posting's reference to 15.85 when the market was <6060 around 3:30pm EST allowed me to go long for the rest of the afternoon. TY
+
+2025-02-06T21:39:06.358Z | Mas
+which post was the vix ratio about i remember reading it but now i cant find it
+
+2025-02-06T21:47:38.705Z | Jeffrey K
+AMZN call at 5pm  stock has been all over the place
+
+2025-02-06T21:49:50.158Z | Jeffrey K
+is there now a big slug of positive gamma at 6090?
+
+2025-02-06T21:56:00.663Z | RNR
+
+2025-02-06T21:57:10.982Z | RNR
+Sorry，please ignore that...
+
+2025-02-06T22:04:24.441Z | Alma
+okay I'm here a bit, but i'm not alone in the room ;))
+
+2025-02-06T22:04:58.496Z | Alma
+we are talking about Goethe's Faust, darkness, serial killers, John E Douglas, politics history etc.
+
+2025-02-06T22:05:11.372Z | Alma
+we gonna watch Naked Gun, to relax all these frustrations :D
+
+2025-02-06T22:05:13.888Z | Jeffrey K
+Hey Alma, is there a chunk of positive gamma at 6090 now?
+
+2025-02-06T22:05:47.389Z | Alma
+i hope you all printed well, it wasn't an easy day, due to vol fckery
+
+2025-02-06T22:05:56.004Z | Alma
+but bullish is bullish ;))
+
+2025-02-06T22:06:02.850Z | Alma
+lemme read
+
+2025-02-06T22:12:38.954Z | Alma
+read my post about kelly criteria. thats an introduction.
+I will drop a lot of educational posts on a weekly basis.
+you got four for the first week + the one about OptionsDepth and greeks (from probability perspective) lets digest them first
+
+2025-02-06T22:13:21.593Z | Sud
+Market would be still bullish or mean revert after tomorrow’s NFP?
+
+2025-02-06T22:13:25.685Z | SrLex
+
+2025-02-06T22:13:57.378Z | Jeffrey K
+I think there's a good chance the bull run topped out today at the close
+
+2025-02-06T22:14:28.992Z | Alma
+i'm a mathematician. probability calculus is basic for me.
+and I jsut told my story this morning about poker :))
+if you read carefully my intraday posts, and not with a hungry eyes like "up or down", but as I promised on X: i explain my take, you will slowly see what i see
+
+2025-02-06T22:14:48.023Z | Jeffrey K
+if we get foolish lift in the overnight futures I'm shorting with vigor
+
+2025-02-06T22:16:04.375Z | Sud
+I meant can we expect a correction to test 6000-6020 tomorrow after NFP.
+
+2025-02-06T22:16:55.125Z | Alma
+greeks aren't everything, I keep telling.
+from one side plp are infected by this naive gex, or too much lines on the chart.
+from the other side, its vanna, charm, vomma, zomma etc.
+nope.
+totally different.
+
+read my educational posts first.
+i commented some parts of them btw, where I hinted how I personally take those, (like relative ROC with momentum, etc.)
++ the best way to show you is to explain my takes in the morning letters, what I do.
+read them, then re-read, and you will get the line
+
+2025-02-06T22:17:29.766Z | Alma
+again: i have a complete educational post abotu the topic. introduction ;))
+
+2025-02-06T22:17:54.632Z | Alma
+and I said, its not the IC, and i was right. in my morning post
+
+2025-02-06T22:19:10.783Z | Alma
+no VIX ratio.
+i wrote fix strike vol.
+VIX is not vol.
+VIX is the index of the next 30 day SPX options vega
+
+2025-02-06T22:19:58.240Z | Alma
+will check tomorrow, but have you read my morning post?
+
+2025-02-06T22:20:39.544Z | Alma
+thank you
+
+2025-02-06T22:21:40.734Z | Alma
+thats a very advanced thing. and not a cheap game.
+
+2025-02-06T22:27:05.246Z | Alma
+Now this is a good question.
+
+The premium is different. ITMs are more expensive.
+OTMs are very cheap.
+
+For intraday 0DTE trading I prefer ITMs mostly.
+Why? Bcs the premium you pay for it includes intrinsic value that doesn't erode over time.
+ATMs and OTMs only have extrinsic value that decay away by the time.
+Very important.
+I use ATM leg for 0DTE only if I know that I will hit it fast and close it fast, bcs ATM has the highest gamma.
+
+If I want to take smaller position however, I prefer taking 1-2DTE, 25 delta contract.
+Never 0DTE, bcs of fast time decay.
+It is cheap.
+
+For longer-term trades like weekly monthly, I prefer 22-25 delta OTM strikes due to the gamma convexity,
+and when I see an oppotunity, or a downstick to buy into it but closer to the original leg's expo, I will add a 40-50 delta near-the-money or ATM leg too.
+
+This is it
+
+2025-02-06T22:30:03.122Z | Alma
+And now, you can also see: I called this bottom too on Sunday, when most of the plp were bearish, and tariffs, and inflation and stuff, i said confidently that this wants to go up. It is up.
+I explained for you how I saw this, not like I did on X.
+If you want to learn about it, read, read, re-read, and take your time to understand it.
+
+Also I said on Sunday, that I won't hit it with longer-term leg only bcs I can't be always here to manage it, and I see relatively high risk compared to that.
+This risk is manifested.
+But I also said on friday that if I could have been at the desk everyday constantly, i would have hit it.
+But I hit ES, and look where it's trading right now ;))
+
+2025-02-06T22:32:15.499Z | Alma
+i answered in short only bcs, I'm not alone as said above ;))
+aaand, bcs some questions are already answered you should just take this service and read the stuffs I drop in posts and in separated chats.
+
+2025-02-06T22:32:20.935Z | Alma
+i turn the chat back on
+
+2025-02-06T22:33:57.198Z | SrLex
+Comrades, for tomorrow, how about using the option (Reply in a new sub-theam) so we don't miss the important stuff, we don't saturate the channel and Alma will find it much easier to search for unfinished questions, so we all win. 🙌🏽
+
+2025-02-06T22:34:03.807Z | SrLex
+
+2025-02-06T22:45:56.164Z | N8
+Can you explain the math how they got from Naked Gun 1 to Naked Gun 33 1/3 in only 3 movies?
+
+2025-02-06T22:52:22.421Z | 670583
+Understood, will do 🫡
+
+2025-02-06T22:56:55.613Z | Doc McGraw
+
+2025-02-06T22:57:27.053Z | Doc McGraw
+frpm a buddy of mine a former MM (fx and commodities)
+
+2025-02-06T23:01:03.805Z | Doc McGraw
+
+2025-02-06T23:53:32.142Z | Usha
+Doc, how does profile looks for tomorrow??
+
+2025-02-06T23:54:00.156Z | Doc McGraw
+I was just looking at it
+
+2025-02-06T23:56:18.592Z | Doc McGraw
+
+2025-02-06T23:57:56.425Z | Doc McGraw
+
+2025-02-06T23:58:33.485Z | Doc McGraw
+
+2025-02-06T23:58:44.825Z | Doc McGraw
+TLDR  Gex thin
+
+2025-02-06T23:59:31.465Z | Doc McGraw
+6040 main down side magent
+
+2025-02-06T23:59:55.691Z | Doc McGraw
+6000 looks solid
+
+2025-02-07T00:00:23.694Z | Doc McGraw
+above customer stacked long calls (strating 6075 ITM)
+
+2025-02-07T00:01:12.658Z | Doc McGraw
+6155 first upside stall level
+
+2025-02-07T00:01:35.410Z | Doc McGraw
+6125***
+
+2025-02-07T00:02:08.321Z | Doc McGraw
+solw grind above that
+
+2025-02-07T00:04:55.579Z | Doc McGraw
+so IF we look at the 6125 and higher sold calls AND the 6040 long puts THEN (here;s where i get it backwards) MM are short skew?
+
+2025-02-07T00:06:57.540Z | 670583
+Does OD have an aggregate of SPX IV or Vega on all 0DTE strikes?
+
+2025-02-07T00:20:30.778Z | Doc McGraw
+not broekn out  its baked into the model
+
+2025-02-07T00:21:08.772Z | Doc McGraw
+
+2025-02-07T00:21:40.346Z | Doc McGraw
+u can selct expiries  eiother one or range   prick strikes
+
+2025-02-07T00:22:15.737Z | Doc McGraw
+
+2025-02-07T00:22:28.202Z | Doc McGraw
+u can select MM or custerm vview
+
+2025-02-07T00:23:03.921Z | Doc McGraw
+
+2025-02-07T00:23:12.732Z | Doc McGraw
+heat map is whole complex
+
+2025-02-07T00:23:50.555Z | Doc McGraw
+
+2025-02-07T00:24:09.934Z | Doc McGraw
+there is also a table view u can cutomize
+
+2025-02-07T00:24:35.130Z | Doc McGraw
+
+2025-02-07T00:25:45.675Z | Doc McGraw
+u can selct flow and date ranegs to see where c or p weer bought or sold added to the oi or taken out  I don;t usually use it, some people use it all the time'
+
+2025-02-07T00:32:19.604Z | Jten0887
+I have a whole lot to study.
+
+2025-02-07T00:34:02.942Z | Doc McGraw
+lol
+
+2025-02-07T00:34:10.071Z | Doc McGraw
+We all do
+
+2025-02-07T00:35:10.822Z | SrLex
+This is like medicine isn't it Doc? Haha 😆
+
+2025-02-07T00:37:34.452Z | Jain
+those are customer sold calls? so MM long calls?
+
+2025-02-07T00:38:22.391Z | Jain
+how do you read this ?
+
+2025-02-07T00:48:47.628Z | Stronghands777
+Oh my I have some studying do on the greeks!!! Thanks in advance for all the education 💟💟
+
+2025-02-07T00:52:51.847Z | NS
+Alma, is it possible to spin a discord server just for chats? There are a lot of good features in discord like I can just filter for what you wrote and read only that. I could search for an old message with ease. Can forward important messages to myself to review later and such.
+
+2025-02-07T00:53:57.442Z | NS
+You could also have a separate write only channel for yourself there where you could update if you are taking any trades if at all. All this information is there in these threads, just it gets lost very easily.
+
+2025-02-07T01:07:21.940Z | 670583
+Gotcha, thank you for that!
+
+Just to be certain, no functions relating to IV or Vega?
+
+2025-02-07T01:25:59.089Z | Doc McGraw
+nope
+
+2025-02-07T01:39:00.161Z | Usha
+Doc friday before opex isnt it bullish??
+
+2025-02-07T02:49:35.889Z | N8
+Yes Discord please 🙏 Replies to comments in Substack have original comment cut off. To read whole original comment it automatically scrolls all the way back up to it. So idk where in the chat feed I am and what I missed. It will only get worse when there’s more people asking more questions.
+
+2025-02-07T04:00:45.509Z | EZ
+I don't think substack has api with Discord. Therefore, she has to manually manage discord members.
+
+2025-02-07T04:59:21.996Z | Jain
+opex isn't for another 2 weeks
+
+2025-02-07T05:38:43.586Z | gsp
+Two quick things:
+1) this already exists, with the TRADES thread at the top of the dated daily chains... and replies are shut off just as you suggested. Here is the link; https://open.substack.com/chat/posts/5ec8d5aa-9fac-4e6d-aef1-3f6a28632ae4?utm_source=share&utm_medium=android&r=1kb28g
+2) a separate daily chain with a few hundred comments and replies, plus the separate ones by educational topic, doesn't seem too much IMO. I belong the Le Shrub too on substack and his chains can span multiple days and have 1000s of iterations. Just my two cents
+
+2025-02-07T06:05:09.457Z | Jain
+wheres the chat from alma about um the gamma and stuff
+
+2025-02-07T08:47:56.653Z | Alma
+https://open.substack.com/chat/posts/2aab643b-d095-4c00-8b42-4f35379fb002

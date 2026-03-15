@@ -1,0 +1,89 @@
+FOMC preview, Trading advises + Intraday post (17/June)
+
+FOMC, Hormuz, Retail Sales, Intraday post
+
+Yesterday, my vanna model said 6050 as max if vol doesn’t calms down, giving us a 60 pts profit during the overnight. The intraday spot/vol beta yesterday was 0.095062 in avg, 0.043498 as median, and closed at 1.007296, a 478.034252% increase during the day.
+
+Meanwhile vvol (white line) was realized to the downside, just right as the Sunday post predicted:
+
+Hormuz is well-threatened, and we need to monitor closely if the skew goes longer or not, bcs that can reverse the vol profile. Until nothing unexpected happens, I think it is enough to reassume on the next Sunday, but let’s keep our eyes on that risk. You find the descriptions in my Sunday post.
+
+Before I jump into the short FOMC preview, I want to re-share my yesterday write-up of intraday trading. It is free for all subs:
+
+Please, take your time to re-read it.
+
+FOMC PreviewFederal Reserve plans to hold its policy rate steady—even though recent inflation readings have been benign—because policymakers remain highly attuned to inflation expectations and tariff- and geo‐related uncertainties that could reignite price pressures.
+
+Midsummer tariffs create enough uncertainty that the Fed’s dot plot may shift hawkishly, delaying cuts into late 2025 or even into 2026.The Fed’s caution reflects a desire to anchor expectations rather than risk repeating past mistakes of premature easing, noting that businesses and workers may act on even small upticks in expected inflation by raising prices and wage demands. University of Michigan’s show that consumer inflation expectations briefly rose after tariff announcements—even if they later moderated—highlighting the Fed’s concern that continued tariff uncertainty can become self-fulfilling. Also, as said on Sunday, the Strait of Hormuz remains a potent inflation/stagflation risk, as even the threat of closure can add a $10–$15/bbl risk premium to oil prices—enough to lift headline inflation by 0.1–0.3 percent if sustained. (Note that a full blockade could send Brent to $120–$130). At the same time, the “midsummer” tariffs set to kick in around July 9 2025 (notably 50% on EU goods and expanded metals levies) are projected to pass through into core goods PCE, contributing 0.1–0.3 percent to inflation by year-end. Market is still more concerned about growth than inflation, but mostly neutral. Literally less narrative now, in these uncertain times. The trend still points up, telling me, growth is the main narrative.
+
+Trump is about to pump the economic performace to show result for his business partners in the Middle East. I still expect vol to be capped during this month and next month until tariffs hit in August.
+
+INTRADAY POSTWatch for VIX 18.74 - 21.74 range. Above, the calls print, and the expiry will be suppressive for the index during the day, gamma squeeze can happen until 23s, but expecting a pin around 20s. If it goes out of this range, Wednesday will be suppressive for the index. If the VIX remains in the range (high odds, pin to 20s), then this will cap the downside in the SPX, but also will be suppressive tomorrow. Not too much suppressive impact in this case tho. Coding SPX intraday positioning for today’s session:
+
+We can see an customer short IC at 5985/90 - 6060/65, and it has some potential today. Customer is betting on the VIX pin mentioned above. The net speed profile is positive today, with some local flat-to-negative speed above 6002.47; in like 1:3 ratio in favor of the net effect. From vol perspective, 6022.49 - 6026.41 is the pivot, can only broken if vol catches up, but I code 6068.5 as the daily max, especially after 1.10PMAt this time 6035 will be a local pivot and will decide if spot wants to get pinned to 6020 or to 6060.Downside pivot is far fro mthe current spot, it is at 5958.82 - 5951.20 range. Can be broken only if spot/vol beta spikes, but I find it unlikely today. I code the min at 5970 vanna flip lvl (will be in full effect after 11am). It is close to the centroid of 5978.71 And 5996 is a strong pivot into the power hour, with pin potential to 5990. All in all, choppy looking day.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+Have a plan before you trade. Me personally, after the short yesterday, I wouldn’t force it today. **update: May’s U.S. retail-sales report showed a 0.9 percent month-on-month drop, well below the –0.5 percent decline economists had forecast. This sharp pullback signals that consumer spending, which underpins roughly two-thirds of GDP, is losing momentum amid tariff-driven price pressures and geopolitical uncertainty. Weak retail sales portend slower GDP growth, heightened recession risk, and a possible drag on core inflation, yet the Fed remains wary of upside risks from oil shocks and inflation expectations, making a June rate cut unlikely.
+
+SCRIPT INPUTS:=== SPX closed at 6033.11===
+
+99.73%, 6141.1370608226, , 6114.070649445764, 95.4%, 6087.1235304113, Risk level, 6069.515119497216, 68.2%, 6060.056587405741, 68.2%, 6006.042515803587, Risk level, 5996.704880502783, 95.4%, 5979.0964695887, , 5952.028434378974, 99.73%, 5925.0829391774
+
+=== ES closed at 6091.0===
+
+99.73%, 6202.893264580369, , 6174.856586445369, 95.4%, 6146.946632290184, Risk level, 6128.708030163584, 68.2%, 6118.909374821588, 68.2%, 6062.962152506025, Risk level, 6053.291969836416, 95.4%, 6035.053367709816, , 6007.014919199943, 99.73%, 5979.106735419631
+
+=== SPY closed at 602.68===
+
+99.73%, 614.2096704427364, , 611.3204574721033, 95.4%, 608.4448352213682, Risk level, 606.5654989392021, 68.2%, 605.5555575595142, 68.2%, 599.7906564033702, Risk level, 598.7945010607978, 95.4%, 596.9151647786317, , 594.0257539674659, 99.73%, 591.1503295572635
+
+=== VIX closed at 19.11===
+
+99.73%, 21.97856952729116, , 21.24932919097101, 95.4%, 20.544284763645578, Risk level, 20.076707930697122, 68.2%, 19.814168714161767, 68.2%, 18.378871515050456, Risk level, 18.143292069302877, 95.4%, 17.67571523635442, , 16.943402847912534, 99.73%, 16.24143047270884
+
+=== IWM closed at 210.77===
+
+99.73%, 216.34294980049208, , 214.94519703616078, 95.4%, 213.55647490024606, Risk level, 212.64808408276585, 68.2%, 212.15866283214754, 68.2%, 209.3721270496031, Risk level, 208.89191591723417, 95.4%, 207.98352509975396, , 206.5855896246513, 99.73%, 205.19705019950794
+
+=== QQQ closed at 534.29===
+
+99.73%, 546.4801741033245, , 543.4240852730329, 95.4%, 540.3850870516623, Risk level, 538.3980886728203, 68.2%, 537.3289012893617, 68.2%, 531.2337150813823, Risk level, 530.1819113271796, 95.4%, 528.1949129483377, , 525.1385265716435, 99.73%, 522.0998258966754
+
+=== NDX closed at 21937.57===
+
+99.73%, 22429.070814786326, , 22305.85717529178, 95.4%, 22183.320407393163, Risk level, 22103.20577458299, 68.2%, 22060.102997710957, 68.2%, 21814.348735183088, Risk level, 21771.934225417008, 95.4%, 21691.819592606837, , 21568.594384804488, 99.73%, 21446.069185213673
+
+=== NQ closed at 22162.75===
+
+99.73%, 22658.365577172575, , 22534.121042590952, 95.4%, 22410.557788586288, Risk level, 22329.77244950716, 68.2%, 22286.309466329116, 68.2%, 22038.497804887003, Risk level, 21995.72755049284, 95.4%, 21914.942211413712, , 21790.68605535851, 99.73%, 21667.134422827425
+
+=== NVDA closed at 144.69===
+
+99.73%, 151.27576671610439, , 149.6202664776707, 95.4%, 147.9828833580522, Risk level, 146.90940338332717, 68.2%, 146.32717926986965, 68.2%, 143.03408267585536, Risk level, 142.47059661667282, 95.4%, 141.3971166419478, , 139.74097603204922, 99.73%, 138.1042332838956
+
+=== AMZN closed at 216.1===
+
+99.73%, 223.43084478903802, , 221.59055481005313, 95.4%, 219.76542239451902, Risk level, 218.5704946939058, 68.2%, 217.92500494311238, 68.2%, 214.2594507146521, Risk level, 213.6295053060942, 95.4%, 212.43457760548097, , 210.59389189692516, 99.73%, 208.76915521096197
+
+=== AAPL closed at 198.42===
+
+99.73%, 205.2552278834812, , 203.53924792302362, 95.4%, 201.8376139417406, Risk level, 200.72347179673315, 68.2%, 200.12151148319904, 68.2%, 196.70377078663188, Risk level, 196.11652820326682, 95.4%, 195.00238605825936, , 193.28602560751523, 99.73%, 191.58477211651876
+
+=== GOOG closed at 177.94===
+
+99.73%, 184.21560782051213, , 182.6399674499843, 95.4%, 181.07780391025605, Risk level, 180.0548798355126, 68.2%, 179.50204574820577, 68.2%, 176.36411985494397, Risk level, 175.8251201644874, 95.4%, 174.80219608974394, , 173.22618954241747, 99.73%, 171.66439217948786
+
+=== TSLA closed at 329.13===
+
+99.73%, 355.64974891719953, , 348.95683527191795, 95.4%, 342.38987445859976, Risk level, 338.0671553850962, 68.2%, 335.69447326484084, 68.2%, 322.4319066398998, Risk level, 320.1928446149038, 95.4%, 315.8701255414002, , 309.16910906434174, 99.73%, 302.61025108280046
+
+=== TSM closed at 215.68===
+
+99.73%, 224.60932885076335, , 222.36579171864878, 95.4%, 220.14466442538168, Risk level, 218.68918382270726, 68.2%, 217.90089771101523, 68.2%, 213.4359940983097, Risk level, 212.67081617729275, 95.4%, 211.21533557461834, , 208.97108026486245, 99.73%, 206.75067114923667
+
+=== AMD closed at 126.39===
+
+99.73%, 132.89369886564984, , 131.25770415069644, 95.4%, 129.64184943282493, Risk level, 128.58174651772399, 68.2%, 128.00559890026196, 68.2%, 124.75348031291657, Risk level, 124.198253482276, 95.4%, 123.13815056717509, , 121.50134731772856, 99.73%, 119.88630113435016

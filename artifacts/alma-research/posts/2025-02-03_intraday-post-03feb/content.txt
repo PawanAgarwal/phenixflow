@@ -1,0 +1,15 @@
+Intraday post (03/feb)
+
+Coding SPX gamma for today session:
+
+At the first glance you can see the net negative speed profile (spot up/gamma down, spot down/gamma up) for this day. This is accelerant to the upside, as MMs are shorter upside gamma, but it doesn’t let vol to calm down if rebounce, and also charm is suppressive too.
+
+Coding ~5929.5 SPX as the zero vanna line where dealer book switches back to net long vanna. If market falls towards this level, vol is expected to cool down slightly (not too much effect tho). As they are short vanna above the flip, this means inverse relationship, so vol down/delta up, meaning, MMs get more deltas to hedge through selling. But when vanna flips from negative to positive, long vanna means vol down/delta down, their algos must switch and start to buy back. (The effect is not immediate, bcs if vol comes down, zero vanna moves a bit down here.)Upside net vanna flip is at 6042.5
+
+I flag 5967/70 area as the main pivot for the price action to stabilize and get out of the magnetic field of that 5945/25 put spread (covered in yesterday post), this is a resistance. And another point at 6017.However charm will be pretty much suppressive in this 5929 - 6042 range, I estimate it to gain effect after 2.35PM.
+
+Script inputs:ES_F 99.73%, 6173.942264000991, , 6147.211330370776, 95.4%, 6120.596132000495, Risk level, 6103.205292968334, 68.2%, 6093.864691792886, 68.2%, 6040.5180442673945, Risk level, 6031.294707031666, 95.4%, 6013.903867999505, , 5987.1713875551295, 99.73%, 5960.557735999009
+
+SPX99.73%, 6149.041924811601, , 6121.853783376803, 95.4%, 6094.785854983926, Risk level, 6077.098376220103, 68.2%, 6067.597176080446, 68.2%, 6013.340559085293, Risk level, 6003.961194092397, 95.4%, 5986.273715328574, , 5959.083932126424, 99.73%, 5932.017645500899
+
+SPY99.73%, 613.1307569291704, , 610.2965187998186, 95.4%, 607.4753821266946, Risk level, 605.6317299410874, 68.2%, 604.6410827265792, 68.2%, 598.985645496347, Risk level, 598.0082847073501, 95.4%, 596.1646325217429, , 593.3302070760379, 99.73%, 590.5092577192671VIX99.73%, 18.94879553450902, , 18.308270926323512, 95.4%, 17.6893979198424, Risk level, 17.27883429746108, 68.2%, 17.04807359267863, 68.2%, 15.787748630972246, Risk level, 15.58116631289048, 95.4%, 15.170602690509162, , 14.527262823801378, 99.73%, 13.911205075842542NVDA99.73%, 131.96981173473705, , 128.96054913037906, 95.4%, 126.01990571478063, Risk level, 124.08023635227484, 68.2%, 123.00898357727978, 68.2%, 117.05724929586671, Risk level, 116.0597630373736, 95.4%, 114.1200936748678, , 111.1053191706253, 99.73%, 108.17018765491139

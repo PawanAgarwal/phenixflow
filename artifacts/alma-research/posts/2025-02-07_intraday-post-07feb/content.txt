@@ -1,0 +1,45 @@
+Intraday post (07/feb)
+
+Futures trading above the risk lvls overnight. SPX currently is at 6083.5
+
+Coded dealer gamma for today expo:
+
+And here is OptionsDepth color projected 2D heatmap:
+
+(For description, check OptionsDepth chatroom here: OD Chat )
+
+Lets look at my gamma map:
+
+The gamma is relatively low, as the long and short side is kinda balanced and they mostly counterbalance each others effect on a net basis.Coding 6125.33 as the lvl where upside long gamma starts to show effect. Coding zero vanna at 6080, where vol must decrease to break through this, and another one at 6033.5, here vol should be high to break through this one from any direction.
+
+From momentum perspective I code 6117.77 as the crucial pivot that price should close above until Feb OpEx latest, to wash out tail-risk.
+
+Also coded how ‘insurance premiums’ are evolving on a fixed strike basis from now into Monday, next Friday and Feb OpEx: 5 delta Put to 25 delta Put, and 25 delta Put to 25 delta Call:
+
+You can see that fear is slowly going away from the market. The demand for tail hedges are unwinding, and also customers are shifting towards calls, also shifting the vanna profile. And I can see this tendency into March OpEx too.I don’t want to see this shift to be too steep, otherwise the left tail becomes underpriced reflexively generating suppressive structural flows and leave the market exposed to downside risk. Relatively the 25dP/25dC ratio is still elevated. If it remains so, we will see vol selling on the right wing of the smirk, bringing stabilizing forces to the market.
+
+Also as I pointed out on Wednesday, that hidden vol selling is there. If this gets realized as vomma is tanking slowly taking down index vol too, this slow vol crush provides supportive vanna/charm flows (as long as 25d P/C ratio remains relatively elevated), and pulls systematics to buy into the upward momentum. This just started to happen.
+
+Using GJR-GARCH model (link here: paper) ) it says: that the persistence of volatility (beta) is dominant, while the immediate effect of shocks (alpha) and the asymmetric effect (gamma) are not statistically significant in this sample. So negative shocks do not have a statistically different impact on volatility than positive shocks. The model expects slow mean reversion in vol. If it realizes, it will trigger slow charm decay on the remained tails. That’s why we need them. 6117.77 lvl is key pivot. And we are just there. Moment of truth.
+
+SCRIPT INPUTS:SPX99.73%, 6186.2917358522545, , 6160.557733238059, 95.4%, 6134.930780035502, Risk level, 6118.187108439241, 68.2%, 6109.1963274308655, 68.2%, 6057.834913993211, Risk level, 6048.952539998259, 95.4%, 6032.208868401998, , 6006.473492729348, 99.73%, 5980.8479125852455
+
+ES99.73%, 6212.363460397235, , 6185.71544177649, 95.4%, 6159.1817301986175, Risk level, 6141.844486153868, 68.2%, 6132.533215938806, 68.2%, 6079.350981429452, Risk level, 6070.155513846132, 95.4%, 6052.8182698013825, , 6026.168738018839, 99.73%, 5999.636539602765
+
+SPY99.73%, 617.0983079661073, , 614.3978240116113, 95.4%, 611.709157645163, Risk level, 609.9522946405352, 68.2%, 609.0086214034305, 68.2%, 603.619417861598, Risk level, 602.6877200079023, 95.4%, 600.9308570032745, , 598.2302133608812, 99.73%, 595.5417066823302
+
+VIX99.73%, 17.872783944663606, , 17.269402958338066, 95.4%, 16.6863919723318, Risk level, 16.299628189351637, 68.2%, 16.08225965376579, 68.2%, 14.894996623996162, Risk level, 14.700371810648365, 95.4%, 14.313608027668197, , 13.707582759575002, 99.73%, 13.127216055336394
+
+IWM99.73%, 234.63399699834767, , 233.13319640175717, 95.4%, 231.64199544741604, Risk level, 230.6666029418123, 68.2%, 230.14113244967996, 68.2%, 227.1490668536931, Risk level, 226.63338485115645, 95.4%, 225.6579923455527, , 224.15699954796753, 99.73%, 222.66599079462108
+
+QQQ99.73%, 543.2083829303177, , 539.7955602002223, 95.4%, 536.4041792581277, Risk level, 534.1860088609936, 68.2%, 532.9912196643573, 68.2%, 526.1868755888462, Risk level, 525.0139423108814, 95.4%, 522.7957719137473, , 519.382527834572, 99.73%, 515.9915682415573
+
+NQ_F99.73%, 22416.239559909194, , 22279.7013400279, 95.4%, 22143.9947799546, Risk level, 22055.2429816894, 68.2%, 22007.4514160198, 68.2%, 21735.201363146556, Risk level, 21688.2570183106, 95.4%, 21599.5052200454, , 21462.951176504343, 99.73%, 21327.260440090806
+
+NVDA99.73%, 140.1289775688679, , 137.2368867355328, 95.4%, 134.4044851223246, Risk level, 132.53830058475145, 68.2%, 131.51109520163263, 68.2%, 125.7851854112612, Risk level, 124.82168476681105, 95.4%, 122.95550022923793, , 120.05914044461129, 99.73%, 117.23100778269459
+
+AMZN99.73%, 249.5035992853581, , 246.82077620261765, 95.4%, 244.16680055820638, Risk level, 242.42700417315493, 68.2%, 241.48365871089328, 68.2%, 236.1465268108849, Risk level, 235.23299948895445, 95.4%, 233.493203103903, , 230.80937950308044, 99.73%, 228.15640437675128
+
+GOOG99.73%, 201.05593347579023, , 199.11003289031817, 95.4%, 197.18296551719197, Risk level, 195.92037796268897, 68.2%, 195.2368781319878, 68.2%, 191.36371581227823, Risk level, 190.69961715449853, 95.4%, 189.43702959999553, , 187.49054546258265, 99.73%, 185.56406164139727
+
+TSM99.73%, 224.26744569968628, , 220.79875964375987, 95.4%, 217.38372284984314, Risk level, 215.13962920079427, 68.2%, 213.91417358345373, 68.2%, 207.0295301161359, Risk level, 205.86037079920573, 95.4%, 203.61627715015686, , 200.14482331769403, 99.73%, 196.73255430031372

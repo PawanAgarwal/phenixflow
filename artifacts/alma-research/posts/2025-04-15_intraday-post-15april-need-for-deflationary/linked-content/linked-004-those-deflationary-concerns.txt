@@ -1,0 +1,57 @@
+NFP, Stagflation, Deflation, Intraday post (04/April)
+
+A very important shift in sentiment is on the way!
+
+Non-Farm Payrolls measures the net change in employment (excluding farm workers, private household employees, and non-profit organization employees).
+
+Change:
+
+Robust NFP numbers signal a strong economy, whereas significantly lower numbers indicate a cooling job market, as the overall economic demand is weak, due to declining consumer spending and uncertainty about future growth, and businesses are either hesitant to expand or are even cutting back on hiring. As job creation slows or reverses, fewer workers find new employment opportunities. Those laid off or entering the market add to the unemployment rate. With fewer people employed, aggregate consumer income and spending fall, causing the economic slowdown.
+
+When inflation is driven by supply shocks rather than demand pressures (like in 2020), unemployment can rise even as prices continue to climb. Once inflation expectations become unanchored, the economy can fall into a self-reinforcing cycle: weak NFP leads to rising unemployment, which suppresses demand further, while cost pressures maintain or even drive up inflation. Simply because prices react to supply/demand ratio. But it does matter which one is rising relative to the other. Central banks face a conundrum: tightening monetary policy to combat inflation can further suppress growth and worsen unemployment. Conversely, loosening policy to boost employment risks fueling inflation even more. This is stagflation.
+
+My call is to get a stagflationary print. That would show very low/stagnant growth or even a contraction in some sectors. Along with weak job gains, unemployment might start to creep upward or fail to decline, indicating slack in the labor market. Although wages might be rising in nominal terms, real wage growth would be subdued once inflation is taken into account. Persistent high inflation in the face of sluggish job growth confirms that demand isn’t driving robust employment gains.
+
+Now let me show you something very important… Something is lurking…
+
+Yields show that market participants are hedging downside risks and slowing economic growth. (Don’t forget that the 10-year yield is a benchmark for many interest rates, including mortgages and corporate bonds. A drop means it’s now cheaper for borrowers to raise funds.)
+
+Equities are down as we know by 4.84% while VIX is up by only 3.06%, with steepening backwardation:
+
+This is simply due to the complacency I’m talking about, while insiders are trying their best to avoid vol squeeze. But look at this:
+
+Gold futures are also down, lower than 3%, but it’s there. It can be nothing for now, but if the trend continous, it can signal that gold becomes less attractive, since it does not generate yield. If investors shift toward holding cash or highly liquid bonds over gold, that foreshadows expactations of increase the real value of cash.
+
+Listen…When aggregate demand (consumer spending, business investment, government expenditure, and net exports) falls, prices tend to drop. Reduced spending leads to lower production, which in turn can trigger layoffs and further declines in demand. A reduction in the money supply—whether due to tight monetary policy or banking crises—reduces the amount of money chasing goods and services. (This was a central feature of the Great Depression.) This also increases the real value of debt (the debt burden does not decline with falling prices), both households and companies find it harder to service their obligations. And as real debt burdens increase, this worsens the balance sheets of borrowers and can lead to a cycle of reduced spending and further price declines.. Nominal wages don’t adjust downward easily due to contracts and worker resistance. This creates a disconnect where real wages rise, further exacerbating unemployment as firms try to cut costs.This process is called: deflation.
+
+This can result in a feedback loop, when 1) reduced spending leads to lower sales and profits, prompting companies to cut costs and lay off workers; 2) with more people out of work, incomes fall, which further depresses consumer spending; 3) lower demand drives prices down even further. As prices drop, the real burden of debt increases, causing financial stress; 4) This increased debt burden and reduced income prompt even less spending and investment, which causes prices to fall further—thus deepening the deflation.
+
+We are not there at all. We are in stagflation, where the economy growing slowly or stagnating, and prices remain high because of supply shocks.In a stagnant economy, borrowers face high real debt burdens. As Irving Fisher’s debt-deflation theory explains, falling output can worsen the real value of debt, squeezing spending further. If consumer and business confidence deteriorates further, due to persistent weak growth and the burden of high debt, spending can drop dramatically. This decline in demand can eventually overpower the supply-side pressures that were keeping prices high. Once people and firms begin to expect that prices will continue to fall, they delay purchases. This behavior can trigger a deflationary environment even a spiral. See Japan’s “lost decades”.
+
+I don’ believe that this gonna happen and it doesn’t even need, listen… if this trend continues, it means investor sentiment is beginning to price in the risk of deflation. That would be a very important shift!But if you understood my post about geopolitics and the global economy, you’ll get that this is precisely the goal! Trump isn’t trying to lure retail traders onto the wrong side; he’s targeting institutional investors. He is fighting the sentiment. He isn’t trying to curb monthly near-term inflation, but rather flush stagflation out of the market completely—much as Volcker did back in the day. The difference is that now there’s the unregulated derivatives market, and you have major banks, investment funds, and in the future, Arab and Jewish investors to save the market and the economy and “buy the dip”.And from now on, all indicators and trends should be interpreted in the light of this.
+
+INTRADAY SETUP Now look at the volatility on different platforms:
+
+And my calculation (3m/1m RV, and RV of vol):
+
+The interesting part is the still declining realized vol of vol. This is the sign of the brake effect on VIX, bcs vomma selling is realized on this upstick. This foreshadows an intention to brake this decline, slowing it down before reaching the bottoms, similarly like braking the higher speed car on an icy road. If it happens, vol can reload itself for a final vol squeeze, after grabbing some liquidity via a short-term potential consolidation. (This is a rough call, and very conditional, but the whole environment kinda feels so…) The most important part that when I code realize vol of vol for the IBKR and Bloomberg RV, it is not this suppressed. So they see room to suppress it further by vol selling.
+
+And I know… you are saying: “this chick gone crazy, whats vol selling??”, well, come and see:
+
+As I explained in the chat, I’m a bit hesitant to post about intraday greeks. Simply because I don’t want to press this bad habit of forcing to explain everything through dealer flows. While dealer flows are very important and huge part of the flows, it is more pronunced when market is more in the center of the distribution. But now we are far out of the center, we are in the left-tail, as predicted, where macros, margin calls, emergency mechanisms, insider manipulation, and pure sentiment determines the price behavior. Here, dealer flow is only reacting. But some plp like to sounds like a math professeur or a doctor however they aren’t, while they confuse cause and effect.So while it still does have effect, it is not the driver of the price actions.
+
+Coding today’s gamma:
+
+This is a net positive speed environment, with net slope of 44.10%The main pivot is 5261.81 from vol perspective (but upside momentum confirmation at 5277.21)Between 5070 and 5248 the speed profile is very steep. So, you need to see lowering volatility to the upside. If they want to brake the downward move and avoid vol squeeze, they will sell more gamma below. The downward centroid is 5175.81Keep your eyes on these ranges, while monitoring the order flow, or OptionsDepth updating Depthview to see if customer gamma selling occurs or not. Look for vol responses. If vol is successfully suppressed and price make it above the pivot, you can see 5333.62 as well.
+
+OptionsDepth Chart:
+
+(Description is here)
+
+Zero vanna is at 5112.48 with positive convexity.Charm flip is around 5250, with positive convexity. This favors for mechanical gamma increase during the day and vol suppression. Vol has to react to this intraday, in order to make me believe. It can even pin the price. But above it is flat to suppressive.
+
+Volatility matters here the most bcs it tells us the story about how supply/demand realizes at certain lvls. Spot/vol beta is pretty much setting up for a move:
+
+(it’s not a vol squeeze yet…)
+
+SCRIPT INPUTS(after a 170+ pts gap down the preprojected thresholds are not accurate)

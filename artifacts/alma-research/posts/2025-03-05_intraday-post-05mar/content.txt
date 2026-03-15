@@ -1,0 +1,43 @@
+Intraday post (05/mar)
+
+Coding gamma exposure for today’s session:
+
+(Description is here)
+
+Today again we have an iron condor at 5700/5705/5840/5845 Coding main pivot at 5771.57Upside gamma will effect price above 5806.68; so is downside gamma below 5736.68Coding upside vanna flip at 5814.98 (vol should go down in order to break through this line), and downside vanna flip at 5648.45 (vol should go up to break this line).We are still in short speed environment to ensure slow spot decay, as called.This ensures positive charm flows (dealers become longer delta as time passes, forcing them to sell), even tho it is not that pronunced today.Similarly to yesterday, below the pivot charm convexity (color) is positive, and negative above. This steepens the speed profile making the gamma vs vol interactions more pronunced = shorter upside vol, longer downside vol., short vanna evironment.This is again, very good for reversion trades, especially on the call side. It remains undervalued especially with a daily short speed environment. While traders stay net long ATM vol into Friday.
+
+From momentum perspective, market is at its pivot, at 5806.44
+
+while volatility is making lower highs as expected during spot decay:
+
+If SPX can close above this pivot line, some weekly put decay can provide short-term tailwind. However, note that stochastic models tell me that current regime is not mean reverting rather trending while moving randomly. No mean reverting pattern is recognized. In such an environment intraday traders better aim only one bounce or rejection from a significant level and leave, instead of playing for constant reversions.
+
+Meanwhile, SOFR shows us that growth scare is growing as expected and planned.
+
+Stagflation is persistent, while we see ongoing concern about a potential government shutdown in mid-March, especially with legislative gridlock. The plan is to force the Fed to cut rates, weakening the USD and take tech lower for the new investors from the Middle-East and Russia, while buying out chinese investors. This regime will stay with us for now. The goal is a short, artificialy recession for now.
+
+SCRIPT INPUTS:SPX99.73%, 5903.688141899255, , 5872.219713932075, 95.4%, 5840.919022121502, Risk level, 5820.456289073955, 68.2%, 5809.449687988451, 68.2%, 5746.679642249172, Risk level, 5735.843515613545, 95.4%, 5715.380782565998, , 5683.909576058399, 99.73%, 5652.611662788245
+
+ES=F99.73%, 5918.527897727748, , 5886.182537947512, 95.4%, 5854.013948863874, Risk level, 5832.982401534251, 68.2%, 5821.667609624187, 68.2%, 5757.15265934929, Risk level, 5746.017598465749, 95.4%, 5724.986051136126, , 5692.637686376485, 99.73%, 5660.472102272252
+
+SPY99.73%, 589.7089438237762, , 586.4879074293102, 95.4%, 583.2844645876693, Risk level, 581.1900843566985, 68.2%, 580.0633307646992, 68.2%, 573.6387519177665, Risk level, 572.5298863464265, 95.4%, 570.4355061154557, , 567.2141708143575, 99.73%, 564.0110268793488
+
+VIX99.73%, 25.261826989740655, , 24.820006659652265, 95.4%, 24.385913609311245, Risk level, 24.100365847291258, 68.2%, 23.943951940655076, 68.2%, 23.067886487228254, Risk level, 22.919634610472414, 95.4%, 22.634086848452426, , 22.191809028083455, 99.73%, 21.758173468023017
+
+IWM99.73%, 212.62918339985268, , 211.07117908581233, 95.4%, 209.52459078439898, Risk level, 208.51249359176109, 68.2%, 207.96650125937268, 68.2%, 204.86182085022605, Risk level, 204.32750274612954, 95.4%, 203.31540555349164, , 201.7571377391428, 99.73%, 200.21081293803795
+
+QQQ99.73%, 509.8176582651945, , 506.2381746811296, 95.4%, 502.6838230290816, Risk level, 500.3581927421088, 68.2%, 499.10415983618515, 68.2%, 491.97013978232326, Risk level, 490.7417828438287, 95.4%, 488.4161525568559, , 484.8361142896073, 99.73%, 481.282317320743
+
+NQ=F99.73%, 20991.500014913723, , 20842.84867382993, 95.4%, 20695.250007456863, Risk level, 20598.672505025927, 68.2%, 20546.591077405334, 68.2%, 20250.333258933973, Risk level, 20199.327494974073, 95.4%, 20102.749992543137, , 19954.07520852567, 99.73%, 19806.499985086277
+
+NVDA99.73%, 124.83160543465905, , 122.6012792818481, 95.4%, 120.41080164921429, Risk level, 118.9696196151593, 68.2%, 118.1797301827481, 68.2%, 113.75812315086505, Risk level, 113.01037611237976, 95.4%, 111.56919407832477, , 109.33645115772882, 99.73%, 107.14839029288001
+
+AMZN99.73%, 212.72065299330666, , 210.47867580720214, 95.4%, 208.26032802253224, Risk level, 206.8062620820598, 68.2%, 206.01809504641128, 68.2%, 201.55750296439186, Risk level, 200.79374402145584, 95.4%, 199.3396780809834, , 197.09689879249584, 99.73%, 194.87935311020897
+
+GOOG99.73%, 180.30051153032537, , 178.36752207646038, 95.4%, 176.45525607033846, Risk level, 175.20170279038274, 68.2%, 174.5220383160845, 68.2%, 170.676544268421, Risk level, 170.01829843032039, 95.4%, 168.76474515036466, , 166.8310392220968, 99.73%, 164.91948969037776
+
+TSLA99.73%, 295.25656565056664, , 289.3942278296958, 95.4%, 283.64828709774423, Risk level, 279.8639882895242, 68.2%, 277.7835172320755, 68.2%, 266.1725944803851, Risk level, 264.2160288003196, 95.4%, 260.4317299920995, , 254.56143054464496, 99.73%, 248.8234514392771
+
+TSM99.73%, 189.89389223993334, , 187.40409669110682, 95.4%, 184.94694611996667, Risk level, 183.33424168485755, 68.2%, 182.45670802026984, 68.2%, 177.5092946817321, Risk level, 176.66575831514245, 95.4%, 175.05305388003333, , 172.56185455379676, 99.73%, 170.10610776006666
+
+AMD99.73%, 107.19617932051835, , 105.57233521964679, 95.4%, 103.97308966025918, Risk level, 102.92236243101468, 68.2%, 102.34885824116999, 68.2%, 99.12535607365498, Risk level, 98.57763756898532, 95.4%, 97.52691033974082, , 95.90182617710052, 99.73%, 94.30382067948165

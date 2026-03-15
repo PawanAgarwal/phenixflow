@@ -1,0 +1,49 @@
+Intraday post (21/feb)
+
+In today’s chat, I covered most of the ideas about OpEx. On the CBOE website, here, you can read more in details about the SOQ process.After opening, you will find here the official settlement values.
+
+Here I coded today PM expo gamma:
+
+Here you can find the 3D chart, and here the projected 2D heatmap.OptionsDepth Heatmap with today’s AM and PM expo:
+
+Coding zero vanna at 6071, in order to break below this, vol should cool down. As we can see, speed is net positive between 6190 and 6055 that is overall supportive in theory, but the coded color exposure is net negative here. This steepens the fly patterns and the local positive/negative speeds on the wings. I code the ‘centroid’ of this positioning is at 6105, below this lvl the distribution shifts towards retest the lows.
+
+From positioning perspective I code the main pivot at 6085.58 (coincidencing with the center of the ‘IC’ pattern you can see in my heatmap). If this line breaks, 6045 will be magnetic to the downside with spot down/vol down. Now, considering that the zero vanna falls to this range and it can be broken with only lower vol, but also taking local negativ color effect into account, during the AM there is more chance to break below the vanna flip than in the PM. Why? - Bcs, as said, the color pushes gammas down, that favors for vol expansion, and so the zero vanna flip becomes a strong ‘unbreakable’ support line. But it is true from the otherside too: if SPX falls below this line in the AM, it won’t go above this line. Now, above we have an upside magnet at 6186.4, that will come into effect if spot is above 6160.93I code a local zero vanna flip at 6121, that can be broken only if vol goes down too. This line will be stronger into the PM when color comes into effect (lower gamma —> more vol impact). But what is with vol? Can be the line broken?Well, if you look at the charm curve of my chart, you can see that at 6100 and at 6120 lvls the color (charm convexity) is steep postive, this mitigates the negative speed effect on vol in the PM especially into the close, creating longer speed towards 6120. This shifts the distribution asymmetrically for more favoring to choppiness and low IV into PM, as long as SPX can trade above the main pivot. But if we see 6121 vanna flip and 6130.39 broken we have better chanc to vacuum up towards 6160 and 6186 and pin there. (Note that I still see those right-tail hedges that I mentioned in the Sunday post) But all these long gammas disappear into next week.As said, we can see sell into the close, but everything happens, how the roll goes after AM expo, and where the settlement comes out. We have to watch those lvls and intraday IV closely to get some idea about the next moves.
+
+You can see slowing down in tech during this week despite the market high. We saw some rotation, but also we can see slowdown in retail trading momentum:
+
+And GJR-GARCH now expects volatility to remain relatively stable to slightly higher:
+
+The model says that despite SPX up, volatility is very persistent and decay slowly. The near-zero alpha shows us that the immediate impact of new shocks is almost negligible. The gamma coefficient, although positive, is not statistically significant in this sample, meaning that the asymmetry in the impact of shocks is not strongly evidenced here.
+
+From momentum perspective, I don’t like how the price keeps rejecting my trendline trading at 6146.70
+
+This whole rebound was due to the predicted vol decay that pulled institutional buyback flows in to support the market, with retail FOMOing. Also I must say that current ATM strike is trading at 16.8% IV, falling to 8.1% into Monday, and 11.6% into next Friday (month end). VIX is doing the same into Mar4. I will re-check it on Sunday, after expo, but this doesn’t show increased fear after OpEx, while hedges are there but not increased. Today expo is pivotal.
+
+However, for me personally, the market still look bullish, after I saw the pricings on that yesterday decline and despite some bearish-interpreted indicators and gamma unclench, I don’t see significant shift in the skew towards fear. But again, I will recheck it on Sunday, and all will depends where we close. Personally my gut-feeling tells more bullishness yet into March OpEx, even if we get a correction next week. But if vol catches up, it creates a vol squeeze… 18.5s is VIX pivot
+
+SCRIPT INPUTS:
+
+SPX99.73%, 6212.544517500742, , 6188.742798015136, 95.4%, 6165.032268515996, Risk level, 6149.543275346969, 68.2%, 6141.23019628012, 68.2%, 6093.71758904435, Risk level, 6085.496763715531, 95.4%, 6070.007770546504, , 6046.204976178147, 99.73%, 6022.495521561758
+
+ES99.73%, 6263.508444366747, , 6238.330729261066, 95.4%, 6213.254222183374, Risk level, 6196.871345751594, 68.2%, 6188.076096115507, 68.2%, 6137.821456240305, Risk level, 6129.128654248406, 95.4%, 6112.745777816626, , 6087.566809468798, 99.73%, 6062.491555633253
+
+SPY99.73%, 620.4245401621591, , 617.9083038319773, 95.4%, 615.4022725224859, Risk level, 613.7650132719523, 68.2%, 612.8859943800061, 68.2%, 607.8636842371121, Risk level, 606.9949964936727, 95.4%, 605.3577372431391, , 602.8413733860272, 99.73%, 600.3354696034659
+
+VIX99.73%, 17.954571134781744, , 17.371459435881746, 95.4%, 16.807285491096927, Risk level, 16.433270371255677, 68.2%, 16.223504190710145, 68.2%, 15.07544699887552, Risk level, 14.886729323568542, 95.4%, 14.512714203727292, , 13.927262649287218, 99.73%, 13.365428560042472
+
+IWM99.73%, 229.55888131460983, , 228.23031509094594, 95.4%, 226.9094379107229, Risk level, 226.04571936105575, 68.2%, 225.5808265332139, 68.2%, 222.93133690220455, Risk level, 222.47426965261613, 95.4%, 221.610551102949, , 220.28184615919056, 99.73%, 218.96110769906204
+
+QQQ99.73%, 549.673927928799, , 546.5540872640348, 95.4%, 543.4519541987745, Risk level, 541.4235907627865, 68.2%, 540.3320115816864, 68.2%, 534.1099335239848, Risk level, 533.0363701747135, 95.4%, 531.0080067387255, , 527.8878530069368, 99.73%, 524.786033008701
+
+NQ_F99.73%, 22767.35679901041, , 22637.7738312519, 95.4%, 22508.928399505206, Risk level, 22424.680741266508, 68.2%, 22379.34117334982, 68.2%, 22120.90841594914, Risk level, 22076.319258733492, 95.4%, 21992.071600494794, , 21862.47555552138, 99.73%, 21733.64320098959
+
+NVDA99.73%, 151.78799882969858, , 148.83986898240286, 95.4%, 145.94899972002509, Risk level, 144.0454860102715, 68.2%, 142.9997008383336, 68.2%, 137.15943315066784, Risk level, 136.17451521043162, 95.4%, 134.27100150067804, , 131.31905263813647, 99.73%, 128.43200239100454
+
+AMZN99.73%, 230.59207509283365, , 228.65592920176778, 95.4%, 226.7360399878231, Risk level, 225.47897254358963, 68.2%, 224.79975466978513, 68.2%, 220.94357527099416, Risk level, 220.28103722203537, 95.4%, 219.0239697778019, , 217.0873907460438, 99.73%, 215.16793467279135
+
+TSM99.73%, 212.13276708851987, , 209.1029397949736, 95.4%, 206.11638659601775, Risk level, 204.15504655546206, 68.2%, 203.08591831020127, 68.2%, 197.06885768521684, Risk level, 196.04496565156919, 95.4%, 194.0836256110135, , 191.0517542219277, 99.73%, 188.06724511851138
+
+GOOG99.73%, 193.92367571382758, , 192.09412630170257, 95.4%, 190.28183755173802, Risk level, 189.0945983108968, 68.2%, 188.4521213584967, 68.2%, 184.81010984201694, Risk level, 184.18540046840008, 95.4%, 182.99816122755885, , 181.16809135583696, 99.73%, 179.3563230654693
+
+AMD99.73%, 120.56448416443043, , 118.9551213233967, 95.4%, 117.36724116668788, Risk level, 116.3249399494238, 68.2%, 115.75758164843855, 68.2%, 112.56002511859631, Risk level, 112.01505638846683, 95.4%, 110.97275517120275, , 109.36245025545276, 99.73%, 107.7755121734602

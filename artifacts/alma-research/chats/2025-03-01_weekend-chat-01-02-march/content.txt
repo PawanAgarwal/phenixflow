@@ -1,0 +1,378 @@
+Chat Post
+2025-03-01T09:13:14.684Z | Alma
+WEEKEND CHAT (01-02/march)
+
+Replies
+2025-03-01T09:18:21.795Z | 0Mik
+GM fam, and Our Lady
+Awesome Friday post.
+
+2025-03-01T09:25:05.327Z | Noor888
+Hi, Alma 🌺. Insanely good Friday read. Congrats!
+
+2025-03-01T10:04:24.506Z | Doc McGraw
+gm
+
+2025-03-01T10:12:29.497Z | leo
+
+2025-03-01T10:13:05.026Z | leo
+
+2025-03-01T10:22:46.337Z | Mas
+
+2025-03-01T10:38:23.726Z | Mario
+Gm
+
+2025-03-01T11:04:09.796Z | Chris
+Good day to you wonderful people
+
+2025-03-01T11:09:07.278Z | Alex
+Hi everybody, someone can explain why a negative speed environement is supresive ? i don't get the meaning of supresive...
+
+2025-03-01T11:19:35.861Z | Mas
+
+2025-03-01T11:56:33.201Z | gwgj41
+think about climbing a mountain
+
+2025-03-01T12:12:44.323Z | Mas
+
+2025-03-01T12:19:43.829Z | Mas
+Is this correct for charm calls and charm puts? anyone with exp can tell me?
+
+2025-03-01T12:20:42.881Z | Mas
+is Charm inherently suppose to be negative for calls and puts above spot price?
+
+2025-03-01T12:55:21.050Z | Sphericube69
+Nice week-end to everyone!
+
+2025-03-01T14:15:02.912Z | Chris
+Think about it visually. Let’s look at a call delta curve. The slope of the delta curve decreases on both sides of the ATM price. That means the further you are away from ATM, the less sensitive to changes in spot these options become (which of course is just gamma).
+
+In laymans terms: The price of the call is nothing else than the probability weighted (=expected) payoff from the option. So the further you are below the current ATM price, the lower the probability that your call option will have a payoff.
+
+So far so good. Now let‘s factor in time and use a concrete example. Stock ABC closed at 100 yesterday. Would you place a bet that ABC is at 200 a year from now? And would you place the same bet for tmw? Taking it to the extremes you get the intuition why the time value of an option is higher, the further out it goes. Now fill the spots in between. Would you place a bet that ABC is at at 150 tmw? At 110? . At 102? Your willingness to take the bet and therefore its fair value certainly increases the closer the strike gets to spot. Visually that means that the curve gets steeper and steeper the closer to expiry you get. With a long time to expiry it‘s a nice and easy upward slope. One second before expiry it‘s vertical because it‘s either in the money or not.
+
+So to put this together: with the passage of time, the slope get‘s steeper. Therefore your delta OTM will decrease until 0, ATM stays the same and ITM increases to 1. The wings move more and more to the center.
+
+Now put delta is just call delta times -1. So basically flip the curve below the horizontal axis. Below spot (ITM) delta will decrease until -1 with every day passing, ATM again stays the same, above spot will increase until 0 with every day passing. Therefore you are correct. With the passage of time, below spot delta will decrease in both scenarios and above spot it will increase. Or in one sentence: charm increases with the strike price
+
+2025-03-01T14:28:19.894Z | Jason
+Hi Alma - in your weekend note can you explain what that move at the end of Friday means for bullish momentum? We finished at/slightly above your Friday note level which leads me to believe we are moving towards the higher target you mentioned. That move felt false but it hit your level so don't want to disregard.
+
+2025-03-01T15:26:50.263Z | Alex
+But as we go higher, MM are shorter gamma up, increasing the volatility and it sound like the opposite of supresive…I think I missunderstood something
+
+2025-03-01T15:38:31.261Z | Mas
+Thank you Chris for that very detailed response, I have worked out this math a few months back and I am trying to make sense of everything on a granular level exactly the way you just explained it to me. What i did not understand was Alma said "The color exposure is net negative. This means that we have supportive charm above 5926, but the overall gamma exposure will decrease adding more room for volatility, but also steepening the upside speed profile" - So I have a 2 part question: If my calculations are correct why was charm Postitive below spot on my calculations? and When She is calculating other Greeks aside from MM GEX, are the charm and vanna calculated based off the The current MM Positioning data or is that inherently separate based off of the Option chain data?
+
+2025-03-01T15:45:20.854Z | Ashish Jain
+I think we tank Monday that was just short covering Friday
+
+2025-03-01T15:49:23.161Z | Mas
+
+2025-03-01T16:18:17.869Z | KDH
+I don’t think we tank but I think we see weakness again next week (but I’ll be pumped if we tank as I’m short lol)
+
+2025-03-01T16:18:58.346Z | KDH
+That was month and window dressing too most likely for brokers but definitely a squeeze for sure last 8 min wow
+
+2025-03-01T16:19:12.241Z | 670583
+If anyone is interested, I know Alma has talked about Taleb’s work, he has some quant videos on YouTube. This is his first video I believe about Black-Scholes
+
+https://youtu.be/UoGlUZPNouM?si=4DokdUoTiCg93GoU
+
+2025-03-01T16:26:18.457Z | XIN
+i think if price goes down, it is suppressive, you are right
+
+2025-03-01T16:30:48.129Z | 670583
+Charm seems to be the easiest Greek for me to fundamentally understand out of all of them. As time passes, ITM contracts delta converge to 1/-1 for calls and puts respectively and to 0 for OTM calls and puts. It’s negative for OTM contracts and positive for ITM. That’s about as simple as I understand it, I think of it as delta decay
+
+Attached is a general graph, acceleration towards end of expiry is really when it seems to kick into effect than any other time and why we probably see wild swings like we saw on Friday
+
+@Mas
+
+Attached is a diagram for when net exposure is positive or negative although I’m not sure if it’s 100% correct but it makes logical sense to me all other things being equal
+
+2025-03-01T16:30:58.991Z | 670583
+
+2025-03-01T16:40:18.618Z | XIN
+you can treat vanna charm to some kind of gamma, sum up to get “net GEX”  in that lvl to understand the mm hedge behavior. bcs vanna can equal to vega vs spot, charm can equal to theta vs spot.
+
+long otm call or short otm put = positive speed  = negative charm = positive vanna
+
+long otm put or short otm call = negative speed = positive charm  = negative vanna
+
+2025-03-01T16:44:37.123Z | Mas
+Thanks in a Market maker perspective this makes alot of sense
+
+2025-03-01T16:47:08.990Z | RE
+possible... i wouldnt be suprised if its ranged next week just from looking at charts.  for my weekly / 10m tf  spx studies we just had our 3rd most steepest decline weeks since 1/12/24 with a 10m bar slope of -0.759....  for Monday i have res - 5999.50721745293, 6061.286, 6061.506, 6102.131, 6155.5559  Below - 5877.7525, 5831.3616, 5516.123.  this is only one timeframe study and there are many other layers to take into account..  lets see what Alma's magic formulas produces for monday open.
+
+2025-03-01T17:07:40.557Z | 670583
+this is a snapshot of NDX when it was around 20589 yesterday around 2:00pm EST. I'm using 450 point wide strikes for 03/03/2025 expiry. I'm wondering why the Vanna is elevated on puts compared to calls? It doesn't seem like Gamma, Delta, Vega, or IV Skew is that much different between puts and calls but the Vanna is significantly higher on puts vs calls. If Vanna is the change in delta with respect to IV shouldn't they be pretty much the same as the other Greeks are relatively the same as well?
+
+2025-03-01T17:11:30.398Z | 670583
+
+2025-03-01T17:12:36.797Z | 670583
+*with respect to Vega
+
+2025-03-01T17:31:55.421Z | 670583
+I think it's because of the speed on puts vs. calls now that I'm looking into it, vomma seems to be the same as well
+
+2025-03-01T21:28:05.799Z | Mas
+6000/6005 ES im shorting the hell out of
+
+2025-03-01T22:58:24.404Z | Jeffrey K
+Apparently, this is what the low got bought Friday...
+
+2025-03-01T22:59:17.286Z | Jeffrey K
+major trendlines usually hold the first tap...additional, not so much
+
+2025-03-02T00:50:57.283Z | Doc McGraw
+his books are great and he has a chalk talk on youtube  lectures he gave to Stanford grad students  I htink  I watvched it years ago
+
+2025-03-02T00:51:36.445Z | Doc McGraw
+oh?  based on what signal? how did u calucualte that?
+
+2025-03-02T00:52:49.591Z | Doc McGraw
+has nothingto dowithlines  ahs todo with charm and MM hedging and huge buy orders for March from PMs + JPM delta buyback
+
+2025-03-02T01:03:58.002Z | Mas
+I’m embarrassed to say but it’s from my naive model but I’ve watched it for so long you start seeing patterns.. like if we’re above 6010 that trade would be off for me. I personally think the bottom is in as of last Friday. I do see a trade back into 5950/5900
+
+2025-03-02T01:17:16.696Z | Doc McGraw
+I try not to have a bias
+For me it’s path dependent
+I might expect a certain reaction at a level but conditions always have to be met
+
+2025-03-02T01:18:17.880Z | Doc McGraw
+**SPX ROAD MAP ODTE:
+
+**Chop Zone:**
+5930 – 5960
+
+**Above Chop Zone (Bullish):**
+- IF SPX > 5960, THEN target 5970
+  - IF price clears 5970, THEN look for 5980
+  - IF price stalls at 5970, THEN revert to 5960
+- IF SPX > 5980, THEN next upside target = 5995–6000
+  - IF breakout above 5995–6000 holds, THEN expect further extension
+  - IF failure at 5995–6000, THEN revert to 5980
+
+**Within Chop Zone (5930–5960):**
+- Expect two-way, back-and-forth price action
+- Scalping opportunities may arise, but larger moves likely need a break above/below this zone
+
+**Below Chop Zone (Bearish):**
+- IF SPX < 5930, THEN target 5920
+  - IF price stabilizes at 5920, THEN watch for a bounce toward 5930
+  - IF price breaks below 5920, THEN look for 5900
+- IF SPX < 5900, THEN expect deeper downside
+  - IF price rebounds, THEN potential retest of 5920
+  - IF continued weakness, THEN path to lower support levels
+
+2025-03-02T01:18:54.684Z | Doc McGraw
+This is a very rough preliminary note/ analysis based on OD
+
+2025-03-02T02:35:03.275Z | Doc McGraw
+A xyk :,l
+
+2025-03-02T03:44:16.455Z | Zebra
+Hi Guys. Is this how vanna looks like in Friday? Just want to confirm I’m reading Alma’s post correctly.
+
+2025-03-02T05:19:29.135Z | Madhur
+I think, yes this is how the polynomial trendline for Vanna will look like.
+
+2025-03-02T09:20:04.509Z | Bull
+Hi Alma! Can you please post your magic numbers for Avgo like you nailed Nvda ?
+
+2025-03-02T12:00:40.329Z | Doc McGraw
+Daily Alma TV Conversion Prompt:
+"Please convert today's trading string into the Pine Editor format we call Alma TV. The conversion should take the provided data and format it so that each line starts with a dollar sign, the symbol, a colon, then the rest of the data. For example, for SPX it should look like:
+$SPX: 99.73%, 5975.579154580438, …, 5747.560493857062
+Now, here is today's string:
+[PASTE NEW STRING HERE]"
+
+2025-03-02T12:01:34.014Z | Doc McGraw
+to convert the whole new string into a format that i can put into one slot  - a 1 shot deal  using cgpt 3.0 mini
+
+2025-03-02T12:44:51.156Z | Ashish Jain
+Stocks are going to open lower in Europe no doubt
+
+2025-03-02T12:56:43.998Z | Yoda969
+Reversion Scripts?   Anyone converted the indicators to thinkorswim/ Schwab thinkscript. I don’t use trading view.  Would be greatly appreciated.
+
+2025-03-02T15:17:44.265Z | Schrödingers Trader
+I type the levels in TOS manually using a saved drawing. What sucks about TOS is you can have 2 drawings on at once. Also, it’s easier to update the drawings using your phone, because you can see and edit the entire drawing set at once as opposed to going through each point on the PC.
+
+2025-03-02T15:48:15.119Z | Leonida
+Hey guys can you please tag me where Alma explained the spot/vol beta, I need to study that again.
+
+2025-03-02T16:02:38.425Z | Mas
+"beta meassures the correlation. Spot/vol beta means how muchthe spot and the volatility, atm vol, fix strike vol moves together. when it isnegative, they move opposite. when it is positive, they move together. ofcourse, it has a spectrum, not black&white. the "normal" versionis the negative (short) spot/vol beta, when spot up/vol down. why? bcs it hiscase, investors are long stock, and use hedges to hedge the downside by buyingOTM puts and selling OTM calls, buying the skew. (bcs skew is 25d put minus 25dcall) by doing this, they put market makers (who take the opposite of thetrade: long OTM calls, short OTM puts, selling the skew) into long vanna: so asspot moves up, they become longer vega that they hedge by selling vol. Thisreflexively dumps volatility down if market moves up. But if market moves down,MMs become shorter vega, means they have to buy vol. reflexively increasingvolatility. and not just that... gamma: they are longer upside gamma, andshorter downside gamma (positive speed). So, volatility compresses to theupside (as more trading against the price actions), and expands to thedownside, resulting: NEGATIVE SPOT/VOL BETA. but if the opposite happens, maniaon the options market, and right-tail hedging: investors buying OTM calls andselling OTM puts, selling the skew. this puts market makers into long skew, andshort vanna, means: as spot moves up, they become shorter vega, so they need tobuy vega. Also shorter upside gamma, and longer downside gamma (negative speed)So vol expands if market moves up, createing right-tail risk, low liquidity tothe upside due to this one-sided crowded trade. And compresses to the downside,as there where liquidity stands. This results POSITIVE SPOT/VOL BETA if the bideffects the tails as well, tail OTM puts (that are synthetic VIX calls),bidding also vol of vol, you will see positive spot/vix beta. thats whenblow-off top happens."
+
+2025-03-02T16:03:23.692Z | Leonida
+Thank you Mas👍🏻
+
+2025-03-02T16:15:41.558Z | Mas
+Additional commentary
+
+2025-03-02T18:19:23.278Z | Sud
+Trump announced crypto strategic reserve, bitcoin is up ~10%. Should we expect a melt-up rally tomorrow?
+
+2025-03-02T18:40:11.098Z | KDH
+I suspect a very green Monday at least at open but curious what Alma says
+
+2025-03-02T19:51:43.850Z | Jeffrey K
+Does anyone have the Gamma bar chart values as of EOD Friday?  Helps with the futures overnight
+
+2025-03-02T21:01:47.039Z | Luk
+@alma
+how was in Zakopane. My dear Lady this my country I hope you enjoyed very well?
+
+2025-03-02T21:59:15.751Z | tim
+
+2025-03-02T21:59:31.284Z | tim
+Trump pumping crypto
+
+2025-03-02T22:22:47.306Z | Nazir
+Just my own production a bit crude overview, not a precicely labeled graph
+
+2025-03-02T22:23:11.129Z | Nazir
+
+2025-03-02T22:40:13.154Z | Jten0887
+https://x.com/financialjuice/status/1896321103695671523?s=46&t=J_s0UUte2RS6NYmR_AgrzQ
+
+2025-03-03T00:13:15.037Z | Jeffrey K
+futures struggling to stay green
+
+2025-03-03T00:37:57.951Z | Fred
+So much of that last hour on Friday was $13B into pensions
+
+2025-03-03T00:38:10.213Z | Fred
+And simply EOM
+
+2025-03-03T02:15:12.092Z | Alma
+Hello :))
+Hope you had a nice weekend.
+Dropped a very important post about the economical, geopolitical processes in order to provide a context for the market: https://open.substack.com/pub/stochvoltrader/p/geopolitics-tech-context?r=3dyydu&utm_campaign=post&utm_medium=web
+
+2025-03-03T02:15:21.432Z | Alma
+
+2025-03-03T02:16:40.949Z | Jain
+i forget is weekly post sun
+
+2025-03-03T02:24:08.563Z | Jain
+bullish EOY? vs EOM?
+
+2025-03-03T02:28:32.079Z | Ryan
+I think we can see a -20% decline this year from February highs but end the year around 5500 or even green. I also don’t think the top is in for the year
+
+Exciting times ahead
+
+2025-03-03T02:28:57.653Z | Doc McGraw
+Based on ?
+
+2025-03-03T02:29:05.133Z | Ryan
+I have to catch up on all the readings and posts. Those are just my thoughts. Thank you Alma for sharing
+
+2025-03-03T02:29:49.497Z | 670583
+This is what I needed 🤣 thank you
+
+2025-03-03T02:30:07.163Z | Doc McGraw
+I have 0 idea
+I see many conditional probabilities
+
+2025-03-03T02:30:20.959Z | Ryan
+I don’t want to write it all. It’ll be too long. It’s Alma’s group. Just wanted to share my view
+
+2025-03-03T02:35:36.480Z | Jain
+i was just wondering if her post had a typo EOY vs EOM
+
+2025-03-03T02:35:43.736Z | Jain
+bullish all year ?
+
+2025-03-03T02:36:02.466Z | Jain
+We'll continue going day by day until OpEx, watching closely for sudden convex increases in the pricing of tail SPX puts and tail VIX calls.
+I’m bullish into EOY.
+
+2025-03-03T02:37:43.973Z | Jten0887
+I interpret it as spot decay into opex. Then sudden plunge in Q2 and then rally in end of Q3 to finish out the year.
+
+2025-03-03T02:39:10.937Z | RE
+i read it as rally into eoy
+
+2025-03-03T02:39:20.392Z | KDH
+If so then it’s basically replica of 2022
+
+2025-03-03T02:39:24.975Z | RE
+yah
+
+2025-03-03T02:40:14.732Z | RE
+good read. lots of stuff to think about...  Did you actually enjoy your weekend getaway Alma?!
+
+2025-03-03T02:43:39.714Z | Ryan
+Yeah. I’m waiting for the quarter to end. I don’t think these first 2 weeks of March will be easy. I’ll be sitting on my hands a lot until I see a good opportunity
+
+2025-03-03T02:45:51.453Z | RE
+this week is fairly clear for fin news tho?
+
+2025-03-03T02:55:04.569Z | JSA
+$78k was a corrective target, and now a key support
+
+2025-03-03T03:07:03.022Z | Jten0887
+I still think v shape recovery into March opex to get close to all time highs.
+
+2025-03-03T03:07:12.894Z | Jten0887
+But I will defer to Alma.
+
+2025-03-03T03:23:51.132Z | tim
+
+2025-03-03T03:24:16.922Z | tim
+SPY back in 2021-2022
+
+2025-03-03T03:25:21.350Z | tim
+
+2025-03-03T03:25:24.086Z | tim
+now
+
+2025-03-03T04:28:23.770Z | Sharcus Aurelius
+She is holding March expo puts. If we V shape recover into March OPEX then that’s a waste of cash.
+
+I thought she was thinking that we see a subtle decline lower with potentially violent rallies like Friday, chopping in a “bull flag”/triangle like  pattern into March OPEX… only instead of breaking out to the upside (as is usually the case with a bull flag), we breakout to the downside in an elevator like capitulation decline.
+
+She has stated this environment would be great for keeping put option premiums high while allowing them to decay so bears don’t make money.
+
+And since the call side is underpriced, there will be more opportunity for “arbitrage” by taking advantage of those violent rallies.
+
+But given this I don’t know why she would be holding long dated March Expo puts if they will be prone to decay and expiring worthless. I would assume spot is getting close to where she bought them last Wednesday.
+
+2025-03-03T04:57:35.019Z | RNR
+Anyone tried the momentum indicator?
+
+2025-03-03T08:12:56.478Z | 0Mik
+yo, y’all are overcomplicating this post again until you end up confusing yourselves completely.
+Alma laid it out crystal clear..again.
+she literally explained the big picture for the year and why. that’s the key 'WHY'. she’s not just saying what she sees, she’s breaking down how she thinks, what she’s looking at, and exposing a crucial internal process.. and nobody’s talking about it
+
+2025-03-03T08:14:01.083Z | 0Mik
+First off, the fed call vs gov call distinction perfectly shows that it’s not the fed running the show, it’s the government.
+Second, she’s saying that geopolitical interests will push tech and oil prices down, and that drags the market with it.
+She also explained why there can’t be a sudden crash..'cause that would trigger panic and could lead to a recession via leverage effects.
+Instead, they make the economic metrics look better on paper, bring the economy close to recession, and trigger QE.
+Then she says when everything is set, they start buying, which should begin around summer.
+
+2025-03-03T08:14:16.011Z | 0Mik
+Btw, funds love buying in summer since market activity is low
+
+2025-03-03T08:14:42.021Z | 0Mik
+From there, steady growth… which obviously means bullish into year-end
+
+2025-03-03T08:15:32.243Z | 0Mik
+Like, is this just basic reading comprehension issues for some of y’all, or do people just try to overcomplicate everything?
+What she wrote is insanely important, and nobody’s talking about it.
+Our Lady just mapped out how geopolitical interests are literally manipulating the market. she decoded their entire game.
+What more do you want?
+
+2025-03-03T08:21:47.299Z | 0Mik
+Why wouldn’t she hold March puts? Especially if they’re already ITM, so they’re not fully exposed to extrinsic value decay.
+She literally said multiple times back when she bought them before Feb OPEX.. for hedging purposes. Which makes total sense..hedging spot decay while playing intraday momentum on the call side

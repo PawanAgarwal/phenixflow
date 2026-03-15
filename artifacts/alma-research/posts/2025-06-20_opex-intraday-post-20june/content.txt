@@ -1,0 +1,75 @@
+OpEx + Intraday post (20/June)
+
+Weekly post - Vol of vol supply OpEx greeks dynamics
+
+The FOMC played out as expected. It unanimously voted to keep the federal funds rate at 4.25–4.50%, with the updated projections still showing a median of two rate cuts in 2025 despite higher inflation forecasts and geopolitical uncertainty around tariffs and the Middle East. Powell’s post-meeting comments balanced reassurance on inflation’s gradual cooling with caution over trade-driven price pressures, signaling the Fed remains data-dependent but in no hurry to ease further.Each $10 rise in oil (Hormuz threats) adds ~0.3 % to CPI, reviving stagflation fears. Geopolitical noise outweighs expectations of Fed easing. Only a significant disinflation in core CPI and wage growth would bring cuts as soon as September—otherwise, the Fed remains on hold into 2026. Of 19 policymakers, 8 forecast two 25 bp cuts in 2025, while 7 expect no cuts, making the median of two cuts a fragile compromise. US bond market is about to crack.
+
+Coding today’s PM expo positioning:
+
+The positioning is not clear at first glance, but the net effect is a long fly with net flat-to-negative speed. The centroid is at 5965.07 - 5968.85 zone, below the speed is net negative, and above it is net positive. On OpEx days, the local effects are stronger. Downside pivot is 5953.11, upside pivot is 5973.27The 6000s strike can be a local pivot that will be in effect after 2.20pm if price can stay above the 5970/80 range, and volatility is sold.Upside is definitely capped at 6007/18 range (vanna flip is oscillating there during the day) - as written in the weekly post. Very max is 6025. But so is downside, if market can hold above the downside pivot until 12.50am, and you see vol starting to calm down. If vol catches up before, and market starts to fall, the primal target is 5896/5902 zone (especially strong during the last 1.5 hours), below this, vol will calm down and spot is pinning towards 5850.The positioning is net short delta. The charm flip is very close to the downside pivot, strong effect in the afternoon. Color (charm convexity) is negative, that doesn’t favor too much ‘vol down’ dynamics, mechanically. Vanna flow is heavily negative. So this means, that charm is positive below the downside pivot, and you can expect significant pressure on the spot to the downside, as dealers get longer delta. Above the downside pivot, charm is negative, but delta decay is very small. Significant trend-changing swings can happen during the first three hours after opening, then price will be trapped either towards 6000, or in the centroid range, or down towards 5850, beside the conditions written above. Odds favor for some stabilization above the pivot, and unclech next week to grind lower. Vol of vol supply remains into July.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+AM expiration is heavily negative speed. Local charm pivot is around 5955/58Biggest notional size is 6000 for AM expo, and likely to get pinned to there, a lot of delta will decay on that strike, if spot holds the pivot in to 8.50am, and even go&hold above 5975. In this case, I don’t expect too much unclench after AM positions expire, pre-open, and likely that the spot will stop around the PM pivots and slowly revert back towards 6000, but we should see. If spot fails to hold above the AM pivot, it is doomed to fall and pin towards 5920, then after the AM expo it will unclech to the downside, but the first station at 5902/10 will brake it, the nwe should see how vol behaves. This scenario is way less likely, but non-zero probability. This is why I say, my personall odds estimate local stabilization and unclech post-OpEx. Market has fear of downside grind.
+
+SCRIPT INPUTS:=== SPX closed at 5980.87===
+
+99.73%, 6091.921937089224, , 6064.095400118131, 95.4%, 6036.395968544612, Risk level, 6018.294502799068, 68.2%, 6008.568844274768, 68.2%, 5953.042277475492, Risk level, 5943.445497200932, 95.4%, 5925.344031455388, , 5897.515699410846, 99.73%, 5869.818062910776
+
+=== ES closed at 6036.0===
+
+99.73%, 6151.8554649381695, , 6122.823092653274, 95.4%, 6093.927732469085, Risk level, 6075.043291684163, 68.2%, 6064.894705861215, 68.2%, 6006.966306449255, Risk level, 5996.956708315837, 95.4%, 5978.072267530915, , 5949.037894048737, 99.73%, 5920.1445350618305
+
+=== SPY closed at 597.44===
+
+99.73%, 609.3411582774389, , 606.3585691536666, 95.4%, 603.3905791387194, Risk level, 601.450690339497, 68.2%, 600.4079176698426, 68.2%, 594.4572647376458, Risk level, 593.4293096605031, 95.4%, 591.4894208612807, , 588.5066103131406, 99.73%, 585.5388417225612
+
+=== VIX closed at 22.17===
+
+99.73%, 25.47920149057198, , 24.63801539941018, 95.4%, 23.82460074528599, Risk level, 23.285200902322757, 68.2%, 22.98241498457006, 68.2%, 21.32665940734764, Risk level, 21.054799097677247, 95.4%, 20.515399254714012, , 19.670709486025938, 99.73%, 18.860798509428022
+
+=== IWM closed at 209.65===
+
+99.73%, 215.3308404828315, , 213.90591573197344, 95.4%, 212.49042024141573, Risk level, 211.56444324271422, 68.2%, 211.0654320432714, 68.2%, 208.2249466235667, Risk level, 207.7355567572858, 95.4%, 206.80957975858428, , 205.38445940103955, 99.73%, 203.96915951716852
+
+=== QQQ closed at 528.99===
+
+99.73%, 541.2505234015479, , 538.1766640503071, 95.4%, 535.1202617007739, Risk level, 533.1217963863216, 68.2%, 532.0463017793586, 68.2%, 525.9159371638282, Risk level, 524.8582036136784, 95.4%, 522.8597382992261, , 519.7855701207593, 99.73%, 516.7294765984522
+
+=== NDX closed at 21719.69===
+
+99.73%, 22220.48908084771, , 22094.93459456793, 95.4%, 21970.089540423854, Risk level, 21888.45929024568, 68.2%, 21844.53098810429, 68.2%, 21594.127287342533, Risk level, 21550.92070975432, 95.4%, 21469.290459576143, , 21343.723488963755, 99.73%, 21218.890919152287
+
+=== NQ closed at 21961.75===
+
+99.73%, 22471.64982991681, , 22343.811243055374, 95.4%, 22216.699914958404, Risk level, 22133.586242681966, 68.2%, 22088.857131081673, 68.2%, 21833.902921091827, Risk level, 21789.913757318034, 95.4%, 21706.800085041596, , 21578.94860961167, 99.73%, 21451.85017008319
+
+=== NVDA closed at 145.48===
+
+99.73%, 151.98191196225392, , 150.34764733106235, 95.4%, 148.73095598112695, Risk level, 147.67114433127955, 68.2%, 147.0964971579349, 68.2%, 143.84533820692852, Risk level, 143.28885566872043, 95.4%, 142.22904401887303, , 140.59416986909307, 99.73%, 138.97808803774606
+
+=== AMZN closed at 212.52===
+
+99.73%, 219.7394580363055, , 217.92711974415315, 95.4%, 216.12972901815274, Risk level, 214.95295735823495, 68.2%, 214.31726484569046, 68.2%, 210.70740563412141, Risk level, 210.08704264176507, 95.4%, 208.91027098184728, , 207.09754188390437, 99.73%, 205.3005419636945
+
+=== AAPL closed at 196.58===
+
+99.73%, 203.17163191523585, , 201.5169861537696, 95.4%, 199.87581595761793, Risk level, 198.8013799554345, 68.2%, 198.22105816726068, 68.2%, 194.92512639229318, Risk level, 194.35862004456553, 95.4%, 193.2841840423821, , 191.62919063338808, 99.73%, 189.98836808476418
+
+=== GOOG closed at 173.98===
+
+99.73%, 180.04817610174217, , 178.52468652226372, 95.4%, 177.01408805087107, Risk level, 176.0249753462871, 68.2%, 175.49048703303137, 68.2%, 172.45628362257332, Risk level, 171.93502465371287, 95.4%, 170.9459119491289, , 169.42207608021224, 99.73%, 167.9118238982578
+
+=== TSLA closed at 322.05===
+
+99.73%, 347.45971549684754, , 341.0481309646118, 95.4%, 334.7548577484238, Risk level, 330.61307412243764, 68.2%, 328.34098424942306, 68.2%, 315.63365324711515, Risk level, 313.4869258775624, 95.4%, 309.34514225157625, , 302.9261147659207, 99.73%, 296.6402845031525
+
+=== TSM closed at 213.5===
+
+99.73%, 222.38029239002904, , 220.14902551311238, 95.4%, 217.94014619501453, Risk level, 216.4926585354398, 68.2%, 215.70864890549845, 68.2%, 211.2682626126423, Risk level, 210.5073414645602, 95.4%, 209.05985380498547, , 206.82786601074673, 99.73%, 204.61970760997096
+
+=== AMD closed at 126.79===
+
+99.73%, 133.21419826277722, , 131.59834880524156, 95.4%, 130.0020991313886, Risk level, 128.95495481455592, 68.2%, 128.3860044898538, 68.2%, 125.1736475905821, Risk level, 124.6250451854441, 95.4%, 123.57790086861141, , 121.96127711307984, 99.73%, 120.3658017372228

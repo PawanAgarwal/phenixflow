@@ -1,0 +1,991 @@
+Chat Post
+2025-02-22T10:40:20.933Z | Alma
+WEEKEND CHAT (22-23/feb)
+
+Replies
+2025-02-22T10:40:53.723Z | Jain
+First
+
+2025-02-22T10:41:09.889Z | Kingsize648
+Morning!
+
+2025-02-22T10:41:34.491Z | Alma
+Hallo,
+Make sure you read this: https://open.substack.com/chat/posts/51e0c19d-31f7-4f09-8195-0c06feaa9453?target_reply_id=9d138a07-02b5-47a9-a1d9-3819a35db6b3&showTarget=true
+
+We have a nice community, lot of high knowledge plp and qualified trader here.
+Don't mess it up, If you can do this favor to me.
+And if the shoe fits on you, take it! ;)
+Thank you for your attention
+
+2025-02-22T10:44:12.844Z | Mario
+GM ☕
+
+2025-02-22T10:50:02.875Z | kalless
+Good morning!
+
+2025-02-22T12:43:28.660Z | Alma
+For vol-traders, I recommend this paper: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4761614
+
+2025-02-22T12:56:47.670Z | David P
+Weekend reading sorted thank you!
+
+2025-02-22T13:50:45.411Z | Pawan Agarwal
+Hi Alma, Thx for taking time to help us learn. Current system the way I understand is where you share various reversion levels and some commentary behind those levels and but more or less we trade these reversion levels.
+
+Is there any value in monitor realtime changes some of the information you share? For examples looking at option depth heat map realtime because it changes as market progresses or is it static for the day?
+
+Second, if we should look at data like color, speed or others realtime then where can we monitor? I know you have your own scripts to calculate some of these. What do you recommend for us?
+Thx again for helping!
+
+2025-02-22T14:07:11.677Z | Jeffrey K
+suggestion:  if "IV" is meant to be only a very specific kind, namely fixed strike IV, a notation could help like:  IV(fs)
+
+2025-02-22T14:13:02.899Z | TTFTRADE
+Hey Alma, can you talk a bit more about this chart and signals? Is this something that could be coded in pinescript? thanks
+
+2025-02-22T14:41:30.448Z | Ngok996
+
+2025-02-22T14:42:06.702Z | Ngok996
+
+2025-02-22T15:15:24.795Z | SrLex
+1k of subscribers 🔥🔥🎉🎊
+
+2025-02-22T15:26:55.016Z | Ashish Jain
+I cannot believe I missed that short. It was so obvious after QYLD and OpEx
+
+2025-02-22T15:28:04.755Z | kalless
+Every day is a new day!
+
+2025-02-22T16:42:42.408Z | jj
+Alma, when you have the time pls, i’m interested to hear more how you calibrate heston model and garch to infer future volatility. do the parameters provide high explanatory powers in predicting future vols. thx
+
+2025-02-22T18:17:47.831Z | DIma
+Have a great weekend everyone
+
+2025-02-22T18:18:08.271Z | Ashish Jain
+When you guys getting long? Hard to short here
+
+2025-02-22T18:48:01.338Z | RE
+pretty chunky for support lower in my studies
+
+2025-02-22T18:50:40.732Z | Bull
+Please share your views on NVDA er impact on market.
+
+2025-02-22T18:50:46.053Z | Bull
+alma
+
+2025-02-22T18:53:26.980Z | RE
+these are what i have for SPX.. (ES + SPX EXTRAPOLATED to Monday RTH O.  I  will see what Alma and others post, evaluate Sunday session and make a better decision by Monday
+
+2025-02-22T21:56:44.017Z | Alma
+it can't. this is a very complex code
+
+2025-02-22T21:58:40.814Z | Alma
+0dtes are changing during the day. it can have an effect. but mostly for high frequency traders. the positioning I code, is more like the underlying longer-term ones, that determine the dynamics at the core.
+
+2025-02-22T22:02:41.038Z | Alma
+you got answer yesterday to this.
+look, zero vanna lvl is a black-scholes based product, derived from the positioning, and has a significance as a result of the dealer flow.
+there is multiple tools that meassure the IV, and there are multiple calculations, including simply the ATM vol, or the whole curve but weighted like in the VIX etc.
+but these numbers have no effect on the hedging flow, if you think about it.
+neither does realized vol.
+the only thing that has effect on the hedging dynamics is the vol smirk, and how it shifts at certain contracts.
+to get an idea about that, you look at the fix strike vol. that will reveal the actual momentum of the volaitlity that matters here.
+and so there you will gain some insigts about the vega of the contracts.
+as said, if you trade options, i assume you have some knowledge about it.
+
+2025-02-22T22:04:14.243Z | Alma
+different brokerages have different tools to show that, you have to discover how the brokerage that you use, works. or simply click on the "help" menu.
+me personally, I use IBKR, it has its own menu called "volatility lab" where i can watch the smirk real time of different assets on different expiry, have historical datas, etc.
+also I code by myself as I buy datas.
+
+2025-02-22T22:05:45.393Z | Bull
+Sorry to interrupt but does ToS have such features ?
+
+2025-02-22T22:07:36.252Z | Alma
+i'm pretty sure they do. every brokerage MUST have these... it is an obligation.
+they can't let you trade without provide proper datas.
+
+2025-02-22T22:16:50.198Z | Alma
+apropo, talking about the smirk...
+didn't you find it interesting that in the very last hour, the SPX/VIX correlation went up?
+also the CBOE imlied correlation index also went down in the last two hours.
+also, realized vol barely moved, and the smirk also went down into monday
+
+2025-02-22T22:22:10.258Z | BTFD
+Sorry to interrupt. What did all those tell us?
+
+2025-02-22T22:25:03.021Z | Mas
+
+2025-02-22T22:27:51.698Z | Mas
+
+2025-02-22T22:34:02.130Z | crawtrader
+Hi everyone. Wanted to share some open source code on trading view that I have found extremely helpful taking Alma's daily narrative and plotting it on the SPX chart. Attached is a screenshot from Friday. I've also included a link to the open source script. I use chat GPT to save the script as a base.  I then copy Alma's narrative and ask it to update the script each morning to only display the levels she provides that day. It works quite well. --> https://www.tradingview.com/script/mhCAFdh3-GEX-and-Vanna-Levels/
+
+2025-02-22T22:36:50.947Z | Stanley
+Hey Alma, I use IBKR, but I’m having trouble understanding these charts and smirks in volatility lab. Any recommended readings?
+
+2025-02-22T22:37:47.531Z | Alma
+they have a "campus", and you can fin a '?' at every chart, that takes you to the page where they describe them
+
+2025-02-22T22:38:50.929Z | crawtrader
+Here's a chart plotting Thursdays levels.
+
+2025-02-22T22:46:12.614Z | Alma
+1) to see fixed strike vol goint down on a decline you have to see the put/call skew moving down, that means, customers short the skew --> selling hedges
+2) however to see VIX down along with SPX down, you have to see the sell along the entire curve, including the far tail puts too
+3) the small but 'dissonant' decline in COR3M says short correlation bets from the market side, bcs don't forget: this is IMPLIED correlation. So the market feels like long dispersion at the las hour...
+4) RV only went up by 1.62% on an -1.71% decline. this is also the symptom of the predicted short skew phenomenon manifested in shorter downside speed I analysed on the morning post.
+
+I will scrutinize the next week more in depth, maybe on monday to wait for the freshest datas, but this just doesn't fit into the 'market fear', and 're-COVIDing' narrative for now.
+
+2025-02-22T22:48:01.535Z | Jten0887
+This is incredible work.
+
+2025-02-22T22:54:08.762Z | David P
+The re-covid narrative gave me a real laugh 😂 market already down, then that news comes out and everyone starts blaming it on that
+
+2025-02-22T22:56:36.276Z | 0Mik
+Definitely some insider shadiness goin’ on... If y’all knew how deep insider trading runs in this industry... it's wild. JPM and the rest of these clowns keep pumpin’ out bearporn lies.
+Not sayin’ we rip hard from here, that’d be a stretch, but they’re 100% shorting the overpriced skew, no doubt. Alma saw it too in Friday’s last few hours and the positioning flows
+
+2025-02-22T22:57:03.694Z | 0Mik
+And once again, straight-up brilliant call, before the Friday open. Nailed it. And yeah, I took the vol short at the end too. thx
+
+2025-02-22T22:57:34.449Z | Alma
+pretty typicall how WS works, so they can bid vol up and sell it
+
+2025-02-22T22:58:25.623Z | 0Mik
+Hell yeah, Sister just dissed em
+
+2025-02-22T23:02:27.765Z | Alma
+i will check the monday datas, and will scrutinize how the odds are priced, which bets are mispriced ... but these EOD momentums are something we need to keep in mind.
+
+2025-02-22T23:02:36.428Z | Alma
+maybe the sunday post will come out on Monday now
+
+2025-02-23T03:28:30.157Z | Gamma Goatee
+One thing I have noticed is if a trend is to continue direct next session usually there is a small reversal to blow up the directional options that paid out we did not get that Friday ?
+
+2025-02-23T08:26:05.945Z | Alma
+if futs gap down at open, MMs will be forced to buyback
+
+2025-02-23T08:27:51.866Z | Alma
+also when the headlines and soc media is bearish and in fear, then you have to know that WS is about to sell you overpriced volatility only to short it
+
+2025-02-23T08:28:18.673Z | Alma
+remember my post about odds?
+if the odds are overpriced, the seller has an edge
+
+2025-02-23T08:29:10.966Z | Alma
+but why can it be overpriced? bcs plp are fooled to believe that this is a fair bet
+
+2025-02-23T08:44:20.628Z | Alma
+sometimes it can be revealed via a simple vol simulation, sometimes we look at teh skew or momentum and look for discrepancies
+
+2025-02-23T08:44:29.941Z | Alma
+bcs if the bet looks too good to be true, then it is not
+
+2025-02-23T08:47:12.813Z | Alma
+and in this case, if you spot a discrepancy out and see that the odds are overpriced, the otherside will pay hard, due to the higher multipliers.
+later, when the emotional crowd joins the bet, the odds will be again priced relatively higher, and there will be no edge on that
+
+2025-02-23T08:47:25.614Z | Alma
+i showed this in my educational post
+
+2025-02-23T08:47:58.602Z | Alma
+and the other thing, that i showed you in the market theory post is, that if you want actual alpha, then you should look for these kind of mispricings
+
+2025-02-23T08:48:35.994Z | Alma
+bcs market is effective most of the times, however these mispricings occurs, and when you spot them out, you got like 100%+ in a few mins
+
+2025-02-23T08:48:56.676Z | Alma
+this is why mean reversion trade is so powerful, but you have to back it through other factors
+
+2025-02-23T08:49:38.401Z | Alma
+relying solely on greeks, and market maker hedging flows is just one thing... it is not everything.
+you can't solve the market through that
+
+2025-02-23T08:50:01.194Z | Alma
+same mistake like if you would use only EMAs ... literally the same blindness
+
+2025-02-23T08:50:06.172Z | Alma
+dealer flow is reflexive
+
+2025-02-23T08:50:42.003Z | Alma
+it reflects the customer position, and while it takes a huge % of the intraday flows, it isn't the main driver of the market
+
+2025-02-23T08:51:10.965Z | Alma
+later i will tell you how i know it for this sure.. ;)
+
+2025-02-23T08:52:05.984Z | jj
+Alma any views on your country’s german election
+
+2025-02-23T08:52:15.391Z | Alma
+i use dealer flow only to see the stage.
+but the actors are moving freely on the stage. the use the stage, not determined by it.
+the stage gives an environment, some limits maybe, but not determines the way the actors move, totally
+
+2025-02-23T08:53:00.940Z | Alma
+this is a key point to understand
+
+2025-02-23T08:53:15.766Z | Alma
+bcs many plp relies too much on dealer flow, and in the wrong way
+
+2025-02-23T08:53:58.629Z | Alma
+also MMs like to act like they are the priests of the market.
+and retails also have these conteos about them that MMs know everything, they move the market, etc.
+
+2025-02-23T08:54:00.754Z | Alma
+hell no
+
+2025-02-23T08:54:53.600Z | Alma
+this is the reason I'm a bit hesitant to drop the educational series about greeks, bcs talking about greeks is always sounds fancy, i plp like to talk about it bcs they sound like profeseurs/doctors...
+
+2025-02-23T08:55:59.133Z | Alma
+but you better know, that these educational posts i dropped are more important thatn anything else.
+the dealer flow is only a tool, to see the stage, get some reflection on the customer positioning, and help to spot out discrepancies
+
+2025-02-23T08:56:34.834Z | Alma
+the trend matters... the trend of the position shifts, the trend of the smirk shifts... and most impoartant: THE TIMING
+
+2025-02-23T08:57:10.789Z | Alma
+the market moves on one thing, especially in a time like this with Trump: volatility over and underpricings
+
+2025-02-23T08:57:12.393Z | Alma
+thats all
+
+2025-02-23T08:57:56.242Z | Alma
+bcs volatility risk premium reflects the supply/demand, the 'implied risk/reward' on a trade
+
+2025-02-23T08:59:30.741Z | Alma
+the news are only tools for that
+
+2025-02-23T09:01:37.228Z | Alma
+bcs if you remember my educational post about the odds, fair bet, and probabilities, you know that higher demand on a bet reflects higher implied probability to win on that bet.
+but also you have probably noticed that risk/reward is inversely probortional to supply/demand
+
+2025-02-23T09:03:08.970Z | Alma
+i showed you with a simple math that the higher the demand (and so the implied probability to win on a bet), the lower you edge is if not negative (it becomes negative once it breaks the fair value), and the more edge the sellers have
+
+2025-02-23T09:04:37.619Z | Alma
+Wall Street has every tool to create sentiment, bcs they (insiders) know that no matter how clever you are (and most plp don't know shit about the dynamics, lets be honest), emotions turn your rationality off
+
+2025-02-23T09:05:02.356Z | Alma
+they have news channels, soc media accounts, popular plp...
+
+2025-02-23T09:06:40.671Z | Alma
+when the JPM CEO, or some random GS guy says something on the TV, you better know he lies.
+you have to read between the lines, bcs everything is staged, everything is made to set teh stage for their goal...
+so you have to ask yourself: what can this statement cause, why did he say it just now, and how can he has an edge of that
+
+2025-02-23T09:07:21.721Z | Alma
+then look at the positioning, smirk, momentum, sd channels, relative alphas etc. to see if you see seomthing telling
+
+2025-02-23T09:08:32.775Z | Alma
+being able to code functions, or reading the dealer flow are only TOOLS, not GOALS.
+this doesn't mean, you are reading the tape, bcs the context matters.
+
+2025-02-23T09:08:38.537Z | Alma
+WS wants to sell you a story
+
+2025-02-23T09:08:55.332Z | Alma
+a narrative, bcs once you have emotion, they can make you buy volatility, or sell volatility
+
+2025-02-23T09:11:10.720Z | Alma
+and when you see this mess: OpEx, bearish headlines, Trump speaks 2 hours before close, AAPL making new highs before dumps, and still plp go short on VIX and correlation, you have to know that something just doesn't add to this friday 'crash'
+
+2025-02-23T09:12:02.607Z | Alma
+remember, that I hinted the economic cold war and the tech sector's role in that?
+I research that thing with plp you can't imagine.
+
+2025-02-23T09:12:12.591Z | Alma
+I will post about it carefully, but
+
+2025-02-23T09:13:09.269Z | Alma
+Trump sudden narrative change about Ukraine is not a coincidence. They are negotiating with Putin already, and they want to make a hidden alliance to stop China.. I posted about that on twitter few days ago
+
+2025-02-23T09:13:34.940Z | Alma
+the is important bcs the most important thing now is quantuum computing
+
+2025-02-23T09:14:37.606Z | Alma
+the country that has quantuum computer first, rules the world, literally
+
+2025-02-23T09:14:58.686Z | Alma
+i researched and still have jobs relatied to it...  know for sure what it can do in theory
+
+2025-02-23T09:16:25.915Z | Alma
+but China has a lot of interest in the US, a lot of influence over tech sectors that it shouldn't have,
+these are mostly closed firms, you can't buy their shares, and you probably never heard about them... companies that have the engineers to experiment and build tech for quantuum computing
+
+2025-02-23T09:16:48.668Z | Alma
+and they have results, and they go and build it into the AI technology
+
+2025-02-23T09:16:50.597Z | Alma
+to test it
+
+2025-02-23T09:17:00.811Z | Alma
+and AIs must be trained
+
+2025-02-23T09:17:18.342Z | Alma
+this is why google, X, facebook, insta etc. are there
+
+2025-02-23T09:18:12.812Z | Alma
+with their AI bots...
+i'm telling you that google knows so much that it can predict with ~95% accuracy what you will do in the next day. it is tested. this is a real number.
+
+2025-02-23T09:19:10.320Z | Alma
+advertisment is also just a tool...
+okay, companies like to buy AIs to boost their consumer crowd, but what they get are also only test AIs
+
+2025-02-23T09:20:11.109Z | Alma
+the real ones are used in the military, NATO secret service.
+bcs they have to monitor the momentums, predict decisions of the leaders, military strats etc. with different probabilities.
+
+2025-02-23T09:21:21.485Z | Alma
+remember when CIA sent a public report to Putin to show that they knew about Prigozhin's plan months before it happened? Russian secret service had no clue about it
+
+2025-02-23T09:22:18.950Z | Alma
+also, one of my friend just told me that FBI sent a report to Hungary few weeks ago that a kid wants to massacre in his school.
+hungarian police didn't know about it. it was in my birthplace, Győr
+
+2025-02-23T09:24:01.787Z | Alma
+and these AIs are all trained on us... personally i have no problem about that... i have contracts with gov things, bcs i worked and wok on things that are insider things.
+but its not like a conteo or something...
+they train these algos on us only to build better military AIs
+
+2025-02-23T09:26:53.241Z | Alma
+and if AI gets a quantuum computing backing tech... you can generate new code languages, your computing capacity will skyrocket to infinite in theory, you can create new encrypting techs that no other tools can detect... and you can watch the chinese leaders without they even noticing anything about it... and collect so much informations that you can't imagine, and quantuum built AIs calculate predictions with 99% accuracy (never 100%).
+
+2025-02-23T09:27:51.054Z | Alma
+so the one who has quantuum tech, rules the world, literally, not to mention the military combat AI bots
+(nothing like terminator, but rockets, precision tools etc. and also in medicals)
+
+2025-02-23T09:28:43.300Z | Alma
+and Trump wants to take everything back from China, all of its interest, and steal their good techs...
+and this is mostly made through Wall Street for now
+
+2025-02-23T09:29:52.731Z | Alma
+we all know that if the covid news would be real, Trump would have closed the borders instantly.. he has a very aggressive anti-migrant policy, he is not playing shit
+
+2025-02-23T09:30:21.600Z | Alma
+Trump plays a very aggressive chess game against the BRICS and CSTO
+
+2025-02-23T09:31:07.198Z | Alma
+and won't aid Russia. he will do everything to repeat the 70s, when Russia was forced to give nuclear weapons to america to pay tis debt
+
+2025-02-23T09:31:13.427Z | Alma
+*its
+
+2025-02-23T09:31:49.819Z | Alma
+he won't let Russia to be too strong, but he needs it beside himself to win over China
+
+2025-02-23T09:32:25.724Z | Alma
+these are some underlying flows that are happening under the hood, and directly related to the markets
+
+2025-02-23T09:34:09.719Z | Alma
+my gut feeling is that market is still bullish, but we have to watch the premarket session closely how futures move in the overnight. it can be a big time bottom and we want to be in first, bcs everybody fears now, and bearish bets seem to be overpriced a bit, but i will compute that more precisely
+
+2025-02-23T09:35:44.802Z | Alma
+so the key is to read between the lines,
+see what is the bet they want to sell to you, and if it is overpriced or not.
+and also spot underpriced bets out. thats where the real edge lies.
+
+2025-02-23T09:36:12.256Z | Alma
+market never falls when everybody expects it. it falls when market is complacent
+
+2025-02-23T09:38:29.436Z | Alma
+i wrote it on friday too...
+and see: market didn't even broke 6000, but news are full of bearish headlines.
+and also this decline was priced in ,it  was in the positioning I showed you. once it broke my marked 6105, you knew, bcs I explained the reason. i explained that that zero vanna WILL be broken, and vega went down, it was broken...
+it all was priced in.
+
+2025-02-23T09:38:57.432Z | Alma
+this is the most important thing to understand.
+read my educational posts pls, that i dropped.
+
+2025-02-23T09:39:21.868Z | Alma
+;))
+
+2025-02-23T09:40:26.426Z | Alma
+(chat is turned back on, sorry, but when I'm explaining these kind of things, trying to teach something, i don't want to answer unrelated and momentary irrelevant Qs.. and i'm not german, i'm austrian)
+
+2025-02-23T09:48:12.800Z | Alma
+I let you digest it
+https://open.substack.com/chat/posts/a21b46c3-2e5d-4fce-8f43-2dd8f3c3beb0?target_reply_id=5a702694-1319-4aee-8111-e08325f3a9a8&showTarget=true
+
+2025-02-23T12:33:14.120Z | Stanley
+Thank you Alma. These messages are enlightening.
+
+2025-02-23T12:37:52.379Z | Stanley
+I have read your educational posts over the past few days, but I feel the need to go through them again.
+
+2025-02-23T13:11:30.776Z | Alma
+
+2025-02-23T13:17:07.387Z | Alma
+
+2025-02-23T13:19:02.062Z | David P
+Didn’t know you had a sell signal on the 19th
+
+2025-02-23T13:19:57.334Z | Alma
+you gonna see that these articles I dropped are way more important than greeks.
+talking about greeks is overrated, to shill services and courses, to sound very sophisticated ... snobbish sometimes...
+
+2025-02-23T13:20:09.850Z | Dominik
+I've finally read the OD chat and it was enlightening, to say the least. Thanks for all the effort Alma! I am still struggling with the OD chart, though as I don't understand all your conclusions in the screenshot describing what you see in it. A few questions:
+- am I correct in my assumption that local max gamma = positive gamma, local min gamma = negative gamma?
+- I absolutely don't understand the explanation for EOD regarding positive speed profile creating negative charm flow (I understand that speed = positive in OTM while charm is negative in OTM, but I don't understand the explanation for EOD and what it means for the price itself for EOD... positive speed would increase Gamma, but negative charm (through time decay) will decrease delta. Is it a null-sum game in that case?)
+- Could you elaborate this here: https://open.substack.com/chat/posts/2aab643b-d095-4c00-8b42-4f35379fb002?target_reply_id=c740b8c2-e2c1-49df-b5ec-9e367cc66f15&showTarget=true What does the 84359 represent? What exactly does the calculation for ES futes mean/represent in that case (will they long or short ES in that case?)
+- In all of it: what exactly does the division of 2.5 mean in the chart?
+
+2025-02-23T13:21:10.381Z | Alma
+i understand the greeks very well,
+(later in the year maybe i share some personal references...)
+.. and i'm telling you, plp don't understand how greeks should be handled.
+
+2025-02-23T13:22:27.876Z | Alma
+local max is local max... depends on the local values.
+its math...
+if you have negative gamma levels all around, the max will be the less negative number, but still negative.
+this is why i use the term "local max/min"
+
+2025-02-23T13:23:24.272Z | Alma
+no. speed is gamma relative to spot.
+i described it in the OD chat, read again.
+
+2025-02-23T13:24:23.016Z | Alma
+843.59 is the gamma exposure itslef.. the amount of gamma projected on that strike alone
+
+2025-02-23T13:34:02.751Z | Dominik
+I've already read and re-read it a couple of times, so re-reading yet again will most likely not prove helpful in this case, that's why I ask what the interpretation is (and how you arrived at that conclusion in the screenshot). Spot is OTM = positive speed = higher probability that we go ATM/ITM = higher increase in gamma relative to spot moving ATM/ITM. Spot is OTM = negative charm = higher probability that we stay OTM = higher decrease in delta relative to time. What exactly do you see in the provided screenshot that lets you reach the conclusions that you reach?
+
+2025-02-23T13:53:11.426Z | Gamma
+Alma what do you think gold would do in next few months
+
+2025-02-23T14:02:32.904Z | Alma
+https://open.substack.com/chat/posts/7fd10fe8-accf-4466-991c-e831c757082a?target_reply_id=ac99b588-8596-4d71-8f71-1bc245cdcca8&showTarget=true
+
+2025-02-23T14:13:06.533Z | Alma
+i don't analyse gold
+
+2025-02-23T14:43:59.157Z | Alma
+lets get back to it
+
+2025-02-23T14:44:27.917Z | Alma
+this is why mean reversion is such a powerful strategy
+
+2025-02-23T14:47:56.074Z | Alma
+
+2025-02-23T14:48:41.034Z | Alma
+the thing we want to spot out is that when the mean reversion on any timeframe coincidences with what the positioning is telling us.
+
+2025-02-23T14:48:52.823Z | Alma
+we need both in order to hit alpha
+
+2025-02-23T14:51:35.465Z | Alma
+what i mean by this is if you take Kelly, and assume you aim the vol projected 1SD band, you have 68.2% chance to hit in theory.
+so lets say your algo closes at 30% profit or at 10% loss.
+Kelly advices like 5-6x leverage on this trade then.
+If you take it and hit as the theory says, and positioning reinforces the reversion, you will be up by 50.92% after 100 trades.
+
+2025-02-23T14:51:40.330Z | Alma
+steady, low risk growth
+
+2025-02-23T14:51:49.404Z | Alma
+relatively low-risk
+
+2025-02-23T14:52:31.328Z | Alma
+if you let only 5% to lose, it spike above 100%
+
+2025-02-23T14:52:44.671Z | Alma
+this is how the HF algos trade
+
+2025-02-23T14:53:13.993Z | Alma
+they don't care about the overall trend,
+
+2025-02-23T14:53:31.996Z | Alma
+and if you don't have mean reversion with enough probability, you creates one... pair trading
+
+2025-02-23T14:54:02.786Z | Alma
+but now this is a rough calculation, i didn't take the convexity of the premium into account
+
+2025-02-23T14:54:30.902Z | Alma
+bcs the key is that mean reversion is basically fading the momentum
+
+2025-02-23T14:55:08.501Z | Alma
+as you have read in my posts, the more stretched the momentum is, the higher the probability that it will revert
+
+2025-02-23T14:55:29.207Z | Alma
+however, take into account the IV shifts on the trades.
+
+2025-02-23T14:57:06.303Z | Alma
+if the momentum hits the upside 2 sigma for example, then the odds are very much priced higher for continued upward momentum.
+why? bcs plp tend to think that what happens now that will happen in the future too, our ability for abstract thinking is not that developped as many thinks..
+
+2025-02-23T14:57:44.855Z | Alma
+so the plp start to bid upside up, everybody and his mom buy calls with leverage, IV goes up, skew shifts shorter, spot up/vol up... position becomes one-sided
+
+2025-02-23T14:58:09.855Z | Alma
+but in this case if you chase the rally, the risk/reward is very bad, bcs the odds are already trading above fair value
+
+2025-02-23T14:59:00.707Z | Alma
+then it hits 2 sigma, and you fade it.
+the downside odds are very-very underpriced in this case.
+bcs no one expects it, nobody bets on that
+
+2025-02-23T14:59:14.381Z | Alma
+and the payoff is very high
+
+2025-02-23T14:59:20.780Z | Alma
+and convex
+
+2025-02-23T14:59:32.494Z | Alma
+and this is why mean reversion has the edge
+
+2025-02-23T15:00:17.965Z | Alma
+if you followed me on twitter in the past year, basically this is what i always did all the time: short tops and buy bottoms
+
+2025-02-23T15:01:13.534Z | Alma
+i have special mean reversion models built, i even sold some mean reversion codes years ago, and built some for HFs, bank trading desks
+
+2025-02-23T15:01:26.910Z | Alma
+but again: you want to be sure that mean reversion is rational
+
+2025-02-23T15:01:32.244Z | Alma
+you can't blindly fade moves
+
+2025-02-23T15:01:41.476Z | Alma
+same mistake as chasing
+
+2025-02-23T15:02:22.001Z | Alma
+look what we did during the week... i kept saying "up" until thursday, while the market went up
+
+2025-02-23T15:03:18.005Z | Alma
+why? isn't it contradictionary? - no, bcs market was insecure, and hedged the other side.
+remember my skew metrics? it told that story. puts were very much expensive. and so when it ripped higher, call payout was pretty good
+
+2025-02-23T15:04:13.527Z | Alma
+the other thing is the vol trading... when you fade volatility... same concept, but with vol.
+thats very advanced stuff, and there are many plp here who don't even know the basics (i don't know how they got license to trade options), so i keep this topic for later
+
+2025-02-23T15:05:50.624Z | Alma
+but the key is to get familiar with the concept of probability and odds, and market theory i dropped, in order to understand how the cycles work.
+i don't want to make you trip with greeks too much. bcs i don't want you to think like those hyper-sophisticated plp out-there who are talking greek all day long.
+think strategically
+
+2025-02-23T15:09:00.520Z | Alma
+Take your time to read through what I dropped today https://open.substack.com/chat/posts/a21b46c3-2e5d-4fce-8f43-2dd8f3c3beb0?target_reply_id=5a702694-1319-4aee-8111-e08325f3a9a8&showTarget=true
+Here it starts
+
+2025-02-23T15:10:34.778Z | Bull
+If it’s possible please share thoughts for Nvda er in your weekly post. Sorry for asking out of context question while you explaining more imp things.
+
+2025-02-23T16:12:27.582Z | Investor
+hi Alma, thank you for your wonderful thoughts. I'm a bit confused about the option expiration dynamics going forward. cem always mention the window of weakness starts wed before option expiration. Looking at Opex equations that you dropped. It seems like gamma dominates in the equation. So if there's a volatility event, and vol goes down as spot goes down, then spot is under the zero vanna line and the MM has negative vanna portfolio then they're forced to sell as spot goes down further? And as we approach the next option expiration, then vanna and vega shrinks, theta eats away at the options causing the net delta to be less negative, then they're forced to buy back the underlying as we approach the next option expiration? Is that the logic? Is this why the market bottoms around the 5th or 13th. 1 week before option expiration?
+
+2025-02-23T16:32:32.701Z | David P
+Hey Alma have you watched Pantheon on Netflix, up your street I think 🤓
+
+2025-02-23T17:13:45.036Z | 0Mik
+Alma, your post on X is so haunting https://x.com/alma18499/status/1893704717735244230
+
+2025-02-23T17:24:00.173Z | Derek
+Think this is a new trend line, the old one didn’t have sell signals, only that SPX was rejected multiple times last week
+
+2025-02-23T17:45:16.144Z | Joe J
+hi Alma / or anyone who can answer - im confused how you got to the drift number (annual) in the monte carlo simulation, would you mind explaining?
+
+2025-02-23T17:55:04.986Z | Joe J
+why would Putin consider after sanctions and being kicked off swift.....doesnt he run the risk that as soon as a new administration comes in they can just revert everything?
+
+2025-02-23T18:30:56.044Z | Alma
+didn't see yet, my fav was "Elisa & Marcela" :))
+
+2025-02-23T18:31:22.170Z | Alma
+i think, it will be up, this is why you saw this flush, but we will see... i will drop the psot
+
+2025-02-23T18:31:29.673Z | Dor
+Hi Alma. Tricky question: isn't it true that Charm is normally positive above the spot, Negative below the spot and ZERO At-The-Money? And isn't it true that Charm is mainly relevant for options about to expire? If that is true (big if...), how can one safely utilise Charm days before expiration, since it is constantly changing from positive to negative to zero and vice-versa, as the price constantly oscillates?
+
+2025-02-23T18:32:02.655Z | Alma
+yepp... sadly i can't have any good news.
+i will drop this post, a bit more in detail here too as free content. very important from market perspective as well
+
+2025-02-23T18:32:18.933Z | Alma
+i can change time frames
+
+2025-02-23T18:33:09.504Z | Alma
+it was just an assumption based on the annualized return... jsut to put something in. nothing spec :))
+i'm glad you are reading the post, and thinking on it...
+
+2025-02-23T18:34:40.471Z | Joe J
+Ah ok thank you !
+
+2025-02-23T18:34:57.380Z | Alma
+look what Trump is preparing: to stay for more than two cycles if possible. If Trump successes with his plan to privatizate the states, then it will very similar world order than what you see on the East
+
+2025-02-23T18:38:22.404Z | Alma
+charm is pronunced near/at expos? - yes.
+all the other statements: - nope.
+Dealers have a book with net exposure.
+long otm put has positive charm,
+long otm call has negative charm.
+
+when you sum the book exposure you will get a negative or positive number.
+We can roughly estimate the net exposure by watching the dealer skew, and also speed profile.
+Speed is a good estimation for charm exposure: negative speed = positive charm, positive speed = negative charm.
+bcs in negative speed you long otm puts and short otm calls,
+in positive speed you short otm puts and long otm calls
+think about it
+
+2025-02-23T18:43:18.333Z | Alma
+its not always windows of weakness, Cem simplifies it sometimes.
+remember what the formula showed about vanna vs vol relationship? higher vol = lower vanna effect.
+no vega effect on expo days as i showed.
+
+negative vanna simply means that if vol rips, dealers buy bcs they are shorter delta.
+and if vol declines, dealers sell bcs they are longer delta.
+this is why a negative speed is suppressive + net positive charm exposire (longer delta over time = sell by MMs)
+forget theta here, charm decay matters.
+
+and don't try to derive everything from option greeks. thats jsut one part of the pic
+
+2025-02-23T18:43:26.626Z | Alma
+i dropped knowledge about that above
+
+2025-02-23T19:10:52.425Z | Doc McGraw
+
+2025-02-23T19:11:38.250Z | Doc McGraw
+
+2025-02-23T19:12:09.590Z | Doc McGraw
+MM pov (from options depth) IC in da house
+
+2025-02-23T19:15:25.484Z | Doc McGraw
+6055/60 = ccs and 5960/55 = pcs   Puts net sold 5985 and lower.  Alma can calculate skew / speed / vanna etc (I can say that a small drop in IV / FSV should be supportive, Alma can give us the math and the nuances)
+
+2025-02-23T19:17:12.238Z | VincentiusTrading
+What narrative change are you referring to?
+
+2025-02-23T19:19:15.390Z | Doc McGraw
+and for those of us that go in circles (like me) converting negative to good (if ur a bull and vice versa)  I think of it as supportive (MM NEGATIVE charm is 'good' supportive - think generically theta decay - from below or delta of decaying )
+
+2025-02-23T19:20:17.874Z | BTFD
+negative speed is suppressive which seems conflict with right tail risk as spot up/vol up.
+
+2025-02-23T19:20:29.044Z | Doc McGraw
+'in negative soeed, YOU short otm puts'   YOU = MM correct?
+
+2025-02-23T19:24:02.158Z | Doc McGraw
+link takes me back to the chat...?
+
+2025-02-23T20:04:33.248Z | 0Mik
+Guys, Alma dropped some killer topics today. I reckon if the chat ends up rehashing the same stuff every single day, it's gonna get real boring. Use the search function and give the info some time to sink in.. It needs time to marinate
+
+2025-02-23T20:06:35.735Z | RE
+Yes there is gold in these chat conversations thanks for explaining everything Alma and team
+
+2025-02-23T20:07:19.353Z | RE
+Chat worth the subscription alone.  Invaluable teachings here.  Very generous to share your time and knowledge. Thanks !!
+
+2025-02-23T20:09:23.276Z | EZ
+is it possible to update the revision signal every other day? i think most of us would have benefit greatly if we saw the red dots on 2/19.
+
+2025-02-23T20:11:20.499Z | RE
+Read Feb 21 post again it was basically a verbal red dot
+
+2025-02-23T20:12:03.533Z | RE
+And start from the top of the feb21 chat she explained lots in there
+
+2025-02-23T20:26:45.781Z | BTFD
+This is inevitable as we learn as well as new members join.
+
+2025-02-23T20:39:08.592Z | 0Mik
+And even Sunday post.
+
+2025-02-23T20:39:50.559Z | 0Mik
+Okay, but you're making her repeat herself over and over. Use the search button..Alma’s already laid out the basics. Just put in the effort and take time to really think it through
+
+2025-02-23T20:47:05.746Z | RE
+Any way to dive into the adjusted trendline and what goes into that calculation?  I have some numbers In my studies that come close.  It appears to take weekly regression trend into account
+
+2025-02-23T20:47:40.103Z | RE
+Weekly being f open to f+7 close
+
+2025-02-23T20:49:48.798Z | BTFD
+Everyone has back and forth process during the learning process. I treat this as educational channel to learn. Just like in school, teachers always repeat the same thing and never discourage students for asking the same questions as they learn.
+
+2025-02-23T20:59:28.105Z | EZ
+A pic says a thousand words. It would be a lot easier if she post the revision signal image every other day
+
+2025-02-23T21:04:50.444Z | VincentiusTrading
+
+2025-02-23T21:28:16.952Z | RNR
+Are we able to calculate zero vanna? Or maybe anywhere else we can get that? I know Alma you help us calculate but what about in the future?
+
+2025-02-23T21:31:45.234Z | Alma
+i post it when i see a reason. i signaled put, and even predicted reversion on the weekend before
+
+2025-02-23T21:32:51.604Z | Alma
+Instead of giving you an answer, I give you 3 questions:
+1) what is risk?
+2) what is volatility and what does it show us about supply/demand?
+3) if you are short speed, what is your gamma exposure upside and downside?
+
+2025-02-23T21:35:41.667Z | 0Mik
+Btw, 'member that Alma never even promised trading signals in the first place..just daily analysis? What’s so hard to get about reversion? If people actually asked decent questions, maybe they’d actually improve…
+Alma seriously needs to moderate the chat ‘cause at this rate, the sharper ones are just gonna dip
+
+2025-02-23T21:37:08.126Z | Alma
+Sorry, but I won't share that code. It is 1) insanely complicated, 2) it took me YEARS to develop that after I found out myself what is its significance.
+you don't know how much money i was offered to sell that formula, even cyber attacks. Sorry, I worked too much on that. And it is not 1+1
+
+2025-02-23T21:39:11.173Z | Jeffrey K
+"If people actually asked decent questions,"
+
+2025-02-23T21:39:21.750Z | RNR
+Totally understand. You shared with us is already very generous of you. No need to apologize. Thank you.
+
+2025-02-23T21:39:41.366Z | BTFD
+Risk is from upper side as negative speed is longer OTM put and shorter OTM call, long the skew. Volatility goes up as spot goes up as decreasing gamma. More demand from upper.
+
+2025-02-23T21:40:27.070Z | Alma
+i take volatility into account when I code the regression. It is polinominal regression instead of linear that is used for SD channels (ToS has an inbuilt stdev channel script if i know correctly),
+and take volume and vol into account, in order to differ the difference momentums and their significance.
+then I use volume weighted moving avgs, three with different lenght, and Z-scores that it must hit.
+But none of them are round numbers. It took me a lot of backtest to find the best fit calibration
+
+2025-02-23T21:40:40.546Z | Alma
+it is something that HF quant algos use too
+
+2025-02-23T21:40:53.555Z | Alma
+I wrote scripts like that for HFs and bank trading desks
+
+2025-02-23T21:41:29.803Z | BTFD
+
+2025-02-23T21:42:21.154Z | Alma
+literally nobody has formula to code that.
+later this year maybe i will reveal some stuffs i got, and from where, but from very high lvls from the Street.
+i have lot of job offers... this is why plp keep telling me that I should ask for hundreds of dollars for my service
+
+2025-02-23T21:42:32.168Z | BTFD
+Negative Vanna makes delta decrease as spot goes up. MM has to buy into the direction.
+
+2025-02-23T21:43:25.378Z | Alma
+gamma answer is correct,
+vol and risk aren't.
+i defined them in my posts. look back, and you wil lfind the answer to your Q
+
+2025-02-23T21:43:39.747Z | Alma
+no. vanna is delta vs vol
+
+2025-02-23T21:43:57.367Z | Alma
+https://open.substack.com/chat/posts/2aab643b-d095-4c00-8b42-4f35379fb002
+
+2025-02-23T21:47:28.785Z | Alma
+yes bcs i wanted to help some members to find the very beginning of my today's thread
+
+2025-02-23T21:49:17.689Z | VincentiusTrading
+I take a whack at it
+
+1.) in short, an event with a non zero probability
+2.) volatility is “real velocity” of price action which indirectly gives us a picture on liquidity, so this would show us the intensity of demand/supply
+3.) if I am short speed my gamma is negative so if “put” gamma hurts downside and if “call” gamma hurts upside
+
+2025-02-23T21:53:53.747Z | BTFD
+Sorry. Correct it  Short speed is less gamma as spot up. Less gamma pushes vol up. negative vanna makes delta less as vol up.
+
+2025-02-23T21:54:16.804Z | RE
+Thank you very much.  Now I have to Google about 19 things to understand. 👨‍💻
+
+2025-02-23T21:54:17.641Z | Alma
+no-no...
+1) every event is non-zero prob event. Risk is the amplitude of price fluctuations.
+2) volatility give us a pic about the liquidity inversely: higher vol = lower liquidity, and vice versa (the reason is explained in my educational post)
+3) if you short upside gamma (otm call gamma), price is accelerant to the upside. gamma is inverse to vol, so vol increases, price fluctuations increases. Right tail risk
+
+2025-02-23T21:56:14.036Z | VincentiusTrading
+Ah forgive me I need to study
+
+2025-02-23T21:56:26.901Z | RE
+Have you ever compared ES results to SPX results with the trendline generated
+
+2025-02-23T21:59:01.102Z | VincentiusTrading
+For 2.) higher vol = less liquidity therefore pushing price up or down faster, I’m on right track?
+
+2025-02-23T22:03:35.045Z | Alma
+https://stochvoltrader.substack.com/p/what-is-volatility
+
+2025-02-23T22:04:16.932Z | Ryan
+All that matters in my opinion is whether or not they beat by enough and if supply is being solved. Spend is there from other companies. Curious to see her weekly post. Because if we go higher into March OPEX, my guess is it’ll be carried by semis again
+
+2025-02-23T22:05:04.401Z | Alma
+when vol can expand it is a clear sign that the crowd is on the same side of the trade including MMs reflexively.
+when customers are long OTM calls they usually hedge the right tail bcs they are short stock... not inherently, but usually
+
+2025-02-23T22:06:07.519Z | VincentiusTrading
+
+2025-02-23T22:06:16.244Z | VincentiusTrading
+I see now, many thank yous
+
+2025-02-23T22:07:03.155Z | DIma
+also, going through the chats this week  - the higher the volatility the higher the probability that the contract will move out of its current state (if the contract already ITM - the probability that the option falls out of the ITM territory is increasing and vice versa)
+
+2025-02-23T22:09:56.798Z | VincentiusTrading
+Yes if your option is ITM you want low vol since that would mean lower chance your option has of going OTM, and vice versa you want high vol if your OTM so it squeeze you ITM
+
+2025-02-23T22:18:41.522Z | Alma
+you are on the right track, baby you were born this way ;))
+
+2025-02-23T22:19:22.055Z | VincentiusTrading
+I always knew I was special 😂
+
+2025-02-23T22:23:07.304Z | RNR
+So if they are not hedging enough , there will be vol up. And it’s the risk.
+
+2025-02-23T22:30:05.882Z | Ryan
+Finish your conversation and teachings first. When/if you have time, do you ever trade bonds Alma? I don’t usually. But sometimes, they present an opportunity. TLT looks ready to pop whether SPX is up or down the next few weeks
+
+2025-02-23T22:30:41.877Z | Alma
+
+2025-02-23T22:31:02.189Z | Alma
+ES  needs to take out 6116.52 lvl to confirm bottom. I still lean to bull
+
+2025-02-23T22:34:22.402Z | Alma
+when i was in my 20s and started to trade... i traded even derivatives on them.
+now i hold some 10 yrs treassuries for fixed, almost risk-free income..
+(there is no such thing as "risk-free", even on a treasury.. look what happened for Greece in 2008)
+
+2025-02-23T22:35:26.652Z | Jeffrey K
+I don't think Thursday's ATH was any kind of proper top.  Doesn't mean there won't be more scare for the bulls.  Tops tend to punish both bulls and bears with sharp moves, in my experience.  I don't think we've seen that yet.
+
+2025-02-23T22:39:09.549Z | RE
+that is my current extension from 03/15/24-06/21/24 currently -0.77 sd away
+
+2025-02-23T22:42:37.058Z | RE
+that is my knuckle dragging math though no advanced polinominal ;)
+
+2025-02-23T22:50:49.165Z | Ryan
+Yeah. Every so often there’s these 4-6 week windows that appear where it’s a runway for takeoff (like July to August of last year where you get 11% in 6 weeks). Looks like there could potentially be a runway right now
+
+2025-02-23T22:59:34.447Z | Jeffrey K
+looks like ES will open in the 6030's...but premarket can be deceiving
+
+2025-02-23T23:00:46.212Z | Jeffrey K
+official open 6040.75
+
+2025-02-23T23:21:31.429Z | BTFD
+Hi Alma are we going to expect a weekly post today?
+
+2025-02-23T23:25:21.133Z | Pak
+Monday morning, to get more updated data
+
+2025-02-23T23:29:06.773Z | BTFD
+K
+
+2025-02-23T23:37:01.341Z | Jonopop
+anyone trading today?
+
+2025-02-23T23:46:37.319Z | Jeffrey K
+yes, futures
+
+2025-02-23T23:47:19.346Z | VincentiusTrading
+Got long NQ at open
+
+2025-02-23T23:47:29.724Z | VincentiusTrading
+
+2025-02-24T00:25:18.415Z | Vman
+
+2025-02-24T00:46:26.246Z | Vman
+
+2025-02-24T02:06:50.307Z | Alma
+I dropped the weekly post.
+it's 3am at me. i'm out now
+
+2025-02-24T02:07:09.337Z | Justin Summers
+Thanks so much for all your hard work Alma
+
+2025-02-24T02:07:22.479Z | Alma
+futures are green as expected
+
+2025-02-24T02:07:39.369Z | Derek
+Thank you!
+
+2025-02-24T02:07:43.073Z | Alma
+i highly recommend you to look back all my messages i dropped
+
+2025-02-24T02:07:49.778Z | Alma
+today
+
+2025-02-24T02:07:56.213Z | Alma
+very important
+
+2025-02-24T02:09:25.991Z | Alma
+look, NVDA is smiling at you
+
+2025-02-24T02:11:03.861Z | Alma
+it smiles bcs it wants you to put in it your...
+
+2025-02-24T02:11:04.176Z | BTFD
+what does that mean? Can you explain please for newbie?
+
+2025-02-24T02:11:08.607Z | Alma
+see you tmrw
+
+2025-02-24T02:15:52.503Z | Ryan
+Interesting. What are you seeing for AMD if you don’t mind me asking? I remember you were long, not sure if you closed those. INTC, SMCI both had their bounce. Appreciate the insights
+
+2025-02-24T02:16:52.184Z | Bull
+Can you explain more please ?
+
+2025-02-24T02:16:56.538Z | 0Mik
+https://x.com/alma18499/status/1798650957875523611
+
+2025-02-24T02:17:27.148Z | 0Mik
+She said she holds them and even sized up
+
+2025-02-24T02:18:06.256Z | Ryan
+Thank you. I did the same for March OPEX
+
+2025-02-24T02:59:19.291Z | Gamma Goatee
+There is the take out the directional options crowd as it did not happen during market hours enabling a direct continuation, speaking ahead as we have yet to open tomorrow but looks like that is what is happening ?
+
+2025-02-24T03:37:59.918Z | Prasad
+Alma  can you explain this 'What we see is some vol expectation into Wednesday, but only on the tail put side as traders potentially aims to catch some leverage effect' from your letter
+
+2025-02-24T03:55:18.452Z | Jain
+Where?
+
+2025-02-24T04:31:46.283Z | Vman
+
+2025-02-24T05:59:34.155Z | Fred
+This is super cool! I'm going to have to ask Chat GPT how to load the script and update number like you're doing b/c I have not clue. Appreciate the share.
+
+2025-02-24T08:37:27.154Z | Noor888
+Thank you! If ppl read between your lines - key takeaway is already on futures chart ❤️
+
+2025-02-24T09:07:35.309Z | Noor888
+Guys and girls, I will tell you one thing. Am trading more than a decade and Alma is the only one to whom I subscribed without a single doubt. I do not have paid subscription. I do not need it. If you can apply her posts and outlooks to your own understanding plus put time and effort and learn - you will see that her insights are pure gems 💎. Blessings, Alma 🙏🏻
+
+2025-02-24T10:21:26.279Z | venz
+Thanks.
+So whats the clue?.. it's well hedged and price won't fell. Also mm needs to buy.
+Am i in the right direction? 🤔
+
+2025-02-24T11:15:14.679Z | Alma
+yes, this is why it was conditional: "IF futs gap DOWN", but as i explained, i expected more this kind of move at futures market open. however i'm cautious into wednesday
+
+2025-02-24T11:25:46.767Z | Alma
+look at the skew chart.
+you don't see 22 delta puts going up into wednesday, only a mild up in the 5 delta puts , and call selling on the 22dP/22dC segment.
+this tells me more on volatility speculation again, as smirk steepens on the wings. tail otm contracts have much lower vega, but they are near peak vomma.
+i will add this to the weekly post, to be exact
+
+2025-02-24T11:26:34.641Z | Alma
+leverage effect is the asymmetrical response to negative shocks in vol
+
+2025-02-24T11:26:40.462Z | Alma
+in short
+
+2025-02-24T11:26:59.542Z | Alma
+thank you, very much appreciated :)) and glad to have you here

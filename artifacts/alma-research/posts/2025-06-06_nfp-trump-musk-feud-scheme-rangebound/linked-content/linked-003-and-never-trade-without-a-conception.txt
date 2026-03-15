@@ -1,0 +1,91 @@
+Intraday post
+
+Today I might be let to go home…
+
+Weekly post
+
+Reversion model shows a 70.72% probability for a reversion for ES=F, and 71.63% for SPX.If reversion would occur, my primal target would be 5900.18 for SPX and 5926.38 for ES=F (with VIX towards 19.13), a close beyond these lines would be trend shifting in the short-run, but to me the probabilities are too low yet, but you can size accordingly depending on your style, or just watch and wait for the macros to unfold. Hopefully you didn’t try to short since Sunday open… I kept warning you that market is ranging and it won’t fall, it is supported…
+
+I haven’t followed the chat in the past few days or anything. However, I know that the tendency to “overtrade” exists in the chat room too, which is nothing other than gambling.Whenever—before you start trading—have a plan for what you can and want to do that day. Calculate how much risk you can take, how much capital you can use for a single trade. Determine exactly what that trade will be and why. Define which signals you need to see that will confirm or refute your trade idea. And if you’re not a swing trader or an investor but a day trader, at most two trades per day is healthy. Set a daily loss limit and a profit limit that you don’t exceed. And remember that day trading and scalping are nothing more than making small gains at high risk, which you can lose in the blink of an eye.With this I only want to say: if you don’t have a plan, then don’t trade. If you don’t have a read, don’t force it. Wait. Watch. Wait for the right moment. Minimizing risk should always be first. And risk is minimized primarily through caution and careful thought.This is the most important thing. Profit is only secondary. There is no other way to build wealth.Because the goal is not to win a “how many times was I right” contest, but to build real wealth.
+
+MACRO OVERVIEWWe must go through some fresh macro before jumping into the intraday post…
+
+Here you can see the 5y5y Forward Inflation Swap. Because 5y5y sits below the 2.61 % average, the Fed is seen as having “room to cut” if growth falters, without risking a sustained inflation overshoot. Although headline CPI has recently ticked back toward 2 %–2.5 %, this forward swap level confirms the market’s belief that any summer tariff–driven price‐push will be transitory, and that major inflationary pressures will subside by mid-decade.
+
+Real 30-Year Yield Minus Fed Funds chart shows that the long curve is “crowded”—perfect for a bond-crush tactic if the Fed announces cuts or steps in with SLR policy.
+
+An inverted 2/10 warns of recession, but a steep 5/30 suggests fear of policy missteps. If inflation (tariffs) proves stickier, we could see a bear flattening. If growth weakens, we could see the entire curve to bear flattener into a full curve inversion.And finally,
+
+Credit spreads widened modestly, reflecting growth concerns; bond‐vol remains elevated, indicating risk managers are buying protection. Slight negative skew suggests more calls (rate increase bets), consistent with sticky inflation fears.
+
+SPX volatility risk premium near 96% (~4.5% IR gap)—dealers demand extra vol, reinforcing a supportive June OpEx and ranging June/July. By ranging I mean, up/down, chop in a relatively wider zone (weekly refreshsed), no trending up or down, no crash. However, market soon reaches mean reversion treshholds (no lvl for that), where CTAs and option deltas will weight simply too much. When my model goes up again above 77% even 80% that will be my flip point towards short delta. I wouldn’t care about the noise. NFP is also coming. Reversion potential. Also monitor tweets closely.
+
+INTRADAY POSTCoding today’s positioning
+
+The IC is still there. However, from vol and speed perspective the pattern is a long fly centered around 5965, but the speed profile is net long (long vanna, short charm).Coding the centroid at 5983.28, and downside pivot at 5949.63upside pivot is 6001.36Bcs the pattern is long fly, local downside speed is negative, meaning, volatility is expected to decline if price break below this line. Basically the whole structure favors for a ranging, with only one tradeable move in the first 1 hour or around 2 PM. But not every day is an opportunity. At 5931 we have a vanna flip. Lower vol can break this line, but 5910 seems a nice support.
+
+(me personally, after the pullback two weeks ago, shorts and BTD, I wouldn’t force it… doesn’t worth it)
+
+OptionsDepth Heatmap
+
+(Description is here)I don’t see too much edge for today…5950; 6000 and 6030 are potential pins
+
+SCRIPT INPUTS=== SPX closed at 5970.37===
+
+99.73%, 6088.5017741105985, , 6058.896854644606, 95.4%, 6029.435887055299, Risk level, 6010.180407875271, 68.2%, 5999.830259015528, 68.2%, 5940.763649296415, Risk level, 5930.559592124729, 95.4%, 5911.304112944701, , 5881.697025062768, 99.73%, 5852.238225889401
+
+=== ES closed at 5980.25===
+
+99.73%, 6103.493962509395, , 6072.6048084691565, 95.4%, 6041.871981254698, Risk level, 6021.783215365666, 68.2%, 6010.9820259170965, 68.2%, 5949.359226765652, Risk level, 5938.716784634334, 95.4%, 5918.628018745302, , 5887.73641049362, 99.73%, 5857.006037490605
+
+=== SPY closed at 596.09===
+
+99.73%, 608.6280023813783, , 605.4853884373524, 95.4%, 602.3590011906892, Risk level, 600.3153068025246, 68.2%, 599.2163023648121, 68.2%, 592.9472144974138, Risk level, 591.8646931974755, 95.4%, 589.8209988093108, , 586.6781247776195, 99.73%, 583.5519976186217
+
+=== VIX closed at 17.69===
+
+99.73%, 20.021271714231794, , 19.429714584623454, 95.4%, 18.8556358571159, Risk level, 18.475638567696116, 68.2%, 18.263520972484475, 68.2%, 17.097251290415656, Risk level, 16.904361432303887, 95.4%, 16.524364142884103, , 15.930888831626689, 99.73%, 15.358728285768207
+
+=== IWM closed at 209.03===
+
+99.73%, 215.10857156975223, , 213.5835226299123, 95.4%, 212.06928578487612, Risk level, 211.07847861900652, 68.2%, 210.5441588066804, 68.2%, 207.50479269739134, Risk level, 206.98152138099348, 95.4%, 205.9907142151239, , 204.46542420009877, 99.73%, 202.95142843024777
+
+=== QQQ closed at 527.3===
+
+99.73%, 541.1106579887762, , 537.6469074339254, 95.4%, 534.2053289943881, Risk level, 531.9541917422175, 68.2%, 530.7414342019481, 68.2%, 523.8359571671833, Risk level, 522.6458082577824, 95.4%, 520.3946710056118, , 516.9304761772311, 99.73%, 513.4893420112237
+
+=== NDX closed at 21662.58===
+
+99.73%, 22217.90109700386, , 22078.634345246304, 95.4%, 21940.24054850193, Risk level, 21849.723209690303, 68.2%, 21800.968237699144, 68.2%, 21523.301986722046, Risk level, 21475.4367903097, 95.4%, 21384.919451498074, , 21245.635586691402, 99.73%, 21107.258902996142
+
+=== NQ closed at 21688.0===
+
+99.73%, 22246.704693429423, , 22106.5872661041, 95.4%, 21967.35234671471, Risk level, 21876.283481685714, 68.2%, 21827.229272070897, 68.2%, 21547.87113160953, Risk level, 21499.716518314286, 95.4%, 21408.64765328529, , 21268.51283895007, 99.73%, 21129.295306570577
+
+=== NVDA closed at 141.22===
+
+99.73%, 148.35381409893344, , 146.5595097302667, 95.4%, 144.78690704946672, Risk level, 143.62409535134057, 68.2%, 142.9923320095371, 68.2%, 139.42514043914142, Risk level, 138.81590464865943, 95.4%, 137.65309295053328, , 135.85793392813684, 99.73%, 134.08618590106656
+
+=== AMZN closed at 205.71===
+
+99.73%, 214.52953540130974, , 212.3132029419099, 95.4%, 210.11976770065488, Risk level, 208.6821834302414, 68.2%, 207.90319240863454, 68.2%, 203.49317135053522, Risk level, 202.73781656975862, 95.4%, 201.30023229934514, , 199.08313906818512, 99.73%, 196.89046459869027
+
+=== AAPL closed at 203.27===
+
+99.73%, 211.25275157979172, , 209.24754701508147, 95.4%, 207.26137578989585, Risk level, 205.96018728238982, 68.2%, 205.25598616559793, 68.2%, 201.26441797592508, Risk level, 200.5798127176102, 95.4%, 199.27862421010417, , 197.27284200050434, 99.73%, 195.2872484202083
+
+=== GOOG closed at 167.71===
+
+99.73%, 174.56224618286925, , 172.8406955837335, 95.4%, 171.13612309143463, Risk level, 170.01920696362694, 68.2%, 169.41440081546935, 68.2%, 165.98809895994202, Risk level, 165.40079303637307, 95.4%, 164.2838769085654, , 162.56178956901843, 99.73%, 160.85775381713077
+
+=== TSLA closed at 344.27===
+
+99.73%, 370.2410608973803, , 363.6903443931106, 95.4%, 357.25553044869014, Risk level, 353.02224752241716, 68.2%, 350.7026681785734, 68.2%, 337.7148269360252, Risk level, 335.5177524775828, 95.4%, 331.2844695513098, , 324.7268008639817, 99.73%, 318.29893910261967
+
+=== TSM closed at 197.61===
+
+99.73%, 206.09250176802365, , 203.96085232144674, 95.4%, 201.85125088401185, Risk level, 200.468603095824, 68.2%, 199.719367331237, 68.2%, 195.47787218202072, Risk level, 194.75139690417603, 95.4%, 193.36874911598818, , 191.23636619783784, 99.73%, 189.12749823197638
+
+=== AMD closed at 117.31===
+
+99.73%, 124.17262563202007, , 122.44495022099132, 95.4%, 120.74131281601004, Risk level, 119.62270483799077, 68.2%, 119.01329088150675, 68.2%, 115.5816109662513, Risk level, 114.99729516200924, 95.4%, 113.87868718398997, , 112.14990858642827, 99.73%, 110.44737436797993

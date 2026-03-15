@@ -1,0 +1,57 @@
+Intraday post (27/feb)
+
+Coding intraday gamma for today’s session:
+
+3D chart here, and 2D projection is here.
+
+OptionsDepth chart attached here:
+
+(Find a quick walkthrough here)
+
+I code 6015.90 the main pivot lvl from momentum perspective. If the momentum if bullish, spot should take this lvl out in order to gain upside gamma support. Coding 6068.72 the lvl where the upside long gamma should start to slow the momentum down and temper volatility. We have two local zero vanna line, one is oscillating in the 5911.65 - 5919 range (skewed towards 5911.65), and a second one at 5982 both requires lower local vol in order to break through them. Also note that 6000 is a strong gamma resistance (due to high local DEX there) and potential pin.
+
+This is a MM net short skew / long speed environment above 5856.06 net zero speed line. Meaning, you should normally see negative spot/vol correlation. Any deviation from this comes from strong speculative orders. The color exposure is net negative. This means that we have supportive charm aboe 5926, but the overall gamma exposure will decrease addign more room for volatility, but also steepening the upside speed profile.
+
+I want to show you three things: 1) Despite the yesterday’s drawdown the realized volatility kept decreasing. Also note the upgrind in RV along with the upward momentum before:
+
+This foreshadows shift in the customer sentiment that is not necessary visible in the positioning as this is the result of the net effect of the intraday session. This foreshadows longer spot/vol beta, despite customer long skew positions. Weaker, but similar pattern can be observed in NVDA, also note that its RV was decreased by 8.82% yesterday:
+
+In the tech alpha, we can see the weekly -21.86% decrease, but seems like this momentum slows down for now. Not a huge convicing divergence, but temporal, as expected:
+
+2) We can see the customer’s longer skew effect, but also note the upward slop at the right wing of the skew. Traders are selling OTM call spreads that we can see on the MM GEX chart above 6120 huge long gamma.
+
+Traders expect that vol, spot and time decay will bleed out those contracts. We can see this upward slope into March expo as well:
+
+The demand for tail calls are increased, while puts are relatively stagnant. Despite these bets, I code today’s ATM vol like ~103% higher than what the stochvol models predict. Personally, I still like short skew trades, on the short-run.
+
+3) Credit spreads remain narrow
+
+Meaning that from a credit-risk perspective, traders and investors don’t expect much additional risk. The positive performance in the majority of the stocks along with this tells us that market doesn’t expect that kind of weakness what is communicated. However, this also makes the market more vulnerable, if this tendency continues. *credit spread is the yield difference between a corporate bond (or any credit-risky instrument) and a risk-free benchmark, usually a comparable U.S. Treasury bond. It represents the extra return that investors demand to compensate for the additional credit risk.
+
+SCRIPT INPUTS:
+
+SPX99.73%, 6061.94425547607, , 6035.41515614138, 95.4%, 6009.00215703491, Risk level, 5991.743032943092, 68.2%, 5982.472543983743, 68.2%, 5929.529922652576, Risk level, 5920.377084244408, 95.4%, 5903.11796015259, , 5876.587291899942, 99.73%, 5850.17586171143
+
+ES=F99.73%, 6083.851573404321, , 6055.51016633273, 95.4%, 6027.300786702161, Risk level, 6008.865230237257, 68.2%, 5998.958757334636, 68.2%, 5942.407336492348, Risk level, 5932.634769762743, 95.4%, 5914.199213297839, , 5885.855903464465, 99.73%, 5857.648426595679
+
+SPY99.73%, 605.5651540046721, , 602.8025585134676, 95.4%, 600.052566016008, Risk level, 598.2554623317034, 68.2%, 597.2899123661881, 68.2%, 591.7772651353719, Risk level, 590.8244937229841, 95.4%, 589.0273900386795, , 586.2646167904535, 99.73%, 583.5148020500154
+
+VIX99.73%, 20.55927916317587, , 20.191163903658442, 95.4%, 19.8296397723228, Risk level, 19.591777330904698, 68.2%, 19.46140095717091, 68.2%, 18.731628384326726, Risk level, 18.608223432034755, 95.4%, 18.370360990616653, , 18.001845014404093, 99.73%, 17.640721599763584
+
+IWM99.73%, 221.47142017245315, , 220.01879946256054, 95.4%, 218.57570642411721, Risk level, 217.6317037421597, 68.2%, 217.12302218018547, 68.2%, 214.2272431802099, Risk level, 213.7282816094028, 95.4%, 212.78427892744529, , 211.3314623920274, 99.73%, 209.88856517910935
+
+QQQ99.73%, 527.1699785454464, , 524.0080004889788, 95.4%, 520.8649880520201, Risk level, 518.809561151163, 68.2%, 517.7028945064962, 68.2%, 511.3977856762734, Risk level, 510.3104339660244, 95.4%, 508.25500706516743, , 505.09267389166433, 99.73%, 501.95001657174106
+
+NQ=F99.73%, 21737.247091080793, , 21599.24726949332, 95.4%, 21462.1235455404, Risk level, 21372.43326969423, 68.2%, 21324.11807225247, 68.2%, 21048.98872726753, Risk level, 21001.56673030577, 95.4%, 20911.8764544596, , 20773.859228668327, 99.73%, 20636.752908919207
+
+NVDA99.73%, 141.2547824546199, , 138.7386774380424, 95.4%, 136.26739061695838, Risk level, 134.64150087788073, 68.2%, 133.75044999495242, 68.2%, 128.76215781483359, Risk level, 127.91849668071302, 95.4%, 126.29260694163536, , 123.77379307065247, 99.73%, 121.30521510397385
+
+AMZN99.73%, 222.4226355209038, , 220.39523823523342, 95.4%, 218.3863208122097, Risk level, 217.07048221717545, 68.2%, 216.358751149616, 68.2%, 212.3222575099768, Risk level, 211.6295299898558, 95.4%, 210.31369139482155, , 208.28575693527284, 99.73%, 206.27737668612744
+
+GOOG99.73%, 181.8284411818369, , 180.0375101780005, 95.4%, 178.26421906503955, Risk level, 177.1022826549636, 68.2%, 176.47310992511916, 68.2%, 172.90870232810283, Risk level, 172.29771124152077, 95.4%, 171.13577483144482, , 169.3442869232071, 99.73%, 167.57155271464748
+
+TSLA99.73%, 313.21882143567564, , 307.5630500820736, 95.4%, 302.0094046143222, Risk level, 298.35513473056096, 68.2%, 296.3517018260679, 68.2%, 285.14020170010207, Risk level, 283.24484085537654, 95.4%, 279.5905709716153, , 273.9285310567207, 99.73%, 268.38115415026186
+
+TSM99.73%, 204.5538384332696, , 202.05511606350015, 95.4%, 199.58691677522853, Risk level, 197.96770031470717, 68.2%, 197.08780979109156, 68.2%, 192.12048363092023, Risk level, 191.27228991966783, 95.4%, 189.65307345914647, , 187.1531359994326, 99.73%, 184.6861518011054
+
+AMD99.73%, 110.91087195976714, , 109.35727230278444, 95.4%, 107.82543491176834, Risk level, 106.81958243412072, 68.2%, 106.27151933758469, 68.2%, 103.18574747844906, Risk level, 102.66041329341834, 95.4%, 101.65456081577072, , 100.09995497805282, 99.73%, 98.56912376777193

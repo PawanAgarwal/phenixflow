@@ -1,0 +1,91 @@
+Ahead of FOMC Pt. 2 : Heading into a liquidity crisis Intraday post (06/May)
+
+Educative content
+
+Weekly postAfter reading my yesterday post, look
+
+Yesterday I posted this on Twitter:
+
+Now look at inflation expectations:
+
+Note, that the inflection points of the M2 coincidences with upsticks of inflation expectations, hinting that market participants and consumers view broad liquidity as a key driver of prices. Key to understand my bulltrap-call.
+
+Let, me explain…ISM Manufacturing Prices Paid Index returned to expansion in October 2024 near ~55% and climbed to 69.8% in April, its highest since June 2022, and the ISM Non‐Manufacturing Prices Paid Index similarly jumped from ~58% in October 2024 to 65.1% in April, its strongest pace since January 2023. Readings above 50 % signal that a majority of firms are paying more for inputs. Both surveys have spent seven straight months above 60 %, consistent with sustained price pressures. Swings of 4–5 points month‐to‐month (e.g., Dec +4.0 pts, Apr +4.2 pts) reflect tariff cycles, commodity‐price moves (steel, lumber) and freight bottlenecks—all passing through into higher procurement costs.In Manufacturing, five of the six largest industries (Machinery; Chemicals; Food & Beverage; Electronics; Transportation Equipment) reported higher raw‐material costs in April, while in Services, arts & recreation was the only segment reporting lower input costs; all others are paying more—indicating ubiquitous supply‐chain strain.
+
+This means that despite Fed tightening, input‐cost inflation remains entrenched. A Prices Paid index above 60% historically maps to PPI increases well above target and eventually prints into CPI. And this is strongly against rate cuts. And the margin squeeze, that firms face shrinking margins unless they pass costs onto consumers, in a slowing economy, increasing stagflation. Sharp input‐price spikes often precede equity pullbacks and Treasury sell‐offs, as investors reprice Fed‐cut odds downward—heightening the risk of “sell‐the‐fact” moves around FOMC and tariff‐decision events.
+
+Plus add, that major ports—led by Los Angeles—are seeing 30–35% plunges in China cargo volumes, freight cancellations have surged, and retail inventories, while temporarily elevated, will run down over a 6–8-week buffer. Localized stockouts are already surfacing, but widespread empty shelves are expected within the next week unless shipments rebound—a scenario rendered unlikely without a rapid tariff resolution.So, empty‐shelf shortages have not yet fully materialized, but the supply buildup from stockpiling has masked the sudden drop in imports, setting the stage for visible out-of-stocks by around May 10. And this will lift wholesale prices and compress retailer margins, eventually spilling into CPI data.Fed MUST wait for the true tariff-shock recession and supply-shock inflation to appear in hard data, in order to decide what to do next QT or QE. Watch retail and logistics stocks as early indicators; a sudden uptick in inventory write-downs or guidance cuts will be a red flag that empty-shelf pain is surfacing.The summer liquidity crisis prediction is getting stronger. Plus, US/CN relationship doesn’t look good at all…
+
+Plus, this is ECB day, that I marked many times during April as a risk event, but not only that. There’s something very important that many misses…
+
+Trump administration has resumed involuntary collections on approximately 5.3 million federal student-loan borrowers who are in default, reversing a five-year pandemic-era pause. Under the Treasury Offset Program, the government can now seize tax refunds, garnish wages, and intercept Social Security and other federal benefits to recoup unpaid debt. This marks a dramatic policy shift from the Biden-era relief measures and is expected to place severe financial strain on struggling households, potentially reducing consumer spending by up to $63 billion annually and worsening credit profiles. Student-loan garnishments could reduce U.S. consumer spending by $63 billion annually, with knock-on effects for retail, housing, and auto sectors. Lower disposable income among younger borrowers—many of whom are small-business employees or entrepreneurs—may weigh on hiring and investment in the coming quarters. This renewed collections push coincides with a higher-for-longer Fed stance—lower consumer liquidity may amplify recessionary pressures, complicating the Fed’s inflation vs. growth balancing act.Plus, the Commerce Department’s Section 232 comment window on proposed 25–100 percent tariffs on semiconductors ends May 7, clearing the way for an announcement as early as this Wednesday—a step that could sharply raise input costs for tech and hardware firms. Another inflationary pressure.
+
+For now, it all feels orchestrated—as mentioned, they’re leaning on the inflation narrative to compel the market to reprice recession fears. Then reality will hit in mid-summer. We’re seeing widespread repricing across asset classes, and the path forward remains unclear until Trump returns from the Middle East. One thing is certain: we’re in for heightened volatility, and the risk/reward profile still favors the short side.For ‘swingers’ (lol): watch 5526.70 - 5541.38 zone carefully for SPX today. If that line breaks, market will straight head down to 5467.34; but I’m not into too much swing trades until events unfold as said. I desire clear path.
+
+INTRADAY POSTCoding positioning for today’s session:
+
+Dealers net delta, gamma and charm exposures are positive, but speed profile is heavily negative both on a net basis and locally. The speed profile’s centroid is at 5575.49; this is where volatility makes decision. To the downside the pivot is the 5549.73 - 5554.81 zone, where we should start to see downside longer gamma materializing. The slope of the speed function is about -53.11%, so we should expect heavy vol impact, gravitating towards 5537.47 - if vol decline too fast, this line will reject the price. If the vol decline is flatter, 5525 can pin. If vol starts to catch up to the downside, it will break below this liquidity zone. I doubt it, bcs these constant put sellings remind me of Feb spot decay. They want to brake any downside for now. it would be too early to fall. This is why they mask the true economic state and mess with the algos as I pointed it out in the weekly post. To the upside, 5622.23 is the main pivot, back towards 5669.98Here, vol should catch up in theory as a typicall short speed gamma squeez materializes. Very unstable and mechanical. However if you see vol suppression, that means heavy interest to stabilize the momentum at these levels. Supportive. Upside is still capped. Coding zero vanna at 5677, with positive convexity (low vol is needed to break above).From vanna exposure perspective, this is a nice dealer long fly pattern of 5793/5677/5521 setting a stage for further rangebound, in line with weekly expectations.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX closed at 5650.38===
+
+99.73%, 5845.135197000268, , 5796.241906858173, 95.4%, 5747.757598500134, Risk level, 5716.01250138909, 68.2%, 5698.860814181478, 68.2%, 5601.479600015233, Risk level, 5584.74749861091, 95.4%, 5553.002401499866, , 5504.098257911077, 99.73%, 5455.624802999732
+
+=== ES closed at 5671.25===
+
+99.73%, 5870.445422271891, , 5820.433534408433, 95.4%, 5770.847711135946, Risk level, 5738.378857305627, 68.2%, 5720.8321144550055, 68.2%, 5621.23056307249, Risk level, 5604.121142694373, 95.4%, 5571.652288864054, , 5521.62887314856, 99.73%, 5472.054577728109
+
+=== SPY closed at 563.51===
+
+99.73%, 583.8607916060173, , 578.7507315989811, 95.4%, 573.6853958030086, Risk level, 570.3682167712278, 68.2%, 568.5749355968424, 68.2%, 558.3991250092057, Risk level, 556.6517832287722, 95.4%, 553.3346041969913, , 548.2232990238882, 99.73%, 543.1592083939827
+
+=== VIX closed at 23.64===
+
+99.73%, 28.614529037743154, , 27.34262899795091, 95.4%, 26.127264213695796, Risk level, 25.316415881056358, 68.2%, 24.85253528445241, 68.2%, 22.361811917199486, Risk level, 21.963582898240517, 95.4%, 21.15273456560108, , 19.870222117161763, 99.73%, 18.66546974155372
+
+=== IWM closed at 198.94===
+
+99.73%, 207.56461292785735, , 205.39714291557124, 95.4%, 203.25230646392868, Risk level, 201.84649455668793, 68.2%, 201.0845937607702, 68.2%, 196.77203396841236, Risk level, 196.03350544331207, 95.4%, 194.62769353607132, , 192.4594628234106, 99.73%, 190.31538707214264
+
+=== QQQ closed at 485.93===
+
+99.73%, 506.2846219374651, , 501.170133162599, 95.4%, 496.1073109687325, Risk level, 492.78950759292576, 68.2%, 490.9922867205107, 68.2%, 480.81441760929323, Risk level, 479.07049240707425, 95.4%, 475.7526890312675, , 470.6365243582355, 99.73%, 465.5753780625349
+
+=== NDX closed at 19967.94===
+
+99.73%, 20799.354861363758, , 20590.452065937698, 95.4%, 20383.647430681878, Risk level, 20248.126808279587, 68.2%, 20174.723018594577, 68.2%, 19758.993061646386, Risk level, 19687.75319172041, 95.4%, 19552.23256931812, , 19343.262136444784, 99.73%, 19136.52513863624
+
+=== NQ closed at 20042.25===
+
+99.73%, 20874.624893256318, , 20665.483483347572, 95.4%, 20458.43744662816, Risk level, 20322.76033902738, 68.2%, 20249.274503415752, 68.2%, 19833.06461972826, Risk level, 19761.73966097262, 95.4%, 19626.06255337184, , 19416.853774167743, 99.73%, 19209.875106743682
+
+=== NVDA closed at 113.82===
+
+99.73%, 123.24524623858566, , 120.86596842636358, 95.4%, 118.53262311929284, Risk level, 116.99630798240337, 68.2%, 116.15241350672791, 68.2%, 111.43877976971072, Risk level, 110.64369201759662, 95.4%, 109.10737688070715, , 106.72505677213412, 99.73%, 104.39475376141432
+
+=== AMZN closed at 186.35===
+
+99.73%, 196.9771505379612, , 194.30219998343262, 95.4%, 191.6635752689806, Risk level, 189.93134973129293, 68.2%, 188.9881140478801, 68.2%, 183.67399856437345, Risk level, 182.76865026870706, 95.4%, 181.0364247310194, , 178.35985089182665, 99.73%, 175.7228494620388
+
+=== AAPL closed at 198.89===
+
+99.73%, 210.4987531479203, , 207.5762776552501, 95.4%, 204.69437657396014, Risk level, 202.80214981084913, 68.2%, 201.77131747796793, 68.2%, 195.96632272715905, Risk level, 194.97785018915084, 95.4%, 193.08562342603983, , 190.16129023657749, 99.73%, 187.28124685207968
+
+=== GOOG closed at 166.05===
+
+99.73%, 173.32080595145501, , 171.49347160154673, 95.4%, 169.68540297572753, Risk level, 168.50026160564036, 68.2%, 167.85786000101263, 68.2%, 164.22223916352027, Risk level, 163.59973839435966, 95.4%, 162.4145970242725, , 160.5866084617058, 99.73%, 158.779194048545
+
+=== TSLA closed at 280.26===
+
+99.73%, 306.6296596527483, , 299.9648117638463, 95.4%, 293.44482982637413, Risk level, 289.14657530297615, 68.2%, 286.77665178173, 68.2%, 273.58817078386335, Risk level, 271.37342469702384, 95.4%, 267.07517017362585, , 260.3993199946613, 99.73%, 253.8903403472517
+
+=== TSM closed at 176.4===
+
+99.73%, 187.81478427126055, , 184.93907258379784, 95.4%, 182.10739213563028, Risk level, 180.2467822994148, 68.2%, 179.23097938895825, 68.2%, 173.52284007379208, Risk level, 172.5532177005852, 95.4%, 170.69260786436973, , 167.81464993201328, 99.73%, 164.98521572873946
+
+=== AMD closed at 100.59===
+
+99.73%, 109.43177178270687, , 107.19854149923152, 95.4%, 105.01088589135344, Risk level, 103.56967709077222, 68.2%, 102.7766754269238, 68.2%, 98.3547212297852, Risk level, 97.61032290922779, 95.4%, 96.16911410864657, , 93.93266646217923, 99.73%, 91.74822821729313

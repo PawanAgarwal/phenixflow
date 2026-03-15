@@ -1,0 +1,113 @@
+The concept of risk, VaR, Beta, Sharpe, Sortino, etc.
+
+Moderate, but necessary math warning!
+
+In this post, I will introduce you to the basic concept of risk in trading terminology and present various basic risk metrics using Excel, before diving into advanced, multi-dimensional modern models.
+
+RISK Risk is defined as an event with a non-zero probability, whose exact negative impact and likelihood are uncertain but significantly skewed towards being more negative than zero (neutral) or positive. Below, we will define exactly what "significantly" means in this context, because not every risk should be managed. If a risk is estimated to have a relatively small expected negative impact but a relatively higher probability, or if the estimated negative impact is significant but the probability is very low, then hedging these risks could lead to overhedging, reducing our potential to gain alpha (excess return) on the long run (hidden slow risk).
+
+The three main types are counterparty risk, default risk, and exchange rate risk: Counterparty risk and default risk essentially refer to the risk we take when entrusting our money to brokerage firms or any financial institutions, as well as the protection possibilities provided by government guarantees and investor protection funds. Default risk also applies to bonds and stocks. Since investment funds, banks, ETFs, and other financial products include bonds and stocks in their portfolios, the risk of non-payment is indirectly embedded in these products as well.The negative impact of these risks is significant, but their probability is very low, and with thorough fundamental research, they can be more or less mitigated.The most important risk for us is exchange rate risk.
+
+Exchange risk Exchange rate risk has two or three aspects: practical and psychological. Essentially, exchange rate risk can be measured by the amplitude of price fluctuations. In the two charts below, the net return is the same over the given period,
+
+however, in case b), the investor had to endure wider fluctuation than in case a). From a practical perspective, if futures contracts expire during the given period or if an investor is forced to "cash in their chips for real money" due to an unexpected personal event, they may only be able to do so at a significant negative return.From a psychological perspective, both left-tail and right-tail events test the investor’s resilience and increase the likelihood of mental breakdown, leading to a wide range of emotional and cognitive biases.Therefore, risk must be measured, while it is still essential to mentally train ourselves to avoid failure during challenging times. However, experience itself remains the greatest teacher, as it is through real-life application that theoretical knowledge is truly tested.
+
+Looking back at the chart above, we can see that the final average growth is represented by a linear trend line (in practice, a smoothed rolling moving average curve), which conceals the actual price fluctuations.Thus, knowing that the return over a given period was, for example, 20% is not sufficient information. We also need to understand the level of risk (price fluctuation) endured to achieve that return, as well as how much alpha we "missed out on."
+
+Looking at the simulation below, we can see that according to the stock portfolio model, a higher return could have been achieved over the examined period compared to the valuation model. However, the risk taken was nearly twice as high, which had to be endured both financially and psychologically throughout the investment period, measured by standard deviation:
+
+CAGR is “Compound Annual Growth Rate”, basically simply taking the geometric mean of the return from the initial capital to the ending capital over time t. We then subtract one and to express the growth rate rather than a multiplier:
+
+PROBABILITY OF LOSS, NORMAL DISTRIBUTION Systematic risk, essentially "market risk," represents the total risk of the market. It is essentially volatility, meaning the dispersion of returns around the mean. Below, I have compiled four assets from 2020 to the present using Portfolio Visualizer. In the "Stdev" column, you can see the standard deviation of the asset prices over the given period:
+
+For the US Stock Market, we see a standard deviation of 18.70%. What does this mean? - Well, if you recall my article on volatility, I explained that standard deviation assumes a normal distribution. In a normal distribution, data points are symmetrically distributed around the mean with a known probability.In this case, the standard deviation is 18.70%, meaning that the 1-sigma range lies 18.70% above and below the mean. In the past, kind mathematicians calculated for us that in a Gaussian distribution, the probability of an outcome falling within one standard deviation of the mean is 68.2%
+
+So, dear reader, imagine plotting the log returns of a given asset on the x-axis and the frequency of their occurrence on the y-axis (i.e., how many times a given log return occurred).In this case, the area under the bell curve represents the percentage of data points that fall within a selected range.For example, below, you can see the coded log returns of the SPX from January 1, 2020 onward:
+
+For this period, the annualized standard deviation of the SPX is 21.27%. This means that during the given timeframe, the log returns of the SPX fluctuated ±21.27% around the mean, as shown in the chart, with a 68.2% probability under a normal distribution assumption.The problem, however—as seen in the chart—is that market returns do not actually follow a normal distribution, as I have previously discussed.It is important to understand this limitation. However, as a starting point, the normal distribution assumption provides a reasonable approximation.
+
+Next, I will introduce various basic risk analysis metrics to help you become familiar with them. Later, when I write about portfolio optimizations, the theoretical foundation will be based on these concepts.Let’s start with the simplest one: the Maximum Drawdown (MDD) metric...
+
+MAXIMUM DRAWDOWN MDD is a highly useful metric that indicates the largest peak-to-trough decline experienced by a strategy during backtesting. It shows the maximum loss an investor would have faced while using the strategy in the past.The point is that if we invested $1,000 in a stock that achieved 100% return, meaning it increased to $2,000, and then experienced a 25% decline, our balance would drop to $1,500. The maximum drawdown was 25%, but there was no decline relative to the invested capital. However, if we had invested at the market peak, our $1,000 balance would have fallen to $750. Thus, MDD helps us prepare for the risk of the largest past drawdown reoccurring in the future. In other words, it prepares us for the worst-known scenario. I mean that maximum drawdown is a left-tail event, a low-probability, rare occurrence. However, based on historical data, we know that this scenario is possible. This contrasts with average drawdowns, which occur much more frequently but do not provide insight into the magnitude of a left-tail event.Let's continue with the Value at Risk metric...
+
+VALUE AT RISK (VaR)Value at Risk indicates the probability that our loss will not exceed a specified amount within a given time period. For now, I just want to introduce them at a basic level.
+
+We often hear that VaR is calculated at 5%, which is denoted as VaR(95). For example, if we see VaR(95) = 2%, this means that there is a 5% probability that we will lose 2% or more in the given period. Conversely, there is a 95% probability that we will not lose more than 2% in the next period.The VaR value can be expressed in daily, weekly, monthly, yearly, or any other time frame.There are three main calculation methods: 1) Parametric (Delta-Normal) VaR, which assumes a specific distribution for returns; 2) Historical VaR, which determines the distribution based on past data; 3) Simulation VaR, which uses simulation techniques (e.g., Monte Carlo, or bootstrab methods) to estimate VaR.Let's walk through them briefly using Excel for this example considering those who don’t code.
+
+Parametric (Delta-Normal) VaRAfter downloading monthly SPY data from Nasdaq, we can simply calculate the log returns:
+
+Then volatility, using STDEVP function, and simply the average:
+
+These will define the distribution for us because, don’t forget, in parametric VaR, we assume a normal distribution. Now according to the definition above, VaR is basically:
+
+In simplified terms, z-score represents how many standard deviations (sigmas) an observation is from the mean. The z-score represents how many standard deviations (sigmas) an observation is from the mean. Every probability value has a corresponding z-score.If someone is familiar with math, the z-score is calculated by taking the inverse of the normal distribution function. In Excel, we can use the NORMSINV function to obtain the z-score for a given probability value. In this case, we take the z-score for 95%, which is -1.64485, and then, we simply multiply the volatility value by this z-score and add it to the mean to determine how much volatility is estimated by the normal distribution function within the 95% confidence level:
+
+And this is -1.02%, that means that I have 95% confidence that, in the worst case, my losses won’t exceed 1.02%, but 5% of the time, they will exceed this limit by an unknown amount. And as you have probably realized, dear reader, the VaR value can be calculated for any probability/confidence level.
+
+The delta-normal VaR calculation can also be extended to convexity, using Taylor-series. For example, when estimating exposure on a bond price due to a change in its risk factor (the yield), we typically model it as a function of the bond’s modified duration. However, we can also include the convexity term for a more accurate estimation. Similarly, this approach applies when calculating options risk exposure, including vega exposure.But I will cover these topics in a separate post later.
+
+Historical VaR Historical simulation involves taking the historical returns of an asset, sorting them, and identifying the worst negative return within a given confidence level. However, this method is essentially just finding the quantile of a distribution that happens to be empirical rather than theoretical. All we do is take the log returns and use Excel’s SMALL function, which returns the k-th smallest value in a dataset.Now, let’s think about it: if our dataset had exactly 100 elements, and we sorted the log returns in ascending order, the 95th element would be the 6th element from the back.To find this, we calculate the size of our dataset, multiply it by the significance level, then add one. This precisely identifies the worst log return at the 95% threshold in the dataset’s distribution. In this example we have 21 cells, so, in Excel, our formula would be: =SMALL(G2:G21; 0.05*21+1)
+
+Simulation VaR Here, all we are doing is simulating a distribution instead of using the historical one. In this case, we use a Monte Carlo simulation, assuming Geometric Brownian Motion (see my article on volatility), and we determine the value at the 95% level, just as we did with the historical distribution. The assumption is that
+
+This formula states that periodic returns on a continuously compounded basis are approximately normally distributed, with a mean of μ minus half of the variance over time, and volatility scaled by the square root of time. This also implies that price levels follow a lognormal distribution. What that saying, our Brownian motion transforms into a lognormal diffusion process.
+
+The formula we gonna use for Monte Carlo simulation is this:
+
+Where alpha is the drift, and z is a random variable. Drift represents the expected return over time, while the random variable scaled by volatility introduces the stochastic nature of the simulation, ensuring that we generate different series each time.Let me show you how to do this in Excel. I will use the annual return and volatility of SPY as assumptions for drift and volatility. I convert them into daily values and also calculate the mean drift, taking Jensen’s Inequality into account and applying Itô’s Lemma (as shown in the formula above):
+
+Next, I will calculate the random variable z, which is simply a random z-score. I do this using the RAND function, which generates a probability between 0 and 1, and then applying the NORMSINV function to transform it into an inverse standard normal cumulative distribution. Then I calculate the simulated log returns using the formula I provided earlier. Based on these values, I then project the next value from the initial starting point and the most recent simulated value:
+
+Anytime I press the F9 key, Excel recalculates the RAND function, generating new random paths each time. Now, I’m gonna do 1000 simulations. I create first a table with 1000 rows, I select them, then I go to “Data”, chose “What-if Analysis”, and choose an empty cell for the “Column Input Cell” tricking Excel to re-calculate the function 1000 times:
+
+With this, we have obtained the possible simulated outcomes for the fifth day. From here, calculating VaR follows the same process as before. These are the three fundamental calculation methods for VaR. In a separate article dedicated to this topic, I will cover various hybrid methods, also gamma-normal VaR and the bootstrap method. The goal of this post is simply to illustrate the underlying idea behind VaR.
+
+BETAThe beta coefficient measures a stock's risk relative to an index, indicating how much more or less volatile the individual stock is compared to the overall market. (Note, that beta is typically computed from historical data and assumes that past linear relationships will continue into the future, and fails to capture the nonlinearities and tail risks.)
+
+The basic, traditional way to calculate beta is:
+
+where x is the market excess return, and y is the individual stock’s excess return. Now, if we plot a stock’s alpha on the y-axis of a scatter diagram against the market’s alpha on the x-axis, the slope of the regression line is the beta itself:
+
+The reason for this is that we assume linear relationship:
+
+Ordinary Least Squares finds the α and β that minimize the sum of squared residuals:
+
+Now, take the derivative with respect to β and setting it to zero, assuming that the data are centered or that we’ve adjusted for the intercept:
+
+and here we go…
+
+From this, it logically follows that if beta is exactly 1, it means the stock's volatility matches that of the market.If beta is greater than 1, the stock is more volatile than the market.If beta is less than 1, the stock is less volatile than the market.If beta is exactly 0, the stock has no correlation with the market.And if beta is negative, the stock (or instrument, or any other metric) moves in the opposite direction of the market. For longer-term positions, beta can also indicate the expected positive or negative return relative to the market. Beta basically measures the sensitivity of a given asset to systematic risk.Let me give you an example…
+
+If we take a $1,000,000 portfolio with a beta of 1.8, it means that the portfolio's exposure is approximately 80% more volatile than the market. We have the option to reduce or completely neutralize this beta (systematic risk exposure) using futures contracts. In this case the target beta will be 0.0, meaning we aim to completely neutralize the beta risk:
+
+According to the formula, I need to sell 6 ES mini contracts to neutralize the beta risk. Now, let’s see what happens to our portfolio under theoretical price movements assuming constant beta:
+
+As a result, we can see that our portfolio no longer reacts to SPX price fluctuations, meaning its beta is now 0.Just for curiosity, I’ll show what would happen if our target beta were 0.6 or -0.6Here’s what happens if we adjust our portfolio’s beta risk exposure to SPX at +0.6:
+
+As we can see, the portfolio still reacts to market movements, but this reaction is much smaller compared to being unhedged.And if our target beta is negative, then, as described in the definition, the portfolio’s value will move in the opposite direction of the market:
+
+This is the basic framework of beta.
+
+SHARPE, SORTINO & TREYNOR RATE When evaluating an investment asset or portfolio, the first thing we usually look at is its past returns. However, the problem is that returns alone are not enough—we also need to consider the level of risk taken to achieve those returns.William F. Sharpe’s idea in 1966 was to measure how much return is generated per unit of risk.
+
+To illustrate with a simple example, let's say we have two investment strategies, A and B. For Strategy A, the 10-year annualized average return was 20%, with a standard deviation of 16%, resulting in a Sharpe ratio of approximately 1.25.For Strategy B, the 10-year annualized average return was 13%, with a standard deviation of 7%, giving a Sharpe ratio of approximately 1.86. This means that for Strategy A, each unit of risk generated only 1.25% return, whereas for Strategy B, each unit of risk generated 1.86% return. So, while Strategy B’s annualized return was a little more than half of Strategy A’s, it required significantly less risk in exchange for those returns.
+
+From a risk/return ratio perspective, Strategy B is more favorable. Although its return is significantly lower than Strategy A, there is nothing stopping us from increasing the risk of Strategy B.If I can tolerate a 16% risk level, I can apply 2.28x leverage, which increases Strategy B’s risk to ~16%, while its expected return rises to 29.71% due to leverage—of course, in a simplified model. This means that by properly sizing the position, the total return can be higher even with a lower-risk asset.
+
+One of the problems with the Sharpe ratio is that if an asset is illiquid and does not have daily price quotes or is not valued daily, return smoothing can occur. This means that losses are averaged out in the calculations. Sometimes, fund managers and account managers deliberately apply this technique.
+
+For example, if a strategy’s balance fluctuates between -5% and +5% in a given month, but on one day there was a -20% drop, and the balance is only recorded weekly or monthly, the 20% drop will disappear from the records. As a result, volatility appears lower, which artificially increases the Sharpe ratio.
+
+Another very important problem with the Sharpe ratio is that it does not distinguish between left-tail and right-tail risks, while assuming normal distribution, neglecting skewness. This means that during longer spot/vol beta rallies, the Sharpe ratio will show an unfavorable value, just as it would during shorter spot/vol beta declines. At the same time, it may show a more favorable value during a shorter spot/vol market decay, just as it would during a low spot/vol beta increase.The Sortino ratio addresses this shortcoming:
+
+The main difference here is that, with the Sortino ratio, we only consider the standard deviation of negative returns. The problem with Sortino is that it still relies on historical data and parametric assumptions that may not capture the true risk of extreme downside events.By comparing it to the Sharpe ratio, using together, we get a clearer picture of the amplitude of left-tail and right-tail events.
+
+Suppose an asset has an excess return over the risk‐free rate of 8%, and total standard deviation of 20%, and downside standard deviation (only negative deviations) of 12%. In this case the Sharpe ratio is ~0.40, and the Sortino ratio is ~0.67In this example, the asset's total volatility is 20%, but only 12% of that comes from downside movements. This implies that 12/20 = 60% of the volatility is from negative (downside) moves, and the remaining 40% is from positive moves. Thus, while the Sharpe ratio indicates the asset has a relatively high overall risk (0.40), the Sortino ratio suggests that the "harmful" risk (downside risk) is lower (0.67), because a large part of the volatility comes from favorable, upward movements.
+
+The core idea of the Treynor ratio is that, unlike the Sharpe ratio, it does not use standard deviation to measure risk but instead relies on the beta factor.This allows it to show the return adjusted for systematic risk (volatility relative to the market).
+
+So while Sharpe gives you an overall risk-adjusted return but treats all volatility the same, Sortino refines that view by showing how much of the risk is downside and indicates performance when only negative returns are considered, Treynor isolates the risk that cannot be diversified away (systematic risk). It’s particularly useful if your portfolio is well-diversified and you want to know if you’re being rewarded for the market risk you’re taking. However, don’t forget that beta is a linear metric that fails to capture the nonlinear dynamics, as written above.
+
+Lets assume an example, without numbers, just to give you an idea: Asset A has a moderate Sharpe ratio because it has high total volatility, but its Sortino ratio is high, indicating that most volatility is on the upside. Its Treynor ratio is also strong, meaning its returns are well-compensated given its market risk. Asset B might have a similar Sharpe ratio but a lower Sortino ratio, showing that a greater portion of its volatility comes from negative returns. Its Treynor ratio might be lower too, suggesting that the returns aren’t adequately compensating for the systematic risk taken. In this case, Asset A would be preferred because it delivers similar risk-adjusted returns while exposing you to less downside and more appropriate systematic risk.
+
+P.S.In this post, I only wanted to introduce the basics that form the foundation of risk management.In the next posts, I will present advanced models that take risk convexity into account, like delta-gamma VaR, Conditional VaR, Extreme Value Theory, nonlinear option‐adjusted beta models, quadratic regressions, and stress testings.

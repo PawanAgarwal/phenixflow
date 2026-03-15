@@ -1,0 +1,49 @@
+Intraday post (15/April), "Need" for deflationary concerns
+
+Weekly post is here. Meanwhile global money supply is strictly monotone increasing.
+
+This means two things. First is, domestic money supply is accelerating upward. And the second is, DXY is going down (and M2 is measured in USD; so if DXY down/M2 up), while the real growth is also slowing down. This means, that there is more money chasing the same or even less number of goods, which leads to a new inflationary cycle. However, current data show that while M2 is growing, the pace is moderate relative to recent real GDP increases. Recent headline inflation rates are around 2.4%—close to many central bank targets—and core inflation is around 2.8%If the velocity of money remains low or decreases—meaning that dollars do not circulate rapidly through the economy—the inflationary effect of even a growing money supply is muted. This was exactly what happened during the 2008/09 crisis.
+
+And this is why Trump needs those deflationary concerns. Actually, what did I tell you back in February and March? - Trump wants to cut demand. That’s the only way to fight stagflation (supply side driven inflation). While global dollar selling plus the Fed’s ‘hidden QE’ are having their effect, it has to be balanced by lowering demand to avoid a new inflationary cycle. At the same time, it prevents a liquidity trap and a deflationary spiral—but for now, everyone must fear deflation. I mean, actually. Without optimism or hope, but total bearishness.From the 2008–09 experience, we know that even a major boost in the money supply won’t necessarily cause inflation if the added liquidity doesn’t circulate.Most people don’t see this. Everything is unfolding exactly as planned.
+
+I recommed to watch these two interviews:Treasury Secretary Scott Bessent on Tariffs, Bonds and the Next Fed Chair, andWitkoff about emerging peace deal.
+
+INTRADAY POSTCoding aggregated dealer positioning for today session
+
+We can see a significant bear call spread at 5500/5530Above 5475, it can have a magnetic effect, and I’d mark 5451 as a pivot around 1PM from mechanical flows perspective, but the overall speed profile is net negative with an avg slope of -13.63%Locally it is negative below 5400 (with a slop of -41.29%) and positive above 5400 (with a slope of 16.78%), hence the overall profile is negative. The centroid is at 5340.18Below this level, the downside gamma increases sharply and if the momentum is under control, we should see longer spot/vol realized intraday beta. And below 5283.82 the longer downside gamma effect must be seen shallowing vol, and the 5205.59 - 5283.82 range should be sticky and stabilizing. However, if the vol declines to fast, the pivot is a support, where longer gamma hedging mechanisms reject the momentum. If the vol catches up, it can fall below 5205.59; and from there, see the weekly post.
+
+Above the centroid it is a bit complicated, bcs we have shorter upside gamma, but above 5400 the speed profile goes positive, while tail-to-tail it is still remains negative. The charm flows are flat-to-supportive there, and volatility while it ‘tries’ to decline, should make higher lows and lower highs as the price moves up.
+
+OptionsDepth Chart:
+
+(Description is here)
+
+Coding zero vanna at 5377.54 with positive convexity, meaning, low vol needed to break through this. The color (charm convexity) is negative, meaning gamma decay, giving room for vol to expand. Mechanically, the vol should decline as price moves up, but this decline flattens as time passes and can even reverse, from dealer flow perspective. This, along with OpEx positioning, favors for spot down/vol down stabilization, but overall supportive, if vol doesn’t catches up in the marked territories. From sentiment perspective, yesterday’s EOD selling is showing more weakness, favoring for the Wednesday reversion potential, that I wrote in the weekly post.
+
+SCRIPT INPUTSSPX99.73%, 5618.940354381996, , 5565.443149510878, 95.4%, 5512.455284612874, Risk level, 5477.741151868139, 68.2%, 5458.953112023882, 68.2%, 5352.462876870828, Risk level, 5334.199277819361, 95.4%, 5299.485145074626, , 5245.972432014196, 99.73%, 5193.000075305504
+
+ES=F99.73%, 5673.367614987831, , 5614.9120628037335, 95.4%, 5557.058807493916, Risk level, 5519.142136250899, 68.2%, 5498.596885285602, 68.2%, 5382.281432452922, Risk level, 5362.357863749101, 95.4%, 5324.441192506084, , 5265.965686062125, 99.73%, 5208.132385012169
+
+SPY99.73%, 561.4241201191427, , 555.8201199798623, 95.4%, 550.2720576181651, Risk level, 546.6364852428464, 68.2%, 544.667484816406, 68.2%, 533.5148257116035, Risk level, 531.6035049915286, 95.4%, 527.9679326162099, , 522.3621411319803, 99.73%, 516.8158701152323
+
+VIX99.73%, 35.60848468112569, , 34.40864899521806, 95.4%, 33.24924203538706, Risk level, 32.48012893287627, 68.2%, 32.04791828152617, 68.2%, 29.68695097859634, Risk level, 29.299869846420602, 95.4%, 28.530756743909812, , 27.325685761838223, 99.73%, 26.171514098171183
+
+IWM99.73%, 196.04810869116181, , 193.65396251591068, 95.4%, 191.28905373522934, Risk level, 189.73760181959537, 68.2%, 188.89453925332302, 68.2%, 184.1350969518951, Risk level, 183.32239573899838, 95.4%, 181.7709438233644, , 179.37563409613244, 99.73%, 177.01188886743194
+
+QQQ99.73%, 479.5801177572405, , 474.0228933756552, 95.4%, 468.5300643717843, Risk level, 464.9277469681256, 68.2%, 462.9720715078059, 68.2%, 451.92121205789056, Risk level, 450.0322750045307, 95.4%, 446.42995760087194, , 440.8703121998121, 99.73%, 435.37990421541576
+
+NDX99.73%, 19698.398534542648, , 19471.496968842457, 95.4%, 19247.209032896324, Risk level, 19100.121255359623, 68.2%, 19020.276467611366, 68.2%, 18569.054459877385, Risk level, 18491.917807140377, 95.4%, 18344.830029603676, , 18117.83083308279, 99.73%, 17893.640527957352
+
+NQ=F99.73%, 19909.6651955174, , 19664.426018300408, 95.4%, 19422.2075977587, Risk level, 19263.296420889365, 68.2%, 19176.93002833513, 68.2%, 18689.43203560072, Risk level, 18606.203579110635, 95.4%, 18447.2924022413, , 18201.93187917812, 99.73%, 17959.8348044826
+
+NVDA99.73%, 120.06606768427788, , 117.70381228441208, 95.4%, 115.38803338437526, Risk level, 113.86299420260701, 68.2%, 113.02481617035829, 68.2%, 108.34573699146907, Risk level, 107.5570039663383, 95.4%, 106.03196478457005, , 103.66656350013739, 99.73%, 101.35393048466743
+
+AMZN99.73%, 195.21638177886055, , 191.91435877910612, 95.4%, 188.66818844802404, Risk level, 186.53347742217133, 68.2%, 185.36517892776612, 68.2%, 178.81592681874298, Risk level, 177.70651281220367, 95.4%, 175.57180178635096, , 172.26659421073307, 99.73%, 169.02360845551445
+
+AAPL99.73%, 216.90394214263617, , 213.2776446400986, 95.4%, 209.71197320754857, Risk level, 207.36739133471, 68.2%, 206.0846178393209, 68.2%, 198.89151452753393, Risk level, 197.67261721021188, 95.4%, 195.3280353373733, , 191.6983260919617, 99.73%, 188.1360664022857
+
+GOOG99.73%, 170.40939179160333, , 168.15969420671772, 95.4%, 165.9396965061532, Risk level, 164.4825758430965, 68.2%, 163.68959343040615, 68.2%, 159.21946988674492, Risk level, 158.45742659830975, 95.4%, 157.00030593525304, , 154.74932160274574, 99.73%, 152.53061064980292
+
+TSLA99.73%, 280.2825133993616, , 273.2101583804132, 95.4%, 266.3162597514386, Risk level, 261.76326106221575, 68.2%, 259.2390976950448, 68.2%, 245.26748946231695, Risk level, 242.93675114481553, 95.4%, 238.38375245559263, , 231.29523445689662, 99.73%, 224.41749880766963
+
+AMD99.73%, 103.36917953063326, , 101.12757967656779, 95.4%, 98.93458976531663, Risk level, 97.4889135018234, 68.2%, 96.69187521618568, 68.2%, 92.25606357946116, Risk level, 91.5110864981766, 95.4%, 90.06541023468337, , 87.82012852590252, 99.73%, 85.63082046936674

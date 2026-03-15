@@ -1,0 +1,45 @@
+Intraday post (25/feb)
+
+Here I coded intraday gamma:
+
+Here you can find the 3D GEX chart, and here the 2D projection of it.Voilá, OD'‘s heatmap for today:
+
+(Description is here)
+
+I code zero vanna at 5954, this is the most important reversion lvl for now coincidencing with the vol projected sigma. In order to break below this line, vol should decrease. The question is, as always: can it do so?
+
+This means that from a mechanical perspective, vol decrease is less likely, but provides a good setup for reversion trade.
+
+Yesterday I pointed out some very important informations. We can see an increasing concern about a hard landing scenario contrary to “soft landing” narrative. And we see that customer sentiment is shifting towards longer skew/longer downside vol, with increased 0-2DTE options volume, meaning they hit’n’run othis sudden vol spikes via OTM vomma. This sudden spot and vol spikes trigger CTAs, VCs, leveraged ETFs to sell, along with bearish headlines, amplifying the momentums.
+
+However, what you still keep seeing beside all of this is constant negative speed right within the sigma ranges. And this takes me to think that the market is now under a strong insider speculation into March OpEx with a slow hedged decay, that doesn’t allow bears to catch downside edge on a wider time-frame, but triggers position unwind from institutions while allowing others to rescale into positions and DCA there margins lower. This can set the stage up for a supportive March opex, and a fig flush after that without risking margin calls for certain.This is my theory for now. And this prevents me to take longer-term positions on anyside, bcs I don’t see any edge on that.
+
+As you can see, NVDA call skew also increased, and the smirk flattened. This is not somthing you see after a big flush that actually filled with fear. This takes me to think, personally, that post-ER we can have a good spot to go for a short call edge. I see only edge however, in vol trading currently, and intraday reversion trading.
+
+SCRIPT INPUT:
+
+SPX99.73%, 6089.82952946567, , 6063.126100871049, 95.4%, 6036.539764732835, Risk level, 6019.16730142993, 68.2%, 6009.835817003467, 68.2%, 5956.545523847045, Risk level, 5947.33269857007, 95.4%, 5929.960235267165, , 5903.2552211502225, 99.73%, 5876.67047053433
+
+ES=F99.73%, 6107.664231104604, , 6080.876930785376, 95.4%, 6054.207115552303, Risk level, 6036.780095882252, 68.2%, 6027.419294246127, 68.2%, 5973.961648382882, Risk level, 5964.719904117748, 95.4%, 5947.292884447697, , 5920.503992943077, 99.73%, 5893.835768895396
+
+SPY99.73%, 608.3727968030909, , 605.5756729081656, 95.4%, 602.7914093878736, Risk level, 600.9718770905127, 68.2%, 599.9942256767647, 68.2%, 594.4127773220397, Risk level, 593.4481668547998, 95.4%, 591.6286345574389, , 588.8313278120471, 99.73%, 586.0472471422216
+
+VIX99.73%, 20.742210695059047, , 20.296877272322114, 95.4%, 19.861105118647686, Risk level, 19.573864700737584, 68.2%, 19.41555474510684, 68.2%, 18.534211587934937, Risk level, 18.386134383735072, 95.4%, 18.09889396582497, , 17.652844710867686, 99.73%, 17.21778838941361
+
+IWM99.73%, 221.93996246819714, , 220.50785028730064, 95.4%, 219.08497909786809, Risk level, 218.15425451914084, 68.2%, 217.6528063092686, 68.2%, 214.79776072008553, Risk level, 214.3057369359373, 95.4%, 213.37501235721004, , 211.9427134546407, 99.73%, 210.520028986881
+
+QQQ99.73%, 533.2387677407621, , 529.8860344467344, 95.4%, 526.5543814289748, Risk level, 524.3752714913321, 68.2%, 523.2015134748893, 68.2%, 516.5169890176646, Risk level, 515.3647187430429, 95.4%, 513.1856088054002, , 509.8324609379675, 99.73%, 506.50122249361283
+
+NQ=F99.73%, 21942.927037142534, , 21811.866378472903, 95.4%, 21681.58851857127, Risk level, 21596.392161517033, 68.2%, 21550.52311348674, 68.2%, 21289.179731968863, Risk level, 21244.107838482967, 95.4%, 21158.91148142873, , 21027.836229574346, 99.73%, 20897.572962857466
+
+NVDA99.73%, 141.96809192194672, , 139.0153623997158, 95.4%, 136.1240453506218, Risk level, 134.21888616836986, 68.2%, 133.169968319107, 68.2%, 127.3244505260291, Risk level, 126.34111139022387, 95.4%, 124.43595220797195, , 121.47879116147858, 99.73%, 118.59190563664703
+
+AMZN99.73%, 220.59630915168373, , 218.61584344696314, 95.4%, 216.65315793277546, Risk level, 215.36769063541138, 68.2%, 214.67252893293355, 68.2%, 210.72920830764218, Risk level, 210.052322792323, 95.4%, 208.76685549495892, , 206.78588122147136, 99.73%, 204.82370427605065
+
+GOOG99.73%, 188.55623562199605, , 186.7055955034952, 95.4%, 184.87311903170115, Risk level, 183.67242302326503, 68.2%, 183.02229615187412, 68.2%, 179.33898929326352, Risk level, 178.70758185954747, 95.4%, 177.50688585111135, , 175.65567445542334, 99.73%, 173.82376926081645
+
+TSLA99.73%, 353.92174387461915, , 348.02467897987924, 95.4%, 342.225871326958, Risk level, 338.4130168764205, 68.2%, 336.32709797449155, 68.2%, 324.629393854193, Risk level, 322.64698068217325, 95.4%, 318.83412623163576, , 312.9315528124969, 99.73%, 307.1382536839746
+
+TSM99.73%, 203.74861703786468, , 200.7011710934522, 95.4%, 197.69930546717453, Risk level, 195.72722989512954, 68.2%, 194.65115125815, 68.2%, 188.60108598553137, Risk level, 187.5727578978392, 95.4%, 185.60068232579422, , 182.5509707579748, 99.73%, 179.55137075510407
+
+AMD99.73%, 114.43747086796363, , 112.84451644638887, 95.4%, 111.27373573915759, Risk level, 110.24235808716682, 68.2%, 109.68046151742992, 68.2%, 106.51638759019198, Risk level, 105.9776431335363, 95.4%, 104.94626548154554, , 103.35229291980932, 99.73%, 101.7825303527395

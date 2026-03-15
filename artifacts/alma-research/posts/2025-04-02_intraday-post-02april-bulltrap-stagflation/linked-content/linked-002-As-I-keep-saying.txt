@@ -1,0 +1,75 @@
+Intraday post (26/march), vol comparsion, long gamma trade
+
+bear trap and bull trap into Rosh Chodesh Nisan?
+
+In this weekly post I convered the base, initial context that we should take as the initial point when we are making comparsions or monitoring the changes. Also convered the JPM collar hedge. Recent indications suggest that the “bear‑case” for tariffs is being moderated. If tangible tariff details are released on 2nd of April, there can be significant clarity for corporate planning. This can help dampen volatility and long squeeze UST and short squeeze SPX.
+
+I will drop a new geo post soon, but now in short:History shows that Russia has been most successful in its geopolitical struggles when the West was divided.During the Great Northern War, Peter the Great’s Russia exploited divisions within Europe’s anti-Swedish coalition; in the Napoleonic Wars, Russia allied with Great Britain—usually a rival—to defeat France. In World War II, the Soviet Union benefited from divisions between the USA and Germany’s former allies.Conversely, when the West acted as a unified entity, Russia had to face its greatest challenges—such as during the Cold War, which ultimately led to the collapse of the Soviet Union.
+
+In light of these historical lessons, it would be unwise for Moscow to ignore the potential for accelerating the rift between Washington and its European allies.Russia must continue cooperating with Trump’s team while indirectly supporting those European voices that advocate a more balanced approach toward Russia. Moscow must deepen its bilateral economic relations with individual European countries, circumventing Brussels’ restrictive policies wherever possible. It should also closely monitor any serious Western European attempts to create an independent military bloc.Crucial to understand.
+
+Let’s check the skew, how it progressed during the week.This is SPX skew 1 week ago:
+
+And currently:
+
+Into this Friday expo the skew became longer by 10.30%, with put/ATM skew bid by 5.08% and call/ATM offered by -5.22% (Note also that April OpEx skew is also getting longer.) Besides call selling, we can see some significant increase on the tails even compared to yesterday:
+
+But call selling is coming back into EOM expo:
+
+For bulls, it is very important to hold’n’close above 5710.25 into the weekend in order to not let downside vol to get realized… I’ll tell you why I smell bear trap here, but now…
+
+Speed profile is net flat-to-negative with slope of -0.12% (kinda counterintuitive looking at the GEX chart).Locally it is flat-to-positive above 5767.41 with slope of only 0.24%, and negative below with slope of -0.56%The centroid of the positioning is at 5752.09; this is where momentum will make decisions.Upside pivot is at 5853.37; we should see longer speed mech to be realized here otherwise we will get the same as yesterday and on Monday. But above this, 5865 is pin and should burn RV in theory.To the opposite, the local pivot is 5746.01; where longer speed (shorter downside gamma) mechs should be realized until 5676, and there if the price wants to stabilize lower, shorter speed mechs should be realized, otherwise it’s fake.Also coding VIX downside pivot at 16.68s, towards 15.23s; and upside pivot at 20.42s
+
+OptionsDepth chart:
+
+(Description is here)Coding zero vanna at 5723.47 low vol needed to break through this;And coding 5785.5 the lvl where one should see intraday vol to decrease in order to get the longer gamma into effect to the upside. Otherwise it can be trapped at 5772Charm flip is at 5777, and its convexity (color) is negative. This means that gamma decay is expected in the overall profile until mid-day. There 5772 can pin if longer gamma effect realizes in 5705-5780 range. Above this range spot up/vol up squeeze can be expected again.
+
+In the monday intraday post I made a comparsion between three RV estimation. Let’s see how it was done after Tuesday close.Here I coded intraday RV for yesterday’s session:
+
+As you can see, the intraday vol was suppressed again during the whole session, and - just like during Monday - it spiked at the EOD. The vol was so low that it was pinned to the local 5765 strike, and vol realized the shorter upside gamma, but closed lower, so RV closed only -1.37% lower than previously. However, here you can see that SPX/VIX beta didn’t realized it longer intraday. Actually it went the opposite:
+
+Now, lets look at the different RV metrics.Here is IBKR’s 30-day RV vs IV:
+
+Here is Bloomberg Terminal’s 30-day RV vs IV (using the same annualizing factor [252] I use in my formula):
+
+And here is my own calculation (taking every intraday details into account). 3-month (red) vs 30-day RV (purple), with realized vol of vol (low opacity white):
+
+Note that short vomma is being realized now. VIX and its IV (SPX vomma) according to IBKR:
+
+And according to Bloomberg (VIX and its RV):
+
+VIX IV vs RV:
+
+So, what do we observe:1) Spot is going up, intraday oscillation (algos in mean rev. mode) with slight positive drift; 2) SPX RV is sticky up (Bloomberg profile says elevated rvvol, RV is ready to mean revert, IBKR says rvvol lower, but RV is ‘pinned’, mine says RV is stucked at a ‘resistance’, rvvol is going down, RV is ready to cool off a bit soon); 3) VIX and SPX IV is going down, VIX IV also going down and also realizes down;4) Market local gamma is longer, skew is longer, but despite the intraday SPX/VIX beta, on a daily basis, spot/vol beta doesn’t realize it, and RV neither:
+
+Feels confused? … That’s their goal… Full of contradictional outputs… everything is happening intraday… the participants who rely on close-to-close datas are trapped. This is mechanical… but what does it mean? What’s the progression? … Yesterday I showed you that I have an idea what is this significant discrepancy is all about.So intraday the longer gamma is realized, but on a close-to-close basis one can’t see it. The negative IV/RV spread makes long vol strats and hedges cheaper, and more desirable for bears. To me this seems like a algo-trap for current bearish positioned funds. 2022 was full of these. This scenario lures a lot of bears into short this bounce simply based on math. While long vol bulls can’t really print on this either, only short vol longer delta positions have edge here. But to me it feels like a longer gamma trade is coming that will eventually revert RV down making bears to capitulate. This juices liquidity up. Then, after the collar expired, insiders can start to sell again slowly. Lot of geo and economic uncertainity ahead, and lot of magnetic gaps below. This is the only scenario that makes sense to me watching these discrepancies. Also note that VIX doesn’t show the same hedging behavior now what SPX shows into April VIX expo:
+
+Hopefully you start to realize that it isn’t as simple as drawing some lines on a chart, or comment where positive gamma and negative gamma lies…
+
+SCRIPT INPUTS:SPX99.73%, 5897.82381115298, , 5867.452132320322, 95.4%, 5837.236856748365, Risk level, 5817.48550961246, 68.2%, 5806.864361985114, 68.2%, 5746.276574443953, Risk level, 5735.81429507504, 95.4%, 5716.062947939135, , 5685.68876914679, 99.73%, 5655.47599353452
+
+ES=F99.73%, 5950.712361419805, , 5919.577822031186, 95.4%, 5888.606180709902, Risk level, 5868.359565798474, 68.2%, 5857.470777725335, 68.2%, 5795.363714909855, Risk level, 5784.640434201526, 95.4%, 5764.393819290098, , 5733.2566329832125, 99.73%, 5702.287638580195
+
+SPY99.73%, 588.3197049806611, , 585.0959517992113, 95.4%, 581.8898634766587, Risk level, 579.7937351463538, 68.2%, 578.6660121537673, 68.2%, 572.2360703028044, Risk level, 571.1263087989587, 95.4%, 569.0301804686538, , 565.8061261711307, 99.73%, 562.6003389646514
+
+VIX99.73%, 19.3881651661301, , 18.8203078310674, 95.4%, 18.269082392330187, Risk level, 17.904261408071417, 68.2%, 17.70069930989623, 68.2%, 16.581019804940112, Risk level, 16.39573782898913, 95.4%, 16.03091684473036, , 15.461253894607092, 99.73%, 14.911834070930446
+
+IWM99.73%, 213.6648777146369, , 212.1684170866241, 95.4%, 210.68243733143953, Risk level, 209.7101617665172, 68.2%, 209.1859019886097, 68.2%, 206.20338472927986, Risk level, 205.6898321299672, 95.4%, 204.71755656504484, , 203.22086521347472, 99.73%, 201.73511618184747
+
+QQQ99.73%, 507.60171601267126, , 504.053886278642, 95.4%, 500.53085373387466, Risk level, 498.225752630987, 68.2%, 496.9828475979033, 68.2%, 489.91180382510765, Risk level, 488.69423027916923, 95.4%, 486.3891291762816, , 482.8407547365407, 99.73%, 479.318266897485
+
+NQ=F99.73%, 21053.92198405986, , 20912.088746479745, 95.4%, 20771.21099202993, Risk level, 20679.047208628173, 68.2%, 20629.371207339434, 68.2%, 20346.653486256524, Risk level, 20297.952791371827, 95.4%, 20205.78900797007, , 20063.935575539846, 99.73%, 19923.07801594014
+
+NVDA99.73%, 127.97818851411982, , 126.14298359316594, 95.4%, 124.33409547776304, Risk level, 123.14612114791072, 68.2%, 122.49849912044336, 68.2%, 118.85399064336053, Risk level, 118.23388373490178, 95.4%, 117.04590940504946, , 115.2094558838729, 99.73%, 113.40181636869268
+
+AMZN99.73%, 214.21392440475714, , 212.0772892560557, 95.4%, 209.96196555931215, Risk level, 208.57582697569708, 68.2%, 207.82511240190115, 68.2%, 203.57292644056506, Risk level, 202.8441864520373, 95.4%, 201.45804786842223, , 199.3207307891863, 99.73%, 197.20608902297724
+
+AAPL99.73%, 231.50854488946308, , 229.560714491672, 95.4%, 227.62927244473155, Risk level, 226.36462962774905, 68.2%, 225.68130119597566, 68.2%, 221.80188297327712, Risk level, 221.13537037225095, 95.4%, 219.87072755526845, , 217.92245956044746, 99.73%, 215.99145511053692
+
+GOOG99.73%, 179.45796816547463, , 177.78315928756567, 95.4%, 176.1239807258037, Risk level, 175.037100820471, 68.2%, 174.4490224883436, 68.2%, 171.11487986877424, Risk level, 170.5428857517946, 95.4%, 169.45600584646192, , 167.78073108187135, 99.73%, 166.122018406791
+
+TSLA99.73%, 315.4579741833527, , 308.5529118141834, 95.4%, 301.7989944158951, Risk level, 297.3461670117039, 68.2%, 294.89043163839636, 68.2%, 281.2276113956875, Risk level, 278.9338622851711, 95.4%, 274.4810348809799, , 267.56439899086644, 99.73%, 260.8220551135223
+
+TSM99.73%, 190.10873395472274, , 187.79243799730764, 95.4%, 185.50436392560357, Risk level, 184.0033392961107, 68.2%, 183.18771329407687, 68.2%, 178.58297030115517, Risk level, 177.79664849685804, 95.4%, 176.29562386736518, , 173.97820756630338, 99.73%, 171.691253838246
+
+AMD99.73%, 120.75503659899208, , 119.25951601684055, 95.4%, 117.78251707879292, Risk level, 116.81347571520799, 68.2%, 116.28675977195874, 68.2%, 113.31399110677977, Risk level, 112.80651940197951, 95.4%, 111.83747803839458, , 110.34120901743563, 99.73%, 108.86495851819542

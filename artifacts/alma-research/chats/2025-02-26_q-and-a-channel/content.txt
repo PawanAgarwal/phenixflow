@@ -1,0 +1,857 @@
+Chat Post
+2025-02-26T20:01:32.459Z | Alma
+Q&A Channel
+
+Replies
+2025-02-26T20:01:49.028Z | Alma
+In this chat room, you can post your questions every day, and only your questions. Once the market closes, I’ll disable replies and answer them.
+Before asking anything, please make sure you haven’t already found the answer from others, or in one of my educational posts, daily analyses, or on the OptionsDepth channel.
+
+2025-02-26T20:02:11.732Z | Abdullah Albaadi
+
+2025-02-26T20:02:35.948Z | N8
+
+2025-02-26T20:03:12.679Z | Alma
+
+2025-02-26T20:11:16.872Z | N8
+How can we make this searchable?  I’ve noticed posts have search function on web app but not chat. Can we make an FAQ post? 🤔
+
+2025-02-26T20:14:39.115Z | joel rosenstock
+I have a suggestion ... doing something like this...    What is %SPEED% mean?  use special character; therefore u are searching by a specific word and or phrase.
+
+2025-02-26T20:23:15.535Z | BTFD
+what is spot decay? I asked this morning. I kindly know time decay, gamma decay etc. not sure about spot decay
+
+2025-02-26T20:34:09.543Z | Vman
+What is the best way to interpret spot down, RV down. I guess when realized vol is going down and the price is going down, what can one take away from that in laymans terms? Just that its an overreaction?
+
+2025-02-26T20:36:39.923Z | Vega
+How to determine if there will be a price reversal through IV, RV change, and current price trend?
+
+2025-02-26T20:40:27.333Z | Vman
+Second question: when dealing with individual tickers like say, AAPL. How do market makers hedge vega?
+
+2025-02-26T20:51:28.314Z | Jolene
+
+2025-02-26T21:08:28.481Z | Joe
+Hi Alma. If we are using this data/model outputs to help guide decisions for futures trading, between the gamma model centroid, zero vanna level, and script inputs (for SPX and/or ES), where should we place priority to structure a plan for the day? Should we also have a platform like OD to monitor intrday changes and charm affects in the afternoon?
+
+2025-02-26T22:03:41.136Z | Alma
+Let me see :))
+
+2025-02-26T22:05:20.260Z | Alma
+kinda like a steady slow decrease.. in this case in spot.
+what i meant by that is that SPX overall direction is likely slowly grinding lower into March expo, with this kind of vol compressing downward moves due to downside longer gamma daily
+
+2025-02-26T22:11:07.323Z | Alma
+RV should be up when spot goes down.
+Okay, so ... the key takeaway from my post about volatility here is that volatility is proportional to liquidity. Bcs vol is the standard deviation of the price returns.
+RV usually goes down when spot goes up, 1) bcs returns are log scaled, 2) bcs plp are usually selling the right wing of the skew and buying the left wing, means buying downside puts, shorting upside calls... or in other term: shorting risk reversal. This is key bcs risk reversal is a synthetic stock trade, mainly bcs its PnL diagram is the same as having a stock position.
+In this case, customers are SHORT synthetic stocks. On a net basis of course. Why? - Bcs they hedge their LONG stock position in the options market.
+
+2025-02-26T22:15:00.741Z | Alma
+Now this have a reflexive effect, bcs market makers who take the other side of the trade, short those OTM (downside) puts, and long the upside (OTM) calls.
+so they are longer gamma up and shorter gamma down (positive speed profile).
+Now, what this causes is that whenever the spot grinds higher, it faces increased liquidity as a result of MM hedging activity. They sell the rips and buy the dips when they are net long gamma.
+This means, that whenever a plp are buying the stocks pushing the price higher, there will be increased amount of seller at those levels, as MMs have to sell.
+So the demand side must balance the supply side to the upside in order to push the price higher.
+
+2025-02-26T22:15:54.732Z | Alma
+And this compresses the RETURNS of the price action (I showed on a chart whats the diff between return and price action in my Volatility post, check it).
+So the volatility formula will provide a lower value
+
+2025-02-26T22:21:13.506Z | Alma
+However to the downside, this is the opposite here, bcs to the downside there is lower long gamma exposure (shorter gamma), and at some point MM exposure even switches to negative gamma.
+What this means in practice, that: if the demand side is not enough on the stockmarket to rebalance the supply side from MMs (not solely them, but now lets keep it simple), plp stop-losses, margin lvls will be triggered and need to unwind their positions.
+And as they sell, MMs have less and less long gamma, meaning, they have to buy those sell orders, but in a declining volume. So the liquidity decreases.
+And when spot reaches MM firms net zero gamma line, they switch to negative gamma, where they have to hedge via selling into dips and buying into rips.
+
+What this causes is, that MMs will be on the SAME SIDE that where the stocktraders are, so the counter-side, the opposite side who is needed to fill a sell or buy order is decreased... in otherwords the liquiditiy decreased significantly, and price needs to move a lot to find where sellers can sell their exposures.
+
+2025-02-26T22:21:49.524Z | Alma
+And this expands the RETURNS of the price action, so the volatility formula will give you a higher number.
+
+2025-02-26T22:24:14.151Z | Alma
+Implied volatility is a different thing. Implied volatility is a bet basically on the ranges of returns into the future. This determines the risk premium on the options. Higher IV = higher premium, lower IV = lower premium.
+IV is basically the odds that the contract finishes ITM.
+Higher demand on a certain contract = higher premium = higher IV, and vice versa.
+
+2025-02-26T22:29:43.389Z | Alma
+And look here: if customers sell upside calls, they lower those call IVs (selling vega / selling vol),
+and as they buy downside puts, they bid those put IVs (long vega / long vol).
+And this makes the vol smile steeper on the left wing, and flatter on the right wing.
+So when the spot "slides" (on the x-axis) from the middle (ATM) to the left, meaning spot falls, the IV will increase, bcs we have bid IV values to the left.
+But if the spot slides from the middle to the right side, the IV will decrease, bcs call vols are sold.
+
+2025-02-26T22:29:45.531Z | Alma
+
+2025-02-26T22:29:59.677Z | Alma
+And this is reflexive.
+
+2025-02-26T22:33:21.682Z | Alma
+Now, but WHEN YOU SEE THE OPPOSITE,
+meaning that the vol decreases to the downside, and increases to the upside,
+it means that MMs are longer gamma down, and shorter gamma up.
+Also meaning that the left wing of the smirk is flatter relative to the right wing that is steeper.
+Why? Bcs now customers are net long risk reversal: they are buying upside calls and downside puts = long upside vol, short downside vol.
+Bcs they are shifting net short on the stock.
+
+And this will reflexively increase the liquidity to the downside, compressing the returns, leading to lower vol, and decreasing the liquidity upside, leading to higher vol.
+Bcs dealers are the opposite: they long downside gamma, and short upside gamma.
+
+2025-02-26T22:35:11.691Z | Alma
+And when this effect is so aggressive via gamma, that it immediately prints into the daily realized vol, especially on such a high rate that we saw recently, then it means increased downside liquidity.
+Nothing more, nothing less.
+It doesn't mean bullish or bearish. Don't try to degrade it to this lvl. This means this, you got one piece to the puzzle
+
+2025-02-26T22:54:07.787Z | Alma
+When one build an algo for that, we build trees, so there is no exact answer, we have to consider many things.
+I will write posts about that.
+
+But the two key aspect for now is that you have to understand the positioning, bcs that will give you a clue about the characteristics of the local environment. And you have to know the sigma lvls, bcs sigma lvs are like having the normal distribution projected on the chart giving you an idea about the probabilities. I have a special way to code it not simply IV/sqrt(252)
+Sigmas give you an idea where the momentum is trading relative to the expectations, and give you an idea about potential price extremes, but you always have to take it along with the positioning.
+
+If you don't algotrade, you have to be able to derive what kind of local effects you can expect from the positioning itself. And you compare to that what you see in the realized spot move in that location.
+Sigma lvls give you a probability of how much probability is assigned that the price will remain in that certain range (so mean revert form the 'border').
+
+When I personally trade manually, I like to watch the vol smirk itself, and like to check the intraday ATM IV (i made a script for that for IBKR), and compare it to realized intraday vol.
+
+2025-02-26T22:55:08.230Z | Alma
+IV is basically the reflection of supply/demand.
+Or as I like to say: IV is the price, RV is the value.
+Bcs IV is what you pay, and RV is what you get.
+
+2025-02-26T22:58:53.041Z | Alma
+The momentum in the smirk will give me an idea how the vol expectations and supply/demand ratios changes also on a fixed strike basis, and with that I can also see how it influeces the positioning effect.
+Just think about my zero vanna line, I always tell what vol should do in order to break it.
+One can also build a tool for put/call deltas intraday, to monitor the flow, but relying only on that is dangerous bcs what you see is the past.
+But if you watch it from a "trend perspective", so what is the trend of the delta curves, you can get some idea what its gonna do.
+But keep in mind that not every curve is mean reverting
+
+2025-02-26T23:03:11.474Z | Alma
+The key of reversion trading is that your edge comes from mispricing.
+
+2025-02-26T23:03:34.652Z | Alma
+Read my post about odds. Crucial one.
+
+2025-02-26T23:08:50.034Z | Alma
+Lets say, market opens and starts to go down towards the downside sigma lvl. You see that there is local negative speed, meaning gamma is increasing. Momentum slows down, vol goes down.
+
+Now, after the open, when traders start to take positions, vol is high, gamma is juiced. Plp are rushing into long puts, long downside vol, and the more the market goes down and down, they fomoing in even more.
+There is no real edge here anymore, bcs the IV is bid, odds are high on that downside trade.
+You have to wait.
+You wait until it hits the threshold where you expect mean reversion first bcs it is an extreme, second, bcs the positioning says so. Vol starts to go down, traders start to sell their puts.
+But nobody is buying calls. Their IV is very low.
+You buy it, and market bounces. Your premium spikes.
+
+It is not always this simple, but this is the main idea of mean reversion trading. You buy, when the odds are low on a trade, not when everybody and their mom is buying that bet, bcs not good risk/reward. I showed it mathematically what it means.
+
+2025-02-26T23:29:59.767Z | Alma
+firstly, vega can be hedged via options, bcs only options have vega.
+bcs liquidity is low dealers use cross-hedging strategies here.
+So lets say if the direct market in AAPL options is thin, MMs can hedge some part of their vega using more liquid options on a correlated index or even a related sector ETF.
+
+2025-02-26T23:32:49.106Z | Alma
+Not sure if i understand correctly, but i'm careful with 0DTE positioning changes. Volatility matters the most. Check my answer above, maybe it gives some answer, if not, elabore more on that.
+The key is that sigmas + positioning together, including volatility changes can give you a distribution for the day you are looking at
+
+2025-02-26T23:33:11.955Z | Alma
+Okay, Q&A ended.
+Lets digest it
+
+2025-02-26T23:41:35.975Z | James
+
+2025-02-26T23:54:48.707Z | Jeffrey K
+
+2025-02-27T15:20:21.497Z | futuredale
+For local zero vanna levels, why does it require drop in IV to break them?
+
+2025-02-27T15:22:59.144Z | futuredale
+In the mean reversion script. What are the unlabeled lines?
+
+2025-02-27T15:42:21.644Z | Professor
+Alma, can you elaborate on how you decided to take the short on Dec FOMC?
+
+2025-02-27T15:42:55.410Z | Professor
+How are we supposed to identify those left-tail events?
+
+2025-02-27T15:45:14.471Z | Cryptian
+I watched your spx trade this morning. Great call. Curious as to how you knew to enter? What's your process? Also, it pinged off the supportive charm level at 5926. What made you go long around here?
+
+2025-02-27T15:49:21.181Z | Cryptian
+Also, what is the red and green dots at the top of your charts that you posted on your trade channel? An algo you coded? Totally nailed it. Any chance you will share that?
+
+2025-02-27T15:54:04.471Z | billy
+for the mean reversion threshold TV indicator, what does the risk level represent?
+
+2025-02-27T16:34:31.564Z | John
+For the chart you posted in the trading signals, what is the average you're using for trend?
+
+2025-02-27T16:37:01.078Z | Vman
+
+2025-02-27T16:42:23.681Z | BTFD
+Hi Alma from the Gex map I can only see positive speed between 5845 and 6125 and it is relatively flat in between. How come you can have two zero Vanna?
+
+2025-02-27T16:52:59.912Z | Jain
+how do you decide how much stop loss to put when you first open position?  like 20%? 25% below premium paid?
+
+2025-02-27T17:49:43.661Z | Ngok996
+Alma, thank you for the zero Vanna reversal signal and explanation! Really appreciate it.I have a question: does the "SPX option IV" indicator same as the fixed-strike vol you mentioned before? It seems different to me though...
+
+2025-02-27T17:49:53.781Z | Ngok996
+Currently, I'm tracking vol changes by comparing the current ATM IV with previous days' IV in the same srike. What DTE do you think is appropriate? I'm using 30-ish now, with previous days' vol skews expiring on the same day. Does this approach seem correct?
+
+2025-02-27T17:54:38.798Z | Teddy C
+Hi Alma, what are the best instrument for playing intraday reversals in current vol regime? I'm thinking about buying slightly OTM contracts and exit when they become slightly ITM to capture the bulk of the belly of the gamma curve. You mentioned using 20/22 delta contracts, are those used for swing trades? Thank you
+
+2025-02-27T18:00:34.553Z | vorsage
+Hi Alma, when customer turn short skew, what do you look for to determine the point or range where they reverse that, cover back into long skew?
+
+Gamma SD, changing/steepening speed profiles or particular charm profiles?
+
+2025-02-27T18:29:04.779Z | Terrence Chan
+Alma - I’m  wondering if you could revisit your Feb 13 intraday post comments. In that post you mention how the market was hedged through Feb OPEX and to a lesser extent Q1 OPEX. You also said that equities had to come down with yields stubbornly rising. Well fast forward to now, yields have been declining and stocks have declined with them and also RV as you said in todays post continues down. With PCE coming out tomorrow, do you think the market is prepared for that and we’ll get a positive reversion in gold and equities like last month (you say in your post)
+
+2025-02-27T18:32:31.028Z | Joe J
+Hi Alma - can AAPL be added to the script? Thank you
+
+2025-02-27T18:43:42.092Z | Italy
+Hello
+Can you please link to the post ?
+
+2025-02-27T19:32:43.370Z | Teddy C
+Hi Alma, I'm wondering how much does the 0 vanna levels move around during the day? Thanks
+
+2025-02-27T19:52:14.818Z | Doc McGraw
+
+2025-02-27T19:52:21.537Z | Doc McGraw
+blue + bueno
+
+2025-02-27T19:52:26.560Z | Doc McGraw
+=
+
+2025-02-27T20:13:51.824Z | Cryptian
+Hi Alma, one more for today. What inputs are you using in the algo? I see 20D realized Vol, and 20P rolling mean, what else is it using if you don't mind me asking? And how did you develop it? I'm working on something similar atm.
+
+2025-02-27T20:20:29.579Z | David P
+Make sure you are looking at SPX CBOE
+
+2025-02-27T20:48:53.225Z | Investor
+Hi Alma, Cem and Volsignals have been calling this decline into March Opex for a while now 10% decline. You're looking at the same data as they are. Do you know how they're able to derive it? He keeps on emphasizng quarterly opex. Is it because Feb Opex has more supportive flows than March Opex. I'm wondering if there's a way to work backwards https://x.com/SchwabNetwork/status/1895205066866311486
+
+2025-02-27T20:54:57.485Z | Gamma
+@Alma yesterday you said there are few quants out there who have courses for basic coding? Can you pls suggest
+
+2025-02-27T21:26:07.322Z | Jain
+hi Alma, 5856.06 under that do we have positive spot/vol cor?
+
+2025-02-27T21:26:10.328Z | Jain
+thanks
+
+2025-02-27T21:46:59.653Z | David P
+When holding hedges as you are now, how do you manage them. I struggled with this before and roundtripped some serious gains on puts
+
+2025-02-27T21:53:24.305Z | Madhur
+
+2025-02-27T21:59:48.936Z | Investor
+Hi Alma, the price action today is what happened today the same as yesterday. MM in a net positive vanna enviornment then as we get to the afternoon the supportive flows start dissipating.
+
+2025-02-27T22:26:53.870Z | Alma
+Okay, lets see the Qs
+
+2025-02-27T22:36:16.595Z | Alma
+It comes from the delta hedging activity.
+If MM is long vanna = vol up/delta up, vol down/delta down for him.
+You can have vanna flip around the middle of a local long fly pattern, or short fly pattern.
+The difference is that in a long fly pattern MM has positive vanna convexity,
+while in a short fly patter, MM has negative vanna convexity.
+
+In positive vanna convexity, you have to see vol down in order to break through the zero vanna,
+while in negative vanna convexity, you need vol up.
+
+The reason is bcs in a long fly pattern, the speed is shorter to the middle, so is the vanna (to keep it simple).
+So mechanically you will naturally see vol up towards the center from any direction. This is what the vanna also dictates.
+Bcs if you move towards the center, MM becomes shorter gamma. It is below the center, MM has short vanna = vol up/delta down,
+but above the center MM has long vanna = vol up/delta up.
+So whenever the spot moves towards the center, vanna forces MMs to buy into the direction of the momentum, and this increases the vol.
+
+2025-02-27T22:38:14.059Z | Alma
+However on the otherside of the flip, everything changes.
+Bcs if you had long vanna above, if spot moves down towards the center of the fly (assuming long fly), vol increases - delta increases, MMs need to sell more. But below the vanna flip, they become short vanna = vol up /delta down, so suddenly they start to face delta crush, so they buyback hedges.
+
+2025-02-27T22:40:38.581Z | Alma
+
+2025-02-27T22:42:18.970Z | Alma
+I said, vol increases mechanically.
+So thats the natural, algorhytmic behavior of vol in a positive vanna convexity towards the flip.
+In order to suppress vol a bit, you need idiosyncratic customer flow that suppresses it.
+Aligning btw with vol selling interest.
+
+2025-02-27T22:42:55.607Z | Alma
+fractional sigma lines
+
+2025-02-27T22:46:53.571Z | Alma
+https://x.com/alma18499/status/1864736679027970243/photo/1
+"when market is heavily skewed bullish and when plp aren't leveraged on VIX anymore, dealers aren't hedged against tail risk. to forseeing a tail event look for expansion of size in deep OTM VIX calls, sudden high convexities, margin puts in SPX... so when the momentum in the tail of the distribution curve expands."
+
+2025-02-27T22:49:12.122Z | Alma
+Zero vanna small vol decrease, and risk lvl. These kind of flushes are always shady, puts were heavily overpriced on that one.
+To your other Q: that chart was just the reflection of the algo signals. It cannot be connected. It is a very complex code, python, live optionsdata, etc. running with IBKR API.
+Later this year I will drop posts on these kind of things
+
+2025-02-27T22:50:25.552Z | Alma
+"make it or break it lvl" It proves the momentum or disproves.
+
+2025-02-27T23:01:25.136Z | Alma
+Hull moving average
+
+2025-02-27T23:03:04.961Z | Alma
+Don't try to derive everything from greeks.
+Vega has longer-term impacts. If MM has positive vanna, if vol goes up, he will sell. But hedging flow is a bit different for individual names.
+
+2025-02-27T23:03:55.871Z | Alma
+Local curves still happen. But vanna is a very complex thing. You have to check different tenors
+
+2025-02-27T23:07:03.785Z | Alma
+Have you read my post on Kelly?
+First, I decide how conviced I am, what porbability I assign to the trade, and what probability the Street assigns to the bet.
+Then I check the positioning, bcs I don't want to be stopped out only if the momentum wanted to revert from lower.
+So risk taking is changing, but it is like 10% on avg for me on a single intraday trade. And if I miss, I take the loss, and revise my call. If still see that, I will take the position later.
+But I don't force it.
+The key is that I take position only if I actually got a read on the tape.
+No lotto and yolo shit
+
+2025-02-27T23:10:09.701Z | Alma
+Don't think so. If you have IBKR, look at simply the smile. Fixed strike vol is literally the vol of an individual contract.
+You look at it on the date you are interested in.
+Its purpose is to give you a pic how the smirk shifts. I had a drawing about that.
+
+2025-02-27T23:10:13.460Z | Alma
+
+2025-02-27T23:11:13.360Z | Alma
+The date you are interested in. Simply. In overall, try to avoid too short tenors to filter the noise. but again: depends on the timeframe
+
+2025-02-27T23:14:27.451Z | Alma
+On intraday trading I usually take 0DTEs.
+But for 0DTE I never take OTM, thats suicide for directional long vol trades. OTM 0DTEs are good for hedging and certain vol strategies but not for spot trading.
+
+I use slightly ITM contracts bcs of the slower theta decay, and ATMs when the conviction is high, bcs ATM has the most gamma, so it gains value the fastest.
+I use 0DTE if I look for a very fast trade, like what you saw today morning.
+And I use 1-2DTEs if I expect a sustained momentum during the day, and here, if I see good convexity edge, I may take 22/25 delta OTMs too, but the key is that here the contract is 1+DTE
+Mind theta risk!
+
+2025-02-27T23:18:58.722Z | Alma
+When customers go complacent, they don't hedge the downside anymore, this is short skew basically. They underestimate downside risk.
+We kinda see that today too, but not net short skew, but less hedging activity relatively.
+Usually I look for lvls where they are expected to panicking back to long the skew one by other. This can be roughly derived from the positioning, CBOE datas, like where is the net exposure, simulating VaR, or different vol patterns (via stochvol models) and realtime simulating the reaction of the positions.
+
+2025-02-27T23:27:33.149Z | Alma
+Can't fully answer this Q now,
+but spx/lty correlation is only slightly up, its trend is up, but trading at neutral currently.
+Also, feb opex was kinda supported, ans we had ATH just right before, we got the buyback on Monday as it was said. I said before Feb OpEx that we will face suppressive OpEx flows, I signaled puts on wednesday close and thursday.
+And also told you that I'm not sure that his market wants up after OpEx, but lets wait until the positioning clears out after expo. We owned those downsticks, and I explained the spot decay call into March OpEx.
+So this is the narrative, that sets the tone.
+
+2025-02-27T23:29:39.643Z | Alma
+Its not like a certain range, they move kinda random, and my model assigns probabilities to certain ranges. It has assumptions, bcs vanna is complex and kinda random. Don't forget that IV is the supply/demand itself, and you have different tenors too.
+The lvls, or sometimes ranges I give for vanna flip is the area where one can find the vanna flip with more than 90% probability. This is the idea
+
+2025-02-27T23:35:44.328Z | Alma
+I explained this many times in the recent days, that back in January the post-Feb expo "stairstep decline" narrative wasn't that obvious yet. We saw the positions but the flows that causes the "stairstep" characteristics comes from the very short-term positioning.
+I don't follow any of them, so I don't know about it, but as much as I know, Cem called stairstep decline a couple of times earlier based on the same pattern, sometimes it works, sometimes it doesn't. Volsignals doesn't think like a trader as much as I see it. The way I see him, he gets a lot of datas and analysis, and when those analyses can have a consistent sythesis that he understands, he will explain that.
+
+2025-02-27T23:41:13.694Z | Alma
+Listen,
+The problem here that many plp in this group too thinks in extremes.
+When you hear the word "bullish" you expect moon, when you hear the word "bearish" you expect bloodbath. This is the two-dimensionality I keep warning you all about.
+I said bottom in January, we got that. I said to buy the dips on february, market wants up, BUT RISK IS HIGH! This means unstable flow, full of FOMO, and I kept emphasizing that it isn't good for longer-term trades, bcs it has no edge. It will go up, but with high risk = wide intraday fluctuations.
+It went to ATH.
+However on the OpEx week I kept warning you about that I'm not necessary bullish after OpEx, but lets wait for the dustle to set to see what the market wants.
+I explained these flows and my thoughts in the chat.
+
+I called the OpEx suppressive flows. As much as I know, Cem called upward OpEx... with his famous gif (selloff on SPXW expo, then buyback into Friday PM expo). I explained that it WON'T be supportive, I derived you that it will not able to break above key lvls and vol will increase into PM.
+Happened.
+And after expo, I explained you that I see spot decay into March OpEx.
+Slow spot decay, still no edge on longerterm trades, but on intraday trades and volatility.
+So the net trend is DOWN now, I just don't take like ES shorts. I only have a put jsut for sure, but nothing else.
+Don't understand the Q.
+
+2025-02-27T23:41:43.318Z | Alma
+I'm not here to comment other plps calls.
+
+2025-02-27T23:43:25.082Z | Alma
+Nothing special. just let them run, and on downsticks I take profit. I go for intraday edge. No alpha on longer-term trades.
+
+2025-02-27T23:43:51.875Z | Alma
+I told that there will be volatility into PM, in the intraday psot ;)
+
+2025-02-27T23:44:05.710Z | Alma
+Ok, this was it.
+
+2025-02-28T18:16:03.705Z | The Alchemist
+Hi Alma, in your daily note today, you mentioned “Model says that for the short-term upward momentum, spot needs to conquer 5953.38”, did you meant this level need to be conquered today, where and how I can see the time this level needs to be broken
+
+2025-02-28T18:20:25.013Z | Tidliwings
+Hi Alma, I was curious about your indicator sigma and risk levels. If you give a lil bit more color on them. ARe you calulating the sigma levels based on Settled Price and settled Vol? I am not sure about the risk level. I am attaching my code for the sigma levels. Let me know if it looks okay. Thank you again for all you are doing. You are amazig <3
+
+2025-02-28T18:26:16.659Z | XIN
+Could you please clarify what this line represents? I've circled it in the pic
+
+2025-02-28T18:26:43.540Z | ulises
+Zero gamma
+
+2025-02-28T18:41:29.054Z | NS
+Hey Alma! Would it be possible to move chat to discord? It just has a lot of features like easy search, better organization etc. thank you!
+
+2025-02-28T19:42:06.411Z | David P
+If we have a lot of crazy range and volume as we do today (even with a range) does this chaos lead to the intraday predictions getting a little less probable as the day continues?
+
+2025-02-28T20:04:42.825Z | 670583
+Is this actually the mathematical formula for MM GEX?
+
+2025-02-28T20:12:24.876Z | Mas
+no
+
+2025-02-28T20:13:53.772Z | Mas
+its a naive gex calculation you are looking to do
+
+2025-02-28T20:14:11.825Z | Mas
+not the gex that alma gets
+
+2025-02-28T20:56:57.889Z | Jain
+in this low vol spot down environment do ITM puts work ?
+
+2025-02-28T21:03:43.058Z | The Alchemist
+Now I know it was meant for today
+
+2025-02-28T21:08:53.124Z | Entropy
+First of all, I love you. 5k profit today! :DD
+It's pretty obvious that your bias is on the bull side. I just want to say that I really appreciate your view.
+However, I would like to understand the market dynamics today, especially after 2 PM.
+Your assessment was: 'We also have negative charm convexity = short color, meaning these low gammas will further decrease into PM, making the profile steeper, adding to volatility and suppressive flows into EoD.'
+Shouldn't the increase in spot/vol beta have disappeared? Why does a gamma squeeze happen at that particular spot? I hope you understand my question—I just want to know the mechanics of this.
+
+2025-02-28T21:15:24.805Z | James
+Gday Alma can you explain with some example how you build long term(20 day or 30 day) options positions and be alpha ; not just 0dte or 1-3 Day thanks
+
+2025-02-28T21:58:54.769Z | Alma
+Mean reversion models are mostly statistical based. So price should literally close above that lvl in order to change the convexity of the momentum meassurements.
+Thats white dot is the zero of the derivative function of the trendline. So it shows ,e the local top or bottom in the curvatory.
+
+2025-02-28T22:00:52.230Z | Alma
+you can see that on the color scale. thats the local zero of the gamma curvatory
+
+2025-02-28T22:02:09.248Z | Alma
+volatility is the friend of an intraday trader
+
+2025-02-28T22:02:34.141Z | Alma
+Nope. this is naive GEX. forget about it for life
+
+2025-02-28T22:03:33.810Z | Alma
+i said: call side intraday edge. the trade is crowded. nobody bought puts. read my premarket post :)) i showed you all
+
+2025-02-28T22:10:01.597Z | Alma
+so negative charm convexity means here that there was shorter charm above and longer charm below, this is why theere was no delta decay from charm below my marked "charm flip" line.
+But charm convexity is the same as gamma to time.
+Logically:
+premium vs spot = delta
+(premium vs spot) vs time = charm
+(premium vs spot) vs spot = gamma
+((premium vs spot) vs spot) vs time = ((premium vs spot) vs time) vs spot = color
+
+so the gamma profile net lowered that naturally increased the volatility, but we were in a negative speed environment = shorter upside gamma, longer downside gamma.
+also negative vanna. so vol up/delta down = MMs are buying, but there is shorter delta upside so less resistance, that kinda gamma squeeze-ish.
+This is why. The lvl mattered alone. That was the kinda line in the sand
+
+2025-02-28T22:14:52.020Z | Alma
+I take longer-term trades only when the trend is clear on that timeframe, and one can rationally expect lower fluctuations.
+Depends on the direction (short/long), and on the characteristics of the expected movement, bcs one should adjust the vega and theta profile to it as well.
+Like if you are expecting a melt up like last year, with a longer spot/vol beta, you don't buy a calendar spread bcs of the vomma risk. Just an example. I will cover this later in posts
+
+2025-03-03T17:49:09.328Z | Alma
+BEFORE ASKING ANYTHING:
+Make sure you actually didn't find the answer anywhere in the site, Q&A chat, posts, or in google (investopedia, etc.)
+
+2025-03-03T19:16:52.423Z | Sharcus Aurelius
+Hey Alma,
+
+What is the oscillator/index you use for VOL in Tradingview? Also, do you consider any other context/variables for “quad witching”, or does it make no difference with your analysis? Thanks!
+
+2025-03-03T21:08:14.083Z | Teddy C
+Hi Alma, how do you know in which direction MMs are going to rebalance their delta at the open?
+
+2025-03-03T21:10:18.373Z | Teddy C
+How did you connect the dot between geopolitics, tech and oil and how they'll move months into the futures?
+
+2025-03-03T21:10:49.428Z | Tidliwings
+I had the same question: How do you determine from the Options Depth  the Net delta of MMs
+
+2025-03-03T21:12:19.289Z | Teddy C
+In your geopolitics post, you said that Arab states will also be part of the deal - but they have quite different ideology from the West, why are the West working with them? Because they have oil and are not seen as a threat?
+
+You also said "the cost of technology must be significantly lower", were you referring to price of tech stocks, or just tech in general?
+
+Thank you so much.
+
+2025-03-03T22:29:38.937Z | Tidliwings
+Also when you say "vol should be much higher, so should VIX, but they aren't... not a coincidence. i predicted it".  How are you comparing them to what should the current values be? Based on historical drops of 150 points or more on day basis?
+
+2025-03-03T22:34:51.896Z | Teddy C
+The 20d rolling RV dropped significantly on 2/25, I think that's because 1/24 (the day before deepseek gap) is not used for calculating rolling RV for that date, am I right? It's not because manipulation in the RV.
+
+2025-03-03T22:36:25.027Z | Teddy C
+due to exclusion of huge 1/24 and 1/27 gap when calculating RV, it makes sense that it dropped? The drop in RV is larger in NDX than in SPX (so was the deepseek gap)
+
+2025-03-03T23:08:13.706Z | billy
+For intraday trading with your mean reversion threshold levels, can we assumed that based on distribution model, price will remain within the risk level majority of the time, but once the risk level is broken, momentum will continue towards the side that is broken and hitting the 95.4% and 99.73%? I noticed today price broken below risk level, and tested zero vanna, but eventually zero vanna was broken leading us to 99.73%. Then using those levels + your sentiment that we are in a controlled down trend environment(mean reversion trading environment), we can formulate an intraday trading plan?
+
+2025-03-03T23:42:46.122Z | XIN
+zero vanna requires lower/higher vol for a beakout, my question is: how can we determine whether the current vol is relatively low or high--through VIX or the RV?
+
+2025-03-04T00:09:03.812Z | hycui
+
+2025-03-04T03:36:13.548Z | N8
+
+2025-03-04T15:06:11.472Z | Jw
+Dear Alma, how does correlation affect the dealer hedging activity? Also it seems like no interest rate factor being input for the dealer flow model, is that bcs the yield has little impact on short term dealer hedge??
+
+2025-03-04T15:58:41.505Z | Sharcus Aurelius
+Hello Alma,
+
+Many times you have stated over the past 2 weeks that “calls have underpriced odds”. How can this be possible when “put/call parity” exists? Aren’t puts/calls always equal in price relative to where spot is on the underlying asset? Thanks!
+
+2025-03-04T20:40:12.424Z | VincentiusTrading
+Hi Alma, where can we find a script or this data for TV? TIA
+
+2025-03-04T22:03:17.216Z | DeanGatsby
+Alma, I tried to translate your pinescript into thinkscript. Would you mind reviewing before I share it with the community? Seems the math is a little off
+
+2025-03-05T00:27:52.360Z | Cryptian
+Hi Alma, squeezing one in here late. I am struggling with sizing. Buying spx options is usually quite a pricy exercise. If you wanted to keep your risk below 1-200 dollars per trade, how would you do it? Unfortunately ATMs are a few thousand. Would you go OTM, or look at minis (which have alot less liquidity). Love to hear your thoughts on how a smaller account would trade your stuff.
+
+2025-03-05T16:20:09.839Z | Joe J
+one day can we go over how to read the garch model? thank you
+
+2025-03-05T16:22:46.869Z | Ryan Mazelli
+XSP or SPY. They cost 1/10th of SPX contracts.
+
+2025-03-05T16:24:51.657Z | Ryan Mazelli
+Just be mindful of XSP, spreads are wider, so always limit buy. Market orders will give you a bad fill. SPY has tighter spreads.
+
+2025-03-05T16:55:26.445Z | Cryptian
+Yes, takes longer to get filled too. Didn't realize spy was a tenth.
+
+2025-03-05T17:10:08.848Z | Ryan Mazelli
+SPY is an ETF for SP500 vs XSP is mini SPX. SPY has a dividend so price is slightly different vs SPX spot. There are conversions calcs out there or you can just see the different strikes and how they correlate to SPX spot
+
+2025-03-05T19:04:29.005Z | Lola
+
+2025-03-05T23:13:28.852Z | Aris
+Hi Alma, slowly understanding all the information you have provided. Regarding spot, RV, and speed...I understand that if spot is higher with positive seed, then it is sell the rips and buy the dips. When RV is down and spot is hgher, then dealers are buying downside puts and shorting upside calls. Now, in your most recent post, you mentioned spot up/vol up/neg speed--what does this mean? Thank you.
+
+2025-03-06T00:13:36.642Z | Lola
+Hi Alma, How should I read RV change % ? when it's positive or when is negative, what does that mean? I am sorry if it's basic question! I am trying so hard to learn all these but a lot doesn't sink in! If there is place you explained and I missed it, please direct me there. Thank you
+
+2025-03-06T08:14:01.157Z | Ebdwcui
+Hi Alma, when you are making a trade what are you using to determine 0dte vs 1dte etc and atm or otm?
+
+2025-03-06T08:17:47.694Z | Ebdwcui
+Delta option
+
+2025-03-06T09:56:06.795Z | Alma
+Thats a simple volatility formula I coded. Q1 OpEx post will come soon
+
+2025-03-06T10:00:40.635Z | Alma
+A lot of investigation. I have friends at right places and they helped to clarify things.
+But this was that omnious chat talk where I derived the narrative first: https://open.substack.com/chat/posts/a2aa1e33-44db-47ef-a8f7-20da2e4bde13?target_reply_id=1834518f-b29f-4e01-8d74-611d4fa11de4&showTarget=true
+go through it. right after opex, after that BTD momentum before NVDA ER
+
+2025-03-06T10:01:01.290Z | Alma
+they have tools for that
+
+2025-03-06T10:03:05.350Z | Alma
+no exact price. They don't think that way. Check my educational post and market theory post, there i elaborated on the value investing approach a bit.
+The main thing is that they don't buy at ATH. They even said it publicly.
+The difference is in religion, but USA is living in an ideological revolution, don't forget that. Putin is the mediator between US and Middle-East.
+It's all business
+
+2025-03-06T10:06:11.642Z | Alma
+usually yes. Risk lvl is the prove/disprove lvl of the current directional momentum.
+Reversion thresholds are statistical based, it meant to give you probabilities derived from volaitlity. Zero vanna, etc. lvls are come from positioning
+
+2025-03-06T10:08:51.676Z | Alma
+Already asked and answered above.
+Look at fixed strike vol and daily RV
+compare the both. Vol tends to mean revert, but the key is that you can see the price vs value (IV vs RV) spread.
+
+2025-03-06T10:29:31.755Z | Alma
+very much.
+lower correlation = low vol = risk exposure can be diversified. they kinda offset each other
+higher correlation = higher vol = higher volume hedging activity, higher costs, slippage, strain market liquidity, and the multi-asset portfolio's cross-greek exposures spike basically, so they need to rebalance their books pretty fast, reflexively increasing volatility. Also they use correlation swaps to offset these kind of risks.
+
+2025-03-06T10:47:19.662Z | Alma
+risk aversion (bias towards downside protection), dividents, borrowing costs, supply/demand imbalances, early exercise features on american options, bid/ask spreads and transaction costs...
+parity is an ideal, reality is different.
+
+Black-Scholes is an idealistic formula with bad assumptions. It is adjusted at many lvls, i.e. the smile (not to mention the smirk) doesn't follow from BS.
+
+2025-03-06T10:51:22.662Z | Alma
+you can use SPY, spreads (if you can sell options) or XSP in order to make it cheaper (XSP is about 1/10th the cost of SPX)
+I use SPY options and ES futs to play SPX
+
+2025-03-06T10:53:23.876Z | Alma
+lot of confusion here. I explained the RV vs speed dynamics above, around the first questions.
+https://open.substack.com/chat/posts/398075ab-2aac-41d1-bf37-8fda43ccf9aa?target_reply_id=ec4981d8-090e-4506-a5bf-f35f178d7209&showTarget=true
+
+2025-03-06T10:54:24.031Z | Alma
+If ROC is positive, RV goes up, if the ROC is negative, RV goes down.
+
+2025-03-06T11:02:10.284Z | Alma
+theta risk, volatility, and strategy of course.
+there was a trade when i chose friday expos, only bcs I was prepared that i will maybe hold them over the week, but due to the high price swings ,i don't see too much edge, bad sortino.
+if i expect vol to go down (like yesterday, as MMs are longer downside vol), and we are in a MM short fly pattern, I mind theta risk, and I estimated that maybe I will need to hold those contracts very long, so the theta will kill the premium, so i went for a safer bet.
+With 0DTEs one has to be very accurate with timing. Yesterday, I felt that I can't time the reversal perfectly, so I chosed 1DTE.
+
+I like OTMs for longer-term trades, cheaper and you get better convexity. But they only have extrinsic value, so the premium decay is faster.
+For intraday trading I like ATMs and ITMs more, bcs ATMs have the highest gamma so it gains profit the fastest, and ITMs have intrinsic value that doesn't affected by vol and time.
+I use ATM when conviction is high, and use ITM when I know that I'm a bit off with timing, and use OTM when I go for longer-term trades...oooor when I'm 101% sure on a 0DTE intraday trade, but it is risky.
+Also 0DTE OTMs are good for vol trading and hedging purposes for stock or futs positions
+
+2025-03-06T11:19:59.055Z | Alma
+INTRADAY REALIZED VOL SCRIPT:
+
+//@version=5
+indicator("GKYZ Volatility", shorttitle="GKYZ Vol. Est.", overlay=false)
+
+lookback = input.int(5, title="Lookback Period", minval=1)  
+
+f_calcDailyRV() =>
+
+    window          = lookback
+    trading_periods = 390
+
+    log_hoD = math.log(high / open)
+    log_loD = math.log(low  / open)
+    log_coD = math.log(close / open)
+
+    log_ocD    = math.log(open / nz(close[1]))
+    log_oc_sqD = log_ocD * log_ocD
+
+    log_ccD    = math.log(close / nz(close[1]))
+    log_cc_sqD = log_ccD * log_ccD
+
+    rsD = log_hoD*(log_hoD - log_coD) + log_loD*(log_loD - log_coD)
+
+    close_volD = math.sum(log_cc_sqD, window) / (window - 1)
+    open_volD  = math.sum(log_oc_sqD, window) / (window - 1)
+    window_rsD = math.sum(rsD, window)        / (window - 1)
+    kD         = 0.34 / (1.34 + (window + 1.0)/(window - 1.0))
+    rvD        = math.sqrt((open_volD + kD*close_volD + (1 - kD)*window_rsD) * trading_periods)
+
+dailyRV = request.security(syminfo.tickerid, "1", f_calcDailyRV())
+
+plot(dailyRV, title="GKYZ Volatility", color=#970ef3, linewidth=2)
+
+2025-03-11T17:38:11.939Z | Alma
+
+2025-03-11T17:38:41.563Z | Alma
+
+2025-03-11T17:39:01.099Z | Alma
+Attention!
+I’m asking everyone again to post only questions in this chat room.
+Before you write anything, please make sure you haven’t already found the answer to your question in my earlier responses or educational posts, and that nobody else has answered it for you in the general chat room.
+This way, we avoid unnecessary repetition, and only genuinely interesting questions will remain here.
+
+Thank you
+
+2025-03-12T10:27:46.322Z | James
+Gday Alma for find an edge on market how can use the skew  in Interactive Brokers; can you give some example with chart and your comment
+
+2025-03-12T10:37:00.963Z | James
+yesterday when you put the OD graph on chat and describe and explaine what you see it's was very educational
+
+2025-03-12T10:57:26.584Z | XIN
+Hi, Alma. Could you please help me understand how to interpret the results of your HMM analysis? Specifically, how can I determine the reversion probability from the results? I also noticed that the state sequence remains consistently in state 1—could you explain what the means and variances of the states represent?
+
+2025-03-12T12:55:23.148Z | Leonida
+Hi Alma, As IV is the price and RV is the value we get, isnt that the only thing that looks in the “future” ? “But IV is nothing more than the risk premium…….So how can we manage vol if not looking at IV. As you said yesterday “we need upside vol up“ to get a squeeze and you saw it before plus all the math and mechanism behind Greeks……Boom 💥 Insane.
+So what were you looking at to say that vol to the upside was increasing ? (Stoch vol method?! But that was a skew)
+Here a portion of my homework notes from the chat (I think can help others members)
+
+2025-03-12T15:38:18.126Z | Vman
+
+2025-03-12T17:55:48.262Z | SrLex
+Hello Alma, good day, I hope you are doing very well. So far, I am getting to know this world, and learning from you is fascinating (I really enjoy learning). Sorry if the question is a bit indiscreet or very basic, but to become part of a "Quant" community or to be surrounded by them, what does it take? Where does one start? Let's say, in my case, my field is vehicles, and I started with a technical level in mechanics, but that opened doors for me to become a certified appraiser... What does the career path of a Quant look like, as it seems very interesting to me? I would greatly appreciate it if you could answer me 🙌🏽🙌🏽.
+
+2025-03-12T22:25:54.540Z | Vman
+
+2025-03-12T22:57:05.934Z | Lola
+Hi sweet Alma
+Can I please make a suggestion
+Would you please create a channel where you post your daily thoughts & explanation
+
+When you posted in the main chat, it gets lost and we have to go in every chat to review it
+
+It’s not like I personally get it with the first read and I have to keep going back and find the chats
+
+What if you just create one link to all your thoughts for the day?
+It gets easier to connect them all together.
+Just a suggestion. I hope you will do that.
+Thank you
+
+2025-03-13T00:26:44.971Z | 670583
+https://www.citadel.com/careers/details/equity-quantitative-research-equity-model-research-quantitative-researcher/
+
+read that. there's some more info on Citadel's website too if that's the career path you would like to pursue.
+
+2025-03-13T00:32:17.755Z | Lex
+
+2025-03-13T00:38:17.350Z | Lex
+Alma I am trying to learn how you plan and enter your trades based off your explanations that you share with us daily- on Monday the SPY cals 70 delta you entered you took 27 pts then added at 5677 you also commented on put profits from the 5640 - was this a trade you had opened prior to that day? I know you have been mentioning this throughout the week re: puts - thanks
+
+2025-03-13T02:00:02.362Z | Ebdwcui
+Hi Alma, I don’t quite understand. You stated that we need to see vol increase to see rally maintain yet we see vol decrease a lot via vix and vvix yet you remain bullish. Am I misinterpreting what you meant by vol increasing?
+
+2025-03-13T02:48:59.671Z | 670583
+Alma, you always reference to learn the rules of the game and then play better than anyone else, but what exactly are the rules to begin with? I cannot seem to grasp that, not even super advanced rules just basic fundamental rules that are just second nature to you.
+
+I JUST learned exactly what a MM has to do if a Greek moves one direction or another if everything else is equal (which is obviously NEVER the case considering they're derivatives and their position on the curve is always changing as time and price move on).
+
+Bottom line of my question and I don't even know if this is answerable in just a single Substack message, what are the rules to begin with of this game we call trading?
+
+2025-03-13T04:13:20.861Z | 670583
+Also, how do you go about choosing longer term swing contracts, like the IWM or your March OpEx puts from Feb 19th? Is that a different process than 0DTE-1DTE?
+
+2025-03-13T05:29:37.777Z | Mario
+Alma is it possible to calculate your intraday levels historically in TradingView?
+
+2025-03-13T06:47:11.820Z | 670583
+In relation to the question above from Mario, is this variance process defined on the 3rd equation how you’re finding your sigma levels for the day?
+
+2025-03-13T06:48:28.933Z | 670583
+Defined as the sigma sqrt of the terms in the bottom equation
+
+2025-03-13T13:41:12.299Z | Cryptian
+Hi Alma, I notice you have one set of numbers you quote in your articles, but the reversion numbers the algo generates at the bottom of your daily algos are different? How do we use these? Do we add both, or just stick to the levels from the algo, and keep the levels from the article in mind?
+
+2025-03-13T17:10:45.038Z | Tidliwings
+Hi Alma when you say close below a certain level, what timeframe do you consider?
+
+2025-03-15T18:34:31.563Z | Alma
+so it estimates that your returns come from one of two hidden regimes.
+defined by their own Gaussian distribution. I guess you have read my post about them.
+The means and variances tell you what the typical return and volatility are in each regime. For example, if state 1 has a mean of –0.00025, this means that when the model is in state 1, the typical avg return is –0.025% per observation.
+Then we have the variance of returns within that state. A very low variance means the returns in that state are very consistent, while a high variance would mean they fluctuate a lot.
+The state sequence is all in state 1 means that the model finds no evidence of switching regimes during the analysed (1week, 1hourly candles) period.
+And also we have a transition probability matrix, that tells me the probability of staying in the same state or switching to the other state at the next time step.
+
+2025-03-15T18:53:32.703Z | Alma
+
+2025-03-15T19:01:55.437Z | Alma
+this is a very complex topic. It is volatility modelign btw. GJR-GARCH, Heston-Nandi, Rough Bergomin (still under research), etc. by that you can forecast possible path for the volatility, or even (if you have a good estimation rate) use it for arbitrage trading between rough vol model prices and traditional models prices.. some funds do that.
+So you get an expected volatility paths with a distirbution like as i attached. and you can do this via deep learning as well... i prefer that.
+and this gives an idea, then you simply just look at the vol complex, VX futs, options, also you can model the vomma surface, etc.
+you derive the vol impact from the positioning, you can simulate possible paths, then get a distirbution again. this time, for the price.
+
+and the instinct, when you are thinking about the very recent flows, how one came from the other, and what the market wants. bcs the best deep learning tool is your brain at the end,, all these tools only help you to see patterns.
+and you make a decision to a bias. will post about these methods more, but the thinking process can be observed in my posts. i try to show that, bcs thats how you can learn
+
+2025-03-15T19:03:38.414Z | Alma
+my path was a bit special, but you have to learn math, then go to fin math, the most important thing is to learn the researches, do your homework, go through the formulas by your onw as well, think about them, ask a lot of questions from others, and do it
+
+2025-03-15T19:12:35.954Z | Alma
+i had a put from feb19, i kept rolling a few portion of it, while taking profit out of it at the same time.
+my entries (when i do manually, like what you saw in the p ast two weeks), are tied pretty much for the reversion lvls and the lvls i give you + intraday vol
+okay, i have a machine learning based momentum metric, but i did a very simplified yet accurate enough indicator for you too, in order to get a better edge.
+
+so the reversion lvls are basically the different slices of the probability distribution. it gives you literally a probability + risk lvl, that confirms or disproves the recent momentum.
+then you have the positioning + orderflow.
+this gives you an idea about the dynamics that can be waited.
+longer gamma = slows down the momentum, absorbs intraday vol,
+vanna flip lines, etc.
+and you look for anomalies at the lvls, and in the order flow to catch if the price doesn't behave there as it should, mechanically.
+
+order flow can lie, bcs big players, funds like to scale into positions in small sizes in order to avoid catching others attention (like they did on tuesday) - i knew that they bought, bcs i have friends from here and there, and i just heard. nothing special.
+
+if i wanna go for a reversion trade on the call side, i want convexity on the calls, and i want room for the momentum. i patiently wait for a certain lvl where the reversion probability is higher, and we get gamma on the calls to gain profit. like it was on thursday, i didn't rush into any trades.
+
+2025-03-15T19:13:41.930Z | Alma
+no, i said, if we see vol up rally, that will be unstable, and would make me unhappy. I'm short vol during the whole week
+
+2025-03-15T19:20:06.254Z | Alma
+know the instrument you trade with: option, futures, stocks, how they behave... know the underlying's dynamics how it interacts with others.
+don't trade too much assets, learn a sector, or just one or too assets and master that. edge can be found anywhere.
+You have to decide what you are: an investor, or a speculant.
+Do you build a portfolio (what model), and what is your strategy. also you have to know how to hedge your portfolio.
+then learn at least basic macro, how the economy works (Ray Dalio has a very basic but very nice presentation on that "how the economic machine works in 30 mins" check youtube)
+and most importantly, you have to day up to date with current market theories in order to read the tape in the present times.
+
+This is why I wrote educational posts on topics like what i dropped.. not greeks that is very fancy and popular nowadays (over-emphatized)
+
+2025-03-15T19:31:34.126Z | Alma
+very different, bcs my algo determines the size of it, and its greeks... so it adds or/and decreases the portfolio exposures.
+like, I sold a ratio put spread 1:3 with March expo, it is basically a spot down/vol down bet, and as the put goes ITM, from vega and theta terms it is basically a risk reversal trade with long vanna, short vega, long theta, but the delta is negative. if i add long OTM calls, my vol and theta exposures can be mitigated, or even canceled out, but if the time to maturity is shorter, it won't affect the net vega and theta exposures... or if i chose an even longer dated maturity, it will have more vega impact ...+ their derivatives of course. so it is complex,
+
+but for shorter term trades, one simply determines what is the bet: what is the timeframe you are thinking about and what is the vol that you bet on. long vol, short vol, beside long delta short delta bets.
+and you manage the theta risk with lets say, longer maturity, but now you get more vega impact potentially... so it depends on the strategy.
+
+2025-03-15T19:33:30.209Z | Alma
+if you mean the reversion lvls, those are vol based.
+the other lvls (like zero vanna, or other border lines wher stabilization or destabilization can be expected etc.) are posiitoning and projected vol+dealer flow impact based.
+momentum mased lvls are combinations of probability and positioning
+
+2025-03-15T19:33:56.888Z | Alma
+so every lvls have their own meaning, tell us different things of the price action
+
+2025-03-15T19:35:03.167Z | Alma
+usually the very close, but depends on what timeframe you are interested in.
+but intraday it is mostly a pattern: retest the line and the retest is succesful, the line does what it is expected... or not.
+this is what we watch
+
+2025-03-15T19:35:14.813Z | Alma
+there are two more questions, i will answer those later
+
+2025-03-22T11:11:12.210Z | Alma
+Skew is the IV across the strikes on a certain day. Nothing more, nothing less.
+In the middle you have the ATM strike, on the left-side there are the OTM puts/ITM calls, and on the right side there are the OTM calls/ITM puts
+Here I covered the basic of it, but you will certainly get an educational post on that as well
+https://x.com/alma18499/status/1798650957875523611
+
+2025-03-22T11:11:14.381Z | Alma
+
+2025-03-22T11:11:26.171Z | Alma
+
+2025-03-22T11:15:16.020Z | Alma
+What is IV? (in short)
+It is the volatility risk premium on the contract. Indirectly reflecting the supply/demand of that contract.
+Bcs the higher the demand for a certain contract, the more people are betting on that contract going ITM into its expo.
+And if the demand grows, the price increases. Why? bcs the seller will have loss on that contract if the buyer wins. So he increases the price.
+And bcs volatility is the SD of the logreturns, the higher the vol, the higher range of returns are expected on that contract.
+So the higher risk the sellers has that the contract will expire ITM. So he will ask for higher premia.
+
+2025-03-22T11:20:50.345Z | Alma
+What we traders are interested in in terms of skew, is its relative changes.
+You chose the tenor, or date you are interested in, and check how the skew looked like yesterday, 1 weekago, after the last OpEx, vs today etc.
+And you can check where the sentiment goes.
+We usually meassure the slopeness of the skew by simply taking the 22 delta put vs ATM segment, or 5 delta put vs 22 delta put, and the 22 delta call vs ATM, and the ATM itself...
+of course, some plp use the 25 deltas, others the 20 deltas instead of 22 delta... again instead of 5 deltas one might use the 10 deltas...
+(I prefer the 22 delta, bcs thats where vanna peaks in avg, and 5 delta, bcs that is used many times for vega strats when hedging tails)
+
+And so by comparing how the slopeness of these segments are changed over the time, you will get an idea about the supply/demand of the customer flow.
+
+If you chose multi expiry chart, thats basically the 3D chart
+
+2025-03-22T11:22:46.102Z | Alma
+and this is what really shows you the market sentiment in terms of volatility, not the VIX.
+bcs it tells you how the supply and demand changes for insurances for certain delta contracts.
+We are looking for sudden high convexities on the tails, or declines that are simply contradictionary from the present sentiment perspective we experience
+
+2025-03-22T11:24:42.850Z | Alma
+also 22 delta put vs call skew is a close enough proxy for the vanna and charm exposures.
+bcs customer longer skew = MM longer vanna, shorter charm
+customer shorter skew = MM shorter vanna, longer charm
+
+2025-03-22T12:55:19.380Z | Alma
+https://arxiv.org/pdf/1811.09312#:~:text=Zeng%20and%20Lee%20,problem%20simply%20reduces%20to%20the
+
+2025-03-22T13:08:55.536Z | Alma

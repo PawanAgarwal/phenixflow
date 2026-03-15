@@ -1,0 +1,45 @@
+Intraday post (12/march)
+
+Coding intraday gamma:
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+I code 5523.43 as the downside vanna flip (vol needs to be cool to break it), and 5733.40 as the upside pivot. I see resistances at 5605, and in the 5670/95 range. Vol needs to be relatively higher in order to break it, but above the pivot, intraday vol needs to cool off in order to stabilize there. Below 5700, we have positive charm convexity, meaning, gamma is increasing there, mitigating the vol impact in theory. But the convexity flips to negative at 5713 (zero color basically), lowering the local gamma. This creates a negative speed profile later on. But if you think about it… this is exactly the opposite that I described to necessary to happen in order to get a more stable rally. So, simply based on this, and other factors (see below), any rally here is very unstable.
+
+Stochvol models are showing easing downward drift and easing intraday mean reverion tendencies. Yesterday I dropped a thread in the chat to explain my personal reverion take for this day.Despite the constant drifting and strong bearish sentiment, VIX didn’t really spike. This is the decay with a lot of dispersions instead of panick selling where IV is relatively underperforming, and VRP is not rewarded further unless larger moves occurs.
+
+Modest undershoot in current CPI print, meaning slight ease in inflation concerns. This can provide a slight relief rally, but bcs the differences are minimal, the overall reaction is likely to be tight.
+
+Note that the skew shows bid in the tail hedges rather than an unwind of hedges, while calls fixed strike vol remained at the same lvl (friday expo):
+
+same longer skew behavior into the OpEx:
+
+However, the vol on a fixed strike basis is easing after March OpEx, however only slightly. Simply bcs they know that the government will cut demand side, and also will go hard on EU (if no changing about the partial truce narrative). The inflation eases but not enough. It requires further intervention.
+
+SCRIPT INPUTS:SPX99.73%, 5719.050729558984, , 5682.186693545936, 95.4%, 5645.5602768888675, Risk level, 5621.602389318409, 68.2%, 5608.694684118624, 68.2%, 5535.202633352987, Risk level, 5522.537259119091, 95.4%, 5498.5793715486325, , 5461.7105395802955, 99.73%, 5425.088918878516
+
+ES=F99.73%, 5726.901232968078, , 5689.302501556507, 95.4%, 5651.950616484039, Risk level, 5627.516715510243, 68.2%, 5614.350237394483, 68.2%, 5539.397928644278, Risk level, 5526.483284489757, 95.4%, 5502.049383515961, , 5464.445573471129, 99.73%, 5427.098767031922
+
+SPY99.73%, 571.0419927630785, , 567.2488926197476, 95.4%, 563.4809878366174, Risk level, 561.0161002305911, 68.2%, 559.6877175071205, 68.2%, 552.1265377332687, Risk level, 550.8238655897214, 95.4%, 548.3589779836951, , 544.5653531040317, 99.73%, 540.797973057234
+
+VIX99.73%, 29.149118162607092, , 28.586407196593584, 95.4%, 28.034559119450517, Risk level, 27.671212871381474, 68.2%, 27.4716277936797, 68.2%, 26.3568297520938, Risk level, 26.168787281206416, 95.4%, 25.805441033137374, , 25.24201060233917, 99.73%, 24.6908819899808
+
+IWM99.73%, 207.74822476329365, , 205.99123890778847, 95.4%, 204.24911238164682, Risk level, 203.10840174522997, 68.2%, 202.4919981397181, 68.2%, 198.9927528564405, Risk level, 198.39159825477003, 95.4%, 197.25088761835318, , 195.4935028154951, 99.73%, 193.75177523670635
+
+QQQ99.73%, 487.87132362287565, , 483.7863927457112, 95.4%, 479.73566486319567, Risk level, 477.08344010753996, 68.2%, 475.65044147730714, 68.2%, 467.51448002828187, Risk level, 466.1165720994913, 95.4%, 463.4643473438356, , 459.37850785771445, 99.73%, 455.3286885841556
+
+NQ=F99.73%, 20069.08070640966, , 19900.855471863833, 95.4%, 19734.04035320483, Risk level, 19624.817198060056, 68.2%, 19565.803045411158, 68.2%, 19230.750198267862, Risk level, 19173.182801939944, 95.4%, 19063.95964679517, , 18895.696908055277, 99.73%, 18728.91929359034
+
+NVDA99.73%, 116.85416672479175, , 114.81279480868238, 95.4%, 112.80708443051111, Risk level, 111.48773560257563, 68.2%, 110.76506102397235, 68.2%, 106.7172778218288, Risk level, 106.03226866988531, 95.4%, 104.71291984194983, , 102.66943935734638, 99.73%, 100.66583754766918
+
+AMZN99.73%, 205.9867497185756, , 203.62401065745152, 95.4%, 201.2883730282331, Risk level, 199.75670222718145, 68.2%, 198.9253139157516, 68.2%, 194.22660168932418, Risk level, 193.4232904485998, 95.4%, 191.89161964754814, , 189.52787282649265, 99.73%, 187.19324295720565
+
+GOOG99.73%, 173.04052204867676, , 171.2662946717904, 95.4%, 169.51025888810793, Risk level, 168.35939309776248, 68.2%, 167.73584007606183, 68.2%, 164.20537724875388, Risk level, 163.60059835731565, 95.4%, 162.4497325669702, , 160.67490564725625, 99.73%, 158.91946940640136
+
+TSLA99.73%, 253.6130111602971, , 247.78786088861736, 95.4%, 242.0965064956759, Risk level, 238.3421259750094, 68.2%, 236.26809541507058, 68.2%, 224.74799571465255, Risk level, 222.81787768709998, 95.4%, 219.06349716643348, , 213.2275076152759, 99.73%, 207.54699250181227
+
+TSM99.73%, 180.40825607830496, , 178.03305679444475, 95.4%, 175.68912864950403, Risk level, 174.15069310771494, 68.2%, 173.31350362758803, 68.2%, 168.59392662591523, Risk level, 167.7893093336913, 95.4%, 166.25087379190222, , 163.8743237300997, 99.73%, 161.5317463631013
+
+AMD99.73%, 102.46396233276413, , 101.0279089933445, 95.4%, 99.61198223449729, Risk level, 98.6822367224623, 68.2%, 98.17563655919992, 68.2%, 95.32334663136068, Risk level, 94.83776754999863, 95.4%, 93.90802203796365, , 92.47103759103598, 99.73%, 91.05604193969681

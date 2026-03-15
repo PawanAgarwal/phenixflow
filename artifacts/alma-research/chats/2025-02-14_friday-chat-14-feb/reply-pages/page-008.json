@@ -1,0 +1,4382 @@
+{
+  "after": "2025-02-14T22:39:11.833Z",
+  "status": 200,
+  "more": false,
+  "moreAfter": false,
+  "moreBefore": false,
+  "lastViewedAt": null,
+  "replies": [
+    {
+      "comment": {
+        "id": "c64364c9-4c71-430d-8825-c4485e8ee2e9",
+        "created_at": "2025-02-14T22:41:12.470Z",
+        "updated_at": "2025-02-14T22:41:12.470Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "the key is to know what is the vanna convexity and what territory is beyond the zero vanna: positive or negative.\nif positive, you need relatively high vol to break through the zero vanna,\nif negative, you need relatively low vol to break through the flip.\njust think about that... the reason is delta hedging. \nand also it is totally contradictionary what the speed profile would indicate, and this is why we have to watch the \"hidden\" effects too, that i described this morning",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "the key is to know what is the vanna convexity and what territory is beyond the zero vanna: positive or negative.\nif positive, you need relatively high vol to break through the zero vanna,\nif negative, you need relatively low vol to break through the flip.\njust think about that... the reason is delta hedging. \nand also it is totally contradictionary what the speed profile would indicate, and this is why we have to watch the \"hidden\" effects too, that i described this morning",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "62a767a2-2407-42f1-86be-ae8d618060da",
+        "created_at": "2025-02-14T22:41:20.318Z",
+        "updated_at": "2025-02-14T22:41:20.318Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "some nuances",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "some nuances",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "b9b8c14c-a35e-49eb-8293-5728e09fa908",
+        "created_at": "2025-02-14T22:41:28.533Z",
+        "updated_at": "2025-02-14T22:42:08.225Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 275345921,
+        "body": "Hi Alma or a colleague who can help me... when talking about Skew Long/Short, what does the net exposure refer to and what does the net positioning refer to?\n\n- I mean, in a SHORT SKEW the positioning comes being short puts OTM ⬇️ and Long Call ⬆️ and the exposure comes being the Long RR?",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Hi Alma or a colleague who can help me... when talking about Skew Long/Short, what does the net exposure refer to and what does the net positioning refer to?\n\n- I mean, in a SHORT SKEW the positioning comes being short puts OTM ⬇️ and Long Call ⬆️ and the exposure comes being the Long RR?",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 275345921,
+        "name": "SrLex",
+        "handle": "srlex",
+        "previous_name": "Carlos",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/186e1980-401e-44ab-b2f5-3bf1f4cff3d4_4096x4096.png",
+        "bio": null,
+        "profile_set_up_at": "2024-10-08T16:41:12.091Z",
+        "reader_installed_at": "2025-02-03T11:53:12.923Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "free_signup",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T12:35:59.503Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "8a1d1a41-98dd-41f6-8281-e1487fc772e5",
+        "created_at": "2025-02-14T22:41:33.151Z",
+        "updated_at": "2025-02-14T22:41:33.151Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "this question is... uhh... not easy",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "1cd8d190-72a3-498c-a0a5-0e8f858a8395",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "this question is... uhh... not easy",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "1cd8d190-72a3-498c-a0a5-0e8f858a8395",
+          "created_at": "2025-02-14T22:27:35.704Z",
+          "updated_at": "2025-02-14T22:27:35.704Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 33634060,
+          "body": "I mean, we aspire to make trades based on our read of the market. Then trade using that information, we should aim for optimal size and risk amounts of course to maximise our performance. These would be more accurate if we knew our edge, our perceived alpha. How can we estimate that well when we don’t trade with an algorithm, we read the market. Hope that makes sense",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "4e7f6fdb-3ec8-455f-a363-bcdc27a56659",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "I mean, we aspire to make trades based on our read of the market. Then trade using that information, we should aim for optimal size and risk amounts of course to maximise our performance. These would be more accurate if we knew our edge, our perceived alpha. How can we estimate that well when we don’t trade with an algorithm, we read the market. Hope that makes sense",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 33634060,
+          "name": "David P",
+          "handle": "samsaraohara",
+          "previous_name": "David Phelan",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+          "bio": "Meditation, music, trading",
+          "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+          "reader_installed_at": "2025-02-02T14:55:02.198Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T21:29:53.277Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "d261d815-41ac-4c0a-96fb-e2e404513a9f",
+        "created_at": "2025-02-14T22:43:40.642Z",
+        "updated_at": "2025-02-14T22:43:40.642Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "skew is 25 delta put IV minus 25 delta call IV ...(or some we take 22 delta if we want to catch peak vanna... depends on the exact BS modification, it can be 20 vanna too)\nso the value of the difference will decrease if put iv decreases. \nso you need to sell otm puts more relative to otm calls in order to be short on the skew",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "b9b8c14c-a35e-49eb-8293-5728e09fa908",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "skew is 25 delta put IV minus 25 delta call IV ...(or some we take 22 delta if we want to catch peak vanna... depends on the exact BS modification, it can be 20 vanna too)\nso the value of the difference will decrease if put iv decreases. \nso you need to sell otm puts more relative to otm calls in order to be short on the skew",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "b9b8c14c-a35e-49eb-8293-5728e09fa908",
+          "created_at": "2025-02-14T22:41:28.533Z",
+          "updated_at": "2025-02-14T22:42:08.225Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 275345921,
+          "body": "Hi Alma or a colleague who can help me... when talking about Skew Long/Short, what does the net exposure refer to and what does the net positioning refer to?\n\n- I mean, in a SHORT SKEW the positioning comes being short puts OTM ⬇️ and Long Call ⬆️ and the exposure comes being the Long RR?",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 1,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "thumbs_up": 1
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Hi Alma or a colleague who can help me... when talking about Skew Long/Short, what does the net exposure refer to and what does the net positioning refer to?\n\n- I mean, in a SHORT SKEW the positioning comes being short puts OTM ⬇️ and Long Call ⬆️ and the exposure comes being the Long RR?",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 275345921,
+          "name": "SrLex",
+          "handle": "srlex",
+          "previous_name": "Carlos",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/186e1980-401e-44ab-b2f5-3bf1f4cff3d4_4096x4096.png",
+          "bio": null,
+          "profile_set_up_at": "2024-10-08T16:41:12.091Z",
+          "reader_installed_at": "2025-02-03T11:53:12.923Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": null,
+            "leaderboard": null,
+            "vip": false,
+            "badge": null,
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "free_signup",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T12:35:59.503Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "c7fd8643-caeb-4437-820c-85e300509110",
+        "created_at": "2025-02-14T22:53:56.941Z",
+        "updated_at": "2025-02-14T23:11:06.078Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "have you read Benjamin Graham's works? \nedge is buying assets at prices significantly below intrinsic value, and the way you manage the risk. this is crucial part: no overhedge or underhedge.. delta–gamma VaR (i will cover in the future, Expected Shortfall etc.) \nalso, you need to use math like graham number, or margin of safety, that is basically: intrinsic value minus market value divided by the intrinsic value. it help you to protect against estimation errors and market volatility.. \nAnd the Graham number is the square root of 22.5 * EPS * BVPS (book value per share)... and if a stock is trading below this number, it is potentially undervalued. \n\nThe hedging part is the real challenge.. and thats where hedge funds do mistakes. thats how i predicted this upward movement, bcs they were overexposed to long vol hedges, and they had to cover their losses that those hedging positions caused... its not easy at all to estimate the distribution",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "1cd8d190-72a3-498c-a0a5-0e8f858a8395",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 2,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "bacon": 1,
+          "exploding_head": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "have you read Benjamin Graham's works? \nedge is buying assets at prices significantly below intrinsic value, and the way you manage the risk. this is crucial part: no overhedge or underhedge.. delta–gamma VaR (i will cover in the future, Expected Shortfall etc.) \nalso, you need to use math like graham number, or margin of safety, that is basically: intrinsic value minus market value divided by the intrinsic value. it help you to protect against estimation errors and market volatility.. \nAnd the Graham number is the square root of 22.5 * EPS * BVPS (book value per share)... and if a stock is trading below this number, it is potentially undervalued. \n\nThe hedging part is the real challenge.. and thats where hedge funds do mistakes. thats how i predicted this upward movement, bcs they were overexposed to long vol hedges, and they had to cover their losses that those hedging positions caused... its not easy at all to estimate the distribution",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "1cd8d190-72a3-498c-a0a5-0e8f858a8395",
+          "created_at": "2025-02-14T22:27:35.704Z",
+          "updated_at": "2025-02-14T22:27:35.704Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 33634060,
+          "body": "I mean, we aspire to make trades based on our read of the market. Then trade using that information, we should aim for optimal size and risk amounts of course to maximise our performance. These would be more accurate if we knew our edge, our perceived alpha. How can we estimate that well when we don’t trade with an algorithm, we read the market. Hope that makes sense",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "4e7f6fdb-3ec8-455f-a363-bcdc27a56659",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "I mean, we aspire to make trades based on our read of the market. Then trade using that information, we should aim for optimal size and risk amounts of course to maximise our performance. These would be more accurate if we knew our edge, our perceived alpha. How can we estimate that well when we don’t trade with an algorithm, we read the market. Hope that makes sense",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 33634060,
+          "name": "David P",
+          "handle": "samsaraohara",
+          "previous_name": "David Phelan",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+          "bio": "Meditation, music, trading",
+          "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+          "reader_installed_at": "2025-02-02T14:55:02.198Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T21:29:53.277Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "812ad7f7-3e68-4b70-8033-cb7bacb44c92",
+        "created_at": "2025-02-14T22:54:30.614Z",
+        "updated_at": "2025-02-14T22:54:43.303Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "i will cover things that can help like portfolio optimalizations, risk metrics etc. in the future",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "bacon": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "i will cover things that can help like portfolio optimalizations, risk metrics etc. in the future",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "1193afab-d7cc-422e-8611-0e5869658d95",
+        "created_at": "2025-02-14T22:54:41.376Z",
+        "updated_at": "2025-02-14T22:54:41.376Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "my market theory post can help a lot",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "my market theory post can help a lot",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "d763041b-a33b-47e2-b76e-42766c6693ad",
+        "created_at": "2025-02-14T22:54:50.948Z",
+        "updated_at": "2025-02-14T22:54:58.823Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "and really, read Benjamin Graham's works",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "bacon": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "and really, read Benjamin Graham's works",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "269cf66d-798f-492e-87b5-4de84718f1a1",
+        "created_at": "2025-02-14T22:55:31.707Z",
+        "updated_at": "2025-02-14T22:55:31.707Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "i hope it helped, its a bit late for me now, it's not something that can be explained in short",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "i hope it helped, its a bit late for me now, it's not something that can be explained in short",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "c1fccac3-a83c-4bdc-8af3-018f23b19bb0",
+        "created_at": "2025-02-14T22:57:05.176Z",
+        "updated_at": "2025-02-14T22:57:05.176Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "i must think about that... good question tho and very complex",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "i must think about that... good question tho and very complex",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "890bb802-1624-4add-9873-85a9dc8dd3ba",
+        "created_at": "2025-02-14T22:57:46.395Z",
+        "updated_at": "2025-02-14T22:59:34.720Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "me personally, i meassure everything i can... bcs probability is tautological at the end of the day, and it works on the long run",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "fire": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "me personally, i meassure everything i can... bcs probability is tautological at the end of the day, and it works on the long run",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "feee355d-e688-49ec-8441-75e14dcb18f2",
+        "created_at": "2025-02-14T23:06:52.225Z",
+        "updated_at": "2025-02-14T23:06:52.225Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "and the most important, that Warren Buffet has always been emphatized: keep tracking your own performance",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "and the most important, that Warren Buffet has always been emphatized: keep tracking your own performance",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "315b7f3c-cde3-4127-95b5-9b435aa452ee",
+        "created_at": "2025-02-14T23:07:22.087Z",
+        "updated_at": "2025-02-14T23:07:22.087Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "how much of your profit came from the market’s move versus your own timing and decision-making",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "how much of your profit came from the market’s move versus your own timing and decision-making",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "12b9fb54-7a00-4362-aa58-82dbd3c7776c",
+        "created_at": "2025-02-14T23:07:39.473Z",
+        "updated_at": "2025-02-14T23:07:39.473Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "to determine a statistical edge, even if your process is subjective",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "to determine a statistical edge, even if your process is subjective",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "92d0014b-83c0-402a-a117-3a2c3f1ac07d",
+        "created_at": "2025-02-14T23:08:29.346Z",
+        "updated_at": "2025-02-14T23:08:29.346Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "and also compare your performance to a market benchmark (like SPX) and adjust for risk (using Sharpe, Sortino, or Treynor ratios)",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "and also compare your performance to a market benchmark (like SPX) and adjust for risk (using Sharpe, Sortino, or Treynor ratios)",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "da049034-1cfa-43de-b309-41582b5d90c7",
+        "created_at": "2025-02-14T23:08:32.466Z",
+        "updated_at": "2025-02-14T23:08:32.466Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "Crucial.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Crucial.",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "c1dda405-1840-4e49-9887-115d44c9fe23",
+        "created_at": "2025-02-14T23:09:05.934Z",
+        "updated_at": "2025-02-14T23:13:14.027Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 33634060,
+        "body": "All this really helped. So grateful for your expert time. I just finished man for all markets, so interesting! I will read Benjamin Graham next.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "d763041b-a33b-47e2-b76e-42766c6693ad",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "upvote": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "All this really helped. So grateful for your expert time. I just finished man for all markets, so interesting! I will read Benjamin Graham next.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 33634060,
+        "name": "David P",
+        "handle": "samsaraohara",
+        "previous_name": "David Phelan",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+        "bio": "Meditation, music, trading",
+        "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+        "reader_installed_at": "2025-02-02T14:55:02.198Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "d763041b-a33b-47e2-b76e-42766c6693ad",
+          "created_at": "2025-02-14T22:54:50.948Z",
+          "updated_at": "2025-02-14T22:54:58.823Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 204864402,
+          "body": "and really, read Benjamin Graham's works",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 1,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "bacon": 1
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "and really, read Benjamin Graham's works",
+          "user_pub_role": "admin",
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 204864402,
+          "name": "Alma",
+          "handle": "alma271828",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+          "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+          "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+          "reader_installed_at": "2025-01-25T15:05:18.103Z",
+          "status": null
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": true,
+          "role": "admin",
+          "created_at": "2024-06-04T17:16:22.957Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T21:29:53.277Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a90e5e25-5ab2-4dc6-ab83-8c3996c4fb44",
+        "created_at": "2025-02-14T23:13:21.322Z",
+        "updated_at": "2025-02-14T23:13:21.322Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "Graham is crazy important",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "c1dda405-1840-4e49-9887-115d44c9fe23",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Graham is crazy important",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "c1dda405-1840-4e49-9887-115d44c9fe23",
+          "created_at": "2025-02-14T23:09:05.934Z",
+          "updated_at": "2025-02-14T23:13:14.027Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 33634060,
+          "body": "All this really helped. So grateful for your expert time. I just finished man for all markets, so interesting! I will read Benjamin Graham next.",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "d763041b-a33b-47e2-b76e-42766c6693ad",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 1,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "upvote": 1
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "All this really helped. So grateful for your expert time. I just finished man for all markets, so interesting! I will read Benjamin Graham next.",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 33634060,
+          "name": "David P",
+          "handle": "samsaraohara",
+          "previous_name": "David Phelan",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+          "bio": "Meditation, music, trading",
+          "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+          "reader_installed_at": "2025-02-02T14:55:02.198Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T21:29:53.277Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "6eda3175-80e8-41f5-a465-4d7391e1ec4e",
+        "created_at": "2025-02-14T23:14:28.809Z",
+        "updated_at": "2025-02-15T07:36:47.150Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "I will write post about DoM (depth of market) too, when I analyse positioning, bcs that what HF algos use the most... they are SL hunters, it was like that even back in 2007",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "upvote": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I will write post about DoM (depth of market) too, when I analyse positioning, bcs that what HF algos use the most... they are SL hunters, it was like that even back in 2007",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "58f45c3c-5821-4865-942b-2641207faccb",
+        "created_at": "2025-02-14T23:15:55.222Z",
+        "updated_at": "2025-02-14T23:21:01.559Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "trading succes is mostly determined by training your mind to counteract natural instincts, bcs algos have no insticts!",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 2,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "hundred_points": 1,
+          "upvote": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "trading succes is mostly determined by training your mind to counteract natural instincts, bcs algos have no insticts!",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "610d6ca7-5ffa-4972-b680-f947c60c27ae",
+        "created_at": "2025-02-14T23:16:18.464Z",
+        "updated_at": "2025-02-14T23:16:18.464Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "they don't feel anything about ther PnL-s",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "they don't feel anything about ther PnL-s",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "a35f2b7f-a0e2-47f9-85fb-5db403702fff",
+        "created_at": "2025-02-14T23:20:15.918Z",
+        "updated_at": "2025-02-17T10:14:50.907Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "its not a coincidence that i use VWMA",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 2,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "upvote": 2
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "its not a coincidence that i use VWMA",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "320e63df-168f-43fd-9a00-b7a076c681d9",
+        "created_at": "2025-02-14T23:25:26.233Z",
+        "updated_at": "2025-02-14T23:25:26.233Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 162039407,
+        "body": "What’s a good length intraday trading  for VWMA?",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "a35f2b7f-a0e2-47f9-85fb-5db403702fff",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "What’s a good length intraday trading  for VWMA?",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 162039407,
+        "name": "ulises",
+        "handle": "ulises793249",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/39d423fa-fbd7-462a-b1b1-b073b55699c5_144x144.png",
+        "bio": "California ",
+        "profile_set_up_at": "2023-08-11T00:46:01.765Z",
+        "reader_installed_at": "2023-08-11T00:52:10.085Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "a35f2b7f-a0e2-47f9-85fb-5db403702fff",
+          "created_at": "2025-02-14T23:20:15.918Z",
+          "updated_at": "2025-02-17T10:14:50.907Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 204864402,
+          "body": "its not a coincidence that i use VWMA",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 2,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "upvote": 2
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "its not a coincidence that i use VWMA",
+          "user_pub_role": "admin",
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 204864402,
+          "name": "Alma",
+          "handle": "alma271828",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+          "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+          "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+          "reader_installed_at": "2025-01-25T15:05:18.103Z",
+          "status": null
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": true,
+          "role": "admin",
+          "created_at": "2024-06-04T17:16:22.957Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "free_signup",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-03T00:42:00.937Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "7dd227db-e8aa-4528-bae6-acd79c636ad7",
+        "created_at": "2025-02-14T23:32:21.529Z",
+        "updated_at": "2025-02-14T23:32:21.529Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 105505041,
+        "body": "your yellow line",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "a35f2b7f-a0e2-47f9-85fb-5db403702fff",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "your yellow line",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 105505041,
+        "name": "jj",
+        "handle": "jjlim2022",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6a65974f-247f-4839-b248-403eb17b05d0_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2025-02-02T04:17:48.973Z",
+        "reader_installed_at": "2025-02-05T11:05:03.846Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "a35f2b7f-a0e2-47f9-85fb-5db403702fff",
+          "created_at": "2025-02-14T23:20:15.918Z",
+          "updated_at": "2025-02-17T10:14:50.907Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 204864402,
+          "body": "its not a coincidence that i use VWMA",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 2,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "upvote": 2
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "its not a coincidence that i use VWMA",
+          "user_pub_role": "admin",
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 204864402,
+          "name": "Alma",
+          "handle": "alma271828",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+          "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+          "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+          "reader_installed_at": "2025-01-25T15:05:18.103Z",
+          "status": null
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": true,
+          "role": "admin",
+          "created_at": "2024-06-04T17:16:22.957Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-02T04:12:54.297Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "64f6f21d-cd00-4cb2-a731-91f139a8579e",
+        "created_at": "2025-02-14T23:33:51.920Z",
+        "updated_at": "2025-02-14T23:33:51.920Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "on my reversion algo its not. in the script is shared it is",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "7dd227db-e8aa-4528-bae6-acd79c636ad7",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "on my reversion algo its not. in the script is shared it is",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "7dd227db-e8aa-4528-bae6-acd79c636ad7",
+          "created_at": "2025-02-14T23:32:21.529Z",
+          "updated_at": "2025-02-14T23:32:21.529Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 105505041,
+          "body": "your yellow line",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "a35f2b7f-a0e2-47f9-85fb-5db403702fff",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "your yellow line",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 105505041,
+          "name": "jj",
+          "handle": "jjlim2022",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6a65974f-247f-4839-b248-403eb17b05d0_144x144.png",
+          "bio": null,
+          "profile_set_up_at": "2025-02-02T04:17:48.973Z",
+          "reader_installed_at": "2025-02-05T11:05:03.846Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-02T04:12:54.297Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "fe5765b3-2702-4f3f-bcce-43a43fd1ce7e",
+        "created_at": "2025-02-14T23:34:12.584Z",
+        "updated_at": "2025-02-14T23:34:12.584Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "20 on daily, \n9 on one minute... algos works with that.. in avg",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "320e63df-168f-43fd-9a00-b7a076c681d9",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "20 on daily, \n9 on one minute... algos works with that.. in avg",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "320e63df-168f-43fd-9a00-b7a076c681d9",
+          "created_at": "2025-02-14T23:25:26.233Z",
+          "updated_at": "2025-02-14T23:25:26.233Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 162039407,
+          "body": "What’s a good length intraday trading  for VWMA?",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "a35f2b7f-a0e2-47f9-85fb-5db403702fff",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "What’s a good length intraday trading  for VWMA?",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 162039407,
+          "name": "ulises",
+          "handle": "ulises793249",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/39d423fa-fbd7-462a-b1b1-b073b55699c5_144x144.png",
+          "bio": "California ",
+          "profile_set_up_at": "2023-08-11T00:46:01.765Z",
+          "reader_installed_at": "2023-08-11T00:52:10.085Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": null,
+            "leaderboard": null,
+            "vip": false,
+            "badge": null,
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "free_signup",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-03T00:42:00.937Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "d27c63b0-b81a-4357-a0c2-94198bb9b2ce",
+        "created_at": "2025-02-14T23:34:14.811Z",
+        "updated_at": "2025-02-14T23:34:14.811Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "roughly",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "roughly",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "4ac9d9e2-aff3-4946-bc7a-6e710c581e40",
+        "created_at": "2025-02-14T23:35:16.031Z",
+        "updated_at": "2025-02-14T23:35:16.031Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "algos are programmed to juicing vol and liquidity, they’re programmed to target areas where many stop‐loss orders are clustered, so they do",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "algos are programmed to juicing vol and liquidity, they’re programmed to target areas where many stop‐loss orders are clustered, so they do",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "abca2d6d-5b1d-4d70-a3a7-3f156af04742",
+        "created_at": "2025-02-14T23:36:43.452Z",
+        "updated_at": "2025-02-14T23:36:43.452Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 105505041,
+        "body": "could you pls write more on how you use vmwa to identify your trading directions",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "could you pls write more on how you use vmwa to identify your trading directions",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 105505041,
+        "name": "jj",
+        "handle": "jjlim2022",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6a65974f-247f-4839-b248-403eb17b05d0_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2025-02-02T04:17:48.973Z",
+        "reader_installed_at": "2025-02-05T11:05:03.846Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-02T04:12:54.297Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "6aa79ad2-29ba-4211-af97-35a04e14814a",
+        "created_at": "2025-02-14T23:38:27.558Z",
+        "updated_at": "2025-02-14T23:38:27.558Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "i don't directly use it",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "abca2d6d-5b1d-4d70-a3a7-3f156af04742",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "i don't directly use it",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "abca2d6d-5b1d-4d70-a3a7-3f156af04742",
+          "created_at": "2025-02-14T23:36:43.452Z",
+          "updated_at": "2025-02-14T23:36:43.452Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 105505041,
+          "body": "could you pls write more on how you use vmwa to identify your trading directions",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "could you pls write more on how you use vmwa to identify your trading directions",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 105505041,
+          "name": "jj",
+          "handle": "jjlim2022",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6a65974f-247f-4839-b248-403eb17b05d0_144x144.png",
+          "bio": null,
+          "profile_set_up_at": "2025-02-02T04:17:48.973Z",
+          "reader_installed_at": "2025-02-05T11:05:03.846Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-02T04:12:54.297Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "e2815061-a184-467f-bfd7-8a6b5ee85f3d",
+        "created_at": "2025-02-14T23:39:04.323Z",
+        "updated_at": "2025-02-14T23:39:04.323Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "i covered the concept of mean reversion in my posts. read them first, and i cover my decisions in my daily posts",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "i covered the concept of mean reversion in my posts. read them first, and i cover my decisions in my daily posts",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "cab25485-d46a-4787-82a4-bbb85722e7e4",
+        "created_at": "2025-02-14T23:39:43.451Z",
+        "updated_at": "2025-02-15T07:29:18.174Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "vwma and its sigmas - as i wrote in the script post - are only to give you a clue about the momentum",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 2,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "upvote": 2
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "vwma and its sigmas - as i wrote in the script post - are only to give you a clue about the momentum",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "c54bcfa5-be43-43fe-ae61-e21f6bdf7a78",
+        "created_at": "2025-02-14T23:39:50.490Z",
+        "updated_at": "2025-02-14T23:39:50.490Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "and probabilities",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "and probabilities",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "185b6321-3084-473f-ba46-55d7640658c6",
+        "created_at": "2025-02-14T23:40:55.583Z",
+        "updated_at": "2025-02-15T08:37:31.523Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 33634060,
+        "body": "The implications of this are so cool, we think of each of our trades as an undervalued stock in a way. We reason out why that is so and how confident we are. Instead of company factors we have IV, Greeks, Vol, Price Action and Volume. Amazing 🤩",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "c7fd8643-caeb-4437-820c-85e300509110",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "winking_face": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "The implications of this are so cool, we think of each of our trades as an undervalued stock in a way. We reason out why that is so and how confident we are. Instead of company factors we have IV, Greeks, Vol, Price Action and Volume. Amazing 🤩",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 33634060,
+        "name": "David P",
+        "handle": "samsaraohara",
+        "previous_name": "David Phelan",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+        "bio": "Meditation, music, trading",
+        "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+        "reader_installed_at": "2025-02-02T14:55:02.198Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "c7fd8643-caeb-4437-820c-85e300509110",
+          "created_at": "2025-02-14T22:53:56.941Z",
+          "updated_at": "2025-02-14T23:11:06.078Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 204864402,
+          "body": "have you read Benjamin Graham's works? \nedge is buying assets at prices significantly below intrinsic value, and the way you manage the risk. this is crucial part: no overhedge or underhedge.. delta–gamma VaR (i will cover in the future, Expected Shortfall etc.) \nalso, you need to use math like graham number, or margin of safety, that is basically: intrinsic value minus market value divided by the intrinsic value. it help you to protect against estimation errors and market volatility.. \nAnd the Graham number is the square root of 22.5 * EPS * BVPS (book value per share)... and if a stock is trading below this number, it is potentially undervalued. \n\nThe hedging part is the real challenge.. and thats where hedge funds do mistakes. thats how i predicted this upward movement, bcs they were overexposed to long vol hedges, and they had to cover their losses that those hedging positions caused... its not easy at all to estimate the distribution",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "1cd8d190-72a3-498c-a0a5-0e8f858a8395",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 2,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "bacon": 1,
+            "exploding_head": 1
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "have you read Benjamin Graham's works? \nedge is buying assets at prices significantly below intrinsic value, and the way you manage the risk. this is crucial part: no overhedge or underhedge.. delta–gamma VaR (i will cover in the future, Expected Shortfall etc.) \nalso, you need to use math like graham number, or margin of safety, that is basically: intrinsic value minus market value divided by the intrinsic value. it help you to protect against estimation errors and market volatility.. \nAnd the Graham number is the square root of 22.5 * EPS * BVPS (book value per share)... and if a stock is trading below this number, it is potentially undervalued. \n\nThe hedging part is the real challenge.. and thats where hedge funds do mistakes. thats how i predicted this upward movement, bcs they were overexposed to long vol hedges, and they had to cover their losses that those hedging positions caused... its not easy at all to estimate the distribution",
+          "user_pub_role": "admin",
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 204864402,
+          "name": "Alma",
+          "handle": "alma271828",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+          "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+          "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+          "reader_installed_at": "2025-01-25T15:05:18.103Z",
+          "status": null
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": true,
+          "role": "admin",
+          "created_at": "2024-06-04T17:16:22.957Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T21:29:53.277Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a2f0c994-e91c-40a3-9e81-3f664ea45bd1",
+        "created_at": "2025-02-15T00:41:51.484Z",
+        "updated_at": "2025-02-15T00:41:51.484Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 45998310,
+        "body": "Looking forward to reading this.  I apparently have been using much too small size for positions.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "0d87b332-c2d6-4ca8-8a8a-1e575282fc8a",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Looking forward to reading this.  I apparently have been using much too small size for positions.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 45998310,
+        "name": "John",
+        "handle": "jtbunchanumbers",
+        "previous_name": null,
+        "photo_url": "https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8543073e-30c7-41dc-a1b3-5d299e8c85f1_400x400.jpeg",
+        "bio": "A normal guy",
+        "profile_set_up_at": "2025-02-01T05:25:38.755Z",
+        "reader_installed_at": "2025-02-01T05:41:08.061Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "0d87b332-c2d6-4ca8-8a8a-1e575282fc8a",
+          "created_at": "2025-02-14T22:04:44.615Z",
+          "updated_at": "2025-02-15T04:49:10.528Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 204864402,
+          "body": "that is not how i actually do it, that 16% is the kelly, if i assume 50-50% probability and a bit better gain than loss.\nI will write a post about my intraday trading approach this weekend.\nbut if you have read my post about probability and risk, you already have some idea",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "f71ae15a-211e-4632-8318-3aa135e114b7",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 2,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "bacon": 1,
+            "thumbs_up": 1
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "that is not how i actually do it, that 16% is the kelly, if i assume 50-50% probability and a bit better gain than loss.\nI will write a post about my intraday trading approach this weekend.\nbut if you have read my post about probability and risk, you already have some idea",
+          "user_pub_role": "admin",
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 204864402,
+          "name": "Alma",
+          "handle": "alma271828",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+          "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+          "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+          "reader_installed_at": "2025-01-25T15:05:18.103Z",
+          "status": null
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": true,
+          "role": "admin",
+          "created_at": "2024-06-04T17:16:22.957Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "free_signup",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T05:22:53.005Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "57a849c4-e6e5-44c7-941b-ddfe295ca27f",
+        "created_at": "2025-02-15T01:19:33.923Z",
+        "updated_at": "2025-02-15T01:19:33.923Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 4356278,
+        "body": "Alma, I wonder if you play with the futures options and what is your view on it? pros would be able to trade after hours. Also want to hear how you select trading vehicles: futures, 0/1DTE stock options and futures options.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Alma, I wonder if you play with the futures options and what is your view on it? pros would be able to trade after hours. Also want to hear how you select trading vehicles: futures, 0/1DTE stock options and futures options.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 4356278,
+        "name": "Alex Cui",
+        "handle": "alexcui",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-02-07T21:12:20.094Z",
+        "reader_installed_at": "2025-02-07T21:12:14.317Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": null
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "free_signup",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-07T21:07:51.215Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": null
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "68110522-ccd8-4494-b3d9-c110a22cc602",
+        "created_at": "2025-02-15T03:20:37.768Z",
+        "updated_at": "2025-02-15T03:20:37.768Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 55316798,
+        "body": "Alma, I just got through your efficient market, momentum, mean reversion article. at the bottom where you give the (IV/sqrt252)*closing price, how do you annualize the IV or where do you get that data from? Is that the calculation you do in the mornings for the mean reversion levels, or do you have additional calculations you perform?",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Alma, I just got through your efficient market, momentum, mean reversion article. at the bottom where you give the (IV/sqrt252)*closing price, how do you annualize the IV or where do you get that data from? Is that the calculation you do in the mornings for the mean reversion levels, or do you have additional calculations you perform?",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 55316798,
+        "name": "670583",
+        "handle": "670583",
+        "previous_name": "Alec Pradhan",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/a2946627-36d3-4034-bde4-b2edf3e94152_144x144.png",
+        "bio": "Just trying to figure out the puzzle of financial markets ",
+        "profile_set_up_at": "2024-12-16T14:56:44.991Z",
+        "reader_installed_at": "2024-12-17T11:20:44.866Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T06:47:51.317Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "7b45ea9b-c6e2-40f8-8f49-47e0884fe35c",
+        "created_at": "2025-02-15T03:46:11.434Z",
+        "updated_at": "2025-02-15T03:46:11.434Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 55316798,
+        "body": "Will you eventually talk about selling/writing options to collect premiums? I’ve been doing IC’s a lot recently and really like them",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "15a9d24f-28bc-4819-8322-8e6f73e5eb19",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Will you eventually talk about selling/writing options to collect premiums? I’ve been doing IC’s a lot recently and really like them",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 55316798,
+        "name": "670583",
+        "handle": "670583",
+        "previous_name": "Alec Pradhan",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/a2946627-36d3-4034-bde4-b2edf3e94152_144x144.png",
+        "bio": "Just trying to figure out the puzzle of financial markets ",
+        "profile_set_up_at": "2024-12-16T14:56:44.991Z",
+        "reader_installed_at": "2024-12-17T11:20:44.866Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "15a9d24f-28bc-4819-8322-8e6f73e5eb19",
+          "created_at": "2025-02-14T15:06:57.274Z",
+          "updated_at": "2025-02-14T15:06:57.274Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 204864402,
+          "body": "or mabye short a strangle",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "or mabye short a strangle",
+          "user_pub_role": "admin",
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 204864402,
+          "name": "Alma",
+          "handle": "alma271828",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+          "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+          "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+          "reader_installed_at": "2025-01-25T15:05:18.103Z",
+          "status": null
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": true,
+          "role": "admin",
+          "created_at": "2024-06-04T17:16:22.957Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T06:47:51.317Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "552384f8-8ed3-4f0f-8b67-3ffc58e01933",
+        "created_at": "2025-02-15T05:53:27.205Z",
+        "updated_at": "2025-02-15T12:43:32.047Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 104666850,
+        "body": null,
+        "status": "deleted",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": null,
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 104666850,
+        "name": "James",
+        "handle": "giacamb",
+        "previous_name": "Giacomo",
+        "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/6a4cd862-adec-4697-8117-512475fb42f1_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2022-10-16T21:36:11.812Z",
+        "reader_installed_at": "2025-02-01T11:29:42.501Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "free_signup",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T05:24:14.519Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "eea39543-47af-4784-8eb1-b9a4fd05aba2",
+        "created_at": "2025-02-15T06:20:31.193Z",
+        "updated_at": "2026-02-09T15:30:58.430Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 101712223,
+        "body": "I buried my dad the day Alma started this class. I wanted to make enough money trading to take care of him. But I couldn’t help him and learn fast enough to save him. He was my valentine. 😞",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "broken_heart": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I buried my dad the day Alma started this class. I wanted to make enough money trading to take care of him. But I couldn’t help him and learn fast enough to save him. He was my valentine. 😞",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 101712223,
+        "name": "N8",
+        "handle": "pantzz",
+        "previous_name": "Six",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/f5e24a9a-f2a9-4790-8b7a-c2140138ed96_720x718.jpeg",
+        "bio": "Quaint",
+        "profile_set_up_at": "2022-11-28T04:05:23.217Z",
+        "reader_installed_at": "2022-11-28T04:02:57.099Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0",
+        "created_at": "2025-02-15T07:26:40.091Z",
+        "updated_at": "2025-02-15T17:10:10.286Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 76766860,
+        "body": null,
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": [
+          {
+            "id": "bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a",
+            "type": "image",
+            "content_type": "image/png",
+            "image_height": 316,
+            "image_width": 374,
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+            "media_upload_id": null
+          }
+        ],
+        "reaction_count": 2,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [
+          {
+            "id": "bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a",
+            "user_id": 76766860,
+            "publication_id": 2679129,
+            "community_comment_id": "6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0",
+            "type": "image",
+            "content_type": "image/png",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+            "created_at": "2025-02-15T07:26:39.768Z",
+            "updated_at": "2025-02-15T07:26:39.768Z",
+            "image_height": 316,
+            "image_width": 374,
+            "community_post_id": null,
+            "media_upload_id": null,
+            "mediaUpload": null
+          }
+        ],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 2
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": [
+          {
+            "type": "image",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+            "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+            "width": 374,
+            "height": 316,
+            "explicit": false
+          }
+        ]
+      },
+      "user": {
+        "id": 76766860,
+        "name": "Doc McGraw",
+        "handle": "docmcgraw",
+        "previous_name": "Doc Trader McGraw",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8ad63062-91ce-4795-bcc3-2e9dff836d8d_693x458.jpeg",
+        "bio": "Providing a Road Map for trading SPX - Iron Condors or scalps. Using a combination of Structural Analysis + years of experience. QUANTUITION Math + 40 years of compressed pattern recognition ",
+        "profile_set_up_at": "2023-01-24T03:47:23.287Z",
+        "reader_installed_at": "2024-09-18T00:48:35.819Z",
+        "status": {
+          "bestsellerTier": 100,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "bestseller",
+            "tier": 100
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-01-26T12:12:20.654Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": 100,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "bestseller",
+          "tier": 100
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "0204c2d5-2161-4c29-9db0-a4ceb64fed93",
+        "created_at": "2025-02-15T07:26:49.602Z",
+        "updated_at": "2025-02-15T07:26:49.602Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 76766860,
+        "body": "from BoA",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "from BoA",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 76766860,
+        "name": "Doc McGraw",
+        "handle": "docmcgraw",
+        "previous_name": "Doc Trader McGraw",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8ad63062-91ce-4795-bcc3-2e9dff836d8d_693x458.jpeg",
+        "bio": "Providing a Road Map for trading SPX - Iron Condors or scalps. Using a combination of Structural Analysis + years of experience. QUANTUITION Math + 40 years of compressed pattern recognition ",
+        "profile_set_up_at": "2023-01-24T03:47:23.287Z",
+        "reader_installed_at": "2024-09-18T00:48:35.819Z",
+        "status": {
+          "bestsellerTier": 100,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "bestseller",
+            "tier": 100
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0",
+          "created_at": "2025-02-15T07:26:40.091Z",
+          "updated_at": "2025-02-15T17:10:10.286Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 76766860,
+          "body": null,
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": [
+            {
+              "id": "bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a",
+              "type": "image",
+              "content_type": "image/png",
+              "image_height": 316,
+              "image_width": 374,
+              "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+              "media_upload_id": null
+            }
+          ],
+          "reaction_count": 2,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [
+            {
+              "id": "bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a",
+              "user_id": 76766860,
+              "publication_id": 2679129,
+              "community_comment_id": "6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0",
+              "type": "image",
+              "content_type": "image/png",
+              "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+              "created_at": "2025-02-15T07:26:39.768Z",
+              "updated_at": "2025-02-15T07:26:39.768Z",
+              "image_height": 316,
+              "image_width": 374,
+              "community_post_id": null,
+              "media_upload_id": null,
+              "mediaUpload": null
+            }
+          ],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "thumbs_up": 2
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": [
+            {
+              "type": "image",
+              "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+              "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/6f65746c-ecb8-4768-8d1e-baf8f7bd9fc0/bdfef02a-3ecb-4ee4-8687-cbb714ff9b3a.png",
+              "width": 374,
+              "height": 316,
+              "explicit": false
+            }
+          ]
+        },
+        "user": {
+          "id": 76766860,
+          "name": "Doc McGraw",
+          "handle": "docmcgraw",
+          "previous_name": "Doc Trader McGraw",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8ad63062-91ce-4795-bcc3-2e9dff836d8d_693x458.jpeg",
+          "bio": "Providing a Road Map for trading SPX - Iron Condors or scalps. Using a combination of Structural Analysis + years of experience. QUANTUITION Math + 40 years of compressed pattern recognition ",
+          "profile_set_up_at": "2023-01-24T03:47:23.287Z",
+          "reader_installed_at": "2024-09-18T00:48:35.819Z",
+          "status": {
+            "bestsellerTier": 100,
+            "subscriberTier": 5,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "bestseller",
+              "tier": 100
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-01-26T12:12:20.654Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": 100,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "bestseller",
+            "tier": 100
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-01-26T12:12:20.654Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": 100,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "bestseller",
+          "tier": 100
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "36b85211-4245-48f2-bdb4-d8ee30343b3b",
+        "created_at": "2025-02-15T08:38:19.572Z",
+        "updated_at": "2025-02-15T08:38:19.572Z",
+        "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+        "user_id": 204864402,
+        "body": "you can get it from the broker, or take it by newton-raphson",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "68110522-ccd8-4494-b3d9-c110a22cc602",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "mentions": null,
+        "threadMediaUploads": [],
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "you can get it from the broker, or take it by newton-raphson",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "68110522-ccd8-4494-b3d9-c110a22cc602",
+          "created_at": "2025-02-15T03:20:37.768Z",
+          "updated_at": "2025-02-15T03:20:37.768Z",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+          "user_id": 55316798,
+          "body": "Alma, I just got through your efficient market, momentum, mean reversion article. at the bottom where you give the (IV/sqrt252)*closing price, how do you annualize the IV or where do you get that data from? Is that the calculation you do in the mornings for the mean reversion levels, or do you have additional calculations you perform?",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Alma, I just got through your efficient market, momentum, mean reversion article. at the bottom where you give the (IV/sqrt252)*closing price, how do you annualize the IV or where do you get that data from? Is that the calculation you do in the mornings for the mean reversion levels, or do you have additional calculations you perform?",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 55316798,
+          "name": "670583",
+          "handle": "670583",
+          "previous_name": "Alec Pradhan",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/a2946627-36d3-4034-bde4-b2edf3e94152_144x144.png",
+          "bio": "Just trying to figure out the puzzle of financial markets ",
+          "profile_set_up_at": "2024-12-16T14:56:44.991Z",
+          "reader_installed_at": "2024-12-17T11:20:44.866Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T06:47:51.317Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    }
+  ],
+  "post": {
+    "communityPost": {
+      "paywallInfo": null,
+      "id": "e5e476cb-0806-4ba8-a896-4134391f318f",
+      "created_at": "2025-02-14T11:14:05.738Z",
+      "updated_at": "2026-02-09T20:50:10.873Z",
+      "user_id": 204864402,
+      "publication_id": 2679129,
+      "body": "FRIDAY CHAT (14/feb)",
+      "link_url": null,
+      "status": "published",
+      "type": "media",
+      "audience": "only_paid",
+      "media_assets": [
+        {
+          "id": 110106487,
+          "url": "https://substack-post-media.s3.amazonaws.com/public/images/6d4aa45e-7834-46bf-b571-5b2839469546_1123x525.png",
+          "imageWidth": 1123,
+          "contentType": "image/png",
+          "imageHeight": 525
+        }
+      ],
+      "is_locked": true,
+      "pub_moderation_status": null,
+      "trust_and_safety_status": null,
+      "is_edited": false,
+      "comment_count": 400,
+      "max_comment_created_at": "2025-02-15T08:38:19.572Z",
+      "reaction_count": 1,
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z"
+      },
+      "threadMediaUploads": [],
+      "recent_commenters": [
+        {
+          "id": 204864402,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+          "name": "Alma",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f"
+        },
+        {
+          "id": 76766860,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8ad63062-91ce-4795-bcc3-2e9dff836d8d_693x458.jpeg",
+          "name": "Doc McGraw",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f"
+        },
+        {
+          "id": 101712223,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/f5e24a9a-f2a9-4790-8b7a-c2140138ed96_720x718.jpeg",
+          "name": "N8",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f"
+        },
+        {
+          "id": 55316798,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/a2946627-36d3-4034-bde4-b2edf3e94152_144x144.png",
+          "name": "670583",
+          "post_id": "e5e476cb-0806-4ba8-a896-4134391f318f"
+        }
+      ],
+      "reactions": {
+        "sun_with_face": 1
+      },
+      "muted": true,
+      "left_pub_chat": false,
+      "reported_by_user": false,
+      "user_pub_role": "admin",
+      "most_recent_comment_created_at": "2025-02-15T08:38:19.572Z",
+      "mediaAttachments": [
+        {
+          "type": "image",
+          "url": "https://substack-post-media.s3.amazonaws.com/public/images/6d4aa45e-7834-46bf-b571-5b2839469546_1123x525.png",
+          "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/6d4aa45e-7834-46bf-b571-5b2839469546_1123x525.png",
+          "width": 1123,
+          "height": 525,
+          "explicit": false
+        }
+      ]
+    },
+    "user": {
+      "id": 204864402,
+      "name": "Alma",
+      "handle": "alma271828",
+      "previous_name": null,
+      "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+      "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+      "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+      "reader_installed_at": "2025-01-25T15:05:18.103Z",
+      "status": null
+    },
+    "pubRole": {
+      "membership_state": "subscribed",
+      "is_founding": true,
+      "role": "admin",
+      "created_at": "2024-06-04T17:16:22.957Z",
+      "can_post_notes_as_primary_user": false
+    },
+    "userStatus": null
+  }
+}

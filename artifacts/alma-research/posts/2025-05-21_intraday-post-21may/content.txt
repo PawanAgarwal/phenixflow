@@ -1,0 +1,73 @@
+Intraday post (21/May)
+
+Here you find the weekly post to learn about the accumulated risk. (I also attached today a GIF showing you the zomma curve change to sigma change)Here is a short description of the expected flows around VIX expo, and explaining the monetary and fiscal risk that will indicate an eventful summer, and makes the bearmarket risk spike.
+
+INTRADAY POSTCoding today’s positioning:
+
+Some ppl on twitter are misled by the synthetic long puts (short shares, long calls, ~100:1 ratio). What we have here is a long fly pattern centered around 5875. The overall speed exposure is net long with an avg slope of 4.19%, but I rather expect local impacts. Speed is negative below 5875 and positive above.The centroid of the positioning is 5903.22Downside pivot is 5892.07; and upside pivot is 5919.22 (where vol can be expected to cool off, if it gets realized, market will stabilize). The whole positioning favors for a rangebound, with local negative color meaning gamma will decrease more during the day. I code upside zero vanna at 5940. If volatility decreases sharply (meaning, shorts don’t get squeezed, puts don’t get unwound), this will reject the price. Also, here the local color exposure is positive, meaning, over the time gamma will increase above the upside pivot. If the squeeze would yet happen, the hard-stop is 5993/6000Projecting color and vol, if the price stays below the upside pivot until 2PM, we can expect the move to suppress volatility. If this happens, 5875 can be broken, with primal target of 5852 and 5800/5796 as secondary targets. But as you can see in the mean reversion lvls, that would be pretty extended.
+
+Now, as VIX puts get unwound, you will see hedge unwind: VX futs buyback, ES sell. The question is, how much positions will be rolled after the SOQ, and how smooth it is. Sentiment-wise I project 5894.03 as the line, that if broken, it shifts the optimism a bit, and the more it stabilizes below, the more the calls get sold below, the more downside momentum we will see, not necessary today, but into Friday.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+SCRIPT INPUTS:=== SPX 5940.46===
+
+99.73%, 6070.159831464724, , 6037.647805724957, 95.4%, 6005.309915732362, Risk level, 5984.168843203612, 68.2%, 5972.796944649254, 68.2%, 5907.946062819847, Risk level, 5896.751156796388, 95.4%, 5875.610084267638, , 5843.095159545716, 99.73%, 5810.760168535276
+
+=== ES 5954.0===
+
+99.73%, 6090.32972051623, , 6056.151387661843, 95.4%, 6022.164860258115, Risk level, 5999.94311581397, 68.2%, 5987.985435685095, 68.2%, 5919.819458566552, Risk level, 5908.05688418603, 95.4%, 5885.835139741885, , 5851.653455427582, 99.73%, 5817.67027948377
+
+=== SPY 592.85===
+
+99.73%, 606.2871532915675, , 602.9185065476505, 95.4%, 599.5685766457838, Risk level, 597.3783206592583, 68.2%, 596.1998244418166, 68.2%, 589.4811399320143, Risk level, 588.3216793407418, 95.4%, 586.1314233542163, , 582.7624529350976, 99.73%, 579.4128467084325
+
+=== VIX 18.09===
+
+99.73%, 20.34886328465739, , 19.776086238145425, 95.4%, 19.219431642328693, Risk level, 18.85123692692954, 68.2%, 18.64616631937316, 68.2%, 17.516183419634366, Risk level, 17.32876307307046, 95.4%, 16.960568357671306, , 16.38612450948083, 99.73%, 15.83113671534261
+
+=== IWM 209.08===
+
+99.73%, 215.10728874852558, , 213.59515163538157, 95.4%, 212.0936443742628, Risk level, 211.11119630825314, 68.2%, 210.5814311988853, 68.2%, 207.5677085536889, Risk level, 207.04880369174688, 95.4%, 206.06635562573723, , 204.5539836021691, 99.73%, 203.05271125147445
+
+=== QQQ 520.27===
+
+99.73%, 535.3474691486842, , 531.564737589829, 95.4%, 527.8087345743421, Risk level, 525.3511071031065, 68.2%, 524.0258107545782, 68.2%, 516.4868783067069, Risk level, 515.1888928968934, 95.4%, 512.7312654256579, , 508.9479399967995, 99.73%, 505.1925308513157
+
+=== NDX 21367.37===
+
+99.73%, 21976.02679430263, , 21823.332116197165, 95.4%, 21671.698397151315, Risk level, 21572.487339679985, 68.2%, 21518.996216839183, 68.2%, 21214.66010223734, Risk level, 21162.252660320013, 95.4%, 21063.041602848683, , 20910.323762993437, 99.73%, 20758.713205697368
+
+=== NQ 21420.0===
+
+99.73%, 22035.16397597984, , 21880.832523167486, 95.4%, 21727.58198798992, Risk level, 21627.310259905207, 68.2%, 21573.242829550316, 68.2%, 21265.65291302517, Risk level, 21212.689740094793, 95.4%, 21112.41801201008, , 20958.062763777558, 99.73%, 20804.83602402016
+
+=== NVDA 134.38===
+
+99.73%, 142.8206471292366, , 140.6946619592242, 95.4%, 138.6003235646183, Risk level, 137.2244980825527, 68.2%, 136.47384907231643, 68.2%, 132.25300495409013, Risk level, 131.53550191744728, 95.4%, 130.1596764353817, , 128.0321265157301, 99.73%, 125.9393528707634
+
+=== AMZN 204.07===
+
+99.73%, 213.9301521935362, , 211.45074624564992, 95.4%, 209.00007609676808, Risk level, 207.3928712892217, 68.2%, 206.52032715708026, 68.2%, 201.5898912915341, Risk level, 200.7471287107783, 95.4%, 199.1399239032319, , 196.659437387168, 99.73%, 194.20984780646378
+
+=== AAPL 206.86===
+
+99.73%, 215.34116387996946, , 213.21033045022742, 95.4%, 211.10058193998472, Risk level, 209.71815222754972, 68.2%, 208.96953457407432, 68.2%, 204.72872983510342, Risk level, 204.0018477724503, 95.4%, 202.6194180600153, , 200.48791567090456, 99.73%, 198.37883612003057
+
+=== GOOG 165.32===
+
+99.73%, 172.32071269021827, , 170.56155522862068, 95.4%, 168.82035634510913, Risk level, 167.67924017660354, 68.2%, 167.0610107444985, 68.2%, 163.56045820743643, Risk level, 162.96075982339644, 95.4%, 161.81964365489085, , 160.0598970890746, 99.73%, 158.3192873097817
+
+=== TSLA 343.82===
+
+99.73%, 371.6543621672925, , 364.6293787658473, 95.4%, 357.73718108364625, Risk level, 353.2001800503776, 68.2%, 350.7095630292668, 68.2%, 336.78952952819174, Risk level, 334.4398199496224, 95.4%, 329.90281891635374, , 322.86925009683443, 99.73%, 315.9856378327075
+
+=== TSM 193.45===
+
+99.73%, 202.97412181517373, , 200.5789595044634, 95.4%, 198.21206090758685, Risk level, 196.65962905171355, 68.2%, 195.81655492468627, 68.2%, 191.05413321210122, Risk level, 190.24037094828643, 95.4%, 188.68793909241313, , 186.29169305274215, 99.73%, 183.92587818482625
+
+=== AMD 113.51===
+
+99.73%, 120.65516380738022, , 118.85545043699402, 95.4%, 117.08258190369011, Risk level, 115.91792020308714, 68.2%, 115.2824525757839, 68.2%, 111.70942810753324, Risk level, 111.10207979691288, 95.4%, 109.9374180963099, , 108.13637439480554, 99.73%, 106.36483619261979

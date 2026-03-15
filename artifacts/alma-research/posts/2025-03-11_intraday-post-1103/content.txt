@@ -1,0 +1,53 @@
+Intraday post (11/03)
+
+Coding today’s gamma:
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+From positioning perspective coding key supports at 5585 and 5655 through local longer gamma effect. 5679 is a zero vanna lvl to the upside, we need relatively higher local vol to break through that.The main characteristics is positive speed between 5500 and 5725 … finally…This is the classic long vanna, short charm profile, where you have downside short gamma, and upside long gamma. In this profile vanna/charm flows are supportive if volatility can calm down, while short charm puts dealers into shorter delta as time passes triggering buyback flows. The gamma is very low by the way, its net and mean value is still negative across the range. And charm convexity is also negative meaning, gamma will decrease even further. This favors for pronunced charm flow, but also favors for vol to increase.
+
+Yesterday I marked 26-27s zone for VIX as sticky from positioning perspective. This elevated lvl, and also the vol sector grinding higher forces MMs to sell futures as we are heading to the expo. Why? - Bcs SPX skew is high, and this means (non-directly) that MMs are net long vanna, so elevated vol lvl adds a negative variable effecting their net greek exposure and so the delta hedging needs.
+
+According to the mean reversion model there is 54.51% chance for an intraday reversion from this lvl, and it marks 5673.46 as the most important short-term pivot from momentum perspective (9 pts above the risk lvl).I run the code across the past week:
+
+It shows us that 1) the wider trend doesn’t show mean reverting characteristics, 2) while the intraday trend does, however there is a tendency in the rolling datas that the microstructural behavior is likely to shift slowly into a less-choppy phase, intraday trendings are getting to be sustained (decreasing the edge on mean reversion trading for algos), and 3) regime is consistent, but HMM’s active state mean becomes progressively more negative, and the “slope of the negative drift” is moderately increased over the weak. So there is a very slow very hidden acceleration in the negative tendency.
+
+What catched my attention is that how calm the vol smirk is into Wednesday:
+
+and into March OpEx:
+
+The elevations we can see are natural behavior as plp are hedging the events, but I don’t see those increased convexities that we would expect when market is so hyped about a retest of last April lows… We have negative gamma all over the range, funds are rotating out of equities towards EU and Asia, demand side is aggressively cut down and dollar weakens (plus Trump wants strong dollar during growth).
+
+while Mag7 is tanking hard:
+
+and as a result of elevated/-ting vol lvls CTAs and VCs will need to decrease their net exposures. This tells me that market is already okay with it, it isn’t surprised and shows no tail-risk fear. But also means that selling interest is more % mechanical, and the downside selling interest is simply decreased. SPX/long-term yields correlation is grinding up but still negative, we can expect a lower inflation print, and we can expect that market will react to it at first as a good news (bcs if inflation lowers, gov may doesn’t need to trigger recession and all, but they will), bcs the goal is to fight the inflation, but more better the stagflation.. and this can cause another significant squeeze up to flush those downside hedges out and pull fresh selling volume in again.
+
+I code 5550/5555 range as the line that the index should hold in order to provide some decaying pressure to those puts bought to hedge event vol during this week.
+
+SCIRPT INPUTS:SPX99.73%, 5762.8743652496905, , 5725.675732325258, 95.4%, 5688.71721192172, Risk level, 5664.541979936802, 68.2%, 5651.517003662865, 68.2%, 5577.358233108397, Risk level, 5564.578137250698, 95.4%, 5540.40290526578, , 5503.199418968294, 99.73%, 5466.2457519378095
+
+ES=F99.73%, 5772.28903000626, , 5734.279126940818, 95.4%, 5696.51951500313, Risk level, 5671.81865311211, 68.2%, 5658.50793619253, 68.2%, 5582.736699956944, Risk level, 5569.68134688789, 95.4%, 5544.98048499687, , 5506.965416356461, 99.73%, 5469.21096999374
+
+SPY99.73%, 575.9400753496742, , 572.0871732856955, 95.4%, 568.260046219759, Risk level, 565.7563567234066, 68.2%, 564.4069687923316, 68.2%, 556.7267594606452, Risk level, 555.4036774562809, 95.4%, 552.8999879599285, , 549.0465450875973, 99.73%, 545.2199588300133
+
+VIX99.73%, 30.151196831647248, , 29.572850999804345, 95.4%, 29.005598720999405, Risk level, 28.632133736928207, 68.2%, 28.427029357121647, 68.2%, 27.281188939394173, Risk level, 27.087867483774918, 95.4%, 26.71440249970372, , 26.13532727718231, 99.73%, 25.568804389055877
+
+IWM99.73%, 207.81632458206406, , 206.0472144158056, 95.4%, 204.2931644272625, Risk level, 203.14461421679718, 68.2%, 202.52392326561338, 68.2%, 199.00062747698036, Risk level, 198.3953943281247, 95.4%, 197.24684411765938, , 195.4773267990959, 99.73%, 193.72368396285782
+
+QQQ99.73%, 489.17422659680506, , 485.0457511822563, 95.4%, 480.9521187915666, Risk level, 478.27171164705885, 68.2%, 476.82334296910744, 68.2%, 468.60092421380557, Risk level, 467.1883103255974, 95.4%, 464.50790318108966, , 460.3784943514981, 99.73%, 456.2857953758512
+
+NQ=F9.73%, 20123.848602759495, , 19955.368682313478, 95.4%, 19788.29930137975, Risk level, 19678.91022912995, 68.2%, 19619.807319005835, 68.2%, 19284.24553593127, Risk level, 19226.58977087005, 95.4%, 19117.20069862025, , 18948.683310788856, 99.73%, 18781.651397240505
+
+NVDA99.73%, 115.05777493690135, , 113.02029181173985, 95.4%, 111.01888914691747, Risk level, 109.70221237938273, 68.2%, 108.98073744300076, 68.2%, 104.941131606624, Risk level, 104.25779433448446, 95.4%, 102.94111756694971, , 100.90146812106526, 99.73%, 98.90223177696583
+
+AMZN99.73%, 204.16955184722804, , 201.74779942677247, 95.4%, 199.35477256668042, Risk level, 197.7851545212219, 68.2%, 196.93266899293408, 68.2%, 192.11752095750313, Risk level, 191.29483205104373, 95.4%, 189.7252140055852, , 187.30235396298028, 99.73%, 184.9104347250376
+
+GOOG99.73%, 175.07855757576033, , 173.251888362233, 95.4%, 171.44427756717704, Risk level, 170.2595022843789, 68.2%, 169.61740417770474, 68.2%, 165.98291105185388, Risk level, 165.3604928328086, 95.4%, 164.17571755001046, , 162.34840838417233, 99.73%, 160.54143754142717
+
+TSLA99.73%, 245.0510934782091, , 239.25732730198354, 95.4%, 233.60054368734674, Risk level, 229.8676644555256, 68.2%, 227.80333481834614, 68.2%, 216.3489778622875, Risk level, 214.43232333744314, 95.4%, 210.699444105622, , 204.89419530767503, 99.73%, 199.24889431475964
+
+TSM99.73%, 180.45333374975866, , 177.9856257741034, 95.4%, 175.55166382312152, Risk level, 173.9537194270378, 68.2%, 173.08347800969727, 68.2%, 168.1813023906253, Risk level, 167.34626836593094, 95.4%, 165.74832396984723, , 163.27909640802133, 99.73%, 160.8466540432101
+
+AMD99.73%, 102.47338230862857, , 101.0019720916418, 95.4%, 99.55168978102327, Risk level, 98.59921801702394, 68.2%, 98.07996487618354, 68.2%, 95.15793833557835, Risk level, 94.660776489812, 95.4%, 93.70830472581267, , 92.23589063316837, 99.73%, 90.78661219820737

@@ -1,0 +1,830 @@
+Chat Post
+2025-03-22T13:12:23.532Z | Alma
+WEEKEND CHAT (22-23/march)
+
+Replies
+2025-03-22T13:12:42.901Z | superCat
+Good morning
+
+2025-03-22T13:12:59.462Z | QT
+
+2025-03-22T13:13:21.911Z | dee
+GM
+
+2025-03-22T13:13:34.103Z | Alma
+I answered the Qs in the Q&A channel
+https://open.substack.com/chat/posts/398075ab-2aac-41d1-bf37-8fda43ccf9aa
+
+If you have or don't have OptionsDepth account, you can use my link https://optionsdepth.com/app?via=alma and coupon code ODALMA to get 10% off monthly sub fee.
+You can use it for the new month, or if you just start to create an account.
+
+2025-03-22T13:15:17.407Z | Alma
+I see some constant repeated Qs about the mean reversion threshold lvls.
+I will write a post about it ,but in general mean reversion refers to the tendency of a stochastic process to drift toward its long-term average level over time.
+If you spend some time with reading through these very important writings, you will see what it means https://stochvoltrader.substack.com/s/educational-posts
+
+2025-03-22T13:16:24.689Z | Alma
+the threshold lvls show you ranges with assigned probabilities (assuming gaussian distribution, bcs volatility assumes gaussian distr. check my post about vol)
+and it tells you what is the probability that the price will stay within the range
+
+2025-03-22T13:17:28.410Z | Alma
+ooor from an other aspect, it basically gives you an idea about the probability that the momentum will be disrupted and reverts from those lines if the market is in a mean reverting phase (see my educational posts)
+
+2025-03-22T13:18:07.073Z | Alma
+the way I do it is to use options implied vol along with expected vol
+and compare their distributions they project
+
+2025-03-22T13:18:27.555Z | Alma
+
+2025-03-22T13:18:42.571Z | Alma
+IV is important bcs IV is basically the volatility that the traders are betting on. (see the Q&A channel)
+
+2025-03-22T13:19:35.081Z | Alma
+what I post you is a linear projection.
+for non-high freq trading it is well enough
+
+2025-03-22T13:20:56.111Z | Alma
+you are not doing HF stat arb trading, pair trading with millions I guess,
+so you don't need that nuanced approach.
+I will write about them too, but for this kind of intraday trading that I showed you, and swing trades it is unnecessary
+
+2025-03-22T13:21:45.031Z | Alma
+the goal is to gain as many infos from the price action as possible,
+and have as sharp probability distribution for the possible outcomes as possible, to get edge
+
+2025-03-22T13:26:49.082Z | Alma
+so what I'm doing for you in these weeks, is basically four things:
+1) researching what the market is all about.. what is the strategy, where the river flows...
+2) having a probability distirbution for certain ranges
+3) read the MM positioning to project possible dynamics that we should see in an ideal world (any deviation from this reveals the hands of the underlying customer interest)
+4) read the vol surface and project lvls where the underlying vol dynamics are expected to shift, and looking for deviations
++1) constantly monitoring how the sentiment is evolving, constantly comparing it to the underlying driver of the markets (the first point)
+
+having all of these, we can have a bias, and we can build a strategy.
+more nuanced pictures, including non linear models should be used only when you manage a complex portfolio and you want o to constatnly optimalize its sortino
+
+2025-03-22T13:28:04.098Z | Alma
+and based on all of this, you can build you concept for that day or for that week,
+pre-calculate your VaR etc. to determine what amount and how you wanna play,
+then play it
+
+2025-03-22T13:28:11.768Z | Alma
+https://stochvoltrader.substack.com/s/educational-posts
+
+2025-03-22T13:31:21.100Z | Alma
+how did everybody do this week?
+what was your play?
+
+What do you think about the geos?
+Whats you gonna do this weekend?
+(chat is on)
+
+2025-03-22T13:35:22.742Z | David P
+I had a very green week, trading mean reversions mainly to the long side. Using the 10m momentum indicator for entries. I definitely overtraded and was too impatient at a number of points, so left money on the table and tolerated higher drawdown than I had planned. So overall decent but lots to be improved. Very interesting to see the geos play out as you mentioned. Can I ask how do you think Russia will play the game of getting closer to America without endangering their close relationship with china?
+
+2025-03-22T13:41:20.441Z | Alma
+overtrading... thats how i losed all the money i earned on the very first week when i first traded options years ago...
+do you use algo, or..?
+
+2025-03-22T13:42:08.515Z | Alma
+As much as I know, Russia wants to break up with China. Thats what I was writing about. the one is a conservative righty, the other is a extreme lefty
+
+2025-03-22T13:49:07.360Z | Steve Dursley
+I am a new subscriber as of 30 minutes ago, so I will be spend a good bit of my weekend going through your educational posts!
+
+2025-03-22T13:59:08.176Z | Yoda969
+Alma,  from following Adam Mancini, his focus is Es.  The market develops magnetic levels of price over time.  The levels become points of support and resistance. The reference to magnetic means to me that it is a mean level that price expands an reverts to multiple times.  As price moves up or down out of the standard range of the magnet level it will develop a new magnet area that is now the new mean reversion level.   I am not a math expert.  Based on the observation.  Could you develop a model that identifies the magnet price/ level after it has presented itself to show the standard deviations from the new magnet price level.  The magnet price can be the turning point as much as 10 or more time over a period of days, an can return to the area after it has moved away from it as the markets move up and down.
+
+2025-03-22T13:59:38.505Z | David P
+Manual trading, trying to watch the IVs and vol but still figuring out my process for that.
+
+2025-03-22T14:00:03.120Z | Scriptwonder
+Hi Alma! It was a decent week for me, caught most of the moves intraday, until yesterday I blew up using 0DTEs with a short bias(short on some tech stocks and bitcoin related). I think a lot of problems are on me as many of bad habits occur when that squeeze happened. My major question would be how you determine stop-loss on your options entry with theta burning(premium will decay even when stock price is just dancing on ur  level)?
+For me I need to cool down and leave the market for a few days, reflecting on this pitfall as I really do want this be the last one. Also got a interview next week so gotta prepare for that:))
+
+2025-03-22T14:08:28.499Z | Steve Dursley
+Good luck for your interview!!
+
+2025-03-22T14:20:22.858Z | Mario
+Alma I've tried to replicate your levels using GJR-GARCH to estimate volatility, but my sigma levels were wider than yours, could you add some insights about the input parametres? And also, could you explain in more detail the meaning (importance) of the outputs
+
+2025-03-22T14:21:03.107Z | Mario
+
+2025-03-22T14:23:05.530Z | Matt G
+Alma, I have quant question regarding calc of SPX/LTY correlation.  I am tracking a daily rolling correlation in Excel and am curious how you calculate this:  1) do you use TNX (10y)? or longer duration for LTY? 2) should correlation be based on raw numbers or returns (it seems using returns is more robust but I'm surprised at difference in results), 3) which trailing period do you prefer for say a daily rolling correlation?  I'm currently using 15 periods.  Thanks so much!
+
+2025-03-22T14:23:12.035Z | Chris
+Why do you use expected realized vol? Have you tried IV? Basically just take ATM IV, divide by 16 and then you have your daily move from yesterdays close. Usually good enough
+
+2025-03-22T14:24:43.159Z | Hennessy
+I think Russians may need to get close to Yankees to get some relief, but they know deeply in their heart, US politics change along with election, which means next time or the time after time, another administration may hostile to them again. Also Europe probably won’t get along with them in any foreseeable future until they back down. Considering this, I think they may keep some distance from China to gain something from Trump, but considering future uncertainties, they won’t break up with CCP completely
+
+2025-03-22T14:24:48.406Z | Chris
+For 2) Always use returns because they are normalized.
+
+2025-03-22T14:26:23.628Z | Feng
+Hi Alma! I am new here. I heard plp talking about there will be rebalancing in the EOM. Some think it will be a pushing up. Is it possible that the rebalancing is the other way, they put the money in other places?
+
+2025-03-22T14:26:35.786Z | LEo
+I didn’t get time to do monitor market constantly due to work/meetings…so I took a more conservative approach ,when I get reversion signals, I do credit spread with low deltas… usually at you 95% lvls… and then I just wait for the options to decay away in the day and it has worked well for the past 2 weeks for me…
+
+Physiologically, I was able to do larger positions with this approach vs buying call/puts directly too
+
+2025-03-22T14:28:24.886Z | LEo
+Also, I was able to use margin as collateral (without really paying for it bc it’s credit ) and that helped increase my return
+
+2025-03-22T14:29:33.650Z | Jonathan Scholz
+As this was my first week here, I just paper traded ES Futures from what i could grasp from the info given here. It was ok, but I won't apply anything into real traded, until i have a feeling i understand at least most of what is talked about here. Until then, you can find me on the playground. 😅
+
+2025-03-22T14:31:30.620Z | Tom
+That’s right thing to do. I just started right away with money and somehow always miss big opportunities due to fear and loss money because set a tight stop loss , or rush
+
+2025-03-22T14:33:54.110Z | Mario
+Very Green. The longs from last week went very well, Closed at your signal. Also MEICs Monday and tuesday worked well.
+
+2025-03-22T14:50:16.949Z | David P
+Yes Russian reliance on China seems at the moment to be key will be interesting to see how they will reduce that. As regards their view of America if tech giants stay firmly in the hands of republican leaning broligarchs, democrats won’t win another election for a very long time imo.
+
+2025-03-22T15:16:55.813Z | Mike Houston
+I can’t imagine Putin likes being Xi’s bitch but he knows US changes it’s mind every 4yrs so it’s an unreliable ally. Also he is determined to rebuild the Russian Empire, which is completely unrealistic he has an economy the size of Italy and military hardware which is outdated. A population in decline, as I understand it almost 1 million men in their prime dead or wounded and 1.5 million more left and are not coming back.
+
+His war has been a disaster for Russia, his only hope is that Trump allows him out with some dignity, Trump will hoping to split up the alliance between Russia and China but I think Trump is daft.
+
+It’s the old scorpion and the frog story. Scorpion ask’s frog to give him a lift across the river, at first frog says no because scorpion is dangerous but scorpion talks him into it as scorpion says it’s in his interest that frog survives as he will be on frogs back.  Half way across the river the scorpion sting the frog, as they start to drown the frog says why, we will both die. The scorpion shrugs and say’s It’s what I do.
+
+Putin is a scorpion and will stab West in the back as soon as it suits him
+
+2025-03-22T15:29:56.593Z | Hennessy
+Maybe humans should be governed by AI somehow 😂
+
+2025-03-22T15:31:54.190Z | Hennessy
+Only a small group gain after war, most lose , even the winners. Maybe god AI could just do some calculations and set all the scenarios for everyone before spending money or lives actually
+
+2025-03-22T15:39:42.620Z | Joe J
+4/5 on trades. and met my daily and weekly goals so very happy :)  Geo's - I see what your saying. just dont know why Russia would want to ruin relations with China when they are right next door. also curious to know your thoughts on turkey in this whole geo outlook. if EU re-escalates war which seems likely turkey can help solve a lot of the problems they will have. Erdogan has mentioned serval times he wants to re-establish the ottoman empire and there's a lot of territory in the ottoman empire. This weekend i will head to the casino to watch March Madness a college basketball tournament. i don't watch much college basketball so if anyone got tips for possible bets it would be greatly appreciated hahaha.
+
+2025-03-22T15:52:17.019Z | Gamma
+Picked up John C Hull book . High math 😅
+
+2025-03-22T16:04:24.573Z | Investor
+Hi Alma, naive question. The stock data isn’t normal or Gaussian. When you use ADF or other statistical techniques do you process it? How do you get the mean reversion levels? Is it just with  stock data or with option signals too.
+
+2025-03-22T16:06:30.197Z | Investor
+Are you pre processing the data or just feeding it directly?
+
+2025-03-22T16:07:45.331Z | Investor
+Which book is this?
+
+2025-03-22T16:14:57.278Z | Mario
+Just feeding
+
+2025-03-22T16:53:03.475Z | J.K.
+Hi Alma! I had a nice green week. 💰
+
+Your "supportive" stance influenced me to decide to NOT TRADE OPTIONS this week, just bull commons, leveraged etfs, etc. It also led me to end flat almost everyday which was so crucial with the lower opens. So thank you!!! 🙌🏼
+
+Weekend plans -> spend time with my wife and three sons! Play, clean, watch sports, have friends over, go to church service tomorrow morning, and enjoy life! Hope you have a wonderful weekend! All the best to you Alma! ❤️🙂
+
+2025-03-22T17:06:16.127Z | RE
+good morning
+
+2025-03-22T17:06:37.250Z | RE
+do any of you coding wizards have a way to get a dump of this substack chat
+
+2025-03-22T17:24:42.701Z | Jonathan Scholz
+On the map it might look right next door, but in reality that part of Russia is extremely remote. It's like Alaska being right next door to USSR...
+
+2025-03-22T17:34:02.763Z | RE
+no doubt they took it easy on us this quarter here is SPX study
+
+2025-03-22T17:35:00.555Z | RE
+slope meaning for every 4h bar spx goes -$2.5
+
+2025-03-22T17:35:32.843Z | RE
+not even half of what we experienced in '22
+
+2025-03-22T17:42:45.942Z | RE
+ndx ^ same
+
+2025-03-22T17:48:29.544Z | RE
+SPX monthly study, not as rosy of a picture tho
+
+2025-03-22T17:54:31.133Z | RE
+weekly we are turning a corner hopefully though with a slight positve slope..  anyways excited to see how the weekly posts and guidance ties in.
+
+2025-03-22T18:00:24.968Z | Juventino in Stockholm
+China lefty?? Come on....they are the best business men in world know...look at the development. They are just lefty on paper
+
+2025-03-22T18:02:09.173Z | Juventino in Stockholm
+You expect the bloodbath start now after opex to q3?
+
+2025-03-22T18:11:52.769Z | Mike
+This is true, and historically, despite both formerly being communist, they were never particularly friendly. I think the west has a cloudy view and tends to think that all communist (or former) countries are allies, but that’s not the case. Just look at the conflicts between China and Vietnam. Also, look at the detente between the U.S. and China during Nixon. Russia just really wants to reassert its sphere of influence over its former states. If you understand Russians, you understand that they have no loyalty to anyone, even their own. Every person takes whatever they can.
+
+2025-03-22T18:13:10.112Z | Mike
+Что правда, правда
+
+2025-03-22T18:17:15.695Z | Mike
+Or rather Что правда, это правда
+
+2025-03-22T19:42:37.529Z | Tom
+Made 5 trades for 114k. Clean week. I think we slide down under 5500 (the VIX is about to hit spring and SPX is still distributing while top tier funds aren’t buying here) into 4/2 and then Trump most likely releases tariff bargaining announcement which gives a big relief rally into big tech ER. The dump and chop thru the summer.
+This weekend I’m studying more vol info and spending time with my boy
+
+Still holding 3/31 25 delta puts. Are you going to add to these Alma?
+
+2025-03-22T19:45:38.318Z | Juventino in Stockholm
+I don't think Russia will do that against china, especially how china has helped Russia the last year's to manage all the sanctions from west. And Russia knows west are friends to Russia as long as to the next fight... And Russia doesn't want that, be a friend as long as you to as what west wants... And everybody knows china is next big player ,doenst matter if u like it or not. Only reason west are still on pkya is becus of power as regulations, tariffs, swift etc. that's just temporary.
+
+2025-03-22T21:26:27.633Z | Marcus Carlsson
+SPX 1hour
+This just show how good Alma's mean reversion code is.
+This is the waterfall from the ATH and if you focus on the yellow mean-line one can clearly see that it's in a downword pointing slope.
+But even at the green arrow where the price bounce 100 points it never turned up, but continued to point down.
+But when price comes down at the blue arrow and price only moves 80 points to the upside the mean line started to point up immediately.
+After that it continue it's slow upward direction.
+At that time Alma said in one of her newsletter that into opex we should see oscillation and supportive flows.
+That yellow line surely show what she said - supportive
+
+2025-03-23T00:16:01.240Z | Taco
+Well bit late to the party but here I am. Mostly I played reversion on the long side. I don't do options, only futures. And so far I'm +17% in March trading small positions. Still making too many trades but learnt to cut loses quickly and hold successful runners.
+I'm starting the day with the post, marking reversion lvls, and I'm watching both NQ (with qqq values on chart) and spx at the same time - with options flow from quantdata. And for example, AAPL had a big odte call order few minutes the whole rally began yesterday. So usually it is helpful but sometimes I find it misleading.
+
+If sometimes I can't figure out the bias out of the daily post, I take a break and watch, while thinking where I would take a position. And the accuracy is growing, so I feel like I'm learning in here. 😊
+
+2025-03-23T01:13:20.455Z | Gamma
+Options, futures and other derivatives
+
+2025-03-23T01:24:42.733Z | Vman
+More a macro question here. With the current tariffs or excess of them at some point and the admins goal of lowering the dollar, wouldn't that offset tariffs? I remember China doing currencty manipulation in 2018 to get around it but not sure if that would work for the U.S.
+
+2025-03-23T01:27:22.967Z | Vman
+
+2025-03-23T01:27:54.508Z | Vman
+
+2025-03-23T01:35:22.433Z | Vman
+
+2025-03-23T02:04:55.121Z | David P
+Been doing lots of study this weekend and realised that Grok 3 is much better at understanding the Greeks than ChatGPT. Great for testing your understanding more deeply
+
+2025-03-23T02:42:38.463Z | Mike Houston
+Was OPEX holding back SPY ….VIX falling much quicker than SPY rose last few days
+
+2025-03-23T03:00:50.884Z | han
+To weaken China, it suffices to put a wedge between the two countries. Deeply Russia believes that it is the gendarme of Europe, and would certainly not accept being a Chinese vassal. Losing Europe, however, is a risk for the US.
+
+2025-03-23T03:01:37.270Z | Mike Houston
+CTA’s are buyers over the next month
+
+2025-03-23T04:18:23.645Z | Δboy
+i had some luck getting closer by reverse engineering her scripts for TV... but i also am struggling to be able to exactly replicate daily levels...
+
+2025-03-23T04:23:38.003Z | Hennessy
+Russia always wanted to be accepted as one of the Europe family members, but never did it and may never will . Russia loves CCP? hell no. CCP loves Russia, double hell no. They may need each other in future uncertainties ? Chances are greater than 0
+
+2025-03-23T04:36:02.608Z | 670583
+
+2025-03-23T08:33:15.071Z | Juventino in Stockholm
+Everybody loves Russia , becuz of there cheap energy and commodity resources. I think thats the reason Trump like Russia sonfsst now
+
+2025-03-23T10:48:27.698Z | Leonida
+I played very small size and I felt confident about be more patient waiting for the movement. I had 2 reds trade, revisiting both of them I didn’t expect the level but jumped in too early,  And I got the mistakes and write it down on my notes. Apart these 2 I never chased the market so I feel I’m learning fast. I played those beautiful swing with you and so week was done no needed to overtrade. Cmon🏴‍☠️
+
+2025-03-23T12:50:11.558Z | Stanley
+Given Alma posts, I decided to play with ES day trade only with mean reversion levels and momentum signals. A green week and a happy man. What I learned from Alma has brought me genuine enjoyment in trading for the first time. Thank you Alma.
+The weekend, I will spend most time to fill the knowledge gap and understand OD charts.
+
+2025-03-23T13:13:11.110Z | Stanley
+Hi Alma, just read your twitters and found this. Hope to see the full content in your education post soon.
+
+2025-03-23T13:40:26.244Z | Alma
+@Mario you use wrong distribution (for the first blick.. didn't watch deeper into it now)
+
+2025-03-23T13:40:27.898Z | Alma
+
+2025-03-23T13:41:39.522Z | Juventino in Stockholm
+What do u expect next week Alma from the market? Slowly Start of the bloodbath?
+
+2025-03-23T13:41:45.446Z | Alex
+This week I stayed calm with my longs. 🤩
+Alma, you are talking about Tech being progressively bought by Middle East in a precedent post. Do you think the same would be done with Luxery stocks like LVMH and Hermes? (Yes I am French 🤩)
+The more I look at it, the more it seems to move in a similar way.
+I wish you a nice weekend,
+Alex
+
+2025-03-23T13:42:51.330Z | Alma
+I'm glad to see everybody is doing fine and you feel some evolution in your trading journey
+
+2025-03-23T13:42:57.833Z | Alma
+later
+
+2025-03-23T13:43:30.053Z | Juventino in Stockholm
+Cheers
+
+2025-03-23T13:43:37.518Z | Alma
+i don't know, honestly
+
+2025-03-23T13:55:01.670Z | gsp
+The Geos are the best! Loved the antecedent Hungarian writing; a world chessboard series of moves i had not heard of.
+
+2025-03-23T13:59:01.909Z | Alma
+By the way, I tell you a "secret" how can you spare hundreds if not thousands of dollars a year...
+
+If you buy Graham - Intelligent Investor, Natenberg - Options Volatility and Pricing, Bennett - Trading Volatility and Taleb - Dynamic Hedging (very advanced), you spent 185-230 USD only once, (but note that these books are avaible online for free in PDF format)
+
+If you are an IBKR user, real time options + futures data for equities is approximately around $600/year
+
+Lets say you spend $97/month for SG pro, or $224/month for OD promax (including my -10% discount)
+
+It is $3543 in a year, assuming you bought the books and didn't used the discount.
+
+2025-03-23T13:59:02.974Z | Alma
+and for this price you got:
+real time data on your brokerage,
+every knowledge that would be otherwise taught you by furus, inaccurately
+processed market datas.
+
+Instead of paying + hundreds of dollars for furus discords and inaccurate services.
+(This is why I chosed $35 for this service, to really help)
+
+I hope you will realize one day that most of the "teachers" out-there, and pseudo-quants are making their living from the retail's laziness
+
+2025-03-23T14:01:24.383Z | Mike
+Did you build your own algo and if so, did you use Python to do it?
+
+2025-03-23T14:06:22.161Z | Alma
+yes
+
+2025-03-23T14:07:59.264Z | Leonida
+Your willingness to help is palpable, Alma. We love it and it transmits trust. It’s a non-stop learning here
+
+2025-03-23T14:08:11.471Z | Mike
+Any books or other recommendations specifically for using Python to trade? I’m planning on taking some of the general courses soon, but was curious if there were specific things I should focus on.
+
+2025-03-23T14:09:53.033Z | Mike
+I appreciate the help as well. It’s refreshing to have someone lay this stuff out plainly.
+
+2025-03-23T14:09:57.416Z | Leonida
+Why you choose standardised t student?
+
+2025-03-23T14:10:35.306Z | RE
+do u have time to answer a q on OD
+
+2025-03-23T14:11:29.332Z | Leonida
+If n is big it converges to a normal
+
+2025-03-23T14:14:17.976Z | Chris
+Alma, have you given my suggestion of a side chat for Models / Theories / Implementations a thought? A member side chat for all these topics?
+
+2025-03-23T14:23:19.094Z | Alma
+IBKR webinars, PyQuant, QuantPy, Quantra, QuantStart, Medium.com, Quantsapp... internet is full of free and non-expensive courses and articles
+
+2025-03-23T14:23:40.485Z | Alma
+just drop it here, and we'll see
+
+2025-03-23T14:25:04.372Z | Alma
+the problem is substack chat structure... bcs these are not chat rooms, but threads instead.
+i think, lets give it a try this way. you can answer for each other here.
+lets see how it goes.
+i would be much happier to see these kind of convos than "what is gamma??? where is the signal chat??" and stuff
+
+and if it doesn't go, we will find another way
+
+2025-03-23T14:26:16.136Z | superCat
+Maybe a discord room alma?
+
+2025-03-23T14:32:49.756Z | RE
+ok its gonna look like voodoo so dont roast me , its a concept
+
+2025-03-23T14:33:56.873Z | Alma
+fatter tails
+https://onlinelibrary.wiley.com/doi/10.1111/j.1540-6261.1993.tb05128.x
+https://www.jstor.org/stable/1925546
+https://users.ssc.wisc.edu/~bhansen/papers/ier_94.pdf
+http://rama.cont.perso.math.cnrs.fr/pdf/empirical.pdf
+
+2025-03-23T14:35:30.702Z | Alma
+you can use normal of course
+
+2025-03-23T14:36:05.183Z | Alma
+GJR‐GARCH model specifically to capture asymmetries
+
+2025-03-23T14:36:14.459Z | Leonida
+Okay
+
+2025-03-23T14:39:02.370Z | Leonida
+Thanks Alma
+
+2025-03-23T14:39:43.057Z | Alma
+this is why i prefer s-t
+
+2025-03-23T14:42:05.062Z | loosersgame
+asked the Optionsdepth discord where the exchange data is coming from, for the 10min intervalls.. I assumed its the data from the cboe  https://datashop.cboe.com/cboe-options-open-close-volume-summary
+
+2025-03-23T14:43:08.225Z | loosersgame
+if someone might have some help in that direction :)! Im still very sceptic that the data is accurate cause its very sensitive data
+
+2025-03-23T14:58:29.913Z | RE
+Alright, so we have our OD charts that you share daily.  I get the coordinates through the price scale and then put values in excel to calc mean line based on shape, as well as the Up / Downslope angles and produce some parallels off of our developed mean line
+
+2025-03-23T15:00:22.286Z | RE
+oh i added your charm chart rotated in there too
+
+2025-03-23T15:04:50.420Z | Mario
+Alma I've tried also normal distribution
+
+2025-03-23T15:09:10.016Z | Mario
+Yes, It comes from CBOE
+
+2025-03-23T15:19:51.097Z | loosersgame
+Ty
+
+2025-03-23T15:31:43.032Z | Mike Houston
+TGT 4 x normal volume friday and largest trade ever after hrs...maybe ready for a bounce...has been on a one way ticket for two years...trading at 10.5 x fwd earning ....4.4% dividend. If its not going broke it seems very cheap. Looks setup for a dead cat bounce at least
+
+2025-03-23T15:32:33.574Z | Mike Houston
+comes with falling knife health warning
+
+2025-03-23T15:40:22.279Z | RE
+Here is the marked up OD with the means calculated and sloping channels applied.  There seems to be some reaction to the zones developed.. It has helped me with directional confirmation but its geometry and my gut tellls me likely voodooo...  Please confirm if you have time
+
+2025-03-23T15:42:38.195Z | Investor
+Hi Alma, I would love if there’s a specific chat about modeling in general.
+
+2025-03-23T15:45:05.193Z | Gamma
+Hi Alma , since you are math teacher, can recommend any probability book ?
+
+2025-03-23T16:09:56.272Z | Investor
+Is there a stochastic calculus that is focused on options that you would recommend that is more geared toward your techniques
+
+2025-03-23T17:30:29.326Z | futuredale
+Curious, is there an "optimal" time to grab IVs for calculating daily levels?
+
+2025-03-23T18:23:51.928Z | SPX500
+I think not. China is the only reliable regime they can work with. Actually only due to China they were able to survive western sanctions and keep the war going. Its  a longterm alliance.The dictators in both C and R  are for life, unlike western democracies every 4 years new theater new surprises . Putin cant stop war, if he does its a defeat for him, he gained about 50 miles of land in 3 years at exorbitant costs. Imagine Napoleon or Hitler with emperor plans got stuck 50 miles from France/Germany border in some villages🤣. He cant stop, his strategic goals not achieved and he suffered tremendous economic and soldier lives cost. Why would he stop as Trump already showering him with "kindness and gifts". This game of chicken will continue, Trump will be repeating his "peace mantra" and Putin  continue his war blaming Ukraine not wanting "peace-capitulation ".
+
+2025-03-23T18:38:57.389Z | LEo
+Could  it be that Russia wants US to believe that they want to break up with China.. Hence Alma/ Alma’s source believe so?  Doesn’t change the narrative on how market will behave tho
+
+2025-03-23T18:42:42.346Z | hurdy
+Hi, I just subscribed this weekend, so very new. I was wondering how you view the role of JXY on daytrading the SPY since they sometimes seem highly correlated. Is that a piece of the puzzle you take into account?
+
+2025-03-23T18:48:20.110Z | Yoda969
+Bottom line for me.  No way Russia wants a confrontation with China.  Russia cannot with stand a confrontation with any major power.  They are depleted of manpower.  Key point remember.  The Russian warship Moskva, the flagship of the Russian Navy's Black Sea Fleet, was attacked and sunk by Ukrainian forces with a subpar drones.
+
+2025-03-23T19:17:40.902Z | Terrence Chan
+How do you overlay all of this on top of the OD chart. Is this native to the OD platform? I am not signed up yet so sorry for the layman question. This looks amazing
+
+2025-03-23T19:36:59.600Z | RE
+Thanks.  I'm not on OD yet either... soon.  The screen shot is  trading view with an enhanced image pasted and aligned from her daily mail out..   I do markups of the od heat map in blue beam cause I'm familiar with that software w scaling aligning drawings and measuring.  You could do it all on TV but I wanted to build formulas based on the coordinates of the outer shape make it quick and create a quick plan.  Had some concepts with the nodes at close I'll share later if it develops into something.
+
+2025-03-23T19:38:21.899Z | RE
+But she did say the key is positioning so I think I would need a proper OD data dump and derive a more robust calculation that what I have with the 4 corners aboce
+
+2025-03-23T20:02:17.774Z | Doc McGraw
+I’ve gotten the same impression from numerous sources plus my own Machiavellian mind
+
+2025-03-23T20:03:14.030Z | Doc McGraw
+It is
+
+2025-03-23T20:28:10.616Z | loosersgame
+Yes, i got a conformation after a few weird messages. Thank you
+
+2025-03-23T20:36:33.764Z | meager man
+I’d be interested to know what Alma thinks/knows about Trump coin and how’s that’s used from the foreign funds/country aspect to curry favor with the admin
+
+2025-03-23T20:40:25.516Z | Mike Houston
+Yes and they have an economy the size of Spain, more in PPP terms but europe without USA has an economy 12-15 x Russia. They should easily be able to pin Russia back if they got some backbone.
+
+2025-03-23T20:52:46.548Z | tim
+Alma has mentioned in previous chats that she doesn't talk about crypto (BTC, alts, etc) and only indexes and volatility as that's her real edge /alpha
+
+2025-03-23T21:02:30.340Z | LEo
+Sources from US side mainly or China/Russia side too? my source from the other side gave me different impression…
+
+2025-03-23T21:35:24.811Z | DIma
+Traded less than last week, and did way better in terms of returns. The momentum script helped a lot to prevent from big losses even if sometime i had wrong bias intraday. Still need to learn a lot to read flows. Thanks for guidance Alma! 🫶
+
+2025-03-23T21:36:09.952Z | Stronghands777
+For the ones here for some time how fo u follow along Alma intraday? Like whats the best way to follow Alma.
+
+Admittedly I’m not able to watch the chat during the day but how do u follow Alma?
+
+Would love to know!
+
+2025-03-23T21:36:38.556Z | meager man
+Was specific to the political use potentially of the medium and not a question of trading it. More about the possible utilization by nation states and other actors etc.
+
+2025-03-23T21:39:45.417Z | Doc McGraw
+No specific “inside” sources
+The past enmity between Russia and China, Putin realizing he can proper (steal) more when he’s friends with the USA
+The way the deal with Russia is structured
+
+2025-03-23T21:49:37.109Z | Doc McGraw
+Is there a thread somewhere where @alma posts her trades?
+I remember seeing it once, a thread from Feb we can go back to but I don’t know what an easy way to access it is
+
+2025-03-23T21:50:34.883Z | Doc McGraw
+Where did you find this?
+
+2025-03-23T21:52:40.726Z | David P
+https://open.substack.com/chat/posts/5ec8d5aa-9fac-4e6d-aef1-3f6a28632ae4?r=k0w7g&utm_medium=ios&utm_source=share
+
+2025-03-23T21:55:48.581Z | RE
+I made it doc
+
+2025-03-23T21:57:31.058Z | Doc McGraw
+Eunance Sinclair in his new book goes through the different Garch measures
+Not sure how I would use it when I’m developing my daily game plan
+
+2025-03-23T21:58:36.455Z | Stronghands777
+Dude I had been missing this whole Signal secrion this whole time with notis off lol
+
+2025-03-23T21:58:52.504Z | Stronghands777
+Okay makes sense now that the signals go there and this is just a intraday chat
+
+2025-03-23T21:58:54.404Z | Stronghands777
+Thank you
+
+2025-03-23T22:02:34.677Z | Mike Houston
+Russia is a country which controls 11% of the worlds surface with 1.8% of its population. They just lost close to 1 million of the productive men and 1.5 million more have left never to return. The gain was around an extra 0.06% of the worlds landmass so they now have 11.06%. When this is over some Russian are going to sit down and think this thru and decide to end Putin
+
+2025-03-23T22:03:09.976Z | Mas
+Can someone tell me where the +Speed is for ES?
+
+2025-03-23T22:05:01.065Z | Mike Houston
+Truth is Substack is a poor forum for this sort of community, discord is better IMO. It takes a bit of routing around to find stuff on Substack
+
+2025-03-23T22:05:37.084Z | Doc McGraw
+I think he’s looking for an exit
+I also read an interesting article about from the Russian pov
+Basically everything the west promised Russia would not happen in the Ukraine happened
+Ukraine DID persecute Russian speaking people etc
+So getting nato nations off his border (Poland admission was another promise the west broke) and the Russian speaking part of Ukraine is very much a win
+He can easily go through history point out all the things Russia publicly objected to a check the boxes showing how the deal reversed much of thst
+
+2025-03-23T22:10:56.234Z | Mike Houston
+When you have rising gamma you have +ve speed. Speed is the derivative of gamma, so when the slope of gamma is upwards you will have a positive speed, just how +ve will depend on the slopeyness of gamma. Easy enough to work out for a single strike but when you got many strikes it’s a bit tougher I expect. That’s how I understand it
+
+2025-03-23T22:27:01.922Z | Stanley
+What is $97/month SG pro? Sorry for the naïve question.
+
+2025-03-23T22:29:13.450Z | RNR
+Spotgamma I am guessing
+
+2025-03-23T22:31:30.571Z | SPX500
+You are right putin is looking for an exit from sanctions and isolation, but not an exit from the war and from his goals of restoring Russia to former USSR borders. His goals on Ukraine not achieved at all. In 3 years he gained about 50 miles of Ukr territory compared to what he had in 2022. Compare this to Hitler or Napoleon being stalemated  within 50 miles from their borders for 3 years, its a fiasko. Also there is no persecution for russian language in Ukraine.
+
+2025-03-23T22:34:41.434Z | meager man
+Interested to see if this futures gap up holds to start a small relief rally into the morning or not. More interested in Alma’s next write up tho :)
+
+2025-03-23T22:37:53.921Z | RNR
+Did Alma mention that she is short bias now?
+
+2025-03-23T22:39:56.342Z | Mike Houston
+I watch big trades coming in on things like leverage etc and TBH, usually there is some sort of action before market turns and TBH there has been none…except large trades inSVIX,UVIX and VXX last Thursday. In fact I would say quite a few trades have looked bullish. Maybe we move towards the upper band of the JPM trade before uncertainty with regards to tariffs and job numbers causes a pullback.
+
+2025-03-23T22:41:04.691Z | Mike Houston
+She said she was agnostic on direction this week on Friday
+
+2025-03-23T22:41:55.689Z | Stronghands777
+Yeah man hopefully can follow along now lol
+
+2025-03-23T23:15:06.766Z | Bruce W
+Watch 5700 on RTH open. See if that big seller is still there and watch volumes. If he's still selling into this strength I'm going to follow.
+
+2025-03-23T23:38:40.016Z | Tom
+Yes into start of April. She has 22 delta puts open for 3/31 only
+
+2025-03-23T23:39:22.614Z | Tom
+Yes and above there is another big seller sitting at 5765 too
+
+2025-03-23T23:54:24.555Z | Chris
+I love the geopolitical discussion! I have given this a lot of thought after Alma presented her infos a few days (is it already weeks?) ago. I think there is whole lot of points to consider. EU and China are both energy poor, so an axis US-Russia-UAE/Saudi could help controlling China and to keep the Europeans in check in the long term. So far China got a third of its oil imports from the two pariah states Russia and Iran and another third from UAE and SA. That’s also why this nuclear deal with Iranis so strategically important for the U.S., if it goes through. But that also means UAE and Saudi will not align too closely with both, since China is a major source of revenue for them. So there is some strategic sense to it. Nevertheless, the simplicity with which it was stated does not live up to the complexities on the ground.  
+ 
+In the short term I think it’s more likely that the US and Russia made an agreement that involved Syria and Ukraine. After the Russians got their asses handed to them in Syria, the resulting destabilization of Syria plays especially in the cards of Israel. The agreement between the US might have been that the US will cease to / drastically reduce their support Ukraine in return of the cessation of Russian activities in Syria. Similar theories were already discussed as a possibility in 2019 for Venezuela or Syria vs. Ukraine. Any long term agreement will require very delicate balancing by Putin. As mentioned, China was besides Iran the only country that continued delivering weapons and technology to Russia inthe early months of the war. It also provided urgently needed income to the Russian state. But as a result of its international isolation Russia ended up being a vassal of China. That certainly did not sit well with Putin, who feels the need to establish dominance and certainly does not like to be the junior partner in a relationship. So the current events are already a major win for Putin. US media is covering Russian talking points about illegitimate NATO-expansion, Putin and Trump are talking about the future of Ukraine and Europe without them being involved, Putin is back on the global stage. Strategically and militarily Russia is still impaired and suffering drastic consequences after 3 years of war. Putin transformed the Russian economy into a war economy running hot. If the war stops, Putin will face a collapsing economy and a lot of social unrest from disgruntled widows and returning veterans. The second is manageable (hello OMON) but in combination both will lead to increased scrutiny of the cost and benefit of the policies of the supreme Vladimir Vladimirovich. Putin thereforehas a major incentive to keep the war machine running. For the peace deal with Ukraine this will mean he will not give in unless it is a total victory (as defined by the maximalist demands from the Russian side) that will present him as the masterstrategist who reinstated the empire. Anything less will most certainly lead to the continuation of the war in Ukraine or the start of a war against some other countries (looking at you Georgia, Kazakhstan) always under the pretence of saving discriminated Russian minorities while serving strategic interest (Georgia is transit country for gas and oil from Kazakhstan and Azerbaijan to Turkey and Greece). For Ukraine, Russias maximalist demands will mean the end of the sovereign state and it will become a Russian puppet state like Belarus. Ukraine/Zelensky of course will not accept this, therefore the war will likely drag on or stay in stalemate. Both sides will pretend to negotiate to make Trump happy, but not much will come out of it.  The Europeans could play a role in this if they were to give up on their strategic paralysis and start acting in their own best interests.
+China has an economic interest in Kazakhastan and Georgia, both countries (besides being trade partners and suppliers of raw materials) play crucial roles in the Belt and Road initiative (New Eurasian Land Bridge Corridor,  China – Central Asia – West Asia Corridor). While they certainly play the long game, I don’t think they will sit this out. One imperative will be to increase the cost of this alliance for all parties. Chinas three main levers are threefold: 1. Use their control of the rare earths trade / tech supply chain (chips) to increase pressure on the US and Russia. 2. Use their BRI leverage (in the Caucasus) to increase pressure on Russia 3. In the far east, Russia and China share 2500 miles of sparsely guarded border (on the Russian side). Amassing significant troops along the border will put a strategic dilemma on Russia and the US. There are significant mineral and other natural resources within 500 to 1000miles of the Russian border. Russia will not be able defend its border should China threaten to invade. And besides the US there are no candidates who could come to the rescue. And since Trump promised less wars under his watch, there is a tiny likelihood that will happen. There is of course more nuclear options (China holds around a billion of US Treasuries). Selling them would put massive harm on the plumbing of the US financial system.
+
+2025-03-23T23:54:31.919Z | PylanceB
+I remember Alma has GOOG 3/31 and AAPL 6/25 calls as well. So maybe middle eastern funds are buying those…
+
+2025-03-23T23:58:17.483Z | Tom
+Alma just went long. So she has delta 22 3/31 hedges, GOOG and aapl longs.
+
+2025-03-23T23:58:29.714Z | Chris
+That's the same old story over and over again. Russia is a master in presenting itself as the invincible superpower (don't poke the bear) and in the same time presenting itself as the victim of everything happening around it. And Estonia did not join Nato because they were afraid of Finland. All of these things have already been debunked and are just reiterated by Russian propaganda outlets to provide a narrative.
+
+2025-03-24T00:05:18.879Z | Stronghands777
+Alma - u said ur next level of interest is at 5735 is that where u buy more longs or just a level ur watching?
+
+2025-03-24T00:06:29.573Z | Yoda969
+She long 5748, she would add 35
+
+2025-03-24T00:11:41.775Z | meager man
+Believe every put she’s mentioned has had the word hedge included
+
+2025-03-24T00:18:18.953Z | Chris
+Yeah, you could even go so far that the Russians think the Chinese a lower race. And the last two sentences are gold. When the Kursk incursion happened the first thing the Russian troops sent to defend the villages were doing was looting the homes of their fellow citizens... Many of those stories
+
+2025-03-24T00:27:03.620Z | Schrödingers Trader
+Is it possible for you to ‘normalize’ the wording in how you present the data in Substack. I’ve been following you for almost a year on X, I was one of the first 75 subscribers on Substack, so I value your information, I kinda got your gist, or ‘Alma speak’, until yesterday. You used the word ‘centroid’ for the first time ever. Why? The post did not read like your normal posts in tenor or flow. It was unlike you.
+
+I’m asking if possible, just as you post the reversion levels for Spx below in a list for TV script, can you also list these levels as well, these are from your 3/19 premarket report. And none were included in the 3/21 post.
+
+3/19 Data
+
+> I code 5611.96 as our main pivot level, and 5523.77 (very close to the 5523.5 my momentum model highlighted
+> According to the model, as long as the SPX can hold the 5523.5 level, the positive drift remains intact.
+
+3/20 data
+> I’m coding 5595 as the level where puts should start to catch a bid in theory for significant downward strenght
+>I’m coding 5680.43 as the level where calls should catch a bid;
+The main daily pivot is 5623.59, mark it.
+>Coding 5683 zero vanna (low vol needed to break through it). Below the 5683 zero vanna line MMs are short vanna, just as I said above. In theory, intraday spot/vol beta should catch a bid below the vanna flip.
+>Coding 5535 zero vanna (high vol needed to break through it).
+>5610/5601 is an important support are. If vol can calm down here, price can be stabilized.
+>5739.5 is needed to break in order to get gamma support for stabilization.
+
+2025-03-24T00:34:55.355Z | meager man
+The fact you’re asking for this after her end of day Friday post is kind of crazy to me
+
+2025-03-24T00:35:07.919Z | Raju siruvuri
+The futures up! Let's see what is coming this week.
+
+2025-03-24T00:35:43.857Z | meager man
+Little rejection off the Friday risk level too so far
+
+2025-03-24T00:42:42.317Z | Raju siruvuri
+
+2025-03-24T00:47:38.955Z | foobar
+Anyone have a guide on how to use Script 1: Mean Reversion Threshold Levels?
+Or link me to a post where Alma describes it?
+
+2025-03-24T00:57:43.345Z | Gamma Goatee
+
+2025-03-24T01:04:12.310Z | RE
+
+2025-03-24T01:07:51.650Z | RE
+early chats has some good Q/A like Feb2-4.  There is also the educaitonal posts and the Q A section.
+
+2025-03-24T01:08:56.678Z | foobar
+Great I'll check those out ty
+
+2025-03-24T01:13:14.674Z | DeanGatsby
+Very true! Noticed this a few weeks ago. Seems to better at code conversions as well
+
+2025-03-24T01:43:23.902Z | Yoda969
+https://stochvoltrader.substack.com/
+The link should take you to the Main entry page,  Mean Reversion should be on that page
+
+2025-03-24T01:49:21.260Z | Wayne
+which strikes?
+
+2025-03-24T01:50:17.765Z | Jain
+Would be terrible and maybe more war
+
+2025-03-24T02:23:07.046Z | Terrence Chan
+The end to the weekend already but I also wanted to share how last week went for me and some brief lessons learned
+
+1. The “mean reversion” and supportive themes  of the week as well as the spy flipping green on the daily timeframe at the close of the Friday before had me directionally biased towards calls
+
+2. Win/loss for the week 6-2. 2 of those wins through the aid of averaging down in lots. I was pretty disciplined about initial position sizing allowing me to have buying power to increase size when I had conviction
+
+3. The week prior we still were trading in the spot decay regime wherein we were taking quick trades and taking profits fast. With this supportive week, I left some profits on the table and missed some larger moves. Eventually I got the hint and by Friday I was allowing price action and especially Vvix/Vix to tell me if we were seeing volatility dropping further when we hit risk levels to allow for holding onto positions longer
+
+2025-03-24T02:23:33.977Z | Terrence Chan
+A few notations I made for Monday - Wednesday of last week
+
+2025-03-24T02:23:43.998Z | Terrence Chan
+
+2025-03-24T02:23:51.771Z | Terrence Chan
+
+2025-03-24T02:24:09.313Z | Alma
+Are you ready for some mindfck?
+WEEKLY POST IS OUT
+https://open.substack.com/pub/stochvoltrader/p/weekly-post-24-28march?r=3dyydu&utm_campaign=post&utm_medium=web
+
+2025-03-24T03:21:02.505Z | Terrence Chan
+One more observation was just how much the options depth picture changes compared to the premarket view that Alma provides.
+
+Here is a before market (Alma shared) picture vs the during marker view
+
+I know this is obvious to everyone here especially the OD users but you can see the positive gamma influence causing price to go down in the second picture
+
+2025-03-24T03:21:34.576Z | Terrence Chan
+Premarket view
+
+2025-03-24T03:21:54.362Z | Tom
+I wonder what’s you guys’s take on indicators? do they give the real info that changes the price movement? (For me no, because price movements are a lot depends on positioning ) but all those MACD, TTM squeeze, RSI look pretty good when they show an overbought/oversold, or the”bullish cross” etc.
+
+2025-03-24T03:22:16.964Z | Terrence Chan
+During market view shares in the chat by someone.
+
+This was last Mondays trade
+
+2025-03-24T03:24:33.942Z | Terrence Chan
+I don’t use technical indicators derived from
+Price action. Moving averages / macd / stochastics. They are just looking at the past and that’s not a predictor of the future. Anything backward looking is not relevant
+
+2025-03-24T03:30:30.627Z | Terrence Chan
+Probably the only commonly available indicator
+I reference is the McClellan oscillator which is not a measure of price but of market breadth
+
+2025-03-24T03:34:05.592Z | RNR
+Could I ask what do you usually use to lead your trades?
+
+2025-03-24T03:36:26.975Z | Tom
+Thanks
+That’s a good point. I tried to have a set of rules enter trade based on them. Didn’t work out well because some mental as well.
+I tried TTM Squeeze kinda weird
+
+2025-03-24T03:46:29.020Z | Terrence Chan
+Yes ttm squeeze is John carters indicator. That one has some price volatility compared with moving averages to time trades. Don’t get me wrong a lot of people are successful using moving averages to tactically enter and exit trades. It does help ensure discipline against a system. And discipline is important in staying consistent with a process.
+
+2025-03-24T03:47:42.244Z | Terrence Chan
+In the end though what they are is just calculations of price from prior periods
+
+2025-03-24T03:48:30.729Z | Terrence Chan
+Here’s a great piece by McClellan about how is oscillator works. Just watch for 10 minutes from 35 min to 45 min mark
+
+2025-03-24T03:48:32.965Z | Terrence Chan
+https://www.youtube.com/watch?v=StZ-Ras7WM0
+
+2025-03-24T03:49:57.435Z | Terrence Chan
+Here’s a link to the latest chart
+
+2025-03-24T03:49:59.278Z | Terrence Chan
+https://www.mcoscillator.com/market_breadth_data/
+
+2025-03-24T03:51:05.958Z | Terrence Chan
+We’re right at the 0 baseline on the oscillator (not his summation index)
+
+2025-03-24T03:51:10.214Z | Tom
+Yes I think I can recognize a squeeze by using Alma’s sd band it’s actually better for me.
+
+2025-03-24T03:51:48.768Z | Tom
+Just when it touches the outer band of its going to break out or reverse , prob need more info for that
+
+2025-03-24T03:52:31.980Z | Tom
+Thanks will check it out
+
+2025-03-24T03:52:57.326Z | Terrence Chan
+Are you asking me what I am watching to decide when to enter a trade?
+
+2025-03-24T03:54:49.833Z | Terrence Chan
+There are also views of this available on shorter timeframes on TOS and other trading platforms.
+
+Look for divergences in price bottoms and oscillator bottoms to help identify buying opportunities
+
+2025-03-24T03:56:33.874Z | Terrence Chan
+
+2025-03-24T03:58:29.189Z | Tom
+Oh yea, I realized that in tradingview there aren’t many to use on smaller timeframes
+
+2025-03-24T03:59:39.361Z | Tom
+Divergence happened during feb as well
+
+2025-03-24T03:59:47.583Z | Terrence Chan
+But I’d use this one just on the daily and use it to time your longer term positions
+
+2025-03-24T03:59:58.784Z | Dad Trader
+Alma's indicators are simply elegant -- Be thankful
+
+2025-03-24T04:00:01.120Z | Terrence Chan
+I don’t recommend it for anything intraday
+
+2025-03-24T04:00:24.654Z | Dad Trader
+Be thankful she shares -- that reversion band is no joke
+
+2025-03-24T04:00:48.791Z | Dad Trader
+watch as we hit the lower band
+
+2025-03-24T04:01:02.795Z | Dad Trader
+on the 5 minute chart
+
+2025-03-24T04:01:46.006Z | Dad Trader
+I think we have to close teh gap on ES in the next 10 hours when I am sleeping
+
+2025-03-24T04:04:22.668Z | Tom
+That way I can entered where Alma entered haha. I missed that and it was too high when I saw it.
+
+2025-03-24T04:12:49.814Z | Tom
+I wonder if anyone figured this out?
+
+2025-03-24T04:16:22.110Z | Terrence Chan
+I’d do it if I was smart enough :)
+
+2025-03-24T04:21:14.218Z | Dad Trader
+goodnight --  that was about it - but we may also go long here
+
+2025-03-24T04:22:00.450Z | Dad Trader
+What do you use for the VIX or vol indicator?  Thank you for sharing -- thice charts.
+
+2025-03-24T05:14:31.764Z | Derek
+What’s SG pro? ($97/month)
+
+2025-03-24T07:28:08.718Z | venz
+Spot gamma
+
+2025-03-24T07:41:25.725Z | Dominik
+I gotta say, substack chat sucks massive balls in terms of any kind of organisation of thoughts/explanations ☹️

@@ -1,0 +1,57 @@
+Intraday post (14/feb)
+
+SPX currently trading at 6102 overnight…Market was pain-traded back up as it was expected in the Sunday post. Both the vol forecast and the momentum in the positioning told us that depite what we could have seen on the surface, big players weren’t concerned about left-tail event at all, and didn’t really cared what the economic data will be, and they didn’t, and no matter what, volatility will go down, forcing speculatns to cover, pushing the price back up. We are there…
+
+Coding SPX gamma for this weekly expo:
+
+And here is OptionsDepth Heatmap for today’s session:
+
+(Heatmap overview can be found here: OD chat)
+
+I code zero vannas at 6041 and 6109.48, and significant support between the two lines from gamma at 6096Let’s dissect this positioning:
+
+Now I want to show you something very important nad interesting here:
+
+All four indices dropped by around 3–4% initially on the first week of the month, then by an additional 1–2% before partially recovering. And so is RV and IV but they both were slowly dumped into the CPI day. RSP didn’t followed SPX on the Jan27 decline, its vol was also calm until Feb3. Look at Cboe Correlation Index:
+
+and VIX and its beloved IV:
+
+From vol perspective, there is ‘nothing new in the west’, this is the hidden vomma selling I called before it manifested, and selling downside vol and downside gamma to the dealers (that reflexively eats into the RV) tells me that traders were and still are net betting on the vol crush, short left-tail risk into Feb OpEx, waiting for the remaining downside hedges to decay away. This is clever, bcs the local speed profile is still positive, so through vanna flows it creates a reflexive cycle.
+
+Now, look at the chart above: NDX made higher lows after Jan27, RSP (equal weighted SPX) made lower lows, and SPX made a ‘wyckoff’. Lets check tech alpha:
+
+And small/mid caps:
+
+This tells me that market is still net short correlation and net short vol on the long run, short left-tail, that will make market underexposed to risk after March OpEx as I see now, but provides vanna/charm delta decay tailwind for now, as long vol traders were forced to sell vol into the declines as their positions decayed (this is what I was telling since Sunday). Those trades basically shorted economic growth worrying about significant inflationary pressures avoiding further growth, but they were lured into a trap and used to add support for the market. The effect already appeared in volatility:
+
+The majority of the vol and momentum is coming from tech. This is logical as West wants to buy the East out of tech and semis, as these are essential secotrs for military, cyber security etc. developments. Also Trump and the Fed knows that if they push inflation too high, they can cause a bigger catastrophe once recession occurs, as it can lead to deflation spiral from these. Investments in technology and infrastructure, which drive productivity. They can lower production costs, boost overall efficiency, and support higher economic growth, even when price levels are rising.So, as economists say: keeping a large portion of the economy in low-risk, stable sectors (e.g., government bonds, high-quality infrastructure) while targeting a smaller portion for high-growth, high-risk investments.
+
+Finally lets look at GJR-GARCH:
+
+The asymmetric effect of negative shocks (γ≈0.205) is present but not statistically robust in this sample. The immediate impact of shocks (α≈0) appears negligible in this estimation. About 82% of yesterday’s volatility carries over to today.
+
+Reversion trendline is at 6129.79If SPX can break and close above that line in the next sessions and into OpEx, we’ll likely see fatter right tail in Q1, preparing the stage for vulnerable Qopex
+
+SCRIPT INPUTS:
+
+SPX99.73%, 6211.84728262574, , 6187.605616605857, 95.4%, 6163.458553422245, Risk level, 6147.683827701906, 68.2%, 6139.216514577029, 68.2%, 6090.8274066243375, Risk level, 6082.455820735594, 95.4%, 6066.681095015255, , 6042.438292605464, 99.73%, 6018.29236581176
+
+ES99.73%, 6237.487331109806, , 6211.875415442054, 95.4%, 6186.368665554904, Risk level, 6169.703980584005, 68.2%, 6160.756313582427, 68.2%, 6109.637204421739, Risk level, 6100.796019415995, 95.4%, 6084.131334445096, , 6058.518087775184, 99.73%, 6033.012668890194
+
+SPY99.73%, 619.9218962065036, , 617.3686593367082, 95.4%, 614.8259383376268, Risk level, 613.164656072373, 68.2%, 612.2726577059293, 68.2%, 607.176655340571, Risk level, 606.295304865127, 95.4%, 604.6340225998732, , 602.0806522219806, 99.73%, 599.5380647309964
+
+VIX99.73%, 17.284692057306742, , 16.729606035033243, 95.4%, 16.192346219388234, Risk level, 15.836241476226801, 68.2%, 15.636637557021402, 68.2%, 14.543575521553135, Risk level, 14.363759286712652, 95.4%, 14.007654543551219, , 13.45039711948397, 99.73%, 12.915308705632711
+
+QQQ99.73%, 549.031670056892, , 545.7388845011146, 95.4%, 542.4658472354773, Risk level, 540.325388995696, 68.2%, 539.1729414365, 68.2%, 532.6069954072123, Risk level, 531.474659832429, 95.4%, 529.3342015926477, , 526.0410463022381, 99.73%, 522.768378771233
+
+NQ_F99.73%, 22646.607089654342, , 22512.872949697925, 95.4%, 22379.928544827173, Risk level, 22292.991339213513, 68.2%, 22246.189671354947, 68.2%, 21979.506278146935, Risk level, 21933.508660786487, 95.4%, 21846.571455172827, , 21712.822765841476, 99.73%, 21579.892910345658
+
+NVDA99.73%, 146.87128313047273, , 143.94684560114342, 95.4%, 141.08063820830276, Risk level, 139.19288796367536, 68.2%, 138.1549803517941, 68.2%, 132.36300831697318, Risk level, 131.38709860859026, 95.4%, 129.49934836396287, , 126.57091483695181, 99.73%, 123.70870344179289
+
+TSLA99.73%, 381.23496452971267, , 374.8578879958555, 95.4%, 368.58748348555946, Risk level, 364.4644046651655, 68.2%, 362.20854458684687, 68.2%, 349.55906640259633, Risk level, 347.415600217647, 95.4%, 343.29252139725304, , 336.90943826243887, 99.73%, 330.64504035309983
+
+GOOG99.73%, 195.3730074823507, , 193.49068924944743, 95.4%, 191.6265061825816, Risk level, 190.40514675885686, 68.2%, 189.74400891005686, 68.2%, 185.99732135778612, Risk level, 185.35486300676814, 95.4%, 184.1335035830434, , 182.25062614779063, 99.73%, 180.3870022832743
+
+AMZN99.73%, 238.35087372020678, , 236.34723249732306, 95.4%, 234.36043441869714, Risk level, 233.059551206405, 68.2%, 232.35664856572794, 68.2%, 228.36605957954606, Risk level, 227.68043902797, 95.4%, 226.37955581567786, , 224.37546526908514, 99.73%, 222.38911651416822
+
+TSM99.73%, 214.6376249191931, , 211.41147350771456, 95.4%, 208.23381337512387, Risk level, 206.14617081175732, 68.2%, 205.00690460272003, 68.2%, 198.6022868535464, Risk level, 197.51383285035206, 95.4%, 195.4261902869855, , 192.19761537727726, 99.73%, 189.0223787429163
