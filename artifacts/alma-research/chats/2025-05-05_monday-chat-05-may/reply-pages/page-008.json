@@ -1,0 +1,3099 @@
+{
+  "after": "2025-05-06T09:09:55.874Z",
+  "status": 200,
+  "more": false,
+  "moreAfter": false,
+  "moreBefore": false,
+  "lastViewedAt": null,
+  "replies": [
+    {
+      "comment": {
+        "id": "fc6c82fb-95e2-48c5-bbfe-ba88fbb5ad7a",
+        "created_at": "2025-05-06T09:29:10.474Z",
+        "updated_at": "2025-05-06T09:29:10.474Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 150449815,
+        "body": "big sell DAX from the triple-top at highs. need to consult a portrait of Merz or Lagarde to understand what it all means 🤯",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "big sell DAX from the triple-top at highs. need to consult a portrait of Merz or Lagarde to understand what it all means 🤯",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 150449815,
+        "name": "Alexander K",
+        "handle": "alexanderk3",
+        "previous_name": "Alexander Kirkbride",
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-02-10T23:33:32.173Z",
+        "reader_installed_at": null,
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "0604ae9c-a3fe-4490-a19f-26ca16ec74d5",
+        "created_at": "2025-05-06T09:45:54.553Z",
+        "updated_at": "2025-05-06T14:33:50.268Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 31935018,
+        "body": "I forgot the Username of the guy who originally built the script, that automatically splits Alma's inputs and shows the right levels on every chart. However, the script stopped working yesterday, because of changes in how alma posted the reversion levels. So I updated the script. Credit is to the original author, this was a minor thing to do and it was easy because the script is well written. :-)",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 4,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 1,
+          "upvote": 3
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I forgot the Username of the guy who originally built the script, that automatically splits Alma's inputs and shows the right levels on every chart. However, the script stopped working yesterday, because of changes in how alma posted the reversion levels. So I updated the script. Credit is to the original author, this was a minor thing to do and it was easy because the script is well written. :-)",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 31935018,
+        "name": "Jonathan Scholz",
+        "handle": "rjscholz",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+        "reader_installed_at": "2025-03-14T15:35:48.108Z",
+        "status": null
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "f8ddf1ed-506d-4008-988f-0488fbdeeaac",
+        "created_at": "2025-05-06T09:46:21.772Z",
+        "updated_at": "2025-05-06T09:46:21.772Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 31935018,
+        "body": "//@version=6\nindicator('Mean Reversion Threshold Levels', overlay = true)\n\n\n// Input for multiple symbols with their respective threshold levels\ninput_text = input.text_area('', title = 'Input Symbol Thresholds (Format: SYMBOL on one line, thresholds on next line)', confirm = true)\n\n\n// Get current symbol\ncurrent_symbol = syminfo.ticker\n\n\n// Color inputs for different levels\ncolor0 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 1')\ncolor1 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 2')\ncolor2 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 3')\ncolor3 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 4')\ncolor4 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 5')\ncolor5 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 6')\ncolor6 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 7')\ncolor7 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 8')\ncolor8 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 9')\ncolor9 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 10')\n\n\n// Function to split string by a delimiter\nTxtToArray(string origin, string divider) =>\n    str.split(origin, divider)\n\n\n// Updated parsing logic supporting old and new formats\nParseSymbolThresholds(string inputText) =>\n    symbolThresholds = array.new_string()\n    if str.length(inputText) > 0\n        lines = TxtToArray(inputText, '\\n')\n        currentSymbol = ''\n        for i = 0 to array.size(lines) - 1\n            line = str.trim(array.get(lines, i))\n\n\n            // New format: === SYMBOL ===\n            if str.startswith(line, '===') and str.endswith(line, '===') and str.length(line) > 7\n                words = TxtToArray(line,\" \")\n                symbolName = array.get(words,1)\n                currentSymbol := symbolName\n            // Old format: line without commas and not empty\n            else if not str.contains(line, ',') and str.length(line) > 0\n                currentSymbol := str.trim(line)\n            // If this line is data and currentSymbol is set\n            else if str.contains(line, ',') and str.length(currentSymbol) > 0\n                array.push(symbolThresholds, currentSymbol)\n                array.push(symbolThresholds, line)\n                currentSymbol := ''\n    symbolThresholds\n\n\n// Normalize and match against current symbol\nGetCurrentSymbolThresholds(array<string> symbolThresholds, string currentSymbol) =>\n    result = ''\n    normalizedCurrent = str.upper(currentSymbol)\n    for i = 0 to array.size(symbolThresholds) - 1 by 2\n        if i + 1 < array.size(symbolThresholds)\n            symbol = array.get(symbolThresholds, i)\n            thresholds = array.get(symbolThresholds, i + 1)\n\n\n            normalizedInput = str.upper(symbol)\n            normalizedInput := str.replace(normalizedInput, '=F', '1!')\n            normalizedInput := normalizedInput == 'ES' ? 'ES1!' : normalizedInput\n\n\n            if normalizedInput == normalizedCurrent\n                result := thresholds\n                break\n    result\n\n\n// Parse input and get current symbol thresholds\nsymbolThresholds = ParseSymbolThresholds(input_text)\ncurrentThresholds = GetCurrentSymbolThresholds(symbolThresholds, current_symbol)\nDividedstrings = TxtToArray(currentThresholds, ',')\n\n\n// Plot levels\nplot(array.size(Dividedstrings) >= 2 ? str.tonumber(array.get(Dividedstrings, 1)) : na, title = 'level 1', color = color0, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 4 ? str.tonumber(array.get(Dividedstrings, 3)) : na, title = 'level 2', color = color1, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 6 ? str.tonumber(array.get(Dividedstrings, 5)) : na, title = 'level 3', color = color2, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 8 ? str.tonumber(array.get(Dividedstrings, 7)) : na, title = 'level 4', color = color3, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 10 ? str.tonumber(array.get(Dividedstrings, 9)) : na, title = 'level 5', color = color4, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 12 ? str.tonumber(array.get(Dividedstrings, 11)) : na, title = 'level 6', color = color5, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 14 ? str.tonumber(array.get(Dividedstrings, 13)) : na, title = 'level 7', color = color6, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 16 ? str.tonumber(array.get(Dividedstrings, 15)) : na, title = 'level 8', color = color7, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 18 ? str.tonumber(array.get(Dividedstrings, 17)) : na, title = 'level 9', color = color8, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 20 ? str.tonumber(array.get(Dividedstrings, 19)) : na, title = 'level 10', color = color9, display = display.price_scale)\n\n\n// Add labels and lines\nif barstate.islastconfirmedhistory and array.size(Dividedstrings) != 0\n    for i = 0 to array.size(Dividedstrings) - 1 by 1\n        temporarycolor = i <= 1 ? color0 :\n                         i <= 3 ? color1 :\n                         i <= 5 ? color2 :\n                         i <= 7 ? color3 :\n                         i <= 9 ? color4 :\n                         i <= 11 ? color5 :\n                         i <= 13 ? color6 :\n                         i <= 15 ? color7 :\n                         i <= 17 ? color8 :\n                         color9\n\n\n        if i % 2 == 0 and array.size(Dividedstrings) > i + 1\n            label.new(bar_index, str.tonumber(array.get(Dividedstrings, i + 1)), array.get(Dividedstrings, i),\n                      xloc = xloc.bar_index, color = color.new(color.white, 10),\n                      size = size.large, style = label.style_none,\n                      textcolor = temporarycolor, textalign = text.align_right)\n\n\n        if i % 2 != 0 and array.size(Dividedstrings) > i\n            line.new(bar_index, str.tonumber(array.get(Dividedstrings, i)),\n                     bar_index + 1, str.tonumber(array.get(Dividedstrings, i)),\n                     extend = extend.both, color = temporarycolor)\n\n\n\n\n//@version=6\n\n\n\ntickers = array.from(\"ES1!\",\"SPY\",\"SPX\")\ncount = array.size(tickers)\ntimes = array.new<int>()\nprices = array.new<float>()\n\n\n\nvar table price_tab = table.new(position.top_center,3,count,color.white)\n\n\nfor i = 0 to (count - 1)\n    t = array.get(tickers,i)\n    close_t = request.security(t,\"\",time_close)\n    times.push(close_t)\n\n\nclose_time = times.min()\n\n\nfor i = 0 to (count - 1)\n    t = array.get(tickers,i)\n    sec = request.security(t,\"\",close)\n    prices.push(sec)\n\n\n\nfor i = 0 to (count - 1)\n    t = array.get(tickers,i)\n    p_int = array.get(prices,i)\n    p = str.tostring(p_int)\n    s = str.tostring(array.get(prices,0) - p_int)\n    price_tab.cell(0,i,t)\n    price_tab.cell(1,i,p)\n    price_tab.cell(2,i,s)",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "//@version=6\nindicator('Mean Reversion Threshold Levels', overlay = true)\n\n\n// Input for multiple symbols with their respective threshold levels\ninput_text = input.text_area('', title = 'Input Symbol Thresholds (Format: SYMBOL on one line, thresholds on next line)', confirm = true)\n\n\n// Get current symbol\ncurrent_symbol = syminfo.ticker\n\n\n// Color inputs for different levels\ncolor0 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 1')\ncolor1 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 2')\ncolor2 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 3')\ncolor3 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 4')\ncolor4 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 5')\ncolor5 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 6')\ncolor6 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 7')\ncolor7 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 8')\ncolor8 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 9')\ncolor9 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 10')\n\n\n// Function to split string by a delimiter\nTxtToArray(string origin, string divider) =>\n    str.split(origin, divider)\n\n\n// Updated parsing logic supporting old and new formats\nParseSymbolThresholds(string inputText) =>\n    symbolThresholds = array.new_string()\n    if str.length(inputText) > 0\n        lines = TxtToArray(inputText, '\\n')\n        currentSymbol = ''\n        for i = 0 to array.size(lines) - 1\n            line = str.trim(array.get(lines, i))\n\n\n            // New format: === SYMBOL ===\n            if str.startswith(line, '===') and str.endswith(line, '===') and str.length(line) > 7\n                words = TxtToArray(line,\" \")\n                symbolName = array.get(words,1)\n                currentSymbol := symbolName\n            // Old format: line without commas and not empty\n            else if not str.contains(line, ',') and str.length(line) > 0\n                currentSymbol := str.trim(line)\n            // If this line is data and currentSymbol is set\n            else if str.contains(line, ',') and str.length(currentSymbol) > 0\n                array.push(symbolThresholds, currentSymbol)\n                array.push(symbolThresholds, line)\n                currentSymbol := ''\n    symbolThresholds\n\n\n// Normalize and match against current symbol\nGetCurrentSymbolThresholds(array<string> symbolThresholds, string currentSymbol) =>\n    result = ''\n    normalizedCurrent = str.upper(currentSymbol)\n    for i = 0 to array.size(symbolThresholds) - 1 by 2\n        if i + 1 < array.size(symbolThresholds)\n            symbol = array.get(symbolThresholds, i)\n            thresholds = array.get(symbolThresholds, i + 1)\n\n\n            normalizedInput = str.upper(symbol)\n            normalizedInput := str.replace(normalizedInput, '=F', '1!')\n            normalizedInput := normalizedInput == 'ES' ? 'ES1!' : normalizedInput\n\n\n            if normalizedInput == normalizedCurrent\n                result := thresholds\n                break\n    result\n\n\n// Parse input and get current symbol thresholds\nsymbolThresholds = ParseSymbolThresholds(input_text)\ncurrentThresholds = GetCurrentSymbolThresholds(symbolThresholds, current_symbol)\nDividedstrings = TxtToArray(currentThresholds, ',')\n\n\n// Plot levels\nplot(array.size(Dividedstrings) >= 2 ? str.tonumber(array.get(Dividedstrings, 1)) : na, title = 'level 1', color = color0, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 4 ? str.tonumber(array.get(Dividedstrings, 3)) : na, title = 'level 2', color = color1, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 6 ? str.tonumber(array.get(Dividedstrings, 5)) : na, title = 'level 3', color = color2, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 8 ? str.tonumber(array.get(Dividedstrings, 7)) : na, title = 'level 4', color = color3, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 10 ? str.tonumber(array.get(Dividedstrings, 9)) : na, title = 'level 5', color = color4, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 12 ? str.tonumber(array.get(Dividedstrings, 11)) : na, title = 'level 6', color = color5, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 14 ? str.tonumber(array.get(Dividedstrings, 13)) : na, title = 'level 7', color = color6, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 16 ? str.tonumber(array.get(Dividedstrings, 15)) : na, title = 'level 8', color = color7, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 18 ? str.tonumber(array.get(Dividedstrings, 17)) : na, title = 'level 9', color = color8, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 20 ? str.tonumber(array.get(Dividedstrings, 19)) : na, title = 'level 10', color = color9, display = display.price_scale)\n\n\n// Add labels and lines\nif barstate.islastconfirmedhistory and array.size(Dividedstrings) != 0\n    for i = 0 to array.size(Dividedstrings) - 1 by 1\n        temporarycolor = i <= 1 ? color0 :\n                         i <= 3 ? color1 :\n                         i <= 5 ? color2 :\n                         i <= 7 ? color3 :\n                         i <= 9 ? color4 :\n                         i <= 11 ? color5 :\n                         i <= 13 ? color6 :\n                         i <= 15 ? color7 :\n                         i <= 17 ? color8 :\n                         color9\n\n\n        if i % 2 == 0 and array.size(Dividedstrings) > i + 1\n            label.new(bar_index, str.tonumber(array.get(Dividedstrings, i + 1)), array.get(Dividedstrings, i),\n                      xloc = xloc.bar_index, color = color.new(color.white, 10),\n                      size = size.large, style = label.style_none,\n                      textcolor = temporarycolor, textalign = text.align_right)\n\n\n        if i % 2 != 0 and array.size(Dividedstrings) > i\n            line.new(bar_index, str.tonumber(array.get(Dividedstrings, i)),\n                     bar_index + 1, str.tonumber(array.get(Dividedstrings, i)),\n                     extend = extend.both, color = temporarycolor)\n\n\n\n\n//@version=6\n\n\n\ntickers = array.from(\"ES1!\",\"SPY\",\"SPX\")\ncount = array.size(tickers)\ntimes = array.new<int>()\nprices = array.new<float>()\n\n\n\nvar table price_tab = table.new(position.top_center,3,count,color.white)\n\n\nfor i = 0 to (count - 1)\n    t = array.get(tickers,i)\n    close_t = request.security(t,\"\",time_close)\n    times.push(close_t)\n\n\nclose_time = times.min()\n\n\nfor i = 0 to (count - 1)\n    t = array.get(tickers,i)\n    sec = request.security(t,\"\",close)\n    prices.push(sec)\n\n\n\nfor i = 0 to (count - 1)\n    t = array.get(tickers,i)\n    p_int = array.get(prices,i)\n    p = str.tostring(p_int)\n    s = str.tostring(array.get(prices,0) - p_int)\n    price_tab.cell(0,i,t)\n    price_tab.cell(1,i,p)\n    price_tab.cell(2,i,s)",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 31935018,
+        "name": "Jonathan Scholz",
+        "handle": "rjscholz",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+        "reader_installed_at": "2025-03-14T15:35:48.108Z",
+        "status": null
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "c844f21a-f6f5-4add-96a0-adf1dc0faf3c",
+        "created_at": "2025-05-06T09:55:08.820Z",
+        "updated_at": "2025-05-06T09:55:08.820Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 4852973,
+        "body": "thanks for the fix, I noticed the format change, but I was busy",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "0604ae9c-a3fe-4490-a19f-26ca16ec74d5",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "thanks for the fix, I noticed the format change, but I was busy",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 4852973,
+        "name": "ppunkr",
+        "handle": "ppunkr",
+        "previous_name": "Pedro Perez Rubio",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e8177de9-196c-4710-bde5-f1bdc7cc0034_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2022-09-14T13:32:11.847Z",
+        "reader_installed_at": "2023-04-11T20:28:33.119Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 10,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 10,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "0604ae9c-a3fe-4490-a19f-26ca16ec74d5",
+          "created_at": "2025-05-06T09:45:54.553Z",
+          "updated_at": "2025-05-06T14:33:50.268Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 31935018,
+          "body": "I forgot the Username of the guy who originally built the script, that automatically splits Alma's inputs and shows the right levels on every chart. However, the script stopped working yesterday, because of changes in how alma posted the reversion levels. So I updated the script. Credit is to the original author, this was a minor thing to do and it was easy because the script is well written. :-)",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 4,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "thumbs_up": 1,
+            "upvote": 3
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "I forgot the Username of the guy who originally built the script, that automatically splits Alma's inputs and shows the right levels on every chart. However, the script stopped working yesterday, because of changes in how alma posted the reversion levels. So I updated the script. Credit is to the original author, this was a minor thing to do and it was easy because the script is well written. :-)",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 31935018,
+          "name": "Jonathan Scholz",
+          "handle": "rjscholz",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+          "bio": null,
+          "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+          "reader_installed_at": "2025-03-14T15:35:48.108Z",
+          "status": null
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T08:07:31.031Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 10,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 10,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a9252a97-4109-412d-b926-4f9ac3dd3ebc",
+        "created_at": "2025-05-06T09:55:59.747Z",
+        "updated_at": "2025-05-06T09:55:59.747Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 186741169,
+        "body": "Thanks for the updating. But may I ask what's the difference between this and the original script provided by Alma?",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "0604ae9c-a3fe-4490-a19f-26ca16ec74d5",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Thanks for the updating. But may I ask what's the difference between this and the original script provided by Alma?",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 186741169,
+        "name": "Ngok996",
+        "handle": "ngok996",
+        "previous_name": "Jin",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/db534088-f7aa-4bce-b4cd-cd6d13eb2d9f_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2024-12-31T10:07:36.155Z",
+        "reader_installed_at": "2025-01-03T12:02:14.491Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "0604ae9c-a3fe-4490-a19f-26ca16ec74d5",
+          "created_at": "2025-05-06T09:45:54.553Z",
+          "updated_at": "2025-05-06T14:33:50.268Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 31935018,
+          "body": "I forgot the Username of the guy who originally built the script, that automatically splits Alma's inputs and shows the right levels on every chart. However, the script stopped working yesterday, because of changes in how alma posted the reversion levels. So I updated the script. Credit is to the original author, this was a minor thing to do and it was easy because the script is well written. :-)",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 4,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "thumbs_up": 1,
+            "upvote": 3
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "I forgot the Username of the guy who originally built the script, that automatically splits Alma's inputs and shows the right levels on every chart. However, the script stopped working yesterday, because of changes in how alma posted the reversion levels. So I updated the script. Credit is to the original author, this was a minor thing to do and it was easy because the script is well written. :-)",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 31935018,
+          "name": "Jonathan Scholz",
+          "handle": "rjscholz",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+          "bio": null,
+          "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+          "reader_installed_at": "2025-03-14T15:35:48.108Z",
+          "status": null
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-03T08:49:32.793Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "8aefaf30-d07a-40ee-8022-97cc4c53cce4",
+        "created_at": "2025-05-06T09:56:47.676Z",
+        "updated_at": "2025-05-06T09:56:47.676Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 31935018,
+        "body": "Have a look, I used the split function on the line and selected the second element (which is the ticker symbol)",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "c844f21a-f6f5-4add-96a0-adf1dc0faf3c",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Have a look, I used the split function on the line and selected the second element (which is the ticker symbol)",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 31935018,
+        "name": "Jonathan Scholz",
+        "handle": "rjscholz",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+        "reader_installed_at": "2025-03-14T15:35:48.108Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "c844f21a-f6f5-4add-96a0-adf1dc0faf3c",
+          "created_at": "2025-05-06T09:55:08.820Z",
+          "updated_at": "2025-05-06T09:55:08.820Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 4852973,
+          "body": "thanks for the fix, I noticed the format change, but I was busy",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "0604ae9c-a3fe-4490-a19f-26ca16ec74d5",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "thanks for the fix, I noticed the format change, but I was busy",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 4852973,
+          "name": "ppunkr",
+          "handle": "ppunkr",
+          "previous_name": "Pedro Perez Rubio",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e8177de9-196c-4710-bde5-f1bdc7cc0034_96x96.png",
+          "bio": null,
+          "profile_set_up_at": "2022-09-14T13:32:11.847Z",
+          "reader_installed_at": "2023-04-11T20:28:33.119Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 10,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 10,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T08:07:31.031Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 10,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 10,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "4d65f43e-cae7-45e3-9310-4568887b3574",
+        "created_at": "2025-05-06T09:57:03.929Z",
+        "updated_at": "2025-05-06T09:57:03.929Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 31935018,
+        "body": "basically chnged only one line",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "basically chnged only one line",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 31935018,
+        "name": "Jonathan Scholz",
+        "handle": "rjscholz",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+        "reader_installed_at": "2025-03-14T15:35:48.108Z",
+        "status": null
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "14c76982-ec2c-49ce-8df1-9436164121d5",
+        "created_at": "2025-05-06T09:57:51.085Z",
+        "updated_at": "2025-05-06T11:12:32.710Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 31935018,
+        "body": "you can copy all inputs into the filed at the same time and the script autmatically will show the right levels on the right tickers",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "a9252a97-4109-412d-b926-4f9ac3dd3ebc",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "you can copy all inputs into the filed at the same time and the script autmatically will show the right levels on the right tickers",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 31935018,
+        "name": "Jonathan Scholz",
+        "handle": "rjscholz",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+        "reader_installed_at": "2025-03-14T15:35:48.108Z",
+        "status": null
+      },
+      "quote": {
+        "comment": {
+          "id": "a9252a97-4109-412d-b926-4f9ac3dd3ebc",
+          "created_at": "2025-05-06T09:55:59.747Z",
+          "updated_at": "2025-05-06T09:55:59.747Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 186741169,
+          "body": "Thanks for the updating. But may I ask what's the difference between this and the original script provided by Alma?",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "0604ae9c-a3fe-4490-a19f-26ca16ec74d5",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Thanks for the updating. But may I ask what's the difference between this and the original script provided by Alma?",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 186741169,
+          "name": "Ngok996",
+          "handle": "ngok996",
+          "previous_name": "Jin",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/db534088-f7aa-4bce-b4cd-cd6d13eb2d9f_144x144.png",
+          "bio": null,
+          "profile_set_up_at": "2024-12-31T10:07:36.155Z",
+          "reader_installed_at": "2025-01-03T12:02:14.491Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-03T08:49:32.793Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "a2968d75-3474-43b8-9196-9fcd29c08183",
+        "created_at": "2025-05-06T09:58:41.124Z",
+        "updated_at": "2025-05-06T09:58:41.124Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 186741169,
+        "body": "Ah that's great. Thanks again!!",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "14c76982-ec2c-49ce-8df1-9436164121d5",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Ah that's great. Thanks again!!",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 186741169,
+        "name": "Ngok996",
+        "handle": "ngok996",
+        "previous_name": "Jin",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/db534088-f7aa-4bce-b4cd-cd6d13eb2d9f_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2024-12-31T10:07:36.155Z",
+        "reader_installed_at": "2025-01-03T12:02:14.491Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "14c76982-ec2c-49ce-8df1-9436164121d5",
+          "created_at": "2025-05-06T09:57:51.085Z",
+          "updated_at": "2025-05-06T11:12:32.710Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 31935018,
+          "body": "you can copy all inputs into the filed at the same time and the script autmatically will show the right levels on the right tickers",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "a9252a97-4109-412d-b926-4f9ac3dd3ebc",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 1,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "thumbs_up": 1
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "you can copy all inputs into the filed at the same time and the script autmatically will show the right levels on the right tickers",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 31935018,
+          "name": "Jonathan Scholz",
+          "handle": "rjscholz",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+          "bio": null,
+          "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+          "reader_installed_at": "2025-03-14T15:35:48.108Z",
+          "status": null
+        },
+        "user_status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-03T08:49:32.793Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "29b58069-4ded-4271-a4f4-fcc2ce66a214",
+        "created_at": "2025-05-06T11:16:08.570Z",
+        "updated_at": "2025-05-06T11:16:08.570Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 31935018,
+        "body": "i just realized, there is a small custom table showing spy spx and es in the script, that i added. \n\nthis is the script without the table:",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "i just realized, there is a small custom table showing spy spx and es in the script, that i added. \n\nthis is the script without the table:",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 31935018,
+        "name": "Jonathan Scholz",
+        "handle": "rjscholz",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+        "reader_installed_at": "2025-03-14T15:35:48.108Z",
+        "status": null
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "e93aa91f-1bd6-4afb-85b4-7003eec5e19b",
+        "created_at": "2025-05-06T11:16:11.469Z",
+        "updated_at": "2025-05-06T11:16:11.469Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 31935018,
+        "body": "//@version=6\nindicator('Mean Reversion Threshold Levels', overlay = true)\n\n\n// Input for multiple symbols with their respective threshold levels\ninput_text = input.text_area('', title = 'Input Symbol Thresholds (Format: SYMBOL on one line, thresholds on next line)', confirm = true)\n\n\n// Get current symbol\ncurrent_symbol = syminfo.ticker\n\n\n// Color inputs for different levels\ncolor0 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 1')\ncolor1 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 2')\ncolor2 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 3')\ncolor3 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 4')\ncolor4 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 5')\ncolor5 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 6')\ncolor6 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 7')\ncolor7 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 8')\ncolor8 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 9')\ncolor9 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 10')\n\n\n// Function to split string by a delimiter\nTxtToArray(string origin, string divider) =>\n    str.split(origin, divider)\n\n\n// Updated parsing logic supporting old and new formats\nParseSymbolThresholds(string inputText) =>\n    symbolThresholds = array.new_string()\n    if str.length(inputText) > 0\n        lines = TxtToArray(inputText, '\\n')\n        currentSymbol = ''\n        for i = 0 to array.size(lines) - 1\n            line = str.trim(array.get(lines, i))\n\n\n            // New format: === SYMBOL ===\n            if str.startswith(line, '===') and str.endswith(line, '===') and str.length(line) > 7\n                words = TxtToArray(line,\" \")\n                symbolName = array.get(words,1)\n                currentSymbol := symbolName\n            // Old format: line without commas and not empty\n            else if not str.contains(line, ',') and str.length(line) > 0\n                currentSymbol := str.trim(line)\n            // If this line is data and currentSymbol is set\n            else if str.contains(line, ',') and str.length(currentSymbol) > 0\n                array.push(symbolThresholds, currentSymbol)\n                array.push(symbolThresholds, line)\n                currentSymbol := ''\n    symbolThresholds\n\n\n// Normalize and match against current symbol\nGetCurrentSymbolThresholds(array<string> symbolThresholds, string currentSymbol) =>\n    result = ''\n    normalizedCurrent = str.upper(currentSymbol)\n    for i = 0 to array.size(symbolThresholds) - 1 by 2\n        if i + 1 < array.size(symbolThresholds)\n            symbol = array.get(symbolThresholds, i)\n            thresholds = array.get(symbolThresholds, i + 1)\n\n\n            normalizedInput = str.upper(symbol)\n            normalizedInput := str.replace(normalizedInput, '=F', '1!')\n            normalizedInput := normalizedInput == 'ES' ? 'ES1!' : normalizedInput\n\n\n            if normalizedInput == normalizedCurrent\n                result := thresholds\n                break\n    result\n\n\n// Parse input and get current symbol thresholds\nsymbolThresholds = ParseSymbolThresholds(input_text)\ncurrentThresholds = GetCurrentSymbolThresholds(symbolThresholds, current_symbol)\nDividedstrings = TxtToArray(currentThresholds, ',')\n\n\n// Plot levels\nplot(array.size(Dividedstrings) >= 2 ? str.tonumber(array.get(Dividedstrings, 1)) : na, title = 'level 1', color = color0, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 4 ? str.tonumber(array.get(Dividedstrings, 3)) : na, title = 'level 2', color = color1, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 6 ? str.tonumber(array.get(Dividedstrings, 5)) : na, title = 'level 3', color = color2, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 8 ? str.tonumber(array.get(Dividedstrings, 7)) : na, title = 'level 4', color = color3, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 10 ? str.tonumber(array.get(Dividedstrings, 9)) : na, title = 'level 5', color = color4, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 12 ? str.tonumber(array.get(Dividedstrings, 11)) : na, title = 'level 6', color = color5, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 14 ? str.tonumber(array.get(Dividedstrings, 13)) : na, title = 'level 7', color = color6, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 16 ? str.tonumber(array.get(Dividedstrings, 15)) : na, title = 'level 8', color = color7, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 18 ? str.tonumber(array.get(Dividedstrings, 17)) : na, title = 'level 9', color = color8, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 20 ? str.tonumber(array.get(Dividedstrings, 19)) : na, title = 'level 10', color = color9, display = display.price_scale)\n\n\n// Add labels and lines\nif barstate.islastconfirmedhistory and array.size(Dividedstrings) != 0\n    for i = 0 to array.size(Dividedstrings) - 1 by 1\n        temporarycolor = i <= 1 ? color0 :\n                         i <= 3 ? color1 :\n                         i <= 5 ? color2 :\n                         i <= 7 ? color3 :\n                         i <= 9 ? color4 :\n                         i <= 11 ? color5 :\n                         i <= 13 ? color6 :\n                         i <= 15 ? color7 :\n                         i <= 17 ? color8 :\n                         color9\n\n\n        if i % 2 == 0 and array.size(Dividedstrings) > i + 1\n            label.new(bar_index, str.tonumber(array.get(Dividedstrings, i + 1)), array.get(Dividedstrings, i),\n                      xloc = xloc.bar_index, color = color.new(color.white, 10),\n                      size = size.large, style = label.style_none,\n                      textcolor = temporarycolor, textalign = text.align_right)\n\n\n        if i % 2 != 0 and array.size(Dividedstrings) > i\n            line.new(bar_index, str.tonumber(array.get(Dividedstrings, i)),\n                     bar_index + 1, str.tonumber(array.get(Dividedstrings, i)),\n                     extend = extend.both, color = temporarycolor)",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "//@version=6\nindicator('Mean Reversion Threshold Levels', overlay = true)\n\n\n// Input for multiple symbols with their respective threshold levels\ninput_text = input.text_area('', title = 'Input Symbol Thresholds (Format: SYMBOL on one line, thresholds on next line)', confirm = true)\n\n\n// Get current symbol\ncurrent_symbol = syminfo.ticker\n\n\n// Color inputs for different levels\ncolor0 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 1')\ncolor1 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 2')\ncolor2 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 3')\ncolor3 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 4')\ncolor4 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 5')\ncolor5 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 6')\ncolor6 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 7')\ncolor7 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 8')\ncolor8 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 9')\ncolor9 = input.color(defval = color.rgb(224, 10, 110), title = 'Color 10')\n\n\n// Function to split string by a delimiter\nTxtToArray(string origin, string divider) =>\n    str.split(origin, divider)\n\n\n// Updated parsing logic supporting old and new formats\nParseSymbolThresholds(string inputText) =>\n    symbolThresholds = array.new_string()\n    if str.length(inputText) > 0\n        lines = TxtToArray(inputText, '\\n')\n        currentSymbol = ''\n        for i = 0 to array.size(lines) - 1\n            line = str.trim(array.get(lines, i))\n\n\n            // New format: === SYMBOL ===\n            if str.startswith(line, '===') and str.endswith(line, '===') and str.length(line) > 7\n                words = TxtToArray(line,\" \")\n                symbolName = array.get(words,1)\n                currentSymbol := symbolName\n            // Old format: line without commas and not empty\n            else if not str.contains(line, ',') and str.length(line) > 0\n                currentSymbol := str.trim(line)\n            // If this line is data and currentSymbol is set\n            else if str.contains(line, ',') and str.length(currentSymbol) > 0\n                array.push(symbolThresholds, currentSymbol)\n                array.push(symbolThresholds, line)\n                currentSymbol := ''\n    symbolThresholds\n\n\n// Normalize and match against current symbol\nGetCurrentSymbolThresholds(array<string> symbolThresholds, string currentSymbol) =>\n    result = ''\n    normalizedCurrent = str.upper(currentSymbol)\n    for i = 0 to array.size(symbolThresholds) - 1 by 2\n        if i + 1 < array.size(symbolThresholds)\n            symbol = array.get(symbolThresholds, i)\n            thresholds = array.get(symbolThresholds, i + 1)\n\n\n            normalizedInput = str.upper(symbol)\n            normalizedInput := str.replace(normalizedInput, '=F', '1!')\n            normalizedInput := normalizedInput == 'ES' ? 'ES1!' : normalizedInput\n\n\n            if normalizedInput == normalizedCurrent\n                result := thresholds\n                break\n    result\n\n\n// Parse input and get current symbol thresholds\nsymbolThresholds = ParseSymbolThresholds(input_text)\ncurrentThresholds = GetCurrentSymbolThresholds(symbolThresholds, current_symbol)\nDividedstrings = TxtToArray(currentThresholds, ',')\n\n\n// Plot levels\nplot(array.size(Dividedstrings) >= 2 ? str.tonumber(array.get(Dividedstrings, 1)) : na, title = 'level 1', color = color0, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 4 ? str.tonumber(array.get(Dividedstrings, 3)) : na, title = 'level 2', color = color1, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 6 ? str.tonumber(array.get(Dividedstrings, 5)) : na, title = 'level 3', color = color2, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 8 ? str.tonumber(array.get(Dividedstrings, 7)) : na, title = 'level 4', color = color3, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 10 ? str.tonumber(array.get(Dividedstrings, 9)) : na, title = 'level 5', color = color4, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 12 ? str.tonumber(array.get(Dividedstrings, 11)) : na, title = 'level 6', color = color5, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 14 ? str.tonumber(array.get(Dividedstrings, 13)) : na, title = 'level 7', color = color6, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 16 ? str.tonumber(array.get(Dividedstrings, 15)) : na, title = 'level 8', color = color7, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 18 ? str.tonumber(array.get(Dividedstrings, 17)) : na, title = 'level 9', color = color8, display = display.price_scale)\nplot(array.size(Dividedstrings) >= 20 ? str.tonumber(array.get(Dividedstrings, 19)) : na, title = 'level 10', color = color9, display = display.price_scale)\n\n\n// Add labels and lines\nif barstate.islastconfirmedhistory and array.size(Dividedstrings) != 0\n    for i = 0 to array.size(Dividedstrings) - 1 by 1\n        temporarycolor = i <= 1 ? color0 :\n                         i <= 3 ? color1 :\n                         i <= 5 ? color2 :\n                         i <= 7 ? color3 :\n                         i <= 9 ? color4 :\n                         i <= 11 ? color5 :\n                         i <= 13 ? color6 :\n                         i <= 15 ? color7 :\n                         i <= 17 ? color8 :\n                         color9\n\n\n        if i % 2 == 0 and array.size(Dividedstrings) > i + 1\n            label.new(bar_index, str.tonumber(array.get(Dividedstrings, i + 1)), array.get(Dividedstrings, i),\n                      xloc = xloc.bar_index, color = color.new(color.white, 10),\n                      size = size.large, style = label.style_none,\n                      textcolor = temporarycolor, textalign = text.align_right)\n\n\n        if i % 2 != 0 and array.size(Dividedstrings) > i\n            line.new(bar_index, str.tonumber(array.get(Dividedstrings, i)),\n                     bar_index + 1, str.tonumber(array.get(Dividedstrings, i)),\n                     extend = extend.both, color = temporarycolor)",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 31935018,
+        "name": "Jonathan Scholz",
+        "handle": "rjscholz",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1fbd64d-3bda-4f1b-ba88-75912b0d4dfe_96x96.png",
+        "bio": null,
+        "profile_set_up_at": "2025-03-14T15:35:54.663Z",
+        "reader_installed_at": "2025-03-14T15:35:48.108Z",
+        "status": null
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "cc1b521a-3fff-439e-aaeb-4eb45b9eba22",
+        "created_at": "2025-05-06T11:19:26.172Z",
+        "updated_at": "2025-05-06T13:20:50.987Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 56646175,
+        "body": "I combined the 3 indicators into one (for those who don’t have tradingview premium😂)",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 4,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "double_exclamation_mark": 3,
+          "plus": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I combined the 3 indicators into one (for those who don’t have tradingview premium😂)",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 56646175,
+        "name": "Giovanni",
+        "handle": "giovanni862898",
+        "previous_name": "Giovanni Valassina",
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2024-10-17T18:45:46.379Z",
+        "reader_installed_at": "2023-11-04T15:17:57.836Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "free_signup",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-03-13T17:23:11.767Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "8d74ab99-b506-4747-8f92-632d680d4e9d",
+        "created_at": "2025-05-06T11:39:00.666Z",
+        "updated_at": "2025-05-06T11:39:00.666Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 105917094,
+        "body": "Alma just covered puts before open",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Alma just covered puts before open",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 105917094,
+        "name": "Judy",
+        "handle": "judy947898",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-09-30T23:34:30.901Z",
+        "reader_installed_at": "2022-09-30T23:33:50.974Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a4569d84-37f9-465d-992e-1d2090b37ee8",
+        "created_at": "2025-05-06T11:39:47.667Z",
+        "updated_at": "2025-05-06T11:42:52.820Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 33634060,
+        "body": "Careful Judy, that’s not clear from the post. Could be the short ES futures.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "8d74ab99-b506-4747-8f92-632d680d4e9d",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 2,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 2
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Careful Judy, that’s not clear from the post. Could be the short ES futures.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 33634060,
+        "name": "David P",
+        "handle": "samsaraohara",
+        "previous_name": "David Phelan",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+        "bio": "Meditation, music, trading",
+        "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+        "reader_installed_at": "2025-02-02T14:55:02.198Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "8d74ab99-b506-4747-8f92-632d680d4e9d",
+          "created_at": "2025-05-06T11:39:00.666Z",
+          "updated_at": "2025-05-06T11:39:00.666Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 105917094,
+          "body": "Alma just covered puts before open",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Alma just covered puts before open",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 105917094,
+          "name": "Judy",
+          "handle": "judy947898",
+          "previous_name": null,
+          "photo_url": null,
+          "bio": null,
+          "profile_set_up_at": "2022-09-30T23:34:30.901Z",
+          "reader_installed_at": "2022-09-30T23:33:50.974Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": null,
+            "leaderboard": null,
+            "vip": false,
+            "badge": null,
+            "subscriber": null
+          }
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T21:29:53.277Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "2a2a67e5-fbf7-42a9-9ca2-f9ceb76a1573",
+        "created_at": "2025-05-06T11:39:59.496Z",
+        "updated_at": "2025-05-06T11:39:59.496Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 33634060,
+        "body": "if they were still open.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "a4569d84-37f9-465d-992e-1d2090b37ee8",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "if they were still open.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 33634060,
+        "name": "David P",
+        "handle": "samsaraohara",
+        "previous_name": "David Phelan",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+        "bio": "Meditation, music, trading",
+        "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+        "reader_installed_at": "2025-02-02T14:55:02.198Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "a4569d84-37f9-465d-992e-1d2090b37ee8",
+          "created_at": "2025-05-06T11:39:47.667Z",
+          "updated_at": "2025-05-06T11:42:52.820Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 33634060,
+          "body": "Careful Judy, that’s not clear from the post. Could be the short ES futures.",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "8d74ab99-b506-4747-8f92-632d680d4e9d",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 2,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "thumbs_up": 2
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Careful Judy, that’s not clear from the post. Could be the short ES futures.",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 33634060,
+          "name": "David P",
+          "handle": "samsaraohara",
+          "previous_name": "David Phelan",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+          "bio": "Meditation, music, trading",
+          "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+          "reader_installed_at": "2025-02-02T14:55:02.198Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T21:29:53.277Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T21:29:53.277Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "94cddb61-2c52-4683-bae0-8b3c4a407391",
+        "created_at": "2025-05-06T11:44:08.819Z",
+        "updated_at": "2025-05-06T11:44:08.819Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 105917094,
+        "body": "if this is not low,why not leave it running into open, might be more or less there",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "if this is not low,why not leave it running into open, might be more or less there",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 105917094,
+        "name": "Judy",
+        "handle": "judy947898",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-09-30T23:34:30.901Z",
+        "reader_installed_at": "2022-09-30T23:33:50.974Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a4d11a47-edc8-4675-8dac-830751508dbc",
+        "created_at": "2025-05-06T11:44:39.370Z",
+        "updated_at": "2025-05-06T11:44:39.370Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 314836480,
+        "body": "Who knows this is the low? NO ONE",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Who knows this is the low? NO ONE",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 314836480,
+        "name": "Leonida",
+        "handle": "leonidatrading",
+        "previous_name": "Leonida Trading",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/10af1791-08ad-4a42-8c38-be2fcfd8b615_1082x1179.jpeg",
+        "bio": null,
+        "profile_set_up_at": "2025-02-01T10:33:31.642Z",
+        "reader_installed_at": "2025-02-01T10:32:56.744Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T10:29:09.601Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "1e9badfa-f348-411b-a16e-c0a26b05b23b",
+        "created_at": "2025-05-06T11:45:09.591Z",
+        "updated_at": "2025-05-06T11:45:09.591Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 314836480,
+        "body": "Locking profits means put yourself in the condition to play a scenario win-to win",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Locking profits means put yourself in the condition to play a scenario win-to win",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 314836480,
+        "name": "Leonida",
+        "handle": "leonidatrading",
+        "previous_name": "Leonida Trading",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/10af1791-08ad-4a42-8c38-be2fcfd8b615_1082x1179.jpeg",
+        "bio": null,
+        "profile_set_up_at": "2025-02-01T10:33:31.642Z",
+        "reader_installed_at": "2025-02-01T10:32:56.744Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T10:29:09.601Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "f758cbe9-da62-469a-bfda-24f842f23126",
+        "created_at": "2025-05-06T11:45:26.188Z",
+        "updated_at": "2025-05-06T11:45:26.188Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 314836480,
+        "body": "This is trading this is risk management",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "This is trading this is risk management",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 314836480,
+        "name": "Leonida",
+        "handle": "leonidatrading",
+        "previous_name": "Leonida Trading",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/10af1791-08ad-4a42-8c38-be2fcfd8b615_1082x1179.jpeg",
+        "bio": null,
+        "profile_set_up_at": "2025-02-01T10:33:31.642Z",
+        "reader_installed_at": "2025-02-01T10:32:56.744Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T10:29:09.601Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "e2370b1a-39a2-4b45-bdb6-f9762b9522d2",
+        "created_at": "2025-05-06T11:45:35.589Z",
+        "updated_at": "2025-05-06T11:45:35.589Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 105917094,
+        "body": "Ok",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Ok",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 105917094,
+        "name": "Judy",
+        "handle": "judy947898",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-09-30T23:34:30.901Z",
+        "reader_installed_at": "2022-09-30T23:33:50.974Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "43e05a3a-949d-49a3-888f-018ffc7fb0e4",
+        "created_at": "2025-05-06T11:47:00.465Z",
+        "updated_at": "2025-05-06T11:47:00.465Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 33634060,
+        "body": "Yes also only 40 points ish of profit if those are the ES futures, so would perhaps want to be letting that trade breath hence stop maybe adjusted to guarantee green trade. Along with taking some profits.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "94cddb61-2c52-4683-bae0-8b3c4a407391",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Yes also only 40 points ish of profit if those are the ES futures, so would perhaps want to be letting that trade breath hence stop maybe adjusted to guarantee green trade. Along with taking some profits.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 33634060,
+        "name": "David P",
+        "handle": "samsaraohara",
+        "previous_name": "David Phelan",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+        "bio": "Meditation, music, trading",
+        "profile_set_up_at": "2025-02-01T21:32:50.356Z",
+        "reader_installed_at": "2025-02-02T14:55:02.198Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "94cddb61-2c52-4683-bae0-8b3c4a407391",
+          "created_at": "2025-05-06T11:44:08.819Z",
+          "updated_at": "2025-05-06T11:44:08.819Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 105917094,
+          "body": "if this is not low,why not leave it running into open, might be more or less there",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "if this is not low,why not leave it running into open, might be more or less there",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 105917094,
+          "name": "Judy",
+          "handle": "judy947898",
+          "previous_name": null,
+          "photo_url": null,
+          "bio": null,
+          "profile_set_up_at": "2022-09-30T23:34:30.901Z",
+          "reader_installed_at": "2022-09-30T23:33:50.974Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": null,
+            "leaderboard": null,
+            "vip": false,
+            "badge": null,
+            "subscriber": null
+          }
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T21:29:53.277Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "df770119-662c-4c66-8fc4-deca00fbd201",
+        "created_at": "2025-05-06T11:47:20.221Z",
+        "updated_at": "2025-05-06T11:47:20.221Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 314836480,
+        "body": "Otherwise you’re gambling",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "f758cbe9-da62-469a-bfda-24f842f23126",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Otherwise you’re gambling",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 314836480,
+        "name": "Leonida",
+        "handle": "leonidatrading",
+        "previous_name": "Leonida Trading",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/10af1791-08ad-4a42-8c38-be2fcfd8b615_1082x1179.jpeg",
+        "bio": null,
+        "profile_set_up_at": "2025-02-01T10:33:31.642Z",
+        "reader_installed_at": "2025-02-01T10:32:56.744Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "f758cbe9-da62-469a-bfda-24f842f23126",
+          "created_at": "2025-05-06T11:45:26.188Z",
+          "updated_at": "2025-05-06T11:45:26.188Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 314836480,
+          "body": "This is trading this is risk management",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "This is trading this is risk management",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 314836480,
+          "name": "Leonida",
+          "handle": "leonidatrading",
+          "previous_name": "Leonida Trading",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/10af1791-08ad-4a42-8c38-be2fcfd8b615_1082x1179.jpeg",
+          "bio": null,
+          "profile_set_up_at": "2025-02-01T10:33:31.642Z",
+          "reader_installed_at": "2025-02-01T10:32:56.744Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T10:29:09.601Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T10:29:09.601Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "b961729c-acbf-4d6c-ae8f-6a22d5be646d",
+        "created_at": "2025-05-06T11:52:05.815Z",
+        "updated_at": "2025-05-06T11:52:05.815Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 54743627,
+        "body": "Come on 5575spx",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Come on 5575spx",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "adfda1c8-3f03-4cff-9af8-e789cc66be06",
+        "created_at": "2025-05-06T11:58:17.079Z",
+        "updated_at": "2025-05-06T11:58:17.079Z",
+        "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+        "user_id": 129299852,
+        "body": "Exactly - once you have earned your initial stop, you can close part of your position and let the balance run for either more gains or being stopped out and lose nothing",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "f758cbe9-da62-469a-bfda-24f842f23126",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Exactly - once you have earned your initial stop, you can close part of your position and let the balance run for either more gains or being stopped out and lose nothing",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 129299852,
+        "name": "Kingsize648",
+        "handle": "kingsize648",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-02-14T11:41:22.917Z",
+        "reader_installed_at": "2025-02-14T11:41:01.205Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "f758cbe9-da62-469a-bfda-24f842f23126",
+          "created_at": "2025-05-06T11:45:26.188Z",
+          "updated_at": "2025-05-06T11:45:26.188Z",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+          "user_id": 314836480,
+          "body": "This is trading this is risk management",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "mentions": null,
+          "threadMediaUploads": [],
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "This is trading this is risk management",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 314836480,
+          "name": "Leonida",
+          "handle": "leonidatrading",
+          "previous_name": "Leonida Trading",
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/10af1791-08ad-4a42-8c38-be2fcfd8b615_1082x1179.jpeg",
+          "bio": null,
+          "profile_set_up_at": "2025-02-01T10:33:31.642Z",
+          "reader_installed_at": "2025-02-01T10:32:56.744Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-01T10:29:09.601Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    }
+  ],
+  "post": {
+    "communityPost": {
+      "paywallInfo": null,
+      "id": "864214e2-f814-4615-86bc-cbc944d0bbdb",
+      "created_at": "2025-05-05T08:59:40.842Z",
+      "updated_at": "2025-05-06T12:27:48.405Z",
+      "user_id": 204864402,
+      "publication_id": 2679129,
+      "body": "MONDAY CHAT (05/May)",
+      "link_url": null,
+      "status": "published",
+      "type": "media",
+      "audience": "only_paid",
+      "media_assets": [
+        {
+          "id": 128378685,
+          "url": "https://substack-post-media.s3.amazonaws.com/public/images/7e427380-0237-4673-87a5-5f5b5d9ef018_1123x525.png",
+          "imageWidth": 1123,
+          "contentType": "image/png",
+          "imageHeight": 525
+        }
+      ],
+      "is_locked": true,
+      "pub_moderation_status": null,
+      "trust_and_safety_status": null,
+      "is_edited": false,
+      "comment_count": 378,
+      "max_comment_created_at": "2025-05-06T11:58:17.079Z",
+      "reaction_count": 0,
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z"
+      },
+      "threadMediaUploads": [],
+      "recent_commenters": [
+        {
+          "id": 129299852,
+          "photo_url": null,
+          "name": "Kingsize648",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb"
+        },
+        {
+          "id": 54743627,
+          "photo_url": null,
+          "name": "Eli",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb"
+        },
+        {
+          "id": 314836480,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/10af1791-08ad-4a42-8c38-be2fcfd8b615_1082x1179.jpeg",
+          "name": "Leonida",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb"
+        },
+        {
+          "id": 33634060,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/8b2edac9-f51b-44dd-a1fd-d3ee9dfd4134_4032x3024.jpeg",
+          "name": "David P",
+          "post_id": "864214e2-f814-4615-86bc-cbc944d0bbdb"
+        }
+      ],
+      "reactions": {},
+      "muted": true,
+      "left_pub_chat": false,
+      "reported_by_user": false,
+      "user_pub_role": "admin",
+      "most_recent_comment_created_at": "2025-05-06T11:58:17.079Z",
+      "mediaAttachments": [
+        {
+          "type": "image",
+          "url": "https://substack-post-media.s3.amazonaws.com/public/images/7e427380-0237-4673-87a5-5f5b5d9ef018_1123x525.png",
+          "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/7e427380-0237-4673-87a5-5f5b5d9ef018_1123x525.png",
+          "width": 1123,
+          "height": 525,
+          "explicit": false
+        }
+      ]
+    },
+    "user": {
+      "id": 204864402,
+      "name": "Alma",
+      "handle": "alma271828",
+      "previous_name": null,
+      "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+      "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+      "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+      "reader_installed_at": "2025-01-25T15:05:18.103Z",
+      "status": null
+    },
+    "pubRole": {
+      "membership_state": "subscribed",
+      "is_founding": true,
+      "role": "admin",
+      "created_at": "2024-06-04T17:16:22.957Z",
+      "can_post_notes_as_primary_user": false
+    },
+    "userStatus": null
+  }
+}

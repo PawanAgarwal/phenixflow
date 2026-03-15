@@ -1,0 +1,103 @@
+IV down/RV up, long zomma/short vanna - Intraday post (31/Oct)
+
+Window of Risk updated:
+
+Window of Risk Pt. 2 - Flows update
+
+Weekly post:
+
+FOMC week, Greeks breakdown - Weekly post (27-31/Oct)
+
+Zomma supply and short vanna being realized after yesterday sell-the-news event (familiar? I just posted it before), closing at my downside target. Market is underpricing the reality. More in details, below…
+
+PCEConsensus is core PCE ~ +0.2% m/m, ~+2.9% y/y for September. That was the immediate take after the softer CPI on Oct 24. But steady most likely.Institutions expect tariff effects to be a noise only. Very importantly, after the Fed’s cut and Powell’s tone, December cut odds slid from the mid-80s/90s to the ~68–75% area depending on venue/time—i.e., modestly dovish, not a done deal. That leaves room to re-price on even a tenth in core.
+
+However, let me remind you that shutdown is on. And market prices in only good news, not bad news. It is grounded, but a hidden left-tail.
+
+INTRADAY POSTCoding today’s positioning:
+
+We have another short fly pattern today with net slightly negative speed exposure, centering around 6864.98Upside realized volatility remains heavily sold, but this time they are more concerned about downside RV, relative to the downside probability that the distribution shows. This creates a rather sticky profile towards the center of the pattern, after yesterday’s flush.
+
+I mark the 6808 - 6894 range, where we can see rangebound, with gravity of 6864.98
+
+The centroid is at 6877.72 - 6891.56;below this area, we have some supportive flows, but they are weak!
+
+The downside pivot is at 6849.59,with net target of 6797.46, but we have a very important and strong support at 6808 during the day. Only if intraday RV is sold and skew is bid, it can be broken.
+
+Upside pivot is at 6892.11(kinda aligns with the upper bound of the marked range), and this is a heavy resistance. Very low probability to break it. if it does, the upside target is 6914.98
+
+So while the distribution says that the market expects a squeeze after yesterday panic hedging and supportive ranging, the positioning is sensitive towards any downside. So, be careful.Note that VIX and VVIX could not make new highs yet, that is natural in a vomma supplied environment. These flows must be tested. Realized volatility catched up to the downside while IV went down as it can be expected in a long zomma - short vanna environment:
+
+This is simply because zomma supply in a short vanna environment manages the upside realized volatility. IV went lower as it should be due to short vanna, but as it went down, gamma went slightly down too (positive zomma), expanding the realized volatility to the downside. If I use my GKYZ formula, the trend is more visible for RV:
+
+So, all in all, the intraday distribution shows: 1.) ranging2.) squeeze up then reversion down3.) retesting downside4.) breaking out to the upsideBut I think, looking at the bigger picture, the left-tail is fatter than what the market prices in intraday. Flies can work well, I would not go for directional bets, neither vol selling, rather being long vol. But don’t be overexposed and be ready to cover, once you see the price and skew behavior at the pivots.To be honest, when market is like this, I don’t like to force any trades, rather like to spend the session observing and studying…
+
+OptionsDepth Heatmap
+
+SCRIPT INPUTS=== SPX closed at 6822.34 ===
+
+99.73%, 6941.809893161537, , 6911.877888797916, 95.4%, 6882.0749465807685, Risk level, 6862.601353995437, 68.2%, 6852.142379654399, 68.2%, 6792.406860616063, Risk level, 6782.078646004563, 95.4%, 6762.605053419232, , 6732.671331419535, 99.73%, 6702.8701068384635
+
+=== ES closed at 6894.0 ===
+
+99.73%, 7020.495116164059, , 6988.799789910941, 95.4%, 6957.247558082029, Risk level, 6936.628854147288, 68.2%, 6925.551578424458, 68.2%, 6862.303354893494, Risk level, 6851.371145852712, 95.4%, 6830.752441917971, , 6799.0551189819125, 99.73%, 6767.504883835941
+
+=== SPY closed at 679.83 ===
+
+99.73%, 691.97428889926, , 688.9315268297788, 95.4%, 685.9021444496301, Risk level, 683.9226253590507, 68.2%, 682.8593228924916, 68.2%, 676.7871178877506, Risk level, 675.7373746409494, 95.4%, 673.75785555037, , 670.7149117865641, 99.73%, 667.68571110074
+
+=== VIX closed at 16.91 ===
+
+99.73%, 19.39862638919971, , 18.766159410347157, 95.4%, 18.154313194599855, Risk level, 17.748667093160304, 68.2%, 17.521114009122922, 68.2%, 16.275956619483736, Risk level, 16.071332906839697, 95.4%, 15.665686805400146, , 15.03065940970189, 99.73%, 14.42137361080029
+
+=== IWM closed at 244.85 ===
+
+99.73%, 251.62176580225403, , 249.9230905519999, 95.4%, 248.235882901127, Risk level, 247.1320850753596, 68.2%, 246.53712890423006, 68.2%, 243.15116506333882, Risk level, 242.56791492464038, 95.4%, 241.46411709887298, , 239.76519893641245, 99.73%, 238.07823419774596
+
+=== QQQ closed at 626.05 ===
+
+99.73%, 640.9894686823992, , 637.2436566300054, 95.4%, 633.5197343411996, Risk level, 631.0846009459685, 68.2%, 629.7737924717953, 68.2%, 622.3039251970791, Risk level, 621.0153990540314, 95.4%, 618.5802656588003, , 614.8340546922658, 99.73%, 611.1105313176007
+
+=== NDX closed at 25734.81 ===
+
+99.73%, 26348.920521303065, , 26194.942984847105, 95.4%, 26041.86526065153, Risk level, 25941.765245679133, 68.2%, 25887.88238787537, 68.2%, 25580.821662795206, Risk level, 25527.85475432087, 95.4%, 25427.75473934847, , 25273.760804937294, 99.73%, 25120.699478696937
+
+=== NQ closed at 26149.25 ===
+
+99.73%, 26794.538525782646, , 26632.727811425666, 95.4%, 26471.894262891325, Risk level, 26366.71223318875, 68.2%, 26310.077556972556, 68.2%, 25987.427153742807, Risk level, 25931.78776681125, 95.4%, 25826.605737108675, , 25664.77659612529, 99.73%, 25503.961474217354
+
+=== NVDA closed at 202.89 ===
+
+99.73%, 214.046859177545, , 211.23923071047182, 95.4%, 208.4684295887725, Risk level, 206.64986154283267, 68.2%, 205.66030166093321, 68.2%, 200.08134475941014, Risk level, 199.1301384571673, 95.4%, 197.31157041122748, , 194.50235760924755, 99.73%, 191.73314082245497
+
+=== AMZN closed at 222.86 ===
+
+99.73%, 233.44982082121504, , 230.78718108863129, 95.4%, 228.15491041060753, Risk level, 226.42876961674946, 68.2%, 225.49191412134493, 68.2%, 220.19663000575648, Risk level, 219.29123038325056, 95.4%, 217.5650895893925, , 214.90132747423584, 99.73%, 212.27017917878499
+
+=== AAPL closed at 271.4 ===
+
+99.73%, 279.82823077842943, , 277.71317989415957, 95.4%, 275.6141153892147, Risk level, 274.2403137723307, 68.2%, 273.4989413446291, 68.2%, 269.28469894029837, Risk level, 268.55968622766926, 95.4%, 267.18588461078525, , 265.0704524973098, 99.73%, 262.9717692215705
+
+=== GOOG closed at 281.9 ===
+
+99.73%, 293.8654329708836, , 290.8586927097564, 95.4%, 287.8827164854418, Risk level, 285.93235091118777, 68.2%, 284.8756531844131, 68.2%, 278.892599799195, Risk level, 277.8676490888122, 95.4%, 275.91728351455816, , 272.909531642543, 99.73%, 269.93456702911635
+
+=== TSLA closed at 440.1 ===
+
+99.73%, 468.6777891090051, , 461.47804118450654, 95.4%, 454.3888945545026, Risk level, 449.73071492973475, 68.2%, 447.18737962227493, 68.2%, 432.8966014033414, Risk level, 430.4692850702653, 95.4%, 425.81110544549745, , 418.6056945800782, 99.73%, 411.5222108909949
+
+=== TSM closed at 303.22 ===
+
+99.73%, 318.9378075902179, , 314.98384651277024, 95.4%, 311.078903795109, Risk level, 308.5169011579035, 68.2%, 307.12431556090274, 68.2%, 299.26475166856363, Risk level, 297.9230988420966, 95.4%, 295.36109620489106, , 291.4051521704151, 99.73%, 287.50219240978214
+
+=== AMD closed at 254.84 ===
+
+99.73%, 283.6072443873404, , 276.3218587342037, 95.4%, 269.2236221936702, Risk level, 264.5345613585337, 68.2%, 261.9330980991805, 68.2%, 247.54374021607796, Risk level, 245.14543864146628, 95.4%, 240.4563778063298, , 233.15367450528362, 99.73%, 226.0727556126596
+
+=== GC closed at 4038.3 ===
+
+99.73%, 4169.849304910271, , 4136.831255543294, 95.4%, 4104.074652455135, Risk level, 4082.6321157547613, 68.2%, 4071.0544910390936, 68.2%, 4005.277657165659, Risk level, 3993.967884245239, 95.4%, 3972.5253475448653, , 3939.5007504482687, 99.73%, 3906.75069508973
+
+=== SI closed at 48.73 ===
+
+99.73%, 51.203174539664, , 50.58110209483934, 95.4%, 49.966587269832, Risk level, 49.563459819866765, 68.2%, 49.34442012688885, 68.2%, 48.10773329040858, Risk level, 47.89654018013323, 95.4%, 47.493412730168, , 46.871041200031826, 99.73%, 46.256825460335996

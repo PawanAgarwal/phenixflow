@@ -1,0 +1,81 @@
+Important trading advice + Intraday post (16/June)
+
+SPX is trading at 6013 while I’m writing these lines…Here you can find the weekly post. On Friday, during the power hour I signaled that firms are buying and holding the index up. The setup into FOMC favors for reversion trades, a bit more edge on the long delta side.
+
+The key, I keep emphatizing for you, that you cannot beat the HF algos. There are two reasons for that: 1) Because, you cannot be that fast in terms of reading complex conditions, and fill trades; 2) Because you cannot be that emotionless, and disciplined. You will be distracted by win or loss.During the day there is only one intraday edge opportunity, two at max. Usually during the AM, and after 2 PM. In the first 20-30 min, intraday vol is high, bcs that when ppl are taking their 0DTE positions. You better watch during the first 30-40 min, and wait for the market to decide where it wants to go, and to build a structure (to have a retested support or resistance zone, to show its net drift, to unveil which effects are the most influential, etc.).
+
+You probably keep your spendings/incomes in check, so you know how much capital you should put into trading. If so, you should decide your daily budget, including your loss limit, and also your profit limit. Also you should decide, which side (long or short) you ‘feel’, which side you are familiar with to read, then based on the intraday setup, you should decide at what point and what conditions you will take your trade, and in what size. With this conscious planning you also determine, what conditions would disprove your trade and you take the loss.
+
+The next thing you need to do is to wait, wait and wait, until the market gives it to you. If it doesn’t give it to you, don’t fomo into the otherside, but wait for the next one or leave the desk, and leave it for tomorrow. You are not obligated to give your money to the market makers. The key is the careful and conscious planning, and to feel secure with it. You have to understand your decision, you have to be able to explain to yourself or to your wife, why you took that certain position. The worst that can happen is that you were wrong, and you took your loss within your limit. This is crucial, because insecurity leads to over-hesitation or to undisciplinated fomo-behavior.For fast jump-in trades, use market orders, for more calculated and patient trades, use limit orders. No trailing stop-loss. And when the trade goes into your favor, and momentum is proved, size up, and roll when the contract reaches 80-85 delta (roll back towards 50 delta). For intraday trading I like to use 60/70 delta ITM contracts due to the theta, and 50 delta ATMs when conviction is high. I use 22 delta OTMs for swing trades, with weekly expo at least. And if the MM positioning is short fly pattern, be fast out, because of higher theta bleed.Me personally, I trade a distribution, sizing based on the simulated probabilitity values, using my own modified Heston-Nandi for that, then size up on the winners and close the losers. Also DCAing only 3 times at max, when I bet on long vol (but mostly 2 legs).
+
+Reversion lvls, shared at the end of every posts, give you the probabilities. Positioning based leves are giving you the support/resistance zones, also levels where dynamics shifts. You should look for divergences. And the momentum script I shared with you, gives you a straight-forward clue about the current momentum. While the educational posts give you practical insights of risk management, position sizing, market phases and dynamics. Also showed how to create your own simulation using Excel, etc.These things are enough to beat the market. All you need to do is to draw the levels on the chart, take notes of the dynamics, and make a plan.Take your time. Be responsible and calculated.
+
+INTRADAY POSTAs long as VIX can hold below 22.5, the VIX expo looks supportive into Tuesday close, but into Wednesday, VIX dealers will unwind their hedges. The more it approaches 18.5, the more violent it will be. Coding today’s intraday positioning:
+
+Speed profile is net positive, with a skewed short fly pattern. Market is locally betting on a hard stop at 6027.5 if vol doesn’t catch up to the upside. There is also a slight bet on spot up/vol up, that is possible locally above 6009, but we should see vol up materializing at 6013.65 If vol makes it to catch up and break the spread at 6025/30, I code 6050 as max, heavy vanna flip line. Market is betting on a rangebounding back towards 6000/6010 and a pin is possible, charm also suppressive above. The centroid falls to 5979.88, and downside pivot at 5954.75 (aligning with the weeklies), so below here vol catches up and momentum accelerates. But I code 5917 as the min, heavy vanna flip again. With elevated vol, these vanna flips stop the move, as delta hedging turns against the momentum.
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+And again: market doesn’t care about the war!
+
+SCRIPT INPUTS: === SPX closed at 5976.97===
+
+99.73%, 6091.380337582811, , 6062.7102830917465, 95.4%, 6034.175168791406, Risk level, 6015.526283765407, 68.2%, 6005.504471616949, 68.2%, 5948.298647780627, Risk level, 5938.413716234593, 95.4%, 5919.764831208595, , 5891.092811222669, 99.73%, 5862.559662417189
+
+=== ES closed at 5978.25===
+
+99.73%, 6095.6853557373815, , 6066.255473275428, 95.4%, 6036.967677868691, Risk level, 6017.825714883497, 68.2%, 6007.537101027217, 68.2%, 5948.818715071212, Risk level, 5938.674285116503, 95.4%, 5919.532322131309, , 5890.100314997452, 99.73%, 5860.8146442626185
+
+=== SPY closed at 597.0===
+
+99.73%, 609.1115944958644, , 606.0761323725451, 95.4%, 603.0557972479322, Risk level, 601.0816073451062, 68.2%, 600.0202587888308, 68.2%, 593.9643836485353, Risk level, 592.9183926548938, 95.4%, 590.9442027520678, , 587.9085069035568, 99.73%, 584.8884055041356
+
+=== VIX closed at 20.82===
+
+99.73%, 23.980511686514006, , 23.17691948965885, 95.4%, 22.400255843257003, Risk level, 21.885092438355223, 68.2%, 21.595678425476954, 68.2%, 20.0142817343863, Risk level, 19.754907561644778, 95.4%, 19.239744156742997, , 18.432689361307627, 99.73%, 17.659488313485994
+
+=== IWM closed at 208.89===
+
+99.73%, 214.62517370753102, , 213.18655882202566, 95.4%, 211.7575868537655, Risk level, 210.82275353943794, 68.2%, 210.31890623023665, 68.2%, 207.45125182104087, Risk level, 206.95724646056203, 95.4%, 206.02241314623447, , 204.58359551801442, 99.73%, 203.15482629246895
+
+=== QQQ closed at 526.96===
+
+99.73%, 539.6172650550511, , 536.4436162071943, 95.4%, 533.2886325275256, Risk level, 531.2254983235523, 68.2%, 530.1148722651582, 68.2%, 523.7861256307723, Risk level, 522.6945016764478, 95.4%, 520.6313674724745, , 517.4573762052507, 99.73%, 514.302734944949
+
+=== NDX closed at 21631.04===
+
+99.73%, 22137.915902454348, , 22010.83216176489, 95.4%, 21884.477951227174, Risk level, 21801.857179127117, 68.2%, 21757.389961622535, 68.2%, 21503.947661326907, Risk level, 21460.222820872885, 95.4%, 21377.602048772827, , 21250.505257294597, 99.73%, 21124.164097545654
+
+=== NQ closed at 21652.0===
+
+99.73%, 22161.29438783826, , 22033.602917247845, 95.4%, 21906.64719391913, Risk level, 21823.632208701492, 68.2%, 21778.951422020687, 68.2%, 21524.299825017843, Risk level, 21480.367791298508, 95.4%, 21397.35280608087, , 21269.64812258376, 99.73%, 21142.70561216174
+
+=== NVDA closed at 141.97===
+
+99.73%, 148.65261716176173, , 146.9724679106543, 95.4%, 145.31130858088088, Risk level, 144.2220419835137, 68.2%, 143.630938447215, 68.2%, 140.28939846179517, Risk level, 139.7179580164863, 95.4%, 138.62869141911912, , 136.9478471841831, 99.73%, 135.28738283823827
+
+=== AMZN closed at 212.1===
+
+99.73%, 219.51904244251645, , 217.65637929651533, 95.4%, 215.80952122125822, Risk level, 214.60021730312803, 68.2%, 213.94672105696986, 68.2%, 210.23705798210534, Risk level, 209.59978269687196, 95.4%, 208.39047877874177, , 206.52738981136454, 99.73%, 204.68095755748354
+
+=== AAPL closed at 196.45===
+
+99.73%, 203.41629209984166, , 201.66719921031034, 95.4%, 199.93314604992082, Risk level, 198.79764043764663, 68.2%, 198.18392099639905, 68.2%, 194.7006380536362, Risk level, 194.10235956235334, 95.4%, 192.96685395007916, , 191.21735012359446, 99.73%, 189.48370790015832
+
+=== GOOG closed at 175.88===
+
+99.73%, 182.2929387698832, , 180.68259129784397, 95.4%, 179.0864693849416, Risk level, 178.04116036545062, 68.2%, 177.47599340593513, 68.2%, 174.26939078500408, Risk level, 173.71883963454937, 95.4%, 172.67353061505838, , 171.06278316911175, 99.73%, 169.4670612301168
+
+=== TSLA closed at 325.31===
+
+99.73%, 351.96611927137894, , 345.23777847675274, 95.4%, 338.63805963568944, Risk level, 334.2931121944547, 68.2%, 331.90713638017206, 68.2%, 318.57627818140173, Risk level, 316.3268878055453, 95.4%, 311.98194036431056, , 305.24517556719314, 99.73%, 298.65388072862106
+
+=== TSM closed at 211.1===
+
+99.73%, 219.62605769419244, , 217.48409826644425, 95.4%, 215.36302884709622, Risk level, 213.97328144294286, 68.2%, 213.2208605873778, 68.2%, 208.95761438717182, Risk level, 208.22671855705713, 95.4%, 206.83697115290377, , 204.69435913340726, 99.73%, 202.57394230580755
+
+=== AMD closed at 116.16===
+
+99.73%, 121.83173178225867, , 120.40545011105473, 95.4%, 118.99586589112933, Risk level, 118.07137361062117, 68.2%, 117.56938284227566, 68.2%, 114.73330561823109, Risk level, 114.24862638937883, 95.4%, 113.32413410887067, , 111.89721768196111, 99.73%, 110.48826821774132

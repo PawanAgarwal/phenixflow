@@ -1,0 +1,83 @@
+CPI day as pivot, The Risk of Debt Burden, Fed + Intraday post (15/July)
+
+Very important post
+
+Weekly post
+
+DATA RELEASES, PERSPECTIVEToday, we get the CPI datas. I estimate a stronger report with higher probability, as YoY rates near multi‑month highs and tariff‑impacted goods and services keeping pressure on prices. This would take September cut’s off te table. However there is a chance for a milder upside core inflation (thats what the Fed actually looks at), +0.23% m/m, helped by tariffs (+8 bps), but still below consensus, and that would leave some room for September cuts.
+
+I tell you, what is Trump’s problem here…There is a looming debt‐service crisis under high interest rates. As Treasury yields rise, they increase discount rates, draw cash away from equities, and elevate risk premia, that compress valuations and trigger corrections. There’s a wide gulf between Fed‑fund futures (implying rate cuts) and Fed projections (no cuts until 2026), meaning a Fed surprise could send yields—and equity volatility—much higher. What Trump wants is to get those 3-mo. T-bill yields down by showing artificially low inflation, so that MMF managers pull cash out of bills (yields fall) and redeploy into equities or credit. I posted about the scheme. If Fed cut rates, it can keep the “fake growth” alive until the reality of credit dynamics hit later…
+
+What you need to watch is which side’s will prevails: Team Treasury/White House or the Fed’s technocrats. If the data is dovish enough to reprice Fed cuts or not. Data is always faked, we know that. But that will tell us how the market will evolve in the coming days, weeks and months, and who is in control and so what is the trade for the near-term…Bearmarket now or a crisis later. Thats the question.
+
+INTRADAY POSTCoding today’s positioning:
+
+The positioning is a net long speed. A very steep one. People are hedging left-tail. The centroid lies in the 6308.88, that is a crucial pivot. 6350 gamma is very high. If vol decreases sharply, it will reject the spot. Upside pivot is 6326.51; thats where the 6350 gamma starts to be magnetic. If upside vol is high, we can see fakeouts into 6390, and that line must be broken in order to get a melt up towards 6450 (gamma squeeze). This is when inflation print is good, but we need PPI and PCE too.
+
+Downside pivot is 6273.65, and it looks like a very strong support anyway. Makes sense, bcs market is like saying “if CPI is not that soft, PPI and PCE still can change the picture”. Only a very bad CPI print could take out the optimism now. Primal downside target is 6202, and I code this as a max. Then, between the downside pivot and downside max, that 6238 is a bit magnetic, and into the afternoon, spot can be pretty much stucked below the pivot. From there, there is a pivot after 2.30PM at 6245; above that, spot can retest 6285, and likely will close at 6260.Below, market will most likely be suppressed towards 6225.
+
+If print would be very bad (highly doubt, as there is a strong battle under the hood), 6128 is the primal downside target and liquidity is there to support the spot.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+SCRIPT INPUTS=== SPX closed at 6268.56 ===
+
+99.73%, 6365.140751586465, , 6340.949593604713, 95.4%, 6316.850375793233, Risk level, 6301.1077132846385, 68.2%, 6292.658865033321, 68.2%, 6244.368131005537, Risk level, 6236.012286715362, 95.4%, 6220.269624206768, , 6196.0773913937865, 99.73%, 6171.979248413536
+
+=== ES closed at 6309.5 ===
+
+99.73%, 6408.764689929268, , 6383.900283603782, 95.4%, 6359.132344964633, Risk level, 6342.9522005061635, 68.2%, 6334.267560701423, 68.2%, 6284.634831829582, Risk level, 6276.0477994938365, 95.4%, 6259.867655035367, , 6235.002096845702, 99.73%, 6210.235310070732
+
+=== SPY closed at 624.81 ===
+
+99.73%, 634.7997285331926, , 632.297364272001, 95.4%, 629.8048642665963, Risk level, 628.1765385156858, 68.2%, 627.3024607335858, 68.2%, 622.3075565647487, Risk level, 621.4434614843141, 95.4%, 619.8151357334036, , 617.3126517501867, 99.73%, 614.8202714668073
+
+=== VIX closed at 17.20 ===
+
+99.73%, 19.432250542245047, , 18.86593603944459, 95.4%, 18.316125652592252, Risk level, 17.95226893856544, 68.2%, 17.74929224500745, 68.2%, 16.632578792585168, Risk level, 16.447732587313467, 95.4%, 16.083875873286654, , 15.515780641754098, 99.73%, 14.96775098363386
+
+=== IWM closed at 223.19 ===
+
+99.73%, 229.0114871778597, , 227.55146130341757, 95.4%, 226.10074358892984, Risk level, 225.15184117893872, 68.2%, 224.6406574100362, 68.2%, 221.72985193335322, Risk level, 221.22815882106127, 95.4%, 220.27925641107015, , 218.8190448101838, 99.73%, 217.3685128221403
+
+=== QQQ closed at 556.21 ===
+
+99.73%, 567.2556985118631, , 564.4875195978495, 95.4%, 561.7328492559316, Risk level, 559.9324003984979, 68.2%, 558.9646036062048, 68.2%, 553.4416862826275, Risk level, 552.4875996015022, 95.4%, 550.6871507440685, , 547.9187675868408, 99.73%, 545.164301488137
+
+=== NDX closed at 22855.63 ===
+
+99.73%, 23297.978167828096, , 23187.12741437101, 95.4%, 23076.80408391405, Risk level, 23004.70133255807, 68.2%, 22965.95079077782, 68.2%, 22744.774117791796, Risk level, 22706.558667441932, 95.4%, 22634.455916085954, , 22523.597393957858, 99.73%, 22413.281832171906
+
+=== NQ closed at 23036.25 ===
+
+99.73%, 23486.843741630088, , 23373.923858510305, 95.4%, 23261.546870815044, Risk level, 23188.10009092934, 68.2%, 23148.62434579673, 68.2%, 22923.32478115221, Risk level, 22884.39990907066, 95.4%, 22810.953129184956, , 22698.02516303035, 99.73%, 22585.656258369912
+
+=== NVDA closed at 164.07 ===
+
+99.73%, 170.65511362980823, , 169.00081701170174, 95.4%, 167.3625568149041, Risk level, 166.28918329324537, 68.2%, 165.70810087808417, 68.2%, 162.41537828475074, Risk level, 161.8508167067546, 95.4%, 160.77744318509588, , 159.12264883068903, 99.73%, 157.48488637019176
+
+=== AMZN closed at 225.69 ===
+
+99.73%, 234.35708747250877, , 232.1802053581093, 95.4%, 230.02354373625437, Risk level, 228.61080847823544, 68.2%, 227.84646932931668, 68.2%, 223.51272584388735, Risk level, 222.76919152176455, 95.4%, 221.35645626374563, , 219.17897445950948, 99.73%, 217.02291252749123
+
+=== AAPL closed at 208.62 ===
+
+99.73%, 215.60320553711077, , 213.8502782053716, 95.4%, 212.11160276855537, Risk level, 210.97334026600632, 68.2%, 210.35855715795358, 68.2%, 206.8668321177273, Risk level, 206.2666597339937, 95.4%, 205.12839723144464, , 203.37510287903655, 99.73%, 201.63679446288924
+
+=== GOOG closed at 182.81 ===
+
+99.73%, 190.5249962781624, , 188.5863844189244, 95.4%, 186.6674981390812, Risk level, 185.40995374574072, 68.2%, 184.7286803255126, 68.2%, 180.87096744694702, Risk level, 180.21004625425928, 95.4%, 178.9525018609188, , 177.0132452088536, 99.73%, 175.0950037218376
+
+=== TSLA closed at 316.9 ===
+
+99.73%, 339.9576571996113, , 334.1435247428904, 95.4%, 328.4288285998056, Risk level, 324.67043047626896, 68.2%, 322.61291943020257, 68.2%, 311.08218241603225, Risk level, 309.129569523731, 95.4%, 305.3711714001943, , 299.5512984914807, 99.73%, 293.8423428003887
+
+=== TSM closed at 228.67 ===
+
+99.73%, 238.02231734659142, , 235.67264039625658, 95.4%, 233.34615867329572, Risk level, 231.8217309458013, 68.2%, 230.99624694748294, 68.2%, 226.31984379673264, Risk level, 225.51826905419867, 95.4%, 223.99384132670426, , 221.6434303299064, 99.73%, 219.31768265340855
+
+=== AMD closed at 146.24 ===
+
+99.73%, 155.246117243287, , 152.9780198341819, 95.4%, 150.7430586216435, Risk level, 149.2750615109877, 68.2%, 148.47445872212887, 68.2%, 143.97086617496907, Risk level, 143.2049384890123, 95.4%, 141.7369413783565, , 139.4672391474517, 99.73%, 137.23388275671303

@@ -1,0 +1,87 @@
+Intraday Prognostications and Tidings (06/Aug)
+
+Prologue
+
+Monthly outlook into Aug - Sept window + Weekly post (04/Aug - 08/Aug)
+
+InterlogueSo, lets think about it… Market priced in a range for the week. I derived it for you and showed it. The spot squeezed up there and now it is rangebounding as expected on Sunday (and proved on Tuesday).
+
+What does this tell us? Simple: bulltrap. Because, market has squeezed out, even faked out above the range only to take in back into the next day, and now it creates structural uncertainity, keeping VIX elevated above 16s (also longer VIX gamma there), and collect premium, mostly from bulls while buring theta and mood for bears. Today’s positioning is very telling, let’s look at it…
+
+Alma ex machina
+
+INTRADAY POSTCoding today’s positioning
+
+We can see a clear long fly pattern, with a net negative speed profile. (Don’t be visually cheaten by the huge gamma bar of 6340, the net effect is negative speed) This is a clear setup for a rangebound inbetween the pivotal levels (see below).The centroid range falls at 6281.83 - 6292.20This also serves as a very strong pivot today, getting even stronger as the time moves forward. So price can be either below or above it, but i’m not expect it to be broken during the day. Simply bcs a local vanna flip falls to there, at 6295/6301
+
+Downside pivot is at 6262.60After 11am, it serves as a very strong support, with fake-out potential down to 6245/40And a pin potential in the last 1.5 hours, if spot is above 6258 (otherwise 6240 is the magnet).Now, the the downside longer gammas should have their effect on intraday vol below 6277, however it has a potential to catch up before 11am (very unlikely by itself, a sudden sentiment shock is needed for it). If it does, 6240 - 6231 is the next supportive range, and here vol should calm down and revert back to 6258/60, then pin to 6240. But again, it is unlikely, market doesn’t bet on this.
+
+The upside pivot is 6332.37Volatility is expected to calm down here too, and then the spot would revert from the pivot. If right wing of the skew is bid (this is what the market bets on), the max level is 6368.49, and here, above the pivot if vol calms down, 6352 would pin.
+
+OptionsDepth Heatmap
+
+The distribution is not as right-tail heavy as before… very muted. The downside liquidity bet is stronger, so market expects further rangebound, not progression.
+
+EpilogueSCRIPT INPUTS:=== SPX closed at 6299.19 ===
+
+99.73%, 6396.031018828596, , 6371.774769532915, 95.4%, 6347.610509414298, Risk level, 6331.825423345236, 68.2%, 6323.353907919233, 68.2%, 6274.933040870042, Risk level, 6266.554576654763, 95.4%, 6250.7694905857015, , 6226.512168258529, 99.73%, 6202.3489811714035
+
+=== ES closed at 6324.5 ===
+
+99.73%, 6422.386972761514, , 6397.868427731497, 95.4%, 6373.443486380757, Risk level, 6357.48790982063, 68.2%, 6348.92458055812, 68.2%, 6299.980727778848, Risk level, 6291.51209017937, 95.4%, 6275.556513619243, , 6251.036869262004, 99.73%, 6226.613027238486
+
+=== SPY closed at 627.97 ===
+
+99.73%, 637.8729109802437, , 635.3923600700095, 95.4%, 632.9214554901218, Risk level, 631.3072810003422, 68.2%, 630.4408666989568, 68.2%, 625.4893727281609, Risk level, 624.6327189996579, 95.4%, 623.0185445098782, , 620.5378781432653, 99.73%, 618.0670890197564
+
+=== VIX closed at 17.85 ===
+
+99.73%, 19.95426921428133, , 19.421078406758042, 95.4%, 18.902134797875526, Risk level, 18.559138978127237, 68.2%, 18.368535961057713, 68.2%, 17.315943921261365, Risk level, 17.140861784812216, 95.4%, 16.797865965063927, , 16.26329265789181, 99.73%, 15.745731548658126
+
+=== IWM closed at 220.85 ===
+
+99.73%, 226.6916942561497, , 225.2265358713248, 95.4%, 223.77084712807485, Risk level, 222.81865096432244, 68.2%, 222.3056265330127, 68.2%, 219.38471553817203, Risk level, 218.88134903567754, 95.4%, 217.92915287192514, , 216.46380281974436, 99.73%, 215.0083057438503
+
+=== QQQ closed at 560.27 ===
+
+99.73%, 571.2138940742934, , 568.4713366637418, 95.4%, 565.7419470371467, Risk level, 563.9580923030369, 68.2%, 562.9993256359213, 68.2%, 557.5273133519987, Risk level, 556.5819076969631, 95.4%, 554.7980529628533, , 552.0552997746223, 99.73%, 549.3261059257065
+
+=== NDX closed at 23018.56 ===
+
+99.73%, 23460.229978118896, , 23349.551408874617, 95.4%, 23239.39498905945, Risk level, 23167.402782626068, 68.2%, 23128.71392705103, 68.2%, 22907.876397166016, Risk level, 22869.717217373935, 95.4%, 22797.725010940554, , 22687.03881781607, 99.73%, 22576.890021881107
+
+=== NQ closed at 23092.0 ===
+
+99.73%, 23533.834149412185, , 23423.115163767878, 95.4%, 23312.917074706093, Risk level, 23240.898108351907, 68.2%, 23202.195609233044, 68.2%, 22981.27600702117, Risk level, 22943.101891648093, 95.4%, 22871.082925293907, , 22760.356355743952, 99.73%, 22650.165850587815
+
+=== NVDA closed at 178.26 ===
+
+99.73%, 187.38183645800595, , 185.08732911976853, 95.4%, 182.82091822900298, Risk level, 181.334058886348, 68.2%, 180.52605596838941, 68.2%, 175.96476441747626, Risk level, 175.18594111365198, 95.4%, 173.699081770997, , 171.4034529981152, 99.73%, 169.13816354199403
+
+=== AMZN closed at 213.75 ===
+
+99.73%, 221.80612737724448, , 219.78286770011945, 95.4%, 217.77806368862224, Risk level, 216.4649149261314, 68.2%, 215.75463173114733, 68.2%, 211.72638920681803, Risk level, 211.0350850738686, 95.4%, 209.72193631137776, , 207.69813974571412, 99.73%, 205.69387262275552
+
+=== AAPL closed at 202.92 ===
+
+99.73%, 209.25944942049023, , 207.6685395626557, 95.4%, 206.08972471024512, Risk level, 205.0563944547052, 68.2%, 204.4987211163017, 68.2%, 201.32889971833913, Risk level, 200.78360554529476, 95.4%, 199.75027528975485, , 198.15907522712314, 99.73%, 196.58055057950975
+
+=== GOOG closed at 195.32 ===
+
+99.73%, 202.30828500964634, , 200.55360432017721, 95.4%, 198.81414250482317, Risk level, 197.67505204825082, 68.2%, 197.05932688924435, 68.2%, 193.5650445869758, Risk level, 192.96494795174917, 95.4%, 191.82585749517682, , 190.07075714470605, 99.73%, 188.33171499035365
+
+=== TSLA closed at 308.72 ===
+
+99.73%, 326.5793566768786, , 322.0835723851574, 95.4%, 317.64967833843934, Risk level, 314.7386032001081, 68.2%, 313.1530116359142, 68.2%, 304.2223990822455, Risk level, 302.70139679989194, 95.4%, 299.7903216615607, , 295.29173002393253, 99.73%, 290.86064332312145
+
+=== TSM closed at 232.47 ===
+
+99.73%, 242.02064870847155, , 239.62109110690545, 95.4%, 237.24532435423578, Risk level, 235.68856861475493, 68.2%, 234.84552487247694, 68.2%, 230.06994859687956, Risk level, 229.25143138524507, 95.4%, 227.69467564576422, , 225.29436164158378, 99.73%, 222.91935129152844
+
+=== AMD closed at 174.31 ===
+
+99.73%, 185.8408999666334, , 182.93546317430105, 95.4%, 180.0754499833167, Risk level, 178.19591328875546, 68.2%, 177.1692741041514, 68.2%, 171.40303530978693, Risk level, 170.42408671124454, 95.4%, 168.5445500166833, , 165.63674159812626, 99.73%, 162.7791000333666
+
+Post ScriptumWe just reached 2200+ subscribers.Thank you for you trust and support.I stay your quant with best wishes:
+
+~Alma

@@ -1,0 +1,1651 @@
+Chat Post
+2025-05-13T09:39:40.815Z | Alma
+TUESDAY CHAT (13/May)
+
+Replies
+2025-05-13T09:40:26.778Z | Alma
+You'll get a free highly educational post about current dynamics.
+You can share it, bcs it will be free until the intraday section.
+
+2025-05-13T09:40:38.565Z | Alma
+PERSONAL ANNOUNCEMENT
+I won’t work on May 24-26 (no weekly, no Monday post. If I see update, I will post it in short in the chat, but I won’t be at the desk)
+And July 24 - Aug 1
+
+2025-05-13T09:40:44.179Z | Alma
+If you don't have an OptionsDepth account yet, or if you already have one but want a 10% discount for next month, then use this link: https://optionsdepth.com/app?via=alma
+or my promo code ODALMA
+
+2025-05-13T09:49:03.844Z | Alma
+
+2025-05-13T09:49:29.267Z | Alma
+
+2025-05-13T10:15:54.629Z | Carlos Cuervo
+Alma do you expect a hot cpi or inline?
+
+2025-05-13T10:39:37.318Z | J.K.
+Good morning Alma.  I am not sure if you saw my question from yesterday but wondering if you can give some insight. VIX-piration is not until next week, not this week like the usual cadence.  Could you can touch on implications based on what you see for VIX-expiration knowing it is after OPEX?
+
+2025-05-13T11:03:54.348Z | Mas
+Is anyone getting an error with Almas volatility python code? All of sudden its not producing the data on the chart? line 1685, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+line 1752, in _getitem_axis
+    self._validate_integer(key, axis)
+
+2025-05-13T11:04:02.527Z | Mas
+those are the errors
+
+2025-05-13T11:04:09.003Z | Mas
+if anyone can help me
+
+2025-05-13T11:16:52.776Z | Stanley
+I can have a look. Where can I find this volatility python code?
+
+2025-05-13T11:36:18.735Z | Mas
+Hey Stanley i could of sworn i sent it to you in previous chats
+
+2025-05-13T11:36:58.521Z | Mas
+import numpy as np
+import math
+import pandas as pd
+import yfinance as yf
+import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+from scipy.stats import norm
+from datetime import datetime
+import datetime as dt
+
+symbol = "^GSPC"
+start_date = "2024-01-01"
+end_date = dt.datetime.now()
+price_data = yf.download(symbol, start=start_date, end=end_date)
+
+def standard_deviation(price_data, window=20, trading_periods=252, clean=True):
+    log_return = (price_data["Close"] / price_data["Close"].shift(1)).apply(np.log)
+    squared_log_return = log_return ** 2
+    rolling_squared_log_return = squared_log_return.rolling(window=window, center=False).sum() / (window - 1)
+    rolling_mean_log_return = log_return.rolling(window=window, center=False).mean()
+    squared_rolling_mean = (rolling_mean_log_return ** 2) / (window * (window - 1))
+    adjusted_variance = rolling_squared_log_return - squared_rolling_mean / window
+    adjusted_std_dev = adjusted_variance.apply(np.sqrt) * math.sqrt(trading_periods)
+
+    if clean:
+        return adjusted_std_dev.dropna()
+    else:
+        return adjusted_std_dev
+
+rolling_std_dev = standard_deviation(price_data)
+print(standard_deviation(price_data))
+
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(rolling_std_dev, label='Rolling SD')
+plt.title(f'Rolling SD of Logreturns for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized SD')
+plt.legend()
+plt.show()
+
+def parkinson(price_data, window=20, trading_periods=252, clean=True):
+    rs = (1.0 / (4.0 * math.log(2.0))) * (np.log(price_data["High"] / price_data["Low"])) ** 2.0
+
+    def f(v):
+        return (trading_periods * v.mean()) ** 0.5
+
+    result = rs.rolling(window=window, center=False).apply(func=f, raw=True)
+
+    if clean:
+        return result.dropna()
+    else:
+        return result
+
+p_volatility = parkinson(price_data)
+print(p_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(p_volatility, label='Rolling Parkinson vol')
+plt.title(f'Rolling Parkinson vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+def garman_klass(price_data, window=20, trading_periods=252, clean=True):
+    if not all(col in price_data.columns for col in ['High', 'Low', 'Close', 'Open']):
+        raise ValueError("price_data must contain 'High', 'Low', 'Close', and 'Open' columns.")
+
+    log_high_low = np.log(price_data['High'] / price_data['Low'])
+    log_close_open = np.log(price_data['Close'] / price_data['Open'])
+
+    gk_volatility = (
+        (0.5 * log_high_low ** 2) -
+        ((2 * np.log(2) - 1) * log_close_open ** 2)
+    )
+
+    gk_volatility = np.sqrt(trading_periods * gk_volatility.rolling(window=window).mean())
+
+    if clean:
+        gk_volatility = gk_volatility.dropna()
+
+    return gk_volatility
+
+gk_volatility = garman_klass(price_data)
+print(gk_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(gk_volatility, label='Rolling Garman-Klass vol')
+plt.title(f'Rolling Garman-Klass vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+def rogers_satchell(price_data, window=20, trading_periods=252, clean=True):
+    if not all(col in price_data.columns for col in ['High', 'Low', 'Close', 'Open']):
+        raise ValueError("price_data must contain 'High', 'Low', 'Close', and 'Open' columns.")
+
+    log_high_open = np.log(price_data['High'] / price_data['Open'])
+    log_low_open = np.log(price_data['Low'] / price_data['Open'])
+    log_close_open = np.log(price_data['Close'] / price_data['Open'])
+
+    rs_volatility = (
+        (log_high_open * (log_high_open - log_close_open)) +
+        (log_low_open * (log_low_open - log_close_open))
+    )
+
+    rs_volatility = np.sqrt(trading_periods * rs_volatility.rolling(window=window).mean())
+
+    if clean:
+        rs_volatility = rs_volatility.dropna()
+
+    return rs_volatility
+
+rs_volatility = rogers_satchell(price_data)
+print(rs_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(rs_volatility, label='Rolling Roger-Satchell vol')
+plt.title(f'Rolling Roger-Satchell vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+def yang_zhang(price_data, window=20, trading_periods=252, clean=True):
+
+    log_ho = (price_data['High'] / price_data['Open']).apply(np.log)
+    log_lo = (price_data['Low'] / price_data['Open']).apply(np.log)
+    log_co = (price_data['Close'] / price_data['Open']).apply(np.log)
+
+    log_oc = (price_data['Open'] / price_data['Close'].shift(1)).apply(np.log)
+    log_oc_sq = log_oc**2
+
+    log_cc = (price_data['Close'] / price_data['Close'].shift(1)).apply(np.log)
+    log_cc_sq = log_cc**2
+
+    rs = log_ho * (log_ho - log_co) + log_lo * (log_lo - log_co)
+
+    close_vol = log_cc_sq.rolling(
+        window=window,
+        center=False
+    ).sum() * (1.0 / (window - 1.0))
+    open_vol = log_oc_sq.rolling(
+        window=window,
+        center=False
+    ).sum() * (1.0 / (window - 1.0))
+    window_rs = rs.rolling(
+        window=window,
+        center=False
+    ).sum() * (1.0 / (window - 1.0))
+
+    k = 0.34 / (1.34 + (window + 1) / (window - 1))
+    result = (open_vol + k * close_vol + (1 - k) * window_rs).apply(np.sqrt) * math.sqrt(trading_periods)
+
+    if clean:
+        return result.dropna()
+    else:
+        return result
+
+yz_volatility = yang_zhang(price_data)
+print(yz_volatility)
+plt.style.use('dark_background')
+plt.figure(figsize=(12, 6))
+plt.plot(yz_volatility, label='Rolling Yang-Zhang vol')
+plt.title(f'Rolling Yang-Zhang vol for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized vol')
+plt.legend()
+plt.show()
+
+plt.style.use('dark_background')
+plt.figure(figsize=(14, 8))
+
+plt.plot(rolling_std_dev, label=f'Standard Deviation (Current: {rolling_std_dev.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(p_volatility, label=f'Parkinson (Current: {p_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(gk_volatility, label=f'Garman-Klass (Current: {gk_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(rs_volatility, label=f'Rogers-Satchell (Current: {rs_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+plt.plot(yz_volatility, label=f'Yang-Zhang (Current: {yz_volatility.iloc[-1]:.4f})', color=np.random.rand(3,))
+
+plt.title(f'Volatility Estimators for {symbol}')
+plt.xlabel('Date')
+plt.ylabel('Annualized Volatility')
+plt.legend(loc='upper left')
+plt.grid()
+
+plt.show()
+
+2025-05-13T11:37:00.858Z | Mas
+this one
+
+2025-05-13T11:51:58.132Z | Leonida
+It works for me
+
+2025-05-13T11:53:40.192Z | Leonida
+
+2025-05-13T11:55:46.139Z | Leonida
+
+2025-05-13T12:14:43.037Z | Tom
+Who’s in puts ahead of cpi?
+
+2025-05-13T12:18:16.127Z | Michael
+SpotGamma
+@spotgamma
+Friday's expiration is setting up to be the most lopsided ever, as call values trounce the value of puts.I mean, 90% of Index options value expiring on 5/16 is calls?!?!
+
+Or huge squeeze, or if index consolidates, hedges unwinding and selling pressure.
+Alma, is this why you expect some selling pressure today and /or tomorrow?
+
+2025-05-13T12:23:03.629Z | Nevistrader
+https://x.com/CramerTracker/status/1922026685282529603
+
+2025-05-13T12:24:42.684Z | Michael
+So CPI could trigger a squeeze. Or we see supressed upside or pinning.
+Skewed 91,4% calls and 9,4% puts. Is extremely call heavy.
+
+2025-05-13T12:25:44.504Z | Steve Dursley
+
+2025-05-13T12:26:59.994Z | Steve Dursley
+
+2025-05-13T12:29:06.840Z | Michael
+If I was a market maker, I would reduce my risk by dropping the index and collect all premiums. :-)
+
+2025-05-13T12:34:02.627Z | Chad
+Bye puts
+
+2025-05-13T12:34:59.754Z | Eli
+took a wild short at 92
+
+2025-05-13T12:35:14.633Z | Eli
+figured collar should hold on first touch lol
+
+2025-05-13T12:37:00.777Z | Michael
+For the put buyers. The hope I can give you is that the first move is most of the times the wrong move. ;-)
+
+2025-05-13T12:39:02.803Z | Alma
+POST IS OUT
+
+https://stochvoltrader.substack.com/p/cpi-credit-spreads-stagflation-qt
+
+2025-05-13T12:41:51.517Z | Doc McGraw
+how does a MM 'drop the index'?
+
+2025-05-13T12:42:02.179Z | Alma
+https://x.com/alma18499/status/1922271001229902251
+
+2025-05-13T12:44:43.748Z | Michael
+by buying puts. :-) Spreading some misinformation. They have lot of tools in the boxes.
+
+2025-05-13T12:49:13.528Z | Jeffrey K
+went to level for a hot second, premarket spike and immediately retreated
+
+2025-05-13T12:50:16.247Z | Jeffrey K
+market makers can't move the index around at will.  Not at all.
+
+2025-05-13T12:50:38.877Z | Alma
+Tariff shock is now hard-coded into the headline CPI.
+Core inflation remains sticky, driven by services and shelter, And remember, that hte core inflation is what the Fed watches.
+without cut signals, yields stay elevated, and volatility-target funds remain sidelined retail sales, and PCE data to gauge supply-shock persistence
+Fed-funds futures show near-zero odds of a June cut
+
+2025-05-13T12:54:34.876Z | Chad
+Am I missing something Alma ? The core inflation reading m/m did rise but below expectation no ?
+
+2025-05-13T12:55:02.264Z | Carlos
+After watching the headline CPI print coming out as soft, Alma's analysis now makes me think about this more cafefully
+
+2025-05-13T12:56:00.315Z | Jeffrey K
+
+2025-05-13T12:57:11.713Z | Alma
+sticky
+
+2025-05-13T12:57:40.346Z | Michael
+Just look at the 10-year yield. Bond market mostly smarter than the equity market. This CPI is not soft.
+
+2025-05-13T12:58:57.946Z | Stanley
+Right, you did send it to me. I was confused about the error line number 1752 which was too big. The main.py only has 192 lines. The error must come from some library. I will have a look after market close.
+
+2025-05-13T12:59:24.559Z | Nevistrader
+Aramco CEO: Aramco to spend $3.4b to expand US refinery.
+
+2025-05-13T13:03:28.477Z | Doc McGraw
+MM do NOT do that   i  am 100% sure
+
+2025-05-13T13:04:08.867Z | Doc McGraw
+they are mecnaical  no discreartiantry  I Know cinspircaies appeal to folks   thats not how it works
+
+2025-05-13T13:11:17.936Z | kalless
+I’m still trying to digest Alma’s probability of a downward reversion that she discussed in today’s post.  To me, it seems like it would take a very impressive shock to get us there.
+
+2025-05-13T13:28:19.822Z | Jason
+Yeah on the surface that's a good point. If we are in a headline driven market we need a headline. Maybe PPI on Thu.
+
+2025-05-13T13:51:22.979Z | Michael
+From Convexvalue
+Calls > puts 10,5 : 1
+
+2025-05-13T13:53:47.021Z | Chad
+anyone still holding puts
+
+2025-05-13T13:58:45.054Z | J.K.
+Bear etfs for now.  Looking to add puts soon.
+
+2025-05-13T13:59:51.620Z | Terrence Chan
+I’m long iwm puts
+
+2025-05-13T13:59:56.378Z | Terrence Chan
+Morning everyone!
+
+2025-05-13T14:00:04.995Z | Michael
+Got some puts now.
+Can not imagine that they want this market to get out of control with these huge call positions and squeezes everyday.
+
+2025-05-13T14:00:34.623Z | Terrence Chan
+$208 1dte put
+
+2025-05-13T14:00:56.821Z | Terrence Chan
+@ 1.02
+
+2025-05-13T14:02:19.237Z | Jolene
+im waiting for 5889.97 spx per alma intraday note
+
+2025-05-13T14:02:23.437Z | Jolene
+to give it a try
+
+2025-05-13T14:06:34.103Z | meager man
+https://x.com/DeItaone/status/1922292200567669018
+
+2025-05-13T14:06:44.223Z | meager man
+the other shoe to drop at some point
+
+2025-05-13T14:06:59.117Z | meager man
+those yields like she posted about
+
+2025-05-13T14:12:33.373Z | Michael
+Oh well. She closed her puts yesterday.
+Will close mine from today. Will wait for better opps.
+
+2025-05-13T14:12:51.167Z | kalless
+It looks like the REITs and some of the interest rate-sensitive stocks are starting to notice the higher rates…
+
+2025-05-13T14:15:30.569Z | Robx
+Alma, what is usually your % SL on Puts?
+
+2025-05-13T14:16:04.224Z | Alma
+i don't hold a put taken at 5812 when market is above 5820 (yesterday close)
+
+2025-05-13T14:16:16.669Z | Alma
+nobody does that
+
+2025-05-13T14:19:16.766Z | Patriot
+5889 level. Does it push up or does it bounce from here
+
+2025-05-13T14:19:39.657Z | Patriot
+That is the question
+
+2025-05-13T14:20:54.692Z | Nevistrader
+If hourly closes above 5895.59, can go to 5915.5
+
+2025-05-13T14:22:06.110Z | Hem
+I got some delta 30 eow spx puts
+
+2025-05-13T14:22:14.452Z | Jolene
+Hey Alma are you still in ES shorts?
+
+2025-05-13T14:22:22.209Z | J.K.
+Crucial next 20 minutes
+
+2025-05-13T14:22:37.187Z | Michael
+I did not follow your trade yesterday. Bought puts today but closed quickly. Interested to know about the thesis you mentioned that there could be a dip to buy this week. May 13/14. Imagine that thesis is of the table now?
+
+2025-05-13T14:25:33.907Z | Jolene
+i think its more blow off topish if we continue here...a modest pullback would be more bullish if im intrepretting the notes right
+
+2025-05-13T14:28:10.923Z | Michael
+I an not buying here and hope for a small pull back.
+
+2025-05-13T14:29:46.533Z | Jolene
+thanks alma!
+
+It would be good to understand when you post these what your LIS (line in the sand)
+
+very profitable week no complaints just feedback
+
+appriciate you and all your hard work!
+
+2025-05-13T14:32:18.671Z | Alma
+i had no ES shorts open...
+
+2025-05-13T14:32:55.985Z | Jolene
+My mistake sorry
+
+2025-05-13T14:35:14.588Z | Boom
+Bears still alive?
+
+2025-05-13T14:35:43.501Z | han
+Barely
+
+2025-05-13T14:35:45.240Z | Boom
+What an amazing v recovery
+
+2025-05-13T14:35:50.461Z | Jolene
+I play both sides and alive and well
+
+2025-05-13T14:37:17.008Z | Jolene
+This weird tribalism with bears and bulls is so overplayed lol. Like the Cramer jokes
+
+2025-05-13T14:37:29.944Z | N8
+Somebody did. Is it worth diamond handing that opex put now at 30d?
+
+2025-05-13T14:39:26.041Z | J.K.
+Agreed.  Play the R/R and make money. Who cares which direction.
+
+2025-05-13T14:48:29.466Z | Boom
+Yea? Most aren’t profitable trading one direction, let alone both ways. If your account outperformed trading both ways during this time, def in the 1% minority. Lots of bulls are up 50%+ on their entire account in a few weeks.
+
+2025-05-13T14:49:17.487Z | Boom
+If you can copy trade fast enough, you’ve done fine
+
+2025-05-13T14:51:53.607Z | Jolene
+theres always some giga chad throwing shade because of their perception on how others trade. Cant argue with that. I hope you make good money and have good health sir.
+
+2025-05-13T14:55:19.724Z | Jolene
+is anyone playing longer term puts here for potential reversion?
+
+2025-05-13T15:00:07.725Z | han
+Here, since Alma said so in her intraday post
+
+2025-05-13T15:00:41.788Z | David P
+I am but small size for now considering the probabilities.
+
+2025-05-13T15:02:33.488Z | Jason
+Cautious plays, yes. More interested in waiting for post opex.
+
+2025-05-13T15:02:45.847Z | Jolene
+yeah same here but small shot since its underpriced
+
+2025-05-13T15:03:24.879Z | Jolene
+i got june mopex 22 delta very small
+
+2025-05-13T15:10:29.451Z | Boom
+Just trying to save people some money and frustration. People keep reloading puts everyday or have a bearish bias and missed the move up. Approach everyday with fresh eyes and watch the price action. If you’re going to short, at least just follow Alma’s signals or plan. Don’t do it on your own bc you read some headline on tariffs. That’s all I’m saying
+
+2025-05-13T15:11:01.252Z | Boom
+We just had a years worth of bull market in 2.5 weeks
+
+2025-05-13T15:14:17.044Z | Jolene
+The advice is great, but your approach isn't
+.
+You assume everyone was bearish and throw shade in a way thats no warranted.
+
+This discourages communication and others are less reluctant to share ideas because they dont want to hear this crap. At least not me, ill speak for myself.
+
+There is a way about giving advice and still being respectful.
+Just my opinion.
+
+2025-05-13T15:19:22.270Z | Boom
+? all i said was "any bears still alive" "what an amazing v recovery"
+
+2025-05-13T15:19:48.207Z | Boom
+anyways, GL. certainly a million ways to make money in the markets. but the goal isnt to make money. its to outperform, otherwise we'd all just buy indexes
+
+2025-05-13T15:20:03.245Z | han
+I am not exactly a bear, since I am also waiting to see if Alma's buyable dip and the underlying narrative can materialize
+
+2025-05-13T15:21:51.530Z | J.K.
+
+2025-05-13T15:22:40.652Z | Doritos
+The market goes up and down - bears must be alive the way bulls were alive when market fell down
+
+2025-05-13T15:23:08.293Z | Doritos
+Their turn will come soon
+
+2025-05-13T15:29:21.266Z | Praswell
+Headlines coming in as Alma predicted. wild stuff.
+
+2025-05-13T15:29:23.154Z | Marcus Carlsson
+800 points up with only 100 points pullback inside
+
+2025-05-13T15:31:11.474Z | Jeffrey K
+as speculative as it is...i'm calling significant top made a few minutes ago
+
+2025-05-13T15:32:08.743Z | Jeffrey K
+11:27 a.m.
+
+2025-05-13T15:36:04.710Z | Carlos
+will believe some kind of top once we lose 5850
+
+2025-05-13T15:42:22.484Z | Boom
+i wouldnt guess. we can grind to ATH. no one ever knows. trying to predict will affect your trading in my experience
+
+2025-05-13T15:42:30.893Z | Nevistrader
+5915 next
+
+2025-05-13T15:42:48.791Z | Boom
+we could also plummet 5,000
+
+2025-05-13T15:43:36.545Z | Jeffrey K
+agreed, ticked a new high after i posted.
+
+2025-05-13T15:47:53.997Z | Nevistrader
+Lol
+
+2025-05-13T15:48:21.674Z | meager man
+on a day of headlines reversion trading wasn't he move I was looking to make
+
+2025-05-13T15:48:44.146Z | meager man
+caught my piece of the pie and on hands watching from here
+
+2025-05-13T15:50:16.814Z | J.K.
+Top tick is 5899.99....that would be a very neat top tick if it holds. There had to have been so many sell orders at 5900. lol
+
+2025-05-13T15:50:50.781Z | Vman
+MBS isn’t throwing 1 trillion at SPX at 5900. But what do I know lol
+
+2025-05-13T15:51:14.881Z | Nevistrader
+QQQ reaching kind of top for the day 516.54, probably stall here..let's c
+
+2025-05-13T15:51:14.957Z | David P
+Shorted 5899 with very tight stop for a quick 5x RR that was free money 😂
+
+2025-05-13T15:52:08.165Z | DIma
+Shorted as well ES
+
+2025-05-13T15:52:47.233Z | meager man
+10yr at 4.5
+
+2025-05-13T15:53:12.819Z | JFinn81
+Epic clown show
+
+2025-05-13T15:53:26.139Z | Nada
+Alma you are the best!🐐 first time I traded with confidence knowing the levels and not bothering what people say 🍾
+
+2025-05-13T15:53:44.463Z | gogumappa
+5919 has been busy all morning
+
+2025-05-13T15:53:52.397Z | gogumappa
+lots of resting orders there
+
+2025-05-13T15:54:19.975Z | gogumappa
+ES
+
+2025-05-13T16:00:30.650Z | DIma
+
+2025-05-13T16:03:36.833Z | David P
+Sometimes I wonder if I should just make it all simpler and only wait for trades at big round numbers 😂😂
+
+2025-05-13T16:04:20.229Z | han
+Same as Alma said, it could go to 6500 if the geo and macro hurdles are cleared.
+
+2025-05-13T16:06:35.398Z | Jeffrey K
+we should go up and make another new high IMO
+
+2025-05-13T16:06:51.677Z | DIma
+Yeah but somehow still trying to short for a mean reversion; i am in disbelief with this push
+
+2025-05-13T16:07:54.443Z | DIma
+Got the red signal on 10m and now accepting below that big level on spx and daily most tarded area
+
+2025-05-13T16:08:04.932Z | Alma
+guys...
+i will tell, when it goes up to 80%
+
+2025-05-13T16:08:37.924Z | Doritos
+How much is it now ?
+
+2025-05-13T16:09:00.993Z | David P
+
+2025-05-13T16:09:10.705Z | David P
+
+2025-05-13T16:09:35.767Z | David P
+67.26% 😂
+
+2025-05-13T16:09:54.959Z | Gamma
+Alma your rant later on US-Saudi meet ?
+
+2025-05-13T16:10:47.163Z | J.K.
+The one other basic PA point that I feel like most are overlooking is the weekly gap. Weekly gaps are rare on the indices and most of the time they are filled within a week.
+
+2025-05-13T16:11:04.925Z | han
+Squeeze + headlines make the path more difficult to predict
+
+2025-05-13T16:11:58.818Z | Nevistrader
+UNH - Andrew Witty steps down after steep share decline; Chairman Stephen Hemsley returns as CEO
+
+2025-05-13T16:15:55.215Z | Chad
+why would we revert to 5491 ?
+
+2025-05-13T16:19:59.127Z | Jason
+You would have to review mean reversion trading. Alma has educational posts on it. Remember she's providing probabilities from her models, not absolutes.
+
+2025-05-13T16:21:46.748Z | meager man
+10yr/30yr and fed seems to be signaling all might not be well under the hood and some repricing will be needed to make real investors want to buy back into whatever positive narrative is being sold on the back of trade/Middle East/potential truce in Ukraine
+
+2025-05-13T16:21:52.723Z | Carlos Cuervo
+The different thing today is we had so many positive news and Trump comments pumping the market and the reaction is muted
+
+2025-05-13T16:21:54.815Z | meager man
+stagflation risks etc
+
+2025-05-13T16:22:04.406Z | Carlos Cuervo
+10y at 4.5
+
+2025-05-13T16:24:10.924Z | Chad
+200 SMA is now at 5752 - I find it hard to believe we will revert to 5491
+
+2025-05-13T16:26:04.508Z | Jason
+Equities can typically ignore that for a bit but it will come in if yields get thru resistance here. They would drop until Bessent comes out to calm markets (insert 'Yellen concerned' meme here). By that point be sure that Bessent and Powell pumped some backend liqudity in.
+
+2025-05-13T16:28:51.985Z | Doritos
+Looks like a head and shoulder on SPY
+
+2025-05-13T16:29:23.335Z | N8
+If SPX pins at 5850 today, what will it do to 28d puts for opex expiry?
+
+2025-05-13T16:30:17.028Z | Boom
+a lot of charts have the bottom reversal ihns right now. they are all breaking out of it, which puts most of these stocks at ATH. look at ARM for example
+
+2025-05-13T16:30:38.940Z | Boom
+target would be 168ish
+
+2025-05-13T16:32:08.070Z | Boom
+i dont know if you guys were trading during COVID, but this is very reminiscent of that period. many sold the bottom thinking SPX was going to 1,500 bc world was shut down. we just relentlessly climbed the wall of worry and left everyone behind
+
+2025-05-13T16:34:34.652Z | Paul
+to echo on this, agree not really any panic if looking at MOVE, HJG, BAMLH0A0HYM2 indexes
+
+2025-05-13T16:34:38.105Z | J.K.
+As of this moment, I would lean in this direction as well.
+
+2025-05-13T16:34:40.257Z | Nada
+Most stocks are running to their 61% retracement or breaking ATH. I think a reversal will happen when those set ups are done. Look at AAPL, Amazon, tesla, NVDA. The cant just keep on falling.
+
+2025-05-13T16:36:26.709Z | J.K.
+Where's Jeffrey with the H&S call out? lol
+
+2025-05-13T16:37:47.142Z | DIma
+Closed
+
+2025-05-13T16:38:02.363Z | Boom
+semi's are just setting up. if semi's break out, we are going to ATH easy. market moved without the biggest industry leading
+
+2025-05-13T16:39:29.945Z | DIma
+One thing i know for sure, the moment i long the market mean revert 5% min 😂😂😂
+
+2025-05-13T16:40:31.873Z | Nada
+Agree. Lets see how events unfold as Alma mentioned in her posts
+
+2025-05-13T16:41:07.215Z | Boom
+yup. day by day
+
+2025-05-13T16:46:11.785Z | Jason
+Yeah I was thinking about the lockout rally end of 2023 as well. Entries were tough. People who missed just chased or shorted and got squeezed.
+
+2025-05-13T16:48:22.944Z | Boom
+yup i remember
+
+2025-05-13T16:48:58.360Z | Boom
+shorting is dangerous because it really messes with you emotionally and mentally if the market continues to rip and evreyone makes money except you
+
+2025-05-13T16:49:19.949Z | 0Mik
+Yo, fellas, notice how every time the quant models call for a pullback..exactly what you need to build a solid base, the market never actually bounces on its own? And it ain’t Powell talking it up, it’s the gov stepping in to juice it. That straight-up kills the whole negative wealth effect on inflation that Alma pointed out
+
+2025-05-13T16:50:30.627Z | Boom
+my hedge fund buddies always say, bull markets are the hardest for them bc making money is not enough. investors want out performance. but in a bear market, redemptions dont hit as hard if you lose more than others (unless its a ridiculous amount) as long as you performed well in the bull. people are OK to lose when everyone else is losing. not OK to underperform when everyone is winning
+
+2025-05-13T16:51:09.191Z | Carlos
+therefore they are going to chase
+
+2025-05-13T16:52:52.925Z | Carlos
+The hard part is that they have been waiting for a significant dip that never comes. Probably Paul TJ also missed the rally it seems.
+
+2025-05-13T16:58:03.537Z | Alma
+nobody missed anything.
+there will always be waves that you will miss, and then what?
+never let it stick into your mind. move on, and check whats ahead of you.
+the biggest blunder is to trade without concenption.
+if you did a rational decision and was wrong, you did better mentally, than chasing and accidentaly win.
+
+in the first case you will win on the long run, on the second case you will lose everything.
+marathon. no sprinting
+
+2025-05-13T16:59:16.395Z | Alma
+gov put,
+
+2025-05-13T16:59:25.686Z | Alma
+but this is btw a good point
+
+2025-05-13T16:59:33.953Z | Alma
+lets think about, whats the purpose, beside the obvious
+
+2025-05-13T17:03:35.917Z | Carlos
+Reduce systematic risk in financial system due to high interest rates. Popularity and better polling. Positive market sentiment. Strengthen the dollar and strong bargaining power in the world
+
+2025-05-13T17:05:06.258Z | Jason
+Couldn't go to middle east with markets where they were
+
+2025-05-13T17:06:15.714Z | Rooster
+Similar thoughts to Carlos . . . Boost consumer confidence that all is actually OK in the economy, and prevent a self-fulfilling prophecy of a recession, or worse a deflationary spiral (although they need at least a mild recession to push down rates)
+
+2025-05-13T17:07:31.965Z | Carlos
+Makes sense. Flexing his power to Saudis on how easy he can control the financial markets. Sure bet for them
+
+2025-05-13T17:08:48.523Z | Carlos Cuervo
+I think he also needs to keep oil prices lower. He needs the Saudis. Alma I remember at one point the Saudis were not buying then . Is still the case?
+
+2025-05-13T17:11:38.431Z | Sharcus Aurelius
+With all this speculation of narrative it doesn’t seem to lead to any cohesive, concrete action in terms of investment decisions and trading. But knowing about this cluster of green dots sure would’ve been useful to know about. Seems that script is pretty accurate. Don’t know why there is such inconsistency with sharing data from Alma’s indicators.
+
+2025-05-13T17:13:35.387Z | Alma
+
+2025-05-13T17:14:10.432Z | Carlos Cuervo
+I cant find that indicator . Can you link it for me please?
+
+2025-05-13T17:14:22.261Z | Boom
+well, technically you could've miss 22% on the indexes in a month. many individual stocks are 50%+. so  yea, there was a lot to miss. but agree there will always be opportunities. i think its imporatnt to find a system that works for you, refine it and stick to it.
+
+2025-05-13T17:14:22.552Z | Alma
+i wrote about that, but we rode the waves well...
+
+2025-05-13T17:14:36.042Z | Boom
+when you have random entries you get random results
+
+2025-05-13T17:15:58.807Z | Alma
+nah, i mean....
+you missed 71% since 2023, and 165% since covid, etc.
+
+2025-05-13T17:16:34.997Z | Sharcus Aurelius
+That’s Alma’s own reversion script. She does not share that or post about it consistently.
+
+2025-05-13T17:17:37.626Z | Alma
+but the thing is, that 1) you got the signals, my trade signals performed well in this past one month. i see that i must write a revision on that...
+2) when upside is finally confirmed well, and market goes up like 700 pts, you won't be sorry about this april low
+
+2025-05-13T17:26:47.067Z | Sharcus Aurelius
+This in combination with options flow, over sold conditions, and very lucrative PE ratios should’ve given enough context for a swing higher, especially if there was an incentive to prop up the market heading into ME meetings.
+
+Of course, so much emphasis was put on Russia/Ukraine, that has now seemingly disappeared. To put the entire stake of the tariffs on the Ukraine/Russia conflict seems to be very misguided. And lead to being too conservative when we were trading 1,000 points lower.
+
+Getting caught into these subjective narrative driving feedback loops and taking your eyes of the hard data hasn’t done this Substack any justice.
+
+2025-05-13T17:30:39.440Z | Alma
+tariffs are the indicators of truce
+
+2025-05-13T17:30:52.796Z | Alma
+i spent almost 3 months to explain this
+
+2025-05-13T17:33:53.555Z | Alma
+you can get a move like this
+
+2025-05-13T17:34:02.973Z | Alma
+
+2025-05-13T17:34:10.210Z | Alma
+or this
+
+2025-05-13T17:34:15.546Z | Alma
+
+2025-05-13T17:34:28.470Z | Alma
+or this
+
+2025-05-13T17:35:17.729Z | Alma
+
+2025-05-13T17:36:01.043Z | Alma
+i tell you, all of them are possible now.
+bcs of geo risk
+
+2025-05-13T17:37:05.014Z | Alma
+it wouldn't be the first case
+
+2025-05-13T17:37:25.536Z | Alma
+18% dead cat bounce happened just right in 2022
+
+2025-05-13T17:37:44.561Z | Alma
+11% in 2015
+
+2025-05-13T17:38:01.505Z | Alma
+24% in 2009
+
+2025-05-13T17:38:26.350Z | Alma
+21% in 2002/03
+
+2025-05-13T17:39:01.542Z | Alma
+25% in 1975
+
+2025-05-13T17:39:15.132Z | Alma
+but...
+
+2025-05-13T17:39:21.565Z | Alma
+73% before the final bottom
+
+2025-05-13T17:39:37.327Z | Alma
+that was a 3 year rally
+
+2025-05-13T17:40:02.557Z | Alma
+15% in '62
+
+2025-05-13T17:40:03.627Z | Alma
+etc.
+
+2025-05-13T17:42:37.632Z | Alma
+hope you get the point
+
+2025-05-13T17:43:13.921Z | Alma
+market is now happy that recession is seems like avoided
+
+2025-05-13T17:43:21.430Z | Alma
+the tariffs effects can be dampened
+
+2025-05-13T17:43:52.279Z | Alma
+i keep telling about this.
+this is why i told you and explained you macro in the past one month, to make you understand how the mechanics are connected
+
+2025-05-13T17:44:27.186Z | Alma
+but soon it will realize that inflation is still sticky, and economy is in the same stagflation trap as before
+
+2025-05-13T17:45:18.947Z | Alma
+and worsened
+
+2025-05-13T17:45:33.796Z | Alma
+so growth is capped
+
+2025-05-13T17:45:55.998Z | Alma
+look
+
+2025-05-13T17:46:02.252Z | Alma
+look very closely
+
+2025-05-13T17:46:13.723Z | Alma
+market is always pricing something
+
+2025-05-13T17:46:18.075Z | Alma
+seems obvious, right?
+
+2025-05-13T17:46:19.848Z | Alma
+no.
+
+2025-05-13T17:46:50.757Z | Alma
+think about it... the price reflects something real.
+we are mostly speculants... all we care is ups and down, but to predict things, you have to go out of this bubble.
+
+2025-05-13T17:47:20.433Z | Alma
+what the price is trying to reflect is value. read my post about efficient market theory. i'M begging you!!!
+
+2025-05-13T17:48:01.376Z | Alma
+to build a value, you need narrative.. at least... and to make is stable, you need progression
+
+2025-05-13T17:48:12.716Z | Alma
+now
+
+2025-05-13T17:48:27.223Z | Alma
+this bullrun is what... speculation on vol selling. literally it is
+
+2025-05-13T17:49:03.116Z | Alma
+vol was shorted, dealers market makers are buying back, risk parities also buy a bit, shorts get squeezed etc.
+
+2025-05-13T17:49:32.732Z | Alma
+repo facilities, fed with bonds etc. i literally explained these dynamics how they work
+
+2025-05-13T17:49:56.861Z | Alma
+meanwhile gov kept sending bullish headlines, bcs quant trading algos are monitoring those
+
+2025-05-13T17:50:08.787Z | Alma
+and this all kept pushing market back up
+
+2025-05-13T17:50:11.755Z | Alma
+why?
+
+2025-05-13T17:50:26.674Z | Alma
+bcs gov knew that one bad headline, and market goes to lower lows
+
+2025-05-13T17:51:02.248Z | Alma
+bcs there is nothing except the emergency mechanisms that save the market's ass during this period
+
+2025-05-13T17:52:17.600Z | Alma
+same thing was with 2024... an artificial rally... i kept telling... market took back the returns of the last year in 3 days
+
+2025-05-13T17:52:51.634Z | Alma
+now,
+
+2025-05-13T17:52:54.990Z | Alma
+the problem is big
+
+2025-05-13T17:53:02.781Z | Alma
+bcs of china
+
+2025-05-13T17:53:16.465Z | Alma
+why china?
+many of you know, but there are ppl who simply don't listen
+
+2025-05-13T17:54:36.212Z | Alma
+US wants? - deal with russia and ME (it is good both geopolitically and economically)
+Russia wants? - full truce, and buffer zone,
+ME wants? - safe and stable economy, no stagflation. (simply bcs if this is the case, market will eventually fall big to wash inflation out... inevitable)
+
+2025-05-13T17:54:37.941Z | Alma
+but...
+
+2025-05-13T17:54:49.027Z | Alma
+EU doesn't want truce, and deal between US and Russia
+
+2025-05-13T17:55:11.532Z | Alma
+Trump threatens EU by WHO, NATO, and tariffs
+
+2025-05-13T17:55:17.893Z | Alma
+EU is weak in itself
+
+2025-05-13T17:55:21.309Z | Alma
+what can EU do?
+
+2025-05-13T17:55:38.777Z | Alma
+run to Xi, for financing it... new sugardaddy
+
+2025-05-13T17:55:55.096Z | Alma
+what can Trump do?
+threatens China, to step back
+
+2025-05-13T17:56:25.744Z | Alma
+China takes the fight, but it has worse cards, but knows about Trump's plan, so it plays for time, to keep his allies (Russia and ME close)
+
+2025-05-13T17:56:32.781Z | Alma
+get it?
+
+2025-05-13T17:56:48.604Z | Alma
+i cannot spell it more simple than this
+
+2025-05-13T17:57:26.372Z | Alma
+ME already see some opportunity so they carefully took some investments.
+
+2025-05-13T17:57:33.288Z | Alma
+Trump said, everything's gonna be ok.
+
+2025-05-13T17:57:34.628Z | Alma
+now...
+
+2025-05-13T17:57:38.170Z | Alma
+what else would he say
+
+2025-05-13T17:58:09.173Z | Alma
+you either 1) believe him, or 2) don't believe him.
+
+i said this.
+if you do, buy and hold.
+if you don't, wait until events unfold
+
+2025-05-13T17:58:45.402Z | Alma
+no need to overcomplicate it
+
+2025-05-13T17:59:08.610Z | Alma
+the problem is that the fight isn't over yet. still no truce, and inflation is still hgih
+
+2025-05-13T17:59:27.655Z | Alma
+and cuts are always being said "later, later, later..."
+
+2025-05-13T18:00:08.754Z | Alma
+the rally didn't let the market to have its negative wealth effect run through on the economy well... it was too fast.
+
+2025-05-13T18:00:14.405Z | Alma
+it was out of control
+
+2025-05-13T18:00:21.823Z | Alma
+Trump was impatient
+
+2025-05-13T18:00:30.015Z | Alma
+market must have been bailed out
+
+2025-05-13T18:00:34.807Z | Alma
+they did, artificially
+
+2025-05-13T18:00:56.927Z | Alma
+but this is a house of cards
+
+2025-05-13T18:00:58.766Z | Alma
+for now
+
+2025-05-13T18:01:23.402Z | Alma
+until no real progression.
+if the deals are ok, we can say the grind up until next FOMC is justified, and can be longed
+
+2025-05-13T18:01:29.916Z | Alma
+without taking too much risk
+
+2025-05-13T18:01:35.792Z | Alma
+then wait until next FOMC
+
+2025-05-13T18:01:48.681Z | Alma
+what is the POV of inflation
+
+2025-05-13T18:02:03.685Z | Alma
+if they take inflation down (even on papers), or not
+
+2025-05-13T18:02:17.377Z | Alma
+if they do, they will stimulate growth
+
+2025-05-13T18:02:43.977Z | Alma
+if the truce is done, it is a clear sign that US won over China for now, and market can go up, bottom is confirmed, and no other  job than long and hold
+
+2025-05-13T18:02:53.314Z | Alma
+it will go to 7000, 7100 etc.
+
+2025-05-13T18:03:10.425Z | Alma
+Putin wants the deal
+
+2025-05-13T18:03:23.470Z | Alma
+but what if China sets up a trap that we don't know about
+
+2025-05-13T18:03:56.706Z | Alma
+what if, they use this period until midsummer, august, to handle their inner problems and set up another trap, and attack back economy
+
+2025-05-13T18:04:21.522Z | Alma
+china has shortages, we saw that, i showed you, that Xi is prepared for a prolonged trade war
+
+2025-05-13T18:05:00.191Z | Alma
+another attack that is out of Trump's control...
+supply shocks, and boom... EU provokes Russia more via Ukraine, and no truce.. new lows
+
+2025-05-13T18:05:03.054Z | Alma
+ok?
+
+2025-05-13T18:05:03.509Z | Alma
+so
+
+2025-05-13T18:05:05.609Z | Alma
+pls
+
+2025-05-13T18:05:07.003Z | Alma
+...
+
+2025-05-13T18:05:12.352Z | Alma
+narrative matters
+
+2025-05-13T18:05:30.679Z | Alma
+without narrative, they cannot sell their products
+
+2025-05-13T18:05:48.408Z | Alma
+give me a sign that you have read it
+
+2025-05-13T18:09:56.403Z | Carlos
+So by truce = signed deal btw Ukraine and Russia that peace has been achieved = China lost = Market saved
+
+2025-05-13T18:11:30.501Z | Δboy
+that could be considered check... checkmate dosnt happen much in geopolitics but yes thats what we really want to see. it opens up russia to the worldwide economy again.
+
+2025-05-13T18:11:39.844Z | Carlos
+and then EU won't have another choice but to give in and sit on the table with US.  In the meantime that is why no other EU countries have negotiated with US since part of EU (unlike UK)
+
+2025-05-13T18:12:36.248Z | N8
+@alma when you’re not at your desk is your SL set by your algo or manual?
+
+2025-05-13T18:14:59.540Z | Boom
+i'm not criticizing you. you have  your way of trading, that's fine. but there are people in here that are hanging by every word you write and when you even mention a potential bearish stance, they are loading puts even though you are writing in probabilistic if/then type scenarios. they cant seem to adjust to new data from a month ago and still think the world is ending
+
+2025-05-13T18:16:21.666Z | Δboy
+well, how many times did she tell ppl not to do that? lol.
+
+2025-05-13T18:17:25.817Z | Boom
+i know and they dont listen lol. like, stop fighting the price action. there is too much obsession with top ticking. i'd rather be late to the party than the first one there
+
+2025-05-13T18:17:59.495Z | David P
+Who are the the people getting wrecked boom?
+
+2025-05-13T18:18:00.779Z | Boom
+you will have way more conviction by being a little late and catching the meat of the move. Jesse livermore's 1/8th quote
+
+2025-05-13T18:18:16.995Z | Δboy
+some ppl just wont get it... no matter how many times you sit down and explain, try to articulate, explain again, post disclaimers, long rants about it over and over... draw pics for gods sake... its like ...
+
+2025-05-13T18:19:13.632Z | Boom
+some are still subs but dont comment here. i have a few people in my DM's asking for advice bc they either cant stop shorting or they missed this entire move bc they were bearish leaning
+
+2025-05-13T18:19:28.607Z | Δboy
+Fortunately for some unfortunately for others... this isn't idiocracy.
+
+2025-05-13T18:20:31.608Z | David P
+Fair enough 👍
+
+2025-05-13T18:21:08.229Z | Jolene
+Ray Dalio on X: "The Art of the Deals and the Forces Behind Them" / X
+
+2025-05-13T18:21:08.900Z | N8
+Is criticism required to get a response to a question? 🙋🏽‍♂️
+
+2025-05-13T18:21:24.171Z | Jolene
+https://x.com/RayDalio/status/1922337839825482027
+
+2025-05-13T18:21:26.111Z | Δboy
+q&a channel exists...
+
+2025-05-13T18:21:31.458Z | 670583
+Does anyone know the post(s) where Alma her about her Hidden Markov Models and Hurst Exponent?
+
+2025-05-13T18:21:55.355Z | Δboy
+yeah there are a bunch of all that . start in "educational posts"
+
+2025-05-13T18:22:28.248Z | Δboy
+she doesnt do the work for you but if you do you will figure it out
+
+2025-05-13T18:22:58.080Z | David P
+I’ve been thinking the same.
+
+2025-05-13T18:24:25.157Z | N8
+
+2025-05-13T18:25:15.997Z | 670583
+Brother, I’ve been here since day 1. She posted an intraday post with the values, that’s what I’m looking for
+
+2025-05-13T18:27:06.437Z | N8
+Q&A channel has replies turned off. Nothing has been posted in it since feb 24th.
+
+2025-05-13T18:28:24.923Z | Orange Swan
+Do you think this is less likely now after Xi’s flashy visit at Moscow on victory day?
+
+2025-05-13T18:28:28.343Z | 670583
+I wouldn’t expect an answer, there’s over 1000 people here. She’s defiantly got a life outside of this so highly unlikely she answered for the most part. Is what it is and can’t blame her in all honesty
+
+2025-05-13T18:29:01.118Z | Raju siruvuri
+
+2025-05-13T18:31:38.894Z | David P
+Except that if most critics get a reply and quite fast. Big Alma fan here (and Alma replied to a question of mine yesterday), just been noticing that dynamic happening a bit. Which is natural of course no one likes being criticised.
+
+2025-05-13T18:34:43.967Z | N8
+Anyone still hanging on to dogshit puts waiting for an exit dip? Asking for a friend.
+
+2025-05-13T18:35:05.945Z | 670583
+I’ve noticed with traders and especially formally educated individuals (think doctors) the “god-complex” is quite wild. Just part of the game usually and it’s valid many times because of how informed they are.
+
+2025-05-13T18:37:19.425Z | Jeffrey K
+10 yr. at 5.505 is interesting
+
+2025-05-13T18:37:59.983Z | Alma
+this is very important.
+this is the furu-thing that is devastating, and built this wrong culture. chasing the trone of "the best trader".
+but the best trader is not who is top ticking everything, and not even the one who generates the most alpha.
+but the one who can sustain a stable growth with the less risk possible.
+this is what many don't understand.
+they play the guessing race instead, and lose.
+
+i rather proud of the growth i generated via rational decisions, thatn the ones that were on pure luck (like in the first times).
+furus created this wrong culture. and this is what Wall Street likes the most. they can push the crowd here and there by that
+
+2025-05-13T18:39:01.419Z | Jeffrey K
+furus just snake oil salesmen that have been around forever is some form
+
+2025-05-13T18:39:02.965Z | Robx
+As Dalio Dixit:
+" Remember that the news, to be of value, should be viewed in the context of the conditions of the big forces that transpire together to determine the direction of big cycle changes, most importantly changes in the monetary order, the domestic political order, the world geopolitical order, climate changes, and technology changes (i.e., the Big 5).
+    Remember that we are on the brink of big changes in the monetary, domestic political, and international orders and that everything depends on whether or not these things are handled in smart, cooperative ways.
+    Remember that, in your investing, it is important to 1) have a well-thought-out investment game plan that includes smart diversification that you're sticking with and to 2) not respond after the fact to news and market movements without careful consideration."
+
+2025-05-13T18:39:34.583Z | Δboy
+Jobs made an asshole comment to comcast CEO once... He went home and asked his CTO what steve was talking about and it ended up making their company billions.    ppl need to be less fragile. learning is hard.
+
+2025-05-13T18:40:03.526Z | Alma
+i closed the Q&A bcs ppl started to pose the same Qs over and over again, without reading.
+i will open that channel rather periodically... than letting it open always.
+
+btw, i saw no criticism here
+
+2025-05-13T18:40:27.689Z | Δboy
+so..... dont rely on signals? lol
+
+2025-05-13T18:40:48.160Z | Δboy
+jk i apologize :(
+
+2025-05-13T18:42:18.526Z | Jeffrey K
+if market gets sold thru this gamma today...it's gonna get ugly ahead
+
+2025-05-13T18:42:35.395Z | Alma
+and they claim they outperformed the market in april by 2548975645% etc.
+
+ok, you can 1) deposit money on your account, and you balance will increase, and you just screenshot it... or 2) photoshop, or 3) you got lucky.
+ppl bought at the bottom. i did, and many of the members here did... also real time shorted the upsticks, and shorted VIX when it was safe... and voilá...
+i didn't perform 80x alpha this month... but what i did is at least real, and closed the month green.
+if ppl only followed the trades i made, literally.. they ended up green. you can simulate it. nothing is deleted
+
+2025-05-13T18:43:04.831Z | Alma
+
+2025-05-13T18:43:13.305Z | Alma
+he is right
+
+2025-05-13T18:43:26.523Z | Boom
+1000% agree and what i've been trying to convey
+
+2025-05-13T18:43:29.118Z | Robx
+Alma, Don't leave those great Q&As, most of us enjoy and value them, even if we don't post at that moment
+
+2025-05-13T18:44:21.552Z | Alma
+i don't leave it, just need to be moderated.
+i will pre-announce open, and will open for a while, then close it again
+
+2025-05-13T18:44:57.722Z | Δboy
+i literally came on here just to give alma props because ive been seeing news come across the wire all day... i wanted to say " damn, props to alma for calling this basically exactly months ago" (dispite circumstances and moves nobody could have predicted) remember, this is 4d chess per say.     but then i saw the epic rant and same old "where r signals". "whats next bull trade" .... and lost my narrative...           anyways ....  " damn, props to alma for calling this basically exactly months ago" !!!!!!
+
+2025-05-13T18:45:08.305Z | Boom
+funny that you were the one calling me names simply bc i was saying not to be so bearish biased and letting price action dictate last week
+
+2025-05-13T18:47:11.024Z | Boom
+if your positions aren't working right away, cut it. no reason to hold options to 0 bc you're waiting for some unforeseen event to come save you. i'm trying to get better at this as well. focus on stacking and growing the account and less volatility to my pnl
+
+2025-05-13T18:47:34.310Z | Boom
+but i dont trade options much. sometimes spreads/flys/etc. mostly just individual stocks
+
+2025-05-13T18:51:16.296Z | Alma
+you know, this is also a crucial thing.
+
+ppl usually have a mindset for bullish or bearish bias that is hardly changeable. This is natural.
+to switch fast, is very hard.
+to be versatile is very hard. Two different approach. (i mean, in trading, not in a relationship.. but there too)
+
+so it is ok, if somebody understood the bear side, or the bullside of the tape.
+it is okay if somebody starts to play only for short or long, if he has a tactics.
+martingale, etc. sized right... just like that IC whale does in some weeks. He has a bias, he trades it. But he is definitely prepared. and via martingale he will take back the prvious losses.
+mean reversion trading is bit riskier, written in the educational post.
+
+but the main mistake is not cutting the loss. not recognizing when to quit, and wait for a better entry.
+this is why strategy and read matters.
+
+2025-05-13T18:52:34.418Z | han
+In theory, yes. Don't overestimate Xi and the Communist Party; they are not as competent as their counterparts. Xi, even compared to his predecessors, is an unusual Russia simp. The US can make a U-turn with an election; China doesn't enjoy this flexibility.
+
+2025-05-13T18:52:51.192Z | David P
+Definitely working on this also. All these news bombs recently encourage bad habits and they are a special case.
+
+2025-05-13T18:56:29.175Z | ac 507
+agreed
+
+2025-05-13T18:57:16.012Z | Praswell
+Alma, there was a recent Opex scenario where the am expiry was supported but the pm was not- I remember it was because the dealers had a ton of delta to sell (can't remember which opex specifically). Is this week setting up similarly or is it too early to tell?
+
+2025-05-13T18:58:07.174Z | Praswell
+*this is not a bullish or bearish question, I'm just trying to learn.
+
+2025-05-13T18:59:12.854Z | Robx
+Mental flexibility is a fundamental quality in trading, but unfortunately, as you said, it's common to lack it and fall into biases, both rational and irrational, most of the time without realizing it. It requires a great effort of self-knowledge and willpower to create the necessary mental flexibility. It usually comes after a great deal of pressure and some big mistakes that make you rethink your pre-established mental framework.
+
+2025-05-13T18:59:12.880Z | Nevistrader
+CHTR - Possible Bullish Engulfing close today, could get to 433 by EOW. 430C is $0.50. If it does get the momentum, could 6X..just a thought. If anyone who only plays options on stocks
+
+2025-05-13T18:59:48.896Z | N8
+I don’t call anyone names. I called you out for creating drama. I have zero interest in arguing with you or anyone. I will simply block you.
+
+2025-05-13T19:01:23.328Z | Jeffrey K
+tape feels similar to me when a determined seller was gaming the gamma level liquidity
+
+2025-05-13T19:01:39.243Z | Nevistrader
+Guys..what's the use in fighting with each other. Let's use the great knowledge that so many have to share and grow..just my 2c
+
+2025-05-13T19:07:31.939Z | N8
+I blocked him.
+
+2025-05-13T19:10:30.516Z | RNR
+Anyone has the charm for today?
+
+2025-05-13T19:13:52.880Z | han
+However, the Europeans are the politically-crafty ones; I would not be surprised if they used this period to consolidate/plan.
+
+2025-05-13T19:18:43.385Z | Boom
+thank you
+
+2025-05-13T19:20:05.355Z | Δboy
+like in dune... where he says something like " our enemies are all around us but i do see a thin narrow way through",  thats how i see things right now... we had a big dip and ppl always wake up the night after wishing they could take it all back... but we are not out of the woods yet.
+
+2025-05-13T19:22:55.493Z | Vman
+Unrelated. Anyone see the inside of that plane from qatar? Shits unreal
+
+2025-05-13T19:23:59.204Z | Vman
+Also isn't giving AI chips to Qatar a massive global security risk?
+
+2025-05-13T19:26:06.363Z | 670583
+This is what I was talking about
+
+2025-05-13T19:26:12.347Z | 670583
+
+2025-05-13T19:38:46.940Z | Vman
+In a funny way this  runup now would ensure liquidity to the downside i mean, who won't be buying every dip after this runup. Now you have liquidity on the way down (if we do keep going lower). Just seems like a bear rally but its just an idea
+
+2025-05-13T19:43:16.835Z | Jason Valvano
+Sucked everyone in. Either this is the cleanest reversal ever or onc eth flows stop the show will end
+
+2025-05-13T19:43:32.908Z | Jason Valvano
+This seems purely mechanical right @Almargar
+
+2025-05-13T19:46:27.129Z | Δboy
+i think we need to keep our enemies closer... look what happened to iran after the shaw....
+
+2025-05-13T19:46:42.058Z | Vman
+There were a ton of calls at 5700 before the china deal. It sort of looked like a call spread of 5700/5900. So any reduction in tarriffs would have caused that upside volatility (same to the downside as well). Now that they're all ITM dealers likely aren't selling against the rally as its all hedged, that and all those puts that were getting closed out keep adding to support. If we're going to go down it can't happen until after OPEX imo (entirely because of how we gapped up)
+
+2025-05-13T19:48:34.682Z | Δboy
+and fredo when he was looked over..
+
+2025-05-13T19:49:29.312Z | Vman
+Probably just a pullback though. I figure late july is when all the tarriff/shipping all that comes up. Also would line up with a seasonal correction
+
+2025-05-13T19:50:09.260Z | Δboy
+possibility/risk cant be overloooked/unhedged at very least.
+
+2025-05-13T19:50:27.174Z | han
+Gas money talks. Qatar has some links with Iran (sometimes it is needed as a back channel); on the other hand, it hosts a major US airbase anyway. I wouldn't call it a massive global security risk... It is true that Chinese firms sometimes circumvent the chips embargo via grey areas such as the Middle East.
+
+2025-05-13T19:50:47.496Z | Vman
+Well so far everything i've said is wrong so, i am the oracle of reversals.
+
+2025-05-13T19:50:51.627Z | Vman
+:D
+
+2025-05-13T19:51:46.058Z | Vman
+But thats entirely because i've been a bad student lately lol
+
+2025-05-13T19:52:36.844Z | Δboy
+like alma says right/wrong doesnt matter as much if you mitigate risk and deal with probabilities... nobody gets it right all the time, but if you leave yourself open to changing strat you will have better chanced than hail mary every play
+
+2025-05-13T19:54:12.841Z | Jason Valvano
+When’s opex?
+
+2025-05-13T19:54:29.558Z | Vman
+Friday. But there is also a decent concentration on May 30th due to VIxperation
+
+2025-05-13T19:54:39.383Z | EMD1
+I think I'd add UST's to the macro mix (unexpected, emperor's clothes, source of volatility).
+Sticky inflation plus indebtedness plus policy uncertainty; we saw weakness in April.
+Tax cuts could be like Kwarteng's Gilt yields bump in '21.
+Also, might be used as an instrument of influence, like tariffs, and/or utilized/handled in unexpected ways.
+So not risk free, as mostly priced at present.
+No idea on timing or probabilities of any of this.
+(This is all taken from Ben Hunt's epsilon theory.)
+
+2025-05-13T19:56:25.617Z | Vman
+I was reading almas stuff earlier. Kinda got me thinking, anyone pick up trumps rhetoric shift towards EU right after the china deal? He just immediately went on the offensive against them. Idk what to make of it yet, but it was....interesting
+
+2025-05-13T20:06:20.238Z | 670583
+@Alma
+Is the ADF stat an Augmented Dickey-Fuller test? If so, aren't markets inherently not stationary as the markets mean variance changes just about every day?
+
+2025-05-13T20:09:36.903Z | Jason
+we might get a different Trump after he secures his bag from the desert.
+
+2025-05-13T20:12:04.556Z | Carlos
+https://www.ft.com/content/52f7be1c-e708-4b01-b486-7f189a52c842
+
+2025-05-13T20:17:40.133Z | Jason
+paywall...anything interesting beyond the headline?
+
+2025-05-13T20:17:44.779Z | Vman
+With how impulsive he is, if that is part of any sort of agreement he wll start attacking EU before he gets back.
+
+2025-05-13T20:20:34.666Z | Vman
+But honestly, taking the bullish case. MAG7 has lagged the runup. Would probably see huge buying there soon
+
+2025-05-13T20:48:05.863Z | Jeffrey K
+Jeffrey, you're a genius
+
+2025-05-13T20:55:35.500Z | Sharcus Aurelius
+Right that’s exactly what I’m talking about. You’re placing the sole reason for the tariffs existing upon the Russia/Ukraine conflict. It seems a bit misguided. Why don’t you talk about it anymore? The US has dropped out of peace negotiations and now the war is just lingering there.
+
+The war started in 2022. It’s now 2025 and SPX has rallied 40% since it started. Why do equity markets care about it now? Trump also issued tariffs in his first term, when there was no war.
+
+I just don’t understand what is leading you to that conclusion.
+
+It was like the markets couldn’t rally without a peace deal, and that narrative was a major reason why you were hesitant and very cautious when we were at 4800.
+
+We are now 1,000 points higher, and there is no peace deal.
+
+2025-05-13T20:58:23.080Z | han
+I am curious to see where the UK and the EU will stand; the recent rhetoric shift on immigration both by Starmer and Merz makes one speculate...
+
+2025-05-13T20:59:53.145Z | Sharcus Aurelius
+I do agree that we will see some volatility moving forward into summer, given where interest rates are and the huge Covid debt wall that needs to be refinanced at a way higher interest rate starting next month. Also, the effective tariff rate on China is still 30%, which is still a very high amount historically speaking.
+
+2025-05-13T21:02:25.455Z | Eli
+Was watching that manipulation in that area lol
+
+2025-05-13T21:05:49.037Z | Jeffrey K
+The seller(s) were present
+
+2025-05-13T21:16:54.564Z | han
+Actually evidences seem to support Alma's claim; now that Ukraine-Russia negotiation should start this week, tariff on China is paused. Now that Trump is in the Middle East; clearly a closer US-Arab alliance is emerging. On the tech front, even the CEOs of almost all the major tech companies are present in this trip...
+
+These countries are the major investors of the US, without which the stock market is just a gigantic nationwide computer game.
+
+The story goes back to volatility, the perplexing controlled decay in February; one had to wonder, why?
+
+"And what is volatility?"
+
+2025-05-13T21:31:59.257Z | Vman
+Got an ELI5 for what you were seeing? I  don't really watch the order flow (just do long swings) so just curious
+
+2025-05-13T21:32:13.822Z | Vman
+Or was it just the level 2 book
+
+2025-05-13T21:40:50.428Z | tim
+https://www.youtube.com/watch?v=6QkC5d183wI
+
+2025-05-13T21:43:29.732Z | meager man
+Lack of liquidity”
+
+2025-05-13T21:53:56.018Z | Sud
+Also according to Alma, Middle Eastern investors didn’t really buy the bottom in April..so now US-china trade tensions eased, Trump is in Middle East making deals etc. SPX artificially rallied at 5900 without any real investors.
+What is the most likely path going forward?
+Alma shared 4 scenarios but what are the probabilities of those paths?
+
+2025-05-13T21:57:03.334Z | Sud
+Alma shared probabilities of mean reversion today..just like that what are the probabilities of SPX paths for summer at least?
+
+2025-05-13T22:21:25.631Z | Sharcus Aurelius
+How can it be proven that “investors” didn’t buy the bottom or haven’t bought the rally?
+
+How do we really know? Also, a majority of us are traders here. So I don’t care whether it’s investors or if it’s “artificial”. The market has rallied over 1,000 points.
+
+It really doesn’t matter, outside of taking profit right now. Which we aren’t even certain whether we should because the market has already rallied 20% before any of these deals have been fully resolved. Which is why Alma laid out 4 different possible moves going forward.
+
+Seems that the market was rallying on flow and momentum, and not fully on fundamentals (although you know there are insiders who do know the outcomes of these meetings). Which is exactly my point, aren’t we subscribed here to get a better gage on flow, options dynamics, and underlying market conditions?
+
+There were certainly hints with the data that a strong rally was underway, even Alma’s reversion script was flagging buy like crazy at the bottom and the first major retrace.
+
+Just seems like getting sucked too far into narrative driven, subjective fundamentals and overlooking the data and dynamics Alma is supposedly well versed in missed a great opportunity to profit nicely on this rally.
+
+And the fact people here are concerned on it being “artificial” is exactly what’s wrong with this perspective.
+
+2025-05-13T22:27:22.472Z | Nevistrader
+one question comes on my mind - Can retailers push market 1100 points? as Alma said it has to be gov intervening or may be the institutions were aware of the eventual outcome (friends of trump), who started buying? who knows.
+
+Another question on my mind - will ME invest at this high, will they say to US that we want to get in low, so drop the ball, don;t know. just thoughts in my mind.
+
+2025-05-13T22:28:51.703Z | Nevistrader
+i think in hindsight this looks as a missed opportunity, but beneath the surface there were heavy cracks, which flagged caution, which is what Alma was saying all the way, probably
+
+2025-05-13T22:29:22.468Z | Sud
+I don’t think even Alma expected this rally to go this fa r until last week Thursday/Friday.
+
+2025-05-13T22:29:43.503Z | Nevistrader
+yes, because this was not based on fundamentals
+
+2025-05-13T22:31:45.394Z | Sud
+So is this still a bear market rally & bull trap is still on or we now exited the bear market & in bull market till SPX 6500?
+
+2025-05-13T22:32:03.075Z | Nevistrader
+the technicals were not working during the drop from 6100 to 4800, whenever i tried to take contrarian moves, so it was not fully clear that the tide had turned for me atleast until 3rd week of April
+
+2025-05-13T22:32:33.941Z | Nevistrader
+at this point it is plain russia-ukraine truce = china fold = market explode
+
+2025-05-13T22:32:46.314Z | Nevistrader
+these dont happen then range bound
+
+2025-05-13T22:35:24.182Z | Nevistrader
+the main problem was market was news driven so any assessment, would get nullified with each tweet and news coming
+
+2025-05-13T22:35:37.125Z | Nevistrader
+technical assessment*
+
+2025-05-13T22:36:49.683Z | Nevistrader
+only seasoned traders could navigate this gyrating mkt with green days. not so experienced traders ended up struggling to BE or maky be slightly green or in red
+
+2025-05-13T22:37:24.319Z | Nevistrader
+but, i take this as a learning curve and move on.
+
+2025-05-13T22:37:49.480Z | Sud
+Correct..that’s why we’ve subscribed to Alma to get insights..
+
+2025-05-13T22:38:48.897Z | Nevistrader
+i used to be a perma bull and longing everything. but after joining here, saw the other side of it and probably got my ass saved from not going long :-) so im thankful always
+
+2025-05-13T22:40:41.686Z | Vman
+2022 we were about 4% below the high on the first rally. We are about there right now. I still think its a bear market rally but im swinging until i get a better picture
+
+2025-05-13T22:42:03.831Z | Vman
+
+2025-05-13T22:42:13.108Z | Sud
+Yea it looks like that as media started showing bull market is back etc.. perfect time to pull the rug
+
+2025-05-13T22:45:45.071Z | Terrance
+for the last 2 weeks i have seen what i would assume is one fund , buying EVERY day in names  $10 + million in option for 2027 . mostly tech focus with some ins & health care focus names . i’ve estimated over $250 million dollars that was spend . i think we going higher in the coming months . Many breadth indicators are leading and very strong .
+
+2025-05-13T22:48:13.187Z | Jason Valvano
+I mean if that was a bear market it lasted 3 weeks? Is that the shortest one ever?
+
+2025-05-13T22:48:50.795Z | Terrance
+i remember very well in 2022 and 2020 and 2017 n 2009.. BREADTH lead the way
+
+2025-05-13T22:48:56.716Z | Terrance
+up n down
+
+2025-05-13T22:52:24.856Z | Jason Valvano
+Yeah but this would be the shortest bear market ever
+
+2025-05-13T22:52:28.792Z | Jason Valvano
+lol
+
+2025-05-13T22:57:13.040Z | Sud
+Alma, what’s your view on current market..still bear or in bull market now?
+
+2025-05-13T23:01:08.976Z | Stanley
+Hey @Mas , it works for me. Wonder if you had any change on the code or python upgrade. The error basically says the dataframe has less data than expected, so it got an out of bounds error. Which volatility plot generated the error?
+
+2025-05-13T23:01:35.050Z | Terrance
+well we also decided that we was going to have a trade war with every nation on planet earth … market reacted to it . quite simple . long term as  i like to say it .  America is on a treadmill to hell .
+
+2025-05-13T23:04:14.178Z | Doc McGraw
+Why assume it was one fund ?
+What strike and expiration?
+I haven’t noticed it
+
+2025-05-13T23:04:52.586Z | Terrance
+yes sir , strike and expiration was all the same
+
+2025-05-13T23:05:32.446Z | Terrance
+one example
+
+2025-05-13T23:09:02.959Z | Terrance
+
+2025-05-13T23:09:07.881Z | Terrance
+
+2025-05-13T23:09:29.615Z | Terrance
+size of the flow is not normal x  .
+
+2025-05-13T23:09:44.560Z | Terrance
+those where place last week
+
+2025-05-13T23:09:52.651Z | Terrance
+with countless other size
+
+2025-05-13T23:12:40.684Z | Terrance
+also i assume it’s one fund base on the 15 years of watching option flow .
+
+2025-05-13T23:30:35.047Z | Multimax72
+Just wanted to offer my perspective for what it’s worth— everyone has different strategies, but in the end, you are a risk manager. Can’t stuff it under a pillow. Try to “collect“ a wide range of inputs and expertise from different domains… Technical, positioning, option market structure, fundamentals, macro economics. Listen to CNBC if you can take it just so you can see what the furus are saying and what is priced —not for advice. Sometimes you hear something hadn’t considered (rare). Be gracious and humble and philosophical – – everyone has their role, even if merely a contrary indicator. And you have to love this stuff, to get up excited.
+
+Alma is a rare talent because she has multi discipline skills and blends them together. This is key. She is not here to hold your hand and tell you what to do -again if that’s what you’re looking for, It’s better to find a good fiduciary and let them manage the money for you. Or just buy the index.
+
+2025-05-13T23:57:11.664Z | RNR
+Actually, a lot of new traders end up FOMO-buying and riding the rally, and they don’t know anything besides the headlines.
+
+2025-05-14T00:16:19.300Z | Δboy
+anybody on here experimented with a Fourier transform?
+
+2025-05-14T00:26:28.127Z | Tom
+Trump said BTD at the bottom and 10% day. Then he said it again and we rallied 6% trend is bullish and why fade the President that can actually think. Ppl overthink too much imo. Use data and keep it simple. Alma been spot on. Ppl over think or don’t read clearly.
+
+2025-05-14T00:27:06.340Z | Tom
+Up here, 1100 pts later, kinda late lol
+
+2025-05-14T01:11:43.131Z | han
+https://x.com/SprinterObserve/status/1922285972210778534
+
+2025-05-14T01:25:21.563Z | Carlos
+So did Trump just folded ? https://x.com/firstsquawk/status/1922389354401366129?s=46&t=OixYFIUztgrLK3xRjSQVFQ
+
+2025-05-14T01:27:16.579Z | meager man
+It’s just making official what was agreed to over the weekend. Nothing new.
+
+2025-05-14T01:32:16.863Z | Carlos
+Thought the tariffs were 30 to 40%
+
+2025-05-14T01:32:29.078Z | Carlos
+Not 10%
+
+2025-05-14T01:46:06.700Z | meager man
+
+2025-05-14T02:22:36.280Z | meager man
+https://x.com/financialjuice/status/1922468814949695802?s=46&t=no5XLk0_-XX3yc9FhfnY_A
+
+2025-05-14T02:23:07.686Z | meager man
+Interesting brics
+
+2025-05-14T02:46:04.332Z | stinkyxylene
+Very much agree with Alma's narrative on China, it's a possibility but a concerning one. That's why ceasefire is so important. Xi could be using this time to sort out food imports and strengthen tie with China's allies. He knows the liquidity issues over summer as well. Xi is probably smiling to Trump while sharpening knife
+
+2025-05-14T05:31:23.024Z | han
+
+2025-05-14T05:44:51.815Z | han
+Well, Xi and CCP were aware of the trade war even from Trump 1.0. Were they well-prepared this time? Doesn't seem so. Xi has more interest in cementing his power, in my opinion.
+
+China's economy has also been in trouble latest since 2022; I suspect the younger generations who grew up in affluent times would not accept going back to the tough days their forefathers endured. So if Xi is sane, then China would not seek escalation.
+
+2025-05-14T05:47:20.803Z | Carlos Cuervo
+The part I most intrigued about is Russian position on this. Russia wants both the Holy alliance and China . I wonder if they will have to choose eventually
+
+2025-05-14T05:59:16.404Z | han
+Historically speaking, Russia and China tend to end up in direct conflict or backstabbing each other. Putin won't give up the China card too soon though.
+
+2025-05-14T06:10:18.277Z | Alma
+
+2025-05-14T06:10:24.829Z | Alma
+
+2025-05-14T06:18:22.616Z | DIma
+not necessarily Putin wants with China..but how painful is without China and what deals need to be secured so to cover those losses
+
+2025-05-14T06:29:12.107Z | DIma
+anyone in AMD, looks like it wants to accept above weekly vwap band
+
+2025-05-14T07:14:16.367Z | Eli
+So they’re buying at the highs? Or did we somehow miss the “flows” that Saudi’s already might’ve bought the low?
+
+2025-05-14T07:15:12.852Z | Eli
+Seems like a sell the news type of deal but due to PA it looks like we’re in some sorta topping process right now
+
+2025-05-14T07:17:44.597Z | futuredale
+iirc the conditions for saudi investments were killing stagflation and russian deal?
+
+2025-05-14T07:36:18.501Z | han
+I am cautiously optimistic. It seems that the EU will try to work with the US; now we watch Putin's choice...
+
+2025-05-14T07:43:57.856Z | Alma
+UK matters

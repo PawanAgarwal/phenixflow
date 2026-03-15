@@ -1,0 +1,89 @@
+Spiking uncertainity, USD/JPY - Intraday post (09/Oct)
+
+Window of Risk:
+
+Window of Risk, Disbalance - Investigating the story that the market tells
+
+Weekly post:
+
+Short vanna, short veta, short fly - Weekly post (06-10/Oct)
+
+The world economy is now better than feared but worse than we need. Global growth will slow only slightly this year and next. The AI optimism, tight credit spreads, earlier USD slide easing USD borrowers’ strains, tariff shock being smaller than feared for now, and private sector adaptability are all supportive on the short-run.However, equity prices are approaching late-1990s dot-com levels (in terms of sigma) and so a sharp correction would tighten financial conditions and hit growth, especially in developing economies. Plus monetary gold now exceeds one-fifth of official reserves (the central-bank bid narrative that’s supported this year’s rally- as I predicted in April), and the risk of margin compression that could flip to consumer passthrough, rekindling inflation is still looming. Tight spreads are part of why conditions feel easy. The implied risk is gap-risk if equities correct. That tilts institutional credit positioning toward higher-quality carry, shorter spread duration, and systematic hedges (index puts/CDX) into event windows. ’Buffett indicator’ (total market cap vs GDP) shows 221.54% today. It is very out of reality. The current situation favors more dispersion in equities.
+
+Uncertainity is unusually high, while global debt is marching above 100% of GDP during the next 4 years window. If US tackles the structural federal deficit and incentivize household saving (e.g., retirement tax preferences), that is supportive on the long-run.
+
+With the USD stalling, flows are gravitating to EM and carry. The U.S. data blackout keeps uncertainty high; when Washington reopens, they expect softer momentum in the macro tape, which could cap further USD gains.France is in flux after PM Sébastien Lecornu resigned; Macron is set to name a new PM within ~48 hours. Importantly, snap elections look less likely than they did earlier in the week. The euro broke its 100-day and momentum accounts had to adjust. We should consider trimming shorts near 1.1580/50, but stay medium-term USD-bearish and open to flipping later.USD/JPY move looks overextended absent fresh data. The LDP elected Sanae Takaichi, prompting a JPY slide as markets priced easier fiscal stances; large banks also cooled on near-term JPY longs. 155 would be a danger zone for Japan’s MoF (intervention risk), and flag near levels: minor resistance 153.70/80, bigger at 154.90/00; support 151.20/30. Cross-JPY (e.g. CHFJPY, EURJPY) still pushing highs.
+
+INTRADAY POSTCoding today’s positioning:
+
+We can see an IC again at 6715/20 - 6775/80.However the net speed profile is very steeply negative. The speed pattern today doesn’t form a fly, but it forms a short risk reversal.
+
+The net downside gamma is the most supportive towards 6702.47, with downside pivot of 6721.07, from where the downside gamma starts to be magnetic. This pivot coincidences with the lower wing of the IC, so it is a very sticky and supportive line.
+
+The upside gamma is very much vacuuming towards 6787.49, with upside pivot of 6769.51 (again, almost coincidencing with the upper wing of the IC). We can expect heavy vol up move here, then pin to the pivot.
+
+The centroid, where the upside vacuum and the downside magnet effects are balanced against each other is in the 6733.02 - 6741.17 area.This will reveal for us where the flows are shifting, following the changes in the fixed strike skew. If everything aligns, the intraday spot/vol beta should shift to positive during the day, and the spot/skew beta towards negative.
+
+OptionsDepth Heatmap
+
+So the market expects an up-day, a momentum day, with quick upside vol bets, and intraday downside vol sell edge.Secondary bet is a reversion from the upper wing of the IC towards 6755 and pin there during the power hour.Third is stickiness, the IC win the bet,and only the fourth one is the downside vol burning and ranging.
+
+SCRIPT INPUTS=== SPX closed at 6753.72 ===
+
+99.73%, 6846.895472959788, , 6823.561845226994, 95.4%, 6800.307736479895, Risk level, 6785.120134387449, 68.2%, 6776.973835423817, 68.2%, 6730.3858218367395, Risk level, 6722.319865612551, 95.4%, 6707.132263520106, , 6683.797804386641, 99.73%, 6660.544527040212
+
+=== ES closed at 6803.25 ===
+
+99.73%, 6898.132717855579, , 6874.371113269219, 95.4%, 6850.691358927789, Risk level, 6835.22547591733, 68.2%, 6826.929469946608, 68.2%, 6779.487822643722, Risk level, 6771.27452408267, 95.4%, 6755.808641072211, , 6732.04617127641, 99.73%, 6708.367282144421
+
+=== SPY closed at 673.11 ===
+
+99.73%, 682.5175285379942, , 680.161580213048, 95.4%, 677.8137642689971, Risk level, 676.280337117304, 68.2%, 675.4577876278463, 68.2%, 670.7539946454999, Risk level, 669.939662882696, 95.4%, 668.4062357310029, , 666.050201257595, 99.73%, 663.7024714620059
+
+=== VIX closed at 16.3 ===
+
+99.73%, 18.00196506136049, , 17.571322895141105, 95.4%, 17.150982530680245, Risk level, 16.873562225678487, 68.2%, 16.72007820705657, 68.2%, 15.868805397694938, Risk level, 15.726437774321516, 95.4%, 15.449017469319756, , 15.017499684860391, 99.73%, 14.598034938639511
+
+=== IWM closed at 246.72 ===
+
+99.73%, 252.5402800990672, , 251.08099388300695, 95.4%, 249.6301400495336, Risk level, 248.68143439338564, 68.2%, 248.17080439290382, 68.2%, 245.26061372951645, Risk level, 244.75856560661435, 95.4%, 243.8098599504664, , 242.3504218505778, 99.73%, 240.8997199009328
+
+=== QQQ closed at 611.44 ===
+
+99.73%, 623.0829020088563, , 620.1653458474092, 95.4%, 617.2614510044282, Risk level, 615.3636579769847, 68.2%, 614.3438301164484, 68.2%, 608.5223131470633, Risk level, 607.5163420230155, 95.4%, 605.6185489955719, , 602.7007949033678, 99.73%, 599.7970979911438
+
+=== NDX closed at 25136.62 ===
+
+99.73%, 25608.283252811172, , 25490.094704948504, 95.4%, 25372.451626405586, Risk level, 25295.570516197364, 68.2%, 25254.260531667507, 68.2%, 25018.426310370938, Risk level, 24977.669483802634, 95.4%, 24900.788373594412, , 24782.592039688032, 99.73%, 24664.956747188826
+
+=== NQ closed at 25354.0 ===
+
+99.73%, 25831.52581738548, , 25711.86721757333, 95.4%, 25592.76290869274, Risk level, 25514.926200458907, 68.2%, 25473.101711157906, 68.2%, 25234.33615558381, Risk level, 25193.073799541093, 95.4%, 25115.23709130726, , 24995.570549442305, 99.73%, 24876.47418261452
+
+=== NVDA closed at 189.11 ===
+
+99.73%, 197.63804039893975, , 195.4944050766881, 95.4%, 193.37402019946987, Risk level, 191.9839496144427, 68.2%, 191.23012565995387, 68.2%, 186.9658344192282, Risk level, 186.23605038555732, 95.4%, 184.84597980053016, , 182.70153052658793, 99.73%, 180.58195960106028
+
+=== AMZN closed at 225.22 ===
+
+99.73%, 234.61589355541906, , 232.25504198548546, 95.4%, 229.91794677770955, Risk level, 228.38641612817622, 68.2%, 227.55684998100088, 68.2%, 222.85864763729555, Risk level, 222.05358387182378, 95.4%, 220.52205322229045, , 218.1604342863874, 99.73%, 215.82410644458093
+
+=== AAPL closed at 258.06 ===
+
+99.73%, 265.93911661786404, , 263.96198796597196, 95.4%, 261.999558308932, Risk level, 260.71526230022016, 68.2%, 260.0223183059543, 68.2%, 256.0826452198528, Risk level, 255.40473769977982, 95.4%, 254.12044169106798, , 252.14296854707246, 99.73%, 250.180883382136
+
+=== GOOG closed at 245.46 ===
+
+99.73%, 255.8239863899768, , 253.21973433338755, 95.4%, 250.6419931949884, Risk level, 248.9526634134222, 68.2%, 248.03746420579665, 68.2%, 242.85518225963008, Risk level, 241.96733658657783, 95.4%, 240.27800680501161, , 237.6728877218019, 99.73%, 235.09601361002322
+
+=== TSLA closed at 438.69 ===
+
+99.73%, 470.6101428186538, , 462.5612770633254, 95.4%, 454.6500714093269, Risk level, 449.4470881298863, 68.2%, 446.59874588556295, 68.2%, 430.63603236775526, Risk level, 427.9329118701137, 95.4%, 422.72992859067307, , 414.6731154525318, 99.73%, 406.7698571813462
+
+=== TSM closed at 304.52 ===
+
+99.73%, 320.9326230592972, , 316.8028968599705, 95.4%, 312.7263115296486, Risk level, 310.05105397098316, 68.2%, 308.59587875895005, 68.2%, 300.3888220506738, Risk level, 298.9889460290168, 95.4%, 296.31368847035134, , 292.1817234818384, 99.73%, 288.10737694070275
+
+=== AMD closed at 235.56 ===
+
+99.73%, 263.4126100507566, , 256.35490784975053, 95.4%, 249.48630502537827, Risk level, 244.94632958710497, 68.2%, 242.4231713590475, 68.2%, 228.49077265443762, Risk level, 226.17367041289504, 95.4%, 221.63369497462173, , 214.5575827324344, 99.73%, 207.70738994924344

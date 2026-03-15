@@ -1,0 +1,637 @@
+<!doctype html>
+<html>
+ <head><link rel="stylesheet" type="text/css" href="https://go.cboe.com/css/form.css?ver=2021-09-20" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initialscale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Subscribe to Derivatives Market Intelligence</title>
+  <meta name="description" content="Receive actionable insights and analysis on Cboe’s leading suite of derivatives products straight to your inbox.">
+  <style type="text/css">.row {display: flex;}@media screen and (max-width: 480px) {.row .column {display:inline-block;width:100%}}</style>
+  <style type="text/css">@media screen and (max-width: 480px) {.column {margin-right: 0 !important;}.columnDiv {margin-right: 0 !important;}}@media screen and (min-width: 480px) {.column {margin-bottom: 0 !important;}.columnDiv {margin-bottom: 0 !important;}}</style>
+  <style type="text/css">.contentpageDefaultLandingPageTemplate .contentRoot {margin: 0 auto;}@media only screen and (max-width: 1024px) {.contentpageDefaultLandingPageTemplate .contentRoot {max-width: 980px;}}@media only screen and (max-width: 768px) {.contentpageDefaultLandingPageTemplate .contentRoot {max-width: 600px;}}@media only screen and (max-width: 480px) {.contentpageDefaultLandingPageTemplate .contentRoot {width: 320px !important;}.row {align-items: center;flex-direction: column;}.column {width: 100% !important;}}</style>
+  <style type="text/css">.placeholder-container {text-align:center;}.placeholder-container img {width:100%;}.placeholder-container div {padding-bottom:25px;font-family:'Salesforce Sans';}form.form p label {color:var(--label-color);font-family:var(--label-font);font-size:var(--label-font-size);float:var(--label-alignment-float);text-align:var(--label-alignment-text-align);line-height:var(--label-alignment-line-height);width:var(--label-alignment-width);}form.form p label.inline {line-height:2em;float:none;}form.form input.text, form.form select, form.form textarea.standard, form.form input.date {background-color:var(--input-background-color);border:var(--input-border, 2px inset);border-radius:var(--input-border-radius);width:var(--input-width);box-sizing:var(--input-box-sizing, unset);}form.form select {color:var(--input-dropdown-icon-color);}form.form input.text:focus, form.form select:focus, form.form textarea.standard:focus, form.form input.date:focus {background-color:var(--input-focus-background-color);border-color:var(--input-focus-border-color);outline:var(--input-focus-border-outline, initial);box-shadow:var(--input-focus-box-shadow);box-sizing:var(--input-box-sizing, unset);}form.form p.error input.text, form.form p.error select, form.form p.error textarea.standard, form.form p.error input.date {background-color:var(--input-error-background-color);border-color:var(--input-error-border-color);box-sizing:var(--input-box-sizing, unset);}form.form .pd-checkbox input {appearance: none;position: fixed;margin: 0;padding: 0;}form.form .pd-checkbox label {position: relative;padding-left: 0;}form.form .pd-checkbox.required input + label {padding-left: 0;}form.form .pd-checkbox input + label::before {content: '';display: inline-block;vertical-align: middle;width: 1rem;height: 1rem;margin: 0 3px 3px 0;border: var(--input-border, 2px inset);border-radius: 3px;background-color: var(--input-background-color);}form.form .pd-checkbox input:checked + label::before {border-style: solid;border-width: var(--input-border-width);border-color: var(--checkbox-radio-button-icon-color);background-color: var(--checkbox-radio-button-icon-color);}form.form .pd-checkbox input:checked + label::after {position: absolute;content: '';top: 0;left: 0;display: inline-block;height: 0.3rem;width: 0.7rem;border-bottom: 0.2rem solid white;border-left: 0.2rem solid white;transform: translate(0, 0.1rem) rotate(-45deg);margin-left: var(--input-border-width);}form.form .pd-checkbox .value span {display:var(--checkbox-alignment-vertical, block);float:var(--checkbox-alignment-horizontal);}form.form .pd-checkbox:after {content:var(--checkbox-alignment-horizontal-content);display:var(--checkbox-alignment-horizontal-display);clear:var(--checkbox-alignment-horizontal-clear);}form.form .pd-checkbox {zoom:var(--checkbox-alignment-horizontal-zoom);}form.form .pd-radio input {opacity: 0;position: fixed;}form.form .pd-radio input:focus + label::before {outline: 1px solid #005fcc;outline-offset: 1px;}form.form .pd-radio input + label::before {content: '';display: inline-block;vertical-align: middle;width: 1rem;height: 1rem;margin: 0 3px 3px 0;border-radius: 50%;border: var(--input-border, 2px inset);background-color: var(--input-background-color);}form.form p.pd-radio.required input + label {position: relative;padding-left: 0;}form.form p.pd-radio.required.required-custom input + label::before {position: initial;}form.form .pd-radio input:checked + label::before {background: radial-gradient(var(--checkbox-radio-button-icon-color) 0%, var(--checkbox-radio-button-icon-color) 40%, transparent 50%, transparent);border-style: solid;border-width: var(--input-border-width);border-color: var(--checkbox-radio-button-icon-color);}form.form .pd-radio .value span {display:var(--radio-button-alignment-vertical, block);float:var(--radio-button-alignment-horizontal);}form.form .pd-radio:after {content:var(--radio-button-alignment-horizontal-content);display:var(--radio-button-alignment-horizontal-display);clear:var(--radio-button-alignment-horizontal-clear);}form.form .pd-radio {zoom:var(--radio-button-alignment-horizontal-zoom);}form.form p.submit input {font-family:var(--button-text-font);font-size:var(--button-text-font-size);color:var(--button-text-font-color);font-weight:var(--button-text-font-weight);font-style:var(--button-text-font-style);text-decoration:var(--button-text-decoration);background-color:var(--button-color);border-radius:var(--button-border-radius);border:var(--button-border, 2px outset);padding-top:var(--button-padding-top, 2px);padding-right:var(--button-padding-right, 12px);padding-bottom:var(--button-padding-bottom, 2px);padding-left:var(--button-padding-left, 12px);width:var(--button-width);margin-top:var(--button-margin-top);margin-right:var(--button-margin-right);margin-bottom:var(--button-margin-bottom);margin-left:var(--button-margin-left);}form.form p.no-label {margin-left:var(--label-alignment-above-label-margin-left);}form.form span.value {margin-left:var(--label-alignment-margin-left, 153px);}form.form p span.description {margin-left:var(--label-alignment-span-description-margin-left);}form.form p.required label, form.form span.required label {background-position:var(--label-alignment-background-position);padding-left:var(--label-alignment-padding-left);}form.form p.submit {text-align:var(--button-alignment, initial);margin-left:var(--label-alignment-submit-margin-left, 160px);}</style>
+ <!-- Google Tag Manager --> <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-5D4ZVF');</script> <!-- End Google Tag Manager --> 
+ <link href="https://go.cboe.com/l/77532/2025-11-25/fpb7cd/77532/1764067564PBuVkHJs/favicon.ico" rel="shortcut icon">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css" integrity="sha384-NvKbDTEnL+A8F/AA5Tc5kmMLSJHUO868P+lDtTpJIeQdGYaUIuLr4lVGOEA1OcMy" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icon/themify-icons@1.0.1-alpha.3/themify-icons.min.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"><link href="https://go.cboe.com/l/77532/2025-11-25/fpb7zs/77532/1764068548KgZ2MJIr/cboe_lp_peb_corp_gradient_1.0.min.css" rel="stylesheet"><link href="https://go.cboe.com/l/77532/2026-01-26/fprkf7/77532/1769469319Ak9stLv8/forms_custom_1.0.min.css" rel="stylesheet"><script>
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = 'https://go.cboe.com/l/77532/2025-11-25/fpb84z/77532/1764068808szzC7ArL/lp_functions_1.0.js';
+                document.head.appendChild(script);
+            </script><style>form.form .pd-checkbox input:checked+label::after {top: 10px !important}</style><script type="text/javascript" src="https://go.cboe.com/js/piUtils.js?ver=2021-09-20"></script><script type="text/javascript">
+piAId = '78532';
+piCId = '121426';
+piHostname = 'go.cboe.com';
+
+(function() {
+	function async_load(){
+		var s = document.createElement('script'); s.type = 'text/javascript';
+		s.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + piHostname + '/pd.js';
+		var c = document.getElementsByTagName('script')[0]; c.parentNode.insertBefore(s, c);
+	}
+	if(window.attachEvent) { window.attachEvent('onload', async_load); }
+	else { window.addEventListener('load', async_load, false); }
+})();
+</script></head>
+ <body>
+  <div class="contentpageDefaultLandingPageTemplate" style="background-color: ;background-image: url(&quot;https://&quot;);background-position: center;background-size: cover;background-repeat: no-repeat;" role="presentation" id="contentpage_landingPageBodyContent">
+   <div class="contentRoot" style="padding-top: 0px; padding-bottom: 0px; padding-left: 0px; padding-right: 0px;  max-width: 1320px;" role="presentation">
+    <div class="row" style="align-items: flex-start; width: 100%; background-color: undefined;" role="presentation">
+     <div width="100%" class="column columnDiv" style="width: 100%;vertical-align: top;display: inline-block;">
+      <div class="contentbuilder-landingpage-html" style="font-size: 14px; word-break: break-word;" role="presentation" id="contentRegion">
+       <div class="p-0">
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5D4ZVF" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="row" style="align-items: center; width: 100%; background-color: ;" role="presentation">
+     <div width="100%" class="column columnDiv" style="width: 100%;vertical-align: middle;display: inline-block;">
+      <div class="contentbuilder-landingpage-html" style="font-size: 14px; word-break: break-word;" role="presentation" id="contentRegion">
+       <div class="header logo-center header-dark header-xl body">
+        <div class="container-fluid">
+         <div class="header-extra">
+          <ul class="list-inline-lg">
+           <li></li>
+          </ul>
+         </div>
+         <div class="header-logo">
+          <div class="img-link-box"><a href="https://www.cboe.com"><img src="https://go.cboe.com/l/77532/2025-11-25/fpb8fl/77532/1764069619NKKiPFkr/NewCboeLogo_RGBRev_260x88.png" style="width:130px !important"></a>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="row" style="align-items: flex-start; width: 100%; background-color: undefined;" role="presentation">
+     <div width="100%" class="column columnDiv" style="width: 100%;vertical-align: top;display: inline-block;">
+      <div class="contentbuilder-landingpage-html" style="font-size: 14px; word-break: break-word;" role="presentation" id="contentRegion">
+       <div class=" body text-white">
+        <div class="container text-center mt-4">
+         <div class="row g-4">
+          <div class="col-12">
+           <h1 class="display-5 font-family-primary text-center" style="font-weight:800 !important">Subscribe to Derivatives Market Intelligence</h1>
+          </div>
+         </div>
+        </div>
+        <div class="container text-white mb-5 text-center ">
+         <div class="row mt-3">
+          <div class="col-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+           <h2 class="fw-normal fs-5">Receive valuable insights and analysis on Cboe’s leading suite of derivatives products straight to your inbox.</h2>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="row" style="align-items: flex-start; width: 100%; background-color: ;" role="presentation">
+     <div width="16.66%" class="column columnDiv" style="width: 16.66%;margin-right: 15px;margin-bottom: 15px;vertical-align: top;display: inline-block;">
+      <div></div>
+     </div>
+     <div width="66.66%" class="column columnDiv" style="width: 66.66%;margin-right: 15px;margin-bottom: 15px;vertical-align: top;display: inline-block;">
+      <div class="attachmentPoint" style="--label-alignment-float: none; --label-alignment-text-align: left; --label-alignment-line-height: 1em; --label-alignment-width: auto; --label-alignment-submit-margin-left: 5px; --label-alignment-above-label-margin-left: 50px; --label-alignment-margin-left: 0px; --label-alignment-span-description-margin-left: 0px; --label-alignment-background-position: top left; --label-alignment-padding-left: 15px; --input-border-width: 0px; --input-border-radius: 0px; --input-error-border-color: #BA0517; --checkbox-radio-button-icon-color: #22aa58; --checkbox-alignment-vertical: block !important; --radio-button-alignment-vertical: block !important; --button-text-font-weight: normal; --button-text-font-style: normal; --button-text-decoration: none;  --button-border-radius: 0px; --button-alignment: center;" data-form-id="26310" data-form-url="https://go.pardot.com/l/77532/2023-08-23/ffkwnf?is_lpb_preview=1" title="Derivs-TL-Derivatives Market Intelligence Subscriptions-2023Q2">
+<form accept-charset="UTF-8" method="post" action="https://go.cboe.com/market-intelligence-content-subscription" class="form" id="pardot-form">
+
+<style type="text/css">
+form.form p.required label, form.form span.required label { background: none; padding-left: 0px; }
+</style>
+
+
+
+
+
+	
+		
+
+		
+			<p class="form-field  first_name pd-text required required-custom    ">
+				
+					<label class="field-label" for="77532_276000pi_77532_276000">First Name *</label>
+				
+
+				<input type="text" name="77532_276000pi_77532_276000" id="77532_276000pi_77532_276000" value="" class="text" size="30" maxlength="40" onchange="" onfocus="" />
+				
+			</p>
+			<div id="error_for_77532_276000pi_77532_276000" style="display:none"></div>
+			
+		
+			<p class="form-field  last_name pd-text required required-custom    ">
+				
+					<label class="field-label" for="77532_276003pi_77532_276003">Last Name *</label>
+				
+
+				<input type="text" name="77532_276003pi_77532_276003" id="77532_276003pi_77532_276003" value="" class="text" size="30" maxlength="80" onchange="" onfocus="" />
+				
+			</p>
+			<div id="error_for_77532_276003pi_77532_276003" style="display:none"></div>
+			
+		
+			<p class="form-field  email pd-text required required-custom    ">
+				
+					<label class="field-label" for="77532_276006pi_77532_276006">Email *</label>
+				
+
+				<input type="text" name="77532_276006pi_77532_276006" id="77532_276006pi_77532_276006" value="" class="text" size="30" maxlength="255" onchange="" onfocus="piAjax.loadEmailIndicator(this, 276006, 'https://go.cboe.com/images/indicator2.gif');" />
+				
+			</p>
+			<div id="error_for_77532_276006pi_77532_276006" style="display:none"></div>
+			
+		
+			<p class="form-field  country pd-select required required-custom    ">
+				
+					<label class="field-label" for="77532_276012pi_77532_276012">Country *</label>
+				
+
+				<select name="77532_276012pi_77532_276012" id="77532_276012pi_77532_276012" class="select" onchange=""><option value="1512360" selected="selected"></option>
+<option value="1512363">United States</option>
+<option value="1512366">Canada</option>
+<option value="1512369">Afghanistan</option>
+<option value="1512372">Albania</option>
+<option value="1512375">Algeria</option>
+<option value="1512378">American Samoa</option>
+<option value="1512381">Andorra</option>
+<option value="1512384">Angola</option>
+<option value="1512387">Anguilla</option>
+<option value="1512390">Antarctica</option>
+<option value="1512393">Antigua and Barbuda</option>
+<option value="1512396">Argentina</option>
+<option value="1512399">Armenia</option>
+<option value="1512402">Aruba</option>
+<option value="1512405">Australia</option>
+<option value="1512408">Austria</option>
+<option value="1512411">Azerbaijan</option>
+<option value="1512414">Bahamas</option>
+<option value="1512417">Bahrain</option>
+<option value="1512420">Bangladesh</option>
+<option value="1512423">Barbados</option>
+<option value="1512426">Belarus</option>
+<option value="1512429">Belgium</option>
+<option value="1512432">Belize</option>
+<option value="1512435">Benin</option>
+<option value="1512438">Bermuda</option>
+<option value="1512441">Bhutan</option>
+<option value="1512444">Bolivia</option>
+<option value="1512447">Bosnia and Herzegovina</option>
+<option value="1512450">Botswana</option>
+<option value="1512453">Brazil</option>
+<option value="1512456">British Indian Ocean Territory</option>
+<option value="1512459">British Virgin Islands</option>
+<option value="1512462">Brunei</option>
+<option value="1512465">Bulgaria</option>
+<option value="1512468">Burkina Faso</option>
+<option value="1512471">Burundi</option>
+<option value="1512474">Cambodia</option>
+<option value="1512477">Cameroon</option>
+<option value="1512480">Cape Verde</option>
+<option value="1512483">Cayman Islands</option>
+<option value="1512486">Central African Republic</option>
+<option value="1512489">Chad</option>
+<option value="1512492">Chile</option>
+<option value="1512495">China</option>
+<option value="1512498">Christmas Island</option>
+<option value="1512501">Cocos (Keeling) Islands</option>
+<option value="1512504">Colombia</option>
+<option value="1512507">Comoros</option>
+<option value="1512510">Congo</option>
+<option value="1512513">Cook Islands</option>
+<option value="1512516">Costa Rica</option>
+<option value="1512519">Croatia</option>
+<option value="1512522">Cuba</option>
+<option value="1512525">Cura&ccedil;ao</option>
+<option value="1512528">Cyprus</option>
+<option value="1512531">Czech Republic</option>
+<option value="1512534">C&ocirc;te d&rsquo;Ivoire</option>
+<option value="1512537">Democratic Republic of the Congo</option>
+<option value="1512540">Denmark</option>
+<option value="1512543">Djibouti</option>
+<option value="1512546">Dominica</option>
+<option value="1512549">Dominican Republic</option>
+<option value="1512552">Ecuador</option>
+<option value="1512555">Egypt</option>
+<option value="1512558">El Salvador</option>
+<option value="1512561">Equatorial Guinea</option>
+<option value="1512564">Eritrea</option>
+<option value="1512567">Estonia</option>
+<option value="1512570">Ethiopia</option>
+<option value="1512573">Falkland Islands</option>
+<option value="1512576">Faroe Islands</option>
+<option value="1512579">Fiji</option>
+<option value="1512582">Finland</option>
+<option value="1512585">France</option>
+<option value="1512588">French Guiana</option>
+<option value="1512591">French Polynesia</option>
+<option value="1512594">French Southern Territories</option>
+<option value="1512597">Gabon</option>
+<option value="1512600">Gambia</option>
+<option value="1512603">Georgia</option>
+<option value="1512606">Germany</option>
+<option value="1512609">Ghana</option>
+<option value="1512612">Gibraltar</option>
+<option value="1512615">Greece</option>
+<option value="1512618">Greenland</option>
+<option value="1512621">Grenada</option>
+<option value="1512624">Guadeloupe</option>
+<option value="1512627">Guam</option>
+<option value="1512630">Guatemala</option>
+<option value="1512633">Guernsey</option>
+<option value="1512636">Guinea</option>
+<option value="1512639">Guinea-Bissau</option>
+<option value="1512642">Guyana</option>
+<option value="1512645">Haiti</option>
+<option value="1512648">Honduras</option>
+<option value="1512651">Hong Kong S.A.R., China</option>
+<option value="1512654">Hungary</option>
+<option value="1512657">Iceland</option>
+<option value="1512660">India</option>
+<option value="1512663">Indonesia</option>
+<option value="1512666">Iran</option>
+<option value="1512669">Iraq</option>
+<option value="1512672">Ireland</option>
+<option value="1512675">Isle of Man</option>
+<option value="1512678">Israel</option>
+<option value="1512681">Italy</option>
+<option value="1512684">Jamaica</option>
+<option value="1512687">Japan</option>
+<option value="1512690">Jersey</option>
+<option value="1512693">Jordan</option>
+<option value="1512696">Kazakhstan</option>
+<option value="1512699">Kenya</option>
+<option value="1512702">Kiribati</option>
+<option value="1512705">Kuwait</option>
+<option value="1512708">Kyrgyzstan</option>
+<option value="1512711">Laos</option>
+<option value="1512714">Latvia</option>
+<option value="1512717">Lebanon</option>
+<option value="1512720">Lesotho</option>
+<option value="1512723">Liberia</option>
+<option value="1512726">Libya</option>
+<option value="1512729">Liechtenstein</option>
+<option value="1512732">Lithuania</option>
+<option value="1512735">Luxembourg</option>
+<option value="1512738">Macao S.A.R., China</option>
+<option value="1512741">Macedonia</option>
+<option value="1512744">Madagascar</option>
+<option value="1512747">Malawi</option>
+<option value="1512750">Malaysia</option>
+<option value="1512753">Maldives</option>
+<option value="1512756">Mali</option>
+<option value="1512759">Malta</option>
+<option value="1512762">Marshall Islands</option>
+<option value="1512765">Martinique</option>
+<option value="1512768">Mauritania</option>
+<option value="1512771">Mauritius</option>
+<option value="1512774">Mayotte</option>
+<option value="1512777">Mexico</option>
+<option value="1512780">Micronesia</option>
+<option value="1512783">Moldova</option>
+<option value="1512786">Monaco</option>
+<option value="1512789">Mongolia</option>
+<option value="1512792">Montenegro</option>
+<option value="1512795">Montserrat</option>
+<option value="1512798">Morocco</option>
+<option value="1512801">Mozambique</option>
+<option value="1512804">Myanmar</option>
+<option value="1512807">Namibia</option>
+<option value="1512810">Nauru</option>
+<option value="1512813">Nepal</option>
+<option value="1512816">Netherlands</option>
+<option value="1512819">New Caledonia</option>
+<option value="1512822">New Zealand</option>
+<option value="1512825">Nicaragua</option>
+<option value="1512828">Niger</option>
+<option value="1512831">Nigeria</option>
+<option value="1512834">Niue</option>
+<option value="1512837">Norfolk Island</option>
+<option value="1512840">North Korea</option>
+<option value="1512843">Northern Mariana Islands</option>
+<option value="1512846">Norway</option>
+<option value="1512849">Oman</option>
+<option value="1512852">Pakistan</option>
+<option value="1512855">Palau</option>
+<option value="1512858">Palestinian Territory</option>
+<option value="1512861">Panama</option>
+<option value="1512864">Papua New Guinea</option>
+<option value="1512867">Paraguay</option>
+<option value="1512870">Peru</option>
+<option value="1512873">Philippines</option>
+<option value="1512876">Pitcairn</option>
+<option value="1512879">Poland</option>
+<option value="1512882">Portugal</option>
+<option value="1512885">Puerto Rico</option>
+<option value="1512888">Qatar</option>
+<option value="1512891">Romania</option>
+<option value="1512894">Russia</option>
+<option value="1512897">Rwanda</option>
+<option value="1512900">R&eacute;union</option>
+<option value="1512903">Saint Barth&eacute;lemy</option>
+<option value="1512906">Saint Helena</option>
+<option value="1512909">Saint Kitts and Nevis</option>
+<option value="1512912">Saint Lucia</option>
+<option value="1512915">Saint Pierre and Miquelon</option>
+<option value="1512918">Saint Vincent and the Grenadines</option>
+<option value="1512921">Samoa</option>
+<option value="1512924">San Marino</option>
+<option value="1512927">Sao Tome and Principe</option>
+<option value="1512930">Saudi Arabia</option>
+<option value="1512933">Senegal</option>
+<option value="1512936">Serbia</option>
+<option value="1512939">Seychelles</option>
+<option value="1512942">Sierra Leone</option>
+<option value="1512945">Singapore</option>
+<option value="1512948">Slovakia</option>
+<option value="1512951">Slovenia</option>
+<option value="1512954">Solomon Islands</option>
+<option value="1512957">Somalia</option>
+<option value="1512960">South Africa</option>
+<option value="1512963">South Korea</option>
+<option value="1512966">South Sudan</option>
+<option value="1512969">Spain</option>
+<option value="1512972">Sri Lanka</option>
+<option value="1512975">Sudan</option>
+<option value="1512978">Suriname</option>
+<option value="1512981">Svalbard and Jan Mayen</option>
+<option value="1512984">Swaziland</option>
+<option value="1512987">Sweden</option>
+<option value="1512990">Switzerland</option>
+<option value="1512993">Syria</option>
+<option value="1512996">Taiwan</option>
+<option value="1512999">Tajikistan</option>
+<option value="1513002">Tanzania</option>
+<option value="1513005">Thailand</option>
+<option value="1513008">Timor-Leste</option>
+<option value="1513011">Togo</option>
+<option value="1513014">Tokelau</option>
+<option value="1513017">Tonga</option>
+<option value="1513020">Trinidad and Tobago</option>
+<option value="1513023">Tunisia</option>
+<option value="1513026">Turkey</option>
+<option value="1513029">Turkmenistan</option>
+<option value="1513032">Turks and Caicos Islands</option>
+<option value="1513035">Tuvalu</option>
+<option value="1513038">U.S. Virgin Islands</option>
+<option value="1513041">Uganda</option>
+<option value="1513044">Ukraine</option>
+<option value="1513047">United Arab Emirates</option>
+<option value="1513050">United Kingdom</option>
+<option value="1513053">United States Minor Outlying Islands</option>
+<option value="1513056">Uruguay</option>
+<option value="1513059">Uzbekistan</option>
+<option value="1513062">Vanuatu</option>
+<option value="1513065">Vatican</option>
+<option value="1513068">Venezuela</option>
+<option value="1513071">Viet Nam</option>
+<option value="1513074">Wallis and Futuna</option>
+<option value="1513077">Western Sahara</option>
+<option value="1513080">Yemen</option>
+<option value="1513083">Zambia</option>
+<option value="1513086">Zimbabwe</option>
+</select>
+				
+			</p>
+			<div id="error_for_77532_276012pi_77532_276012" style="display:none"></div>
+			
+		
+			<p class="form-field  Investor_Type pd-select required required-custom    form-field-primary">
+				
+					<label class="field-label" for="77532_368839pi_77532_368839">Investor Type *</label>
+				
+
+				<select name="77532_368839pi_77532_368839" id="77532_368839pi_77532_368839" class="select" onchange=""><option value="" selected="selected"></option>
+<option value="1914121">Institutional</option>
+<option value="1914124">Retail</option>
+<option value="1914127">Other</option>
+</select>
+				
+			</p>
+			<div id="error_for_77532_368839pi_77532_368839" style="display:none"></div>
+			
+		
+			<p class="form-field  company pd-text required required-custom    form-field-secondary dependentFieldSlave dependentField">
+				
+					<label class="field-label" for="77532_276009pi_77532_276009">Company *</label>
+				
+
+				<input type="text" name="77532_276009pi_77532_276009" id="77532_276009pi_77532_276009" value="" class="text" size="30" maxlength="255" onchange="" onfocus="" />
+				
+			</p>
+			<div id="error_for_77532_276009pi_77532_276009" style="display:none"></div>
+			
+		
+			<p class="form-field  Market_Participant_Type pd-select required required-custom    form-field-secondary dependentFieldSlave dependentField">
+				
+					<label class="field-label" for="77532_276015pi_77532_276015">Market Participant Type *</label>
+				
+
+				<select name="77532_276015pi_77532_276015" id="77532_276015pi_77532_276015" class="select" onchange=""><option value="" selected="selected"></option>
+<option value="1619380">Asset Manager</option>
+<option value="1619383">Asset Owner</option>
+<option value="1619386">Hedge Fund</option>
+<option value="1619389">Insurance</option>
+<option value="1619392">Registered Investment Advisor</option>
+<option value="1619395">Consultants</option>
+<option value="1619398">Academia</option>
+<option value="1619401">Proprietary Trading</option>
+<option value="1619404">Bank</option>
+<option value="1619410">Other</option>
+</select>
+				
+			</p>
+			<div id="error_for_77532_276015pi_77532_276015" style="display:none"></div>
+			
+		
+			<p class="form-field  derivatives_content_subscriptions pd-checkbox required required-custom    ">
+				
+					<label class="field-label" for="77532_400249pi_77532_400249">Choose your subscriptions: *</label>
+				
+
+				<span class="value"><span><input type="checkbox" name="77532_400249pi_77532_400249_2093392" id="77532_400249pi_77532_400249_2093392" value="2093392" onchange="" /><label class="inline" for="77532_400249pi_77532_400249_2093392">Macro Volatility Digest: weekly market commentary highlighting opportunities in the cross-asset derivatives markets.</label></span><span><input type="checkbox" name="77532_400249pi_77532_400249_2093395" id="77532_400249pi_77532_400249_2093395" value="2093395" onchange="" /><label class="inline" for="77532_400249pi_77532_400249_2093395">Volatility Insights: thematic pieces on emerging trends in volatility trading.</label></span><span><input type="checkbox" name="77532_400249pi_77532_400249_2093398" id="77532_400249pi_77532_400249_2093398" value="2093398" onchange="" /><label class="inline" for="77532_400249pi_77532_400249_2093398">Webinars and Events: deep dives into products and investment themes.</label></span><span><input type="checkbox" name="77532_400249pi_77532_400249_2093401" id="77532_400249pi_77532_400249_2093401" value="2093401" onchange="" /><label class="inline" for="77532_400249pi_77532_400249_2093401">State of the Industry: quarterly derivatives market insights.</label></span></span>
+				
+			</p>
+			<div id="error_for_77532_400249pi_77532_400249" style="display:none"></div>
+			
+		
+			<p class="form-field  traded_products pd-checkbox required required-custom    ">
+				
+					<label class="field-label" for="77532_276018pi_77532_276018">Which products do you currently trade? *</label>
+				
+
+				<span class="value"><span><input type="checkbox" name="77532_276018pi_77532_276018_1589284" id="77532_276018pi_77532_276018_1589284" value="1589284" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589284">None</label></span><span><input type="checkbox" name="77532_276018pi_77532_276018_1589287" id="77532_276018pi_77532_276018_1589287" value="1589287" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589287">Crypto</label></span><span><input type="checkbox" name="77532_276018pi_77532_276018_1589290" id="77532_276018pi_77532_276018_1589290" value="1589290" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589290">Index Options</label></span><span><input type="checkbox" name="77532_276018pi_77532_276018_1589293" id="77532_276018pi_77532_276018_1589293" value="1589293" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589293">ETFs</label></span><span><input type="checkbox" name="77532_276018pi_77532_276018_1589296" id="77532_276018pi_77532_276018_1589296" value="1589296" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589296">Stocks</label></span><span><input type="checkbox" name="77532_276018pi_77532_276018_1589299" id="77532_276018pi_77532_276018_1589299" value="1589299" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589299">Futures</label></span><span><input type="checkbox" name="77532_276018pi_77532_276018_1589302" id="77532_276018pi_77532_276018_1589302" value="1589302" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589302">Single Stock Options</label></span><span><input type="checkbox" name="77532_276018pi_77532_276018_1589305" id="77532_276018pi_77532_276018_1589305" value="1589305" onchange="" /><label class="inline" for="77532_276018pi_77532_276018_1589305">ETF Options</label></span></span>
+				
+			</p>
+			<div id="error_for_77532_276018pi_77532_276018" style="display:none"></div>
+			
+		
+			<p class="form-field opt-in Express_Consent_Privacy_Policy pd-checkbox required required-custom    ">
+				
+					<label class="field-label" for="77532_276021pi_77532_276021">Marketing Consent *</label>
+				
+
+				<span class="value"><span><input type="checkbox" name="77532_276021pi_77532_276021_1513140" id="77532_276021pi_77532_276021_1513140" value="1513140" onchange="" /><label class="inline" for="77532_276021pi_77532_276021_1513140">Yes, I acknowledge that Cboe may contact me about Cboe activities, products, and services. I understand that I can unsubscribe from communications from Cboe at any time.</label></span></span>
+				
+			</p>
+			<div id="error_for_77532_276021pi_77532_276021" style="display:none"></div>
+			
+		
+			<p class="form-field opt-in Privacy_Policy_Consent pd-checkbox required required-custom    ">
+				
+					<label class="field-label" for="77532_276024pi_77532_276024">Privacy Consent *</label>
+				
+
+				<span class="value"><span><input type="checkbox" name="77532_276024pi_77532_276024_1513143" id="77532_276024pi_77532_276024_1513143" value="1513143" onchange="" /><label class="inline" for="77532_276024pi_77532_276024_1513143">Yes, I agree to Cboe's Terms and Conditions (https://www.cboe.com/terms/) for use of websites and Cboe's Privacy Notice and Policy (https://www.cboe.com/privacy) and acknowledge that my personal data will be processed in accordance with the policy.</label></span></span>
+				
+			</p>
+			<div id="error_for_77532_276024pi_77532_276024" style="display:none"></div>
+			
+		
+			<p class="form-field  lasttouch_utm_campaign pd-hidden  hidden no-label  ">
+				
+
+				<input type="hidden" name="77532_324792pi_77532_324792" id="77532_324792pi_77532_324792" value="" />
+				
+			</p>
+			<div id="error_for_77532_324792pi_77532_324792" style="display:none"></div>
+			
+		
+			<p class="form-field  lasttouch_utm_campaign_id pd-hidden  hidden no-label  ">
+				
+
+				<input type="hidden" name="77532_324813pi_77532_324813" id="77532_324813pi_77532_324813" value="" />
+				
+			</p>
+			<div id="error_for_77532_324813pi_77532_324813" style="display:none"></div>
+			
+		
+			<p class="form-field  lasttouch_utm_content pd-hidden  hidden no-label  ">
+				
+
+				<input type="hidden" name="77532_324816pi_77532_324816" id="77532_324816pi_77532_324816" value="" />
+				
+			</p>
+			<div id="error_for_77532_324816pi_77532_324816" style="display:none"></div>
+			
+		
+			<p class="form-field  lasttouch_utm_source pd-hidden  hidden no-label  ">
+				
+
+				<input type="hidden" name="77532_324801pi_77532_324801" id="77532_324801pi_77532_324801" value="" />
+				
+			</p>
+			<div id="error_for_77532_324801pi_77532_324801" style="display:none"></div>
+			
+		
+			<p class="form-field  lasttouch_utm_term pd-hidden  hidden no-label  ">
+				
+
+				<input type="hidden" name="77532_324822pi_77532_324822" id="77532_324822pi_77532_324822" value="" />
+				
+			</p>
+			<div id="error_for_77532_324822pi_77532_324822" style="display:none"></div>
+			
+		
+			<p class="form-field  lasttouch_utm_medium pd-hidden  hidden no-label  ">
+				
+
+				<input type="hidden" name="77532_324825pi_77532_324825" id="77532_324825pi_77532_324825" value="" />
+				
+			</p>
+			<div id="error_for_77532_324825pi_77532_324825" style="display:none"></div>
+			
+		
+			<p class="form-field %%form-field-css-classes%% pd-captcha required hidden   %%form-field-dependency-css%%">
+				
+
+				<div class="g-recaptcha" data-sitekey="6LdeKFcdAAAAAA8ieqIc8bHuW-X3fbCAl09z_wJd"></div>
+<script type="text/javascript" src="https://www.google.com/recaptcha/enterprise.js">
+</script>
+
+				
+			</p>
+			<div id="error_for_Recaptchapi_Recaptcha" style="display:none"></div>
+			
+		
+
+		
+	<p style="position:absolute; width:190px; left:-9999px; top: -9999px;visibility:hidden;">
+		<label for="pi_extra_field">Comments</label>
+		<input type="text" name="pi_extra_field" id="pi_extra_field"/>
+	</p>
+		
+
+		<!-- forces IE5-8 to correctly submit UTF8 content  -->
+		<input name="_utf8" type="hidden" value="&#9731;" />
+
+		<p class="submit">
+			<input type="submit" accesskey="s" value="Sign Up" />
+		</p>
+	
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+	var anchors = document.getElementsByTagName("a");
+	for (var i=0; i<anchors.length; i++) {
+		var anchor = anchors[i];
+		if(anchor.getAttribute("href")&&!anchor.getAttribute("target")) {
+			anchor.target = "_top";
+		}
+	}
+		
+//]]>
+</script>
+<input type="hidden" name="hiddenDependentFields" id="hiddenDependentFields" value="" /></form>
+<script type="text/javascript">(function(){ pardot.$(document).ready(function(){ (function() {
+	var $ = window.pardot.$;
+	window.pardot.FormDependencyMap = [{"primary_field_html_id":"77532_368839pi_77532_368839","secondary_field_html_id":"77532_276015pi_77532_276015","primary_field_value":"Institutional"},{"primary_field_html_id":"77532_368839pi_77532_368839","secondary_field_html_id":"77532_276015pi_77532_276015","primary_field_value":"Other"},{"primary_field_html_id":"77532_368839pi_77532_368839","secondary_field_html_id":"77532_276009pi_77532_276009","primary_field_value":"Institutional"}];
+
+	$('.form-field-primary input, .form-field-primary select').each(function(index, input) {
+		$(input).on('change', window.piAjax.checkForDependentField);
+		window.piAjax.checkForDependentField.call(input);
+	});
+})(); });})();</script></div>
+     </div>
+     <div width="16.66%" class="column columnDiv" style="width: 16.66%;margin-right: 15px;margin-bottom: 15px;vertical-align: top;display: inline-block;">
+      <div></div>
+     </div>
+    </div>
+    <div class="row" style="align-items: flex-end; width: 100%; background-color: ;" role="presentation">
+     <div width="100%" class="column columnDiv" style="width: 100%;padding: 20px;vertical-align: bottom;display: inline-block;">
+      <div class="contentbuilder-landingpage-html" style="font-size: 14px; word-break: break-word;" role="presentation" id="contentRegion">
+       <div class="bg-gradient-">
+        <div class="section-spacing-sm body">
+         <div class="container">
+          <hr class="hr-diagonal">
+          <div class="py-4">
+           <div class="row g-2">
+            <div class="col-12 col-md-6 text-center text-md-start">
+             <p class="text-white-90 small">©2026 Cboe Global Markets, All Rights Reserved.</p>
+            </div>
+            <div class="col-12 col-md-6 text-center text-md-end">
+             <ul class="list-inline-dot">
+              <li><a class="link-hover-line" href="https://www.cboe.com/insights">Insights</a></li>
+              <li><a class="link-hover-line" href="https://www.cboe.com/markets/">Our Markets</a></li>
+             </ul>
+            </div>
+           </div>
+           <div class="row g-2">
+            <div class="col-12">
+             <p class="text-white-90 mt-4 small">There are important risks associated with transacting in any of the Cboe Company products or any digital assets discussed here. Before engaging in any transactions in those products or digital assets, it is important for market participants to carefully review the disclosures and disclaimers contained at <a href="https://www.cboe.com/global-disclaimers/">https://www.cboe.com/global-disclaimers/</a>. These products and digital assets are complex and are suitable only for sophisticated market participants. These products involve the risk of loss, which can be substantial and, depending on the type of product, can exceed the amount of money deposited in establishing the position. Market participants should put at risk only funds that they can afford to lose without affecting their lifestyle.</p>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

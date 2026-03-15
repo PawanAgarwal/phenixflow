@@ -1,0 +1,75 @@
+Ahead of datas, Short-term positioning shift, Risk/reward shift + Intraday post (02/July)
+
+Sentiment and risk/reward shift ahead?Yesterday, Powell spoke in ECB conferenc in Poland. He reaffirmed that the Fed remains data-dependent, weighing each meeting’s economic indicators—particularly on inflation, employment, and the effects of recent tariffs—before deciding on interest-rate cuts. He emphatized that that U.S. tariffs have elevated core inflation forecasts, necessitating caution, and that he needs to wait for incoming jobs, CPI, and tariff-impact data. We have NFP, PMI and unemployment rate datas tomorrow.After the tariffs deadline trade-war escalation threatens both growth and the Fed’s easing window. Sentiment is actually about bad news are bad news, the trend is already clear:
+
+Market bets on this tariff shock and datas into next week with a heavy short fly spread at 6000/6070/6145, now as a short vega, vomma and charm, and long veta, long vanna, theta and delta bet. This creates a heavy local support in the 6162-6132 field, centered around the wing of 6145, creating a heavy demand bid there, with dealers swallowing vol up on downward moves + local MM long gamma effect. But the decay flow is suppressive bcs of charm and veta, flooring the vol and supports my ‘grind up from next week with vomma supply’ theory. As on the longer tenors, SPX is getting net longer vanna (but not confirmed by the vol complex, look at only VIX fighting with my 16.5s pivot), the mechanical vol grind up would cap the upside. That shifts the risk/reward, hence I took positions I described yesterday. The risk is the MM short veta factor…
+
+INTRADAY POSTCoding today’s positioning:
+
+The positioning is characterized by a short fly pattern with net negative speed exposure. I expect too high theta risk today due to dealers net negative theta and veta exposure. If MMs are forced to be longer vol, that can provide nice payoff on a fast 55+ delta 1DTE contract, but also generates more theta decay. Too much ‘rent fee’ for an unfavorable convexity. Also charm is net suppressive. If one wants to trade today, needs to be very fast on reversion catch’n’run. 1DTE with 55/60 delta is at least to avoid the time risk, but only if you are very conviced about the move, and fast out. Otherwise a long theta trade is fine, or reversion trade with futures.
+
+Coding the centroid of the gamma convexity at 6192.46- 6193.12 range.Upside pivot is 6207.46, while downside it 6176.83 (strong support from 2.40PM).Coding 6234.5 as the upside max for a reversion target, with a margin of error of 6243 fakeout. Very strong during the power hour.And 6150 for downside min. Downside pivot os 6176/80 is especially strong in the last 1.5 hours. We also have a local pivot of 6217 after 2PM, becoming strong support or resistance in the last 20 mins. This can produce a pin to 6225, otherwise it is 6200 still. It is algo tick-hunting environment. Rangebounding.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+SCRIPT INPUTS=== SPX closed at 6198.01 ===
+
+99.73%, 6293.87754876997, , 6269.864854403261, 95.4%, 6245.943774384986, Risk level, 6230.31736393548, 68.2%, 6221.9307271196685, 68.2%, 6173.996594356375, Risk level, 6165.70263606452, 95.4%, 6150.076225615015, , 6126.062455984753, 99.73%, 6102.14245123003
+
+=== ES closed at 6248.25 ===
+
+99.73%, 6347.546188332416, , 6322.673409415569, 95.4%, 6297.8980941662085, Risk level, 6281.712815468024, 68.2%, 6273.024929559424, 68.2%, 6223.376443549432, Risk level, 6214.787184531976, 95.4%, 6198.6019058337915, , 6173.727951237133, 99.73%, 6148.953811667584
+
+=== SPY closed at 617.65 ===
+
+99.73%, 627.4665281765303, , 625.0075779981162, 95.4%, 622.5582640882651, Risk level, 620.9581699954907, 68.2%, 620.0992757729338, 68.2%, 615.1909729392029, Risk level, 614.3418300045092, 95.4%, 612.7417359117348, , 610.2826694822403, 99.73%, 607.8334718234696
+
+=== VIX closed at 16.82 ===
+
+99.73%, 18.951089517897167, , 18.413183172060553, 95.4%, 17.89054472080161, Risk level, 17.54480711694846, 68.2%, 17.352171803153368, 68.2%, 16.2910996736789, Risk level, 16.11519273046365, 95.4%, 15.769455126610499, , 15.229954084061566, 99.73%, 14.708910329514945
+
+=== IWM closed at 218.01 ===
+
+99.73%, 223.6305180185296, , 222.22094615770982, 95.4%, 220.8202590092648, Risk level, 219.90411457224448, 68.2%, 219.41063024978945, 68.2%, 216.60031286540234, Risk level, 216.1158854277555, 95.4%, 215.1997409907352, , 213.78999394632302, 99.73%, 212.38948198147037
+
+=== QQQ closed at 546.99 ===
+
+99.73%, 558.138151269011, , 555.3441200123693, 95.4%, 552.5640756345055, Risk level, 550.7469269776567, 68.2%, 549.7699734719223, 68.2%, 544.1958254789188, Risk level, 543.2330730223433, 95.4%, 541.4159243654946, , 538.6216759882617, 99.73%, 535.841848730989
+
+=== NDX closed at 22478.13 ===
+
+99.73%, 22928.660949011362, , 22815.75020082092, 95.4%, 22703.395474505684, Risk level, 22629.958929816832, 68.2%, 22590.481954074163, 68.2%, 22365.21365148229, Risk level, 22326.30107018317, 95.4%, 22252.86452549432, , 22139.94529134066, 99.73%, 22027.59905098864
+
+=== NQ closed at 22691.75 ===
+
+99.73%, 23154.11327953227, , 23038.23248181421, 95.4%, 22922.931639766135, Risk level, 22847.566425202374, 68.2%, 22807.047902713388, 68.2%, 22575.863263413357, Risk level, 22535.933574797626, 95.4%, 22460.568360233865, , 22344.678562045603, 99.73%, 22229.38672046773
+
+=== NVDA closed at 153.3 ===
+
+99.73%, 159.6440046120422, , 158.05004605439984, 95.4%, 156.47200230602112, Risk level, 155.43792955425823, 68.2%, 154.87788077550985, 68.2%, 151.705708681272, Risk level, 151.1620704457418, 95.4%, 150.1279976939789, , 148.53352933502828, 99.73%, 146.9559953879578
+
+=== AMZN closed at 220.46 ===
+
+99.73%, 229.17250432445343, , 226.98392789106308, 95.4%, 224.81625216222673, Risk level, 223.39611395734082, 68.2%, 222.62747124217287, 68.2%, 218.27100643080266, Risk level, 217.5238860426592, 95.4%, 216.10374783777328, , 213.91453295825485, 99.73%, 211.7474956755466
+
+=== AAPL closed at 207.82 ===
+
+99.73%, 214.68332173378764, , 212.96057916122496, 95.4%, 211.25166086689381, Risk level, 210.13293942428643, 68.2%, 209.52880508741003, 68.2%, 206.09702724358283, Risk level, 205.50706057571355, 95.4%, 204.38833913310617, , 202.6652454382278, 99.73%, 200.95667826621235
+
+=== GOOG closed at 176.91 ===
+
+99.73%, 184.07968822222932, , 182.27845355305675, 95.4%, 180.49484411111465, Risk level, 179.3261849308913, 68.2%, 178.6934326484812, 68.2%, 175.10840450504568, Risk level, 174.4938150691087, 95.4%, 173.32515588888535, , 171.52336866884963, 99.73%, 169.74031177777067
+
+=== TSLA closed at 300.71 ===
+
+99.73%, 325.8405390029362, , 319.49613874137583, 95.4%, 313.2752695014681, Risk level, 309.1789916439895, 68.2%, 306.9283406461294, 68.2%, 294.3603266546182, Risk level, 292.24100835601047, 95.4%, 288.1447304985319, , 281.79206787972157, 99.73%, 275.57946099706373
+
+=== TSM closed at 224.68 ===
+
+99.73%, 234.21794847057203, , 231.82119839235114, 95.4%, 229.44897423528602, Risk level, 227.89428863458278, 68.2%, 227.05196658735213, 68.2%, 222.28272372997398, Risk level, 221.46571136541723, 95.4%, 219.911025764714, , 217.51346909320688, 99.73%, 215.142051529428
+
+=== AMD closed at 136.11 ===
+
+99.73%, 143.68772210363198, , 141.7806357350254, 95.4%, 139.898861051816, Risk level, 138.66369234892397, 68.2%, 137.9914271893826, 68.2%, 134.20219902161563, Risk level, 133.55630765107605, 95.4%, 132.32113894818403, , 130.41294952132597, 99.73%, 128.53227789636804

@@ -1,0 +1,29 @@
+No downside confirmation - Weekly post (29/Sept - 03/Oct)
+
+Here you can find my free post about the window of risk, coded CTA trigger levels and description of the setup:
+
+Window of Risk, Disbalance - Investigating the story that the market tells
+
+While I’m working on my stat arb trading strategies educational material, I marked Monday to be supported by the post-OpEx buyback flow, and Tuesday as the day when the risk can start to be materilaized. Also in the last weekly post marked 6569.00 - 6599.61 as the area where the weekly vomma supply will kick in and cap any volatility, and marked the 6607.82 - 6580.47 weekly area that would confirm any downward trend. We indeed experienced a ~130.3 pts (~1.94%) fall.However, on Thursday and Friday intraday post I explained how the short-term sentiment was changed for the algos about the PCE print and that market is likely to be pinned to 6645. The week closed at 6644.4 durint AH, rejecting to confirm the downward trend.
+
+This week we’ll get JOLTs Job Openings on Tuesday, ISM Manufacturing PMI on Wednesday and Services PMI, NFP and unemployment rate on Friday. Also JPM collar expires into Wednesday, so the huge long gamma call strike, that creates a well-supplied downside will vanish.BLS report showed +22k jobs in August and 4.3% unemployment; benchmark revision tracking implies underlying payroll growth has been weaker through the year. That keeps attention on a sub-50 manufacturing PMI and services hiring gauges.Looks like, mid-week is a potential turning point in terms of volatility.
+
+Let’s look at how the market positions itself into this week…
+
+WEEKLY POST Let’s look at the weekly positioning first:
+
+This positioning is net short speed again, but not as steep as before. The most supportive area is the centroid of the profile at 6534.21 - 6581.61but overall the profile is net long gamma, and because of the flat speed profile, the moves are expected to be slowed down.
+
+The vanna profile is negative, creating a downside vol supply,Veta (vega decay) is negative, this means, going into Wednesday the dealers will need to buyback vol, but in an exponentialy decreasing amount. However, in this case, this creates a mild right-tail risk towards 6673.37 during the first half of the week.This 6673.37 is like the “gate of the right-tail vacuum effect” towards 6750. This tests the upside skew, if there is organic demand for upside vol beside the mechanical flows.Vomma is again positive, creating a cap on the volatility. The downside area it covers is estimated to 6563.35 - 6589.37, right around the centroid range. To the upside it covers 6709.24 - 6739.90; these are the ranges that the vomma supply allows in case of a vol down and a vol up moves for spot. You can see the vol of vol being heavily dumped over the past weeks (grey line) forcing realized volatility to rangebound:
+
+The JPM collar short call is a ~95.22 delta short call position by now. It has no magnetic effect on the spot. It would only have some directional effect once the spot hits the lower bound of the centroid range, and if realized volatility would be dumped below 8.79% from its current level of 9.58%It has however a strong effect on vol of vol, capping any downward vol upstick. So, once the collar expires, the local short vanna, long vomma profile decreases, making downside support weaker.
+
+The 5-delta fix strike skew showed a 11.68% increase over the last week, and 22-delta fix strike is bid by 26.60%, while fix strike ATM vol is dumped by 9.02%This tells me that market is betting on a small vol increase towards the vomma supply/weekly centroid area, but they don’t expect the market to fall. Customers are net short gamma, short vol and short kurtosis. They more like expect stabilization and ranging here. The setup favors for premium collecting strats and intraday reversion trading strategies.
+
+Let’s look at the weekly ranges that the vol market expects:
+
+SPX: 6699.52 - 6587.88; 6560.88 ES=F: 6753.55 - 6639.45; 6611.85SPY: 667.43 - 656.21; 653.50NDX: 24783.69 - 24224.01; 24088.65NQ=F: 25013.20 - 24440.30; 24301.76VIX: 16.27 - 14.31; 16.73
+
+SPX: 6699.52 - 6587.88; 6560.88 ES=F: 6753.55 - 6639.45; 6611.85SPY: 667.43 - 656.21; 653.50NDX: 24783.69 - 24224.01; 24088.65NQ=F: 25013.20 - 24440.30; 24301.76VIX: 16.27 - 14.31; 16.73
+
+The ranges are pretty much aligning with the derived vomma supports. Thursday premarket, I will recheck the positioning.

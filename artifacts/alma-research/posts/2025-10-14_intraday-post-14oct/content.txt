@@ -1,0 +1,91 @@
+Intraday post (14/Oct)
+
+Explaining my Window of Risk call:
+
+Window of Risk, Disbalance - Investigating the story that the market tells
+
+Weekly post, october OpEx:
+
+OpEx week, China risk - Weekly post (13 - 17/Oct)
+
+Equities cheapened implieds less than rates did earlier in the quarter. MOVE ~80s leaves room for macro shock transmission into equities without rates markets breaking. This supports crossasset hedges that benefit from equity–rates correlation flips (e.g. long equity vol vs. short rates vol on a spread where you expect equity vol to reprice more on policy days).
+
+I’m working on a new educational post about statistical arbitrage and mean reversion trading (including pair trading, CADF test, Johansen test, Triplets, Half-Life, Long/short portfolio, risk management).This is a complet course btw.The next will be momentum trading, followed by greeks and probability distribution, OptionsDepth education, including the terms of my daily letters, then machine learning etc.Basic python codes will be included.When I’m ready, I will raise the monthly fee to 50 EUR/month (600 EUR/yearly) for new subscribers, and will create a plan for educational posts only for 35 EUR/month.This won’t affect the ones who already subscribed (just like the change from USD to EUR didn’t affect them), only the new-comers.And there will be no more raise.We are reaching 2.4k subs soon…
+
+I’m working on a new educational post about statistical arbitrage and mean reversion trading (including pair trading, CADF test, Johansen test, Triplets, Half-Life, Long/short portfolio, risk management).This is a complet course btw.The next will be momentum trading, followed by greeks and probability distribution, OptionsDepth education, including the terms of my daily letters, then machine learning etc.Basic python codes will be included.
+
+When I’m ready, I will raise the monthly fee to 50 EUR/month (600 EUR/yearly) for new subscribers, and will create a plan for educational posts only for 35 EUR/month.This won’t affect the ones who already subscribed (just like the change from USD to EUR didn’t affect them), only the new-comers.And there will be no more raise.We are reaching 2.4k subs soon…
+
+INTRADAY POST Coding today’s positioning:
+
+We can see an IC pattern at 6600/05 - 6685/90, that is brave regarding the lowering gamma to the upside.The net speed profile is negative, not too steep but it is so. The centroid of the profile is at 6545.24; this is where the dealer flow is neutral, the upside shorter gamma and downside longer gamma effects are balanced. If spot is above this line, it has a chance to break into the IC range during the AM session. After that, the wings become even stronger resistances.
+
+Upside pivot is at 6615.93at this line, the local shorter upside gamma vacuum starts to kick in towards 6677 first, then maybe even touching the wings. If realized volatility is sold, it will provide a nice reversion trade opportunity within the IC range.
+
+Downside pivot is at 6516.92Downside gamma is supportive here, mostly into the PM session, and centroid can be sticky.I don’t expect the downside pivot to be broken, very low probability, but if it’d be, 6487.39 is very supportive already. Left-tail is managed.
+
+I like lower risk premium selling strats here, and maybe some small 0DTE reversion trades if we are in the centroid. Otherwise I avoid this uncertainity. I don’t put my money into fogg.Most of the moves are happening during the overnight session.
+
+OptionsDepth Heatmap
+
+VIX is below 21s, from this point 19s is sticky zone for this weekly expo, then into VIXpiry next week it is sensitive back towards 21s.Regarding the lowered correlation, I don’t see significant impact now.
+
+SCRIPT INPUTS=== SPX closed at 6654.72 ===
+
+99.73%, 6763.216087113513, , 6736.037455367475, 95.4%, 6708.968043556756, Risk level, 6691.283181357254, 68.2%, 6681.788968443857, 68.2%, 6627.540474262077, Risk level, 6618.156818642747, 95.4%, 6600.471956443244, , 6573.291972642432, 99.73%, 6546.223912886488
+
+=== ES closed at 6689.75 ===
+
+99.73%, 6806.013718898722, , 6776.885457857479, 95.4%, 6747.881859449361, Risk level, 6728.93087326887, 68.2%, 6718.753059106382, 68.2%, 6660.62065094152, Risk level, 6650.56912673113, 95.4%, 6631.618140550639, , 6602.488233114239, 99.73%, 6573.486281101278
+
+=== SPY closed at 663.04 ===
+
+99.73%, 674.1570935308856, , 671.3720675053177, 95.4%, 668.5985467654428, Risk level, 666.7864605199085, 68.2%, 665.813472713912, 68.2%, 660.2548771138618, Risk level, 659.2935394800915, 95.4%, 657.4814532345571, , 654.6962806845702, 99.73%, 651.9229064691143
+
+=== VIX closed at 19.03 ===
+
+99.73%, 21.420401373401752, , 20.814224076838528, 95.4%, 20.22520103002363, Risk level, 19.83556571808236, 68.2%, 19.6185012039374, 68.2%, 18.422710516603246, Risk level, 18.224435655208655, 95.4%, 17.834800343267386, , 17.226837892946488, 99.73%, 16.639599999889263
+
+=== IWM closed at 244.41 ===
+
+99.73%, 250.86531245172534, , 249.24625975912653, 95.4%, 247.63765622586266, Risk level, 246.58544029623144, 68.2%, 246.0185349890595, 68.2%, 242.79080839652252, Risk level, 242.23455970376855, 95.4%, 241.18234377413734, , 239.56307990785103, 99.73%, 237.95468754827465
+
+=== QQQ closed at 602.01 ===
+
+99.73%, 615.4851078082015, , 612.1070607684937, 95.4%, 608.7475539041008, Risk level, 606.5511113313639, 68.2%, 605.3694036915044, 68.2%, 598.6317442920918, Risk level, 597.468888668636, 95.4%, 595.2724460958992, , 591.8940824909455, 99.73%, 588.5348921917985
+
+=== NDX closed at 24750.25 ===
+
+99.73%, 25293.782702571, , 25157.53255725994, 95.4%, 25022.0163512855, Risk level, 24933.420520766427, 68.2%, 24885.762198462075, 68.2%, 24613.991751168604, Risk level, 24567.079479233573, 95.4%, 24478.4836487145, , 24342.221212415483, 99.73%, 24206.717297429
+
+=== NQ closed at 24904.5 ===
+
+99.73%, 25483.54162417397, , 25338.367706802346, 95.4%, 25194.020812086987, Risk level, 25099.637027346627, 68.2%, 25048.84211524797, 68.2%, 24759.316411916134, Risk level, 24709.362972653373, 95.4%, 24614.979187913013, , 24469.790592839207, 99.73%, 24325.45837582603
+
+=== NVDA closed at 188.32 ===
+
+99.73%, 197.4847265903818, , 195.1800975355563, 95.4%, 192.9023632951909, Risk level, 191.40851286095867, 68.2%, 190.59741093663982, 68.2%, 186.0147084083666, Risk level, 185.23148713904132, 95.4%, 183.7376367048091, , 181.43198874368093, 99.73%, 179.1552734096182
+
+=== AMZN closed at 220.07 ===
+
+99.73%, 229.94206673286607, , 227.4606610815194, 95.4%, 225.00603336643303, Risk level, 223.39688648897587, 68.2%, 222.52433072127397, 68.2%, 217.58798688587814, Risk level, 216.74311351102412, 95.4%, 215.13396663356696, , 212.65162863692422, 99.73%, 210.19793326713392
+
+=== AAPL closed at 247.66 ===
+
+99.73%, 255.80447612232535, , 253.7601885251826, 95.4%, 251.7322380611627, Risk level, 250.40468845322366, 68.2%, 249.6878172403042, 68.2%, 245.61544153772672, Risk level, 244.91531154677634, 95.4%, 243.5877619388373, , 241.54306119400513, 99.73%, 239.51552387767464
+
+=== GOOG closed at 244.64 ===
+
+99.73%, 255.19566276578945, , 252.54295994295038, 95.4%, 249.91783138289472, Risk level, 248.19725835207103, 68.2%, 247.26483427594664, 68.2%, 241.98669577166555, Risk level, 241.08274164792894, 95.4%, 239.36216861710525, , 236.70854357136844, 99.73%, 234.08433723421052
+
+=== TSLA closed at 435.9 ===
+
+99.73%, 466.3209401298588, , 458.6526556154454, 95.4%, 451.11047006492936, Risk level, 446.1518568237624, 68.2%, 443.4400228906979, 68.2%, 428.2272365213325, Risk level, 425.64814317623757, 95.4%, 420.6895299350706, , 413.0142795295146, 99.73%, 405.47905987014116
+
+=== TSM closed at 302.89 ===
+
+99.73%, 320.59945237803055, , 316.1410895437943, 95.4%, 311.74472618901524, Risk level, 308.8580854513963, 68.2%, 307.28547006877955, 68.2%, 298.42979758162414, Risk level, 296.9219145486037, 95.4%, 294.03527381098473, , 289.574067218721, 99.73%, 285.1805476219694
+
+=== AMD closed at 216.42 ===
+
+99.73%, 240.88631242266865, , 234.69004159433936, 95.4%, 228.6531562113343, Risk level, 224.66514728643932, 68.2%, 222.45250294671212, 68.2%, 210.2144541480034, Risk level, 208.17485271356065, 95.4%, 204.18684378866567, , 197.97580059191802, 99.73%, 191.95368757733132

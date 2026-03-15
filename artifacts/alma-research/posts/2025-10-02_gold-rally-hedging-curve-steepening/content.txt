@@ -1,0 +1,87 @@
+GOLD rally, hedging curve-steepening risk - Intraday post (02/Oct)
+
+Practical recommendations to consider
+
+Weekly post:
+
+No downside confirmation - Weekly post (29/Sept - 03/Oct)
+
+Window of Risk:
+
+Window of Risk, Disbalance - Investigating the story that the market tells
+
+For portfolio managers: The current gold rally is chiefly supported by central banks + ETF demand, and (statistically) that rates lead gold, not ETF flows or the dollar. The Fed’s easing bias and upside risk to breakevens are the bullish pillars.Gold is effectively short beta to real yields, so the biggest left-tail is a real-yield backup / curve steepener—that’s what we should hedge.Gold doesn’t produce cash flow and is prone to regime swings. It’s a hedge/insurance, not a compounding engine. So, treat gold as exposure to inflation/real-rate factors rather than an “asset class.” Size it by risk budget and factor diversification, not notional. Manage the overlap with duration/ breakeven risk in the rest of the portfolio, so you don’t double up on the same macro bet.
+
+Measure your portfolio’s gold to real-rate beta: regress Δgold vs Δ10y TIPS yield and vs Δbreakeven; update rolling. Adjust rates-up hedges to the beta. TY/US put spreads (short 10y/long-bond futures via puts) sized by DV01 to your estimated gold–rates beta (mind vol risk!). Or bear-steepener options (2s10s/5s30s payer spreads) to cover a potential curve-steepening risk… GLD/XAU puts or collars (e.g., 3–6M 25Δ put financed with a 10–15Δ call sale) to protect against ETF-inflow stall/reversal. Because downside is on the table if ETF inflows stop.Or if you’re not set up to manage rate hedges, consider simpler collars or a multi-asset inflation sleeve (gold + TIPS + commodities) to diversify the bet.
+
+INTRADAY POSTCoding today’s positioning:
+
+This is a heavily long speed profile both locally and on a net basis. The left-tail of the distribution is relatively thin, but its body is fat, especially around the centroid area of 6726.70 - 6733.611This is a very well supplied area.
+
+Above the centroid, the speed profile is very convex.This means, that the upside move is not too easy. There is a natural ‘magnetic fiel’ coming from the area above 6755, but it is hard to ‘climb up to this mountain’. The biggest strenght is required at 6744.24 upside pivot, This is where negative charm flows are very pronunced. To break this line, and confirm it, you need to see at least 115.11% increase in the call skew, and it should appear in the realized vol too a bit (relatively higher local intraday vol), and then the vol must be sold, to confirm that the line is ‘conquered’. After 1.40PM, the 6736 line becomes sticky. And the 6745/55 area becomes rejecting.
+
+The centroid area is a very significant pivot during the day. Very important to watch, where the market opens.Downside is supplied. 6708/14 are is a sticky range.Downside pivot is at 6702.31, this is where the upside ‘magnetic field’ starts to fade, and market can retest 6655/60, before 1PMThen reverse back to 6708/14, or after 1PM, reject from the downside pivot and pin to 6680.
+
+Downside has significantly lower probability based on positioning. If we open above the centroid, it favors for premium collection.If opening is confirmed below the centroid, and downside pivot shows strenght in put vol, the maybe.. but only maybe I would go for a fast downside momentum trade with 1DTEs, but I wouldn’t play the downside. The day favors for premium collection.
+
+OptionsDepth Heatmap
+
+SCRIPT INPUTS=== SPX closed at 6711.2 ===
+
+99.73%, 6805.300400480041, , 6781.734497474649, 95.4%, 6758.250200240021, Risk level, 6742.911834961774, 68.2%, 6734.684012175391, 68.2%, 6687.633522865108, Risk level, 6679.488165038226, 95.4%, 6664.149799759979, , 6640.58302945854, 99.73%, 6617.099599519958
+
+=== ES closed at 6757.0 ===
+
+99.73%, 6851.754250912274, , 6828.024596774262, 95.4%, 6804.377125456137, Risk level, 6788.932182557436, 68.2%, 6780.6471842079445, 68.2%, 6733.269767601241, Risk level, 6725.067817442564, 95.4%, 6709.622874543863, , 6685.892346868264, 99.73%, 6662.245749087726
+
+=== SPY closed at 668.45 ===
+
+99.73%, 677.8809768887251, , 675.5191180969198, 95.4%, 673.1654884443626, Risk level, 671.6282392115004, 68.2%, 670.8036007287336, 68.2%, 666.0880829510207, Risk level, 665.2717607884997, 95.4%, 663.7345115556375, , 661.3725647550218, 99.73%, 659.019023111275
+
+=== VIX closed at 16.29 ===
+
+99.73%, 18.001104419081567, , 17.56812100501241, 95.4%, 17.14555220954078, Risk level, 16.866642189230486, 68.2%, 16.712302220024007, 68.2%, 15.856454663845275, Risk level, 15.71335781076951, 95.4%, 15.434447790459215, , 15.000573411914697, 99.73%, 14.578895580918433
+
+=== IWM closed at 242.49 ===
+
+99.73%, 248.16368929921325, , 246.74119001978843, 95.4%, 245.32684464960664, Risk level, 244.40203329383488, 68.2%, 243.9042979512315, 68.2%, 241.06740476662725, Risk level, 240.57796670616514, 95.4%, 239.65315535039338, , 238.23051042610533, 99.73%, 236.81631070078677
+
+=== QQQ closed at 603.25 ===
+
+99.73%, 614.8264423326865, , 611.9254879185297, 95.4%, 609.0382211663432, Risk level, 607.1512610661154, 68.2%, 606.1372013979975, 68.2%, 600.3489136172426, Risk level, 599.3487389338846, 95.4%, 597.4617788336568, , 594.5606245394589, 99.73%, 591.6735576673135
+
+=== NDX closed at 24800.86 ===
+
+99.73%, 25271.377953085026, , 25153.47342087391, 95.4%, 25036.118976542515, Risk level, 24959.424550189655, 68.2%, 24918.211847573937, 68.2%, 24682.95022477309, Risk level, 24642.295449810346, 95.4%, 24565.601023457486, , 24447.68855104231, 99.73%, 24330.342046914975
+
+=== NQ closed at 25009.25 ===
+
+99.73%, 25483.105017009828, , 25364.364622976507, 95.4%, 25246.177508504912, Risk level, 25168.939140732313, 68.2%, 25127.434506025013, 68.2%, 24890.50433941473, Risk level, 24849.560859267687, 95.4%, 24772.322491495088, , 24653.574121713937, 99.73%, 24535.394982990172
+
+=== NVDA closed at 187.24 ===
+
+99.73%, 195.800668883162, , 193.64867566907975, 95.4%, 191.52033444158099, Risk level, 190.1249454136256, 68.2%, 189.3680739217718, 68.2%, 185.0874598106484, Risk level, 184.35505458637442, 95.4%, 182.95966555841903, , 180.806832457567, 99.73%, 178.67933111683803
+
+=== AMZN closed at 220.63 ===
+
+99.73%, 229.37115301920812, , 227.17535443791968, 95.4%, 225.00057650960406, Risk level, 223.57576856747312, 68.2%, 222.80457175586398, 68.2%, 218.4337808231274, Risk level, 217.68423143252687, 95.4%, 216.25942349039593, , 214.06298113431657, 99.73%, 211.88884698079187
+
+=== AAPL closed at 255.45 ===
+
+99.73%, 263.3730411985745, , 261.3847759571719, 95.4%, 259.41152059928726, Risk level, 258.1200648839196, 68.2%, 257.4231398633152, 68.2%, 253.46150015912093, Risk level, 252.77993511608037, 95.4%, 251.48847940071272, , 249.49985667261083, 99.73%, 247.52695880142545
+
+=== GOOG closed at 245.54 ===
+
+99.73%, 255.72705512172945, , 253.16748195198915, 95.4%, 250.63352756086474, Risk level, 248.97303757602282, 68.2%, 248.0736913848277, 68.2%, 242.97988979070936, Risk level, 242.10696242397717, 95.4%, 240.44647243913525, , 237.88607646128094, 99.73%, 235.35294487827053
+
+=== TSLA closed at 459.46 ===
+
+99.73%, 492.5870714182922, , 484.23448801293483, 95.4%, 476.0235357091461, Risk level, 470.62382306796445, 68.2%, 467.66844421761476, 68.2%, 451.10221622496573, Risk level, 448.2961769320355, 95.4%, 442.8964642908539, , 434.5357829679893, 99.73%, 426.33292858170773
+
+=== TSM closed at 288.47 ===
+
+99.73%, 302.8825958360024, , 299.2577561911861, 95.4%, 295.6762979180012, Risk level, 293.3270447967328, 68.2%, 292.05092306035573, 68.2%, 284.8440628477171, Risk level, 283.61295520326723, 95.4%, 281.2637020819989, , 277.6371734443149, 99.73%, 274.05740416399766
+
+=== AMD closed at 164.01 ===
+
+99.73%, 173.7171259859738, , 171.27315273239157, 95.4%, 168.86356299298689, Risk level, 167.28130145727317, 68.2%, 166.4190883477006, 68.2%, 161.56499383690831, Risk level, 160.7386985427268, 95.4%, 159.1564370070131, , 156.71086640056086, 99.73%, 154.30287401402617

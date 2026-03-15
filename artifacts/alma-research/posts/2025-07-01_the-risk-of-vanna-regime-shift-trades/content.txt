@@ -1,0 +1,89 @@
+The risk of vanna regime shift, Trades, Tariffs deadline + Intraday post (01/July)
+
++ Personal announcements
+
+As you know I said last week: vol selling, and now I said that I don’t expect vol this week, rather from next week Tuesday/Wednesday window. Not a vol squeeze or something, but the trigger of a grind up.At these points I use the spot to cash out of the positions (short vol, long delta) and roll up a small % of them only. I don’t open new longs, and buy very cheap July/August OTM put spreads (30/10 deltas are my targets now), bcs reversion model says 80%+, and I want to hedge this out… other conditions are not given yet for a net short bias. My risk target remains August, that will be the pivot when we see if it is a bearmarket or a stagnation. I literally don’t do anything else on this week, rather I watch how things evolve and how positioning reacts. This is especially important, bcs tariffs deadline can be ‘TACOed’…
+
+Also two personal announcement:1) I’m finally free, so I can continue my work on the educational section (implied vol and all of its aspect like skew, surface modeling etc, option greeks, vol trading etc.) 2) I won’t work from 24th of July to 2nd of August. But I will be here in the chat for the FOMC to comment. Also I’ll share everything that will be helpful to process the events on those days… (it’s the data mostly, not the Fed itself)
+
+Before jumping into the intraday positioning breakdown, let me tell you why the vanna regime shift is problematic…
+
+Shift into long vannaOn this chart you can see the realized SPX/VIX beta that made higher lows over the past weeks and also catched up on this squeeze due to short vanna regime that gets more and more flat. I explained that regime shift is on the way into long vanna where ‘vol down’ creates supportive flows, and spot upward grind can be stabilized through mechanical vol selling. We can see that the beta started to flatten, it’s volatility is very low on this upward curvatory:
+
+However, my call is that the tariff deadline will turn vol up again. I start to scale into bets on that cheap 22/5 delta call spreads into august expo…However if I’m right, the upward grind will push back the price from the height bcs all of these deltas will start to press the price in a longer vanna regime. The grind up however will be supportive on lower levels, I will reassume these vanna ranges in the next Sunday post. So, to me upside seems capped pretty much at the levels I market last week.
+
+Tariff deadlineFor now the vol selling also triggered institutional buyback flows, but once the vol starts to grind up on renewed tariff-concerns and the growth concerns, those positions will be squeezed out. The vol spikes will be dampened through the vol of vol supply that is manifesting through the distribution over the past one week. The kurtosis is sold by 59.16%, while vanna regime is slowly grinding up from negative to positive, but still more ‘short’ than ‘long’, and the RoC is grinding down. If July 9 passes with no further tariff delay, market is very likely topped.But if Bessent gets scare to death again of tariffs, he can convince Trump again about a surprise tariff pause. (In April, he personally lobbied in Mar-a-Lago to pause reciprocal tariffs, warning Trump that fresh trade levies would spike borrowing costs and roil auctions)I’m telling you that the market seems like pricing in the TACO scenario. Distribution still says VIX traders are net longer VIX vomma and longer on the VIX skew. I called this behavior a week ago, but we can see it being realized.
+
+INTRADAY POST Coding intraday positioning:
+
+We have a Big Beautiful IC again at 6170/75 - 6235/40 territory. Fair enough this is exactly the range of my risk levels, so I’d say, it is a reasonable IC. The speed impact is a short fly basically with 6170.97 as centroid.Upside pivot is 6193.82, downside pivot is 6170.57With speed profile of net positive, downside vol has a chance to catch up locally, but I don’t see too much odds for ‘zomma those gammas down’ and break out of the IC. If it would do so, 6148.62 is the range from where momentum escapes the IC wing’s gravitational field. 6222 is my upside target and 6160 is my downside (bcs I don’t expect vol to catch up, a fakeout can happen at max). While after 11.20am we have 6210 as a pivot if upside was touched first, and 6186 if downside. If momentum stuck inbetween in the powerhour, 6200 will be a pin, otherwise one of the wings. The unlikeliest scenario: if upward wing is broken due to higher local vol, then the target is 6245/50 zone.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+Odds favor for chop, maybe one nice reversion trade opportunity can play out.
+
+Reversion trading is a fast intraday “catch and run” directional scalping, basically.No long or short side. You trade what the market gives to you. If it goes to the resistance or reversion threshold, you go for a quick put, with SL, if it goes to the support lines, lower reversion bands, you go for a call with SL, small size.55/60 delta ITM and ATM if you see the dynamic is lurking what you wanna see, bcs you want the most gamma to catch fast profits.After 20-30% profit you start to scale in, and you can roll your ITM calls back into 55 delta, when they reach ~80 deltas, if you see that the momentum is strong. You adjust the SL, take the profit, close the desk and go out enjoying summer.If the trade went against you (line is broken and confirmed through dynamics and pattern: retested and structure is built beyond the line), you take the small loss, don’t take it personal, just as the natural % when ppl lose on trading, and close the desk and go out enjoying the summer. You weren’t wrong nor right, market just did a different thing that you could not see forward… and mostly not foreseeable…
+
+Important trading advice + Intraday post (16/June)
+
+SCRIPT INPUTS=== SPX closed at 6204.95 ===
+
+99.73%, 6301.566140940134, , 6277.365635952298, 95.4%, 6253.258070470067, Risk level, 6237.509639496825, 68.2%, 6229.057205096389, 68.2%, 6180.748768606984, Risk level, 6172.390360503175, 95.4%, 6156.641929529933, , 6132.44032635095, 99.73%, 6108.333859059866
+
+=== ES closed at 6245.25 ===
+
+99.73%, 6345.101488220829, , 6320.089317609891, 95.4%, 6295.175744110415, Risk level, 6278.8999515304195, 68.2%, 6270.163180963121, 68.2%, 6220.237038015066, Risk level, 6211.6000484695805, 95.4%, 6195.324255889585, , 6170.310888612766, 99.73%, 6145.398511779171
+
+=== SPY closed at 617.85 ===
+
+99.73%, 627.6727787749726, , 625.2122613885673, 95.4%, 622.7613893874862, Risk level, 621.1602764471658, 68.2%, 620.3008338161883, 68.2%, 615.3894056343038, Risk level, 614.5397235528343, 95.4%, 612.9386106125138, , 610.4779768282029, 99.73%, 608.0272212250275
+
+=== VIX closed at 16.72 ===
+
+99.73%, 18.861495753777, , 18.320873851925423, 95.4%, 17.795747648006664, Risk level, 17.448313765525533, 68.2%, 17.25464720024448, 68.2%, 16.188357525133636, Risk level, 16.011685318947123, 95.4%, 15.664251436465992, , 15.121991494776838, 99.73%, 14.598503330695657
+
+=== IWM closed at 215.79 ===
+
+99.73%, 221.18758107188248, , 219.83404438340767, 95.4%, 218.48879053594123, Risk level, 217.6089848212244, 68.2%, 217.13520237343081, 68.2%, 214.43635906778783, Risk level, 213.9710151787756, 95.4%, 213.09120946405875, , 211.73751441693437, 99.73%, 210.3924189281175
+
+=== QQQ closed at 551.64 ===
+
+99.73%, 562.7174361949574, , 559.941228835854, 95.4%, 557.1787180974787, Risk level, 555.3730959977006, 68.2%, 554.4024423208227, 68.2%, 548.8636544249463, Risk level, 547.9069040022994, 95.4%, 546.1012819025212, , 543.3248651059945, 99.73%, 540.5625638050426
+
+=== NDX closed at 22679.01 ===
+
+99.73%, 23120.404071931243, , 23009.790955164543, 95.4%, 22899.70703596562, Risk level, 22827.759802240827, 68.2%, 22789.09135673765, 68.2%, 22568.39170819368, Risk level, 22530.26019775917, 95.4%, 22458.312964034376, , 22347.69200804781, 99.73%, 22237.615928068753
+
+=== NQ closed at 22866.75 ===
+
+99.73%, 23320.28363367053, , 23206.62324138388, 95.4%, 23093.516816835265, Risk level, 23019.59083454697, 68.2%, 22979.853691252425, 68.2%, 22753.084086638282, Risk level, 22713.90916545303, 95.4%, 22639.983183164735, , 22526.314425896035, 99.73%, 22413.21636632947
+
+=== NVDA closed at 157.99 ===
+
+99.73%, 164.35732331915094, , 162.7577083271766, 95.4%, 161.1736616595755, Risk level, 160.13578795855386, 68.2%, 159.57389136571285, 68.2%, 156.39006808107627, Risk level, 155.84421204144616, 95.4%, 154.80633834042453, , 153.2062380790558, 99.73%, 151.62267668084908
+
+=== AMZN closed at 219.39 ===
+
+99.73%, 227.84329944322434, , 225.72008170079127, 95.4%, 223.61664972161216, Risk level, 222.23876191236658, 68.2%, 221.4932431981267, 68.2%, 217.26639735029323, Risk level, 216.5412380876334, 95.4%, 215.1633502783878, , 213.03954372009184, 99.73%, 210.93670055677563
+
+=== AAPL closed at 205.17 ===
+
+99.73%, 211.9159249478985, , 210.222679043061, 95.4%, 208.54296247394925, Risk level, 207.4433767074418, 68.2%, 206.84960626208638, 68.2%, 203.47652982400655, Risk level, 202.8966232925582, 95.4%, 201.79703752605073, , 200.10344954388174, 99.73%, 198.42407505210147
+
+=== GOOG closed at 177.39 ===
+
+99.73%, 184.70514979607668, , 182.86721806206432, 95.4%, 181.04757489803833, Risk level, 179.85520548127784, 68.2%, 179.20945653386434, 68.2%, 175.55168722868194, Risk level, 174.92479451872214, 95.4%, 173.73242510196164, , 171.89390965005262, 99.73%, 170.0748502039233
+
+=== TSLA closed at 317.66 ===
+
+99.73%, 343.09309834016216, , 336.67478948340346, 95.4%, 330.3765491700811, Risk level, 326.23095414063465, 68.2%, 323.9558837393881, 68.2%, 311.23678540723955, Risk level, 309.0890458593654, 95.4%, 304.94345082991896, , 298.5174698698325, 99.73%, 292.2269016598379
+
+=== TSM closed at 226.49 ===
+
+99.73%, 235.84898529965852, , 233.4975166328308, 95.4%, 231.16949264982927, Risk level, 229.64397804598494, 68.2%, 228.8177842525791, 68.2%, 224.13804186201898, Risk level, 223.33602195401508, 95.4%, 221.81050735017075, , 219.45828882076916, 99.73%, 217.1310147003415
+
+=== AMD closed at 141.9 ===
+
+99.73%, 149.60013207471098, , 147.66255154603766, 95.4%, 145.7500660373555, Risk level, 144.4949445091776, 68.2%, 143.8121495934914, 68.2%, 139.96172915943578, Risk level, 139.3050554908224, 95.4%, 138.0499339626445, , 136.11128867541356, 99.73%, 134.19986792528903

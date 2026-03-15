@@ -1,0 +1,139 @@
+Venezuela, Long vomma&zomma - Weekly post (03/Nov)
+
+Updated analysis, FREE:
+
+Window of Risk Pt. 2 - Flows update
+
+As I said in the very last weekly post, I won’t work on this week due to outside reasons. On Nov 9, I will send the next weekly post, and intradays after. At the bottom of this post, I shared the script inputs for Monday.The weekly ranges are now coded for all the assets you demanded including gold and silver futures.
+
+As I said in the very last weekly post, I won’t work on this week due to outside reasons. On Nov 9, I will send the next weekly post, and intradays after. At the bottom of this post, I shared the script inputs for Monday.The weekly ranges are now coded for all the assets you demanded including gold and silver futures.
+
+Next week we have PMI and NFP.
+
+Market is like shifting towards bad news are good news regime on the front-end. Note what I keep saying, that bad news are underestimated, market keeps being headline sensitive due to the geo and policy theater.
+
+Let’s analyse the market positioning for the next week and the ranges that matters…
+
+WEEKLY ANALYSISLet’s look at the weekly positioning:
+
+The positioning is net long gamma, that mitigates the room for the realized volatility to increase. The speed profile is net short, with an almost symmetric long fly pattern centering aroung 6842.32The net flat-to-short speed means that market is slightly net short on realized volatility to the downside, especially below the downside pivot of 6678.21, down towards 6634.62and slightly long RV to the upside, until the upside pivot of 6934.94, up towards 6977.44The centroid of the speed profile is in the 6760.34 - 6790.32 range, where the speed profile has no direct impact on the RV, but it is solely customer flow dependent.But again, the speed profile is very flat on a net basis, its volatility impact is rather local. Gamma decay (color) is negative (it usually is in a long fly pattern). So as time passes, the net gamma exposure decreases, giving more room for RV to increase. However! the effect is the strongest around the center of the fly pattern, so this steepens the speed profile and makes the pivots more pronunced and their impact on RV stronger.
+
+The positioning is also net long vega, managing implied volatility.The vega decay (veta) is negative, meaning that into Thursday, the dealers become shorter vega on the profile, generating a volatility sensitive environment. Also they are flat-to-short vanna, but it flips to positive if IV changes by 15% into any direction (as vanna curve gets flatter if IV bids). So this means, dealers are net long downside IV and short upside IV. But similarly to speed, the impact is relatively low. Vomma profile is again positive. Customers are selling tailedness, meaning, if IV catches bid, dealers will become longer vega, forcing them to sell volatility. And this way they indirectly influence realized volatility as well. This doesn’t prevent vol up moves, but it prevents squeezes and helps to pin volatility making it ranging.
+
+Lastly, the zomma profile remains positive. Until volatility changes by 15% into any direction. This means, if IV goes down RV will move upward, and if IV goes up, RV will move downward. Thinking like IV = the price and RV = the value you buy, this creates a trappy situation, because it says that downside more likely fairly even underpriced, and upside becomes overpriced. This is a hidden left-tail risk, that the market underestimates.
+
+And so because of these dynamics the downside pivot os 6678.21 and the upside pivot of 6934.94 become very strong pivots, locally even reject the prices if the customer flow is not confident. A certain directional demand should come to exceed the target of 15% change for IV. This way, the pivots basically test the skew.
+
+Let’s see what the vomma based model says, what RV range the market “allows" to realize”, and where wuld it take us in terms of spot at max:Lower range: 6683.03 - 6733.48Upper range: 6909.70 - 6942.56(Pretty much around the pivots based on speed profile)
+
+Let’s look how the fixed strike skew changed over the past week:The tail skew increased by 3.51%, while the 22-delta skew was sold by 0.88%, and ATM fixed strike vol is bid by 9.84% To me, this change reinforces what the zomma profile says: there is a hidden left-tail in the market. And it is hedged, but only slightly. And this way, if it materializes, the need for cover will can create vol squeeze high enough to suppress vomma supply. This is a hidden short vomma, sentiment-wise…
+
+Conclusion: The geo and policy risk is persistent and the market feels it. It underprices left-tail, too complacent about good news, doesn’t count bad news in. However, our beloved Bessent solved this issue by pushing the short-term SPX/yields beta into negative territory making algos to lean towards bullishness on bad news, takes me to think that something is coming. All what you see: US/CN deal, shutdown, all a big theater. It is not over yet, and Venezuela is a looming risk, directly tied to the US/RUS escalation danger. Russia uses Venezuela for energy, arms, and diplomatic leverage.This is crucial because any escalation can cause oil-led inflation shocks pushing up front-end UST etc-etc. So be careful, because market is heavily headline driven right now, that is a hidden left-tail and kurtosis. I don’t expect crash, but the previous ‘market is forced to go up’ seems like weakening, and heavy profit taking is on. Strategically I remain net long until spot proves otherwise around the centroid and downside vol behaves the way the positioning indicates. I take profit on strenghts, and hedge volatility through iron flies and calendars.
+
+Let’s look at the IV based weekly ranges, that the market watches for momentum/sentiment:
+
+SPX: 6910.86241706754 - 6769.537582932459; vol based margin of error bounds: 6945.040381405846, 6735.359618594153ES: 6941.566010229491 - 6802.933989770509; vol based margin of error bounds: 6975.092745147614, 6769.407254852386SPY: 689.2457224040413 - 674.8742775959586; vol based margin of error bounds: 692.7213092048091, 671.3986907951908VIX: 18.992786572869825 - 15.88721342713018; vol based margin of error bounds: 19.743837645207453, 15.13616235479255IWM: 250.1258163223699 - 242.33418367763008; vol based margin of error bounds: 252.01014291152805, 240.44985708847193QQQ: 637.9635184532896 - 620.1764815467105; vol based margin of error bounds: 642.2651312363347, 615.8748687636654NDX: 26226.062499873133 - 25490.19750012687; vol based margin of error bounds: 26404.023916725717, 25312.236083274285NQ: 26338.64180524673 - 25627.35819475327; vol based margin of error bounds: 26510.658464757762, 25455.341535242238NVDA: 209.60497952696386 - 195.37502047303616; vol based margin of error bounds: 213.04634944653392, 191.9336505534661AMZN: 252.38747088062962 - 236.05252911937038; vol based margin of error bounds: 256.3379093184416, 232.10209068155842AAPL: 274.96350410432615 - 265.77649589567386; vol based margin of error bounds: 277.18528798861445, 263.55471201138556GOOG: 289.594153471047 - 274.045846528953; vol based margin of error bounds: 293.3543523309302, 270.28564766906976TSLA: 474.4632867006642 - 438.6567132993358; vol based margin of error bounds: 483.12273991196463, 429.9972600880354TSM: 308.7171324466059 - 292.1428675533941; vol based margin of error bounds: 312.72544873383663, 288.1345512661634AMD: 268.16652757078054 - 244.0734724292195; vol based margin of error bounds: 273.993186306796, 238.246813693204GC: 4080.8581815964894 - 3945.9418184035108; vol based margin of error bounds: 4113.486322843456, 3913.313677156544SI: 49.45086774678772 - 47.04913225321228; vol based margin of error bounds: 50.03170288840908, 46.46829711159092
+
+SPX: 6910.86241706754 - 6769.537582932459; vol based margin of error bounds: 6945.040381405846, 6735.359618594153
+
+ES: 6941.566010229491 - 6802.933989770509; vol based margin of error bounds: 6975.092745147614, 6769.407254852386
+
+SPY: 689.2457224040413 - 674.8742775959586; vol based margin of error bounds: 692.7213092048091, 671.3986907951908
+
+VIX: 18.992786572869825 - 15.88721342713018; vol based margin of error bounds: 19.743837645207453, 15.13616235479255
+
+IWM: 250.1258163223699 - 242.33418367763008; vol based margin of error bounds: 252.01014291152805, 240.44985708847193
+
+QQQ: 637.9635184532896 - 620.1764815467105; vol based margin of error bounds: 642.2651312363347, 615.8748687636654
+
+NDX: 26226.062499873133 - 25490.19750012687; vol based margin of error bounds: 26404.023916725717, 25312.236083274285
+
+NQ: 26338.64180524673 - 25627.35819475327; vol based margin of error bounds: 26510.658464757762, 25455.341535242238
+
+NVDA: 209.60497952696386 - 195.37502047303616; vol based margin of error bounds: 213.04634944653392, 191.9336505534661
+
+AMZN: 252.38747088062962 - 236.05252911937038; vol based margin of error bounds: 256.3379093184416, 232.10209068155842
+
+AAPL: 274.96350410432615 - 265.77649589567386; vol based margin of error bounds: 277.18528798861445, 263.55471201138556
+
+GOOG: 289.594153471047 - 274.045846528953; vol based margin of error bounds: 293.3543523309302, 270.28564766906976
+
+TSLA: 474.4632867006642 - 438.6567132993358; vol based margin of error bounds: 483.12273991196463, 429.9972600880354
+
+TSM: 308.7171324466059 - 292.1428675533941; vol based margin of error bounds: 312.72544873383663, 288.1345512661634
+
+AMD: 268.16652757078054 - 244.0734724292195; vol based margin of error bounds: 273.993186306796, 238.246813693204
+
+GC: 4080.8581815964894 - 3945.9418184035108; vol based margin of error bounds: 4113.486322843456, 3913.313677156544
+
+SI: 49.45086774678772 - 47.04913225321228; vol based margin of error bounds: 50.03170288840908, 46.46829711159092
+
+And as promised here I share the script intraday input lines for Monday:
+
+=== SPX closed at 6840.2 ===
+
+99.73%, 6960.062596306762, , 6930.032161388789, 95.4%, 6900.131298153381, Risk level, 6880.593694955379, 68.2%, 6870.100298076351, 68.2%, 6810.168424816764, Risk level, 6799.806305044621, 95.4%, 6780.268701846619, , 6750.2365413450825, 99.73%, 6720.337403693237
+
+=== ES closed at 6872.25 ===
+
+99.73%, 6997.337017957343, , 6965.995071220389, 95.4%, 6934.7935089786715, Risk level, 6914.404325051625, 68.2%, 6903.4509263178425, 68.2%, 6840.906769787272, Risk level, 6830.095674948375, 95.4%, 6809.7064910213285, , 6778.3626013068015, 99.73%, 6747.162982042657
+
+=== SPY closed at 682.06 ===
+
+99.73%, 694.3075250456575, , 691.2388624302266, 95.4%, 688.1837625228287, Risk level, 686.1874159403865, 68.2%, 685.1150392936361, 68.2%, 678.9912150636997, Risk level, 677.9325840596134, 95.4%, 675.9362374771712, , 672.8673897105656, 99.73%, 669.8124749543424
+
+=== VIX closed at 17.44 ===
+
+99.73%, 20.406230129756313, , 19.650685504220004, 95.4%, 18.923115064878157, Risk level, 18.439619553727876, 68.2%, 18.16642856291448, 68.2%, 16.681968506999556, Risk level, 16.440380446272126, 95.4%, 15.956884935121845, , 15.197245816163928, 99.73%, 14.47376987024369
+
+=== IWM closed at 246.23 ===
+
+99.73%, 253.0398579817427, , 251.33162749469577, 95.4%, 249.63492899087134, Risk level, 248.5249221398473, 68.2%, 247.9266193159223, 68.2%, 244.5216089317624, Risk level, 243.9350778601527, 95.4%, 242.82507100912864, , 241.11659624878374, 99.73%, 239.42014201825728
+
+=== QQQ closed at 629.07 ===
+
+99.73%, 644.1072264931448, , 640.3368848468492, 95.4%, 636.5886132465724, Risk level, 634.1375453281898, 68.2%, 632.8181404914221, 68.2%, 625.2993929830564, Risk level, 624.0024546718103, 95.4%, 621.5513867534277, , 617.7806422066325, 99.73%, 614.0327735068553
+
+=== NDX closed at 25858.13 ===
+
+99.73%, 26475.13371851457, , 26320.430798848643, 95.4%, 26166.631859257286, Risk level, 26066.06025313941, 68.2%, 26011.923578982325, 68.2%, 25703.416230434887, Risk level, 25650.19974686059, 95.4%, 25549.628140742716, , 25394.908748516515, 99.73%, 25241.12628148543
+
+=== NQ closed at 25983.0 ===
+
+99.73%, 26617.656424016404, , 26458.516590808715, 95.4%, 26300.328212008204, Risk level, 26196.879214893528, 68.2%, 26141.182603941415, 68.2%, 25823.84847514775, Risk level, 25769.120785106472, 95.4%, 25665.671787991796, , 25506.514199130488, 99.73%, 25348.343575983596
+
+=== NVDA closed at 202.49 ===
+
+99.73%, 213.6275418794366, , 210.82477037176818, 95.4%, 208.0587709397183, Risk level, 206.24335161337015, 68.2%, 205.25550060250166, 68.2%, 199.68620300966325, Risk level, 198.73664838662987, 95.4%, 196.92122906028172, , 194.11687519844182, 99.73%, 191.35245812056343
+
+=== AMZN closed at 244.22 ===
+
+99.73%, 256.066637000229, , 253.08764951376327, 95.4%, 250.14331850011448, Risk level, 248.21231666907715, 68.2%, 247.16391574034012, 68.2%, 241.2401615732796, Risk level, 240.22768333092284, 95.4%, 238.29668149988552, , 235.31638547243946, 99.73%, 232.37336299977102
+
+=== AAPL closed at 270.37 ===
+
+99.73%, 278.1044735521035, , 276.16408593802964, 95.4%, 274.23723677605176, Risk level, 272.9765175870589, 68.2%, 272.2967530235003, 68.2%, 268.4294173388209, Risk level, 267.76348241294113, 95.4%, 266.50276322394825, , 264.5620787625104, 99.73%, 262.6355264478965
+
+=== GOOG closed at 281.82 ===
+
+99.73%, 293.8213230833809, , 290.8055150524375, 95.4%, 287.82066154169047, Risk level, 285.8644458790994, 68.2%, 284.8045274142938, 68.2%, 278.80352573868356, Risk level, 277.7755541209006, 95.4%, 275.8193384583095, , 272.80250909923507, 99.73%, 269.8186769166191
+
+=== TSLA closed at 456.56 ===
+
+99.73%, 486.6802433011641, , 479.0910096741849, 95.4%, 471.62012165058206, Risk level, 466.7105219924923, 68.2%, 464.0289675664546, 68.2%, 448.96679661107487, Risk level, 446.4094780075077, 95.4%, 441.49987834941794, , 433.9044833899408, 99.73%, 426.4397566988359
+
+=== TSM closed at 300.43 ===
+
+99.73%, 316.0599765433807, , 312.1280246353491, 95.4%, 308.2449882716903, Risk level, 305.6973020951193, 68.2%, 304.312408268976, 68.2%, 296.4967587909454, Risk level, 295.1626979048807, 95.4%, 292.6150117283097, , 288.68107351189747, 99.73%, 284.80002345661933
+
+=== AMD closed at 256.12 ===
+
+99.73%, 285.56412349187593, , 278.10569207984815, 95.4%, 270.84206174593794, Risk level, 266.04266961676217, 68.2%, 263.37818598807615, 68.2%, 248.65003508069404, Risk level, 246.1973303832378, 95.4%, 241.39793825406204, , 233.92111756101357, 99.73%, 226.6758765081241
+
+=== GC closed at 4013.4 ===
+
+99.73%, 4138.189277327835, , 4106.873466556925, 95.4%, 4075.794638663918, Risk level, 4055.453986459481, 68.2%, 4044.4769999115792, 68.2%, 3982.080475980644, Risk level, 3971.3460135405194, 95.4%, 3951.0053613360824, , 3919.683892028374, 99.73%, 3888.6107226721647
+
+=== SI closed at 48.25 ===
+
+99.73%, 50.612475432375085, , 50.01836967057638, 95.4%, 49.431237716187546, Risk level, 49.046154220710406, 68.2%, 48.83704761557612, 68.2%, 47.655721379430936, Risk level, 47.453845779289594, 95.4%, 47.068762283812454, , 46.47439064330097, 99.73%, 45.887524567624915

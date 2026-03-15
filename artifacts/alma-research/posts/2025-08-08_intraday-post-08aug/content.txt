@@ -1,0 +1,85 @@
+Intraday post (08/Aug)
+
+Monthly outlook into Aug - Sept window + Weekly post (04/Aug - 08/Aug)
+
+Bulltrap? VIX, Trump, Structure breakdown + Intraday post (05/Aug)
+
+Complacency - Intraday post (07/Aug)
+
+Here you can find my description of the ‘bulltrap’-ish setup for this week and the ‘base-bias‘:
+
+INTRADAY POST Coding today’s positioning:
+
+Again a tricky profile today. While you see a local short fly pattern centered around 6370, the net speed profile is negative. There is way more gamma down, than up. 6370 acts as a wall.The profile is betting on supported downside and strong right-tail towards 6413 (my overall target, see last posts), but there are some nuances…
+
+The centroid is at 6338.09The speed profile would suggest that the vol catches up here. But the gamma at 6353.66 has a strong effect to swallow the right wing bid. Especially after 11.05am
+
+Upside pivot is at 6367.78; very close to the gamma wall. Only a steep bid on the right wing of the skew could push the spot through this pivot. Otherwise it is pinned back to 6350.The 6370 gamma wall is significant only in the last 1.5 hours in terms of volatility, but still makes it hard for the spot to catch up. Very good news should come to push call IV up, to make the spot able to pass through these local resistances, and squeeze up to 6413Otherwise it is the perfect bulltrap, and high theta for both sides.
+
+Downside pivot is at 6323.23I don’t see it to get broken. Very strong line, especially after 11amAnd locally the volatility is expected to catch up towards this. If it happens , the spot will revert back to 6354.98. And this is what the market is betting on. Only if put skew is sold here and it gets realized too intraday, that when the spot can break this line. But still, the downside longer gamma will reject the spot and brake the fall at 6300/6290Here vol should catch up again to reach 6245… very unlikely scenario. Very bad news should happen.
+
+So, the key is the 6350/55 gamma. After 11.05amIn the last 1.5 hours 6361 is a line in the sand if spot will be magnetized by the 6370 or 6350 gamma. Also a less likely scenario is the 6395, if spot holds above 6382; very strong call bid shoould occur.
+
+OptionsDepth Heatmap
+
+All in all, the market is betting on ranging around the 6350/70 as center, and it skewing towards upside fakeout then back down… but the trap is that a lot of calls are sold on the way.So it makes me think that the market is still betting on simple premium collection rather than any trending move. So, the right-skewed “Galton board” is set, lets trade the structure carefully and calculated…
+
+SCRIPT INPUTS:=== SPX closed at 6340.0 ===
+
+99.73%, 6436.690210398341, , 6412.47209734917, 95.4%, 6388.345105199171, Risk level, 6372.584600904241, 68.2%, 6364.126646049931, 68.2%, 6315.781189452122, Risk level, 6307.415399095759, 95.4%, 6291.654894800829, , 6267.435727433127, 99.73%, 6243.309789601659
+
+=== ES closed at 6373.75 ===
+
+99.73%, 6471.871627300477, , 6447.2945544919585, 95.4%, 6422.810813650238, Risk level, 6406.816988400261, 68.2%, 6398.233383013096, 68.2%, 6349.172206004244, Risk level, 6340.683011599739, 95.4%, 6324.689186349762, , 6300.111023336211, 99.73%, 6275.628372699523
+
+=== SPY closed at 632.25 ===
+
+99.73%, 641.9914670661423, , 639.5514634641634, 95.4%, 637.1207335330712, Risk level, 635.53287440129, 68.2%, 634.6806943466015, 68.2%, 629.8099246786412, Risk level, 628.96712559871, 95.4%, 627.3792664669288, , 624.9391544474131, 99.73%, 622.5085329338577
+
+=== VIX closed at 16.57 ===
+
+99.73%, 18.55946250575032, , 18.055247744390478, 95.4%, 17.56473125287516, Risk level, 17.24044886443786, 68.2%, 17.060117140868094, 68.2%, 16.06493707239025, Risk level, 15.899551135562142, 95.4%, 15.57526874712484, , 15.06969773918737, 99.73%, 14.580537494249679
+
+=== IWM closed at 219.84 ===
+
+99.73%, 225.61333528226265, , 224.16535491199267, 95.4%, 222.72666764113131, Risk level, 221.78561399012253, 68.2%, 221.2786266547818, 68.2%, 218.39189679512768, Risk level, 217.89438600987748, 95.4%, 216.9533323588687, , 215.50516526863524, 99.73%, 214.06666471773735
+
+=== QQQ closed at 569.24 ===
+
+99.73%, 580.1632874112843, , 577.4260081542344, 95.4%, 574.7016437056421, Risk level, 572.9211478576028, 68.2%, 571.9643027873328, 68.2%, 566.5025962314738, Risk level, 565.5588521423972, 95.4%, 563.7783562943579, , 561.0408884519342, 99.73%, 558.3167125887157
+
+=== NDX closed at 23389.53 ===
+
+99.73%, 23830.89467340485, , 23720.296866031826, 95.4%, 23610.212336702425, Risk level, 23538.269894937435, 68.2%, 23499.61211926, 68.2%, 23278.9273267934, Risk level, 23240.790105062562, 95.4%, 23168.847663297573, , 23058.242487320025, 99.73%, 22948.165326595146
+
+=== NQ closed at 23521.75 ===
+
+99.73%, 23967.07380705783, , 23855.483071970266, 95.4%, 23744.411903528915, Risk level, 23671.824122978487, 68.2%, 23632.818720834617, 68.2%, 23410.154323138682, Risk level, 23371.675877021513, 95.4%, 23299.088096471085, , 23187.48987754113, 99.73%, 23076.42619294217
+
+=== NVDA closed at 180.77 ===
+
+99.73%, 189.87010651147148, , 187.58128438193964, 95.4%, 185.32005325573576, Risk level, 183.8367358943659, 68.2%, 183.0308881774859, 68.2%, 178.4804744865966, Risk level, 177.70326410563413, 95.4%, 176.21994674426426, , 173.9300419368144, 99.73%, 171.66989348852854
+
+=== AMZN closed at 223.13 ===
+
+99.73%, 231.54283716235716, , 229.42998790178956, 95.4%, 227.33641858117858, Risk level, 225.96512612371436, 68.2%, 225.22338927833044, 68.2%, 221.01678380155118, Risk level, 220.29487387628564, 95.4%, 218.9235814188214, , 216.81017107254223, 99.73%, 214.71716283764283
+
+=== AAPL closed at 220.03 ===
+
+99.73%, 227.11086732117496, , 225.33369720489483, 95.4%, 223.57043366058747, Risk level, 222.41625228723595, 68.2%, 221.79315255061204, 68.2%, 218.25260429525449, Risk level, 217.64374771276405, 95.4%, 216.48956633941253, , 214.7120522606797, 99.73%, 212.94913267882504
+
+=== GOOG closed at 197.28 ===
+
+99.73%, 204.29482296411476, , 202.53352483514865, 95.4%, 200.78741148205737, Risk level, 199.64399533890668, 68.2%, 199.02597955337458, 68.2%, 195.51842947103407, Risk level, 194.91600466109333, 95.4%, 193.77258851794264, , 192.01087432504468, 99.73%, 190.26517703588524
+
+=== TSLA closed at 322.27 ===
+
+99.73%, 340.3971101449394, , 335.834757940148, 95.4%, 331.33355507246966, Risk level, 328.37883611884456, 68.2%, 326.77035482614514, 68.2%, 317.7059033238054, Risk level, 316.1611638811554, 95.4%, 313.2064449275303, , 308.6413991697953, 99.73%, 304.14288985506056
+
+=== TSM closed at 242.62 ===
+
+99.73%, 253.25153637060816, , 250.5795566564743, 95.4%, 247.93576818530408, Risk level, 246.20282775689495, 68.2%, 245.26348296702972, 68.2%, 239.94739574098637, Risk level, 239.03717224310506, 95.4%, 237.30423181469592, , 234.63129405824014, 99.73%, 231.98846362939184
+
+=== AMD closed at 172.4 ===
+
+99.73%, 182.84534287220177, , 180.21508888162032, 95.4%, 177.6226714361009, Risk level, 175.920080547932, 68.2%, 174.99185282630674, 68.2%, 169.76858202982143, Risk level, 168.879919452068, 95.4%, 167.17732856389912, , 164.54527318372763, 99.73%, 161.95465712779824

@@ -1,0 +1,75 @@
+Theta decay, 'when will vol come back?' + Intraday post (30/June) with reversion trading
+
+Check the weekly post. I added some complementary thoughts to it. Very important.I covered the July month in short with some strat advices.
+
+Don’t expect too much impact from the JPM collar reset. It has more local impact, and vol impact on the long run, if spot is in a certain area. But it is only one trade among many others, and this time it has minor impact.Don’t fall for furus who try to sound clever through explaining the collar over and over again, and mostly wrongly…
+
+INTRADAY POSTCoding today’s positioning:
+
+Today we have a very straight and deep long fly pattern (long at the wings, short at the center), with a net positive gamma convexity, with a centroid of 6193.14We see a customer long spread pattern at 6205/6250 call spread, and I code 6212.94 as the main pivot, and we have also a local vanna flip there around ~6203Notionally the 6205 strike is the impactful one here, acting as a major resistance. This line could be broken only if vol calms down. The margin of error (until fakeout can happen) is the 6212.94 one, but if you see intraday vol getting offered, the upside gravity will take efect. Odds are low for this scenario. However the downside support is 6173.95, also a pivot, if vol catches up. But all I simulate is ranging mostly, with one fast reversion trade edge. If 6173 would broke, I code 6143/6153 range as a very stron support pushing back the momentum towards 6173.95Theta decay is expected to be high today! Don’t use 0DTEs on this week (no fin adv). Tomorrow’s data will provide some more excitement, but vol is expected to come back next week, not this week. I use this week to roll up on positions while taking profits of short vol, long delta trades.
+
+OptionsDepth Heatmap
+
+(Description is here)
+
+Reversion trading is a fast intraday “catch and run” directional scalping, basically.No long or short side. You trade what the market gives to you. If it goes to the resistance or reversion threshold, you go for a quick put, with SL, if it goes to the support lines, lower reversion bands, you go for a call with SL, small size. 55/60 delta ITM and ATM if you see the dynamic is lurking what you wanna see, bcs you want the most gamma to catch fast profits. After 20-30% profit you start to scale in, and you can roll your ITM calls back into 55 delta, when they reach ~80 deltas, if you see that the momentum is strong. You adjust the SL, take the profit, close the desk and go out enjoying summer. If the trade went against you (line is broken and confirmed through dynamics and pattern: retested and structure is built beyond the line), you take the small loss, don’t take it personal, just as the natural % when ppl lose on trading, and close the desk and go out enjoying the summer. You weren’t wrong nor right, market just did a different thing that you could not see forward… and mostly not foreseeable…
+
+SCRIPT INPUTS=== SPX closed at 6173.07 ===
+
+99.73%, 6268.175866631122, , 6244.354133617078, 95.4%, 6220.622933315561, Risk level, 6205.120677054688, 68.2%, 6196.8008529371255, 68.2%, 6149.247566884725, Risk level, 6141.019322945312, 95.4%, 6125.517066684439, , 6101.694275334266, 99.73%, 6077.964133368878
+
+=== ES closed at 6220.75 ===
+
+99.73%, 6318.718574630754, , 6294.178778781152, 95.4%, 6269.7342873153775, Risk level, 6253.765409650564, 68.2%, 6245.194117705, 68.2%, 6196.209450719275, Risk level, 6187.734590349436, 95.4%, 6171.7657126846225, , 6147.224777682705, 99.73%, 6122.781425369246
+
+=== SPY closed at 614.91 ===
+
+99.73%, 624.6619636095477, , 622.2191964346981, 95.4%, 619.7859818047738, Risk level, 618.1964117364175, 68.2%, 617.3431769053363, 68.2%, 612.4671567753054, Risk level, 611.6235882635824, 95.4%, 610.0340181952262, , 607.5911360301436, 99.73%, 605.1580363904523
+
+=== VIX closed at 16.31 ===
+
+99.73%, 18.414854254583428, , 17.883473838052037, 95.4%, 17.36742697470382, Risk level, 17.025965681463074, 68.2%, 16.83556957536775, 68.2%, 15.787602007622212, Risk level, 15.614033708185366, 95.4%, 15.272572414944614, , 14.739557632045049, 99.73%, 14.22514513506501
+
+=== IWM closed at 215.48 ===
+
+99.73%, 220.74942753603216, , 219.4281162510289, 95.4%, 218.1147137680161, Risk level, 217.25579707964283, 68.2%, 216.7933544247427, 68.2%, 214.1585914159595, Risk level, 213.70420292035715, 95.4%, 212.8452862319839, , 211.52382718049148, 99.73%, 210.21057246396782
+
+=== QQQ closed at 548.09 ===
+
+99.73%, 559.1179194262061, , 556.3541085863385, 95.4%, 553.603959713103, Risk level, 551.8064088466315, 68.2%, 550.8400804944704, 68.2%, 545.3260510197963, Risk level, 544.3735911533686, 95.4%, 542.5760402868971, , 539.812020119941, 99.73%, 537.062080573794
+
+=== NDX closed at 22534.2 ===
+
+99.73%, 22972.608284894905, , 22862.743503620695, 95.4%, 22753.404142447453, Risk level, 22681.943592009582, 68.2%, 22643.536817969478, 68.2%, 22424.33008259691, Risk level, 22386.45640799042, 95.4%, 22314.99585755255, , 22205.123296030448, 99.73%, 22095.791715105097
+
+=== NQ closed at 22740.25 ===
+
+99.73%, 23189.394680094974, , 23076.835333329902, 95.4%, 22964.82234004749, Risk level, 22891.611757192008, 68.2%, 22852.260308736746, 68.2%, 22627.6852308568, Risk level, 22588.888242807992, 95.4%, 22515.67765995251, , 22403.110098087593, 99.73%, 22291.105319905026
+
+=== NVDA closed at 157.75 ===
+
+99.73%, 164.19309344896743, , 162.5743405767281, 95.4%, 160.97154672448372, Risk level, 159.921322492302, 68.2%, 159.35263253485115, 68.2%, 156.13091783568268, Risk level, 155.578677507698, 95.4%, 154.52845327551628, , 152.90919605842595, 99.73%, 151.30690655103257
+
+=== AMZN closed at 223.3 ===
+
+99.73%, 231.17682138653834, , 229.19915680691048, 95.4%, 227.23841069326917, Risk level, 225.95448880726343, 68.2%, 225.26059821417286, 68.2%, 221.32203435761429, Risk level, 220.6455111927366, 95.4%, 219.36158930673085, , 217.38346495112435, 99.73%, 215.4231786134617
+
+=== AAPL closed at 201.08 ===
+
+99.73%, 207.05344571790422, , 205.55465969981475, 95.4%, 204.06672285895212, Risk level, 203.09305120693372, 68.2%, 202.56785685907352, 68.2%, 199.58105162445136, Risk level, 199.0669487930663, 95.4%, 198.0932771410479, , 196.59424388683945, 99.73%, 195.1065542820958
+
+=== GOOG closed at 178.27 ===
+
+99.73%, 185.21520567992377, , 183.47068857397423, 95.4%, 181.7426028399619, Risk level, 180.61053431413433, 68.2%, 179.9979272332879, 68.2%, 176.52515965640706, Risk level, 175.9294656858657, 95.4%, 174.79739716003812, , 173.05238546789295, 99.73%, 171.32479432007625
+
+=== TSLA closed at 323.63 ===
+
+99.73%, 349.5280579882884, , 342.9924406804136, 95.4%, 336.5790289941442, Risk level, 332.3576455420532, 68.2%, 330.0410143502999, 68.2%, 317.08939220135557, Risk level, 314.9023544579468, 95.4%, 310.6809710058558, , 304.13754921689247, 99.73%, 297.73194201171157
+
+=== TSM closed at 228.57 ===
+
+99.73%, 238.01956437492598, , 235.64533185956216, 95.4%, 233.294782187463, Risk level, 231.75450319435006, 68.2%, 230.92030738890944, 68.2%, 226.195272796342, Risk level, 225.38549680564992, 95.4%, 223.845217812537, , 221.4702274340113, 99.73%, 219.120435625074
+
+=== AMD closed at 143.81 ===
+
+99.73%, 151.67145893512526, , 149.6931928395038, 95.4%, 147.74072946756263, Risk level, 146.4593116611372, 68.2%, 145.76211546465075, 68.2%, 141.8310188050196, Risk level, 141.1606883388628, 95.4%, 139.87927053243737, , 137.8999012113634, 99.73%, 135.94854106487475

@@ -1,0 +1,79 @@
+VIX downside vomma 'risk', remember? + Intraday post (03/July)
+
+Good morning to everyone who loves the whiff of that fresh-mattered morning NFP print.Yesterday I posted a new educational article about my trading principles covering both practical applications and principiums. Take your time to read and re-read it. Algos are set to take a recessionary print as positive-to-neutral today, while an inflationary print would be taken more like flat.
+
+Btw, last night, I digged into tariffs and datas a bit more... Tariffs act like some sales taxes on imports, raising prices at the checkout, because importers pass the duty on to consumers. In this economic environment nominal income growth underpins nominal spending growth, even tho credit growth remains dampened (DPI +0.8%, PCE +0.2% - illustrating how income gains still support spending; Consumer Credit +4.3% - below past credit-fuelled cycles).The 90 days pause led to a surge in arrivals at US ports roughly three weeks after its announcement, basically pulling forward demand masking the fact that core income dynamic still underpins the cycle.
+
+Now, core macro theory holds that when nominal incomes lag price rises, households either draw down savings, borrow more, or cut real spending. This would cause GDP growth slowdown and profit margin compression. Trump's work-visa rescissions and ICE raids already tightened the labor market. Basically any drop in foreign-born labor keeps the unemployment rate artificially low and bolsters wages, regardless of tariff policy. So it generates a wage inflation as firms are forced to pay more for scarce labor. And this is independent from the tariffs! This is crucial. Plus, across used cars, hotels/STRs, raw materials, housing, restaurants, and wages, we can see demand-pull pressures as too much demand chasing too few goods.And if I'm right, then stagflation is actually worsening and the Fed's “neutral” rate has likely shifted higher. This will tighten Fed's room again to cut rates, and this is why I see growth concerns ('bad news are bad news' regime) looming back through bonds vs equities.
+
+I want you to remember something I showed you in the weekly post…
+
+I showed you last week and in Sunday post again, that I see bets on VIX vomma increase to the downside as VIX dealers remain long vanna. Basically telling me that they expect a sudden vol crush to buy the relatively underpriced hedges (potentially on benign tariffs news). When vol starts to revert up and grinds up, the SPX net short vanna will create a ‘vaccum up’ effect. The vol environment couldn’t shifted into long vanna. A clear sign was VIX failing to build a structure below the marked 16.5s pivot. A vol crush would only some local effects here. July remains supported. I expect top to form around 6320/60 around OpEx week. I will cover that. Datas first, and check how vol market behaves.
+
+INTRADAY POST Coding today’s positioning:
+
+We have a clear local long speed setup with is centroid in the 6237.71 - 6251.11 range. This is the main pivot for today.To the downside, we have 6221.52 lvl as ‘checkpoint’.It is a clear reversion trading environment, with tight maturity-driven high speed effect, bcs gamma impact is the highest when we are close to expo. Coding 6145 as the downside min (small weak pivot at 6179, strong after 12.30am), and 6280/90 as the max, but thats also can pin hard, upward risk level can prove it. Wait for the data, and be conscious as I wrote…
+
+OptionsDepth Heatmap:
+
+(Description is here)
+
+SCRIPT INPUTS=== SPX closed at 6227.42 ===
+
+99.73%, 6324.22594834349, , 6299.977976189057, 95.4%, 6275.822974171745, Risk level, 6260.043604591756, 68.2%, 6251.574642105508, 68.2%, 6203.171302405198, Risk level, 6194.796395408244, 95.4%, 6179.017025828255, , 6154.7679569556085, 99.73%, 6130.61405165651
+
+=== ES closed at 6277.0 ===
+
+99.73%, 6377.3653952774985, , 6352.2244911148955, 95.4%, 6327.182697638749, Risk level, 6310.823138208517, 68.2%, 6302.041398870562, 68.2%, 6251.858300291327, Risk level, 6243.176861791483, 95.4%, 6226.817302361251, , 6201.67519522341, 99.73%, 6176.6346047225015
+
+=== SPY closed at 620.45 ===
+
+99.73%, 630.3264228636086, , 627.8524621381041, 95.4%, 625.3882114318044, Risk level, 623.7783545050362, 68.2%, 622.9142122177524, 68.2%, 617.9759616822786, Risk level, 617.1216454949639, 95.4%, 615.5117885681957, , 613.0377105168177, 99.73%, 610.5735771363915
+
+=== VIX closed at 16.64 ===
+
+99.73%, 18.776669701123986, , 18.234679992966843, 95.4%, 17.708334850561993, Risk level, 17.360057689278783, 68.2%, 17.165858321486624, 68.2%, 16.096972016085772, Risk level, 15.919942310721218, 95.4%, 15.571665149438008, , 15.028007285258948, 99.73%, 14.503330298876017
+
+=== IWM closed at 221.03 ===
+
+99.73%, 226.74179875966254, , 225.30932413530462, 95.4%, 223.88589937983127, Risk level, 222.95487618200627, 68.2%, 222.4533666634967, 68.2%, 219.59740768068255, Risk level, 219.10512381799373, 95.4%, 218.17410062016873, , 216.74144712713147, 99.73%, 215.31820124033746
+
+=== QQQ closed at 550.8 ===
+
+99.73%, 562.0673443161719, , 559.2434142642994, 95.4%, 556.433672158086, Risk level, 554.59709503455, 68.2%, 553.6096699161546, 68.2%, 547.9759240836463, Risk level, 547.0029049654499, 95.4%, 545.1663278419139, , 542.3421767205167, 99.73%, 539.532655683828
+
+=== NDX closed at 22641.89 ===
+
+99.73%, 23096.71594946897, , 22982.72818378593, 95.4%, 22869.302974734484, Risk level, 22795.166344971043, 68.2%, 22755.312398000846, 68.2%, 22527.89655546183, Risk level, 22488.613655028956, 95.4%, 22414.477025265514, , 22300.480654432587, 99.73%, 22187.06405053103
+
+=== NQ closed at 22852.75 ===
+
+99.73%, 23320.004722176916, , 23202.89699754195, 95.4%, 23086.37736108846, Risk level, 23010.21484137362, 68.2%, 22969.266645642267, 68.2%, 22735.636232276098, Risk level, 22695.28515862638, 95.4%, 22619.12263891154, , 22502.005755528895, 99.73%, 22385.495277823084
+
+=== NVDA closed at 157.25 ===
+
+99.73%, 163.60645652961142, , 162.00954895847502, 95.4%, 160.4282282648057, Risk level, 159.39212585047903, 68.2%, 158.83116474621943, 68.2%, 155.6527741653174, Risk level, 155.10787414952097, 95.4%, 154.0717717351943, , 152.47437681749784, 99.73%, 150.89354347038858
+
+=== AMZN closed at 219.92 ===
+
+99.73%, 228.8324814685964, , 226.5934066777421, 95.4%, 224.3762407342982, Risk level, 222.923506254917, 68.2%, 222.13694618925248, 68.2%, 217.68047670315576, Risk level, 216.916493745083, 95.4%, 215.46375926570178, , 213.2239976552908, 99.73%, 211.00751853140358
+
+=== AAPL closed at 212.44 ===
+
+99.73%, 219.48610263391538, , 217.7174509461456, 95.4%, 215.9630513169577, Risk level, 214.81453658762948, 68.2%, 214.1942824208305, 68.2%, 210.67110997530133, Risk level, 210.06546341237052, 95.4%, 208.9169486830423, , 207.1479334095331, 99.73%, 205.39389736608462
+
+=== GOOG closed at 179.76 ===
+
+99.73%, 187.10740386342883, , 185.2614470134062, 95.4%, 183.4337019317144, Risk level, 182.2360751019755, 68.2%, 181.5875608604427, 68.2%, 177.9136670993969, Risk level, 177.28392489802448, 95.4%, 176.08629806828557, , 174.23976524901315, 99.73%, 172.41259613657115
+
+=== TSLA closed at 315.65 ===
+
+99.73%, 341.6812485808321, , 335.1102518174399, 95.4%, 328.665624290416, Risk level, 324.4225307717404, 68.2%, 322.09207426956317, 68.2%, 309.07368165654316, Risk level, 306.87746922825954, 95.4%, 302.63437570958394, , 296.05504560728065, 99.73%, 289.61875141916784
+
+=== TSM closed at 233.6 ===
+
+99.73%, 243.63301999720886, , 241.11171881962557, 95.4%, 238.6165099986044, Risk level, 236.9811277390594, 68.2%, 236.09493161792776, 68.2%, 231.07813238021032, Risk level, 230.2188722609406, 95.4%, 228.58349000139557, , 226.06132030515573, 99.73%, 223.56698000279113
+
+=== AMD closed at 138.52 ===
+
+99.73%, 146.20674146400063, , 144.27225838170432, 95.4%, 142.36337073200033, Risk level, 141.1104318733682, 68.2%, 140.4285373910755, 68.2%, 136.58479668763766, Risk level, 135.9295681266318, 95.4%, 134.6766292679997, , 132.74103455893788, 99.73%, 130.8332585359994

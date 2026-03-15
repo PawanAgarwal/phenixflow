@@ -1,0 +1,85 @@
+Intraday post (21/Oct)
+
+Window of risk:
+
+Window of Risk, Disbalance - Investigating the story that the market tells
+
+Weekly post:
+
+VIX expo, CPI - Weekly post (20-24/Oct)
+
+US equity +$1.04B concentrating in the US-China, with sector flow into Tech, Financials, Industrials, Materials (rare earths/metals interest noted). MMFs –$20.98B, and US bond +$6.49B over the past five weeks with HY, EM debt, and bank loans seeing outflows. So we have risk-on into cuts, but selective, largest weekly positioning cut since Liberation Day.
+
+The tape remains headline-sensitive and short-horizon dominated. With gold vol at a 5-yr high and GLD IV rich to RV, some portfolios are buying tails via metals instead of piling into deep OTM index puts. So hedgers are paying up for convexity in metals — a tell that geopolitical/policy risk premia are being priced outside equities too.
+
+INTRADAY POSTCoding today’s positioning:
+
+Today’s profile is an almost symmetric short fly pattern centering around 6730, with a net long speed profile. Not too steep making it possible for the spot to climb upwards safely.The centroid is at 6714.86 - 6722.42 area. Below this point the shorter gamma can be accelerating, especially below the downside pivot of 6711.68, with a downside target of 6664.95 (margin of error of 6640, if vol spikes). This target is locally sticky. Otherwise 6695 is the pin potential below the centroid.
+
+Upside pivot is at 6740.75 that is a very sticky local level. If vol catches a bid here, the upside shorter gamma can haven an effect towards 6772.49, only to revert back to the pivot. Upside volatility is heavily sold.
+
+OptionsDepth Heatmap
+
+The market prices more probability for a slight downside than an upside. Anyway volatility remains in check for now.
+
+Keep your eyes on VIX 18s as a serious pivot. Below that it can be easily dumped down to 15s with heavy vol supression pinning SPX spot to 6740.However 19.5, 20s and 21s are local pins. And the lower it pins, the stronger impact buyback flow we can get, expect if VIX breaks below 18s, because puts will be bought back then. Low probability. SPX/VIX beta is dumped.
+
+SCRIPT INPUTS=== SPX closed at 6735.13 ===
+
+99.73%, 6849.235907450722, , 6820.649776717058, 95.4%, 6792.182953725361, Risk level, 6773.583690810893, 68.2%, 6763.596319793509, 68.2%, 6706.542854308449, Risk level, 6696.676309189107, 95.4%, 6678.0770462746395, , 6649.489380041501, 99.73%, 6621.024092549278
+
+=== ES closed at 6780.25 ===
+
+99.73%, 6901.198190738923, , 6870.894610624433, 95.4%, 6840.724095369461, Risk level, 6821.009540279017, 68.2%, 6810.419924470795, 68.2%, 6749.9452277312, Risk level, 6739.490459720983, 95.4%, 6719.775904630539, , 6689.47052011855, 99.73%, 6659.301809261077
+
+=== SPY closed at 671.3 ===
+
+99.73%, 682.9794128944549, , 680.0532914094681, 95.4%, 677.1397064472275, Risk level, 675.2359621454312, 68.2%, 674.2135306696416, 68.2%, 668.3737689810815, Risk level, 667.3640378545687, 95.4%, 665.4602935527724, , 662.5340063187007, 99.73%, 659.620587105545
+
+=== VIX closed at 18.23 ===
+
+99.73%, 20.89627647360857, , 20.218722642335386, 95.4%, 19.563138236804285, Risk level, 19.12853517160609, 68.2%, 18.88480897591877, 68.2%, 17.55077747403396, Risk level, 17.331464828393912, 95.4%, 16.896861763195716, , 16.21659905609166, 99.73%, 15.563723526391431
+
+=== IWM closed at 248.16 ===
+
+99.73%, 254.91858293151898, , 253.22330013655878, 95.4%, 251.53929146575948, Risk level, 250.4376424479219, 68.2%, 249.8439324261105, 68.2%, 246.464562624847, Risk level, 245.8823575520781, 95.4%, 244.78070853424052, , 243.0851906455687, 99.73%, 241.401417068481
+
+=== QQQ closed at 611.54 ===
+
+99.73%, 625.7777147308808, , 622.2081050260942, 95.4%, 618.6588573654403, Risk level, 616.3381098643068, 68.2%, 615.089129828565, 68.2%, 607.9701518715689, Risk level, 606.7418901356931, 95.4%, 604.4211426345596, , 600.8511710570219, 99.73%, 597.3022852691191
+
+=== NDX closed at 25141.02 ===
+
+99.73%, 25712.109446214607, , 25568.938480151934, 95.4%, 25426.5647231073, Risk level, 25333.477143374323, 68.2%, 25283.38925529833, 68.2%, 24997.839927599045, Risk level, 24948.56285662568, 95.4%, 24855.4752768927, , 24712.29049348893, 99.73%, 24569.930553785394
+
+=== NQ closed at 25326.75 ===
+
+99.73%, 25927.53806596716, , 25776.903468749013, 95.4%, 25627.14403298358, Risk level, 25529.215578230935, 68.2%, 25476.5042762418, 68.2%, 25176.104960609635, Risk level, 25124.284421769065, 95.4%, 25026.35596701642, , 24875.705517391936, 99.73%, 24725.96193403284
+
+=== NVDA closed at 182.64 ===
+
+99.73%, 192.27990310962872, , 189.8546320791131, 95.4%, 187.45995155481435, Risk level, 185.88864734794487, 68.2%, 185.0342820992134, 68.2%, 180.21391080609925, Risk level, 179.3913526520551, 95.4%, 177.82004844518562, , 175.393516442506, 99.73%, 173.00009689037125
+
+=== AMZN closed at 216.48 ===
+
+99.73%, 226.40608481201002, , 223.91081313773907, 95.4%, 221.443042406005, Risk level, 219.82509058164737, 68.2%, 218.94745903995315, 68.2%, 213.98409048326008, Risk level, 213.1349094183526, 95.4%, 211.516957593995, , 209.0207064376439, 99.73%, 206.55391518798996
+
+=== AAPL closed at 262.24 ===
+
+99.73%, 270.88598971279293, , 268.7157990935425, 95.4%, 266.5629948563965, Risk level, 265.15369853321124, 68.2%, 264.3926620977621, 68.2%, 260.069520376492, Risk level, 259.3263014667888, 95.4%, 257.91700514360355, , 255.74637369009292, 99.73%, 253.5940102872071
+
+=== GOOG closed at 257.02 ===
+
+99.73%, 268.6000136994299, , 265.68923847265756, 95.4%, 262.8100068497149, Risk level, 260.9224646167079, 68.2%, 259.8988802602153, 68.2%, 254.10850603528849, Risk level, 253.1175353832921, 95.4%, 251.22999315028503, , 248.31811467772198, 99.73%, 245.4399863005701
+
+=== TSLA closed at 447.43 ===
+
+99.73%, 478.56615958950846, , 470.7177635746205, 95.4%, 462.99807979475423, Risk level, 457.9228857816644, 68.2%, 455.147482518103, 68.2%, 439.57704553062496, Risk level, 436.93711421833564, 95.4%, 431.8619202052458, , 424.0064354338163, 99.73%, 416.29384041049155
+
+=== TSM closed at 297.7 ===
+
+99.73%, 314.20562877365205, , 310.0517640967088, 95.4%, 305.95281438682605, Risk level, 303.26239689672076, 68.2%, 301.79819887295236, 68.2%, 293.5445914286991, Risk level, 292.1376031032792, 95.4%, 289.44718561317393, , 285.29093809956964, 99.73%, 281.1943712263479
+
+=== AMD closed at 240.56 ===
+
+99.73%, 268.0079486448807, , 261.0557916067459, 95.4%, 254.28397432244034, Risk level, 249.8099586933248, 68.2%, 247.32681387792599, 68.2%, 233.59724813660318, Risk level, 231.3100413066752, 95.4%, 226.83602567755966, , 219.86698422770814, 99.73%, 213.11205135511932

@@ -1,0 +1,93 @@
+NVDA ER, GDP, PCE, Valuation - Intraday post (27/Aug)
+
+Expectations
+
+Market is waiting for NVDA ER, GDP and PCE… Weekly post:
+
+Weekly post (24-29/Aug)
+
+Last week I said that any vol spike keeps being managed through vomma supply during this whole month, and any directional momentum must be confirmed, because everything is uncertain again.
+
+The NVDA expectations are about $46 billion in revenue and roughly $1.00–$1.02 per share in adjusted EPS. It is expected to beat both top-line and bottom-line expectations and to guide Q3 revenue in the low–$50s billion range, because of the surging demand for Nvidia’s AI‑focused data‑centre GPUs, which accounted for about $39 billion of the company’s $44 billion revenue last quarter, and strong orders from hyperscalers and enterprise customers.NVDA is priced rich, it is trading around 55× trailing earnings and about 10 × sales. The PEG ratio is close to 0.7, which indicates that the current price-to-earnings multiple is only justified if the growth trajectory remains unbroken.The risk investors are watching is the impact of U.S. export restrictions on high‑end AI chips to China (which Nvidia estimated could lower Q2 revenue by up to $8 billion), and the sustainability of supply-chain capacity for new “Blackwell” and “Rubin” chips, and whether cloud providers’ capital‑expenditure plans will continue to rise. Any indication that demand is moderating or that margins are under pressure could trigger a meaningful correction because the stock leaves little room for error. In my view, NVDA is trading at its intrinsic value range ($170-200 range) pricing in very high growth, but if GDP is bad, this growth this pricing will become overoptimistic. For me the current valuation offers a slim margin of safety, so I want to see a pullback before buying again. Reversion probability is about 86.90% with target of 171.20
+
+GDPThe real GDP is expected to grow at at an annualized 3.0% in Q2 2025 with minimal revision (consensus looks for no change, or only a slight moderation).This is supported by stronger personal consumption and a sharp decline in imports, which mechanically boosted GDP because imports are subtracted in the GDP formula.
+
+PCEJuly core PCE is estimated at +0.3% MoM, some estimate that it could even be a hair lower (~0.24–0.25%), expecting YoY core 2.8-3% PCE. Also note, if Lisa Cook can be fired, Trump gains full control over the Fed. Datas will then serve his interest and bubble would be start to get inflated hard.
+
+ValuationSPX’ forward price‑to‑earnings ratio is around 20-23x, while the 10‑year Treasury yield is around 4 %. This implies an earnings yield near 4 %—not far above bond yields. This means that stocks offer little margin for error.The current P/E would only be justified if long‑term earnings growth were 5–6% higher than projected nominal GDP growth. So the market is pricing in a very rosy scenario for profits and productivity. Risk/reward is more balanced than in cheaper markets. This is why I don’t like longer-term positions now, and wait patiently.
+
+Stochastic Volatility - Options market insights is a reader-supported publication. To receive detailed market analyses, key levels and educative structural breakdowns, consider becoming a paid subscriber.
+
+Let’s look at what today’s positioning is telling for intraday traders…
+
+INTRADAY POSTCoding today’s positioning:
+
+Lot of kurtosis is sold to the upside today, market is right tail heavy. Speed profile is net negative with a short fly around its centroid of 6461.86 - 6456.94This tells to me, market is heavily hedging right tail, and aims to temper upside vol spikes, while expecting strong supportive liquidity at the upper bound of the centroid range.
+
+At 6461.86 the market is mostly expected to range with additional upward spot spikes.The upside pivot is 6476.54, this is the “border of the magnetic field” of the 6465/6460 range, where call skew is expected to catch a bid.If it does, 6485.98 is the upside target and even 6500Here (around 6490) if intraday RV calms down a bit but call skew remains bid, we can broke above 6500, but this is a low probability scenario, however market bets on heavy right tail, so keep this in mind. 6505 - 6520 range is very much rejecting.
+
+Downside pivot is 6452.14, but we have couple of supports downward. Downside max is 6388.43, but we have strong supports at 6445/40 area, and 6415/20 area.Something very bad should happen today to break all these “momentum swallowing” supports. Right tail is 68.76% heavier than downside hedges, so you can guess the sentiment…
+
+OptionsDepth Heatmap
+
+So the most likely scenario according to the implied distribution is a ranging above the centroid with potential upsticks then reverting back, until 2.10PM, then 6480 can pin if spot is above 6470, or to the centroid area.Right-tail scenario is a squeeze above 6500, low probability, no catalyst.And the less likely one is a retest of 6400/6385 area.
+
+SCRIPT INPUTS=== SPX closed at 6465.94 ===
+
+99.73%, 6555.961710641016, , 6533.417521278326, 95.4%, 6510.950855320508, Risk level, 6496.277316486022, 68.2%, 6488.406397063232, 68.2%, 6443.395269091359, Risk level, 6435.602683513977, 95.4%, 6420.929144679491, , 6398.38413728342, 99.73%, 6375.918289358983
+
+=== ES closed at 6487.0 ===
+
+99.73%, 6578.162111018584, , 6555.331966156177, 95.4%, 6532.581055509292, Risk level, 6517.721631413263, 68.2%, 6509.750633249232, 68.2%, 6464.169296430225, Risk level, 6456.278368586737, 95.4%, 6441.418944490708, , 6418.587955615811, 99.73%, 6395.837888981416
+
+=== SPY closed at 645.16 ===
+
+99.73%, 654.2794309493403, , 651.9955871916117, 95.4%, 649.7197154746701, Risk level, 648.2332482299277, 68.2%, 647.435843644479, 68.2%, 642.8760996991269, Risk level, 642.0867517700723, 95.4%, 640.6002845253298, , 638.3163553470217, 99.73%, 636.0405690506597
+
+=== VIX closed at 14.61 ===
+
+99.73%, 16.33113252308538, , 15.897594866915176, 95.4%, 15.47556620432223, Risk level, 15.196651584405444, 68.2%, 15.041701238096474, 68.2%, 14.185768120596858, Risk level, 14.04334818671272, 95.4%, 13.764433566795933, , 13.329787907470063, 99.73%, 12.908867248032786
+
+=== IWM closed at 234.28 ===
+
+99.73%, 240.18860995055002, , 238.706887090834, 95.4%, 237.23430497527502, Risk level, 236.27120155333537, 68.2%, 235.75252484248696, 68.2%, 232.7981611404879, Risk level, 232.28879844666463, 95.4%, 231.32569502472498, , 229.843795928782, 99.73%, 228.37139004944999
+
+=== QQQ closed at 572.61 ===
+
+99.73%, 583.6365208380132, , 580.8733496438597, 95.4%, 578.1232604190066, Risk level, 576.3259375224104, 68.2%, 575.3600265473153, 68.2%, 569.8467022379551, Risk level, 568.8940624775896, 95.4%, 567.0967395809935, , 564.3333766802328, 99.73%, 561.5834791619868
+
+=== NDX closed at 23525.29 ===
+
+99.73%, 23970.275635024707, , 23858.76987307759, 95.4%, 23747.782817512354, Risk level, 23675.250159003328, 68.2%, 23636.27461422369, 68.2%, 23413.779308971134, Risk level, 23375.329840996674, 95.4%, 23302.797182487648, , 23191.28395598449, 99.73%, 23080.304364975294
+
+=== NQ closed at 23607.5 ===
+
+99.73%, 24054.685365053196, , 23942.62801748377, 95.4%, 23831.092682526596, Risk level, 23758.201468022926, 68.2%, 23719.032874523924, 68.2%, 23495.43768473474, Risk level, 23456.798531977074, 95.4%, 23383.907317473404, , 23271.84244676641, 99.73%, 23160.314634946804
+
+=== NVDA closed at 181.77 ===
+
+99.73%, 190.70959039060486, , 188.46144182863048, 95.4%, 186.23979519530243, Risk level, 184.78264196163383, 68.2%, 183.99132472116756, 68.2%, 179.52119158291558, Risk level, 178.7573580383662, 95.4%, 177.3002048046976, , 175.0510411857797, 99.73%, 172.83040960939516
+
+=== AMZN closed at 228.71 ===
+
+99.73%, 237.21455981949723, , 235.0788052618473, 95.4%, 232.96227990974862, Risk level, 231.57603665917057, 68.2%, 230.82634823208247, 68.2%, 226.57388455389426, Risk level, 225.84396334082945, 95.4%, 224.4577200902514, , 222.32141384577847, 99.73%, 220.2054401805028
+
+=== AAPL closed at 229.31 ===
+
+99.73%, 236.8193605538125, , 234.93451970890888, 95.4%, 233.06468027690624, Risk level, 231.84065450663482, 68.2%, 231.1797176101255, 68.2%, 227.42491148883104, Risk level, 226.77934549336518, 95.4%, 225.55531972309376, , 223.67010114244476, 99.73%, 221.80063944618752
+
+=== GOOG closed at 207.95 ===
+
+99.73%, 215.38265002856295, , 213.51640218817627, 95.4%, 211.66632501428148, Risk level, 210.4548030596257, 68.2%, 209.7999339530874, 68.2%, 206.08346055246685, Risk level, 205.44519694037427, 95.4%, 204.2336749857185, , 202.36698170171942, 99.73%, 200.51734997143703
+
+=== TSLA closed at 351.67 ===
+
+99.73%, 371.10794270772845, , 366.21621711277993, 95.4%, 361.38897135386424, Risk level, 358.2205866925045, 68.2%, 356.4963668202152, 68.2%, 346.776467258069, Risk level, 345.1194133074955, 95.4%, 341.9510286461358, , 337.05651416389236, 99.73%, 332.2320572922716
+
+=== TSM closed at 238.72 ===
+
+99.73%, 248.60145835809234, , 246.11869619861687, 95.4%, 243.66072917904617, Risk level, 242.05005146667713, 68.2%, 241.17771304501147, 68.2%, 236.2367192677254, Risk level, 235.38994853332287, 95.4%, 233.77927082095383, , 231.29571418592184, 99.73%, 228.83854164190765
+
+=== AMD closed at 166.62 ===
+
+99.73%, 176.57857756613237, , 174.0711300723753, 95.4%, 171.59928878306619, Risk level, 169.97604063978662, 68.2%, 169.09131703619346, 68.2%, 164.11147218572356, Risk level, 163.2639593602134, 95.4%, 161.64071121693382, , 159.13159253418812, 99.73%, 156.66142243386764

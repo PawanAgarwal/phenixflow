@@ -1,0 +1,83 @@
+What is vomma supply? Why is it important? - Intraday post (04/Sept)
+
+As everybody already knows that the coming Fed cut will be a hawkish cut due to the checkmate situation, volatility keeps being managed for this week and day to day.
+
+Vomma selling is basically like selling VIX calls or selling tail SPX OTM puts/calls for the dealers and bidding up gamma at the tails. It doesn’t prevent wider intraday swings, it lets the spot moves kinda freely in a relatively wide range, but it prevents vol spikes, it dampens any upsticks, by compressing the kurtosis of the distribution. This is a less agressive strategy than constantly selling volatility, dumping it down to hell, like it was done in 2022. Those setups are like an extended rubber band, they are very sensitive to any vol spikes, leading into a vol squeeze.For a vomma squeeze, market needs extreme tail event. But we need to know where the “event horizonz" of the tail” lies. Thats something I built formulas for as well.
+
+So vomma supply doesn’t mean that volatility is suppressed. It only means that, the more vol goes up, the more vol exposure the dealers get, so they will sell volatility. (think like this: long vomma = vol up/vega up = selling vega by dealers to hedge)Or think about it like supplying the dealers with VIX upside gamma. And because VIX smirk is mostly concave (especially for longer maturities), but have an upward skew for sure (it is because of the modelled mean reverting tendency of volatility), when VIX spikes, dealers will have a lot to delta hedge (and maybe VIX-vega hedge as well, but it’s conditional), capping the vol spike, and creating a VIX-to-SPX lead-lag. This is because VIX is the 30-day variance object derived from SPX options, so spot moves change SPX option vol premiums and so thus the implied variance curve (think vanna/cross-gamma), which moves VIX futures. To reduce this additional exposure, dealers add an ES hedge sized by the VX–ES beta. The result is buying ES futures at the tail strikes, dampening or even braking the spot move. It can work both ways, as I keep telling. Because spot/vol correlation can be both positive and negative.The third thing is to simply sell tail SPX puts, that are basically synthetic VIX calls. You can see a lot of this on these intraday setups, OptionsDepth Heatmaps… especially to the upside, because in the recent times, intraday setups and even weekly/monthly setups where kept being right-tail heavy. And so, by creating positive gammas to both upside and downside, it simply builds heavy gamma walls to the spot that swallow vol spike-driven spot moves, by leveraging dealer hedging flow. The net result is a compressed kurtosis for SPX distribution. Thinner tails, reduced tail-risks to both direction, and controlled volatility swings.
+
+Playing with inflation swaps or any assets that fits the narrative is only a metaphorical “vomma supply” as it keeps sentiment in check. For example, now, the short-term SPY/yields correlation is dumped again. This makes algos and retails to buy every dip on weak datas as those datas will trigger Fed cut (“bad news are god news”).
+
+Okay, so now let’s jump into today’s positioning…
+
+INTRADAY POST Coding today’s positioning:
+
+We have an IC again at 6410/15 - 6475/80, with a heavily negative speed profile ahead of PMI, with heavy right-tail. The pattern is a short fly pattern centered around the downside pivot of 6453.57
+
+The centroid of the profile is in the 6467.64 - 6479.99 area, but upside pivot falls to 6469.38If volatility catches up here during the AM session, and call skew bids up by 91.9% at least, the spot can break up to the upper part of the centroid range, but the upper wing of 6480 (margin of error of 6485) is kinda unbreakable after 1.30PM. It can be broken before only, if spot can holds above the upside pivot and realized volatility suppresses while call skew remains up. This is the right-tail scenario.In this case 6500/6505 is the limit, there vomma will mange the spot and reject it back.
+
+The downside pivot is 6453.57This is hard to break, and really tests the skew. But if it does, 6400/6391 is the downside max I code. Only to reverse up. During the AM it can reverse up above the downside pivot. Later the resistances are: 6430; 6460 - these levels work as lines in the send. Spot can be pinned both to the lower wing of the IC, or to the downside pivot.
+
+OptionsDepth Heatmap
+
+What market is betting on is strong supporting liquidity at the lower bound of the centroid plus the downside pivot, with upward spikes but with reversions from 6480.The secondary scenario is an upside pin, and only the third one is the downside move. According to the implied distribution. Data comes at 10.00AM, and don’t forget: “bad news are sold as good news”…
+
+SCRIPT INPUTS=== SPX closed at 6448.26 ===
+
+99.73%, 6541.781665718895, , 6518.359318330204, 95.4%, 6495.020832859448, Risk level, 6479.776801347268, 68.2%, 6471.598182496675, 68.2%, 6424.837042252958, Risk level, 6416.743198652733, 95.4%, 6401.499167140552, , 6378.075897502054, 99.73%, 6354.738334281105
+
+=== ES closed at 6460.5 ===
+
+99.73%, 6556.495229566613, , 6532.452339127506, 95.4%, 6508.497614783307, Risk level, 6492.850392363948, 68.2%, 6484.454398043644, 68.2%, 6436.45645209322, Risk level, 6428.149607636052, 95.4%, 6412.502385216693, , 6388.458501166547, 99.73%, 6364.504770433387
+
+=== SPY closed at 643.74 ===
+
+99.73%, 653.2378441487533, , 650.8590518769903, 95.4%, 648.4889220743767, Risk level, 646.9407734781299, 68.2%, 646.1100979679541, 68.2%, 641.3611435874805, Risk level, 640.5392265218701, 95.4%, 638.9910779256234, , 636.6121887250191, 99.73%, 634.2421558512467
+
+=== VIX closed at 16.35 ===
+
+99.73%, 18.132318846787495, , 17.68112552846312, 95.4%, 17.24115942339375, Risk level, 16.950641451367385, 68.2%, 16.78966814956412, 68.2%, 15.89817736180825, Risk level, 15.749358548632616, 95.4%, 15.458840576606255, , 15.006647211097611, 99.73%, 14.567681153212508
+
+=== IWM closed at 233.67 ===
+
+99.73%, 239.45871932415997, , 238.00713981395944, 95.4%, 236.56435966208, Risk level, 235.6207984122419, 68.2%, 235.11272598955216, 68.2%, 232.21831081497805, Risk level, 231.71920158775808, 95.4%, 230.77564033791998, , 229.3238942391138, 99.73%, 227.88128067584
+
+=== QQQ closed at 570.07 ===
+
+99.73%, 581.5630444196237, , 578.6826502353929, 95.4%, 575.8165222098119, Risk level, 573.9431559694132, 68.2%, 572.9360564811291, 68.2%, 567.1894612771403, Risk level, 566.1968440305869, 95.4%, 564.3234777901882, , 561.4428645789111, 99.73%, 558.5769555803764
+
+=== NDX closed at 23414.84 ===
+
+99.73%, 23878.570042633204, , 23762.354726099744, 95.4%, 23646.705021316604, Risk level, 23571.11702436739, 68.2%, 23530.486918067058, 68.2%, 23298.619054567913, Risk level, 23258.56297563261, 95.4%, 23182.974978683396, , 23066.751133929673, 99.73%, 22951.109957366796
+
+=== NQ closed at 23455.75 ===
+
+99.73%, 23922.29780500523, , 23805.375117934072, 95.4%, 23689.023902502613, Risk level, 23612.97661028676, 68.2%, 23572.098387736416, 68.2%, 23338.821601012212, Risk level, 23298.52338971324, 95.4%, 23222.476097497387, , 23105.54475604937, 99.73%, 22989.20219499477
+
+=== NVDA closed at 170.62 ===
+
+99.73%, 177.9033411438023, , 176.0730911526285, 95.4%, 174.26167057190116, Risk level, 173.07448596546138, 68.2%, 172.43122174646265, 68.2%, 168.7893437602689, Risk level, 168.16551403453863, 95.4%, 166.97832942809885, , 165.1474566264197, 99.73%, 163.33665885619772
+
+=== AMZN closed at 225.99 ===
+
+99.73%, 232.93773037635822, , 231.19427319966442, 95.4%, 229.4638651881791, Risk level, 228.33138513683272, 68.2%, 227.72030847923205, 68.2%, 224.24634067498943, Risk level, 223.6486148631673, 95.4%, 222.5161348118209, , 220.77236964136048, 99.73%, 219.0422696236418
+
+=== AAPL closed at 238.47 ===
+
+99.73%, 245.84505227944206, , 243.9943230357626, 95.4%, 242.15752613972103, Risk level, 240.95539261817197, 68.2%, 240.30668999954887, 68.2%, 236.61905363148742, Risk level, 235.98460738182803, 95.4%, 234.78247386027897, , 232.93141377333464, 99.73%, 231.09494772055794
+
+=== GOOG closed at 231.1 ===
+
+99.73%, 240.03077560907286, , 237.78760005806635, 95.4%, 235.56538780453644, Risk level, 234.10967138025754, 68.2%, 233.3220116526265, 68.2%, 228.85641541886395, Risk level, 228.09032861974245, 95.4%, 226.63461219546355, , 224.39081088940495, 99.73%, 222.16922439092713
+
+=== TSLA closed at 334.09 ===
+
+99.73%, 352.5620611710742, , 347.91339870278097, 95.4%, 343.32603058553707, Risk level, 340.315084614652, 68.2%, 338.67653234070127, 68.2%, 329.43961911354546, Risk level, 327.86491538534796, 95.4%, 324.8539694144629, , 320.20265496555095, 99.73%, 315.61793882892573
+
+=== TSM closed at 231.39 ===
+
+99.73%, 240.79396070459478, , 238.43138014871502, 95.4%, 236.09198035229738, Risk level, 234.55913475744845, 68.2%, 233.72916663035036, 68.2%, 229.02694353783335, Risk level, 228.22086524255153, 95.4%, 226.6880196477026, , 224.32471026909295, 99.73%, 221.9860392954052
+
+=== AMD closed at 162.13 ===
+
+99.73%, 171.40344087522467, , 169.06918615313498, 95.4%, 166.76672043761232, Risk level, 165.2551495749507, 68.2%, 164.4320175165107, 68.2%, 159.7948228681077, Risk level, 159.00485042504928, 95.4%, 157.49327956238767, , 155.15759987568407, 99.73%, 152.85655912477532

@@ -1,0 +1,89 @@
+OpEx Flows, supportive or suppressive vanna/charm? - Intraday post (18/Sept)
+
+Supportive OpEx/suppressive OpEx? Supportive vanna&charm flows and so on… Is it really this simple?
+
+If something is supportive is suppressive is very much context dependent, and assuming flows by using only the OTM “skew” contracts for schematic examples is not necessarily accurate. The supportive/suppressive is coming from the passive flows. But passive flows can be overwritten/interfered by shadow greek generated flows, and also the net exposure on a short or long speed profile is not a straight indicator to judge the vanna and charm flows because their weights can be different over the chain and tenors, generating different impacts.
+
+I tell you an example: A negative speed profile would look like this using the schematic modelling of skew contracts: MM is net long OTM puts and net short OTM calls. Result? Net positive charm (because OTM put has positive charm, and OTM call has negative charm, but he shorts the OTM call, so his exposure is positive charm on this call as well) and net negative vanna (same reason).…even tho vanna cannot be handled this way… Is it really suppressive?If vol is sold, negative vanna would make the dealer longer delta, making him sell futures, and vice versa, while as the time passes the long charm makes him longer delta too adding another layer to sell futs. This simple positioning could be called right-tailish in itself, that is literally sells the left-tail of the curve (depending on the convexity, but here I take only this schematic exposure). So, while it tends to generate liquidity to the downside it also prevets downside vol squeezes while opens the gate for upward gamma squeezes. But where is the centroid of this setup that activate one or the other scenario? How vanna, gamma, etc. interfere with time and volatility? What if the dealer doesn’t simply have these two contracts but thousands, if not millions, with different expos and different sizes? How will the exposure change then? What shape the distribution will have?
+
+Now… these are the questions that these oversimplified OpEx explainations doesn’t give you. I’m able to code these. In this post, I share the outputs of the models and shortly explain the coded effective interactions.
+
+INTRADAY POSTCoding AM OpEx positioning:
+
+The positioning draws a long fly pattern, with a net negative speed profile. This means, that in a net basis, there is more gamma down, than up (in this case by 21.38%), and through delta hedging, the profile locally tends to increase spot/vol beta.
+
+OpEx flowsCharm flow is also net negative, and supportive here. This is rare in a short speed profile, but happens. Vanna and color are also net negative here, and zomma is net positive. And we can experience a vol crushing feedback loop.
+
+Okay, what does this mean?The fly pattern has a local short speed, and a local long speed territory above and below the centroid of 6667.51 - 6688.14; this is the line where the flows start to shift. Above, the vanna becomes postive, so any vol crush becomes supportive. But below the centroid range, the vanna shifts into being negative, meaning a vol crush would suppress the spot. (vol down/delta up)Dealers are heavy shorting ITM calls, making a both local and net short charm, meaning, as the time passes, they slowly buy back ES futs. Today, dealers have vol exposure on this positioning that sharply goes to zero into tomorrow. They are net short vol, meaning, as time passes, they become rapidly longer vol, so they need to short vol. And also their vomma exposure is negative as well, so if vol goes down, their vol exposure inflates forcing them to short even more vol. And this can create a vol-suppressing feedback loop.The positive zomma exposure is what creates uncertainity here, because it means, if volatility is crushed the gamma effect mitigates, and it is also both local and net across the profile, as market prices this move as we are at the very right-wing of the curve. So, the more vol is suppressed, the less dependent the spot becomes from dealer hedging flows. It is kinda counterintuitive for the average mind, but think about it like the system is designed to not let the volatility to be suppressed or expanded forever. This is why zomma shifts to positive at the very tails of the curve both on the left and the right side.
+
+All in all: this OpEx positioning is strongly supportive.
+
+LevelsThe centroid is in the 6667.51 - 6688.14 areaDownside pivot is at 6639.35 (shifting towards 6623.55 after 1PM), below this range, 6590 is magnetic. This downside pivot is very hard to break in terms of flows. If it does, its a clear sign that market wants lower. The most supportive cluster is at 6557.40
+
+Upside pivot is at 6675.12 opening the door for a pin to 6685, with potential test of 6698/6700 then reverting back, back only after 12.30PMDuring the AM, 6714.97 is the most magnetic zone.
+
+Between the two, the downside gravitational force is the stronger one, but we will see. Market seems like more into short vol, than bet on direction.
+
+OptionsDepth Heatmap
+
+All in all, market got strong supportive flows from the positioning below, as I said since July/August, and on the PM positioning (posting tomorrow) charm flows will accumulate tons of deltas to sell that will be bought back after OpEx has passed. Market is close to equilibrium, but if it produces a daily avg price of 6635.87, t accumulates more imbalance.
+
+SCRIPT INPUTS=== SPX closed at 6606.76 ===
+
+99.73%, 6699.6821986463, , 6676.411233798684, 95.4%, 6653.22109932315, Risk level, 6638.0747809438035, 68.2%, 6629.949851255605, 68.2%, 6583.488464715024, Risk level, 6575.445219056197, 95.4%, 6560.29890067685, , 6537.027074091708, 99.73%, 6513.8378013537
+
+=== ES closed at 6669.75 ===
+
+99.73%, 6764.757196672175, , 6740.963552877, 95.4%, 6717.253598336088, Risk level, 6701.767425278523, 68.2%, 6693.459657568881, 68.2%, 6645.955758015387, Risk level, 6637.732574721477, 95.4%, 6622.246401663912, , 6598.451854124829, 99.73%, 6574.742803327825
+
+=== SPY closed at 660.0 ===
+
+99.73%, 669.4658773074698, , 667.0952105591788, 95.4%, 664.7329386537349, Risk level, 663.1900006526173, 68.2%, 662.3622419125844, 68.2%, 657.6292728342733, Risk level, 656.8099993473827, 95.4%, 655.2670613462651, , 652.8963033148564, 99.73%, 650.5341226925302
+
+=== VIX closed at 15.72 ===
+
+99.73%, 17.498679482114202, , 17.04821148609512, 95.4%, 16.609339874571504, Risk level, 16.319415162512588, 68.2%, 16.158552758939653, 68.2%, 15.268856850705468, Risk level, 15.120585371545031, 95.4%, 14.830660659486112, , 14.379116859749168, 99.73%, 13.941321051943415
+
+=== IWM closed at 238.28 ===
+
+99.73%, 243.90427865660234, , 242.4941325736488, 95.4%, 241.0921393283012, Risk level, 240.17538190727498, 68.2%, 239.6819454175629, 68.2%, 236.86975712583572, Risk level, 236.38461809272502, 95.4%, 235.46786067169882, , 234.05756765753324, 99.73%, 232.65572134339766
+
+=== QQQ closed at 591.18 ===
+
+99.73%, 602.381321805523, , 599.5744518761445, 95.4%, 596.7806609027615, Risk level, 594.9548454484612, 68.2%, 593.9737293117386, 68.2%, 588.3730055734247, Risk level, 587.4051545515387, 95.4%, 585.5793390972384, , 582.7722806273576, 99.73%, 579.9786781944769
+
+=== NDX closed at 24274.25 ===
+
+99.73%, 24734.347084370773, , 24619.05410858537, 95.4%, 24504.29854218539, Risk level, 24429.30271743295, 68.2%, 24389.00303185113, 68.2%, 24158.951906847207, Risk level, 24119.19728256705, 95.4%, 24044.20145781461, , 23928.900732181417, 99.73%, 23814.152915629227
+
+=== NQ closed at 24530.25 ===
+
+99.73%, 24992.765545426773, , 24876.86793619101, 95.4%, 24761.507772713387, Risk level, 24686.11773880882, 68.2%, 24645.607641963357, 68.2%, 24414.347299966827, Risk level, 24374.38226119118, 95.4%, 24298.992227286613, , 24183.086908830996, 99.73%, 24067.734454573227
+
+=== NVDA closed at 174.88 ===
+
+99.73%, 182.59249006098366, , 180.65407840474464, 95.4%, 178.73624503049183, Risk level, 177.4791091505515, 68.2%, 176.79760895140072, 68.2%, 172.9411294893947, Risk level, 172.2808908494485, 95.4%, 171.02375496950816, , 169.0846393338944, 99.73%, 167.16750993901633
+
+=== AMZN closed at 234.05 ===
+
+99.73%, 241.58083315164725, , 239.69073088605978, 95.4%, 237.81541657582363, Risk level, 236.58789077210514, 68.2%, 235.92519630080108, 68.2%, 232.15965788747297, Risk level, 231.51210922789488, 95.4%, 230.2845834241764, , 228.39411545673505, 99.73%, 226.51916684835277
+
+=== AAPL closed at 238.15 ===
+
+99.73%, 244.80454350879126, , 243.1352160415746, 95.4%, 241.47727175439564, Risk level, 240.39258116246265, 68.2%, 239.80786531786092, 68.2%, 236.4805123719303, Risk level, 235.90741883753736, 95.4%, 234.82272824560437, , 233.1531571086423, 99.73%, 231.49545649120876
+
+=== GOOG closed at 251.42 ===
+
+99.73%, 261.5721347139662, , 259.02166682403873, 95.4%, 256.4960673569831, Risk level, 254.84126939860658, 68.2%, 253.94535092199007, 68.2%, 248.869024880774, Risk level, 247.9987306013934, 95.4%, 246.3439326430169, , 243.79268806702794, 99.73%, 241.26786528603378
+
+=== TSLA closed at 421.62 ===
+
+99.73%, 449.9384309632431, , 442.8022317696624, 95.4%, 435.7792154816216, Risk level, 431.16331123461293, 68.2%, 428.6411469182133, 68.2%, 414.4799343377659, Risk level, 412.0766887653871, 95.4%, 407.46078451837843, , 400.31858047313534, 99.73%, 393.3015690367569
+
+=== TSM closed at 262.06 ===
+
+99.73%, 273.3270848802036, , 270.49564801750154, 95.4%, 267.6935424401018, Risk level, 265.8570076046286, 68.2%, 264.8617936431245, 68.2%, 259.22792571045835, Risk level, 258.2629923953714, 95.4%, 256.4264575598982, , 253.5940433158666, 99.73%, 250.7929151197964
+
+=== AMD closed at 160.46 ===
+
+99.73%, 169.2167764390666, , 167.01323506812517, 95.4%, 164.8383882195333, Risk level, 163.41103365996545, 68.2%, 162.63446059708969, 68.2%, 158.2556647526201, Risk level, 157.50896634003456, 95.4%, 156.08161178046672, , 153.8768457100774, 99.73%, 151.70322356093342

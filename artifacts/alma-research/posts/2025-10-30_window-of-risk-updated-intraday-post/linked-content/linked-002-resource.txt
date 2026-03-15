@@ -1,0 +1,49 @@
+FOMC week, Greeks breakdown - Weekly post (27-31/Oct)
+
+PERSONAL ANNOUNCEMENT:I won’t work on the Nov 3 week.I will send you the weekly post on Nov 2, and the next post will come on Nov 9, again weekly.
+
+PERSONAL ANNOUNCEMENT:I won’t work on the Nov 3 week.I will send you the weekly post on Nov 2, and the next post will come on Nov 9, again weekly.
+
+Window of Risk:
+
+Window of Risk, Disbalance - Investigating the story that the market tells
+
+Deflating risk in time?Last week the weekly positioning did not show fear, however I marked the post-VIX expo day as a downside acceleration potential as VIX dealers buyback their hedges and sell ES futures. We had a nice 98.1 point sell-off day on Wednesday. However I marked the weekly centroid as very importnat because speed, vanna and even zomma worked against downside acceleration if that level is held. Premarket intraday update showed us that it will be held well, kurtosis was heavily sold. Both for Oct 6 and Oct 13 weeks I predicted rangin for the first half of the week within a certain level then volatility spike into Thursday-Friday window. First time we got a 265.85 pts decline after ranging, second time we got a 139.3 pts sell-off. For the Oct 13 week, it was clear that the market sold both the left-tail and tailedness, and that it won’t break the structure. Market has chosen to hide risk through time-correction. The economic datas versus the reality and accumulated policy and geo risks that the market also feels, bids on it too but not enough, also proved that sentiment remains rigged. However, any policy escalation is dangerous. Not overly, you will see, that volatility (RV and IV to) remains under control, and they have every tools to do it, but still… Momentum-wise, the 6858.68 is the pivotal zone for this week, that can form a double top. Macro still supports quality risk but with geopolitical hedges.
+
+FOMCConsensus is very strong for a 25 bps cut. Even tho the shutdown delayed key releases, markets still price a cut and the Fed is focused on the labor side of the mandate. This is key, because it is not healthy on the long-run, but bullish on equities and gold on the short-run. Stopping QT as soon as this meeting is also on the table, due to signs of funding frictions (see SRF usage spike last week) — a plumbing backstop, not stimulus.
+
+Core PCE expectations into Friday release is about +0.2% m/m after the softer 0.2% core CPI; historically core PCE tends to run a touch below core CPI on a monthly basis. Recent prints show 0.2–0.3% m/m as the live range. (August core PCE was +0.2% m/m.)And ~2.8–2.9% y/y (August was 2.9%). The September CPI outcome (core +0.2% m/m) nudged expectations toward the lower end of that band.For GDP the expectation is 3.8 - 3.9%, this is still ok for a cut.
+
+Don’t forget that the key problem what the admin aims to manage is the debt burden over inflation! QT halt could be signaled at the upcoming meeting to create a hidden stimulus. (Stopping runoff raises bank-reserve growth vs the counterfactual, lowering the risk of collateral squeezes/repo spikes. That cuts left-tail liquidity risk, which supports credit and equities even without QE.)If you see HY/IG spreads tightening while index vol compresses into buyback windows, you know what’s happening…
+
+Let’s scrutinize the weekly fixed strike skew, volatility expectations and distribution, dealer positioning…
+
+WEEKLY POSTLet’s scrutinize the weekly positioning:
+
+The net speed profile is negative, with downside heavily sold towards 6559.55 as the most supportive cluster (weighted avg). The profile is net long gamma, long vega,long charm, short color, short vanna, short veta, long vommaand long zomma.
+
+Breaking down the net dealer exposureLet’s go through them again,Net long gamma indicates that the dealer flow is net short on realized volatility, as they are net hedging against the spot movements, compressing the realized daily returns; Net short speed means that dealers are net long upside realized volatility (shorter upside gamma), and net short downside realized volatility (longer downside gamma). The speed profile is very convex to the downside, so this makes the left-tail of the implied distribution heavily sold;Net long charm means that dealers become longer delta as time passes, generating a slow passive selling flow (low impact, stronger into Friday); Net short color means that gamma decays as time passes. As I coded, above roughly ~6750 the net gamma goes negative into Wednesday, while it remains positive below. This steepens the upside speed convexity, and increases the spot-to-realized volatility correlation;Net short vanna indicates that dealers are shorter upside vega and longer downside vega, or in otherwords they are shorter delta if vol goes up, and longer delta if vol goes down. This pushes the spot/vol beta upward, but only slightly now, as vanna exposure is small;Net short veta tells us that the dealers become shorter vega as time passes making them buying back volatility into Wednesday/Thursday window. The vega exposure is very high from the downside, so this is impactful. However, the veta declines fast, the vega decay is slowing down as vega converges to zero, and so this makes the Monday-Tuesday window sensitive;Net long vomma keeps the implied volatility under control, because whenever the volatility spikes, dealers’ vega exposure rises forcing them to sell volatility and vice versa. It is like making the implied volatility rangebound, and so compressing the tailedness (kurtosis) of the implied distribution;Net long zomma means that the gamma and implied volatility correlation is net positive lowering the IV-to-RV correlation on a net basis. If implied vol goes up the gamma exposure increases, providing more pressure on realized volatility, and vice versa. This creates a tricky and trappy environment for traders who are net short both IV and RV (but relatively low significance due to the low vanna exposure);
+
+Speed profile pivotsThe centroid of the speed profile is 6665.25;this is the ‘center of mass’ (so to say), the point where shorter upside gamma ‘vacuum’ and longer downside gamma ‘gravitational’ effects are in balance with each other. And this way, gives us the most important pivot for the market where only the sentiment affects the price. The distribution offers both possibiliy: well-supplied supportive downside and gamma squeezish upside, the sentiment will decide which one it chooses.
+
+The downside pivot is at 6596.58 (margin of error is 6582.54) this is where the spot arrives into the strong gravitational field of the highly convex downside long gammas, with target of 6559.55
+
+The upside pivot is at 6819.26, this is the line where the vacuum-up effect turns on and provide us a squeeze up towards 6918.28 gamma-wise.
+
+Vomma and zomma based upside and downside target rangesNote, that short vanna makes the spot/vol beta longer (not necessary positive, I don’t see that much vanna), but zomma exposure is positive. So if implied volatility suppressed as spot grinds down, the realized volatility can increase as downside gamma lowers a bit. Same to the upside, as if implied vol catches a bid along with spot, the zomma will brake realized volatility by slightly increasing the upside gammas. Taking all of these into account along with implied vol of vol and gamma convexities, I take the implied volatility moves for the week, and code what price ranges it gives me from where the realized volatility is expected to be suppressed into both ways: Downside = 6648.57 - 6694.51Upside = 6856.69 - 6887.42
+
+Why don’t these zones align with the pivots? Because these are primarly based on vomma. Implied vol of vol and expected/forecasted vol of vol implies a certain move in realized volatility. Taking zomma into account, these are the target ranges that the vol of vol bets imply. Kurtosis is sold, implied distribution is right-tailish.
+
+Distribution, fixed strike skewKurtosis is sold, left-tail is sold, right-tail is slightly bid. This means that the markets primarly bet is “no downside”. Given the call selling and zomma supply, they primarly bet on a ranging with a slight positive drift rather than a melt-up.
+
+The fix strike skew is bid a little bit, but only +37.09% for the tails and 28.58% for the 22-deltas. The bid comes mainly from call IV selling.25-20 delta puts are definitely sold, tails are slightly up, but this is more because of mechanical reasons, and slight hedging in case the spot falls through the pivot.
+
+The Monday-Tuesday vol sensitivity makes sense as geo risk again is a hidden risk - as I keep emphatizing - and there can come China headlines (Malaysia talk), if China fights back as I described in earlier posts, it can re-richen front-end volatility intraday. But after that, the rate decision is almost certainly will be a cut to bail out the sentiment.
+
+Implied volatility based rangesNow let’s see what ranges the implied volatility prices in for the coming weeks. These ranges have sentiment-wise significance for momentum traders, as they tell us which ranges ‘tolerate’ the vol sellers and buyers at max before they start to cover:
+
+SPX: 6853.41 - 6729.97; 6700.12ES=F: 6890.56 - 6763.44; 6732.70SPY: 683.60 - 670.90; 667.82NDX: 25678.19 - 25038.13; 24883.33NQ=F: 25834.12 - 25184.38; 25027.25VIX: 17.84 - 14.90; 18.54
+
+SPX: 6853.41 - 6729.97; 6700.12ES=F: 6890.56 - 6763.44; 6732.70SPY: 683.60 - 670.90; 667.82NDX: 25678.19 - 25038.13; 24883.33NQ=F: 25834.12 - 25184.38; 25027.25VIX: 17.84 - 14.90; 18.54
+
+Mark these, and plan your weekly strategy based on your style and goals. We are in bad news are bad news, good news are good news regime.

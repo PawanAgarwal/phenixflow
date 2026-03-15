@@ -1,0 +1,101 @@
+Bottom confirmation? - Intraday post (26/Nov)
+
+Free post:
+
+[free] SPX, Gold, BTC - A quick overview of the recent momentum and sentiment
+
+Weekly post pt. 2.:
+
+Extended weekly breakdown (SPX, Gold, Bitcoin) + Intraday post (24/Nov)
+
+On last Thursday I emphatized that I’m not too bearish anymore, but I’m cautiously bullish, posted the reversion model that said 50%+ probability for a reversion, even growth beyond 60% during the session, while on Friday I posted in the chat also in the weekly post that my bias is that consolidation starts on Monday, and on Tuesday big money starts rebalancing and taking risk. Now, we are like ~280 pts higher since… I also signaled calls realtime in the chat, however, I also emphatize that the move still requires confirmation. As written in the last Tuesday’s free post, the upside pivot is the Oct 27 gap up area, that must be filled with low volatility, in order to ease the pressure. I coded CTA sell trigger at 6710, posted in the past days (even on twitter), that should be taken out by close in order to decrease the insitutional selling pressure. Being bearish around the top and bullish at the local bottom… On last Wednesday I also signaled to take profit from calls intraday, at the daily upside pivot/resistance…
+
+So anybody who paid attention, catched these moves with me.These were pretty obvious, and didn’t even require knowing the positioning.
+
+Let’s jump into today’s intraday positioning breakdown…
+
+INTRADAY POST Coding today’s positioning:
+
+The speed profile is net positive, and very steeply so. Also net gamma exposure is positive too, even to the downside. Market is positive that 6710 trigger level will be held. (Also a local vanna flip is oscillating there too, so the line seems protected)
+
+The centroid is at 6808.06
+
+Upside target is at 6829.98This is a very hard call wall on 0DTE basis, not expected to be broken today, also won’t necessary pin. The speed profile shows the pivot at 6825.51, but taking ‘speed-theta’ into account, only the first 2 hours is good to break above this, with heightened volatility. Imagine like you are climbing up to a big mountain, and the upside pivot is where the convexity of the mountain peaks. So you need the most fuel in that area to get through it. Fuel is now volatility. I don’t see any trigger today that would ignite a gamma squeeze and RV bid, positioning also doesn’t bet on RV up for today.
+
+Downside pivot is at 6770.59,with target of 6707.44From here, reversion can be expected. 6745/55 area is pivotal in terms of climbing upwards, otherwise it will pin to 6725/30Into the PM session, 6770.59 is sticky.
+
+Also we have a local pin at 6795.So what the market is betting is very high liquidity above the centroid, and very thin left-tail towards the downside target. Market has started to confidently sell downside vol.
+
+OptionsDepth Heatmap
+
+SCRIPT INPUTS=== SPX closed at 6765.88 ===
+
+99.73%, 6898.208029052952, , 6865.046312724314, 95.4%, 6832.044014526476, Risk level, 6810.474545790845, 68.2%, 6798.8815225009175, 68.2%, 6732.716717031514, Risk level, 6721.285454209155, 95.4%, 6699.715985473525, , 6666.551895862159, 99.73%, 6633.551970947048
+
+=== ES closed at 6781.5 ===
+
+99.73%, 6915.450718393563, , 6881.881562672957, 95.4%, 6848.475359196781, Risk level, 6826.641392098631, 68.2%, 6814.905402747199, 68.2%, 6747.929226926363, Risk level, 6736.358607901369, 95.4%, 6714.524640803219, , 6680.953034732407, 99.73%, 6647.549281606437
+
+=== SPY closed at 675.02 ===
+
+99.73%, 688.3686507006906, , 685.0233594058927, 95.4%, 681.6943253503454, Risk level, 679.5184952861327, 68.2%, 678.3489540774646, 68.2%, 671.6745471595674, Risk level, 670.5215047138672, 95.4%, 668.3456746496546, , 665.000138604342, 99.73%, 661.6713492993093
+
+=== VIX closed at 18.56 ===
+
+99.73%, 21.391161004584795, , 20.67125682401971, 95.4%, 19.975580502292395, Risk level, 19.514101258545075, 68.2%, 19.25478574595279, 68.2%, 17.838173277481445, Risk level, 17.605898741454922, 95.4%, 17.144419497707602, , 16.421382826951575, 99.73%, 15.728838995415204
+
+=== IWM closed at 245.13 ===
+
+99.73%, 252.02214869941068, , 250.2931808357495, 95.4%, 248.57607434970532, Risk level, 247.4526541117014, 68.2%, 246.84702369148238, 68.2%, 243.400864202773, Risk level, 242.80734588829858, 95.4%, 241.68392565029467, , 239.95470226861067, 99.73%, 238.2378513005893
+
+=== QQQ closed at 608.89 ===
+
+99.73%, 625.4519142722081, , 621.2976392792646, 95.4%, 617.1709571361041, Risk level, 614.4713651097342, 68.2%, 613.0164957736475, 68.2%, 604.7353471638627, Risk level, 603.3086348902658, 95.4%, 600.6090428638959, , 596.454193237312, 99.73%, 592.3280857277919
+
+=== NDX closed at 25018.36 ===
+
+99.73%, 25696.453989582482, , 25526.367586023087, 95.4%, 25357.40699479124, Risk level, 25246.877674489297, 68.2%, 25187.31301394028, 68.2%, 24848.258235075446, Risk level, 24789.842325510705, 95.4%, 24679.31300520876, , 24509.20324084685, 99.73%, 24340.26601041752
+
+=== NQ closed at 25085.5 ===
+
+99.73%, 25768.48586958619, , 25597.169924549937, 95.4%, 25426.992934793096, Risk level, 25315.666238050548, 68.2%, 25255.66928960213, 68.2%, 24914.16844356335, Risk level, 24855.333761949452, 95.4%, 24744.007065206904, , 24572.667377632624, 99.73%, 24402.51413041381
+
+=== NVDA closed at 177.82 ===
+
+99.73%, 188.7571462880892, , 186.00276345765823, 95.4%, 183.2885731440446, Risk level, 181.50581829908606, 68.2%, 180.53358157548973, 68.2%, 175.06436166029334, Risk level, 174.13418170091393, 95.4%, 172.3514268559554, , 169.59510003252305, 99.73%, 166.8828537119108
+
+=== AMZN closed at 229.67 ===
+
+99.73%, 241.29125354473354, , 238.3682353406257, 95.4%, 235.48062677236678, Risk level, 233.5863624445752, 68.2%, 232.55716619964537, 68.2%, 226.74607438540258, Risk level, 225.75363755542477, 95.4%, 223.8593732276332, , 220.93495810882226, 99.73%, 218.04874645526644
+
+=== AAPL closed at 276.97 ===
+
+99.73%, 284.8517156725834, , 282.87442409260836, 95.4%, 280.9108578362917, Risk level, 279.6261381816606, 68.2%, 278.9334692985367, 68.2%, 274.99251172546917, Risk level, 274.31386181833943, 95.4%, 273.02914216370834, , 271.05155125219005, 99.73%, 269.08828432741666
+
+=== GOOG closed at 323.64 ===
+
+99.73%, 340.5438370013876, , 336.2913263279004, 95.4%, 332.0919185006938, Risk level, 329.3365930694676, 68.2%, 327.8387233131018, 68.2%, 319.3860840682252, Risk level, 317.9434069305324, 95.4%, 315.1880814993062, , 310.9334056385565, 99.73%, 306.7361629986124
+
+=== META closed at 636.22 ===
+
+99.73%, 668.7792365029353, , 660.5892797439823, 95.4%, 652.4996182514676, Risk level, 647.1924627014893, 68.2%, 644.3083944230036, 68.2%, 628.0274434099607, Risk level, 625.2475372985108, 95.4%, 619.9403817485324, , 611.7464214598896, 99.73%, 603.6607634970647
+
+=== TSLA closed at 419.4 ===
+
+99.73%, 447.4188791651562, , 440.3584513525721, 95.4%, 433.4094395825781, Risk level, 428.8423622786576, 68.2%, 426.3471812513052, 68.2%, 412.3357867552448, Risk level, 409.95763772134234, 95.4%, 405.39056041742185, , 398.32425473731325, 99.73%, 391.3811208348437
+
+=== TSM closed at 284.68 ===
+
+99.73%, 298.41078024883876, , 294.95811117001017, 95.4%, 291.5453901244194, Risk level, 289.30727294385866, 68.2%, 288.09224505463476, 68.2%, 281.22635569835967, Risk level, 280.05272705614135, 95.4%, 277.81460987558063, , 274.36044135636945, 99.73%, 270.94921975116125
+
+=== AMD closed at 206.13 ===
+
+99.73%, 222.7776316900642, , 218.57610391086536, 95.4%, 214.4538158450321, Risk level, 211.74025187955164, 68.2%, 210.2507195234691, 68.2%, 201.92520580616855, Risk level, 200.51974812044836, 95.4%, 197.8061841549679, , 193.5995460739374, 99.73%, 189.4823683099358
+
+=== GC closed at 4126.3 ===
+
+99.73%, 4239.035811348643, , 4210.757537442886, 95.4%, 4182.667905674321, Risk level, 4164.291968424493, 68.2%, 4154.388351994064, 68.2%, 4098.019131338463, Risk level, 4088.308031575508, 95.4%, 4069.932094325679, , 4041.649874002988, 99.73%, 4013.564188651358
+
+=== SI closed at 51.08 ===
+
+99.73%, 53.44357068181784, , 52.84937481962164, 95.4%, 52.26178534090892, Risk level, 51.87652331977261, 68.2%, 51.667513925227986, 68.2%, 50.48564949355779, Risk level, 50.28347668022739, 95.4%, 49.898214659091074, , 49.30378127023414, 99.73%, 48.71642931818216

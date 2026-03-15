@@ -1,0 +1,105 @@
+Vomma supply, Short vanna, Risk - Intraday post (29/Aug)
+
+Weekly post:
+
+Weekly post (24-29/Aug)
+
+Last week I said that any vol spike keeps being managed through vomma supply during this whole month, and any directional momentum must be confirmed, because everything is uncertain again.
+
+(Yesterday post was free for everybody)
+
+Here I wrote about PCE:
+
+NVDA ER, GDP, PCE, Valuation - Intraday post (27/Aug)
+
+Vomma supply is on (grey line), and very heavy, as we keep seeing it day by day, week by week:
+
+especially on the right-tail, because spot/vol beta is about 21.01% with an avg of 16.24%:
+
+The reason is illiquidity and short squeeze. I also note here that 3m realized volatility is at 9.38% while 1m-RV is at 10.11%, while realized vvol is sold from 81.3% to 26.59% in only one week! This is an agressive “higher for longer” vol environment making quant funds to scale out of long exposures, decreasing insitutional buying flow in terms of investment purpose (because they buyback hedges, levered up through MM buybacks as well, as put spreads etc. are closed).This means that the current SPX levels are not stable at all, and will be held until Sept cut, simultanously compressing risk premium. In the weekly post, I already elaborated on the reason of this.
+
+This is a cautious “stairstep-up”/”elevator up” kind of scenario, while funds cautiously keep upside squeezes in check as well. Through vomma supply, concentrated on the right-tail of the distribution, they create a “braking” effect, in order to extend this melt-up momentum. With this, long vol/long delta strategies can’t really capitalize on this move, while locking the cheapness of the downside hedges, vvariances for the future correction. The secondary effect is cooling down quant algos that take the velocity of the momentum into account, so they meassure lower risk. If volatility would be sold, market would not find enough liquidity at these levels. Simply because, market is about supply and demand balance. If customers sell vanna, they bet on negative spot/vol correlation (simply because the delta vs. volatility relationship is inverse in this position). Now, firstly it opens up the left-tail; secondly, when spot goes through the centroid of the vanna and speed profile to the upside, the imbalance shifts to the sell-side. In order to realize the distribution bet, market needs customers who buy all these sold assets at those prices. And this selling flow is increasing as spot is climbing upward. It is clear now that there is no such high buying liquidity here that could swallow all that potential selling, because there is no faith, no fundamental support for that. Funds are scaling out to cash and safe-havens, and retails are highly volatile traders. However, through buying vanna from dealers, levering-up the upside squeeze, once can amplify the move, but also braking it simultanously by flattening the convexity through vomma selling. And as said, the ultimate benefit is cheap hedges against vol squeezes in the future…
+
+Don’t forget: it’s not about inflation, it’s about the growing debt burden!This is what Trump is aiming to manage. And this is why he slowly gains full control on Fed and others…
+
+Don’t forget: it’s not about inflation, it’s about the growing debt burden!This is what Trump is aiming to manage. And this is why he slowly gains full control on Fed and others…
+
+Also, we will see EOM rebalancing from investors who reduce their stock exposures due to the high risk, and buying bonds and safe havens. The reason is the high stock prices, that increases the weight of stocks in the portfolio against low risk assets. It caps upside.
+
+Stochastic Volatility - Options market insights is a reader-supported publication. To receive detailed market analyses, key levels and educative structural breakdowns, consider becoming a paid subscriber.
+
+Now let’s look at what the market is betting on today…
+
+INTRADAY POSTCoding today’s positioning:
+
+Today is a very interesting short fly pattern centering around 6479.98The steepness on the left-wing of the speed profile is 199.38%on the right-wing it is -231.02%But the net speed profile of the fly is 22.83%, so it is positive. Why? because market prices supportive liquidity at the centroid, and bets on more upside vol, but the range of this right-tail is more narrow, than to the downside. Market is hedging downside down to 6422.46 ahead of PCE, that will be bought back if PCE is in line with expectations or/and if communication stays benign. So yes, the right-tail is fatter today because it is small, but left-tail is more bid. Favoring for downside vol selling if PCE is in line.
+
+The centroid are where market expects the most liquidity is at 6452.10 - 6468.93, this is very important today, and a very strong range during the last 1.5 hours.
+
+Downside pivot is at 6472.20this is from when the puts start to print, but it grinds down to 6422.46/6415 area (with margin of error of 6405) only if put IV is not being sold in the centroid range. This might be a strange dynamics today for some, that the downside pivot is above the centroid of the profile, but the reason is that the put IV is relatively very cheap, so the peak convexity falls closer to the center of the fly structure. However the centroid of the whole profile would prove or disprove the momentum in the skew, telling us if the spot move was only a temporal scare or something that the participants take serious.
+
+Upside pivot is at 6482.54Above this line, spot will get pinned to 6500From here, spot can be unclenched to the upside only if call skew is heavily bid on some catalyst, to squeeze up to 6525 (there is a vanna flip there after 1.15PM, so it serves as a daily max). This is by the way the level that the right-tail bets are all about.
+
+OptionsDepth Heatmap
+
+Today is good for momentum trading and vol selling if PCE aligns. But if it doesn’t, we will see some reversion downward then go back to the centroid. The main bet is good PCE and downside vol selling. Secondary is unclech up then reverse to 6500. And third one is bad PCE with downside, then revert back to the centroid area.
+
+SCRIPT INPUTS=== SPX closed at 6501.86 ===
+
+99.73%, 6586.9306981914315, , 6565.628578137801, 95.4%, 6544.395349095716, Risk level, 6530.528825290512, 68.2%, 6523.093004432136, 68.2%, 6480.557427777993, Risk level, 6473.191174709487, 95.4%, 6459.324650904284, , 6438.021848116933, 99.73%, 6416.789301808568
+
+=== ES closed at 6516.25 ===
+
+99.73%, 6604.079323562943, , 6582.085368789993, 95.4%, 6560.164661781471, Risk level, 6545.848482040712, 68.2%, 6538.170461018397, 68.2%, 6494.255549919982, Risk level, 6486.651517959288, 95.4%, 6472.335338218529, , 6450.340635426801, 99.73%, 6428.420676437057
+
+=== SPY closed at 648.92 ===
+
+99.73%, 657.6041895821076, , 655.4295465034978, 95.4%, 653.2620947910538, Risk level, 651.8465718891701, 68.2%, 651.0874277328742, 68.2%, 646.7453086402633, Risk level, 645.9934281108298, 95.4%, 644.5779052089462, , 642.403189219136, 99.73%, 640.2358104178924
+
+=== VIX closed at 14.43 ===
+
+99.73%, 16.13802649451142, , 15.705216035657585, 95.4%, 15.284013247255709, Risk level, 15.005604928650348, 68.2%, 14.850869037127083, 68.2%, 13.996481302173775, Risk level, 13.854395071349652, 95.4%, 13.57598675274429, , 13.142044885757954, 99.73%, 12.721973505488581
+
+=== IWM closed at 236.22 ===
+
+99.73%, 241.98348225753813, , 240.53829618624135, 95.4%, 239.10174112876908, Risk level, 238.16229352079034, 68.2%, 237.6565027291234, 68.2%, 234.77470798738557, Risk level, 234.27770647920966, 95.4%, 233.33825887123092, , 231.892911913135, 99.73%, 230.45651774246187
+
+=== QQQ closed at 577.08 ===
+
+99.73%, 587.4643130823422, , 584.8624731246082, 95.4%, 582.2721565411711, Risk level, 580.5795135087493, 68.2%, 579.6702649755109, 68.2%, 574.4780558935398, Risk level, 573.5804864912508, 95.4%, 571.887843458829, , 569.2858458531699, 99.73%, 566.6956869176579
+
+=== NDX closed at 23703.45 ===
+
+99.73%, 24130.139820252833, , 24023.23053283346, 95.4%, 23916.794910126417, Risk level, 23847.244469425204, 68.2%, 23809.88350060613, 68.2%, 23596.53643000523, Risk level, 23559.655530574797, 95.4%, 23490.105089873585, , 23383.189319980407, 99.73%, 23276.76017974717
+
+=== NQ closed at 23762.0 ===
+
+99.73%, 24195.08624871795, , 24086.571341983654, 95.4%, 23978.543124358974, Risk level, 23907.95006581795, 68.2%, 23870.026010061614, 68.2%, 23653.480637719727, Risk level, 23616.04993418205, 95.4%, 23545.456875641026, , 23436.935223837616, 99.73%, 23328.91375128205
+
+=== NVDA closed at 180.17 ===
+
+99.73%, 187.43889071774097, , 185.6127725859843, 95.4%, 183.80444535887048, Risk level, 182.6196161718787, 68.2%, 181.97814956831408, 68.2%, 178.343519309484, Risk level, 177.72038382812127, 95.4%, 176.5355546411295, , 174.70888135756047, 99.73%, 172.901109282259
+
+=== AMZN closed at 231.6 ===
+
+99.73%, 239.92257984878748, , 237.83283395515113, 95.4%, 235.76128992439374, Risk level, 234.40470940904137, 68.2%, 233.67138195870197, 68.2%, 229.5099240850173, Risk level, 228.79529059095861, 95.4%, 227.43871007560625, , 225.3484600084965, 99.73%, 223.2774201512125
+
+=== AAPL closed at 232.56 ===
+
+99.73%, 239.97925549101427, , 238.11721769226577, 95.4%, 236.26962774550714, Risk level, 235.0602891004718, 68.2%, 234.40747562416848, 68.2%, 230.6977298793919, Risk level, 230.0597108995282, 95.4%, 228.85037225449287, , 226.98798027766813, 99.73%, 225.14074450898573
+
+=== GOOG closed at 212.37 ===
+
+99.73%, 219.78543376163853, , 217.9236901552362, 95.4%, 216.07771688081925, Risk level, 214.86900117767217, 68.2%, 214.215836795461, 68.2%, 210.50797862793806, Risk level, 209.87099882232783, 95.4%, 208.66228311918076, , 206.80011539406323, 99.73%, 204.95456623836148
+
+=== TSLA closed at 345.98 ===
+
+99.73%, 364.14685319461006, , 359.5764584617631, 95.4%, 355.063426597305, Risk level, 352.1022295265836, 68.2%, 350.4922885515965, 68.2%, 341.4080790869842, Risk level, 339.85777047341645, 95.4%, 336.896573402695, , 332.3238268242145, 99.73%, 327.81314680539
+
+=== TSM closed at 238.27 ===
+
+99.73%, 247.63726799375405, , 245.2842721662787, 95.4%, 242.95363399687704, Risk level, 241.42676931389514, 68.2%, 240.60042055747928, 68.2%, 235.91656030801252, Risk level, 235.11323068610488, 95.4%, 233.58636600312298, , 231.2326908928012, 99.73%, 228.90273200624597
+
+=== AMD closed at 168.58 ===
+
+99.73%, 178.11768945834527, , 175.71708992990318, 95.4%, 173.34884472917264, Risk level, 171.79420134746238, 68.2%, 170.94779391511292, 68.2%, 166.17847199789773, Risk level, 165.36579865253765, 95.4%, 163.81115527082738, , 161.40912188216055, 99.73%, 159.04231054165476
