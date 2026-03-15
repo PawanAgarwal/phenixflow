@@ -1,0 +1,91 @@
+FOMC Week, long zomma/short vomma | Weekly post (26-30/Jan)
+
+I dropped an entirely free post on macro and micro flows and earning season with the context of the current geopolitical environment. Take your time to read it:
+
+Earning season, Micro and Macro flows, Carry trade & Geopolitic landscape | Quant Insights - January 2026
+
+Geo context including “Board of Peace”:
+
+I covered everything here what I see in the markets.
+
+We have FOMC this week, on Wednesday. Market does not expect any cuts. The key wil be the Fed tone about labour market, but I don’t expect anything serious. Market takes it as a vol-trade opportunity only. See below…
+
+The real risk is not the Fed, but a dollar carry unwind risk and the asymmetry in CTAs and Vol Controls positioning.
+
+while metals spiking due to reflation. As one of my friend said today “mid terms against reality”…
+
+What the market is trying to defend now are the Dec22 and Oct24 gaps. Market expects liquidity there, especially on Friday (supportive, stabilizing), but for this week it gives more room for volatility. Until market cannot stabilize above 6957.92, the sentiment pressure remains about this November bottom rebound.
+
+My other momentum metrics puts me into a similar conclusion, saysing 6947.76 as the level that is needed to be broken during the next 5 days in order to at least hold the current positive imbalance, or it marches towards equilibrium.
+
+Let’s look at the positioning, levels and expected dynamics…
+
+WEEKLY POSTHere you can see the weekly positioning:
+
+The speed profile is net flat-to-negative. Customers are buying volatility into both direction, but like 263.84% more vol is bought to the upside than to the downside. If we think about it as a fly pattern, then the center is at 6924.21This zone is basically the main magnetic cluster.
+
+The centroid of the speed profile is at 6895.92 - 6900.21The centroid is also important now, because it marks the zone below the market “hedges” itself and expects huge convex returns.
+
+The downside pivot, where the whole bear/bull bias shifts is at 6786.86Target is 6699.31
+
+Upside pivot is at 7002.39Target is 7036.09
+
+Let’s scrutinize the positioning greeks…
+
+Market maker exposuresNet delta is positive, flipping positive only on Friday above 6927Net charm is negative, it flips only below the downside pivot. This provides a weak passive buyback flow as time passes.Net gamma is negative, and…Net color is also negative along the week. This tells me that market expects higher realized volatility (potentially to mean revert back up to 13% from its current 9%, but more on that at vomma). But the path of least resistance is to the upside. The downside slowly “closes” into Friday, when gamma shifts positive below 6800 and above 6980. There is more gamma down, than up, and while downside realized volatility keeps being sold during the week, upside realized volatility is bid until Thursday and being sold only into Friday. Net zomma is net positive between 6860 and 6960, but there is way more zomma on ‘vol down’ than ‘up’, however, the exposure sharply falls into Friday, but only on the “vol down” side (still higher ROC than in case of upside vol). So, this means, if IV goes up gamma goes slightly up, but if IV goes down, gamma goes sharply down. But it doesn’t pushes net gamma into positive territory! This provides a very little “braking” effect on realized volatility if IV would spike, but this rather says that vol selling is complacency and trap.
+
+Net vega is also negative, andNet veta is positive. Veta is more convex than color, but it doesn’t push the net vega exposure into positive territory. This means, dealers are getting longer vega as time passes and they must sell volatility. Veta is the most convext in Mon-Tue and Thu-Fri windows, inbetween it has very small effect. Net vomma is negative. And again, there is more ultima into vol declines, so dealers sell more vol if volatility decreases than what they buyback when volatility increases. The ultima turns around into Thursday, thats when they expect more vol convexity upward than downward, but it also means that if vol accelerates up, the market expect stronger vol crush into Friday. Net vanna is negative, below 6910/20 it is locally negative and positive above (with less convexity), but into Friday, the whole profile becomes negative. So similarly to speed, customers are long vol into both direction, but they long less vol towards the tails, especially to the downside. However into Friday, the customers shift to confidently short skew.
+
+Overall this whole positioning is like telling me that market wants a volatility mean reversion upward, but not too much and it definitely expects increased liquidity downward (and the path of the was less resistance to upward). The upside pivot is about 0.8σ while the downside pivot is about 1.4σ away. That asymmetry matters: the “mechanical” hurdle to reach upside pivot is smaller than to reach downside pivot, and upside vomma zone is also closer to this range.However they dare to short realized volatility only into Friday and mostly if spot is above the centroid, and switch to long delta above 6927. Until Friday, the positioning favors more towards “vol crush is not welcomed anymore”, than “protecting against vol up”, like if setting a trap for post-FOMC (Thursday) too early vol sellers.The whole positioning is about letting vol to grow but moderately, and stabilize spot where vol would start to go out of control (especially to the downside).
+
+Overall this whole positioning is like telling me that market wants a volatility mean reversion upward, but not too much and it definitely expects increased liquidity downward (and the path of the was less resistance to upward). The upside pivot is about 0.8σ while the downside pivot is about 1.4σ away. That asymmetry matters: the “mechanical” hurdle to reach upside pivot is smaller than to reach downside pivot, and upside vomma zone is also closer to this range.However they dare to short realized volatility only into Friday and mostly if spot is above the centroid, and switch to long delta above 6927. Until Friday, the positioning favors more towards “vol crush is not welcomed anymore”, than “protecting against vol up”, like if setting a trap for post-FOMC (Thursday) too early vol sellers.The whole positioning is about letting vol to grow but moderately, and stabilize spot where vol would start to go out of control (especially to the downside).
+
+Vomma model says, market primarly expects realized volatility to go back up from 9.76% to 10-13% (preventing a future vomma squeeze). Vol crush is limited to 8.81% at max. This puts me in a projected spot move of:6812.86 - 6845.81 as downside zone, and6972.92 - 7000.06 as upside zone.This pretty much aligns with my speed model output. This tells me that market’s initial bet is still ranging. It doesn’t expect any progression in terms of trend, as the zones are just fore the pivots.
+
+Fixed strike skew shows slightly elevated 22-delta skew (only by 21.31%), and this comes from the elevated put demand over the past week. Tail skew is also up, but only slightly. The whole smirk is elevated by 10.78%To me, this aligns with the moderate preparation for some controlled volatility.
+
+Sentiment assumptionDeriving the expected sentiment for days (for guideline only):Mon - Tue is expected to be anxious, choppy but leaning towards with low-risk appetite (volatility can be expected on Tuesday).Wed FOMC day can be expected as positive, hedge unwind day.Thu is expected to dump on trapped vol sellers, if rally happened earlier, traders are expected to take profit. But not too much.Fri is expected to be moderated but not pessimistic.
+
+Here are my coded weekly sentiment pivot ranges based on vol exposures:
+
+SPX: 6982.13 - 6849.09; vol based margin of error bounds: 7014.30, 6816.92ES: 7014.20 - 6877.30; vol based margin of error bounds: 7047.31, 6844.19SPY: 696.30 - 682.16; vol based margin of error bounds: 699.72, 678.74VIX: 17.36 - 14.82; vol based margin of error bounds: 17.97, 14.21IWM: 268.83 - 260.79; vol based margin of error bounds: 270.77, 258.85QQQ: 631.42 - 614.02; vol based margin of error bounds: 635.63, 609.81NDX: 25947.16 - 25263.78; vol based margin of error bounds: 26112.44, 25098.50NQ: 26086.91 - 25389.59; vol based margin of error bounds: 26255.55, 25220.95NVDA: 192.88 - 182.46; vol based margin of error bounds: 195.40, 179.94AMZN: 245.95 - 232.37; vol based margin of error bounds: 249.24, 229.08AAPL: 253.38 - 242.70; vol based margin of error bounds: 255.97, 240.11GOOG: 337.39 - 319.47; vol based margin of error bounds: 341.72, 315.14META: 679.07 - 638.45; vol based margin of error bounds: 688.90, 628.62TSLA: 463.88 - 434.24; vol based margin of error bounds: 471.04, 427.08TSM: 343.38 - 326.36; vol based margin of error bounds: 347.49, 322.25AMD: 271.12 - 248.24; vol based margin of error bounds: 276.66, 242.70GC: 5278.01 - 5060.19; vol based margin of error bounds: 5330.69, 5007.51SI: 112.18 - 100.59; vol based margin of error bounds: 114.99, 97.78TLT: 88.64 - 87.22; vol based margin of error bounds: 88.99, 86.87ZB: 116.18 - 114.51; vol based margin of error bounds: 116.58, 114.10
+
+SPX: 6982.13 - 6849.09; vol based margin of error bounds: 7014.30, 6816.92
+
+ES: 7014.20 - 6877.30; vol based margin of error bounds: 7047.31, 6844.19
+
+SPY: 696.30 - 682.16; vol based margin of error bounds: 699.72, 678.74
+
+VIX: 17.36 - 14.82; vol based margin of error bounds: 17.97, 14.21
+
+IWM: 268.83 - 260.79; vol based margin of error bounds: 270.77, 258.85
+
+QQQ: 631.42 - 614.02; vol based margin of error bounds: 635.63, 609.81
+
+NDX: 25947.16 - 25263.78; vol based margin of error bounds: 26112.44, 25098.50
+
+NQ: 26086.91 - 25389.59; vol based margin of error bounds: 26255.55, 25220.95
+
+NVDA: 192.88 - 182.46; vol based margin of error bounds: 195.40, 179.94
+
+AMZN: 245.95 - 232.37; vol based margin of error bounds: 249.24, 229.08
+
+AAPL: 253.38 - 242.70; vol based margin of error bounds: 255.97, 240.11
+
+GOOG: 337.39 - 319.47; vol based margin of error bounds: 341.72, 315.14
+
+META: 679.07 - 638.45; vol based margin of error bounds: 688.90, 628.62
+
+TSLA: 463.88 - 434.24; vol based margin of error bounds: 471.04, 427.08
+
+TSM: 343.38 - 326.36; vol based margin of error bounds: 347.49, 322.25
+
+AMD: 271.12 - 248.24; vol based margin of error bounds: 276.66, 242.70
+
+GC: 5278.01 - 5060.19; vol based margin of error bounds: 5330.69, 5007.51
+
+SI: 112.18 - 100.59; vol based margin of error bounds: 114.99, 97.78
+
+TLT: 88.64 - 87.22; vol based margin of error bounds: 88.99, 86.87
+
+ZB: 116.18 - 114.51; vol based margin of error bounds: 116.58, 114.10

@@ -1,0 +1,193 @@
+What is volatility?
+
+Math warning!
+
+In this article, I'm going to introduce the concept of volatility, log return, and standard deviation, providing the mathematical background to help you gain a better understanding of these concepts. I will also introduce the four main volatility formulas to illustrate the evolution of volatility estimation: Parkinson, Garman-Klass, Roger-Satchell, and Yang-Zhang.Math warning!When we talk about volatility, we look at the returns rather than closing prices because returns reveal the actual magnitude and direction of the daily price changes, standardizing the measurement of price variability across time and different assets.
+
+By definition, volatility is the annualized standard deviation of the periodic logarithmic returns. And like this volatility basically shows us the “real velocity” of the price action indirectly giving us a picture about the liquidity at certain spot levels.
+
+Liquidity means how easy it is to turn an asset back into cash. The higher the liquidity, the easier and more cost efficient it is to do, and vice versa. if volatility is low, this means that the log returns are compressing as a result of high buying and selling activity at certain territories, because the interest are met there. Au contrary, when volatility is high, this means that the buyers and sellers must “look for each other”, and so the price movements expand, so does volatility.But now, let’s dissect this definition of log returns starting with math basics…
+
+What is logarithmic return?Return is the profit on a trade which the trader receives from that position over a given time period.Let’s say Vᵢ is the initial value of our capital and the end value is Vₑ
+
+Then simple return is:
+
+Because:
+
+where t is the time period and r is the rate.
+
+When we reinvest the returns at the end of each period, and including them in calculating the growth for the next period, this is known as compounded return. Where the rate is expressed as:
+
+Because:
+
+But what if we have a continous compounding? In the language of mathematic when we are modeling a process that leads to continuous rather than discrete behavior, we break it into infinitely small parts. In this case, it is the compounding time period.So let’s say we have an annual return that compounds m times in a year. Then:
+
+If we want to break it into infinite small parts, we use:
+
+And from here to get the rate of logreturn is simply:
+
+Now, logreturn over multiple periods is simply the sum of the logreturns of each period, and because of this logreturn is considered time consistent, that doesn’t hold for simple return. Because of this additivity, logreturns allow for straightforward averaging and compounding adjustments across different time frames, giving us the geometric mean of returns, which accurately reflects the compounded growth rate over time.And because of this, in quantitative finance we use logreturns when we are focused on time-averaging returns, and simple returns (“true returns”) when focusing on portfolio averages across multiple assets. Thus for volatility calculation we use continous compounding returns.
+
+What is standard deviation?Standard deviation is basically the average distance from the mean. The mean is the balance point, the arithmetic average of the dataset, where the sum of deviations is zero. When the data is skewed the mean is more sensitive to outliers than the median and doesn’t always lie in the geometric center of the data. It’s calculated as the sum of all of the numbers divided by their count:
+
+Now let’s say me and a sniper both shoot in a shooting range. These are the results:
+
+Simply taking the mean, we can tell that I shoot just as good as a sniper… in average. However the deviation from the mean is way bigger on my paper.This is what standard deviation shows us, represented by σ (sigma).To calculate the standard deviation, we take each element’s deviation from the mean, square it, average these squared deviations (yielding variance), and finally take the square root of the variance to get the standard deviation.We can take the square root of the variance because variance is always greater than or equal to zero.
+
+By squaring the deviations from the mean and then taking the square root of the average squared deviations (variance), we ensure that all values are positive. This avoids the issue of negative numbers canceling out positive ones, which would otherwise result in a zero sum, as “the mean is the balance point where the sum of deviations equals zero”. Also, squaring the deviations gives greater weight to larger deviations, making the standard deviation more sensitive to data points that are far from the mean.If we have only a sample of the population, the estimation will always underestimate the variance. In this case we can use the Bessel’s correction:
+
+Proof:Let’s take a sample, n independent datas from a population with mean “mu” and variance of sigma squared:
+
+Also a few relationships:
+
+So we proved that if we use (n-1) in the denominator we get an unbiased estimator of the population variance σ2.
+
+Realized volatility calculationPutting this all together it might seem evident, using 1) and 3) that realized volatility can be meassure this way:
+
+where we take the logreturns over a given period, we use the Bessel correction in the first term, and mean adjustment in the second term in order to remove bias by subtracting the square of the average logreturn, ensuring that the formula captures the variability around the mean.Using this formula we get:
+
+The problem with this method is that it doesn’t provide us information about the intraday price fluctuations if the close-to-close return is flat at the end of the day, leaving us with an incomplete picture, and also letting higher-frequency traders exposed to significant risk (i.e. to margin calls) due to the intraday fluctuations. To solve this problem, Michael Parkinson suggested the following formula in the 80s:
+
+The idea here is that in a Brownian motion without drift, high-low range directly reflects the variability or ‘diffusion coefficient’. Squaring each high-low log ratio ensures that both upward and downward movements contribute equally to the variance measure, regardless of direction.The factor of 4n*ln(2) he uses comes from the probability theory, see below.Putting the formula into Python, we get
+
+for the same time period as previously. The main assumption here was that price moves were modelled by Geometric Brownian motion (GBM).
+
+What is random walk? Let’s imagine a Galton board (see: here). If we drop a ball into it from the top, the ball will bounce from each points. At each points it has 1/2 - 1/2 chance to bounce to the left or to bounce to the right during the way down before it falls into one of the troughs. And so we can say that the ball follows a random walk.
+
+What we have here is essentially a Pascal’s triangle. At each pegs on the Galton board, the ball has two possible paths (left or right) with 50-50% probability. In the first row, there’s one peg; in the second row, there are two pegs, in the third row, three pegs, and so on, while in the nth row, there are n pegs, and the ball has two possible paths at each pegs. How many times? n times. This means 2n possible paths in the nth row, with (n+1) troughs at the bottom.And since probability is the ratio of the set of the favorable outcomes to the set of the total possible outcomes, there’s a higher probability of the ball arriving right into or near the center of the board because there are more paths leading there than to the edges.
+
+Now let’s call the probability of going left p and the probability of going right as q that is essentially (1-p). n is the number of pegs also equals the number of rows, and k the number of the result that we looked for (left or right).We can instantly say that p and q are equals because there is 50-50% probability to going left or right at each pegs.The ball can make k left turns and thus only (n-k) right turns. If the bins are numbered as 0, 1, 2, ..., n from left to right, then if the ball makes k left turns, it will land in the (n−k)th bin. It is easy to see if you rotate the binomial tree clockwise by 45°
+
+On this picture, you can see that each four paths lead to the same dot with k=1 step left and (n-k)=3 step right. As so to describe the different possible combinations of left and right turns that lead to certain bins, we can use the binomial coefficient, because it is essentially the number of ways to choose k left turns out of n total turns.
+
+In otherwords the distribution of balls in the troughs follows a binomial distribution.
+
+And according to the central limit theorem, if we make N trials (and N goes to infinite), the distribution will converge to a normal distribution.
+
+Where ξ (binomial random variable) represents the number of successes out of n trials, each with a success probability p, and q is the (1-p) probability of failure.
+
+Now imagine two scenarios:One where we tie every second pegs on the board verticaly restricting the sideways movements of the ball, and another where we tie every second pegs on the board horizontaly increasing the sideways movements of the ball:
+
+In the first case the peak of the normal distribution will be elevated, and the standard deviation will be lower, as the outcomes concentrated more closer to the center, so the distribution narrows. While in the second case the peak of the bell curve will be flatter, and the standard deviation will be higher, as the sideways movements are increased and the outcomes distribute in a wider range. But the distribution remains normal, because the mean, median and the mode is at the center. Notice, that any change in the structure of pegs would shift the probability values, and would result in skewness in the distribution curve.
+
+Now, rotate the Galton board counter-clockwise, and you will get the price action with its distribution, as you can see here on my coded Monte Carlo simulation (running 1000 simulations):
+
+But in the reality we will get only one path that happens, and based on volatility we can assign probabilities to the different path that the price can potentially walk on… or in otherwords: in which bin the ball can land, and also we can assume that at which part of the distribution the price is currently trading. (See later in the topic of implied volatility)So looking at the Gaussian distribution knowing the standard deviation (volatility), we can project that in what range the price will be traded in 68.26% of times (this is the one sigma range), or 95.44% of times (two sigma range), or even 50% of times (that is the 0.67449 sigma) etc. calculated by the inverse cumulative distribution function.For most volatility estimation models we assume that the price follows a Geometric Brownian motion.
+
+What is Brownian motion? (math warning!)In most volatility formulas, we assume that price follows a symmetric random walk. Symmetric because there are 50-50% probabilities at each timesteps. In simple terms, a random walk is like tossing a coin at each timesteps and taking a step up or down depending on the result.
+
+What is the expected value of Xᵢ? We have two values {(-1); 1}, both having 50% probability. So here:
+
+And the variance is:
+
+Means that the variance of the symmetric random walk accumulates at rate one per unit time.Symmetric random walk is a Martingale, it’s a process with no predictable trend: you can’t systematically "win" over time because there’s no drift up or down. Means the expected value of the process at any future point in time is the same as it is now, making it a "fair game" with no bias.The other very important thing about it is that paths are highly irregular and non-differentiable. I show you, why:
+
+This is called the quadratic variation.So what it tells us is that the quadratic variation also accumulates at rate one per unit time. At time t the quadratic variation of every paths is equals to t regardless of direction or probabilities, unlike variance.
+
+But this is still a discrete approach. Time interval isn’t really defined yet. We are just defined a series of coin tosses without defining the frequency. But what if I keep shortening the timesteps, with its interval going to zero? (Mathematically “zero” means infinitely small, the way of modelling continous time)
+
+Let’s derive its variance and quadratic variation:
+
+It is also a martingale and the quadratic variation also accumulates at rate one per unit time.Now let’s look at what is the distirbution of this process at time t
+
+Here we have to use the l’Hopsital rule, but I won’t go through it as I wanna keep it short, we get:
+
+So I just showed you that as x goes to zero, we get mu squared t divided by 2 just like in my previous assumption above. Means, that as n goes to infinity our scale symmetric random walk converges to a normal distributed random variable with mean of zero and variance of t.So the scale symmetric random walk is defined as:
+
+and if
+
+then what we have is a Brownian motion, when the time intervals are infinitely small.
+
+Let’s see the quadratic variation of a Brownian motion:
+
+As time interval goes smaller (towards zero) the expected value becomes equals to T and the variance becomes zero. And because of this:
+
+Based on all of this, assuming that the stock price is a geometric brownian motion, we can calculate volatility as follows:
+
+We will observe what is the volatility of the process S by looking at the path of the stock.
+
+So this is logreturn. Now if we want to get the realized volatility during the defined time interval, we have to take the square of these logreturns:
+
+So this is a close-to-close estimation, assuming that the price follows Brownian motion and that the returns are normally distributed over time.
+
+What Parkinson did, is taking the high-low range instead of just the closing price differences in each interval. Let me show you, how…What is the probability that a random walk is at the position x at time t?
+
+To get a continuous-time (and continuous-space) process from a discrete random walk, we make the step sizes both in time and space dimension go to zero. So after n steps the time elapsed is:
+
+We want finite variance in finite time. Notice the discrete formula:
+
+Now as Δt goes to zero, but we keep a fixed, the variance would vanish incorrectly. The standard diffusion limit is to tie them together such that
+
+where D is a constant (called “diffusion constant”):
+
+So using the equation above:
+
+(Some authors define D so that the variance in time t is 2Dt. While others define it so the variance is Dt. The main point is: “diffusion constant” = “variance growth per unit time.)On discrete lattice:
+
+If x is a multple of a, and n is a multiple of Δt, then we can do a Taylor expansion in both x and t assuming that a goes to zero and Δt goes to zero.
+
+Then:
+
+By putting it all together we arrive to the diffusion equation:
+
+Where:
+
+Now Parkinson said, that suppose a point particle undergoes a one-dimensional, continuous random walk with a diffusion constant D.The diffusion equation, starting from a point x₀ at the t = 0 has the so-called Green’s function solution:
+
+in which case the variance is:
+
+Either way, the D is precisely the coefficient that determines how fast the variance growts in time. And this is the same formula we got above but sigma squared is equals to Dt. Physically (or financially), if you measure the mean-squared displacement after 1 unit of time, that quantity is D (or 2D).
+
+So in continuous time and continuous space, the random walk limit becomes a Wiener process, with probability density of:
+
+If we measure discrete snapshots x(0), x(1), x(2), …, x(n) of the Brownian motion and define increments
+
+then the usual estimator for the diffusion constant is the sample variance of increments:
+
+And so Parkinson’s key observation was that if you only have the high and low of the process over each interval (rather than every discrete point in that interval), you can still estimate the diffusion constant effectively from that min-max range. Intuitively, the larger the typical range over a fixed interval, the larger the underlying variance rate D. Let me show you:
+
+The range R(t) of the process over [0, t] is
+
+As standard Brownian motion (with mean of zero) is symmetric, on average the minimum is just the negative of the maximum. So:
+
+According to the reflection principle:
+
+where phi is the standard normal cumulative distribution function. From this:
+
+If we have a general diffusion constant D, then over time ttt the standard deviation is the square root of 2Dt:
+
+If the process X(t) has variance of 2Dt, we can say:
+
+Parkinson’s idea was to invert the relationship between E[R] and D.
+
+In practice, we have n consecutive intervals (with length of t) and measure a range for each.
+
+From here:
+
+Now in finance prices are often modeled by geometric Brownian motion, using log returns with drift and volatility. In small intervals the drift is negligible compared to stochastic volatility, so the zero-drift approximation can still be used. So Parkinson wrote that if we take the high-low ranges (instead of every tick or close-to-close changes) we can still estimate sigma efficient enough.The well known formula is:
+
+In 1980, Garman and Klass came up with another estimator, taking OHLC (open, high, low, close) datas into account. “We can incorporate the intraday drift and the open–close variation to refine the volatility estimate further.”Their model still assumed zero‐drift continuous Brownian process within each trading day, ignoring overnight effects. The variance is:
+
+The main idea here is that the stochastic process of the log-price p(t):
+
+over each trading day, ignoring overnight. Mu is zero, as they take no drift into account, however it tries to capture the drift by taking open-close return into account. As showed above, a small intraday drift does not drastically affect the day’s range.Putting it into python we get:
+
+In 1991, Rogers and Satchell proposed a range-based volatility estimator that is less sensitive to non-zero drift. If mu doesn’t equal to zero, the distribution of max(p(t)) and min(p(t)) changes. The standard reflection-principle-based derivations (I showed at Parkinson’s formula) lose their neat closed forms or become biased because that principle is for zero drift Brownian motion.Roger and Satchell derived a formula that reduces the bias if mu is higher than zero, however if drift is large, this reducing effect mitigates.
+
+The last volatility estimator I want to show you is the Yang-Zhang formula, which I personally use. Their work took also the overnight gaps into account. Parkinson used high-low ranges, zero drift, no overnight.Garman-Klass added open-close datas, but still no drift and no overnight.Roger and Satchell introduced drift, but still no overnight gaps.Then Dennis Yang and Qiang Zhang proposed a method in 2000 that treat each day i as having two distinct phases:
+
+Within the day, the formula uses Roger-Satchell approach to get the vol of the intraday H-L range, while also taking the overnight drift into account:
+
+Putting the formula into python we get:
+
+We get a more nuanced picture of what was happening. We can find multiple variations of these formulas, often differing by small bias‐correction constants, notational changes, or slightly different ways of grouping terms. But the core idea is always the same.
+
+Lets compare them to each other and to the simple close-to-close SD estimator I introduced at the beginning of the article:
+
+We can see that Parkinson’s formula tends to underestimate volatility the most often, because it only takes the daily H/L range into account but no movements after. But it can be very useful for short-term traders to satisfy their margin requirements.Garman-Klass tries to capture the drift by adding OC datas for the Parkinson formula, but so it tend to overestimate the drift. However it is more effective as it takes the more active open and close price momentums into account.Roger-Satchell also tends to underestimate the volatility, even though it takes drift into account, it doesn’t involve the overnight jumps. While Yang-Zhang takes those gaps into account too.
+
+Don’t forget that the goal is to get as nuanced informations about the momentum and its velocity as it is possible, indirectly gaining insight into the trend of the liquidity. As explained at the beginning of the article, liquidity and volatility are negatively correlated.
+
+However the above range-based estimators are essentially deterministic‐parameter models for daily volatility, as they try to capture it from OHLC datas. These models do not tell us how sigma changes/evolves over multiple days. They don’t capture mean reversion, long memory, or simply the stochastic trend of volatility.To solve these problems there were other great minds on the Earth and worked on several models (like Heston model, SABR, or general hidden‐state volatility models) to capture the stochastic behavior of volatility. I will cover some of them in a different article.
+
+The python code is avaible here under this google drive link.

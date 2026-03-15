@@ -1,0 +1,251 @@
+Statistical-arbitrage: Mean Reversion Trading
+
+Course: Cointegration, ADF, CADF, Johansen-test, Risk management
+
+In the following educational post, I will examine mean-reversion trading. I will introduce cointegration, the Augmented Dickey–Fuller test, the Johansen test, the mathematics of half-life, and my own method for incorporating the realised distribution (skewness and kurtosis).I will explain the principles of risk-management strategies and show practical techniques for applying this highly creative market-maker strategy.Finally, I will touch on the core idea and mathematical approach of a cross-sectional long/short strategy. An in-depth course for traders…
+
+INTRODUCTIONIn my most recent educational post, I explained how, over the long run, most retail traders end up with a negative expected value. Alongside pricing, costs and taxes, one of the most important drivers of this is the random movement of prices, which materially reduces the probability of accurate forecasting. Matters are complicated further by the fact that the very probability of being able to predict price moves also fluctuates over time.
+
+Market inefficiencies can be exploited by a trader only until they become widely known. Once they are, the edge disappears. A classic example was the January effect: toward year-end, investors and fund managers would sell their smaller-cap stocks, partly to optimise the look of their year-end reports and partly to realise losses to reduce their tax bills. That selling created pressure on small caps, which the big players then bought back after the forced sales. As this anomaly became more widely known, more traders started snapping up the small caps being dumped onto the market; the January effect largely vanished, and brokerage costs could swallow the entire profit.
+
+Price dynamics have several mathematical properties that sharply distinguish them from a pure random walk. These include heavy left tails and negative skewness in returns; volatility clustering; mean reversion and long memory in volatility; long-memory in order flow (stemming from order-splitting, while prices remain near-martingales because liquidity providers offset it); momentum and mean-reversion tendencies, and so on—I have written about these before.Algorithms exploit such anomalies as well, so any edge is highly unstable. Bond-market prices, in particular, are literally unpredictable.As I noted in my last post, there are three things we can say with confidence: 1) time passes; 2) volatility mean reverts; and 3) over the long term, equity indices are very likely to rise (though I have already shown counter-examples). This favours long-term investors and volatility sellers.So how could one build a strategy with a positive expected value even in the long term?
+
+In the chart below you can see the SPX’s deviation relative to its monthly average:
+
+This is not volatility, but it is very similar, since volatility measures the standard deviation of log returns over a given window. Yet, like volatility, it exhibits a well-defined mean-reversion property. Because of this, a misconception has taken hold among retail traders that deviations from the 21-day moving average reliably signal an overextension in the direction of market momentum—something that can be exploited with various ‘fade-the-move’ strategies.At first glance the chart would seem to bear this out; the problem is that the moving average itself is continually moving. And that overlooks the role of time correction: the longer the market spends at a given level, the more the moving average will converge on that level. That’s high-school mathematics. Thus the moving average can move towards spot, and spot can move towards the moving average; on the chart above, the two will look identical. That gives an edge to volatility mean-reversion trades, but for spot traders it poses the same question yet again.The problem is unchanged: the average moves—and it can move either up or down. What we would want is an ‘average’ like volatility has, something that is roughly estimable. The problem is the uncertainty of direction. Now, spot has no such thing… but we are able to generate one ourselves…
+
+MEAN REVERSIONA time series is called stationary if its joint distribution is invariant under time shifts. In other words, its mean, variance and covariance do not show any systematic trend or fluctuation over time. Consequently, it doesn’t wander off to infinity but stays around the mean. This does not mean the series is range-bound; rather, its variance does not grow as fast as under normal diffusion.
+
+It can generally be said of asset prices that they are non-stationary stochastic processes.However, as I showed in an earlier post, from the price movements of two instruments we can, at times, construct an approximately stationary price series that we can use for mean-reversion trading. To do this, we need two or more cointegrated assets.
+
+Once we have found such a pair of two or more instruments, we can scrutinize the mean and meassure the sigma levels at which to place our sell and buy orders.
+
+Classic pairs-trading opportunities are rare and short-lived, because market efficiency allows two closely related instruments to remain meaningfully apart only for a short time. The key to success for the trader is to recognise the divergence quickly and respond with appropriate position sizing and timing, before other arbitrageurs exploit the opportunity and the anomaly disappears.Short-term mean-reversion, range-bound tendencies can also be observed within long-term non-stationary time series—for example, in the SPX index. In such phases, correlation and volatility are strongly suppressed, and the index moves around an apparently pinned, quasi-stationary level.
+
+The strategies I will be writing about are mean-reversion pairs trading and long/short strategies (going long assets that rank higher on various factors and shorting those that rank lower)—together with their risk management.
+
+THE RISK OF MEAN REVERSION STRATEGYMean-reversion strategy is effectively a market-making strategy, because when the price slips sufficiently low relative to the recent past we place a limit buy, and when it is sufficiently high we place a limit sell—so we supply the opposite side to the market aggressors, earn the spread, and in essence bet that the short-term imbalance will even out. In doing so, we effectively provide liquidity to the market.A mean-reversion trader is short realized volatility, since the bet is that the imbalances in realized returns will cancel out as time passes. Therefore, the payoff is concave in realised volatility, and the risk increases in proportion to volatility, with a degree of convexity. Thus the payoff and the risk resemble those of a short straddle/strangle strategy.This strategy is highly sensitive to both left- and right-tail events. Hence the use of leverage is very risky in this strategy even at half-Kelly, because such rules all assume a Gaussian distribution, whereas the risk of mean-reversion strategies stems from heavily skewed distributions. Under homoskedastic models the risk is significantly underestimated.
+
+Kelly sizing does not work here very well, because it assumes a normal distribution. It does not protect against Black Swan events. Risk can be reduced with a stop-loss and with downside hedges (if such can be constructed at an acceptable price), but only if the stop-loss is set far from the current price. Backtests have shown that stop-losses reduce the performance of mean-reversion strategies.A downside hedge provides protection only if such can be constructed for the specific portfolio. However, this requires continuous risk monitoring and ongoing forecasting of market direction, because if we hedge the portfolio with put spreads every time, the costs will slowly consume the profits and turn long-term P&L negative.
+
+We can reduce our portfolio risk by running convex, market-taker strategies (that is, any directional trading strategy) in both directions in line with the cycles of realised volatility. This is why it is particularly important for the analyst to determine when the market starts to enter the gravitational field of a tail of the distribution—whether the right or the left tail. At such times we rebalance the strategy in line with the risk and go long on realised volatility.And since a mean-reversion strategy is a short-realised-volatility strategy, a long-realised-vol strategy reduces risk. You can often see evidence of this in the relationship between index correlation and volatility. When funds are running mean-reversion trades—i.e., short vol/short gamma—they pin the index and suppress correlation, because they short one leg of the pair and go long the other. However, if the index crosses a threshold towards one of the tails, the algos tilt towards momentum trading, and index correlation then starts to rise.
+
+In the next parts of the post we will clarify the concepts of stationarity, the ADF test, cointegration, half-life and the z-score.
+
+THE AUGMENTED DICKEY-FULLER TEST (ADF-test)ADF-test aims to objectively detect mean reversion in time series data.
+
+The ADF test is:
+
+Δy is the change in stock price, α is a constant drift (the long-term trend of the time-series),β is the coefficient of the time trend (showing us if the time-series has a trend in a certain direction over time),γ term describes if the time series has a stable, stationary range where the time-series tends to be pulled back if it goes too far from it. If γ is negative, the time-series produces mean revertin tendency, meaning that spikes and drops eventually revert back to a stationary area. Non-negative γ means that the time-series is wandering without reverting back to a stable area. The δ terms check if the past rate of changes in the time-series affect the coming changes, smoothing out short-term noise to clear out the trends. The p is the lag of the order of the autoregressive process,ε is the random shocks, spikes in the time-series.
+
+What the ADF test essentially does is check whether we can reject the null hypothesis that the time series has a unit root. How do we express all this in the language of mathematics?
+
+In Excel I generated a random sequence of 60 numbers with a stationary mean of 100:
+
+In a mean-reverting sequence, the current value depends on the previous one.The “nominal change” column is shifted up by one row, so it always shows the future nominal change associated with the given value. So, the value 100 corresponds to −24, because the next term is 100−24=76, and so on.If I plot this on a scatter plot, with the y-axis showing the nominal change and the x-axis the values of the sequence, we can see that higher numbers are associated with lower nominal-change values, and vice versa. So the farther the sequence moves from its mean, the greater the probability that the nominal change will be negative, pulling the sequence back towards the mean. On the scatter plot you can see the linear-regression trendline. Its formula is:
+
+Does it looks familiar? The trendline is the best fit line, using the least-square regression method, which minimizes the total squared distance (errors ε) between the data points and the line itself. They expected value of y is given by the intercept α plus x multiplied by the slope of the line β, as the predicted y is dependent on x plus the ε as the line will never be a perfect fit.In the figure the regression is y= -0.9812x+97.355 so the β coefficient is negative, and both the slope and the correlation are negative. (Actually, with this low β it is almost white noise…) The formula for the slope is shown here:
+
+The covariance tells us how the two series move in relation to each other. While the variance term shows us, how spread out the previous values of the series are. Which tells us how fast the x values react to the changes of y values. Dividing the former by the latter shows us how the normalized rate of change. In this case the slope is -0.9812, meaning the series is stationary, pulling back towards its mean.What I wrote here as the β value is the γ coefficient in the ADF-test formula. So, to remove any confusion, here it is::
+
+t-statisticI generated another series. Its equation is y=-0.8495x+83.504, so the slope of the linear-regression trendline is −0.8495, which means the sequence is likely mean-reverting.
+
+I write ‘likely’ because the regression line is the best-fit line. How can we determine with certainty whether the series is stationary or not? We have to test whether the obtained slope value lies within the error bounds. For this we need the standard error, which is the standard error of the slope—that is, an estimate of the fluctuation in the estimated slope. The smaller the SE value, the closer the slope estimate is to reality. Its formula, as applied to linear regression, is:
+
+I calculated the SE value for my new series, giving 0.075343, so t-statistics is:
+
+This means that the randomly generated sequence is stationary with a substantially high probability. But how high is that probability? This is where the critical value table helps:
+
+The distribution of the ADF statistic under the unit-root null is not the standard t; therefore, the critical values are produced by simulation (Monte Carlo) and reported using MacKinnon “response surface” formula (and modern package computes from these). The exact value depends on the sample size and on whether a constant and/or a trend is included.
+
+Here, if the obtained value is lower than the 1% threshold (i.e., more negative), it means the probability of observing these results purely by chance is less than 1%, so we are 99% confident that the result is not random but meaningful. In our case, −11.28 is far beyond the threshold, so the confidence level is close to 100%.However, the ADF test also includes other components with respect to the price level, so further analysis is required. The test statistic has to be more negative than the critical value for the hypothesis to be rejected and for us to conclude that the price series is stationary rather than a random walk.
+
+Some of the limitations of the ADF-testThe test requires sufficient statistical power to detect whether a time series is stationary. If the sample size is small, it can produce false results (roughly 90–100 days of data are usually required).The basic assumption, by design, is that the input time series follows a linear trend; in any other case the test will give false results. It follows that it cannot account for left- and right-tail events, during which the usual structure breaks. Even if the time series exhibits a stationary, mean-reverting pattern before and after the tail event, the test will give a false result.It is very important to specify whether the time series has a drift or a trend, or both, or neither. Drift is the constant term (the intercept) that shifts the series’ baseline, while trend is the time-varying component (a function of time, often linear) describing the long-term upward or downward movement of the series, such as a gradual increase or decrease in price. If the analyst sets these parameters incorrectly, the test will again yield a false result. (So the ADF test is not useful in the case of volatile or trending time series.The number of lags used in the regression is crucial: too many lags can overfit noise, while too few can overlook significant short-term fluctuations; both can lead to false results.Also, if the drift is very gradual and mean reversion is slow or incomplete, the test might fail to recognise it.Note that the test is designed to detect long-term stationarity, but it still leaves room for short-term cyclical trending behaviours within the time series.(Further infos here)
+
+COINTEGRATIONTo create a mean-reverting portfolio, we need to examine the cointegration of two instruments. This means checking whether the two price series diverge over the long term or not, and thus whether the spread between the two assets is stationary over time. Let us not confuse cointegration with correlation. Correlation looks at the short-term relationship between returns, whereas cointegration concerns the long-run relationship between price levels. Our aim is to construct a near-stationary spread. Examine the two simulations below:
+
+Let’s see the spreads of each of these simulated paths:
+
+So the two instruments do not have to be correlated with each other in order to be cointegrated. Of course, this does not mean that any linear combination of the time series will produce a stationary portfolio. In most cases a specific proportion has to be set. This is what we call the hedge ratio.
+
+Hedge ratioIt’s the weight that tells us how many units of asset X to short (or long) against one unit of asset Y so that the spread is:
+
+Meaning, the hedge ratio is equivalent to the slope of the linear regression line. Negative hedge ratio means sell that asset, while positive hedge ratio means buy that asset, and then the ratio should be constantly rebalanced. For example, if the hedge ratio is 2.2033, the independent variable is AAPL, and the dependent variable is MSFT, then your portfolio formation is
+
+Using the simple zero-intercept approach statsmodels.api and sm.OLS(y, x).fit()If I compute alpha, beta R squared and standard errors, I get:
+
+In this case, the spread is:
+
+And if it is stationary (it isn’t), one can trade 0.1486 AAPL shares against each unit of MSFT shares, and having a cash leg of $411.09, however this is usually omited for trading while shifting the spread’s mean.
+
+NOTE: this is only for cointegration-style spreads. If you want a beta/exposure hedge instead of a price spread, you regress returns, where the slope is the hedge ratio that neutralizes MSFT’s sensitivity to AAPL’s return:\(r_t^{MSFT} = \alpha_r + \beta_r r_t^{AAPL} + u_t\)
+
+NOTE: this is only for cointegration-style spreads. If you want a beta/exposure hedge instead of a price spread, you regress returns, where the slope is the hedge ratio that neutralizes MSFT’s sensitivity to AAPL’s return:
+
+When we backtest the strategy we should avoid the following mistakes:
+
+Using full-sample β, mean, or std to form historical signals.
+
+Using full-sample β, mean, or std to form historical signals.
+
+Trading at the same close that generated the signal (you didn’t know that close yet).
+
+Trading at the same close that generated the signal (you didn’t know that close yet).
+
+Rebalancing using corporate-action–adjusted prices finalized later.
+
+Rebalancing using corporate-action–adjusted prices finalized later.
+
+Setting the intercept to zero to reduce overfitting
+
+Setting the intercept to zero to reduce overfitting
+
+Selecting pairs with knowledge of their full-sample cointegration p-values and then “backtesting” them from day 1.
+
+Selecting pairs with knowledge of their full-sample cointegration p-values and then “backtesting” them from day 1.
+
+Otherwise we use informations in our backtest that wasn’t knowable at the time the decision was (supposedly) made, making past decisions look smarter than they could have been in real time. This is called the “look-ahead bias”.
+
+CADF TestWhen we run the CADF test we determine the optimal hedge ratio first. Then we can generate our portfolio using portfolio = y - (alpha + beta*x)Then run the CADF test import statsmodels.ts.stattools as ts then cadf_test = ts.adfuller(portfolio.Close)
+
+Using the pair mentioned above, I get:
+
+As said, this series is non stationary, as the test statistic is not more negative than any critical value and the p-value is very large, it fails to reject the null. So a classic cointegration-based pairs trade is not supported.
+
+THE BASICS OF PAIR TRADINGHere are two stock price series that are cointegrated; for a particular hedge ratio, their spread is stationary and mean-reverting:
+
+The spread is therefore Stock “A” minus 0.682 × Stock “B”. Thus, when I go long the spread, I buy 1,000 shares of Stock “A” and short 682 shares of Stock “B”. Conversely, when I go short the spread, I short 1,000 shares of Stock “A” and buy 682 shares of Stock “B”.The point is that the farther the spread moves from its mean, the higher the probability that it will revert to that mean. So when should we time these trades?
+
+Bollinger-bandsThe basis of Bollinger Bands is the n-period moving average, on which standard-deviation levels are calculated from the volatility realised over that period. However, Bollinger Bands assume a symmetric normal distribution. So first we need to test the spread for its kurtosis and skewness:
+
+As we can see, the spread’s distribution is not normal. It has time-varying asymmetry (overall skew ≈ −0.21 but last 21 days +0.78), and it’s platykurtic (negative excess kurtosis). That means a symmetric ±K·σ Bollinger Band would misprice tail probabilities.
+
+Here I coded a simple rolling Cornish-Fischer adjusted Bollinger Bands for the spread, that takes the rolling skewness and kurtosis into account for sigma calculations:
+
+Cornish–Fisher is an asymptotic quantile “fix.” You start from a normal z-score for a chosen tail probability and adjust it with the distribution’s skewness and (excess) kurtosis to approximate the corresponding quantile when returns aren’t normal. It builds confidence bands / VaR that better reflect asymmetry and fat tails than Gaussian bands. However, as it is an asymptotic series, we should apply corrections like parameter corrections or monotone rearrangement.
+
+Cornish–Fisher is an asymptotic quantile “fix.” You start from a normal z-score for a chosen tail probability and adjust it with the distribution’s skewness and (excess) kurtosis to approximate the corresponding quantile when returns aren’t normal. It builds confidence bands / VaR that better reflect asymmetry and fat tails than Gaussian bands. However, as it is an asymptotic series, we should apply corrections like parameter corrections or monotone rearrangement.
+
+I ran a simple test for this strategy. I go long or short the spread with $100 when it breaks through the 1-sigma band (and, if a position is already on, I close the $100 leg), and I add a further $200 when it touches 2-sigma. I close this leg when the spread reaches the mean. Here are the results:
+
+Note the Sharpe rate of 1.30 on this short window. Of course, it is only theoretical example. (The P&L curve is very instructive, especially for impatient, short-term-oriented speculators.)If we have precise options data and dealer-positioning data for Stock A and Stock B, then of course we can compute the spread’s implied volatility,
+
+moreover, from the spread-positioning data, if we extract the vanna exposure we can derive the implied skewness, and from the vomma exposure the implied kurtosis, across different tenors.For while we can make forward estimates with meaningful success from historical data, taking the implied distribution into account sheds light on a great many risk factors.
+
+RiskHowever, neither cointegration nor the hedge ratio is constant, and this entails drawdown risk.It is important to observe the followings:
+
+Diversification (the more strategy is running simultanously, the higher probability for winning we have. However, avoid overdiversification. Always monitor the risk)
+
+Diversification (the more strategy is running simultanously, the higher probability for winning we have. However, avoid overdiversification. Always monitor the risk)
+
+Shorter lookback period for Bollinger band (run multiple strategy tests to find the best one)
+
+Shorter lookback period for Bollinger band (run multiple strategy tests to find the best one)
+
+Constant retest of cointegration
+
+Constant retest of cointegration
+
+Constant macro analysis (you must understand what fundamentals affect the sectors you are trading)
+
+Constant macro analysis (you must understand what fundamentals affect the sectors you are trading)
+
+Scale-in/scale-out to positions technque, layering the capital (using 0.5, 0.7, 1, 1.5 and 2 sigmas. Never go “all-in”. Ever.)
+
+Scale-in/scale-out to positions technque, layering the capital (using 0.5, 0.7, 1, 1.5 and 2 sigmas. Never go “all-in”. Ever.)
+
+JOHANSEN-TESTIt is a multivariate approach that can test for cointegration among two or more time series up to twelve time series. Unlike the CADF test, which is a residual-based ADF one-step/unit-root test (the Engle–Granger two-step procedure), the Johansen test can be applied to more than two time series and is order-independent.
+
+The model uses vector error-correction model. You write a multivariate difference equation with a long-run impact matrix and short-run lag matrices. The test forms residual cross-product matrices, solves a generalized eigenvalue problem, and obtains a set of sample eigenvalues between zero and one. Two likelihood-ratio statistics are built from these numbers: a trace statistic that sums over the smallest eigenvalues and a maximum-eigenvalue statistic that focuses on the next candidate relation. By comparing these statistics to non-standard critical values that depend on your deterministic setup, you determine the number of cointegrating relations, that is, the rank of the long-run impact matrix. If the rank is positive, there exist one or more stationary linear combinations; in trading, those combinations are the spreads you try to exploit.
+
+I can use from statsmodels.tsa.vector_ar.vecm import coint_johansen or simply pip install ‘johansen’ and then use from johansen import coint_johansenRunning this on my previous simulated Stock ‘A’ and Stock ‘B’ assets, it gives:
+
+The R ≤ 0 gives a trace statistic of 18.9762, and the magnitude of the critical value is 15.4943, meaning the null-hypothesis can be rejected with 95% confidence. The eigen statistics for the null hypothesis can be rejected with a 95% confidence level. So the mean reverting tendency is relatively strong. However at r ≤ 1 both statistic values are lower than the magnitude of the critical values, thus fail to reject. The estimated rank is r = 1, meaning only one cointegrating relation exists between A and B. The columns of the eigenvector matrix evec are the estimated cointegrating vectors β. For a pair with rank r = 1 that vector gives the weights of a stationary linear combo of your series, and you turn those weights into a hedge ratio by normalizing one side.
+
+Since the result of the Johansen test does not depend on the ordering of the instruments under review, if we reverse the order (Stock ‘A’; Stock ‘B’) to (Stock ‘B’; Stock ‘A’), we obtain the same result. With this test we can also examine the relationship among more than two instruments, but it yields reliable values for at most twelve instruments, because no one was able to compute critical-value tables for larger systems.
+
+TRIPLETSHere, I simulated a triplet:
+
+I ran the same Johansen test on them:
+
+We see in both tables that it rejects r = 0 at 1% (99% level) and fail to reject r ≤ 1 and r ≤ 2. This means that there is exactly one cointegrating relation among (A, B, C).The hedge ratios are:
+
+This means, to go long the spread, I need to buy 1,000 shares of Stock ‘A’, sell 684 shares of Stock ‘B’, and buy 2,717 shares of Stock ‘C’And to go short the spread, I need to sell 1,000 shares of Stock ‘A’, buy 684 shares of Stock ‘B’, and sell 2,717 shares of Stock ‘C’.
+
+Triplets can be used even when a cointegrated pair temporarily loses its stationarity due to a macro event.A well-known example is the GLD/GDX pair between 2006 and 2008. There was a hedge ratio for the pair that produced a stationary spread. In 2008, however, the spread began to widen because rising oil made gold mining more expensive, which led to selling in GDX, while both gold and oil were trending higher. When the price of USO started to fall again by 2009, stationarity returned to the spread, and this persisted until 2011, when investors took profits on the gold they had bought during the crisis.Mean-reversion trading therefore suffered significant drawdowns over these periods, which could be mitigated, to some extent, by adding USO and turning the pair into a triplet.
+
+HALF LIFE (Ornstein-Uhlenbeck Formula)Half-life tells us how long we should expect a mean-reverting series to take to move halfway back toward its typical level after a shock. That timing is critical for risk management, instrument selection, setting up the Bollinger band look-back period, and deciding how long to hold a position. It lets a trader set a time-based stop: if the move has already lasted longer than the half-life, there is a higher risk that the regime has shifted and the mean-reversion premise no longer holds.Alongside stationarity tests, a trader should always check the half-life. If the half-life is too long, it may be better to avoid trading the spread even if it passed the stationarity test.Conceptually, we connect a simple discrete model of the spread to a continuous-time mean-reverting model. We think about tiny changes in the spread over tiny intervals, with random noise, which gives a standard stochastic differential equation known as the Ornstein–Uhlenbeck formula.
+
+In this formula, the ‘mean-reversion speed’ theta θ determines how fast shocks decay, and the half-life is the natural log of two divided by theta:math.log(2)/thetaThe value of theta comes from the error-correction coefficients estimated in the VECM after Johansen.
+
+I ran the half-life on my simulated pair:
+
+So, what does this 22.76 tell us? It’s the time scale of exponential decay in the conditional expectation of a mean-reverting process, it is the expected distance to the mean halves every ~23 trading days from whatever time a deviation occurs and we start measuring.
+
+Here I plotted the decay:
+
+On the top chart, the purple bars show the sample autocorrelation of the simulated spread (Stock ‘A’ and Stock ’B’). The yellow dashed curve is the theoretical decay based on the parameters. And the half life is where this gold curve reaches 0.5, after 22.76 time steps. On the second chart, we can see the realized mean reversion after hitting a threshold plotted against the OU conditional-mean envelope. We can see that the purple line drops by roughly half around ~23 days, then keeps decaying. As half-life is the time scale of expected exponential decay, so individual cases can revert faster or slower.However, as I increase the time steps of the core simulation, the purple lines and bars converge to the yellow theoretical paths, as longer simulations reduce noise in both summaries:
+
+This is because with more data, the sampling error of the sample autocorrelations shrinks for the first chart. On the second chart it is the law of large numbers, as we get tighter average if we have more qualifying events.So, this is how you should imagine half-life. It is is the time it takes the expected deviation from the mean to fall by half after a shock.
+
+REGIME AWARENESS, TIME-STOPS, STOP-LOSSESWhen we want to manage risk, we must give up the mistaken notion that we can obsessively avoid ever taking a drawdown. Our P&L curve fluctuates even within a monotonically rising trend, just like the price, as we saw in the earlier simulated chart.This means losses are part of trading. The goal is not to avoid losses altogether, but to minimise drawdowns so that, ultimately, the expected value remains positive.
+
+How to use stop-losses in mean reversion trading?As I wrote in my previous educational post, when setting a stop-loss we must first take into account how much loss our account can bear, factoring in our monthly expenses and unexpected events (I showed you practical formulas). Then we need to identify those pivotal areas that would collapse the structure we are targeting and thus override our plan. Finally, we must incorporate current volatility, since pivotal levels and areas also have a margin-of-error range that is a function of volatility.This is the basis of stop-loss management, but it applies mainly to momentum trading. In the case of mean-reversion trading, the strategy is somewhat more nuanced.
+
+The problem we have to solve is that we cannot know when a mean-reverting regime will switch into a trending regime. Even if we run cointegration tests and half-life tests continuously, we still cannot be sure they will signal the transition in time. Tight per-trade stops are usually bad for mean reversion, because in a mean-reverting regime you want to wait; fixed percentage loss exits lock in losses and cut off the rebound. My approach here is, again, probability-based.
+
+In the earlier backtest I set the Bollinger bands so that the SD calculations closely tracked not only rolling realised volatility, but also rolling realised skewness and kurtosis. I call this a rolling Cornish–Fisher-adjusted Bollinger band. Here we can specify a probability, for example 99.9%, which under a normal distribution corresponds to a 3.3 z-score. Based on the rolling CF, the code can back out which z-score corresponds to that probability under the currently realised distribution, and it sets the stop-loss to that z-score. At that point, theoretically, there is only a 1% chance of further momentum. This is essentially a rolling VaR.
+
+Let’s test it. I simulated a stock pair in which the cointegration breaks down after a while, and the spread experiences a 10% increase in volatility:
+
+Rolling realized volatility, skewness and kurtosis:
+
+Here I plotted the spread along with the standard Bollinger-bands:
+
+Based on this, I ran a simple strategy: if the spread touches the 1-sigma lines, the algorithm takes a $100 long or short position in the spread. If it also touches 2-sigma, it adds a further $200 position. It closes this leg when the spread reaches the moving average, or if it retraces back inside the 1-sigma band. The remaining $100 leg is closed when the spread reaches 1-sigma, or when it returns above the mean. Note that I left an initial window so I could observe the mean.The cumulative P&L looks like this:
+
+It is apparent that after the volatility breakout the P&L curve gave back more than 50% of the gains, and the Sharpe ratio is very low—only 0.36 per unit—so the strategy is suboptimal; it has not generated enough excess return for the amount of risk taken.
+
+Now, lets use Corner-Fisher to adjust probabilities to the skewness and kurtosis, and get a fix 99.9% rolling band for stop-loss to quit the strategy and take short spread position:
+
+I ran the same strategy on this but this time I used the dashed line as the stop-loss:
+
+The P&L curve looks much better now, and the Sharpe has also increased by 38.68%—still suboptimal, but largely because of upside volatility. We can fine-tune it further through dynamic position sizing using Kelly, long-volatility hedges, and time-adjusted (half-life-adjusted) stop-losses. Note that I used constant rules for every trade.One has to be very careful, because Cornish–Fisher is only a cumulant-based approximation; with fat tails and volatility clustering, extreme values can be underestimated, the CF quantile can be distorted, and the function may not be monotonic. There are corrections for this. See here. I applied a correction too, which is why you can see the dashed band coincide at some point with the 2-sigma band. Without the correction it would have been underestimated and would have crossed the 2-sigma level.
+
+It is important to note that in these tests I did not take any bid/ask spread or transaction costs into account. The testing was illustrative, run on simulated spreads. In reality the regime can change multiple times, to varying degrees. Although a consistent strategy can indeed be profitable, convexity declines. Beyond continuously recalculating the sigma levels and sizing the strategy against them, mean-reversion trading also requires constant half-life recalculation and cointegration checking.
+
+It is important to note that in these tests I did not take any bid/ask spread or transaction costs into account. The testing was illustrative, run on simulated spreads. In reality the regime can change multiple times, to varying degrees. Although a consistent strategy can indeed be profitable, convexity declines. Beyond continuously recalculating the sigma levels and sizing the strategy against them, mean-reversion trading also requires constant half-life recalculation and cointegration checking.
+
+A half-life-adjusted stop-loss is more important than one tied to sigma, because mean reversion should reveal itself within an estimated time frame. Let us see how long it takes the Johansen and CADF tests to reveal a regime change:
+
+I kept the same 783-step period that I used when testing the trading strategy, in order to assess cointegration. I then ran, in parallel on the simulated spread, a rolling Johansen test and a rolling CADF test. The significance level was set at 5%. When the Johansen test indicated that stationarity had ceased, the code drew a white vertical line at that time step; when the CADF test signalled, it drew a yellow one. We can see that both tests flagged the breakdown of stationarity in time, before the left-tail event.
+
+Half-life measurements, taken from the points where the CF-adjusted Bollinger bands were touched, gave a pretty good approximation of when the Johansen test began to indicate a break in cointegration:
+
+We can observe that while cointegration held, several narrow white stripes appear, because mean reversion takes place relatively quickly (fast, OU-like mean reversion). After the break in cointegration, several broader yellow stripes appear.That’s exactly what a regime with weaker/stochastic “mean” should look like: halflives lengthen and completions drop.So half-life adjusted time-dependent stop-losses also gave us a good edge to close the trade right in time. We can treat the rolling median of it as the typical time to a 50% shrink after a signal. By daily rebalance, that sets expectations for holding periods and decay of P&L heat. And when the median gets longer, our empirical half-life is deteriorating, we must be aware if the cointegration is about to break, and we should lower the position sizes, leverage and take some long realized volatility hedges. Most pain comes from hidden systematic exposures in the wrong regime.(I didn’t use a direct OU/AR(1) estimate from the simulation)
+
+RULES OF THUMB FOR RISK MANAGEMENT IN PAIR TRADINGThe key is to make your pairs pure by neutralizing every unwanted factor you can measure, then size them to a residual-risk target. That’s the institutional path to robust, portable alpha from spreads.View every position through its factor loadings (growth/equity beta, real rates, inflation, credit, EM/commodity, plus style factors like value/size/momentum). Set a desired factor mix, then add hedges (or rebalance legs) to hit targets. Most active returns were actually systematic factor bets. If your pairs carry market, value, momentum, or credit beta, those are not alpha—they’re risk premia.If you pick pairs within an industry or if cross-industry, add/short the relevant sector indices to neutralize sector risk so the bet is truly on the spread relation, not a sector tilt.Check neutrality beyond mean beta: use variance/VaR/tail neutrality tests (Patton’s “depth of neutrality”) and track liquidity exposure so the pair doesn’t secretly load on the liquidity factor in selloffs. Use your measured median half-life as a design input: e.g., time stop at ~2–3× median if the deviation hasn’t halved; price stop if the CF 99% band (proper two-sided ≈2.576σ) is breached.Compute the residual (post-overlay) spread, target a fixed risk (e.g., 8–12% annualized on residuals), and scale exposure inversely to realized volatility.
+
+Where to find pairs to tradeStock, ETF, currency and futures markets.First classify the assets by sector, market capitalisation, liquidity and daily volume. Then take only the highly correlated candidates and run CADF and Johansen tests for cointegration.
+
+The currency market is the most common place to look for pairs (for example, the well-known AUDUSD vs CADUSD combination), mainly because of its high liquidity, low transaction costs and the absence of short-sale constraints on currencies. Simply look for countries with similar economic fundamentals.
+
+Futures markets are also highly liquid, inexpensive to trade and free of short-sale constraints. However, it is less likely that you will find cointegrated pairs, and even if the spot prices are cointegrated, the corresponding futures need not be. In addition, the individual contracts must be back-adjusted into a continuous price series (not daily returns), otherwise you will see gaps.
+
+In the ETF market it is relatively easy to find cointegrating pairs, and they can be more durable than those found in single stocks; but the half-life also tends to be longer, which adds risk. You can look for pairs in markets that share common economic drivers (for example, USO/NORW, as Norway’s economy is largely driven by the oil industry).
+
+CROSS-SECTIONAL CONTRARIAN LONG-SHORT PORTFOLIO STRATEGYCross-sectional mean reversion compares each stock’s short-term return with the cross-sectional average. Using these relative (demeaned) returns, we go long recent underperformers and short recent outperformers. Expressed by mathematical formulas:
+
+By Lehmann and Lo–MacKinlay (1990)Here, the cointegration is not a necessity. They key is to rank the assets by some criteria (like the past avg returns, for example).
+
+I made a quick test using yfinance and stocklist of [’NVDA’,’AAPL’,’GOOGL’,’AMD’,’AMZN’,’META’,’MSFT’, ‘GLD’, ‘BTC’, ‘SPY’] to test this literal formula starting from 2016, and calculated 3-years rolling Sharpe:
+
+Transaction costs are not included. As you can see it printed 27.69% yearly returns on average with net Sharpe of 0.72Now compare it to a simple ‘buy and hold’ portfolio with the same assets equaly weighted:
+
+For the first glance we see that the final return is way much higher than what the L/S portfolio produced, and we got a higher Sharpe too. However, let’s look at this output:
+
+So while it is true that both the Sharpe and the Sortino are higher for the buy-and-hold portfolio, we had to endure drawdowns about 1.6× larger, taking 1–1.5 years to play out and another ~1.5 years to recover—only to gain a 1.44× higher Sharpe and a 1.39× higher Sortino. A long–short approach can mitigate these risks. It is meant to do it. In the example I kept the strategies’ sizing constant, but in live trading this varies. For instance, we would not short an asset that has just caught momentum, right?We can also turn this into an intraday strategy by using close-to-open data instead of close-to-close returns; however, this raises transaction costs, and opens are asynchronous—some NYSE names do not open right at 9:30 because of auctions/imbalances—so ranking “at the open” is non-trivial and mid-quotes or auction data are often used instead.
+
+Transaction costs are very important. The more trades we make, the greater their impact will be, including the cost of liquidity (the bid–ask spread). This can be reduced by using limit orders, but you incur opportunity costs if your order is not filled.In my example I used names I have traded that are still around today, but you should expect that some companies will go bankrupt or be restructured in future. That is why fundamental analysis and continuous monitoring are essential. Backtesting is subject to this kind of survivorship bias.And take Warren Buffett’s advice: “Only buy something that you’d be perfectly happy to hold if the market shut down for 10 years.”
+
+In my next educational post, I will scrutinize liquidity-taking (market-taker) momentum strategies. Then I will continue with machine learning. Stay tuned.

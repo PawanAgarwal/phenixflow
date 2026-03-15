@@ -1,0 +1,4607 @@
+{
+  "after": "2025-11-21T04:21:59.880Z",
+  "status": 200,
+  "more": false,
+  "moreAfter": false,
+  "moreBefore": false,
+  "lastViewedAt": null,
+  "replies": [
+    {
+      "comment": {
+        "id": "73eb4f58-e7b7-410d-a58a-5238fca63cf2",
+        "created_at": "2025-11-21T04:21:59.880Z",
+        "updated_at": "2025-11-21T04:21:59.880Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 180428611,
+        "body": null,
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": [
+          {
+            "id": "c3ed20ea-85ae-4685-8502-5cc96497a70a",
+            "type": "image",
+            "content_type": "image/gif",
+            "image_height": 508,
+            "image_width": 508,
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/73eb4f58-e7b7-410d-a58a-5238fca63cf2/c3ed20ea-85ae-4685-8502-5cc96497a70a.gif",
+            "media_upload_id": null
+          }
+        ],
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [
+          {
+            "id": "c3ed20ea-85ae-4685-8502-5cc96497a70a",
+            "user_id": 180428611,
+            "publication_id": 2679129,
+            "community_comment_id": "73eb4f58-e7b7-410d-a58a-5238fca63cf2",
+            "type": "image",
+            "content_type": "image/gif",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/73eb4f58-e7b7-410d-a58a-5238fca63cf2/c3ed20ea-85ae-4685-8502-5cc96497a70a.gif",
+            "created_at": "2025-11-21T04:21:59.351Z",
+            "updated_at": "2025-11-21T04:21:59.351Z",
+            "image_height": 508,
+            "image_width": 508,
+            "community_post_id": null,
+            "media_upload_id": null,
+            "mediaUpload": null
+          }
+        ],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": [
+          {
+            "type": "image",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/73eb4f58-e7b7-410d-a58a-5238fca63cf2/c3ed20ea-85ae-4685-8502-5cc96497a70a.gif",
+            "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/73eb4f58-e7b7-410d-a58a-5238fca63cf2/c3ed20ea-85ae-4685-8502-5cc96497a70a.gif",
+            "width": 508,
+            "height": 508,
+            "explicit": false
+          }
+        ]
+      },
+      "user": {
+        "id": 180428611,
+        "name": "han",
+        "handle": "hanchan2015",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6d3064e5-3c38-46f0-940e-032c5b024d41_442x512.jpeg",
+        "bio": "Mch7a7",
+        "profile_set_up_at": "2024-04-01T04:18:46.067Z",
+        "reader_installed_at": "2025-02-24T06:13:17.605Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-08T02:52:20.577Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "bf03cd2b-323b-4847-91de-4db235c295fd",
+        "created_at": "2025-11-21T04:50:11.156Z",
+        "updated_at": "2025-11-21T04:50:11.156Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 8488777,
+        "body": "I’m curious to learn which third‑order Greeks you referred to.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "0ed21972-a854-4357-b63f-94bbd2b371a3",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I’m curious to learn which third‑order Greeks you referred to.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 8488777,
+        "name": "Stanley",
+        "handle": "stanley938255",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/26993af1-5fa2-4030-834d-5f61d994db50_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2025-02-07T20:39:03.968Z",
+        "reader_installed_at": "2025-02-14T11:48:05.184Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "0ed21972-a854-4357-b63f-94bbd2b371a3",
+          "created_at": "2025-11-20T17:31:31.926Z",
+          "updated_at": "2025-11-20T17:31:31.926Z",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+          "user_id": 228155932,
+          "body": "3rd order Greeks at work today. But maybe I just got lucky",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "threadMediaUploads": [],
+          "mentions": null,
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "3rd order Greeks at work today. But maybe I just got lucky",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 228155932,
+          "name": "Vman",
+          "handle": "vtrader",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/a133312f-5afa-43f5-a0ec-7c3280fabb3c_144x144.png",
+          "bio": "adasdada ",
+          "profile_set_up_at": "2025-02-02T07:23:37.588Z",
+          "reader_installed_at": "2025-02-24T21:18:39.739Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 1,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 1,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-02T07:20:52.224Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-07T20:28:21.995Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "cafbac62-8830-4c89-b29f-45da0cf05111",
+        "created_at": "2025-11-21T06:49:13.871Z",
+        "updated_at": "2025-11-21T06:49:13.871Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "Hmmm vanna going into December looks weird",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Hmmm vanna going into December looks weird",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "b6ba1eca-6dd4-4724-ba22-f5c3a88849e2",
+        "created_at": "2025-11-21T06:51:52.175Z",
+        "updated_at": "2025-11-21T06:51:52.175Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 209843248,
+        "body": "September is the most bearish month nd bullish asf , nov the most bullish and blood lol 💀 by seasonality",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "September is the most bearish month nd bullish asf , nov the most bullish and blood lol 💀 by seasonality",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 209843248,
+        "name": "Juan Emilio Calderon Ramirez",
+        "handle": "juanemiliocalderonramirez",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/e1f32461-ba99-4029-98ec-307937cce3a6_640x638.jpeg",
+        "bio": null,
+        "profile_set_up_at": "2024-10-17T18:45:46.379Z",
+        "reader_installed_at": "2024-02-22T22:03:49.132Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-13T23:26:32.362Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "e0049cd6-0ee0-4768-b7e4-42c592b573fb",
+        "created_at": "2025-11-21T06:52:22.974Z",
+        "updated_at": "2025-11-21T06:52:22.974Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "Seems like no Christmas rally",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Seems like no Christmas rally",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "e1ea90c6-dea9-453a-9a9e-3636c8d71791",
+        "created_at": "2025-11-21T08:25:42.684Z",
+        "updated_at": "2025-11-21T08:25:42.684Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": "Guyz where is the btd sentiment? Alma warns u not to be overly bearish",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Guyz where is the btd sentiment? Alma warns u not to be overly bearish",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "7f8fb91e-f505-44ce-a97c-56577308dff6",
+        "created_at": "2025-11-21T09:07:24.596Z",
+        "updated_at": "2025-11-21T09:07:24.596Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 38631621,
+        "body": "BTFD",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "BTFD",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 38631621,
+        "name": "Chad",
+        "handle": "chad603280",
+        "previous_name": "Chad Leong",
+        "photo_url": "https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/e82fbfe5-c7c7-47b4-9c3d-5d1d58e1517b_380x380.png",
+        "bio": null,
+        "profile_set_up_at": "2021-05-25T21:19:28.511Z",
+        "reader_installed_at": "2025-02-01T07:01:12.864Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T06:57:44.300Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "d0ba83e6-45b9-41a6-92d4-0dd05562907c",
+        "created_at": "2025-11-21T09:08:11.090Z",
+        "updated_at": "2025-11-21T09:08:11.090Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "I was btd but for some reason vanna is pointing awkwardly left",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I was btd but for some reason vanna is pointing awkwardly left",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "1694ff3a-f10c-4f5f-966c-2c8d33973b4d",
+        "created_at": "2025-11-21T09:08:28.063Z",
+        "updated_at": "2025-11-21T09:08:28.063Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "These last days really screwing with gamma and positioning lol",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "These last days really screwing with gamma and positioning lol",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "5c0b2872-4aef-4db5-a0a7-3e3f37c1d713",
+        "created_at": "2025-11-21T09:09:00.143Z",
+        "updated_at": "2025-11-21T09:09:00.143Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "I’m probably the biggest dip buyer here lol",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I’m probably the biggest dip buyer here lol",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "1468263e-03fb-4f67-8500-ff1cc4be2204",
+        "created_at": "2025-11-21T09:24:46.314Z",
+        "updated_at": "2025-11-21T09:24:46.314Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "After watching nvdas guidance and their numbers. Something doesn’t add up for sure",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "After watching nvdas guidance and their numbers. Something doesn’t add up for sure",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "cf3805d7-645f-4785-9768-0e7c42d4ed71",
+        "created_at": "2025-11-21T09:25:06.551Z",
+        "updated_at": "2025-11-21T09:25:06.551Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "And I think the market smelled the bullshit or at least big money did",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "And I think the market smelled the bullshit or at least big money did",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "72d994f0-c4c0-4727-af4b-ac71fa491808",
+        "created_at": "2025-11-21T09:26:23.160Z",
+        "updated_at": "2025-11-21T09:26:23.160Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "There’s literally no fucking way there’s enough revenue to cover all these costs from all these companies. The buybacks to increase stock price from all the mag7 to take out more loans to pay for these AI ventures doesn’t make any sense lmao",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "There’s literally no fucking way there’s enough revenue to cover all these costs from all these companies. The buybacks to increase stock price from all the mag7 to take out more loans to pay for these AI ventures doesn’t make any sense lmao",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "780eba5e-f8d0-4585-9c4b-0f3a4dd3ea16",
+        "created_at": "2025-11-21T09:43:33.905Z",
+        "updated_at": "2025-11-21T12:28:19.239Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": "It doesn't",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "72d994f0-c4c0-4727-af4b-ac71fa491808",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "It doesn't",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "72d994f0-c4c0-4727-af4b-ac71fa491808",
+          "created_at": "2025-11-21T09:26:23.160Z",
+          "updated_at": "2025-11-21T09:26:23.160Z",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+          "user_id": 54743627,
+          "body": "There’s literally no fucking way there’s enough revenue to cover all these costs from all these companies. The buybacks to increase stock price from all the mag7 to take out more loans to pay for these AI ventures doesn’t make any sense lmao",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "threadMediaUploads": [],
+          "mentions": null,
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "There’s literally no fucking way there’s enough revenue to cover all these costs from all these companies. The buybacks to increase stock price from all the mag7 to take out more loans to pay for these AI ventures doesn’t make any sense lmao",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 54743627,
+          "name": "Eli",
+          "handle": "eli1496139",
+          "previous_name": null,
+          "photo_url": null,
+          "bio": null,
+          "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+          "reader_installed_at": "2022-10-06T13:15:22.712Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 5,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 5,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "cffcdd4c-d6de-4521-a66d-f66610db9af2",
+        "created_at": "2025-11-21T09:43:54.081Z",
+        "updated_at": "2025-11-21T09:43:54.081Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": "But Trump doesn't want to make american small again",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "But Trump doesn't want to make american small again",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "f5246ba9-04a4-42ea-962d-159986ea7b57",
+        "created_at": "2025-11-21T09:44:10.414Z",
+        "updated_at": "2025-11-21T09:44:10.414Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": "He wants great america great news great economy",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "He wants great america great news great economy",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "451a428c-db16-4ee9-94dd-7c3a4cc76702",
+        "created_at": "2025-11-21T09:44:29.135Z",
+        "updated_at": "2025-11-21T09:44:36.248Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": null,
+        "status": "deleted",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": null,
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "577b29b1-7689-470d-bb50-8dade947bbd6",
+        "created_at": "2025-11-21T09:45:50.654Z",
+        "updated_at": "2025-11-21T12:28:31.822Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": "A correction has been timely so far. Alma pointed out that there was not a single 5% pullback since april that is a huge anomaly. Now we got it and we happy",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "A correction has been timely so far. Alma pointed out that there was not a single 5% pullback since april that is a huge anomaly. Now we got it and we happy",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "05a6f2ee-9bbc-42ba-9bfb-47f2897ef999",
+        "created_at": "2025-11-21T10:06:51.947Z",
+        "updated_at": "2025-11-21T10:06:51.947Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "And look at this go",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "And look at this go",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "f993666d-e57c-4f1e-ac1f-ac70bb50d51a",
+        "created_at": "2025-11-21T10:08:58.581Z",
+        "updated_at": "2025-11-21T10:08:58.581Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "Last long call sitting at 6500spx",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Last long call sitting at 6500spx",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "42a1a0d7-96fa-42a2-8653-0a1ffc0923ec",
+        "created_at": "2025-11-21T10:09:10.284Z",
+        "updated_at": "2025-11-21T10:09:10.284Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "Equivalent should be a target",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Equivalent should be a target",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a58f7bc2-ac3c-4557-a10e-1f202714fd5c",
+        "created_at": "2025-11-21T12:14:22.668Z",
+        "updated_at": "2025-11-21T12:14:22.668Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 73251823,
+        "body": "Alma do u still see the red path as possible on BTC?",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": [
+          {
+            "id": "0a1fe585-0a48-4d1d-8fee-fa548175be56",
+            "type": "image",
+            "content_type": "image/png",
+            "image_height": 884,
+            "image_width": 1534,
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/a58f7bc2-ac3c-4557-a10e-1f202714fd5c/0a1fe585-0a48-4d1d-8fee-fa548175be56.png",
+            "media_upload_id": null
+          }
+        ],
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [
+          {
+            "id": "0a1fe585-0a48-4d1d-8fee-fa548175be56",
+            "user_id": 73251823,
+            "publication_id": 2679129,
+            "community_comment_id": "a58f7bc2-ac3c-4557-a10e-1f202714fd5c",
+            "type": "image",
+            "content_type": "image/png",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/a58f7bc2-ac3c-4557-a10e-1f202714fd5c/0a1fe585-0a48-4d1d-8fee-fa548175be56.png",
+            "created_at": "2025-11-21T12:14:21.883Z",
+            "updated_at": "2025-11-21T12:14:21.883Z",
+            "image_height": 884,
+            "image_width": 1534,
+            "community_post_id": null,
+            "media_upload_id": null,
+            "mediaUpload": null
+          }
+        ],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Alma do u still see the red path as possible on BTC?",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": [
+          {
+            "type": "image",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/a58f7bc2-ac3c-4557-a10e-1f202714fd5c/0a1fe585-0a48-4d1d-8fee-fa548175be56.png",
+            "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/a58f7bc2-ac3c-4557-a10e-1f202714fd5c/0a1fe585-0a48-4d1d-8fee-fa548175be56.png",
+            "width": 1534,
+            "height": 884,
+            "explicit": false
+          }
+        ]
+      },
+      "user": {
+        "id": 73251823,
+        "name": "KMD",
+        "handle": "kaashif735011",
+        "previous_name": "kingofnothing",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/f22bf7c8-385b-41c6-843a-ba6ff672f660_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2023-01-24T15:34:05.786Z",
+        "reader_installed_at": "2024-01-04T22:22:50.172Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 10,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 10,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 10,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 10,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "5cf564fb-c76a-4e5d-8401-5dc71050952f",
+        "created_at": "2025-11-21T12:16:15.908Z",
+        "updated_at": "2025-11-21T12:16:15.908Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": "I guess if that purple zone holds. She said 112-115k retest during dec is likely but she is not speculative on the coin",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "I guess if that purple zone holds. She said 112-115k retest during dec is likely but she is not speculative on the coin",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "8e9b4ac3-cad8-44e3-beee-89b22bbf6a00",
+        "created_at": "2025-11-21T12:17:45.654Z",
+        "updated_at": "2025-11-21T12:17:45.654Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 73251823,
+        "body": "thanks man, I wonder if a break above that level to set up the run up above is a viable possibility? The graphic above (although I know its from a while ago) suggests that if this pivot type zone near 107k can break above we might be on for a bit of a run",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "thanks man, I wonder if a break above that level to set up the run up above is a viable possibility? The graphic above (although I know its from a while ago) suggests that if this pivot type zone near 107k can break above we might be on for a bit of a run",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 73251823,
+        "name": "KMD",
+        "handle": "kaashif735011",
+        "previous_name": "kingofnothing",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/f22bf7c8-385b-41c6-843a-ba6ff672f660_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2023-01-24T15:34:05.786Z",
+        "reader_installed_at": "2024-01-04T22:22:50.172Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 10,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 10,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 10,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 10,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a86de40a-0d80-4a00-9865-ccbf77d8c72d",
+        "created_at": "2025-11-21T12:19:41.622Z",
+        "updated_at": "2025-11-21T12:19:41.622Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 73251823,
+        "body": "@Alma",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": {
+          "0": {
+            "user_id": 204864402,
+            "text": "@Alma"
+          }
+        },
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "${0}",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 73251823,
+        "name": "KMD",
+        "handle": "kaashif735011",
+        "previous_name": "kingofnothing",
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/f22bf7c8-385b-41c6-843a-ba6ff672f660_144x144.png",
+        "bio": null,
+        "profile_set_up_at": "2023-01-24T15:34:05.786Z",
+        "reader_installed_at": "2024-01-04T22:22:50.172Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 10,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 10,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 10,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 10,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "2466420c-8d1b-4cbc-b93a-3d6ad2eb9029",
+        "created_at": "2025-11-21T12:31:29.919Z",
+        "updated_at": "2025-11-21T12:31:29.919Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 180428611,
+        "body": "Alma’s latest tweet says that aside from SCOTUS, by next year Q1 there will be more serious trouble for Trump.",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Alma’s latest tweet says that aside from SCOTUS, by next year Q1 there will be more serious trouble for Trump.",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 180428611,
+        "name": "han",
+        "handle": "hanchan2015",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6d3064e5-3c38-46f0-940e-032c5b024d41_442x512.jpeg",
+        "bio": "Mch7a7",
+        "profile_set_up_at": "2024-04-01T04:18:46.067Z",
+        "reader_installed_at": "2025-02-24T06:13:17.605Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-08T02:52:20.577Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "0a03bbf1-ea0a-41d8-9ac5-78f0ad2c2ad5",
+        "created_at": "2025-11-21T12:40:06.628Z",
+        "updated_at": "2025-11-21T12:40:06.628Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 39752120,
+        "body": "Fed Williams to save the day",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Fed Williams to save the day",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 39752120,
+        "name": "billjr",
+        "handle": "billjr1",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2024-10-19T16:27:00.641Z",
+        "reader_installed_at": "2024-10-19T16:26:53.582Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T12:41:31.645Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "4a236f79-f3a5-4cf8-8d5b-c43a763e832d",
+        "created_at": "2025-11-21T12:40:19.996Z",
+        "updated_at": "2025-11-21T12:40:54.379Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 204864402,
+        "body": "wow, I was just writing my daily post... then overnight futs",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": [
+          {
+            "id": "fe33d310-08cc-4008-b3a2-1722c5536837",
+            "type": "image",
+            "content_type": "image/png",
+            "image_height": 661,
+            "image_width": 977,
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/fe33d310-08cc-4008-b3a2-1722c5536837.png",
+            "media_upload_id": null
+          },
+          {
+            "id": "321202c4-befe-4e31-979c-af6f4835e97a",
+            "type": "image",
+            "content_type": "image/png",
+            "image_height": 338,
+            "image_width": 832,
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/321202c4-befe-4e31-979c-af6f4835e97a.png",
+            "media_upload_id": null
+          }
+        ],
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [
+          {
+            "id": "fe33d310-08cc-4008-b3a2-1722c5536837",
+            "user_id": 204864402,
+            "publication_id": 2679129,
+            "community_comment_id": "4a236f79-f3a5-4cf8-8d5b-c43a763e832d",
+            "type": "image",
+            "content_type": "image/png",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/fe33d310-08cc-4008-b3a2-1722c5536837.png",
+            "created_at": "2025-11-21T12:40:19.274Z",
+            "updated_at": "2025-11-21T12:40:19.274Z",
+            "image_height": 661,
+            "image_width": 977,
+            "community_post_id": null,
+            "media_upload_id": null,
+            "mediaUpload": null
+          },
+          {
+            "id": "321202c4-befe-4e31-979c-af6f4835e97a",
+            "user_id": 204864402,
+            "publication_id": 2679129,
+            "community_comment_id": "4a236f79-f3a5-4cf8-8d5b-c43a763e832d",
+            "type": "image",
+            "content_type": "image/png",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/321202c4-befe-4e31-979c-af6f4835e97a.png",
+            "created_at": "2025-11-21T12:40:19.266Z",
+            "updated_at": "2025-11-21T12:40:19.266Z",
+            "image_height": 338,
+            "image_width": 832,
+            "community_post_id": null,
+            "media_upload_id": null,
+            "mediaUpload": null
+          }
+        ],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "upvote": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "wow, I was just writing my daily post... then overnight futs",
+        "user_pub_role": "admin",
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": [
+          {
+            "type": "image",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/fe33d310-08cc-4008-b3a2-1722c5536837.png",
+            "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/fe33d310-08cc-4008-b3a2-1722c5536837.png",
+            "width": 977,
+            "height": 661,
+            "explicit": false
+          },
+          {
+            "type": "image",
+            "url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/321202c4-befe-4e31-979c-af6f4835e97a.png",
+            "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/media_upload/comment/4a236f79-f3a5-4cf8-8d5b-c43a763e832d/321202c4-befe-4e31-979c-af6f4835e97a.png",
+            "width": 832,
+            "height": 338,
+            "explicit": false
+          }
+        ]
+      },
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z",
+        "status": null
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": true,
+        "role": "admin",
+        "created_at": "2024-06-04T17:16:22.957Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": null
+    },
+    {
+      "comment": {
+        "id": "a4e1c2a4-8a29-43f0-aaa0-23b34a0f7542",
+        "created_at": "2025-11-21T12:40:45.955Z",
+        "updated_at": "2025-11-21T12:40:57.800Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 54743627,
+        "body": "Longed this ;)",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "f993666d-e57c-4f1e-ac1f-ac70bb50d51a",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "green_circle": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Longed this ;)",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 54743627,
+        "name": "Eli",
+        "handle": "eli1496139",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+        "reader_installed_at": "2022-10-06T13:15:22.712Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "f993666d-e57c-4f1e-ac1f-ac70bb50d51a",
+          "created_at": "2025-11-21T10:08:58.581Z",
+          "updated_at": "2025-11-21T10:08:58.581Z",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+          "user_id": 54743627,
+          "body": "Last long call sitting at 6500spx",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "threadMediaUploads": [],
+          "mentions": null,
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Last long call sitting at 6500spx",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 54743627,
+          "name": "Eli",
+          "handle": "eli1496139",
+          "previous_name": null,
+          "photo_url": null,
+          "bio": null,
+          "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+          "reader_installed_at": "2022-10-06T13:15:22.712Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 5,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 5,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "9b80aedd-d977-438f-905d-9feb1918458c",
+        "created_at": "2025-11-21T12:41:04.692Z",
+        "updated_at": "2025-11-21T12:41:04.692Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 39752120,
+        "body": "Samee 🙂",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "a4e1c2a4-8a29-43f0-aaa0-23b34a0f7542",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Samee 🙂",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 39752120,
+        "name": "billjr",
+        "handle": "billjr1",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2024-10-19T16:27:00.641Z",
+        "reader_installed_at": "2024-10-19T16:26:53.582Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "a4e1c2a4-8a29-43f0-aaa0-23b34a0f7542",
+          "created_at": "2025-11-21T12:40:45.955Z",
+          "updated_at": "2025-11-21T12:40:57.800Z",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+          "user_id": 54743627,
+          "body": "Longed this ;)",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": "f993666d-e57c-4f1e-ac1f-ac70bb50d51a",
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 1,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "threadMediaUploads": [],
+          "mentions": null,
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {
+            "green_circle": 1
+          },
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Longed this ;)",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 54743627,
+          "name": "Eli",
+          "handle": "eli1496139",
+          "previous_name": null,
+          "photo_url": null,
+          "bio": null,
+          "profile_set_up_at": "2022-01-17T04:52:53.900Z",
+          "reader_installed_at": "2022-10-06T13:15:22.712Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 5,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 5,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T12:41:31.645Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "a1215d59-6a7d-47dd-9915-d20ad17bec51",
+        "created_at": "2025-11-21T12:42:31.424Z",
+        "updated_at": "2025-11-21T12:42:31.424Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 39752120,
+        "body": "Dec rate cut odds over 50% now",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Dec rate cut odds over 50% now",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 39752120,
+        "name": "billjr",
+        "handle": "billjr1",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2024-10-19T16:27:00.641Z",
+        "reader_installed_at": "2024-10-19T16:26:53.582Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-01T12:41:31.645Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "fea41c2e-5d1f-4ed6-b5d9-e7f8a4b9306e",
+        "created_at": "2025-11-21T12:57:23.567Z",
+        "updated_at": "2025-11-21T12:57:23.567Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 168534578,
+        "body": "timiraos not insinuating this",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "timiraos not insinuating this",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 168534578,
+        "name": "Ernest Enriquez",
+        "handle": "rotmer",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/f76d690a-16a4-4bcc-b94d-8a806c3c3fea_144x144.png",
+        "bio": "Scalpeador cinturón amarillo",
+        "profile_set_up_at": "2023-12-12T15:38:22.070Z",
+        "reader_installed_at": null,
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 1,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 1,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-09-14T19:40:02.896Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 1,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 1,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "e23eeada-931d-4e6e-8f12-3aab70aaf4dc",
+        "created_at": "2025-11-21T13:03:23.608Z",
+        "updated_at": "2025-11-21T13:07:43.140Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 379911274,
+        "body": "Fed is coming to save the day. Perfectly how alma said",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": null,
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 1,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {
+          "thumbs_up": 1
+        },
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Fed is coming to save the day. Perfectly how alma said",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 379911274,
+        "name": "راشد المنصوري",
+        "handle": "1234331491",
+        "previous_name": null,
+        "photo_url": null,
+        "bio": null,
+        "profile_set_up_at": "2025-08-11T12:20:42.916Z",
+        "reader_installed_at": "2025-08-11T12:18:56.251Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": null,
+          "leaderboard": null,
+          "vip": false,
+          "badge": null,
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-08-11T12:22:10.846Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": null,
+        "leaderboard": null,
+        "vip": false,
+        "badge": null,
+        "subscriber": null
+      }
+    },
+    {
+      "comment": {
+        "id": "2e04e05c-9e71-417b-b07c-4d59c4047354",
+        "created_at": "2025-11-21T13:12:33.158Z",
+        "updated_at": "2025-11-21T13:12:33.158Z",
+        "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+        "user_id": 180428611,
+        "body": "Alma, what else are you seeing? Europe, Asia, or US internally? Is the world order doomed to be beyond repair? :((",
+        "status": "published",
+        "parent_id": null,
+        "is_locked": false,
+        "quote_id": "2466420c-8d1b-4cbc-b93a-3d6ad2eb9029",
+        "pub_moderation_status": null,
+        "trust_and_safety_status": null,
+        "media_uploads": null,
+        "reaction_count": 0,
+        "reply_count": 0,
+        "max_reply_created_at": null,
+        "threadMediaUploads": [],
+        "mentions": null,
+        "recent_commenters": [],
+        "has_reacted": false,
+        "reactions": {},
+        "muted": true,
+        "reported_by_user": false,
+        "raw_body": "Alma, what else are you seeing? Europe, Asia, or US internally? Is the world order doomed to be beyond repair? :((",
+        "user_pub_role": null,
+        "most_recent_comment_created_at": null,
+        "mediaAttachments": []
+      },
+      "user": {
+        "id": 180428611,
+        "name": "han",
+        "handle": "hanchan2015",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6d3064e5-3c38-46f0-940e-032c5b024d41_442x512.jpeg",
+        "bio": "Mch7a7",
+        "profile_set_up_at": "2024-04-01T04:18:46.067Z",
+        "reader_installed_at": "2025-02-24T06:13:17.605Z",
+        "status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "quote": {
+        "comment": {
+          "id": "2466420c-8d1b-4cbc-b93a-3d6ad2eb9029",
+          "created_at": "2025-11-21T12:31:29.919Z",
+          "updated_at": "2025-11-21T12:31:29.919Z",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+          "user_id": 180428611,
+          "body": "Alma’s latest tweet says that aside from SCOTUS, by next year Q1 there will be more serious trouble for Trump.",
+          "status": "published",
+          "parent_id": null,
+          "is_locked": false,
+          "quote_id": null,
+          "pub_moderation_status": null,
+          "trust_and_safety_status": null,
+          "media_uploads": null,
+          "reaction_count": 0,
+          "reply_count": 0,
+          "max_reply_created_at": null,
+          "threadMediaUploads": [],
+          "mentions": null,
+          "recent_commenters": [],
+          "has_reacted": false,
+          "reactions": {},
+          "muted": true,
+          "reported_by_user": false,
+          "raw_body": "Alma’s latest tweet says that aside from SCOTUS, by next year Q1 there will be more serious trouble for Trump.",
+          "user_pub_role": null,
+          "most_recent_comment_created_at": null,
+          "mediaAttachments": []
+        },
+        "user": {
+          "id": 180428611,
+          "name": "han",
+          "handle": "hanchan2015",
+          "previous_name": null,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6d3064e5-3c38-46f0-940e-032c5b024d41_442x512.jpeg",
+          "bio": "Mch7a7",
+          "profile_set_up_at": "2024-04-01T04:18:46.067Z",
+          "reader_installed_at": "2025-02-24T06:13:17.605Z",
+          "status": {
+            "bestsellerTier": null,
+            "subscriberTier": 5,
+            "leaderboard": null,
+            "vip": false,
+            "badge": {
+              "type": "subscriber",
+              "tier": 5,
+              "accent_colors": {
+                "fg": {
+                  "light": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  }
+                },
+                "bg": {
+                  "light": {
+                    "r": 52,
+                    "g": 21,
+                    "b": 57,
+                    "a": 1
+                  },
+                  "dark": {
+                    "r": 102,
+                    "g": 68,
+                    "b": 107,
+                    "a": 1
+                  }
+                }
+              }
+            },
+            "subscriber": null
+          }
+        },
+        "pub_roles": {
+          "membership_state": "subscribed",
+          "is_founding": false,
+          "role": null,
+          "created_at": "2025-02-08T02:52:20.577Z",
+          "can_post_notes_as_primary_user": false
+        },
+        "user_status": {
+          "bestsellerTier": null,
+          "subscriberTier": 5,
+          "leaderboard": null,
+          "vip": false,
+          "badge": {
+            "type": "subscriber",
+            "tier": 5,
+            "accent_colors": {
+              "fg": {
+                "light": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 255,
+                  "g": 255,
+                  "b": 255,
+                  "a": 1
+                }
+              },
+              "bg": {
+                "light": {
+                  "r": 52,
+                  "g": 21,
+                  "b": 57,
+                  "a": 1
+                },
+                "dark": {
+                  "r": 102,
+                  "g": 68,
+                  "b": 107,
+                  "a": 1
+                }
+              }
+            }
+          },
+          "subscriber": null
+        }
+      },
+      "pub_roles": {
+        "membership_state": "subscribed",
+        "is_founding": false,
+        "role": null,
+        "created_at": "2025-02-08T02:52:20.577Z",
+        "can_post_notes_as_primary_user": false
+      },
+      "user_status": {
+        "bestsellerTier": null,
+        "subscriberTier": 5,
+        "leaderboard": null,
+        "vip": false,
+        "badge": {
+          "type": "subscriber",
+          "tier": 5,
+          "accent_colors": {
+            "fg": {
+              "light": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "dark": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              }
+            },
+            "bg": {
+              "light": {
+                "r": 52,
+                "g": 21,
+                "b": 57,
+                "a": 1
+              },
+              "dark": {
+                "r": 102,
+                "g": 68,
+                "b": 107,
+                "a": 1
+              }
+            }
+          }
+        },
+        "subscriber": null
+      }
+    }
+  ],
+  "post": {
+    "communityPost": {
+      "paywallInfo": null,
+      "id": "045ea33a-19b9-43e1-84c1-3a93c159b090",
+      "created_at": "2025-11-20T13:59:14.289Z",
+      "updated_at": "2025-11-21T13:28:55.747Z",
+      "user_id": 204864402,
+      "publication_id": 2679129,
+      "body": "THURSDAY CHAT (20/Nov)",
+      "link_url": null,
+      "status": "published",
+      "type": "media",
+      "audience": "only_paid_replies",
+      "media_assets": [
+        {
+          "id": 187196792,
+          "url": "https://substack-post-media.s3.amazonaws.com/public/images/229830a3-1d9a-4c5b-9173-4c740ef10d0d_1950x742.png",
+          "imageWidth": 1950,
+          "contentType": "image/png",
+          "imageHeight": 742
+        }
+      ],
+      "is_locked": true,
+      "pub_moderation_status": null,
+      "trust_and_safety_status": null,
+      "is_edited": false,
+      "comment_count": 435,
+      "max_comment_created_at": "2025-11-21T13:12:33.158Z",
+      "reaction_count": 0,
+      "threadMediaUploads": [],
+      "user": {
+        "id": 204864402,
+        "name": "Alma",
+        "handle": "alma271828",
+        "previous_name": null,
+        "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+        "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+        "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+        "reader_installed_at": "2025-01-25T15:05:18.103Z"
+      },
+      "recent_commenters": [
+        {
+          "id": 180428611,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/6d3064e5-3c38-46f0-940e-032c5b024d41_442x512.jpeg",
+          "name": "han",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090"
+        },
+        {
+          "id": 379911274,
+          "photo_url": null,
+          "name": "راشد المنصوري",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090"
+        },
+        {
+          "id": 168534578,
+          "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/f76d690a-16a4-4bcc-b94d-8a806c3c3fea_144x144.png",
+          "name": "Ernest Enriquez",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090"
+        },
+        {
+          "id": 39752120,
+          "photo_url": null,
+          "name": "billjr",
+          "post_id": "045ea33a-19b9-43e1-84c1-3a93c159b090"
+        }
+      ],
+      "reactions": {},
+      "muted": true,
+      "left_pub_chat": false,
+      "reported_by_user": false,
+      "user_pub_role": "admin",
+      "most_recent_comment_created_at": "2025-11-21T13:12:33.158Z",
+      "mediaAttachments": [
+        {
+          "type": "image",
+          "url": "https://substack-post-media.s3.amazonaws.com/public/images/229830a3-1d9a-4c5b-9173-4c740ef10d0d_1950x742.png",
+          "thumb_url": "https://substack-post-media.s3.amazonaws.com/public/images/229830a3-1d9a-4c5b-9173-4c740ef10d0d_1950x742.png",
+          "width": 1950,
+          "height": 742,
+          "explicit": false
+        }
+      ]
+    },
+    "user": {
+      "id": 204864402,
+      "name": "Alma",
+      "handle": "alma271828",
+      "previous_name": null,
+      "photo_url": "https://substack-post-media.s3.amazonaws.com/public/images/d67deada-562c-460d-9e52-9538537a4b27_1024x1024.png",
+      "bio": "Privat investor & speculator | Mathematics | Self-made quant | Market researcher | Options and Futures trader",
+      "profile_set_up_at": "2024-02-05T19:58:57.717Z",
+      "reader_installed_at": "2025-01-25T15:05:18.103Z",
+      "status": null
+    },
+    "pubRole": {
+      "membership_state": "subscribed",
+      "is_founding": true,
+      "role": "admin",
+      "created_at": "2024-06-04T17:16:22.957Z",
+      "can_post_notes_as_primary_user": false
+    },
+    "userStatus": null
+  }
+}

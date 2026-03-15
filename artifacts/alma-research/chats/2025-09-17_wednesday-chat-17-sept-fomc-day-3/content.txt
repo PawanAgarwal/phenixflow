@@ -1,0 +1,698 @@
+Chat Post
+2025-09-17T11:02:43.758Z | Alma
+WEDNESDAY CHAT (17/Sept)
+FOMC DAY <3
+
+Replies
+2025-09-17T11:04:43.529Z | Alma
+If you don't have an OptionsDepth account yet, or if you already have one but want a 10% discount for next month, then use this link: https://optionsdepth.com/app?via=alma
+or my promo code ODALMA
+
+2025-09-17T11:13:36.017Z | Alma
+as you already know from my educational posts, fair value is the value that give neither the seller and the buyer an edge
+
+2025-09-17T11:14:32.169Z | Alma
+if you take the BSM model, it will give you can get the fair value for any given options for any given contruction
+
+2025-09-17T11:18:58.579Z | Alma
+SPX is european style options
+
+2025-09-17T11:19:47.704Z | Alma
+a coded the fair value under normal probability distribution for the 0DTE ATM strike
+
+2025-09-17T11:21:37.213Z | Alma
+then I took implied skewness and implied kurtosis into account, and I got a way closer value than under normal assumptions
+
+2025-09-17T11:22:24.481Z | Alma
+what I saw is that call IV is priced 3.1% higher than what the fair value would imply, and put IV is priced 18.84% higher
+
+2025-09-17T11:23:14.562Z | Alma
+again, i took implied skewness and kurtosis into account
+
+2025-09-17T11:23:37.034Z | Alma
+and the positioning says it is short speed/positive skewness implied distribution = right tailish
+
+2025-09-17T11:25:49.906Z | Alma
+if i take the casino metaphore, it says that the House is buying the downside bets, and selling the upside bets.
+if the house prices the downside bets above its fair value, it will give a positive EV, so house wins on the long run, assuming downside bets print.
+
+and if we assume that upside bets also print, the House should price the upside bets lower than its fair value... but its not what happens!
+it prices above its fair value
+
+2025-09-17T11:26:37.735Z | Alma
+so we can assume that the house expects that upside bets won't print
+
+2025-09-17T11:29:06.293Z | Alma
+so this implies, that the odds for upside bets the probability of the upside scenario is undervalued and the probability of downside bets is overvalued, this will give us a higher than fair bet value.
+and for the downside bets it is the opposite
+
+2025-09-17T11:30:15.468Z | Alma
+so bcs the distribution is right-tailish it means that the extra 18.84% put IV is expected to materilaize upward,
+while the extra only 3.1% call IV is underestimates the upside move potential
+
+2025-09-17T11:30:24.911Z | Alma
+this is a big discrepancy
+
+2025-09-17T11:31:28.549Z | Alma
+so while the implied distribution still remains right-tailish, the pricing says the opposite.
+the house positions itself for the downside bets to print
+
+2025-09-17T11:33:53.447Z | Alma
+got it?
+
+2025-09-17T11:38:24.208Z | DeanGatsby
+Think so. House says lower but players say higher. But in the long run the house will win since they jacked up the premiums across the board. Do I have that right?
+
+2025-09-17T11:41:27.955Z | Alma
+hosue lets the ppl to bet on the upside, and it prices the bets as if they know that the bet will not materialize, so they can collect the stakes
+
+2025-09-17T11:47:08.259Z | Marcus Carlsson
+So, even if spot goes up, the call IV will make it a loosing trade?
+
+2025-09-17T11:49:30.384Z | Alma
+no
+
+2025-09-17T11:58:38.594Z | Chad
+Since the data is public, can’t one just follow the house bet and gain the edge ?
+
+2025-09-17T11:58:45.609Z | Chad
+In theory..
+
+2025-09-17T11:58:50.972Z | Le Chien
+How's the option pricing for tomorrow? Similar?
+
+2025-09-17T12:00:40.032Z | DeanGatsby
+I’ve always wondered how all market makers agree to price these at a certain level
+
+2025-09-17T12:04:41.917Z | billjr
+Interesting point on Bloomberg, even with a 3 cuts this year the hawkish surprise would be failure to reach next year's target on the curve
+
+2025-09-17T12:04:58.513Z | J.K.
+Alma, what type of spread would be profitable in this situation then?  This is way above my knowledge level btw.
+
+2025-09-17T12:05:06.342Z | J.K.
+And good morning to all!
+
+2025-09-17T12:05:14.456Z | J.K.
+And good afternoon!
+
+2025-09-17T12:21:53.187Z | billjr
+I may take next Friday 655put with a small iwm 242odte call
+
+2025-09-17T12:42:09.855Z | Alma
+POST IS OUT
+https://stochvoltrader.substack.com/p/fomc-day-odds-intraday-post-17sept
+
+2025-09-17T12:42:21.958Z | Praswell
+If the house positions itself for downside to print + a short speed setup, wouldn't that downward move be caught or dampened?
+
+2025-09-17T12:42:56.560Z | Alma
+longer downside gamma is still longer downside gamma ;))
+
+2025-09-17T12:53:38.657Z | Fractalearner
+Alma : you state that 6700 is upside max in the case of very good news. What would you view as very good news ? Would that be a 50bps cut and on the lines of very bad news is very good news for the algos ?
+
+2025-09-17T12:53:56.001Z | Fractalearner
+or would that be 25bps with more dovish guidance ?
+
+2025-09-17T12:56:32.027Z | Jac
+I am simple man i am gonna short the fuck out of spx tonite
+
+2025-09-17T13:03:53.880Z | Alma
+rather this
+
+2025-09-17T13:04:01.980Z | jvno
+just like sports bookies they know the hook always gets ya
+
+2025-09-17T13:09:29.938Z | Jeffrey K
+now there's a good way to lose money.  10% fee on every losing bet
+
+2025-09-17T13:09:58.165Z | han
+The analysis seems genius 🌠 Impressive!
+
+2025-09-17T13:15:01.133Z | Fractalearner
+Thanks Alma for clarifying. It also makes sense from a political read of the fed structure.
+
+I fully expect 4 dissent votes in this FOMC. Waller, Miran, Bowman are Trump lapdogs and political appointees, they will surely put their vote on record demanding a 50bps cut. Lisa Cook is untouchable right now lol and she can even put her vote for a hike and there is nothing anyone can do anything about it.
+
+Would not make for a smooth consensus vote and Powell himself is on his way out and he will not fully bend his knee to the emperor. 25bps is at best what might happen. I doubt dovish commentary comes out given the 3 dissenting votes who might argue economy has deteriorated. Lisa cook might argue inflation will roar back. Either way market will not hear the lullaby it needs to hear :)
+
+25bps with hawkish tone- market will not like and might pin in place at centroid or fall to primary downside at 6504
+50bps with hawkish tone on jobs- market should fall on worry and get to downside target of 6415 ( downside max)
+25bps with dovish tone- market can get to the upside max Alma pointed at 6700
+
+2025-09-17T13:26:59.846Z | Chad
+so the probability leans towards downside
+
+2025-09-17T13:28:32.224Z | nynume
+What if it’s 50 and Dovish?
+
+2025-09-17T13:31:46.996Z | Fractalearner
+Would be a very rare possibility. 50bps cut would be an outlier cut given deteriorating conditions in labor market. Very hard to attach dovish commentary with that one. Currently fed watch tool gives a 3.9% probability for 50bps cut.
+
+2025-09-17T13:37:50.144Z | nynume
+Well yesterday Trump said he will cut more than he wanted to so I am just trying to figure out all scenarios
+
+2025-09-17T13:38:01.642Z | billjr
+Even Waller has publicly said hes only in favor of 25 bps cut
+
+2025-09-17T13:47:35.005Z | Fractalearner
+Trump would love to cut even 100bps however he does not hold all the cards yet given that courts rejected Lisa cook firing. Yup good to map all scenarios. I would say the 50bps with dovish is a very rare and if it happens market will rocket to 6800 in a single day. Rest of the scenarios are more probable ( 25bps with hawkish etc. )
+
+2025-09-17T13:48:22.579Z | nynume
+
+2025-09-17T13:50:01.723Z | Fractalearner
+No matter how much he screams, he cannot fire Powell. Powell has until May 2026. Also without lisa cook firing he does not get majority on fed governor board. He is desperate for a bigger cut and will make noise on social media :). He can juice the markets via Bessent and the stealth QE though.
+
+2025-09-17T13:51:24.776Z | JSA
+So, you're saying that throwing tantrums and holding his breath won't work?
+
+2025-09-17T13:59:56.238Z | billjr
+Housing wont soar. Unless they start pumping stimulus and housing credits.
+
+2025-09-17T14:01:25.581Z | meager man
+Housing is not an easily solved problem no matter what happens with mortgage rates
+
+2025-09-17T14:06:27.976Z | Jeffrey K
+implied target SPY 657 ISH
+
+2025-09-17T14:07:47.922Z | William Smith
+Some big ol NDX put buys below 24000 0dte
+
+2025-09-17T14:08:31.010Z | William Smith
+Plus about 6k $585P contracts on QQQ 2dte
+
+2025-09-17T14:14:55.706Z | Mas
+rut is a tell
+
+2025-09-17T14:18:12.004Z | Jac
+And dow
+
+2025-09-17T14:27:29.973Z | راشد المنصوري
+Short calls long puts
+
+2025-09-17T14:35:01.790Z | Jeffrey K
+
+2025-09-17T14:52:54.350Z | foobar
+How are we expecting opex tomorrow to affect price again?
+
+2025-09-17T14:58:24.829Z | foobar
+I found it in the monthly post
+
+> What market expects is, that volatility remains supplied/stairstep up, but this dampening effect is fading into the OpEx week, until they expect the market to range (follow weekly posts) in an expanded range, then they expect volatility squeeze on FOMC (similarly to 2024 Dec FOMC), then OpEx will provide some slowdown/downside support (due to the negative speed profile), Monday some delta buyback, and then further sell-off, but on a slowed manner, and Trump is expected to bail out the sentiment.
+
+2025-09-17T15:21:38.370Z | Mas
+and today she said no its not the same
+
+2025-09-17T15:23:14.323Z | Mas
+but i remember her sell days were thurs and friday if i recall correctly
+
+2025-09-17T15:45:43.171Z | foobar
+> The reversion model says that the probability for a reversion is at 93.50%, very rare value!
+If this is right, market is topped here, and after the OpEx is gone, market will slowly rebalance itself.
+
+from today's post
+
+2025-09-17T15:47:56.410Z | Mas
+Yes but its almost 11:50 and were holding the centroid
+
+2025-09-17T15:48:02.691Z | Mas
+so which one is which
+
+2025-09-17T15:59:30.269Z | Jolene
+Yeah it's all a big guess
+
+2025-09-17T16:00:09.279Z | Fractalearner
+friday sept 19th is opex. She was clear in her weekly post that Tuesday post Opex is when this has higher probability of falling due to opex hedging effects. Will try to find the lines and only probability and not guaranteed it will
+
+2025-09-17T16:00:45.993Z | Fractalearner
+found the lines in the weekly in the first paragraph itself.
+
+"Market is locked up into a range, with downside is well-supported, and this takes me to think that window of risk opens after post-OpEx Tuesday"
+
+2025-09-17T16:02:46.118Z | راشد المنصوري
+She says this since july i think
+
+2025-09-17T16:02:59.337Z | راشد المنصوري
+If not august it is post opex
+
+2025-09-17T16:04:02.820Z | راشد المنصوري
+Fomc = shake the market,
+Opex to mon = supports the market
+Post opex tuesday starting = risk window
+
+2025-09-17T16:11:17.064Z | Jolene
+yeah confused
+
+2025-09-17T16:13:53.847Z | Mas
+so everyone is short in here
+
+2025-09-17T16:14:14.983Z | Mas
+thank you for the free sentiment
+
+2025-09-17T16:20:21.903Z | Chad
+whos adding puts
+
+2025-09-17T16:22:56.747Z | Jac
+i am not yet. i will be after powell speech
+
+2025-09-17T16:23:22.438Z | Mas
+same
+
+2025-09-17T16:25:35.481Z | Jac
+i think early bears might get squeezed
+
+2025-09-17T16:27:51.925Z | nynume
+anyone thinking gold dumps a bit?  Seeing them buying puts.
+
+2025-09-17T16:32:42.938Z | RSA
+https://x.com/jimcramer/status/1968316645556035866
+
+2025-09-17T16:32:47.914Z | RSA
+what a track record lol
+
+2025-09-17T16:41:51.578Z | William Smith
+TLT falling and yields going up 🤔
+
+2025-09-17T16:42:08.854Z | Mas
+oh oh
+
+2025-09-17T16:43:33.390Z | Mas
+hoping for lord powel to get us to rip to 6545
+
+2025-09-17T16:44:03.284Z | Mas
+
+2025-09-17T16:44:19.404Z | Mas
+6645**
+
+2025-09-17T16:50:04.871Z | Jeffrey K
+Go onnn, slap the piggy and run.. ooh hoo hoo
+
+2025-09-17T16:50:48.048Z | Mas
+Lol my comment structure looks like a volume profile or a .....
+
+2025-09-17T17:19:21.460Z | RE
+Anyone holding long into release?
+
+2025-09-17T17:20:55.530Z | EMD1
+Alma, I'm grateful for your modeling and read on the market and "house". I'm newish to options. When you moved beyond BSM to add skewness and kurtosis, which model did you use?
+I think you mentioned it in a chat some time back, and you posted a paper. Is it something like:
+"a non-rough path-dependent model and a two-factor Markovian model that outperform their rough counterparts in capturing SPX smiles between one week and three years, with only 3 to 4 parameters"
+From: https://arxiv.org/html/2401.03345v2
+Thank you.
+
+2025-09-17T17:36:46.220Z | Jolene
+Vix crush?
+
+2025-09-17T17:39:02.470Z | William Smith
+Looks that way
+
+2025-09-17T17:53:10.026Z | Fractalearner
+Only way Vix gets crushed to  14 range is with super dovish guidance. In fact would bet on Vix to explode higher post release of the dot plots if 4 dissenters are in there or if the guidance is hawkish.
+
+2025-09-17T17:54:32.124Z | راشد المنصوري
+Fomc minutes matter
+
+2025-09-17T17:54:45.745Z | J.K.
+Who's ready for this madness that's about to hit lol
+
+2025-09-17T17:54:47.545Z | راشد المنصوري
+Cut is priced in
+
+2025-09-17T17:55:10.118Z | راشد المنصوري
+And according to alma don't expect big things
+
+2025-09-17T17:55:15.370Z | Fractalearner
+Only 25bps is priced in. Not 50bps. Also as you said guidance matters
+
+2025-09-17T17:55:28.519Z | راشد المنصوري
+I will short if levels are broken
+
+2025-09-17T17:55:44.655Z | Fractalearner
+remember first move is always the fake move
+
+2025-09-17T17:55:46.497Z | Mas
+never say never
+
+2025-09-17T17:56:48.108Z | Fractalearner
+
+2025-09-17T17:59:12.344Z | Jeffrey K
+1 minute batshit crazy warning
+
+2025-09-17T18:00:16.511Z | Mas
+664 calls for the win
+
+2025-09-17T18:00:20.579Z | Δboy
+https://www.youtube.com/watch?v=oQ246jra6cM
+
+2025-09-17T18:00:36.080Z | Fractalearner
+boom it goes
+
+2025-09-17T18:01:13.366Z | Fractalearner
+25bps. All that is left is how divided decision and guidance. Powell goes live at 2:30 ET
+
+2025-09-17T18:01:37.720Z | Fractalearner
+wow 2 more coming this year. Market should love this.
+
+2025-09-17T18:02:40.808Z | Fractalearner
+so overall additional 50bps of cuts on top of this 25bps coming before year end.
+
+2025-09-17T18:03:33.054Z | Jac
+hell yeah massive green dildo incoming. gonna short this
+
+2025-09-17T18:05:51.729Z | Fractalearner
+That 50bps additional this year was not priced in. This is going way up.
+
+2025-09-17T18:09:26.119Z | Fractalearner
+Powell is a clever man. He did not outright give what Trump wanted and only gave 25bps now. Threw in the additional 50bps cuts and gets him off his back. Also in the presser at 2:30 all that he needs to do is just maintain neutral language and the market will soar towards close.
+
+2025-09-17T18:10:40.985Z | Jac
+i think 6700 today/tomorrow
+
+2025-09-17T18:15:22.916Z | Jeffrey K
+
+2025-09-17T18:15:33.683Z | Doritos
+Why is market selling off
+
+2025-09-17T18:16:35.056Z | billjr
+Next year's dot plot is very uncertain...likely less than market priced in
+
+2025-09-17T18:21:43.041Z | Jeffrey K
+fly pattern is a long fly around 6580 as center.
+
+2025-09-17T18:26:01.954Z | Jeffrey K
+it's just ranging for now
+
+2025-09-17T18:27:35.547Z | Jac
+now the most important thing is what tie will powell wear
+
+2025-09-17T18:29:01.420Z | Jeffrey K
+higher area of 6635.79 - 6660.14
+
+2025-09-17T18:29:14.323Z | Jeffrey K
+upper bollinger is at 6635 ATM
+
+2025-09-17T18:29:49.562Z | Jeffrey K
+
+2025-09-17T18:30:39.797Z | Jac
+purple tie omg massive pump incoming
+
+2025-09-17T18:36:07.279Z | راشد المنصوري
+Not as hawkish
+
+2025-09-17T18:40:06.455Z | Jac
+FED CHAIR POWELL:"Risks to inflation are tilted to the upside, and risks employment are tilted to the downside, a challenging situation." if its not hawkish i dont know what is
+
+2025-09-17T18:40:12.659Z | Jolene
+vix 16 not giving up, syticky
+
+2025-09-17T18:40:27.849Z | Jac
+he admited that us economy is in stagflation
+
+2025-09-17T18:41:03.352Z | راشد المنصوري
+💰Thank you alm ur a genius
+
+2025-09-17T18:50:13.508Z | han
+Indeed, it takes genius to be able to read the tape when things don't seem to add up.
+
+2025-09-17T18:54:21.332Z | nynume
+holy gold
+
+2025-09-17T18:55:22.370Z | Mac
+J Powell too good at this to get trapped by any of these questions 🤣
+
+2025-09-17T18:58:55.849Z | Chad
+that was the dip folks
+
+2025-09-17T18:58:57.941Z | Chad
+BTFD
+
+2025-09-17T19:00:23.503Z | Terrence Chan
+Thank you Alma! Your 6623.61 level was key today
+
+2025-09-17T19:00:46.777Z | Terrence Chan
+
+2025-09-17T19:01:17.771Z | Terrence Chan
+
+2025-09-17T19:01:50.519Z | Terrence Chan
+6590 local pin also key insight
+
+2025-09-17T19:02:18.473Z | 670583
+Alma gonna nail the pin today?
+
+2025-09-17T19:07:50.803Z | RE
+😂 what a shake out
+
+2025-09-17T19:08:17.029Z | Jac
+nasdaq gonna explode
+
+2025-09-17T19:12:51.247Z | RE
+I guess the fuse was broken 😜
+
+2025-09-17T19:16:56.054Z | Jac
+give it some time. vix crash incoming for now
+
+2025-09-17T19:17:17.999Z | J.K.
+Some hawkish statements, but he's overall dovish.
+
+2025-09-17T19:17:28.060Z | J.K.
+Market responding now after the dip.
+
+2025-09-17T19:17:46.150Z | Fractalearner
+that was the drop and recovery. Vix crush should send it higher. Overall dovish. No more fear in the market
+
+2025-09-17T19:17:57.637Z | Fractalearner
+If you caught that momentous dip of 15 minutes congratulations
+
+2025-09-17T19:18:07.403Z | RE
+See if the bulls get edged money more time here
+
+2025-09-17T19:22:46.185Z | Alma
+strange how these 70-75 pts declines feel like nothing in this market...
+
+2025-09-17T19:23:17.903Z | Alma
+remember: odds are working against you,
+prices are working against you,
+the more time you spend in the market, the more money it will take away from you
+
+2025-09-17T19:24:00.361Z | Delvaux
+Literally just driving argh
+
+2025-09-17T19:24:25.410Z | Jac
+old man is gone we can pump this baby now
+
+2025-09-17T19:25:03.134Z | RE
+Had some nq longs and the. Shorts and long again.   Quite profitable day.  Big steak tonight ☺️
+
+2025-09-17T19:26:41.797Z | Jeffrey K
+
+2025-09-17T19:28:25.220Z | Jac
+
+2025-09-17T19:28:50.744Z | Alma
+nice quick rebound from the downside pivot.
+it means, it didn't wanted to go down
+this is why these pivots matter, they expose bull/bear traps
+
+2025-09-17T19:30:37.184Z | RE
+did you end up playing via futures alama
+
+2025-09-17T19:31:34.895Z | RE
+interested to hear how many pts a professional like yourself was able to collect on a day like today.
+
+2025-09-17T19:39:06.219Z | William Smith
+It’s hard to be bearish if we cannot even close below the overnight low
+
+2025-09-17T19:40:39.236Z | Doritos
+665 SPY coming soon once 660 is held
+
+2025-09-17T19:42:26.750Z | Jeffrey K
+I'd slap that pig so hard there!!
+
+2025-09-17T19:42:53.424Z | Jeffrey K
+i've got futures orders fishing for a negative gamma launch at close
+
+2025-09-17T19:44:08.761Z | Eli
+Lmao dip buying is so easy
+
+2025-09-17T19:44:25.362Z | Eli
+Purple tie never ceases to amaze me anymore
+
+2025-09-17T19:45:08.449Z | Eli
+The amount of shorts that took profit down at the low was insane
+
+2025-09-17T19:45:47.328Z | Eli
+Hoping we get a sub6600 close
+
+2025-09-17T19:51:28.006Z | Jeffrey K
+
+2025-09-17T19:53:04.823Z | Eli
+What a day
+
+2025-09-17T19:53:25.266Z | Eli
+That 6590spx an eyesore for bulls right now
+
+2025-09-17T20:04:37.711Z | William Smith
+This risk reversal window is the size of a bees dick
+
+2025-09-17T20:13:08.780Z | 670583
+She did it again 🐐
+
+2025-09-17T20:13:41.345Z | Igor
+Iron fly 6600 🔥
+
+2025-09-17T20:52:19.546Z | Marcus Carlsson
+
+2025-09-17T21:06:28.314Z | billjr
+Anybody notice what es closed at 🔥
+
+2025-09-17T21:10:27.743Z | billjr
+Mark that on your charts.
+
+2025-09-17T22:02:23.181Z | Juan Emilio Calderon Ramirez
+Is this real? Lol
+
+2025-09-17T22:02:27.612Z | Juan Emilio Calderon Ramirez
+Or AI?
+
+2025-09-17T22:15:00.166Z | Alma
+i didn't trade... i still have high fever, after listening to a lecture, i slept.
+the long-term portfolio is ok for me, plus i will increase the gold and bond exposures soon
+
+2025-09-17T22:18:36.273Z | Alma
+i only had 25d calls sold at the open
+
+2025-09-17T22:27:13.935Z | Juan Emilio Calderon Ramirez
+
+2025-09-17T22:28:04.904Z | Δboy
+lol….  Takes him 10min to change songs.
+
+2025-09-17T22:29:15.529Z | Δboy
+End of every track he says “let’s wait and see what song we should play next”… the plays the same song again while he is deciding
+
+2025-09-17T22:37:47.997Z | han
+Gute Besserung...
+
+2025-09-17T22:38:07.774Z | billjr
+6700 friday trump xi pump?
+
+2025-09-17T22:51:58.234Z | William Smith
+lol already above the RTH high for ES
+
+2025-09-17T23:08:40.864Z | han
+Do you still plan to buy heavily into next the 2-3 years, taking advantage of the AI bubble, or is it the time to shift to lifeboats in safe havens (gold, bonds etc.)?
+
+2025-09-17T23:13:06.363Z | Alma
+why would it change?
+
+2025-09-17T23:18:45.691Z | Fractalearner
+Yup Spy back at 661 as well. Your line about window of reversion being as small as bees.. something was hilarious and apt :)
+
+2025-09-17T23:41:02.600Z | kk
+Hmmm IK you mentioned risk window open next week, that’s your buying opportunity into the next 2-3 years? Originally was expecting 10% in your July AI post but not sure if that has changed
+
+2025-09-18T00:11:29.042Z | RE
+Damn that's been lingering for a while, I guess you're human after all!  Put your feet up get some rest!  Last week of summer 🌞
+
+2025-09-18T00:12:19.796Z | Terrence Chan
+Feel better soon Alma. Your long term health more important than taking a few days off the substack too if you need to
+
+2025-09-18T00:18:47.698Z | BTFD
+Where can the vix data be found in OD?
+
+2025-09-18T01:36:19.941Z | gogumappa
+don't think it's released yet
+
+2025-09-18T01:52:24.749Z | billjr
+
+2025-09-18T08:39:28.046Z | Kikao
+Hi Alma, thanks again for the knowledge you share. What about the big gold resistance you talked about in the post “playing the long term bubble”? Odds now favor the melt up you also talked about?
+
+2025-09-18T08:49:07.130Z | Jason Valvano
+Where is this thing going
+
+2025-09-18T08:49:12.061Z | Jason Valvano
+Only up
+
+2025-09-18T08:54:26.863Z | Hina Bhudia
+Can someone help me on what the current reversion level is please ?
+
+2025-09-18T09:16:16.983Z | Kikao
+🎯
+
+2025-09-18T09:31:44.258Z | Eli
+Buy the dip
+
+2025-09-18T09:31:46.695Z | Eli
+Lmaooo
+
+2025-09-18T09:35:20.345Z | Eli
+Decent short off near 6720-25spx equivalent
+
+2025-09-18T09:35:42.336Z | Eli
+Would be greedy not to take long profits here
+
+2025-09-18T09:35:50.570Z | Eli
+Basically the 100 point move from below
+
+2025-09-18T09:53:51.870Z | RE
+Finally my ESZ25 6720.  If only it came a few nights ago 😂
+
+2025-09-18T10:26:37.737Z | billjr
+Should see a cool off week next week
+
+2025-09-18T10:27:14.242Z | Eli
+Famous last words
+
+2025-09-18T10:27:22.631Z | Eli
+Lmaoo
+
+2025-09-18T10:27:27.000Z | billjr
+Tru that
+
+2025-09-18T10:30:52.514Z | billjr
+Most of these rising channels have been about 10 days followed by pullback or consolidation. 664 is apex of the rising wedge so we shall see.
+
+2025-09-18T10:37:19.607Z | RE
+I thought sells lately come  after mopex for a few days,.follow by melt up, and sells again first few days of calendar month .
+
+2025-09-18T10:38:27.545Z | Doritos
+We hit 665
+
+2025-09-18T10:51:15.589Z | billjr
+Look at 7/29-8/1 candles vs 9/16-today 👀
+
+2025-09-18T10:53:45.973Z | billjr
+
+2025-09-18T11:02:27.272Z | Mas
+not sure how much higher we are going but theres a put position growing at 6550, Pop and fade?
+
+2025-09-18T11:03:06.863Z | Mas
+
+2025-09-18T11:03:21.361Z | Mas
+/ES
+
+2025-09-18T11:03:47.608Z | Mas
+
+2025-09-18T12:15:52.783Z | J.K.
+This market is insane
+
+2025-09-18T12:16:07.635Z | J.K.
+Long, long, and long again...
+
+2025-09-18T12:18:38.523Z | Fractalearner
+as said yesterday will pop much higher and 665 hit pre market on spy. Won't be surprised if 670 hits during regular hours
+
+2025-09-18T12:23:48.251Z | Fractalearner
+Not necessary it has to reverse at 6650 or 6700. There can be small corrections through time and can march higher based on the same reasons which as elevated the market so far since April. Admin and Bessent can pump this as long as they want.
+
+2025-09-18T12:36:15.385Z | nynume
+Yesterday's ETF put/call ratio was 1.95, the highest since it was 1.93 on April 4th.
+
+2025-09-18T12:39:32.182Z | Stanley
+Alma levels are insanely accurate. ES hit yesterday upside target and fade during After-hours
+
+2025-09-18T12:53:59.674Z | billjr
+Yields up dollar up equity up
+
+2025-09-18T12:55:19.190Z | billjr
+Gold up lol am I missing anything

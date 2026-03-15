@@ -1,0 +1,1524 @@
+Chat Post
+2025-11-01T10:51:48.976Z | Alma
+WEEKLY CHAT (01 - 09/Nov)
+
+Replies
+2025-11-01T10:54:25.517Z | Alma
+As I said in the last Sunday post, I won't work in the next week.
+I must take a break bcs I will have a lot of side-works to do in my main field.
+Weekly post arrives tomorrow, and I will also send the script inputs for Monday.
+
+2025-11-01T10:54:32.474Z | Alma
+If you don't have an OptionsDepth account yet, or if you already have one but want a 10% discount for next month, then use this link: https://optionsdepth.com/app?via=alma
+or my promo code ODALMA
+
+2025-11-01T11:14:02.921Z | Alma
+@Stanley to your question about vanna
+
+2025-11-01T11:14:05.832Z | Alma
+
+2025-11-01T11:14:16.998Z | Alma
+it is a typo i think
+
+2025-11-01T11:22:50.530Z | Alma
+
+2025-11-01T11:24:01.504Z | Alma
+
+2025-11-01T11:25:02.387Z | Alma
+
+2025-11-01T11:30:29.197Z | Alma
+for a long call
+
+2025-11-01T11:31:48.391Z | Alma
+for a long put, just reverse it
+
+2025-11-01T11:37:13.770Z | Alma
+
+2025-11-01T11:41:16.474Z | Alma
+by the way I always link a thread from me about gamma, vanna and charm in the daily posts
+
+2025-11-01T11:41:18.955Z | Alma
+
+2025-11-01T11:41:33.618Z | Alma
+there is an intuitive basic description of them
+
+2025-11-01T11:44:15.775Z | Stanley
+Don’t see the difference between long call and long put.
+
+2025-11-01T11:45:24.866Z | Stanley
+Is it a chart for long put?
+
+2025-11-01T11:47:50.525Z | Alma
+look at the second one
+
+2025-11-01T11:52:03.377Z | Alma
+think about charm and vanna this way:
+
+CHARM
+delta change in time.
+
+If the contract is OTM, the charm will push the delta towards zero, bcs there is less and less chance for the contract to expire ITM.
+Simple math: call has positive delta. To push it towards zero, you need to add negative value to it. So OTM call charm is negative.
+put has negative delta. To push its delta towards zero, you need to add a positive number to it. So OTM put charm is positive.
+
+For ITM contracts, you want to push the delta towards one. Same logic from here.
+
+2025-11-01T12:03:32.373Z | Alma
+VANNA
+
+take vanna as the delta change to the PROBABILITY distribution that the contract will expire ITM.
+Why? bcs volatility is the SD of log returns, and implied vol is the bet on future volatility.
+See my educational post about volatility.
+Higher vol = wider range of returns,
+lower vol = narrower range of returns.
+
+So for an OTM call, if IV goes down, the probability to expire ITM will diminish, bcs the market estimates a lower IV for that contract as rational.
+So IV goes down... delta should go down to, in order to express the diminishing probability.
+So vanna must be positive, right? Bcs IV down means you extract the vanna value from the delta value.
+
+And if IV goes up, so the market starts to assign higher chance for the contract to finish in ITM, expecting wider and faster spot movements - the delta also should go up.
+Mathematically: IV up, you add the vanna value to the delta value, and bcs vanna value is a positive number, the delta will increase.
+Simple, right?
+
+For an OTM put, the delta is negative, so everything turns around, like when you mirror a function multiplying by -1
+Same logic here, but don't forget that in negative territory, the zero is upward!
+
+So if IV goes down, the delta should go towards zero... meaning, it should go upward, bcs the delta is negative.
+IV down, meaning you have to extract the vanna value from the delta value.
+So vanna value must be a negative number, bcs extracting a negative number is an basically addition.
+
+And if IV goes up, the delta should go away from zero, meaning it should go down, as delta is negative.
+So IV up, you should add the vanna value to the delta value...
+and if vanna value is negative, adding a negative number is an extraction basically, so the delta will be more negative ("shorter").
+
+(or in otherwords: the absolute value of delta will increase)
+
+so vanna is negative for OTM puts
+
+2025-11-01T12:05:39.106Z | Alma
+Homework:
+take a paper, and draw a table with gamma, charm and vanna.
+Long and short contracts, OTM and ITM, calls and puts.
+
+and derive how these greeks behave to their outputs:
+gamma to change if spot goes up, spot goes down,
+charm as time is passing (time only moves forward, positive value, going ahead)
+vanna, if vol moves up, or vol moves down.
+
+theoretical simple example.
+derive them, and you will understand
+
+2025-11-01T12:14:09.471Z | راشد المنصوري
+Thank you professorin
+
+2025-11-01T12:14:20.655Z | راشد المنصوري
+Perfect explaination
+
+2025-11-01T12:14:41.148Z | راشد المنصوري
+Is the chat thumbnail shoot in Wien?
+
+2025-11-01T12:34:04.625Z | Alma
+yes near to Jubiläumswarte
+
+2025-11-02T01:54:51.594Z | Eli
+Oh man biggest rip coming to the market Sunday lol
+
+2025-11-02T01:55:10.212Z | Eli
+Buy the dip
+
+2025-11-02T01:55:13.818Z | Eli
+😂
+
+2025-11-02T03:24:10.510Z | Stanley
+Why? Could you explain what led you to this?
+
+2025-11-02T03:44:45.680Z | han
+https://youtu.be/CpB7-8SGlJ0?si=4HbYCjbYrK6I01Mj
+
+2025-11-02T11:09:30.280Z | Stanley
+
+2025-11-02T11:16:15.317Z | Eli
+✨ 7000 ✨
+
+2025-11-02T17:54:50.877Z | han
+Also, Alma, you seem to have deleted some of your older political posts :))
+
+2025-11-02T17:59:13.305Z | han
+It's true that if one loves freedom, then politics is more about a balance of power and damage control/stop loss, rather than a single party/candidate/POV :))
+
+2025-11-02T18:18:59.503Z | han
+Actually, perhaps there is a certain similarity with trading. Electoral democracy is still better because it allows to cut the loss, so less chance of blowing up the account :))
+
+2025-11-02T19:24:07.951Z | Alma
+the weekly post will arrive late, maybe after the futs market open
+
+2025-11-02T19:24:10.026Z | Alma
+sorry
+
+2025-11-02T19:24:18.282Z | Alma
+i'm like deutsche bahn
+
+2025-11-02T19:49:00.869Z | Insane
+Die sind immer spät, du nicht
+
+2025-11-02T21:38:45.544Z | han
+Endes gut alles gut ;)
+
+2025-11-02T23:25:51.203Z | Jeffrey K
+guessing a dealer short fly with center 6865 for tomorrow...
+
+2025-11-03T00:04:01.448Z | billjr
+So does the market crash if tariffs are overturned now?
+
+2025-11-03T00:08:12.954Z | Alma
+https://stochvoltrader.substack.com/p/venezuela-long-vomma-and-zomma-weekly
+
+2025-11-03T00:08:17.991Z | Alma
+WEEKLY POST IS OUT
+
+2025-11-03T00:08:23.526Z | Alma
+and I'm out too
+
+2025-11-03T00:09:22.001Z | Stanley
+Hey Alma, enjoy your time off.
+
+2025-11-03T04:58:45.409Z | Terrence Chan
+Thanks Alma! Have a good week
+
+2025-11-03T13:41:59.429Z | Praveen Bandi
+I’d appreciate it if someone could provide the options depth heatmap for today. Thank you.
+
+2025-11-03T13:51:56.578Z | Jeffrey K
+
+2025-11-03T14:02:22.356Z | Jeffrey K
+and everyone goes crazy...
+
+2025-11-03T14:02:53.184Z | راشد المنصوري
+6855-6860 is line in the sand
+
+2025-11-03T14:03:19.019Z | راشد المنصوري
+Smells like momentum day spirit
+
+2025-11-03T14:25:34.897Z | Praveen Bandi
+PUTs on opening?
+
+2025-11-03T14:51:05.476Z | راشد المنصوري
+Not trading at opening
+
+2025-11-03T14:51:23.742Z | راشد المنصوري
+Wanna see movements patterns first
+
+2025-11-03T14:52:08.362Z | راشد المنصوري
+And then if i see something that takes me to assume a direction i take a trade
+
+2025-11-03T14:52:30.853Z | راشد المنصوري
+Alma says patience. Not a guessing competition
+
+2025-11-03T15:09:23.152Z | William Smith
+I know Alma is in vacay but what are the news if 11/5 and the possible supreme courts decision on tariffs
+
+2025-11-03T15:32:07.451Z | Matthew
+
+2025-11-03T15:48:57.919Z | Jeffrey K
+something is afoot
+
+2025-11-03T15:51:29.125Z | billjr
+Market is gonna be on edge with tariff rulings weds.
+
+2025-11-03T16:10:54.504Z | VincentiusTrading
+Yeah I think tariff ruling will be big impact even trump is prepping us in interview with 60 minutes
+
+2025-11-03T16:28:16.242Z | Jeffrey K
+Is it at the supreme ct. ?
+
+2025-11-03T16:30:48.062Z | billjr
+Yes both sides make arguments to s.c weds. And then likely they'll make ruling. By administration's tone it sounds like s.c will side with previous ruling
+
+2025-11-03T16:40:11.180Z | Insane
+Which was?
+
+2025-11-03T16:40:45.847Z | Insane
+I didnt follow
+
+2025-11-03T16:44:04.113Z | billjr
+Original ruling struck down Trump's use of the 1977 International Emergency Economic Powers Act, or IEEPA. But they will likely try to switch to a different tariff act.
+
+2025-11-03T16:45:08.538Z | billjr
+Which could mean alot of these "deals " with countries wont happen.
+
+2025-11-03T17:12:08.669Z | Insane
+Ty
+
+2025-11-03T18:42:00.367Z | Juan Emilio Calderon Ramirez
+I just rralized
+
+2025-11-03T18:42:07.273Z | Juan Emilio Calderon Ramirez
+That dropped at the open
+
+2025-11-03T18:42:11.247Z | Juan Emilio Calderon Ramirez
+Was news?
+
+2025-11-03T18:42:13.454Z | Juan Emilio Calderon Ramirez
+Lol
+
+2025-11-03T18:42:28.655Z | Juan Emilio Calderon Ramirez
+Was straight line
+
+2025-11-03T19:29:39.569Z | Vman
+What do you mean by this?
+
+2025-11-03T19:50:42.649Z | Ernest Enriquez
+I'm going to ask Santa Claus for some overweekend gap closure.
+
+2025-11-03T20:11:30.533Z | Jeffrey K
+
+2025-11-03T22:32:16.986Z | billjr
+Most of the deals were predicated on countries needing to reduce tariffs, if trump cant implement those tariffs those countries have no reason to  invest the capital they pledged into the u.s.
+
+2025-11-03T22:36:43.400Z | Jeffrey K
+inverse H&S ?
+
+2025-11-03T22:37:23.656Z | Jeffrey K
+implied target 6945
+
+2025-11-03T22:38:26.929Z | billjr
+That or we break down on the bear flag to fill some gaps.
+
+2025-11-04T00:00:51.739Z | Vman
+This sort of just seems like a hidden bear case no matter what because if there are no tarrifs then yea it screws up the whole thing. If there are tarriffs then that means he has the authority to take it further.
+
+2025-11-04T00:01:28.437Z | Vman
+this is assuming that tarriffs are the binary event. I haven't seen the word tarriff in so long and felt i needed to re-up
+
+2025-11-04T00:02:13.330Z | Vman
+buying calls
+
+2025-11-04T00:13:39.827Z | billjr
+Biggest issue now would be losing tariff revenue. Bbbill turns into big debt and bond market goes bananas again.
+
+2025-11-04T01:21:02.102Z | billjr
+Dxy>100
+
+2025-11-04T05:53:16.311Z | Stanley
+Anything happened? dropped so much.
+
+2025-11-04T06:09:00.077Z | William Smith
+🤯 my Wednesday 6800Ps are up massive
+
+2025-11-04T06:09:30.204Z | William Smith
+Gap fill incoming
+
+2025-11-04T06:42:48.041Z | Ernest Enriquez
+santa never fails
+
+2025-11-04T09:36:48.582Z | راشد المنصوري
+Just alma being alma
+
+2025-11-04T10:11:53.244Z | Doc McGraw
+📊 5:00 AM Update: The Line Broke — Testing Critical Support
+Date: 2025-11-04
+Straddle / EM: 44.10 (ref. 6785) · Lower EM 6740 / Upper EM 6830
+Current: SPX ~6762 (5:00 AM ET)
+Move: From 6790 (3:30 AM) → 6762 = -28 points in 90 minutes 📉
+🚨 WHAT JUST HAPPENED
+We warned at 3:30 AM that 6780 was THE LINE. It broke. And exactly as expected with SHORT GEX, the move amplified fast.
+-28 points in 90 minutes. No cushion, no support, just dealers chasing the move down. This is what negative gamma does. ⚡
+
+🎯 WHERE WE ARE NOW
+We're testing the critical support confluence zone:
+• 6762 (current) = sitting right on top of:
+• 6750 = gap fill (Oct 23)
+• 6745 = 20-day MA
+• 6740 = EM bottom
+This 6740–6750 zone is THE BATTLE. Three major technical levels stacked on top of each other. If this holds, we bounce. If it breaks, next stop is 6730 (weekly EM bottom + +GEX), then 6725 (the floor). 🛡️
+🔀 IF/THEN FROM HERE
+If 6740–6750 Holds:
+• Bounce play → 6780 → 6800 → 6830 📈
+• 6780 (the line we just broke) becomes first resistance
+• This zone SHOULD hold — it's stacked with support
+If 6740 Breaks:
+• Next stops: 6730 (weekly EM bot) → 6725 (floor) 🐻
+• Below 6725 = structural break, full panic
+• We're still in SHORT GEX zone until 6725, so moves stay amplified ⚡
+If We Rip Back Above 6780:
+• Reclaim "the line" → 6800 → 6830 → 6850 🚀
+• Would be a strong reversal signal (failed breakdown)
+📝 KEY LEVELS (Updated)
+• 6840–6850 = flat close zone 🎯
+• 6830 = EM top
+• 6800 = gap fill (Oct 24) / resistance
+• 6780 = the line (now resistance) 🚨
+• 6762 = current position
+• 6740–6750 = CRITICAL ZONE (EM bot + 20-day MA + Oct 23 gap) ⚠️
+• 6730 = weekly EM bottom + +GEX 🛡️
+• 6725 = the floor 🛡️
+💡 BOTTOM LINE
+The line broke (6780). Short GEX delivered the amplified move we warned about. Now we're testing 6740–6750 — the most critical support zone with three major levels stacked together.
+Hold here = bounce. Break here = 6730, then 6725 (the floor).
+DO NOT fade this until we're at 6725 OR we reclaim 6780. We're still in the danger zone. ⚠️
+Chart confirms: we're right on top of 20-day MA, EM bottom, and Oct 23 gap. This is the stand. 🎯
+
+2025-11-04T10:14:03.260Z | William Smith
+These are the times I wish I could unload during globex
+
+2025-11-04T10:17:30.576Z | Eli
+Trade futures
+
+2025-11-04T10:17:42.560Z | Eli
+Best way to compliment your spreads
+
+2025-11-04T10:26:29.193Z | JSA
+another victory for Gann (date 11/3)
+
+2025-11-04T10:31:02.781Z | Chad
+What happened to windows of risk
+
+2025-11-04T10:32:29.203Z | Chad
+Did we just enter one
+
+2025-11-04T10:35:44.661Z | Eli
+You mean buy the dips?
+
+2025-11-04T10:35:50.504Z | William Smith
+Just like that $5k evaporated
+
+2025-11-04T10:36:30.676Z | William Smith
+Damn globex
+
+2025-11-04T10:37:15.943Z | William Smith
+ES is pretty oversold on the hourly
+
+2025-11-04T10:41:47.298Z | Doc McGraw
+What do you mean?
+
+2025-11-04T10:43:26.073Z | billjr
+Earnings season is always a window of risk
+
+2025-11-04T12:26:11.180Z | Marcus Carlsson
+They are moving outside of RTH. It's easier to push then.
+I can see us V-shape up again
+
+2025-11-04T12:36:07.109Z | Chad
+Earlier Alma highlighted the Oct windows risk - wondering if this is another
+
+2025-11-04T12:36:34.559Z | Chad
+Since she’s not expecting a crash
+
+2025-11-04T12:47:04.593Z | Eli
+Smells like a correction is coming
+
+2025-11-04T12:47:29.719Z | Eli
+Either way 6500 should be a great buy
+
+2025-11-04T12:52:47.301Z | billjr
+Just playing level by level but I have a feeling gov opening will be the catalyst to reverse back up.
+
+2025-11-04T13:13:17.407Z | J.K.
+Still within Alma's weekly range.  And of course bounces near the MOE line
+
+2025-11-04T13:14:06.958Z | J.K.
+6683 is the bottom of her vomma model and her downside pivot is 6678
+
+2025-11-04T13:21:42.870Z | RSA
+*BESSENT: COULD SELL BLACKWELLS TO CHINA ONCE THEY'RE OUTDATED
+
+2025-11-04T14:13:11.486Z | William Smith
+I’ll be a good boy if we revisit the overnight lows 🤣
+
+2025-11-04T14:13:50.523Z | Praswell
+Anyone have the OD chart to share? Thank you!
+
+2025-11-04T14:24:36.090Z | Jeffrey K
+
+2025-11-04T14:43:10.418Z | JSA
+valiant effort to hold a trendline from the 10/14 low
+
+2025-11-04T14:53:18.901Z | han
+Bounced off Alma's lower level, with little error
+
+2025-11-04T14:53:35.189Z | han
+Wish she were here
+
+2025-11-04T15:07:51.418Z | William Smith
+Very happy I sold my puts at open…sheesh
+
+2025-11-04T15:08:28.473Z | Eli
+Buy the dip…? Lmao
+
+2025-11-04T15:08:57.184Z | Eli
+Anyways 6835spx big resistance for higher. If not lower
+
+2025-11-04T15:14:42.360Z | billjr
+Beautiful plays off the levels.
+
+2025-11-04T15:38:25.245Z | RE
+Wowzer
+
+2025-11-04T15:39:15.168Z | RE
+GC long nq long.  Very very gree
+
+2025-11-04T15:40:07.354Z | RE
+Voodoo combined w Alma's GC weeklies levels. 🎯
+
+2025-11-04T16:25:17.966Z | Terrence Chan
+Probably a drop to 6780 is in motion here
+
+2025-11-04T16:26:11.763Z | Terrence Chan
+Vol complex been rising steadily since 10:40et
+
+2025-11-04T16:32:23.260Z | RE
+Yea 6790 I see.  And some "news" to bring us up to flat close.
+
+2025-11-04T16:35:58.272Z | Vman
+All about  what happens tomorrow me thinks
+
+2025-11-04T17:14:40.414Z | Daphne_meow
+Has Alma mentioned any long term purchase goal for ETH?
+
+2025-11-04T17:20:38.057Z | Terrence Chan
+There’s 6780
+
+2025-11-04T17:20:50.460Z | Terrence Chan
+Below 6760 downside momentum
+
+2025-11-04T17:21:06.899Z | Terrence Chan
+But I’m guessing we range around here
+
+2025-11-04T17:21:16.515Z | Terrence Chan
+6780-6800 is what I’ve got as centroid
+
+2025-11-04T17:24:41.555Z | William Smith
+I’m not sure how the shut down resolution would be bullish necessarily…I mean I get it logically, however the market didn’t react negatively (and hasn’t) since it happened, which is bullish…so why would resolution then also be bullish.  Seems very cake and eat it too
+
+2025-11-04T17:32:16.451Z | Jeffrey K
+it would turn sentiment major bearish, IF the market got a meager bounce and resumed selling
+
+2025-11-04T17:41:23.618Z | Jeffrey K
+
+2025-11-04T18:02:21.296Z | Jeffrey K
+GEX is thin...very small nodes
+
+2025-11-04T18:13:39.493Z | Eli
+6735-45spx looks juicy
+
+2025-11-04T18:21:42.939Z | Jeffrey K
+both these trend lines point to the IC below...
+
+2025-11-04T20:03:24.464Z | JSA
+does the centroid break in the last hour or with the ES equivalent in the night session?
+
+2025-11-04T20:24:16.731Z | Jeffrey K
+i think 6760 holds RTH but i could be dead wrong
+
+2025-11-04T20:31:48.839Z | Jeffrey K
+
+2025-11-04T20:38:32.805Z | Jeffrey K
+
+2025-11-04T20:39:14.765Z | Praveen Bandi
+Are you heading down towards 6740?
+
+2025-11-04T20:43:44.925Z | William Smith
+ETH - 50% fib retracement level and weekly 50 MA at ~3150ish
+
+2025-11-04T20:48:01.834Z | Jeffrey K
+last look before MOC
+
+2025-11-04T20:52:45.666Z | Jeffrey K
+
+2025-11-04T21:14:39.867Z | Jeffrey K
+not sure the question??
+
+2025-11-04T23:13:27.184Z | Jeffrey K
+Lunatic Pig... I know you're out there
+
+2025-11-05T00:33:47.352Z | billjr
+6700 target tomorrow maybe then bounce
+
+2025-11-05T01:06:23.606Z | William Smith
+Okay now sad I sold my Wedneday 6800Ps at open today lol.  Just kidding, 300% is a freaking win.
+
+I do think we set up for a reversion trade tomorrow with the RSI getting down pretty low on ES/NQ
+
+2025-11-05T01:09:52.984Z | billjr
+Japan market gettin slammed
+
+2025-11-05T01:14:12.406Z | billjr
+Kospi down 4% ouch.
+
+2025-11-05T01:15:34.648Z | billjr
+Selling could get heavy this week.
+
+2025-11-05T01:34:40.509Z | William Smith
+Feels like there’s something else going on under the hood, company’s with decent earnings are getting sold off
+
+2025-11-05T01:35:08.489Z | William Smith
+Nikkei down 3.15%
+
+2025-11-05T06:37:13.719Z | Daphne_meow
+Hi.
+I’m a newish subscriber
+
+SPY: 689.2457224040413 - 674.8742775959586;
+vol based margin of error bounds: 692.7213092048091, 671.3986907951908
+
+The after market hits 670. Does it mean it breaks the 671 support and it will go lower this week?
+
+2025-11-05T06:54:06.887Z | Ekzotika
+Alma, do you speak Russian?
+
+2025-11-05T10:22:37.343Z | راشد المنصوري
+She is austrohungarian. She speaks french for sure
+
+2025-11-05T10:22:53.165Z | راشد المنصوري
+If it builds structure
+
+2025-11-05T10:23:16.984Z | راشد المنصوري
+Why does she need to make a grown man cry with her x posts?
+
+2025-11-05T12:48:21.774Z | Jeffrey K
+
+2025-11-05T12:49:53.015Z | Jeffrey K
+WED:
+
+2025-11-05T12:53:55.381Z | Jeffrey K
+
+2025-11-05T13:33:32.908Z | RSA
+*TRUMP: SHUTDOWN IMPACTING STOCK MARKET
+
+2025-11-05T13:47:05.838Z | William Smith
+Trump seeing possible two red days in a row and is panicking
+
+2025-11-05T13:51:56.051Z | RSA
+yep
+
+2025-11-05T13:52:06.401Z | RSA
+good thing he is a man of the people
+
+2025-11-05T14:52:59.402Z | RE
+Anyone spend any time with the new mgtn index yet?
+
+2025-11-05T15:00:40.181Z | RSA
+*US OCT. ISM SERVICES PMI HITS 8-MONTH HIGH OF 52.4; EST. 50.8
+
+2025-11-05T15:35:04.519Z | Praveen Bandi
+Is there a chance for QQQ go higher from here?
+
+2025-11-05T16:03:38.727Z | Jeffrey K
+obeying lower line for now
+
+2025-11-05T16:06:35.575Z | JSA
+Waiting for Trump's big (yuge) speech on the economy at 1 pm from Miami
+
+2025-11-05T16:08:33.192Z | Jeffrey K
+first line:  It's a Great Day to Buy, perhaps the Greatest
+
+2025-11-05T16:10:37.724Z | Doritos
+May be we go to 692 today ✈️✈️✈️ after trump speech
+
+2025-11-05T16:53:06.741Z | Jeffrey K
+
+2025-11-05T17:49:36.909Z | Fractalearner
+looks like supreme court potentially stepping in to roll back tariffs contributed to the bounceback along with adp payrolls being better than expected. Will be interesting to see if indices can reclaim the ATH.
+
+2025-11-05T17:57:15.063Z | Vman
+We have to first see what the refunds look like. If the govt was open then ya i could see a squeeze but there is a liqudity crunch atm and if refunds need to go out that could be an issue
+
+2025-11-05T17:59:49.827Z | Vman
+This is also his only foreign policy tool that he has talked about since the 90's lol. Dude isn't just gonna let this slide and some shit will happen
+
+2025-11-05T18:00:32.914Z | Vman
+But logic has also not worked in this market so who knows i guess lol
+
+2025-11-05T18:36:03.196Z | Fractalearner
+we are united in the read and logic has not worked. Almost a rerun of the april playbook where he shouted market will go to ATH. He did the same today on Truth social. Even if the courts yank his power he will come up with some other loop hole.
+
+2025-11-05T18:39:18.393Z | Fractalearner
+it has been a crazy rally since April and a 10% fall has not materialized still. Who knows if this kick starts another lock out rally beyond the ATH or the indices finally crumble under the dismal breadth and worsening labor market.
+
+2025-11-05T19:03:46.154Z | Jeffrey K
+and wants rate cuts
+
+2025-11-05T19:09:11.375Z | JSA
+he wants negative rates; he's an OPM guy.  and if GDP comes in < 4.2%, BEA Director gets a pink slip
+
+2025-11-05T19:09:42.207Z | Vman
+any result of the SC case?
+
+2025-11-05T19:12:10.244Z | RSA
+*APPLE TO USE 1.2 TRILLION PARAMETER GOOGLE MODEL TO POWER SIRI
+
+2025-11-05T19:12:39.503Z | Jeffrey K
+probably takes weeks if not months for a decision
+
+2025-11-05T19:14:53.915Z | RSA
+"A ruling could come as quickly as the end of the year, given the ultra-expedited schedule the Supreme Court has set so far."
+
+2025-11-05T19:19:05.439Z | Vman
+Right but they're leaning towards removing the power of tarrifs right?
+
+2025-11-05T19:19:15.384Z | billjr
+We got enough runway for that gapfill above?
+
+2025-11-05T19:20:40.209Z | Eli
+Oh man did y’all buy the dip!
+
+2025-11-05T19:25:56.738Z | Vman
+Not yet - still trying to check a few things out lol
+
+2025-11-05T19:33:18.173Z | Fractalearner
+missed it and suspect going higher. Dunno if this is all the fall we get for 2025 and if everything rips higher into end of the year.
+
+2025-11-05T19:43:55.012Z | Eli
+I feel you man. I hardly swing trade now
+
+2025-11-05T19:45:22.486Z | Eli
+Holidays are coming soon… slow grindy 10 point days,
+
+2025-11-05T19:46:21.803Z | Eli
+6800 to 7200 with 20 point grind days so 40 trade days left right?
+
+2025-11-05T19:47:11.307Z | Eli
+Would’ve been nice to grab 6650 for a swing
+
+2025-11-05T19:47:22.319Z | Eli
+Would’ve made more sense…
+
+2025-11-05T19:55:11.459Z | Daphne_meow
+wondering if anymore dips coming for the rest of year
+
+2025-11-05T20:07:54.731Z | RSA
+*OpenAI Would Like Federal Backstop For Data Center Investments, CFO Says -- WSJ
+
+2025-11-05T20:08:23.396Z | RSA
+why not, lol
+
+2025-11-05T20:35:24.155Z | Jeffrey K
+
+2025-11-05T20:35:53.149Z | Jeffrey K
+we just dipped 7 pts. !!
+
+2025-11-05T20:37:57.559Z | Jeffrey K
+
+2025-11-05T20:46:19.355Z | Jeffrey K
+neg gamma above and below
+
+2025-11-05T20:52:50.948Z | Jeffrey K
+
+2025-11-05T20:57:56.488Z | Jeffrey K
+Jamie 'Slap Slap
+
+2025-11-05T20:57:59.603Z | Jeffrey K
+Dimon
+
+2025-11-05T20:58:01.783Z | Jeffrey K
+
+2025-11-05T20:58:11.296Z | Vman
+got stopped out this morning out of my puts lol
+
+2025-11-05T20:59:15.532Z | Vman
+Guess thats how the game goes sometimes
+
+2025-11-05T21:02:32.158Z | Jeffrey K
+bro, i was happy to get out even on some shorts and i said to myself, now it can collapse
+
+2025-11-05T21:04:03.625Z | Jeffrey K
+34 points!!
+
+2025-11-05T21:04:22.266Z | Vman
+yea i broke even i still have a massive put debit spread for 6600-6500 into end of Nov. So need to do some more thinking on this one lol
+
+2025-11-05T21:10:50.606Z | William Smith
+I knew we’d puke into close with all that one sided trade today…just didn’t think we’d puke that much
+
+2025-11-05T21:38:18.199Z | billjr
+Still think we have some unfinished business lower
+
+2025-11-05T22:29:16.639Z | William Smith
+Agreed, I think the 10/10 low needs to be tested
+
+2025-11-06T00:40:52.208Z | Juan Emilio Calderon Ramirez
+How is going @Alma
+
+2025-11-06T00:40:56.591Z | Juan Emilio Calderon Ramirez
+Miss u
+
+2025-11-06T08:48:03.301Z | راشد المنصوري
+Hedge funds short nvdia and palantir with tree hands
+
+2025-11-06T10:13:50.436Z | Eli
+Hedge funds theoretically underwater with all the shit bonds they bought as leverage. Market won’t go down. They need interest rates to go lower to get out of their loans
+
+2025-11-06T12:29:35.448Z | راشد المنصوري
+Hedge funds are HEDGE funds
+
+2025-11-06T12:30:34.376Z | Eli
+They be hedge funding the hedges
+
+2025-11-06T12:30:39.570Z | Eli
+😂😂😂
+
+2025-11-06T12:42:01.775Z | راشد المنصوري
+NVDA fell like 14$ i'm pretty sure they locked huge profit
+
+2025-11-06T13:01:37.780Z | Jeffrey K
+Thur
+
+2025-11-06T13:01:41.108Z | Jeffrey K
+
+2025-11-06T13:17:07.994Z | Jeffrey K
+
+2025-11-06T13:34:01.411Z | Jeffrey K
+include a few more levels, neg gamma across the board
+
+2025-11-06T13:41:29.985Z | Mas
+95 target on es?
+
+2025-11-06T13:41:43.863Z | Mas
+6895
+
+2025-11-06T14:02:20.817Z | RSA
+*NANCY PELOSI ANNOUNCES HER RETIREMENT FROM CONGRESS: WAPO
+
+2025-11-06T14:04:25.904Z | Jeffrey K
+her insider trading will no longer be 'legal'
+
+2025-11-06T14:09:13.189Z | RSA
+indeed
+
+2025-11-06T14:10:17.488Z | billjr
+Interesting drop there
+
+2025-11-06T14:13:34.474Z | Jeffrey K
+see all the negative gamma...we should see moves like that today
+
+2025-11-06T14:18:15.609Z | RSA
+40 years in Congress, Christ
+
+2025-11-06T14:35:46.204Z | Marcus Carlsson
+I know one doesn't have to trade it, but a dark pool print at 712.79 just came in.
+Naturally it can take long time before we hit it, But so far where there have been prints over the ATH it has only taken a few weeks before we have hit them
+
+2025-11-06T14:42:10.585Z | Daphne_meow
+Dark pool for spy 712.79?
+
+2025-11-06T14:46:02.536Z | Marcus Carlsson
+yes, sir
+
+2025-11-06T14:46:11.233Z | Marcus Carlsson
+or maybe you aren't a sir :)
+
+2025-11-06T14:47:01.615Z | Marcus Carlsson
+Every since after the april-drop we have had a couple of dark pool prints over the ATH. They have all been hit and today this came in
+
+2025-11-06T14:50:19.778Z | Paul
+hmmm Doc had noted in his sub that institutions have been loading long calls into Nov and year-end too
+
+2025-11-06T15:43:25.342Z | J.K.
+
+2025-11-06T15:44:03.648Z | J.K.
+stopped at 6733.97 and filled the gap 10/24
+
+2025-11-06T15:45:05.438Z | billjr
+Ill go long at 668 spy
+
+2025-11-06T15:45:56.713Z | J.K.
+Bounce may hit here soon.  Divergences showing up.
+
+2025-11-06T16:06:14.460Z | JSA
+Trump major (presumably yuge) announcement due soon.  yesterday's massive economic announcement started 40 minutes late
+
+2025-11-06T16:09:08.198Z | JSA
+SPX gap filled from 10/23
+
+2025-11-06T16:43:20.913Z | Jeffrey K
+6718 is the level futures bottomed at overnight a day or two ago
+
+2025-11-06T16:47:41.722Z | Mr Papaya
+spx showing clear failed breakout from swing high. I think 6500 in on sight.
+
+2025-11-06T16:48:12.339Z | Mr Papaya
+if they want a little scare, we have POC in term of time trading around 6660, that might produce a bounce imo
+
+2025-11-06T16:53:31.275Z | Mr Papaya
+if we have a daily close < 6680, that's lower than the vwap from the vix expiry day, which coincidence with the recent range low (Trump scare 300 points)
+
+2025-11-06T16:53:45.164Z | Mr Papaya
+I think a day or 2 days closing <6680 will signal a correction
+
+2025-11-06T16:56:30.199Z | RSA
+*THERE WILL BE NO FEDERAL BAILOUT FOR AI: TRUMP AI OFFICIAL ON X
+
+2025-11-06T16:58:25.453Z | Mr Papaya
+Sorry for bad language but…
+What on earth is federal bailout for AI???
+
+2025-11-06T16:59:00.293Z | Vman
+OpenAI was asking for a 1T investment or something. lol
+
+2025-11-06T17:05:37.679Z | RSA
+OpenAI CFo came out with an idea yesterday that the gov should guarantee investment into AI infrastructure
+
+2025-11-06T17:08:43.929Z | Mr Papaya
+Omg this is stupid
+
+2025-11-06T17:09:13.473Z | Mr Papaya
+I was about to buy stuff for year end but saw that
+Unbelievable
+Guarantee investment
+
+2025-11-06T17:09:16.893Z | Vman
+If they didn’t lose prop 50/NY and the VA election I bet they would’ve done it hahaha
+
+2025-11-06T17:10:02.135Z | Mr Papaya
+I think openAI cfo borrow the idea from his Asis counterpart?
+But soe in Asia actually generate money
+Big money
+Unlike openAI.
+
+2025-11-06T17:10:19.296Z | Mr Papaya
+Do you think Republican ll lose midterm?
+
+2025-11-06T17:15:53.663Z | Jeffrey K
+mid day
+
+2025-11-06T17:15:56.660Z | Jeffrey K
+
+2025-11-06T17:16:35.311Z | Jeffrey K
+fuck that, they should be paying our electric bills
+
+2025-11-06T17:19:11.791Z | RSA
+of course
+
+2025-11-06T17:19:20.126Z | RSA
+it's blackmail really
+
+2025-11-06T17:21:23.412Z | Praveen Bandi
+Are we going still lower today?
+
+2025-11-06T17:22:34.692Z | Eli
+Under 6725 we could aim for 00-90
+
+2025-11-06T17:23:31.922Z | Eli
+Also openAI asking for gov help… these retards need a bailout already. If you read between the lines, sounds like trumps going to steal openAI or have it become part US govt like intel
+
+2025-11-06T17:26:54.819Z | RSA
+she retracted her statement
+
+2025-11-06T17:27:19.534Z | RSA
+but yes, I Think Trump will bleed them dry when the time comes
+
+2025-11-06T17:27:31.254Z | RSA
+as he should
+
+2025-11-06T17:45:20.849Z | Jeffrey K
+hard to say with this wild volatility.  I think we'll see another lower low eventually but who knows when
+
+2025-11-06T17:51:10.946Z | billjr
+Im long into next week. I think they have to open gov in the next few days
+
+2025-11-06T17:53:24.926Z | Jeffrey K
+
+2025-11-06T17:56:15.038Z | Mr Papaya
+Also this is 1st this week where spx penetrates the weekly central in RTH
+
+2025-11-06T17:56:30.722Z | Mr Papaya
+I think that’s notable
+I think we should take a look at pltr
+
+2025-11-06T17:56:36.381Z | Stanley
+Today's market position is very interesting. Sad that Alma won't interpret it.
+
+2025-11-06T17:56:47.183Z | Mr Papaya
+Pltr bottom maybe the decline stop?
+I see 140 incoming
+
+2025-11-06T17:57:00.479Z | Mr Papaya
+Maybe tuesday of next week
+
+2025-11-06T18:18:28.240Z | Jeffrey K
+channel line contained the low so far...6670 seems like a level...i think alma mentioned something similar, gotta check
+
+2025-11-06T18:20:19.313Z | Jeffrey K
+ah, 6678 as a down pivot.  sometimes those are good reaction points - as in it serves for an intraday low
+
+2025-11-06T18:40:07.938Z | Jeffrey K
+ding on a channel line
+
+2025-11-06T18:59:05.299Z | Jeffrey K
+anyone know what this dashed red line means on OD?  Is it OHLC?
+
+2025-11-06T19:18:40.304Z | Paul
+OHLC (open high low close)
+
+2025-11-06T19:25:01.289Z | Daphne_meow
+https://www.ft.com/content/53295276-ba8d-4ec2-b0de-081e73b3ba43
+
+2025-11-06T19:25:27.473Z | Daphne_meow
+Would this change views on NVDA or other US AI stocks?
+
+2025-11-06T19:28:50.313Z | Jeffrey K
+
+2025-11-06T19:46:20.436Z | RSA
+this was out yesterday and for now, no
+
+2025-11-06T20:26:51.331Z | RSA
+*NVIDIA, KAZAKHSTAN SIGN MOU UP TO $2B IN ADVANCED AI CHIPS
+
+2025-11-06T20:38:27.842Z | Terrence Chan
+Flight to safety possibly taking hold with some of the uncertainty ahead
+
+Something I’m watching - long gov bond bouncing off this zone - same zone it has bounced from a few times this year
+
+2025-11-06T20:38:35.053Z | Terrence Chan
+
+2025-11-06T20:40:32.655Z | Terrence Chan
+Possible it falls again Nov 13 if inflation numbers are hot, but once gov data starts reporting again I wonder how the BLS numbers reframe everything post shutdown
+
+2025-11-06T20:51:57.276Z | Terrence Chan
+Of course if Supreme Court overrule the tarrifs - that could create a ton of bond volatility and not sure what the impact would actually be on the treasury itself as I understand it would need to pay back all those tarrifs and probably creates a flight away from us bonds to a different sovereign or to the yen / Swiss. All just guesses for me but we are in uncertain times
+
+2025-11-06T20:52:32.724Z | Jeffrey K
+
+2025-11-06T21:00:41.960Z | Δboy
+haha dudesss god wrecked.....
+
+2025-11-06T21:03:05.939Z | RE
+What a day !!
+
+2025-11-06T21:03:13.607Z | RE
+🟢🟢🟢
+
+2025-11-06T21:12:45.664Z | RE
+Id say we gap down to 6640 spx  in the am
+
+2025-11-06T21:13:31.597Z | William Smith
+That 50 MA is looking inevitable, broke a bunch of minor supports and now buyers from last week are all overhead supply.
+
+2025-11-06T21:14:18.617Z | Stanley
+Wrecked in last 10 second. wouldn't let them go. There is a hand pushing the market, really.
+
+2025-11-06T21:19:58.274Z | RE
+Anyone got therea handle on BTC lower levels
+
+2025-11-06T21:20:42.822Z | RE
+Smelling a Friday afterhours liquidation sweep and recover into weekend
+
+2025-11-06T21:25:33.825Z | William Smith
+I get it, I fumbled both short and long today.  Left about 12k on the table
+
+2025-11-06T21:26:16.283Z | Jeffrey K
+that's my feet you're smelling, bro
+
+2025-11-06T21:27:10.362Z | RE
+Lol I'm up in the mountains in Montana today I don't think your smelly feet would travel that many states over
+
+2025-11-06T21:30:37.343Z | Jeffrey K
+there's a 1 in 3 chance the market gets wrecked tomorrow...voodoo -- gotta wait and see
+
+2025-11-06T22:58:31.319Z | JSA
+how's this year's crop of dental floss? (h//t frank zappa)
+
+2025-11-06T23:30:25.306Z | RE
+Lol that's a new one for me.  It's beautiful
+
+2025-11-07T01:59:12.965Z | JSA
+anywhere near Whitefish?
+
+2025-11-07T04:36:06.362Z | Mr Papaya
+Haiza
+
+2025-11-07T04:36:21.739Z | Mr Papaya
+Maybe after all
+It’s just a little scared
+
+2025-11-07T08:27:09.795Z | راشد المنصوري
+It is crazy how everytime alma says risk the market goes down 200 points
+
+2025-11-07T08:27:16.086Z | راشد المنصوري
+She is fake lol
+
+2025-11-07T08:35:48.609Z | راشد المنصوري
+Admin's got serious headwins. Scotus can send this shit back to april
+
+2025-11-07T08:36:47.343Z | Eli
+If his buddies all got puts probably lol. This is a market for him and his buddies. Nothing more. Nothing less 😂
+
+2025-11-07T08:56:25.719Z | راشد المنصوري
+Trump is in trouble
+
+2025-11-07T10:59:14.362Z | Mr Papaya
+A fake “guru”
+A real financial wizard.
+Truly amazed
+
+2025-11-07T11:02:30.099Z | Mr Papaya
+You guys should prepare for some Asian movie show ahead.
+This winter.
+Let’s see if I am right 2 times in a row
+Or I am just a little lunatic spreading false information.
+But from what I think it ll be all but a little scared
+
+2025-11-07T11:03:11.481Z | Mr Papaya
+It’s amazing how Alma can articulate this much info from positioning
+Truly magic.
+
+2025-11-07T12:52:34.135Z | Jeffrey K
+Friday:  It's a live one.
+
+2025-11-07T12:52:50.338Z | Jeffrey K
+50 day MA  6670
+
+2025-11-07T12:56:47.177Z | Praveen Bandi
+Any chance squeezing up to 6750
+
+2025-11-07T13:01:33.962Z | Jeffrey K
+not in the cards today IMO
+
+2025-11-07T13:20:04.291Z | Mr Papaya
+thank you, do you think any chance we decline lower than 6670, like 6630 for instance?
+
+2025-11-07T13:25:40.534Z | Jeffrey K
+I like 6660 at first glance, but Alma notes 'toward 6634' as a possibility
+
+2025-11-07T13:26:46.371Z | Jeffrey K
+6670 is the 50 day and is neg. gamma...overthrow it and come back to it as an intraday scalp trade
+
+2025-11-07T13:28:45.824Z | Mr Papaya
+thank you very much!
+
+2025-11-07T13:28:54.340Z | Mr Papaya
+hope we ll have an exciting Friday ahead
+
+2025-11-07T13:34:40.480Z | RSA
+guaranteed to be exciting)
+
+2025-11-07T14:33:20.529Z | Jeffrey K
+
+2025-11-07T14:44:26.671Z | Jeffrey K
+
+2025-11-07T14:50:16.291Z | Δboy
+nice... i got a place in whitefish
+
+2025-11-07T14:51:31.762Z | Δboy
+im on mtn at whitefish... that little yacht club on the lake is primo dinner spot
+
+2025-11-07T14:56:43.309Z | RE
+I'm in Gallatin county
+
+2025-11-07T14:58:15.938Z | Δboy
+yellowstone territory lol
+
+2025-11-07T15:00:08.789Z | Δboy
+do u go to big sky?
+
+2025-11-07T15:01:42.850Z | dannyron10@gmail.com
+*UMICH NOV. CONSUMER SENTIMENT AT 50.3, LOWEST SINCE JUNE 2022
+
+2025-11-07T15:05:09.076Z | JSA
+agree. also tupelo grille
+
+2025-11-07T15:08:35.587Z | Δboy
+wow big suprise there.......
+
+2025-11-07T15:08:41.829Z | Δboy
+umich is a joke
+
+2025-11-07T15:13:50.051Z | Jeffrey K
+Wolverine here - and I say your spelling is a joke
+
+2025-11-07T15:16:17.452Z | Δboy
+wolverine here too bro and idc...
+
+2025-11-07T15:16:38.654Z | Δboy
+ever since they went to online surveys its a joke
+
+2025-11-07T15:17:18.098Z | Δboy
+and umich itself besides football has been going downhill for at least the last 15 years imo but thats besides the point lol
+
+2025-11-07T15:18:43.870Z | Jeffrey K
+I'm not the typical umich libtard they produce, that's the part I have never liked...Proggy
+
+2025-11-07T15:20:53.652Z | Δboy
+yeah i can tell that... i never thought you were but damn dude ive seen so many people get brainwashed there its crazy
+
+2025-11-07T15:22:14.055Z | Δboy
+
+2025-11-07T15:26:55.593Z | Jeffrey K
+I was a freshman when they launched the survey.  They came to Econ 101 to recruit students to man the phones.
+
+2025-11-07T15:37:10.340Z | Δboy
+ive been on like a history refresher kick lately... and what scares me the most is seeing the direction we are going in and mixing that with how generally uninformed most people are.  people are being "taught" by students at best more and more now days and if you took the average persons word for what they think will/should happen we would be a third world country within a couple years.  look how fast it happened to Venezuela.   idk..
+
+2025-11-07T15:39:56.606Z | Δboy
+my point with mich surveys though is ... maybe asking a bunch of illegals who r crossing the boarder from mexico what they think the economy will be like 12 months from now is not the best indicator lol   i realize this is a extreme example but i mean i know professionals in the investment business that dont really have a clue beyond what newsletters they get. they dont think deep or do any independent fact checking
+
+2025-11-07T15:41:45.380Z | Δboy
+partially why i like alma so much... dont go off what she says like she is god but its healthy to see things through more complex perspectives and consider/debate them i mean thats what our institutions were based on but lately its all ad hominum or a list of other fallacies
+
+2025-11-07T16:06:50.354Z | Δboy
+yea i def didn't take u for the weather underground type.  crazy how they all escaped accountability and became professors though.
+
+2025-11-07T16:15:26.767Z | Jeffrey K
+Roast that Piggy!!
+
+2025-11-07T16:43:44.044Z | Jeffrey K
+11:40
+
+2025-11-07T16:47:22.828Z | Paul
+ghost print on QQQ 600 earlier this week filled
+
+2025-11-07T16:54:32.694Z | Mr Papaya
+I think this might produce a bottom
+
+2025-11-07T16:57:42.979Z | Jeffrey K
+look like the sellers need to hit the 6630 pos. gamma liquidity
+
+2025-11-07T17:01:14.875Z | JSA
+fits Alma's 6634 nicely
+
+2025-11-07T17:02:29.498Z | Sebb
+just had a 1hr close below
+
+2025-11-07T17:02:42.710Z | Sebb
+is there any support below on the weekly post?
+
+2025-11-07T17:02:58.960Z | Sebb
+guess 6500ish is the obv one
+
+2025-11-07T17:04:07.467Z | Jeffrey K
+weekly only mentioned down to 6634, monthly post maybe
+
+2025-11-07T17:06:22.735Z | Jeffrey K
+hmm, maybe there's not a NOV monthly post
+
+2025-11-07T17:07:25.442Z | Sebb
+
+2025-11-07T17:07:41.132Z | Sebb
+here: Window of Risk Pt. 2 - Flows update
+
+2025-11-07T17:23:45.757Z | JSA
+great call. thnx
+
+2025-11-07T17:33:29.169Z | Mr Papaya
+Thank you Jeffrey
+Your comment remains gold today
+Just like in July you posted your chart
+That saves me some money getting out of my position
+
+2025-11-07T17:33:57.885Z | Mr Papaya
+Tbh day trading is really a headache
+I admire all of you who can do it long term
+I’m still a new student in this field
+
+2025-11-07T17:34:42.123Z | Mr Papaya
+Thank you for saving my ass once again
+
+2025-11-07T17:44:20.015Z | Juan Emilio Calderon Ramirez
+Can u send the charm?
+
+2025-11-07T17:44:56.108Z | Jeffrey K
+i don't have.  some can i'm sure.
+
+2025-11-07T17:46:55.950Z | Juan Emilio Calderon Ramirez
+This should be a put spread? Debit?
+
+2025-11-07T17:53:05.325Z | Jason Valvano
+Could get the squeeze now no?
+
+2025-11-07T18:06:06.891Z | Praveen Bandi
+6790
+
+2025-11-07T18:16:22.341Z | Juan Emilio Calderon Ramirez
+💀
+
+2025-11-07T18:17:25.066Z | Juan Emilio Calderon Ramirez
+Spy short (not alot data) 12 months , this setup 17 times /16 times succesed  not financial advice
+
+2025-11-07T18:17:38.999Z | Juan Emilio Calderon Ramirez
+2 entry play
+
+2025-11-07T18:25:38.183Z | Δboy
+do u still need?
+
+2025-11-07T18:26:38.419Z | Juan Emilio Calderon Ramirez
+Yes pls
+
+2025-11-07T18:27:33.063Z | Paul
+waiting for 6680spx personally
+
+2025-11-07T18:30:19.050Z | Δboy
+
+2025-11-07T18:31:26.721Z | Δboy
+
+2025-11-07T18:35:52.093Z | Δboy
+lots of positive delta at 90 id assume we hit that or back to 55
+
+2025-11-07T18:37:09.404Z | Juan Emilio Calderon Ramirez
+Ted is positive o negative?
+
+2025-11-07T18:37:40.797Z | Juan Emilio Calderon Ramirez
+Red*
+
+2025-11-07T18:45:50.623Z | Δboy
+red is positive
+
+2025-11-07T18:46:15.204Z | Δboy
+i put the legend down there on the bottom left
+
+2025-11-07T18:47:30.350Z | Δboy
+you can actually basically derive charm from the lines on the gamma maps btw..
+
+2025-11-07T18:48:09.539Z | Δboy
+just fyi
+
+2025-11-07T19:21:29.208Z | Doritos
+Looks like a cup and handle
+
+2025-11-07T19:43:39.819Z | JSA
+out at ES 6735.  thanks again Jeffrey K and Alma wherever you are
+
+2025-11-07T19:44:41.517Z | Vman
+We just reversing on govt shutdown deal rumors?
+
+2025-11-07T19:45:17.334Z | Lola
+I miss Alma sooo much!! She’s brilliant 🌸
+
+2025-11-07T19:57:20.788Z | Jeffrey K
+
+2025-11-07T20:03:41.007Z | han
+Alma right now x))
+
+2025-11-07T20:13:38.990Z | RSA
+lol
+
+2025-11-07T20:31:16.644Z | Δboy
+well immediatly after republicans said no lol so yea thats where i shorted for a quick 2x lol
+
+2025-11-07T20:35:56.980Z | Δboy
+anybody else use MA based on daily and hourly?
+
+2025-11-07T20:36:56.585Z | RE
+What a week!!!
+
+2025-11-07T20:40:56.114Z | RE
+Maybe these weekly levels is all we need
+
+2025-11-07T20:42:17.382Z | RE
+Now 20min of straight selling please 🤣
+
+2025-11-07T21:02:04.357Z | billjr
+Need a smoke after that day lol
+
+2025-11-07T21:03:18.416Z | Δboy
+magamfw all
+
+2025-11-07T21:04:35.229Z | Δboy
+alma cubs. kinda like tiger cubs... but the trailer park version lol
+
+2025-11-07T21:28:36.512Z | Eli
+Sound like a broken record
+
+2025-11-07T21:28:39.770Z | Eli
+But buy the dip
+
+2025-11-08T01:36:57.312Z | billjr
+6760 should be a good rejection if we test monday
+
+2025-11-08T11:25:57.050Z | راشد المنصوري
+I'm cautious
+
+2025-11-08T11:26:15.691Z | راشد المنصوري
+Alma said geo and policy risk not priced in
+
+2025-11-08T11:26:18.275Z | راشد المنصوري
+True
+
+2025-11-08T11:26:24.923Z | راشد المنصوري
+Admin is in trouble
+
+2025-11-08T11:28:30.629Z | Marcus Carlsson
+I’m still in the buy-the-dip crew.
+Sure geo is a risk. But this market has ignored risks and now the company buyback should return
+
+2025-11-08T11:30:43.380Z | billjr
+I think recently there's more awareness of the debt risk in a.i from scam Altman and oracle. All the mags have made their big deals so not much to pump near term.
+
+2025-11-08T12:13:56.138Z | Chad
+been too cautious since april
+
+2025-11-08T12:14:08.077Z | Chad
+but we have rate cut and year end santa rally coming ?
+
+2025-11-08T12:29:52.153Z | billjr
+Our only rally last year was second half of Nov. Dec fell apart.
+
+2025-11-08T12:34:28.809Z | billjr
+Saw some decent spy puts for 11/21 630
+
+2025-11-08T12:47:11.868Z | Chad
+yea jpow spooked the market
+
+2025-11-08T19:21:27.351Z | han
+Trump’s opponents are patient people; indeed it seems that they will launch an offensive given an opportunity.
+
+2025-11-08T19:27:22.890Z | han
+On the other hand, our beloved Bessent masters the game well. And a pullback is quite healthy after the late Oct. 3-day gap-up frenzy.
+
+2025-11-08T19:44:36.305Z | VincentiusTrading
+When’s Alma back?
+
+2025-11-08T20:01:12.610Z | han
+Hopefully tomorrow
+
+2025-11-08T22:58:38.079Z | Schrödingers Trader
+Is that OD using different colors?
+
+2025-11-08T23:00:54.211Z | Schrödingers Trader
+Not gonna lie, on Monday when I read Alma’s post and saw the weekly level of 6634, i thought it was a typo..
+
+2025-11-09T14:23:44.005Z | billjr
+Trumps typical sunday pumping with 2k stimulus checks
+
+2025-11-09T16:34:12.354Z | Alma
+I'm back
+
+2025-11-09T16:34:17.428Z | Alma
+hope you did well
+
+2025-11-09T16:34:22.860Z | Alma
+nice week to short
+
+2025-11-09T16:34:33.548Z | Alma
+now
+
+2025-11-09T16:34:34.380Z | Daphne_meow
+Welcome back Alma <3
+
+2025-11-09T16:44:34.454Z | Carlos Cuervo
+I am excited for the weekly plan.
+
+2025-11-09T17:03:21.160Z | Lola
+Welcome back Alma 🌸
+
+2025-11-09T17:38:54.237Z | Mr Papaya
+Omg nice week to short?
+Alma I ll tp my long immediately on Monday
+Never fade Alma
+
+2025-11-09T17:39:31.983Z | Mr Papaya
+And welcome back!
+May all the wonderful thing be with you Alma and everybody in the group!
+
+2025-11-09T17:40:03.704Z | Mr Papaya
+I just arrived back to the States
+Wake up and see “nice week to short”
+
+2025-11-09T17:42:19.877Z | Carlos Cuervo
+The nice week to short was this past week😂
+
+2025-11-09T17:45:25.567Z | Mr Papaya
+Omg ok
+
+2025-11-09T17:45:46.892Z | Mr Papaya
+Is this really
+
+2025-11-09T17:51:38.608Z | William Smith
+I assume this means last week was good week to short
+
+2025-11-09T17:52:53.602Z | Mr Papaya
+I hope so too
+
+2025-11-09T18:31:15.542Z | Alma
+WEEKLY POST IS OUT
+https://stochvoltrader.substack.com/p/geo-and-policy-uncertainity-is-here
+
+2025-11-09T18:31:22.610Z | Alma
+it was a past tense :))
+
+2025-11-09T18:32:10.782Z | Alma
+https://x.com/alma18499/status/1987563447073001491
+
+2025-11-09T18:43:22.174Z | Juan Emilio Calderon Ramirez
+@Alma we miss u , how was ur week?
+
+2025-11-09T18:47:03.073Z | Alma
+like this song https://music.youtube.com/watch?v=lEUfkbJbtTA&si=kC4m2MSuOfuVkXz6
+
+2025-11-09T18:47:07.681Z | Alma
+i worked a lot
+
+2025-11-09T18:47:21.108Z | billjr
+More Sunday pump... congress ready to make a deal to end shutdown
+
+2025-11-09T18:48:10.396Z | Mr Papaya
+Thank you wonderful Alma.
+
+2025-11-09T18:49:26.720Z | Jeffrey K
+
+2025-11-09T18:49:48.556Z | Mr Papaya
+May all the luck in the world be with you
+I just read the weekly post
+Jeffrey saved my ass on Friday
+I think I ll tp my long on Monday and watch the market instead
+
+2025-11-09T18:54:00.278Z | Alma
+
+2025-11-09T18:54:35.702Z | Juan Emilio Calderon Ramirez
+👀👀👀
+
+2025-11-09T18:57:36.975Z | Alma
+little bit of wien
+
+2025-11-09T18:57:49.723Z | Alma
+
+2025-11-09T19:58:24.409Z | Eli
+When we re open
+
+2025-11-09T19:58:33.740Z | Eli
+How far are we going to rip
+
+2025-11-09T20:27:43.683Z | RE
+6969
+
+2025-11-09T21:21:28.538Z | Juan Emilio Calderon Ramirez
+My weekend in 1 pic 💀
+
+2025-11-09T21:22:15.124Z | Juan Emilio Calderon Ramirez
+There is. Still
+Not a aggrement
+
+2025-11-09T22:00:45.053Z | راشد المنصوري
+Is that u?
+
+2025-11-09T22:00:52.164Z | راشد المنصوري
+lol
+
+2025-11-09T22:18:12.662Z | han
+This is our quant :))
+
+2025-11-09T22:31:50.264Z | Eli
+Just a fun bet guess hahaha
+
+2025-11-10T00:35:44.161Z | JSA
+senate deal reached a short time ago
+
+2025-11-10T01:26:58.625Z | Δboy
+gc on  a rip
+
+2025-11-10T01:32:21.473Z | Eli
+Easy market when it’s full blow euphoria
+
+2025-11-10T03:38:16.053Z | J.K.
+Precursor of what is to come?
+
+2025-11-10T03:47:03.981Z | J.K.
+Thanks for your weeky post Alma! I had a bias towards a rebound then a potential sell off. Grateful for your analysis.
+
+2025-11-10T06:23:37.275Z | Juan Emilio Calderon Ramirez
+Her=bartender , me the drinker lol
+
+2025-11-10T07:57:09.446Z | راشد المنصوري
+That is a lot of shot
+
+2025-11-10T12:30:12.514Z | Juan Emilio Calderon Ramirez
+They are not shorts but cocktails, americano they called it 😂
