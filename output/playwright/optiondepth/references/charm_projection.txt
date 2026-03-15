@@ -1,0 +1,109 @@
+O p tion s D ep th 2 025 Jan 2 025
+1
+Market Makers' Charm 
+Exposure Projection
+Why track charm exposure
+Char m is one of the key "sec ond- or der Gr eeks" used t o understand ho w the delta of an option 
+changes o v er time . W hile man y tr aders f ocus hea vily on gamma e xposur e , they of t en o v er look other 
+influen tial Gr eeks like char m, which pla y s a cr itical r ole in mar ket makers' (MMs) delta hedg ing 
+ac tivities .
+Unlike par amet ers like pr ic e and implied v ola tilit y (IV ), which can fluc tua t e both up and do wn, time 
+only mo v es f or w ar d . T his inevitabilit y makes char m a persist en t and somewha t pr edic table f or c e , 
+of t en c ompar ed t o a st eady wind tha t passiv ely pushes changes in delta. I t is this pr edic tabilit y tha t 
+makes it crucial f or understanding mar ket maker hedg ing ac tivit y .
+What Does Charm Measure?
+Char m measur es ho w the delta of an option changes with the passage of time , assuming all other 
+v ar iables (like pr ic e and v ola tilit y) r emain c onstan t . U sing the Black -S choles-M er t on (BSM) model , 
+some key dynamic influenc es on delta ar e:
+G amma:
+V anna:
+C harm:
+ Changes in delta due t o mo v emen ts in the under lying pr ic e 
+ Changes in delta due t o shif ts in implied v ola tilit y 
+ Changes in delta due t o the passage of time .
+A s time passes , the delta of O TM options na tur ally shif t .
+Figure 1: charm graph vs spot here
+T he impac t of char m g r o w s str onger as options appr oach e xpir a tion, a phenomenon ampli fi ed b y the 
+r ec en t r ise in 0D T E  ( z er o da y s t o e xpir a tion) options .
+
+
+O p tion s D ep th 2 025 Jan 2 025
+2
+A  modern approach: Our MM charm exposure heatmap
+I n the spr ing of 2022, w e in tr oduc ed a pioneer ing appr oach t o addr ess the limita tions of tr aditional 
+methods used t o assess mar ket makers ’  char m e xposur e . O ur hea tmap off ers a mor e ac cur a t e and 
+dynamic r epr esen ta tion b y calcula ting the en tir e char m e xposur e of mar ket makers ’  por tf olios and 
+pr ojec ting it thr oughout the tr ading session. Unlike c on v en tional linear models , our solution pr o vides 
+a sur fac e map tha t enhanc es tr aders ’  c on t e x tual understanding of mar ket dynamics .
+A key inno v a tion is our r elianc e on ac tual mar ket maker option positions r a ther than assumption-
+based models . T his ensur es a pr ecise assessmen t of their positioning , enabling tr aders t o gain 
+ac tionable insigh ts . I n tr ada y pr ojec tions fur ther enr ich this analy sis b y pr o viding time -sensitiv e 
+c on t e x t , par ticular ly lev er ag ing the mechanics of 0D TE options .
+T he hea tmap c omput es the e xposur e of all options acr oss all e xpir a tions , deliv er ing a c ompr ehensiv e 
+and ac cur a t e outlook . B y default , positiv e char m is r epr esen t ed in or ange , while nega tiv e char m is 
+sho wn in blue , mak ing it easy t o in t er pr et the dir ec tional influenc e .
+A s the tr ading session pr og r esses , heigh t ened c on v e xit y bec omes eviden t on the hea tmap , pr imar ily 
+dr iv en b y the incr easing influenc e of 0D TE options as they near e xpir a tion. T his ev olving dynamic 
+off ers tr aders a clear visual understanding of ho w char m e xposur e in t ensifies and shif ts thr oughout 
+the da y .
+The dynamic nature of hedging
+M ar ket makers' hedg ing is a c onstan tly shif ting pr oc ess , with multiple pla y ers c ompeting in r eal time . 
+O ur t ool captur es this br oader c on t e x t b y visualizing the c omplet e char m e xposur e landscape , the 
+eff ec t of all options , str ikes and e xpir a tions c ombined
+V isualization
+W e off er multiple w a y s t o e xplor e char m e xposur e :
+ T his visualiza tion sho w s a sur fac e map , with y ello w mar kers r epr esen ting the closing 
+pr ic es of candlesticks f or y our chosen timefr am 
+ A fla tt ened v ersion of the 3 D sur fac e f or candlesticks o v er la y .
+3D Sur fac e:
+H ea tmap:
+Figure  2:  3D  Charm  Surface
+ Figure  3:  Charm  heatmap
+
+
+O p tion s D ep th 2 025 Jan 2 025
+3
+Interpreting Charm Exposure
+Char m e xposur e sig nifican tly aff ec ts mar ket makers' hedg ing beha vior as delta e xposur e shif ts o v er 
+time . T hese changes cr ea t e either suppr essiv e or suppor tiv e eff ec ts on the pr ic e of the under lying 
+asset , as mar ket makers need t o passiv ely buy or sell the under lying asset t o r e -hedge their options 
+por tf olio .
+Positive Charm – Suppressive
+P ositiv e char m oc curs when the delta e xposur e of their options por tf olio incr eases o v er time . T o 
+hedge this , mar ket makers sell the under lying asset , such as ES futur es f or SP X options . T his sustained 
+selling pr essur e ac ts as a suppr essiv e f or c e on up w ar d pr ic e mo v emen ts , c on tr ibuting t o a g r adual 
+dampening of pr ic e momen tum.
+Figure 4: Suppressive charm
+Negative Charm – Supportive
+Nega tiv e char m happens when the delta e xposur e of their options por tf olio decr eases o v er time . I n 
+this sc enar io , mar ket makers hedge b y buying the under lying asset passiv ely . T his cr ea t es c onsist en t 
+buying pr essur e , which suppor ts pr ic es and mitiga t es do wn w ar d mo v emen t .
+Figure 5: Supportive charm
+
+
+O p tion s D ep th 2 025 Jan 2 025
+4
+Charm as a Persistent Passive Force
+Char m ’ s mag nitude is of t en mild but persist en t , ac ting as a passiv e f or c e influencing pr ic e dynamics 
+o v er time . T hink of it as a st eady wind tha t , while subtle , can ac cumula t e notic eable eff ec ts on the 
+tr ajec t or y of the under lying pr ic e . F or e xample , dur ing per iods of high suppr essiv e char m, mar ket 
+makers' g r adual selling can suppr ess an under lying r ally , ev en when br oader bullish sen timen t 
+pr ev ails . Similar ly , dur ing per iods of suppor tiv e char m, their passiv e buying can pr o vide under lying 
+pr ic e suppor t amidst gener al mar ket w eak ness . W hen char m alig ns with br oader mar ket tr ends , it 
+can ac t as a r einf or cing f or c e , amplifying either up w ar d or do wn w ar d mo v emen ts , mak ing tr ends 
+mor e pr onounc ed .
+Charm Influence on Pinning
+P inning is the r esult of a multifac t or ial in t er pla y , including cust omer flo w s and mar ket makers' 
+hedg ing dynamics , r a ther than a deliber a t e eff or t t o anchor pr ic es a t the "max pain " lev el , as is of t en 
+misc onc eiv ed . I nst ead , it emer ges na tur ally fr om the c omple x in t er ac tions of multiple fac t ors .
+Char m, while not the sole det ermina nt, can pla y a notable r ole in the pinning pr oc ess when its 
+mag nitude is elev a t ed . I n an en vir onmen t domina t ed b y positiv e (suppr essiv e) char m, pr ic es ma y 
+e xper ienc e do wn w ar d pr essur e , g r adually mo ving t o w ar d wha t can be descr ibed as the " char m 
+equilibr ium poin t . " C on v ersely , in a nega tiv e (suppor tiv e) char m en vir onmen t , pr ic es ma y dr if t 
+up w ar d , similar ly c on v er g ing t o w ar d this equilibr ium.
+T he char m equilibr ium poin t mar ks the tr ansition, or " flip , " bet w een suppr essiv e and suppor tiv e 
+char m. A t this poin t , mar ket makers' hedg ing r equir emen ts achiev e balanc e , r educing the need f or 
+passiv e buying or selling of futur es t o manage delta e xposur e o v er time . T his equilibr ium r eflec ts a 
+sta t e wher e char m 's dir ec tional influenc e is neutr aliz ed , pr o viding a stabilizing eff ec t on the pr ic e 
+mo v emen t of the under lying asset .
+Figure 6: Charm contributing to pinning

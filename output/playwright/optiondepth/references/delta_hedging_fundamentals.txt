@@ -1,0 +1,294 @@
+O p tion s D ep th 2 02 4 S ep 2 02 4
+1
+Delta 
+Hedging 
+Fundamentals
+Context
+M ar ket makers ar e essen tial in main taining smooth mar ket 
+oper a tions . B y c on tinuously quoting bid and ask pr ic es , they 
+pr o vide liquidit y tha t allo w s tr aders t o e x ecut e or ders efficien tly , 
+ev en f or lar ge or c omple x tr ades .
+I n the SP X, with ar ound 20,000 c on tr ac ts a v ailable a t an y time , 
+mar ket makers enable tr aders t o tailor their str a t eg ies and ac c ess 
+liquidit y tha t migh t not other wise be possible . B y tak ing the 
+opposit e side of these tr ades , ho w ev er , mar ket makers sometimes 
+hold r esidual positions . T hese positions car r y inher en t r isks , as 
+option v alues can fluc tua t e sig nifican tly due t o fac t ors like 
+changes in the under lying asset ’ s pr ic e . 
+Sinc e the in tr oduc tion of daily 0D TE (z er o da y s t o e xpir a tion) 
+options in spr ing 2022, along with a sur ge in o v er all options 
+tr ading v olume —par ticular ly in shor t er -t er m c on tr ac ts—mar ket 
+makers ha v e enc oun t er ed incr eased struc tur al challenges . T he 
+shor t -t er m na tur e of these options leads t o pr onounc ed 
+fluc tua tions t o their pr icing , demanding incr eased hedg ing 
+eff or ts . T hese in t ensified r esponses can ha v e a c onsider able 
+impac t on the under lying pr ic e , fur ther shaping mar ket dynamics . 
+T o manage dir ec tional r isk , mar ket makers emplo y a str a t egy 
+called delta hedg ing , which helps off set pot en tial changes in their 
+por tf olio ’ s v alue tied t o under lying pr ic e mo v emen ts .
+D elta hedg ing is desig ned t o main tain a balanc ed delta e xposur e 
+b y tr ading the under lying asset , eff ec tiv ely stabilizing the 
+por tf olio ’ s v alue despit e shif ts in the under lying pr ic e . B y 
+c on tinuously adjusting their hedges , mar ket makers can minimiz e 
+the dir ec t impac t of spot pr ic e mo v emen ts on their options 
+por tf olio , helping t o achiev e a neutr al dir ec tional r isk .
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+2
+Figure 1. Delta Hedging Illustrated
+T o understand delta mor e clear ly , let ’ s e xplor e a 
+simple e xample . Suppose y ou pur chase a call option 
+on a st ock , wher e each c on tr ac t r epr esen ts 100 
+shar es . T he call option has a delta of 0.5, meaning 
+tha t f or ev er y dollar incr ease in the st ock pr ic e , the 
+option ’ s v alue r ises b y 50 c en ts per shar e , leading t o 
+a $50 gain (g iv en the 100-shar e quan tit y). 
+C on v ersely , a $1 dr op in the st ock pr ic e w ould 
+decr ease the option ’ s v alue b y $50.
+T o balanc e this e xposur e , delta hedg ing in v olv es cr ea ting an off setting position. F or a call option with 
+a delta of 0.5, y ou w ould hedge b y shor ting 50 shar es of the under lying st ock . F or a put option with a 
+delta of -0.5, delta hedg ing w ould r equir e pur chasing 50 shar es . T his off setting appr oach aims t o 
+stabiliz e the por tf olio b y neutr alizing the dir ec tional r isk tied t o the st ock ’ s pr ic e .
+Figure 2. Call Option Delta Hedging
+D elta, ho w ev er , is not fix ed—it shif ts with mar ket changes , r equir ing ongoing managemen t . 
+R etur ning t o the call option e xample: initially , y ou hedged b y shor ting 50 shar es when the delta w as 
+0.5. No w , suppose the delta decr eases fr om 0.5 t o 0.3 due t o mar ket shif ts . T his change makes y our 
+hedge o v er ly shor t . T o main tain a delta-neutr al position, y ou w ould buy back 20 shar es , adjusting 
+y our net shor t position t o 30 shar es . T his c on tinuous r ebalancing helps keep the por tf olio alig ned 
+with changes in delta.
+T r ack ing changes in delta e xposur e bec omes especially impor tan t her e . M odels like Black -S choles-
+M er t on (BSM) pr o vide Gr eeks , which help pr edic t ho w option pr ic es ma y change . S ome sec ond- or der 
+Gr eeks , in par ticular , allo w us t o monit or delta ’ s sensitivit y t o v ar ious fac t ors . F or e xample , G amma 
+measur es ho w delta r esponds t o changes in the under lying pr ic e , Char m tr acks delta ’ s sensitivit y t o 
+the passage of time , and V anna r eflec ts delta ’ s r esponse t o shif ts in implied v ola tilit y (IV ).
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+3
+Delta Hedging
+Understanding Greeks
+Options Gr eeks help an ticipa t e pot en tial shif ts in an option ’ s pr ic e . Building on our understanding , 
+w e no w f ocus on changes in the net delta of a por tf olio within the fr amew or k of c on tinuous delta 
+hedg ing . T hese shif ts ar e e xplained b y sec ond- or der Gr eeks , which measur e ho w delta changes with 
+r espec t t o v ar ious fac t ors like the under lying pr ic e , time , and implied v ola tilit y . L et ’ s e xplor e this 
+c onc ept in mor e detail .
+I n the c on t e x t of hedg ing an option, t w o distinc t phases unf old:
+I nitial Hedge:  T his phase f ocuses on off setting the option ’ s delta b y adjusting the position 
+ac c or dingly . Her e , an initial under lying position is added t o the dealer ’ s book t o c oun t er balanc e 
+the option ’ s impac t on the por tf olio . T his st ep is r ela tiv ely str aigh tf or w ar d .
+C on tinuous R e -Hedg ing: T he sec ond phase in v olv es manag ing the por tf olio ’ s delta e xposur e 
+o v er time as mar ket c onditions shif t . A n option ’ s delta can v ar y sig nifican tly in r esponse t o fac t ors 
+tha t influenc e its v alue . Her e , w e f ocus on thr ee pr imar y c omponen ts tha t dr iv e these 
+fluc tua tions: under lying pr ic e ( G amma), time ( Char m), and implied v ola tilit y ( V anna).
+T his distinc tion bet w een the initial and c on tinuous r e -hedg ing is k e y t o understanding ho w delta 
+e xposur e is managed dynamically .
+Figure 3. Orders of Greeks
+Initial Hedge
+C alls , puts , long , and shor t c on tr ac ts in tr oduc e diff er en t immedia t e dir ec tional pr essur es on mar ket 
+makers . F or instanc e , when a cust omer buy s calls , the mar ket maker who sells them is lef t with a 
+nega tiv e delta e xposur e , pr ompting an initial hedge b y buying the under lying asset t o neutr alise this 
+position. C on v ersely , if a cust omer sells calls or buy s puts , the mar ket maker ’ s initial hedge w ould 
+in v olv e selling the under lying t o off set a positiv e delta. T his initial hedg ing ac tion pr o vides insigh ts 
+in t o options flo w , as it r ev eals both the dir ec tion mar ket makers must take t o balanc e new positions 
+and the under lying sen timen t of cust omers .
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+4
+C ust omer sen timen t hea vily influenc es options flo w . W hen a cust omer buy s calls or sells puts , it  
+of t en sig nals a bullish stanc e , suggesting a specula tiv e bet on an under lying pr ic e r ise . C on v ersely ,  
+buying puts or selling calls gener ally r eflec ts bear ish e xpec ta tions , with in t en tions t o pr ofit fr om a  
+pr ic e decline . B y the time tr aders obser v e this flo w , mar ket makers ’  hedges ar e t ypically alr eady in  
+plac e , meaning the flo w r eflec ts sen timen t r a ther than pr edic ting hedg ing r esponses . Sig nifican t  
+flo w , whether bullish or bear ish, off ers a snapshot of mar ket sen timen t .
+T r aders in t er pr et dir ec tional sen timen t b y e xamining ho w cust omers plac e their bets . R a ther than 
+f ocusing on hedg ing mechanics , hea v y call-buying r eflec ts a str ong belief in upside pot en tial , while 
+substan tial put -buying sig nals e xpec ta tions of a decline . T his appr oach highligh ts the in t en t behind 
+cust omer ac tions , off er ing a lens t o in t er pr et pr ev ailing mar ket sen timen t eff ec tiv ely .
+Continuous Re-Hedging
+I n the c on t e x t of e x t ensiv e options tr ading on the SP X, mar ket makers manage v ast por tf olios with 
+substan tial positions . W hile the initial delta hedge pr o vides a star ting poin t , it ’ s only par t of the 
+equa tion. A s time passes , under lying pr ic es fluc tua t e , and implied v ola tilit y shif ts , these changes lead 
+t o sig nifican t swings in the por tf olio ’ s delta, demanding fr equen t and substan tial adjustmen ts . T his is 
+wher e sec ond- or der Gr eeks bec ome essen tial , pr o viding deeper insigh ts in t o these lar ge , c on tinuous 
+delta fluc tua tions pr imar ily dr iv en b y time , spot pr ic e , and implied v ola tilit y dynamics .
+Second Order Greeks of Delta
+T o delv e deeper , let ’ s first visualiz e the delta of a call and a put r ela tiv e t o the under lying pr ic e a t 
+v ar ious poin ts , as sho wn in F igur e 4. S ev er al insigh ts emer ge:
+Figure 4. Options Delta vs Underlying Price
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+4
+Observations
+C all options possess a positiv e delta bet w een 0 and 
+P ut options car r y a nega tiv e delta bet w een -1 and 0
+T he slope of delta v s . under lying is c onsist en tly positiv e f or both call and put options .
+T he slope of delta v s . under lying is st eeper ar ound the str ike pr ic e as e xpir a tion appr oaches .
+A s time passes , if the under lying pr ic e is abo v e the str ike pr ic e , delta incr eases f or both a call 
+or a put .
+A s time passes , if the under lying pr ic e is belo w the str ike pr ic e , delta decr eases f or both a call 
+or a put .
+Gamma - Delta Change with Underlying Price
+A s highligh t ed fr om figur e 4, a c onsist en t 
+obser v a tion is tha t the delta has a positiv e 
+r ela tionship with the under lying f or all option t ypes . 
+Notably , sensitivit y t o under lying pr ic e shif ts 
+in t ensifies near the str ike pr ic e and as e xpir a tion 
+nears . R ef er t o F igur es 5 and 6 f or visual r ef er enc e .
+F or e xample , with a call option near the str ike pr ic e , 
+an incr ease in under lying pr ic e pushes the delta 
+fr om positiv e t o ev en mor e positiv e . Similar ly , with a 
+put option near the str ike pr ic e , as the under lying 
+pr ic e r ises , the delta mo v es fr om mor e nega tiv e t o 
+less nega tiv e . 
+Figure 5. Gamma Derivative of Delta
+Figure 6. Options Gamma Vs Underlying Price
+T he hedg ing r esponse t o these delta shif ts r emains c onsist en t: as pr ic es r ise , delta e xposur e 
+incr eases , pr ompting mar ket makers who ar e long on options t o sell in or der t o off set the eff ec t . 
+C on v ersely , as the under lying pr ic e falls , delta e xposur e decr eases , leading mar ket makers t o buy the 
+under lying asset as a hedge .
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+6
+W hen mar ket makers e xper ienc e a positiv e gamma e xposur e , their positioning enables them t o 
+pr o vide liquidit y , buying or selling against pr ic e mo v emen ts . A s highligh t ed in F igur e 6, this eff ec t 
+bec omes ev en mor e pr onounc ed as e xpir a tion appr oaches .
+Short Option Position
+Shif ting our f ocus fr om c on tr ac t t ypes , mar ket makers with a shor t option position find themselv es 
+“ shor t gamma ” . I n fac t , when the dealer holds a nega tiv e position f or a specific c on tr ac t , it r esults in a 
+v er tical r eflec tion of figur es 4 and 6. T his leads delta t o ha v e a nega tiv e slope with r espec t t o the 
+under lying pr ic e . S ee figur es 7 and 8 f or a visual illustr a tion.
+Figure 7. Short Options Delta Profile
+Figure 8. Short Options Gamma Profile
+I n this c on t e x t , the hedg ing pr oc ess diff ers fr om the one discussed ear lier . A s the spot pr ic e r ises , the 
+por tf olio ’ s delta decr eases , pr ompting the mar ket maker t o pur chase in line with the mar ket tr end . 
+C on v ersely , as the spot pr ic e falls , the delta e xposur e incr eases , leading the mar ket maker t o sell , 
+ther eb y balancing the por tf olio with the declining under lying pr ic e .
+Nega tiv e gamma c ompels mar ket makers t o c ompet e , and take liquidit y out of the mar ket . Such an 
+en vir onmen t ma y cause the under lying pr ic e t o mo v e mor e er r a tically .
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+7
+Charm - Delta Change with T ime 
+A s time pr og r esses , the influenc e of Char m, a Gr eek measur ing the eff ec t of time on an option ’ s delta, 
+bec omes incr easingly sig nifican t . W ithin delta hedg ing , Char m of t en pr oduc es pr edic table out c omes . 
+I ts beha vior hinges on t w o key fac t ors: the net position of the option (long or shor t) and the 
+r ela tionship bet w een the under lying pr ic e and the str ike . F or long options , as sho wn in F igur e 4, 
+Char m is positiv e when the under lying pr ic e e x c eeds the str ike and nega tiv e when it falls belo w . 
+F igur e 9 pr o vides a detailed visualiza tion of these dynamics .
+Figure 9. Options Charm Vs Underlying
+F igur e 9 highligh ts impor tan t obser v a tions about Char m ’ s eff ec ts o v er time . W hen Char m is nega tiv e , 
+an option ’ s delta decr eases as time passes , r equir ing mar ket makers with a net nega tiv e Char m t o buy 
+the under lying asset t o adjust their delta e xposur e . C on v ersely , positiv e Char m r esults in delta 
+incr easing o v er time , pr ompting mar ket makers t o sell the under lying t o main tain their hedge . M uch 
+like G amma, the impac t of Char m bec omes mor e pr onounc ed as e xpir a tion nears , in t ensifying the 
+hedg ing adjustmen ts r equir ed .
+T he net positioning of options , similar t o G amma dynamics , is piv otal . R a ther than f ocusing on 
+whether the option is a call or a put , the cr itical fac t or is the net position—long or shor t . A net shor t 
+position eff ec tiv ely mir r ors the eff ec ts seen with G amma, in v er ting the char t v er tically . F igur e 10 
+illustr a t es this , sho wing tha t the g r aphical pa tt er ns of Char m r emain c onsist en t , r egar dless of 
+whether calls or puts ar e in v olv ed , emphasizing the impor tanc e of positioning in hedg ing str a t eg ies .
+Figure 10. Short Options Charm Profile
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+8
+V anna - How Delta Changes W ith Implied V olatility
+V anna depic ts the change in delta of an option c on tr ac t as its implied v ola tilit y shif ts . Each individual 
+option c on tr ac t possesses its o wn unique IV v alue . Unlike G amma and Char m, which measur e delta ’ s 
+r esponse t o changes in under lying pr ic e and time r espec tiv ely , IV in tr oduc es a la y er of c omple xit y . 
+T hese t w o par amet ers—pr ic e and time —ar e c ommon t o all option c on tr ac ts , mak ing it r ela tiv ely 
+str aigh tf or w ar d t o ev alua t e G amma and Char m acr oss a lar ge options por tf olio .
+Ho w ev er , understanding V anna is not as visually in tuitiv e . T r aditional tr ading of t en r elies on C ar t esian 
+candlestick char ts , wher e the x -axis r epr esen ts time and the y -axis r epr esen ts the under lying pr ic e . 
+T his makes the impac t of G amma and Char m r ela tiv ely easy t o g r asp , as their eff ec ts can be visualiz ed 
+along these familiar ax es . I n c on tr ast , IV oper a t es somewha t independen tly of these dimensions . T o 
+fully g r asp V anna, one must c onsider ho w the fix ed str ike IV s of options ha v e changed , par ticular ly 
+within the c on t e x t of a mar ket maker ’ s por tf olio . T his eff ec t cannot be seen on a candlestick char t .
+Thought
+D espit e the c omple xities , V anna ’ s impac t on delta hedg ing dynamics is sig nifican t and w ar r an ts close 
+a tt en tion.
+T he figur es 11 and 12 displa y V anna e xposur e f or a single c on tr ac t acr oss diff er en t under lying pr ic es 
+and e xpir a tions .
+Figure 1 1. Options Delta - Ef fect Of IV
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+9
+Figure 12. Options V anna Vs Underlying Price
+Chart Observations:
+Expir a tion I mpac t: Under lying P r ic e V anna also e x er ts a str ong influenc e on fur ther - da t ed 
+c on tr ac ts .
+M one yness I nfluenc e: C on tr ac ts tha t ar e sligh tly in-the -money or out - of-the money ha v e a 
+sig nifican t impac t on V anna.
+P ositiv e V anna 
+C alls ( O TM): W ith a r ise in IV , delta incr eases fr om positiv e t o mor e 
+positiv e .
+P uts (ITM): W ith a r ise in IV , delta incr eases fr om nega tiv e t o less 
+nega tiv e .
+Nega tiv e V ann
+C alls (ITM): W ith a r ise in IV , delta decr eases 
+P uts ( O TM): W ith a r ise in IV , delta bec omes mor e nega tiv e
+Case Below Strike V anna > 0
+OTM Call, ITM Put
+A bove Strike V anna <  0
+ITM Call, OTM Put
+I V D elta D elta 
+I V D elta D elta 
+Unli k e G amma and Char m, w her e the most sig nifican t impac ts ar e seen near the str i k e pr ic e and 
+close t o e xpir a tion, V anna can influenc e almost all c on tr ac ts on the options chain. T his undersc or es 
+the c onsider able r ole V anna pla y s in delta hedg ing f or mar k et ma k ers .
+
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+10
+ Nega tiv e V anna S c enario
+IV I ncr eases: W ith a nega tiv e V anna, an 
+incr ease in IV causes the delta of the 
+option t o decr ease . T his pr ompts mar ket 
+makers t o buy the under lying asset t o 
+r ebalanc e . 
+
+IV Decr eases: W hen IV decr eases , the 
+delta incr eases , leading mar ket makers t o 
+sell the under lying asset t o sta y hedged .
+P ositiv e V anna S c enario
+IV I ncr eases: W hen V anna is positiv e and 
+IV incr eases , the delta of the option 
+incr eases . T o r ebalanc e their por tf olio , 
+mar ket makers need t o sell the 
+under lying asset . 
+
+IV Decr eases: C on v ersely , if IV decr eases , 
+the delta of the option decr eases . I n this 
+case , mar ket makers w ould need t o buy 
+the under lying asset t o main tain a neutr al 
+position.
+Final Thoughts
+D elta hedg ing unf olds in t w o distinc t stages: an initial c oun t er mo v e and ongoing adjustmen ts in 
+r esponse t o the ev olving delta within an options por tf olio . M ar ket makers , manag ing v ast por tf olios 
+of options , ar e in c onstan t motion, c on tinuously r ecalibr a ting their positions . T his per petual 
+r ebalancing in t ensifies as time ticks closer t o an option ’ s e xpir a tion, amplifying the fr equenc y and 
+mag nitude of hedg ing ac tivities . I n t oda y ’ s mar ket , the e xpansion of options tr ading , par ticular ly with 
+the in tr oduc tion of daily e xpir a tions on SP X, highligh ts ho w the cumula tiv e eff ec t of delta hedg ing 
+has bec ome a cr itical f or c e dr iving mar ket beha vior .
+T he SP X alone off ers appr o xima t ely 20,000 tr adeable option c on tr ac ts , each with substan tial tr ading 
+v olumes . T he sheer scale of this mar ket , c ombined with the e xplosiv e r ise of 0D TE options and the 
+incr easing pr ev alenc e of shor t er -t er m e xpir a tions , has cr ea t ed a unique en vir onmen t wher e the 
+influenc e of mar ket makers ’  hedg ing on the under lying pr ic e has nev er been mor e pr onounc ed . A s 
+these c on tr ac ts near their e xpir a tion, the need f or c onstan t r e -hedg ing c ompounds , cr ea ting a 
+sig nifican t cumula tiv e impac t tha t can dr iv e shar p in tr ada y pr ic e mo v es and influenc e br oader 
+mar ket tr ends .
+T his dynamic r epr esen ts a per f ec t st or m f or understanding ho w delta hedg ing impac ts pr ic e 
+beha vior . B y digg ing deeper in t o the unseen f or c es shaping the mar ket — like mar ket makers ’  
+positions , gamma e xposur es , and their delta hedg ing flo w s — w e gain in v aluable insigh t in t o the 
+mechanics behind these mo v emen ts . A ssessing these fac t ors acr oss a mar ket maker ’ s en tir e por tf olio 
+pr o vides tr aders with a decisiv e edge .
+A t O ptionsD epth, w e speciali z e in unc o v er ing these hidden la y ers of the mar ket . W ith adv anc ed t ools 
+and da ta- dr iv en insigh ts , w e empo w er our users t o na viga t e the c omple xities of options- dr iv en 
+mar ket ac tivit y with pr ecision and c onfidenc e . I n a mar ket incr easingly shaped b y the r ise of 0D TE 
+options and the immense scale of SP X options tr ading , understanding these f or c es is not just an 
+adv an tage — it ’ s essen tial .
