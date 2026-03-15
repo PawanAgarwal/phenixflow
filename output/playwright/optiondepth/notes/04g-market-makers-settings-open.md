@@ -1,0 +1,199 @@
+- generic:
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - img
+            - list:
+              - listitem:
+                - link:
+                  - /url: /home
+                  - img
+                  - generic: Home
+              - listitem:
+                - link:
+                  - /url: /market-makers
+                  - img
+                  - generic: My Dashboard
+              - listitem:
+                - link:
+                  - /url: /market-makers
+                  - img
+                  - generic: Market Maker’s Exposure
+              - listitem:
+                - link:
+                  - /url: /positional-insight
+                  - img
+                  - generic: Positional Insights
+              - listitem:
+                - link:
+                  - /url: /depth-view
+                  - img
+                  - generic: Depth View
+              - listitem:
+                - link:
+                  - /url: /knowledge-base
+                  - img
+                  - generic: Knowledge Base
+              - listitem:
+                - link:
+                  - /url: /data-shop
+                  - img
+                  - generic: Data Shop
+              - listitem:
+                - link:
+                  - /url: /api-units
+                  - img
+                  - generic: API Units
+          - generic:
+            - button:
+              - generic:
+                - generic: PA
+        - generic:
+          - generic:
+            - img
+            - button:
+              - img
+          - list:
+            - listitem:
+              - link:
+                - /url: /home
+                - img
+                - generic: Home
+            - listitem:
+              - link:
+                - /url: /dashboard
+                - img
+                - generic: My Dashboard
+            - listitem:
+              - link:
+                - /url: /market-makers
+                - img
+                - generic: Market Maker’s Exposure
+            - listitem:
+              - link:
+                - /url: /positional-insight
+                - img
+                - generic: Positional Insights
+            - listitem:
+              - link:
+                - /url: /depth-view
+                - img
+                - generic: Depth View
+            - listitem:
+              - link:
+                - /url: /knowledge-base
+                - img
+                - generic: Knowledge Base
+            - listitem:
+              - link:
+                - /url: /data-shop
+                - img
+                - generic: Data Shop
+            - listitem:
+              - link:
+                - /url: /api-units
+                - img
+                - generic: API Units
+          - generic:
+            - generic:
+              - generic:
+                - generic: PA
+                - generic:
+                  - paragraph: Pawan Agarwal
+                  - paragraph: pawan.agarwal@gmail.com
+                - img
+      - button:
+        - generic:
+          - img
+      - generic:
+        - generic:
+          - generic:
+            - button:
+              - generic:
+                - text: 06 Mar, 2026
+                - img
+          - generic:
+            - combobox:
+              - generic:
+                - generic: SPX
+              - generic:
+                - img
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - tablist:
+                  - tab [selected]: Gamma
+                  - tab: Charm
+                  - tab: Vanna
+                - generic:
+                  - generic:
+                    - combobox:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic: Gradient
+                      - generic:
+                        - img
+                  - generic:
+                    - combobox:
+                      - generic:
+                        - generic:
+                          - img
+                        - generic: 1 min
+                      - generic:
+                        - img
+                  - generic:
+                    - img
+                    - generic: How it works?
+                  - generic:
+                    - button:
+                      - img
+                  - button:
+                    - img
+              - tabpanel
+    - region "Notifications Alt+T"
+  - dialog [ref=e357]:
+    - generic [ref=e359]:
+      - generic [ref=e360]:
+        - generic [ref=e361] [cursor=pointer]: Gamma
+        - generic [ref=e362]:
+          - combobox [active] [ref=e364] [cursor=pointer]:
+            - generic [ref=e365]:
+              - img [ref=e367]
+              - generic: 1 min
+            - img [ref=e371]
+          - button [ref=e374] [cursor=pointer]:
+            - img [ref=e375]
+          - button [ref=e378] [cursor=pointer]:
+            - img [ref=e379]
+      - generic [ref=e390]:
+        - generic [ref=e391]:
+          - generic [ref=e392]:
+            - text: Gamma
+            - text: (∆ / 2.5 pts)
+          - generic [ref=e395]:
+            - generic [ref=e396]: "1600"
+            - generic [ref=e397]: "1000"
+            - generic [ref=e398]: "0"
+            - generic [ref=e399]: "-1000"
+            - generic [ref=e400]: "-1600"
+        - generic [ref=e401]:
+          - img
+          - img:
+            - img
+          - img
+          - generic [ref=e403]:
+            - generic [ref=e407] [cursor=pointer]: Gamma / (∆ / 2.5 pts)
+            - generic [ref=e411] [cursor=pointer]: Gamma Peak
+            - generic [ref=e415] [cursor=pointer]: Gamma Trough
+            - generic [ref=e419] [cursor=pointer]: Gamma Zero
+            - generic [ref=e423] [cursor=pointer]: OHLC
+          - generic:
+            - img
+    - generic [ref=e424]:
+      - paragraph

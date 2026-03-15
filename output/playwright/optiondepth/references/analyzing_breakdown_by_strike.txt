@@ -1,0 +1,292 @@
+Analy zing 
+Br eak do wn b y 
+St rik e Ch art s
+O p tion s D ep th 2 02 4 J uly 2 02 4 1
+P ositional br eak do wn b y st rik e
+V isualizing net positions br ok en do wn b y strik e is a po w erful t ool.  This method 
+allo ws us t o quickly underst and the dir ectional bias of a position and the 
+pot ential hedging r equir ements or r esponses of mark et mak ers as the underlying 
+price appr oaches cert ain le v els.
+
+Options contr acts come in tw o types: calls and puts,  and each can either be 
+bought or sold.  With thousands of tr ansactions occurring f or each contr act daily ,  
+tr acking them visually can be an e xtr emely ar duous t ask.  F ortunat ely ,  comput ers 
+can simplify this pr ocess.
+
+By analyzing the flo w ,  one can underst and the moment ary bias and inf er the 
+dir ection of the mark et.  Ho w e v er ,  this appr oach may oft en lag behind the actual 
+price action.  Underst anding the global pictur e b y kno wing the net position of 
+cust omers can pr o vide a significant edge,  r e v ealing the o v er all supply and 
+demand imbalance f or each contr act.
+
+This imbalance oft en acts as a blueprint,  shaping the price action f or the session.  
+But if mark ets ar e efficient,  ho w can cust omers be net long or short positions? 
+This is wher e diff er ent mark et participants come int o play .  M ark et mak ers,  f or 
+e x ample,  pr o vide liquidity t o the mark et,  allo wing tr aders or institutions t o 
+e x ecut e tr ades quickly and at r easonable prices.  The y fill the imbalance b y t aking 
+the opposit e side of cust omers ’ tr ades.
+
+R eading these charts allo ws us t o quickly identify k e y ar eas of int er est f or a 
+tr ading day .  Her e,  w e will div e int o the net cust omer position,  delt a e xposur e 
+(DEX),  and mark et mak ers ’ net gamma e xposur e (GEX).
+
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 2
+Ne t cust omer p osition ( Cust omer s P os )
+L et ’ s st art off with this t able.
+Net Cust omer
+P osition P osition Side Color of
+the Bar Bias
+Net L ong  C alls
+Net Short  C alls
+Net Short  Puts
+Net L ong  Puts
+P ositiv e (+)
+Negativ e (-)
+Negativ e (-)
+P ositiv e (+)
+Right
+L eft
+L eft
+Right
+Gr een
+Gr een
+R ed
+R ed
+Bullish
+Bearish
+Bullish
+Bearish
+Cus t omer s P os
+P o t ential S cenarios
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 3
+Selling O TM C alls indicat es a bearish outlook on the underlying asset.  
+Cust omers who sell O TM calls belie v e that the asset's price will r emain belo w the 
+strik e price,  allo wing them t o k eep the pr emium r eceiv ed fr om selling the call 
+without having t o deliv er the underlying asset.  This str at egy benefits fr om a 
+st able or declining mark et.
+
+Selling O TM Puts signals a bullish outlook on the underlying asset.  Cust omers 
+who sell O TM puts e xpect the asset's price t o st ay abo v e the strik e price,  
+allo wing them t o k eep the pr emium r eceiv ed fr om selling the put without having 
+t o buy the underlying asset at the strik e price.  This str at egy benefits fr om a 
+st able or rising mark et.
+
+Buying O TM C alls pr o vides upside e xposur e.  When cust omers buy calls,  the y 
+ar e anticipating that the underlying asset's price will rise bef or e the option 
+e xpir es.  This str at egy benefits fr om bullish mark et mo v ements,  allo wing the call 
+buy er t o pot entially pr ofit fr om significant up w ar d price swings.  A s the underlying 
+price incr eases,  the call option 's v alue incr eases,  off ering le v er aged gains with 
+limit ed initial inv estment.
+
+Buying O TM Puts pr o vides do wnside e xposur e.  When cust omers buy puts,  the y 
+ar e e xpecting the underlying asset's price t o dr op bef or e e xpir ation.  This str at egy 
+benefits fr om bearish mark et mo v ements,  pr ot ecting the put buy er fr om declines 
+in the underlying asset's price.  A s the underlying price decr eases,  the put 
+option 's v alue incr eases,  pr o viding a w ay t o pr ofit fr om or hedge against 
+significant do wnw ar d price mo v ements.
+
+Deep In-the-Mone y (ITM) Options ar e oft en part of br oader str at egies.  These 
+options hav e strik e prices significantly belo w the curr ent spot price f or calls,  or 
+significantly abo v e the spot price f or puts.  Deep ITM options hav e delt as close t o 
+1 f or calls and - 1 f or puts,  making them behav e similarly t o the underlying asset 
+with less capit al outlay .  The y ar e fr equently used in str at egies lik e co v er ed calls,  
+pr ot ectiv e puts,  or as part of spr eads,  wher e the inv est or aims t o maximiz e 
+le v er age while minimizing risk.  Due t o their high intrinsic v alue and lo w time 
+v alue,  deep ITM options pr o vide a w ay t o gain subst antial e xposur e t o the 
+underlying asset's price mo v ement with r elativ ely lo w er v olatility .
+
+P ositions might change o v er time,  but the y pr o vide a good idea of the o v er all 
+sentiment* .  *A dded pr ecision will be co v er ed in our intr ada y data 
+subscrip tion.
+
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 4
+An int er esting aspect is the z er o days t o e xpir ation (0D TE) options,  wher e lar ge 
+net positions ar e oft en held f or most of the day .  Curr ent dat a suggests that 
+intr aday v olume f or 0D TE options is gener ally balanced betw een buys and sells.  
+Lar ge positions ar e oft en held until e xpir ation,  pr o viding k e y insights int o mark et 
+sentiment and pot ential price mo v ements.
+Cust omer D elt a E xp os ur e ( Cust omer s D E X)
+Delta Char ac t eris tics
+The delt a of an option contr act is dynamic
+The delt a of a single call r anges fr om 0 t o 1 
+The delt a of a single put r anges fr om - 1 t o 0 
+In-the-mone y options hav e a gr eat er w eight,  with the delt a of a 
+single call appr oaching 1 and a single put appr oaching - 1 .
+F or short positions (negativ e position)
+The delt a of a single short call r anges fr om - 1 t o 0 
+The delt a of a single short put r anges fr om 0 t o 1 
+In-the-mone y short options hav e a gr eat er w eight,  with the delt a 
+of a single call appr oaching - 1 and a single put appr oaching 1 .
+* A positiv e delta inf er s a bullish outlook
+* A negativ e delta inf er s a bearish outlook
+Net Cust omer
+P osition P osition Side Color of
+the Bar Bias
+Net L ong  C alls
+Net Short  C alls
+Net Short  Puts
+Net L ong  Puts
+P ositiv e (+)*
+Negativ e (-)
+P ositiv e (+)
+Negativ e (-)*
+Right
+L eft
+Right
+L eft
+Gr een
+Gr een
+R ed
+R ed
+Bullish
+Bearish
+Bullish
+Bearish
+
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 5
+The cust omer DEX br eak do wn b y strik e sho w cases the delt a e xposur e w eight 
+each particular contr act e x erts on the curr ent o v er all e xposur e.  Delt a is dynamic 
+and changes as mark et conditions change,  but the o v er all dir ectional bias 
+r emains tied t o the position.  F or e x ample
+Short calls hav e a negativ e delt a
+L ong calls hav e a positiv e delt a
+Short puts hav e a positiv e delt a
+L ong puts hav e a negativ e delt a.
+
+The magnitude of these delt as can change significantly as mark et conditions 
+change,  influenced b y f act ors such as the underlying price,  time-t o-e xpir ation,  
+and fix ed strik e implied v olatility (IV).
+Cus t omer s DEX
+P o t ential S cenarios
+L ong C alls hav e a positiv e delt a,  indicating a bullish outlook.  A s the underlying 
+asset's price rises,  the delt a and v alue of the calls incr ease,  r eflecting the 
+cust omers' e xpect ation of up w ar d price mo v ement.  This positiv e delt a 
+contribut es t o an o v er all bullish bias.
+
+L ong Puts hav e a negativ e delt a,  indicating a bearish outlook.  A s the underlying 
+asset's price f alls,  the delt a and v alue of the puts incr ease,  r eflecting the 
+cust omers' e xpect ation of do wnw ar d price mo v ement.  This negativ e delt a 
+contribut es t o an o v er all bearish bias.
+
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 6
+Short C alls hav e a negativ e delt a,  indicating a bearish outlook.  When cust omers 
+sell calls,  the y ar e betting against the price rising abo v e the strik e price.  The 
+negativ e delt a of short calls means that as the underlying price incr eases,  the 
+position loses v alue,  consist ent with a bearish sentiment.
+
+Short Puts hav e a positiv e delt a,  indicating a bullish outlook.  When cust omers 
+sell puts,  the y e xpect the price t o st ay abo v e the strik e price.  The positiv e delt a of 
+short puts means that as the underlying price incr eases,  the position gains v alue,  
+r eflecting a bullish sentiment.
+K e y T ak ea w a y
+L ooking at the net Delt a Exposur e (DEX) can pr o vide v aluable insights int o the 
+o v er all bias consensus f or a giv en strik e,  whether thr ough calls or puts,  long or 
+short.  This analysis helps underst and the dir ectional sentiment and pot ential 
+mark et mo v ements based on cust omer positioning.
+Mark e t Mak er ’ s G amma E xp os ur e ( M M G E X)
+Net Cust omer
+P osition
+Net MM
+P osition
+MM G amma Side Color of
+the Bar
+Net L ong  C alls Net Short  C alls
+Net Short  C alls Net L ong  C alls
+Net Short  Puts Net L ong  Puts
+Net L ong  Puts Net Short  Puts
+Negativ e(-)
+P ositiv e (+)
+P ositiv e (+)
+Negativ e(-)
+L eft
+Right
+Right
+L eft
+Gr een
+Gr een
+R ed
+R ed
+G amma Char ac t eris tics
+G amma measur es ho w much the delt a of an option changes as the price of the 
+underlying asset changes.  T r acking gamma is particularly import ant f or delt a 
+hedging mark et participants,  not ably mark et mak ers.  The y typically maint ain no 
+dir ectional e xposur e and use delt a hedging t o neutr aliz e their delt a.  
+
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 7
+Underst anding ho w their delt a will change as price mo v es helps inf er their 
+buying or selling behavior as cert ain price le v els ar e appr oached.
+The MM GEX br eak do wn b y strik e sho w cases the gamma e xposur e w eight each 
+particular contr act e x erts on the curr ent o v er all e xposur e.  G amma is dynamic and 
+changes as mark et conditions change,  but the o v er all polarity is tied t o the 
+position.  F or inst ance:
+L ong options alw a y s ha v e a positiv e gamma
+Short options alw a y s ha v e a negativ e gamma.
+G amma peak s in magnitude at the strik e price
+G amma gets significantly amplified as w e near e xpir ation.
+The magnitude of these gamma v alues can change significantly due t o f act ors 
+such as the underlying price,  time-t o-e xpir ation,  and fix ed strik e implied 
+v olatility (IV).  R ef er t o our heatmap ,  which pr ojects upcoming changes in time 
+and underlying price on the entir e MM options portf olio .
+MM GEX and Mark e t D ynamics
+M ark et mak ers hold the opposit e side of cust omers' net positions,  filling the 
+imbalance of o v er all supply or demand f or specific contr acts.  Their gamma 
+e xposur e (MM GEX) is dir ectly influenced b y their o v er all long or short option 
+position,  r egar dless of the contr act type.  Underst anding MM GEX pr o vides 
+insights int o pot ential mark et support and r esist ance le v els.
+P ositivie G amma: M ark et mak ers ha v e a net long option position.  A s the 
+underlying price mo v es,  mark et mak ers hedge b y buying when the price 
+dr ops and selling when it rises.  This beha vior st abiliz es the mark et,  cr eating 
+support on the do wnside and r esist ance on the upside,  and helps dampen 
+price v olatility 
+Negativ e G amma: M ark et mak ers ha v e a net short gamma position.  A s the 
+underlying price mo v es,  mark et mak ers hedge b y selling when the price 
+dr ops and buying when it rises.  This beha vior e x acerbat es price 
+mo v ements,  acting lik e a "magnet" that pulls the price further in the 
+dir ection of the mo v ement,  incr easing price v olatility .
+
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 8
+MM L ong Options (r egar dless of contr act type): When cust omers ha v e 
+negativ e net options positions,  mark et mak ers ha v e a positiv e position,  
+r esulting in positiv e gamma e xposur e.  The y hedge against price 
+mo v ements,  cr eating support and r esist ance le v els
+MM Short Options (r egar dless of contr act type): When cust omers ha v e 
+positiv e net options positions,  mark et mak ers ha v e a negativ e position,  
+r esulting in negativ e gamma e xposur e.  The y need t o hedge b y selling as the 
+price incr eases and buying as the price decr eases,  amplifying mark et 
+mo v ements.
+K e y T ak ea w a y s
+P ositiv e G amma acts as support and r esist ance due t o mark et mak ers' 
+hedging activities against price mo v ements
+Negativ e G amma acts lik e a "magnet, " pulling prices further in the 
+dir ection of the mo v ement,  thus incr easing v olatility .
+
+By analyzing the MM GEX,  tr aders can gain insights int o pot ential mark et 
+beha vior and k e y price le v els influenced b y mark et mak ers' hedging str at egies.  
+This underst anding helps pr edict pot ential support and r esist ance z ones and 
+anticipat e mark et v olatility .
+MM GEX
+P o t ential S cenarios
+
+
+O p tion s D ep th 2 02 4 J uly 2 02 4 9
+The B o tt om Line
+Underst anding the br eak do wn of net positions b y strik e and the r esulting delt a 
+and gamma e xposur es pr o vides inv aluable insights int o mark et dynamics.  By 
+visualizing net positions,  tr aders can quickly gr asp the dir ectional biases and 
+pot ential hedging actions of mark et participants as prices appr oach specific 
+le v els.
+
+This compr ehensiv e analysis allo ws tr aders t o anticipat e mark et behavior ,  
+identify k e y price le v els,  and mak e mor e inf ormed tr ading decisions.  The insights 
+gained fr om e x amining net cust omer positions,  delt a e xposur e,  and mark et 
+mak er's gamma e xposur e equip tr aders with a str at egic edge in the mark et.
+W e'll e xplor e additional t opics and delv e deeper int o other aspects of options 
+tr ading in futur e t e xts.  St ay tuned f or mor e in-depth analyses and str at egies t o 
+enhance y our tr ading e xpertise.

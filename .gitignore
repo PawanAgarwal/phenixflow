@@ -40,3 +40,7 @@ data/archive/
 data/options_storage/
 data/factset_eps_study/
 data/macro_transformer/
+
+# Local browser session state for OptionDepth exploration
+output/playwright/optiondepth/browser-profile/
+output/playwright/optiondepth/references/.vendor/

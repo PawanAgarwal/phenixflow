@@ -1,0 +1,142 @@
+- generic:
+  - generic:
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - img
+            - list:
+              - listitem:
+                - link:
+                  - /url: /home
+                  - img
+                  - generic: Home
+              - listitem:
+                - link:
+                  - /url: /data-shop
+                  - img
+                  - generic: My Dashboard
+              - listitem:
+                - link:
+                  - /url: /market-makers
+                  - img
+                  - generic: Market Maker’s Exposure
+              - listitem:
+                - link:
+                  - /url: /positional-insight
+                  - img
+                  - generic: Positional Insights
+              - listitem:
+                - link:
+                  - /url: /depth-view
+                  - img
+                  - generic: Depth View
+              - listitem:
+                - link:
+                  - /url: /knowledge-base
+                  - img
+                  - generic: Knowledge Base
+              - listitem:
+                - link:
+                  - /url: /data-shop
+                  - img
+                  - generic: Data Shop
+              - listitem:
+                - link:
+                  - /url: /api-units
+                  - img
+                  - generic: API Units
+          - generic:
+            - button [expanded]:
+              - generic:
+                - generic: PA
+        - generic:
+          - generic:
+            - img
+            - button:
+              - img
+          - list:
+            - listitem:
+              - link:
+                - /url: /home
+                - img
+                - generic: Home
+            - listitem:
+              - link:
+                - /url: /dashboard
+                - img
+                - generic: My Dashboard
+            - listitem:
+              - link:
+                - /url: /market-makers
+                - img
+                - generic: Market Maker’s Exposure
+            - listitem:
+              - link:
+                - /url: /positional-insight
+                - img
+                - generic: Positional Insights
+            - listitem:
+              - link:
+                - /url: /depth-view
+                - img
+                - generic: Depth View
+            - listitem:
+              - link:
+                - /url: /knowledge-base
+                - img
+                - generic: Knowledge Base
+            - listitem:
+              - link:
+                - /url: /data-shop
+                - img
+                - generic: Data Shop
+            - listitem:
+              - link:
+                - /url: /api-units
+                - img
+                - generic: API Units
+          - generic:
+            - generic:
+              - generic:
+                - generic: PA
+                - generic:
+                  - paragraph: Pawan Agarwal
+                  - paragraph: pawan.agarwal@gmail.com
+                - img
+      - button:
+        - generic:
+          - img
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - tablist:
+                  - tab: Purchase
+                  - tab [selected]: Buying History
+              - tabpanel:
+                - generic:
+                  - heading [level=1]: Buying History
+                  - generic:
+                    - generic:
+                      - img
+                      - heading [level=3]: No purchases found.
+                      - paragraph: Once you make a purchase your billing details will appear here.
+    - region "Notifications Alt+T"
+  - menu "PA" [active] [ref=e408]:
+    - menuitem "Settings" [ref=e409]:
+      - link "Settings" [ref=e410] [cursor=pointer]:
+        - /url: /settings
+        - img [ref=e411]
+        - generic [ref=e414]: Settings
+    - menuitem "Membership" [ref=e415]:
+      - link "Membership" [ref=e416] [cursor=pointer]:
+        - /url: /membership
+        - img [ref=e417]
+        - generic [ref=e419]: Membership
+    - menuitem "Logout" [ref=e420]:
+      - button "Logout" [ref=e421] [cursor=pointer]:
+        - img [ref=e422]
+        - generic [ref=e425]: Logout

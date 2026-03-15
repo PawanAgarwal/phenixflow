@@ -1,0 +1,127 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Home" [ref=e23] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e24]
+                - generic [ref=e26]: Home
+            - listitem [ref=e27]:
+              - link "My Dashboard" [ref=e28] [cursor=pointer]:
+                - /url: /dashboard
+                - img [ref=e29]
+                - generic [ref=e34]: My Dashboard
+            - listitem [ref=e35]:
+              - link "Market Maker’s Exposure" [ref=e36] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e37]
+                - generic [ref=e41]: Market Maker’s Exposure
+            - listitem [ref=e42]:
+              - link "Positional Insights" [ref=e43] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e44]
+                - generic [ref=e46]: Positional Insights
+            - listitem [ref=e47]:
+              - link "Depth View" [ref=e48] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e49]
+                - generic [ref=e54]: Depth View
+            - listitem [ref=e55]:
+              - link "Knowledge Base" [ref=e56] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e57]
+                - generic [ref=e59]: Knowledge Base
+            - listitem [ref=e60]:
+              - link "Data Shop" [ref=e61] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e62]
+                - generic [ref=e66]: Data Shop
+            - listitem [ref=e67]:
+              - link "API Units" [ref=e68] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e69]
+                - generic [ref=e73]: API Units
+        - button "PA" [ref=e75] [cursor=pointer]:
+          - generic [ref=e77]: PA
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e80]
+          - button [ref=e93] [cursor=pointer]:
+            - img [ref=e94]
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - link "Home" [ref=e99] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e100]
+              - generic [ref=e102]: Home
+          - listitem [ref=e103]:
+            - link "My Dashboard" [ref=e104] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e105]
+              - generic [ref=e110]: My Dashboard
+          - listitem [ref=e111]:
+            - link "Market Maker’s Exposure" [ref=e112] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e113]
+              - generic [ref=e117]: Market Maker’s Exposure
+          - listitem [ref=e118]:
+            - link "Positional Insights" [ref=e119] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e120]
+              - generic [ref=e122]: Positional Insights
+          - listitem [ref=e123]:
+            - link "Depth View" [ref=e124] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e125]
+              - generic [ref=e130]: Depth View
+          - listitem [ref=e131]:
+            - link "Knowledge Base" [ref=e132] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e133]
+              - generic [ref=e135]: Knowledge Base
+          - listitem [ref=e136]:
+            - link "Data Shop" [ref=e137] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e138]
+              - generic [ref=e142]: Data Shop
+          - listitem [ref=e143]:
+            - link "API Units" [ref=e144] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e145]
+              - generic [ref=e149]: API Units
+        - generic [ref=e154]:
+          - generic [ref=e155]: PA
+          - generic [ref=e190]:
+            - paragraph [ref=e191]: Pawan Agarwal
+            - paragraph [ref=e192]: pawan.agarwal@gmail.com
+          - img [ref=e156]
+    - button [ref=e158] [cursor=pointer]:
+      - img [ref=e160]
+    - generic [ref=e162]:
+      - generic:
+        - paragraph
+      - generic [ref=e163]:
+        - button "06 Mar, 2026" [ref=e165] [cursor=pointer]:
+          - generic [ref=e166]:
+            - text: 06 Mar, 2026
+            - img [ref=e167]
+        - combobox [ref=e170] [cursor=pointer]:
+          - generic [ref=e171]:
+            - generic: SPX
+          - img [ref=e173]
+    - generic [ref=e178]:
+      - img [ref=e179]
+      - generic [ref=e181]:
+        - img [ref=e183]
+        - heading "Get Started with Your Dashboard!" [level=1] [ref=e184]:
+          - text: Get Started with Your
+          - text: Dashboard!
+        - paragraph [ref=e185]: Start by clicking the edit button to personalize your experience. Customize your charts and data to suit your needs. 📊 ✨
+        - button "Edit Dashboard" [ref=e186] [cursor=pointer]:
+          - img [ref=e187]
+          - text: Edit Dashboard
+  - region "Notifications Alt+T"

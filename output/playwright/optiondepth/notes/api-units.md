@@ -1,0 +1,144 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Home" [ref=e23] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e24]
+                - generic [ref=e26]: Home
+            - listitem [ref=e27]:
+              - link "My Dashboard" [ref=e28] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e29]
+                - generic [ref=e34]: My Dashboard
+            - listitem [ref=e35]:
+              - link "Market Maker’s Exposure" [ref=e36] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e37]
+                - generic [ref=e41]: Market Maker’s Exposure
+            - listitem [ref=e42]:
+              - link "Positional Insights" [ref=e43] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e44]
+                - generic [ref=e46]: Positional Insights
+            - listitem [ref=e47]:
+              - link "Depth View" [ref=e48] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e49]
+                - generic [ref=e54]: Depth View
+            - listitem [ref=e55]:
+              - link "Knowledge Base" [ref=e56] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e57]
+                - generic [ref=e59]: Knowledge Base
+            - listitem [ref=e60]:
+              - link "Data Shop" [ref=e61] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e62]
+                - generic [ref=e66]: Data Shop
+            - listitem [ref=e67]:
+              - link "API Units" [ref=e68] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e69]
+                - generic [ref=e73]: API Units
+        - button "PA" [ref=e75] [cursor=pointer]:
+          - generic [ref=e77]: PA
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e80]
+          - button [ref=e93] [cursor=pointer]:
+            - img [ref=e94]
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - link "Home" [ref=e99] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e100]
+              - generic [ref=e102]: Home
+          - listitem [ref=e103]:
+            - link "My Dashboard" [ref=e104] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e105]
+              - generic [ref=e110]: My Dashboard
+          - listitem [ref=e111]:
+            - link "Market Maker’s Exposure" [ref=e112] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e113]
+              - generic [ref=e117]: Market Maker’s Exposure
+          - listitem [ref=e118]:
+            - link "Positional Insights" [ref=e119] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e120]
+              - generic [ref=e122]: Positional Insights
+          - listitem [ref=e123]:
+            - link "Depth View" [ref=e124] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e125]
+              - generic [ref=e130]: Depth View
+          - listitem [ref=e131]:
+            - link "Knowledge Base" [ref=e132] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e133]
+              - generic [ref=e135]: Knowledge Base
+          - listitem [ref=e136]:
+            - link "Data Shop" [ref=e137] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e138]
+              - generic [ref=e142]: Data Shop
+          - listitem [ref=e143]:
+            - link "API Units" [ref=e144] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e145]
+              - generic [ref=e149]: API Units
+        - generic [ref=e154]:
+          - generic [ref=e155]: PA
+          - generic [ref=e174]:
+            - paragraph [ref=e175]: Pawan Agarwal
+            - paragraph [ref=e176]: pawan.agarwal@gmail.com
+          - img [ref=e156]
+    - button [ref=e158] [cursor=pointer]:
+      - img [ref=e160]
+    - generic [ref=e163]:
+      - img [ref=e164]
+      - generic [ref=e165]:
+        - paragraph [ref=e177]: API Units & Usage Overview
+        - generic [ref=e178]:
+          - heading "Purchase API Units" [level=4] [ref=e179]
+          - generic [ref=e180]:
+            - generic [ref=e181]:
+              - generic [ref=e182]:
+                - generic [ref=e183]:
+                  - img [ref=e185]
+                  - paragraph [ref=e187]: Basic
+                - generic [ref=e188]:
+                  - paragraph [ref=e190]:
+                    - img [ref=e192]
+                    - generic [ref=e194]: This plan is only available with our Pro Max Membership. Upgrade to unlock it!
+                  - button "Purchase Now" [disabled] [ref=e195]
+              - generic [ref=e196]:
+                - heading "$99" [level=3] [ref=e197]
+                - paragraph [ref=e198]:
+                  - text: The
+                  - generic [ref=e199]: Basic Plan
+                  - text: includes
+                  - generic [ref=e200]: 2K API units
+                  - text: . It provides access to daily and intraday data for all metrics, Gamma and Charm heatmaps, DepthView market visualizations, strike-specific breakdowns, and expiration-based analytics. The plan offers the full range of data available on the website, delivered through developer-friendly, JSON-formatted API.
+            - generic [ref=e201]:
+              - generic [ref=e202]:
+                - img [ref=e204]
+                - generic [ref=e206]:
+                  - heading "API Documentation" [level=3] [ref=e207]
+                  - paragraph [ref=e208]: Access our comprehensive API documentation to learn about endpoints, parameters, authentication, and best practices for integration.
+                  - link "View Documentation" [ref=e209] [cursor=pointer]:
+                    - /url: /api-units-docs
+                    - text: View Documentation
+                    - img [ref=e210]
+              - generic [ref=e214]:
+                - img [ref=e216]
+                - generic [ref=e218]:
+                  - heading "Overage Charges Information" [level=3] [ref=e219]
+                  - paragraph [ref=e220]: Additional usage beyond your plan is billed at 0.05 per API unit. Charges apply at the end of each billing cycle.
+  - region "Notifications Alt+T"

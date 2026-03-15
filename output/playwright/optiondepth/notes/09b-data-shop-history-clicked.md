@@ -1,0 +1,115 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Home" [ref=e23] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e24]
+                - generic [ref=e26]: Home
+            - listitem [ref=e27]:
+              - link "My Dashboard" [ref=e28] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e29]
+                - generic [ref=e34]: My Dashboard
+            - listitem [ref=e35]:
+              - link "Market Maker’s Exposure" [ref=e36] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e37]
+                - generic [ref=e41]: Market Maker’s Exposure
+            - listitem [ref=e42]:
+              - link "Positional Insights" [ref=e43] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e44]
+                - generic [ref=e46]: Positional Insights
+            - listitem [ref=e47]:
+              - link "Depth View" [ref=e48] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e49]
+                - generic [ref=e54]: Depth View
+            - listitem [ref=e55]:
+              - link "Knowledge Base" [ref=e56] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e57]
+                - generic [ref=e59]: Knowledge Base
+            - listitem [ref=e60]:
+              - link "Data Shop" [ref=e61] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e62]
+                - generic [ref=e66]: Data Shop
+            - listitem [ref=e67]:
+              - link "API Units" [ref=e68] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e69]
+                - generic [ref=e73]: API Units
+        - button "PA" [ref=e75] [cursor=pointer]:
+          - generic [ref=e77]: PA
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e80]
+          - button [ref=e93] [cursor=pointer]:
+            - img [ref=e94]
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - link "Home" [ref=e99] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e100]
+              - generic [ref=e102]: Home
+          - listitem [ref=e103]:
+            - link "My Dashboard" [ref=e104] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e105]
+              - generic [ref=e110]: My Dashboard
+          - listitem [ref=e111]:
+            - link "Market Maker’s Exposure" [ref=e112] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e113]
+              - generic [ref=e117]: Market Maker’s Exposure
+          - listitem [ref=e118]:
+            - link "Positional Insights" [ref=e119] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e120]
+              - generic [ref=e122]: Positional Insights
+          - listitem [ref=e123]:
+            - link "Depth View" [ref=e124] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e125]
+              - generic [ref=e130]: Depth View
+          - listitem [ref=e131]:
+            - link "Knowledge Base" [ref=e132] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e133]
+              - generic [ref=e135]: Knowledge Base
+          - listitem [ref=e136]:
+            - link "Data Shop" [ref=e137] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e138]
+              - generic [ref=e142]: Data Shop
+          - listitem [ref=e143]:
+            - link "API Units" [ref=e144] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e145]
+              - generic [ref=e149]: API Units
+        - generic [ref=e154]:
+          - generic [ref=e155]: PA
+          - generic [ref=e199]:
+            - paragraph [ref=e200]: Pawan Agarwal
+            - paragraph [ref=e201]: pawan.agarwal@gmail.com
+          - img [ref=e156]
+    - button [ref=e158] [cursor=pointer]:
+      - img [ref=e160]
+    - generic [ref=e165]:
+      - tablist [ref=e167]:
+        - tab "Purchase" [ref=e168] [cursor=pointer]
+        - tab "Buying History" [active] [selected] [ref=e169] [cursor=pointer]
+      - tabpanel "Buying History" [ref=e400]:
+        - generic [ref=e401]:
+          - heading "Buying History" [level=1] [ref=e402]
+          - generic [ref=e404]:
+            - img [ref=e405]
+            - heading "No purchases found." [level=3] [ref=e406]
+            - paragraph [ref=e407]: Once you make a purchase your billing details will appear here.
+  - region "Notifications Alt+T"

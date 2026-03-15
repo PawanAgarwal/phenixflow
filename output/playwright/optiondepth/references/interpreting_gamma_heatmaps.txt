@@ -1,0 +1,137 @@
+Mark e t Mak er s ' G amma 
+E xp os ur e P r oje c tion
+O p tion s D ep th 2 02 4 S ep 2 02 4
+1
+T r acking gamma pr o vides tr aders with critical insight int o ho w mark et mak ers hedge their 
+massiv e options por tf olios as the underlying price fluctuat es.  The sheer siz e of mark et mak ers' 
+positions mak es these hedging flo ws significant.  With the r ecent sur ge in popularity of daily 
+0D TE (z er o days t o e xpir ation) options,  underst anding gamma e xposur e has ne v er been mor e 
+crucial.
+The O bs ole t e Appr o a c h t o G amma
+T r aditionally ,  gamma has been view ed thr ough a linear lens,  calculat ed b y simply multiplying 
+open int er est (OI) b y the gamma at each strik e price.  Ho w e v er ,  in t oday 's mark et,  this method 
+is out dat ed and flaw ed f or thr ee main r easons:
+OI Doesn 't R eflect M ark et M ak ers' P ositions
+G amma Is Cumulativ e A cr oss All Options: All options in a mark et mak er's por tf olio 
+contribut e t o the o v er all gamma landscap
+G amma Is Dynamic and Con v e x: G amma peak s ar ound the strik e price and incr eases as 
+e xpir ation nears (illustr at e with a figur e).
+Wh y T r a c k G amma E xp os ur e ?
+(Click her e t o learn mor e).
+F igur e 1 . O p tion s G amma v s Underlying price
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+2
+W e pioneer ed this appr oach in the spring of 20 22 t o addr ess the limit ations of tr aditional 
+gamma tr acking methods.  Our heatmap corr ects these shor t comings b y calculating the entir e 
+gamma e xposur e of mark et mak ers ’ por tf olios and pr ojecting it thr oughout the tr ading session.  
+Inst ead of a linear v alue,  w e pr o vide a surf ace map wher e positiv e gamma is sho wn in blue and 
+negativ e gamma in r ed.  
+A Mo der n Appr o a c h :
+O ur G amma E xp os ur e Hea t map
+M ark et mak ers' hedging is a const antly shifting pr ocess,  with multiple play ers competing in 
+r eal time.  Our t ool captur es this br oader cont e xt b y visualizing the complet e gamma e xposur e 
+landscape.
+The Dy namic Na tur e o f He dging
+W e off er multiple w ays t o e xplor e gamma e xposur e:
+Visualiz ation Op tions
+F igur e 2 . He t map F igur e 3 . 3 D S urf a ce
+Y ou’ ll notice height ened conv e xity as the session pr ogr esses,  lar gely due t o the incr eased 
+influence of 0D TE options as the y appr oach e xpir ation.
+3D Sur f ace: This visualization sho ws a surf ace map ,  with y ello w mark ers r epr esenting the 
+closing prices of candlestick s f or y our chosen timefr ame
+Heatmap: A flatt ened v ersion of the 3D surf ace f or easier analysis.
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+3
+Ho w t o R ea d the G amma Hea t map
+P ositiv e G amma Exposur e
+In a positiv e gamma en vir onment (blue back gr ound),  mark et mak ers hedge b y tr ading the 
+underlying asset—typically ES futur es f or SP X options—against price mo v ements.  A s gamma 
+incr eases,  mark et mak ers ar e mor e lik ely t o suppr ess v olatility ,  which oft en leads t o slo w er 
+price mo v ements or e v en price r ejections.
+L ooking at the 3D sur f ace, y ou can think of it lik e climbing a mountain—it’ s much har der t o 
+climb uphill than t o come do wn. The same idea applie s t o gamma. The higher the sur f ace, 
+the higher the gamma e xposur e. A s the price mo v e s agains t this "uphill" gamma e xposur e, 
+w e e xpec t s tr onger hedging pr e s sur e fr om mark e t mak er s t o r e sis t the price mo v ement. The 
+t op of the mountain r epr e sent s the k e y suppor t or r e sis tance le v els, wher e price mo v ement 
+t ends t o slo w do wn. Once the price mo v e s o v er the peak, it can f all int o the v alle y with le s s 
+r e sis tance.
+F igur e 4 . 3 D S urf a ce with candle stic k c losing price
+G amma P eak s: R epr esent ed b y gr een lines,  these peak s indicat e ar eas wher e gamma ’ s 
+influence is str ongest,  oft en acting as suppor t or r esist ance le v els
+G amma T r oughs: R epr esent ed b y y ello w lines,  these ar e ar eas of lo w gamma influence,  
+oft en r ef err ed t o as “ paths of least r esist ance, ” wher e the underlying asset is less lik ely t o 
+encount er str ong hedging pr essur e r elat ed t o gamma.
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+4
+Negativ e gamma e xposur e
+In a negativ e gamma en vir onment (r ed back gr ound),  mark et mak ers hedge their options 
+por tf olio b y tr ading with the price mo v ements of the underlying asset.  In these envir onments,  
+mark et mak ers e xtr act liquidity fr om the mark et,  leading t o higher v olatility and wider price 
+swings.  The most v olatile point typically occurs wher e gamma e xposur e is locally lo w because 
+the hedging flo ws ar e str ongest ther e.  K eep in mind,  as mark et mak ers activ ely hedge their 
+positions,  a lar ge cust omer or der can quickly change the mark et landscape.  In this case,  the 
+underlying price becomes mor e sensitiv e t o lar ge or ders.
+G amma P eak s: R epr esent ed b y gr een lines,  these indicat e ar eas wher e price mo v ement is 
+e xpect ed t o be least v olatile,  similar t o what w e see in a positiv e gamma envir onment.  
+These le v els oft en act as suppor t or r esist ance
+G amma T r oughs: Sho wn b y y ello w lines,  these r epr esent ar eas of high v olatility .  The 
+hedging flo ws her e ar e str onger and f ollo w the dir ection of the underlying price mo v ement,  
+making the price mor e sensitiv e t o lar ge cust omer tr ades.
+Continue t o the ne xt page f or case s tudie s 
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+5
+The f ollo wing e x amples sho w case ho w our daily model heatmaps w ork.  The same dynamics 
+apply f or the intr aday model.
+E x amples
+R ejec tion of High G amma Exposur e Ar ea
+In this image,  the SP X is in a positiv e gamma envir onment (blue color).  A s the underlying price 
+rises and mo v es t o w ar d a r egion of higher gamma e xposur e (dark er blue),  w e e xpect str ong 
+selling pr essur e fr om mark et mak ers hedging against price mo v ements.  In such cases,  the high 
+gamma le v el acts as r esist ance t o the price.
+R emember ,  gamma w ork s both w ays.  In a positiv e envir onment,  the hedging pr essur e w ork s 
+against price mo v ement in both dir ections.  If the price mo v es do wnw ar d int o an ar ea of high 
+gamma e xposur e,  w e w ould e xpect mark et mak ers t o apply buying pr essur e,  acting as a 
+suppor t le v el.
+F igur e 5 . R eje c tion o f an o v erhea d high gamma ar ea
+F igur e 6 . S upp ort f ound in a high gamma ar ea b elo w .
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+6
+Slo w do wn in a High G amma Ar ea
+P ath of L eas t R e sis tance: L o w G amma Ar eas
+A r ejection may not alw ays occur .  Ho w e v er ,  in ar eas of high gamma e xposur e,  w e oft en see a 
+significant slo w do wn in price mo v ements.
+Underst anding these dynamics,  one can see that mo ving t o w ar d ar eas of lo w er gamma 
+e xposur e should structur ally be easier f or the underlying price,  as ther e is less count er tr end 
+hedging flo w compar ed t o mo ving int o a high gamma envir onment.
+F igur e 7 . T r end S lo w do wn in High G amma Z one
+F igur e 8 . Underlying P rice S e eking P a th o f L ea st R esist ance
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+7
+T r an sitioning B e tw e en G amma En vir onmen t s
+In a negativ e gamma envir onment,  mark et mak ers hedge with the price mo v ement—buying in 
+a rising mark et and selling in a do wntr ending one.  This cr eat es a mor e v olatile landscape,  with 
+sharper and wider price swings.
+If the price mo v es fr om a negativ e gamma envir onment t o a positiv e one,  a major shift in 
+dynamics occurs.  Inst ead of hedging with the price mo v ement,  mark et mak ers no w hedge 
+against it.  It ’ s lik e going fr om pr essing the gas pedal t o suddenly hitting the br ak es.
+This shift oft en pr o vides significant suppor t or r esist ance,  depending on the dir ection of the 
+mo v e.  R emember ,  gamma impacts price mo v ement both w ays.
+Mo ving Fr om a Negativ e t o P ositiv e G amma En vir onment
+F igur e 9 . Underlying P rice F inds S upp ort a s G amma F lips P ositiv e
+F igur e 10 . Underlying P rice Encoun t er s R esist ance a s G amma F lips P ositiv e
+
+O p tion s D ep th 2 02 4 S ep 2 02 4
+8
+On the other hand,  mo ving fr om a positiv e gamma envir onment t o a negativ e one cr eat es a 
+diff er ent scenario .  In this case,  mark et mak ers go fr om hedging against price mo v ement t o no 
+longer being influenced b y gamma (wher e gamma equals 0).  If the price continues int o a 
+negativ e gamma envir onment,  mark et mak ers w ould no w hedge with the price mo v ement,  
+pot entially amplifying the e xisting tr end.
+Mo ving Fr om P ositiv e t o Negativ e G amma
+F igur e 11 . A cceler a tion in P rice Mo v emen t s a s G amma F lips Ne ga tiv e

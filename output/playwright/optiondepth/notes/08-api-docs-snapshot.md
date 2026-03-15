@@ -1,0 +1,230 @@
+- generic [ref=e2]:
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]:
+        - img [ref=e15]
+        - list [ref=e28]:
+          - listitem [ref=e29]:
+            - link "Home" [ref=e30] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e31]
+              - generic [ref=e33]: Home
+          - listitem [ref=e34]:
+            - link "My Dashboard" [ref=e35] [cursor=pointer]:
+              - /url: /api-units-docs
+              - img [ref=e36]
+              - generic [ref=e41]: My Dashboard
+          - listitem [ref=e42]:
+            - link "Market Maker’s Exposure" [ref=e43] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e44]
+              - generic [ref=e48]: Market Maker’s Exposure
+          - listitem [ref=e49]:
+            - link "Positional Insights" [ref=e50] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e51]
+              - generic [ref=e53]: Positional Insights
+          - listitem [ref=e54]:
+            - link "Depth View" [ref=e55] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e56]
+              - generic [ref=e61]: Depth View
+          - listitem [ref=e62]:
+            - link "Knowledge Base" [ref=e63] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e64]
+              - generic [ref=e66]: Knowledge Base
+          - listitem [ref=e67]:
+            - link "Data Shop" [ref=e68] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e69]
+              - generic [ref=e73]: Data Shop
+          - listitem [ref=e74]:
+            - link "API Units" [ref=e75] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e76]
+              - generic [ref=e80]: API Units
+      - button "PA" [ref=e82] [cursor=pointer]:
+        - generic [ref=e84]: PA
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - img [ref=e87]
+        - button [ref=e100] [cursor=pointer]:
+          - img [ref=e101]
+      - list [ref=e104]:
+        - listitem [ref=e105]:
+          - link "Home" [ref=e106] [cursor=pointer]:
+            - /url: /home
+            - img [ref=e107]
+            - generic [ref=e109]: Home
+        - listitem [ref=e110]:
+          - link "My Dashboard" [ref=e111] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=e112]
+            - generic [ref=e117]: My Dashboard
+        - listitem [ref=e118]:
+          - link "Market Maker’s Exposure" [ref=e119] [cursor=pointer]:
+            - /url: /market-makers
+            - img [ref=e120]
+            - generic [ref=e124]: Market Maker’s Exposure
+        - listitem [ref=e125]:
+          - link "Positional Insights" [ref=e126] [cursor=pointer]:
+            - /url: /positional-insight
+            - img [ref=e127]
+            - generic [ref=e129]: Positional Insights
+        - listitem [ref=e130]:
+          - link "Depth View" [ref=e131] [cursor=pointer]:
+            - /url: /depth-view
+            - img [ref=e132]
+            - generic [ref=e137]: Depth View
+        - listitem [ref=e138]:
+          - link "Knowledge Base" [ref=e139] [cursor=pointer]:
+            - /url: /knowledge-base
+            - img [ref=e140]
+            - generic [ref=e142]: Knowledge Base
+        - listitem [ref=e143]:
+          - link "Data Shop" [ref=e144] [cursor=pointer]:
+            - /url: /data-shop
+            - img [ref=e145]
+            - generic [ref=e149]: Data Shop
+        - listitem [ref=e150]:
+          - link "API Units" [ref=e151] [cursor=pointer]:
+            - /url: /api-units
+            - img [ref=e152]
+            - generic [ref=e156]: API Units
+      - generic [ref=e161]:
+        - generic:
+          - paragraph
+          - paragraph
+        - img [ref=e163]
+  - button [ref=e165] [cursor=pointer]:
+    - img [ref=e167]
+  - generic [ref=e169]:
+    - link [ref=e170] [cursor=pointer]:
+      - /url: /api-units
+      - img [ref=e171]
+    - text: API Documentation
+  - generic [ref=e173]:
+    - generic [ref=e174]:
+      - generic [ref=e175]:
+        - generic [ref=e176]:
+          - img [ref=e178]
+          - textbox "Search for API" [ref=e181]
+        - list [ref=e184]:
+          - listitem [ref=e185] [cursor=pointer]: Heatmap
+          - listitem [ref=e186] [cursor=pointer]: Breakdown by Strike
+          - listitem [ref=e187] [cursor=pointer]: Breakdown by Expiration
+          - listitem [ref=e188] [cursor=pointer]: Depthview
+          - listitem [ref=e189] [cursor=pointer]: Intraday slots
+      - generic [ref=e190]:
+        - generic [ref=e191]:
+          - generic [ref=e192]:
+            - heading "Heatmap" [level=1] [ref=e193]
+            - paragraph [ref=e194]:
+              - generic [ref=e195]: GET
+              - generic [ref=e196]: options-depth-api/v1/heatmap/?key=YOUR_API_KEY
+            - paragraph [ref=e198]: The Heatmap Developer API allows developers to fetch data for a specified date, ticker, and model (daily or intraday). It can retrieve data related to options charm/gamma for specific timeslots and trading hours.
+          - generic [ref=e200]:
+            - tablist [ref=e201]:
+              - tab "Intraday Model" [ref=e202] [cursor=pointer]
+              - tab "Daily Model" [selected] [ref=e203] [cursor=pointer]
+            - tabpanel "Daily Model" [ref=e204]:
+              - generic [ref=e205]:
+                - generic [ref=e206]:
+                  - heading "Request Parameters" [level=1] [ref=e207]
+                  - button "Reset Values" [ref=e208] [cursor=pointer]
+                - heading "Mandatory" [level=4] [ref=e209]
+                - generic [ref=e210]:
+                  - generic [ref=e211]:
+                    - generic [ref=e212]:
+                      - generic [ref=e213]: dateRequired
+                      - button "Pick a date" [ref=e215] [cursor=pointer]:
+                        - generic [ref=e216]:
+                          - text: Pick a date
+                          - img [ref=e217]
+                    - paragraph [ref=e219]: The date for which intraday timeslots are required. The date must be in YYYY-MM-DD format.
+                  - generic [ref=e220]:
+                    - generic [ref=e221]:
+                      - generic [ref=e222]: tickerRequired
+                      - combobox [ref=e224] [cursor=pointer]:
+                        - generic [ref=e225]:
+                          - generic: Select ticker
+                        - img [ref=e227]
+                    - paragraph [ref=e229]: Underlying index symbol
+                  - generic [ref=e230]:
+                    - generic [ref=e231]:
+                      - generic [ref=e232]: modelRequired
+                      - combobox [disabled] [ref=e234]:
+                        - generic [ref=e235]:
+                          - generic: daily
+                        - img [ref=e237]
+                    - paragraph [ref=e239]: "Specifies whether the data requested is for daily or intraday timeslots. Allowed values: 'daily' or 'intraday'."
+                  - generic [ref=e240]:
+                    - generic [ref=e241]:
+                      - generic [ref=e242]: typeRequired
+                      - combobox [ref=e244] [cursor=pointer]:
+                        - generic [ref=e245]:
+                          - generic: Select type
+                        - img [ref=e247]
+                    - paragraph [ref=e249]: Type of the heatmap
+                - heading "Optional" [level=4] [ref=e250]
+                - generic [ref=e251]:
+                  - generic [ref=e252]:
+                    - generic [ref=e253]:
+                      - generic [ref=e254]: min_price
+                      - textbox "Enter min_price" [ref=e255]
+                    - paragraph [ref=e256]: Minimum price for gamma/charm.
+                  - generic [ref=e257]:
+                    - generic [ref=e258]:
+                      - generic [ref=e259]: max_price
+                      - textbox "Enter max_price" [ref=e260]
+                    - paragraph [ref=e261]: Maximum price for gamma/charm.
+        - generic [ref=e262]:
+          - generic [ref=e263]:
+            - heading "Code Examples" [level=2] [ref=e264]
+            - generic [ref=e265]:
+              - generic [ref=e267]:
+                - tablist [ref=e268]:
+                  - tab "Shell" [selected] [ref=e269] [cursor=pointer]
+                  - tab "Python" [ref=e270] [cursor=pointer]
+                  - tab "Javascript" [ref=e271] [cursor=pointer]
+                  - tab "Node" [ref=e272] [cursor=pointer]
+                  - tab "Php" [ref=e273] [cursor=pointer]
+                  - tab "Ruby" [ref=e274] [cursor=pointer]
+                  - tab "Swift" [ref=e275] [cursor=pointer]
+                - tabpanel "Shell" [ref=e276]:
+                  - code [ref=e280]: "curl -s -X GET \\ -H 'accept: application/json' \\ 'https://api.optionsdepth.com/options-depth-api/v1/heatmap/?key=YOUR_API_KEY&model=daily'"
+              - generic [ref=e281]:
+                - img [ref=e282] [cursor=pointer]
+                - img [ref=e285] [cursor=pointer]
+          - generic [ref=e294]:
+            - heading "Query URL" [level=2] [ref=e295]
+            - generic [ref=e296]:
+              - generic [ref=e297]:
+                - generic [ref=e298]: GET
+                - generic [ref=e299]: https://api.optionsdepth.com/options-depth-api/v1/heatmap/?key=YOUR_API_KEY&model=daily
+                - img [ref=e300] [cursor=pointer]
+              - generic [ref=e304]:
+                - paragraph [ref=e305]:
+                  - img [ref=e307]
+                  - generic [ref=e309]: Requires Pro Max Membership and API Unit subscription. Upgrade to access.
+                - button "Try it!" [disabled] [ref=e310]:
+                  - img [ref=e311]
+                  - text: Try it!
+          - generic [ref=e313]:
+            - heading "Response" [level=2] [ref=e314]
+            - generic [ref=e315]:
+              - generic [ref=e317]:
+                - tablist [ref=e318]:
+                  - tab "Sample Response" [selected] [ref=e319] [cursor=pointer]
+                  - tab "Query Response" [ref=e320] [cursor=pointer]
+                - tabpanel "Sample Response" [ref=e321]:
+                  - code [ref=e325]: "[ { \"price\": 5780, \"value\": 13.952934, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5782.5, \"value\": 3.737846, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5785, \"value\": -1.113819, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5787.5, \"value\": -7.86575, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5790, \"value\": 3.624774, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5792.5, \"value\": -63.681117, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5795, \"value\": 4.508798, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5797.5, \"value\": -558.46452, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5800, \"value\": 1.243803, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5802.5, \"value\": 602.31625, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5805, \"value\": 4.368624, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5807.5, \"value\": -229.980383, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5810, \"value\": 3.9858, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5812.5, \"value\": 19.700038, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5815, \"value\": -4.866717, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5817.5, \"value\": 223.147224, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5820, \"value\": -1.198774, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5822.5, \"value\": -158.773499, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5825, \"value\": -2.330447, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5827.5, \"value\": 221.522277, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5830, \"value\": -3.581884, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5832.5, \"value\": -106.946491, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5835, \"value\": 3.326876, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5837.5, \"value\": -2.142379, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5840, \"value\": -0.755278, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5842.5, \"value\": 20.268202, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5845, \"value\": -7.655065, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5847.5, \"value\": 121.107131, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5850, \"value\": 2.916677, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5852.5, \"value\": -170.025837, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5855, \"value\": 6.729402, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5857.5, \"value\": 33.449707, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5860, \"value\": -2.601362, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5862.5, \"value\": 15.292026, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5865, \"value\": -1.508707, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5867.5, \"value\": 16.21144, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5870, \"value\": -1.414213, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5872.5, \"value\": 5.981378, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5875, \"value\": 2.622955, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5877.5, \"value\": -41.015923, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5880, \"value\": 1.530543, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5882.5, \"value\": 26.738614, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5885, \"value\": -3.960006, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5887.5, \"value\": 38.613393, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5890, \"value\": -4.290246, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5892.5, \"value\": 30.825124, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5895, \"value\": -4.072132, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5897.5, \"value\": 46.566803, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5900, \"value\": 7.315081, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5902.5, \"value\": -123.381708, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5905, \"value\": 6.949525, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5907.5, \"value\": 39.735455, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5910, \"value\": 1.189468, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5912.5, \"value\": -31.543894, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5915, \"value\": 10.514148, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5917.5, \"value\": -69.998865, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5920, \"value\": 0.146742, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5922.5, \"value\": 79.087101, \"effectiveDatetime\": \"2025-05-19T16:00:00\" }, { \"price\": 5925, \"value\": -12.486085, \"effectiveDatetime\": \"2025-05-19T16:00:00\" } ]"
+              - generic [ref=e326]:
+                - img [ref=e327] [cursor=pointer]
+                - img [ref=e330] [cursor=pointer]
+    - generic [ref=e340]:
+      - paragraph [ref=e341]: Documentation Glossary
+      - button [ref=e342] [cursor=pointer]:
+        - img [ref=e343]
+  - region "Notifications Alt+T"

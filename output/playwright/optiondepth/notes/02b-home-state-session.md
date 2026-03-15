@@ -1,0 +1,186 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Home" [ref=e23] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e24]
+                - generic [ref=e26]: Home
+            - listitem [ref=e27]:
+              - link "My Dashboard" [ref=e28] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e29]
+                - generic [ref=e34]: My Dashboard
+            - listitem [ref=e35]:
+              - link "Market Maker’s Exposure" [ref=e36] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e37]
+                - generic [ref=e41]: Market Maker’s Exposure
+            - listitem [ref=e42]:
+              - link "Positional Insights" [ref=e43] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e44]
+                - generic [ref=e46]: Positional Insights
+            - listitem [ref=e47]:
+              - link "Depth View" [ref=e48] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e49]
+                - generic [ref=e54]: Depth View
+            - listitem [ref=e55]:
+              - link "Knowledge Base" [ref=e56] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e57]
+                - generic [ref=e59]: Knowledge Base
+            - listitem [ref=e60]:
+              - link "Data Shop" [ref=e61] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e62]
+                - generic [ref=e66]: Data Shop
+            - listitem [ref=e67]:
+              - link "API Units" [ref=e68] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e69]
+                - generic [ref=e73]: API Units
+        - button "PA" [ref=e75] [cursor=pointer]:
+          - generic [ref=e77]: PA
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e80]
+          - button [ref=e93] [cursor=pointer]:
+            - img [ref=e94]
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - link "Home" [ref=e99] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e100]
+              - generic [ref=e102]: Home
+          - listitem [ref=e103]:
+            - link "My Dashboard" [ref=e104] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e105]
+              - generic [ref=e110]: My Dashboard
+          - listitem [ref=e111]:
+            - link "Market Maker’s Exposure" [ref=e112] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e113]
+              - generic [ref=e117]: Market Maker’s Exposure
+          - listitem [ref=e118]:
+            - link "Positional Insights" [ref=e119] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e120]
+              - generic [ref=e122]: Positional Insights
+          - listitem [ref=e123]:
+            - link "Depth View" [ref=e124] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e125]
+              - generic [ref=e130]: Depth View
+          - listitem [ref=e131]:
+            - link "Knowledge Base" [ref=e132] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e133]
+              - generic [ref=e135]: Knowledge Base
+          - listitem [ref=e136]:
+            - link "Data Shop" [ref=e137] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e138]
+              - generic [ref=e142]: Data Shop
+          - listitem [ref=e143]:
+            - link "API Units" [ref=e144] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e145]
+              - generic [ref=e149]: API Units
+        - generic [ref=e154]:
+          - generic [ref=e155]: PA
+          - generic [ref=e172]:
+            - paragraph [ref=e173]: Pawan Agarwal
+            - paragraph [ref=e174]: pawan.agarwal@gmail.com
+          - img [ref=e156]
+    - button [ref=e158] [cursor=pointer]:
+      - img [ref=e160]
+    - main [ref=e175]:
+      - generic [ref=e176]:
+        - generic [ref=e177]:
+          - generic [ref=e178]:
+            - paragraph [ref=e180]: Economic Calendar
+            - generic [ref=e182]:
+              - iframe [ref=e185]:
+                - generic [ref=f4e3]:
+                  - generic [ref=f4e4]:
+                    - generic [ref=f4e6]:
+                      - generic "Only high importance" [ref=f4e7]:
+                        - img [ref=f4e8]:
+                          - img [ref=f4e9]
+                      - generic "Countries" [ref=f4e11]:
+                        - img [ref=f4e12]:
+                          - img [ref=f4e13]
+                    - progressbar [ref=f4e16]
+                    - link "More events" [ref=f4e19] [cursor=pointer]:
+                      - /url: https://www.tradingview.com/economic-calendar?utm_campaign=events&utm_medium=widget&utm_source=app.optionsdepth.com
+                      - generic [ref=f4e21]: More events
+                      - img [ref=f4e22]:
+                        - img [ref=f4e23]
+                  - generic [ref=f4e25]:
+                    - link "Visit TradingView — financial charting platform and trading community":
+                      - /url: https://www.tradingview.com?utm_campaign=events-logo&utm_medium=widget&utm_source=app.optionsdepth.com
+                    - img [ref=f4e27]
+                    - img [ref=f4e30]
+              - generic [ref=e186]:
+                - link "Economic Calendar" [ref=e187] [cursor=pointer]:
+                  - /url: https://www.tradingview.com/markets/currencies/economic-calendar/
+                  - generic [ref=e188]: Economic Calendar
+                - text: By TradingView
+          - generic [ref=e189]:
+            - generic [ref=e190]:
+              - paragraph [ref=e191]: Articles Spotlight
+              - link "View More" [ref=e192] [cursor=pointer]:
+                - /url: https://optionsdepth.com/resources/
+            - generic [ref=e194]:
+              - link "article-6 7 min read Market Makers' Charm Exposure Projection a year ago" [ref=e195] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2025/01/Market_Makers_Charm_Exposure_Heatmaps.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=h9zimD2T3lIN9pDHTkLLlP8zt%2Fs%3D&Expires=2088951114
+                - img "article-6" [ref=e197]
+                - generic [ref=e198]:
+                  - paragraph [ref=e200]: 7 min read
+                  - paragraph [ref=e201]: Market Makers' Charm Exposure Projection
+                  - paragraph [ref=e202]: a year ago
+              - link "article-5 25 min read Delta Hedging Fundamentals a year ago" [ref=e203] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2024/11/Delta_Hedging_Fundamentals.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=WN1m415lSaUQkOvc8JwNgtXYnRo%3D&Expires=2088951114
+                - img "article-5" [ref=e205]
+                - generic [ref=e206]:
+                  - paragraph [ref=e208]: 25 min read
+                  - paragraph [ref=e209]: Delta Hedging Fundamentals
+                  - paragraph [ref=e210]: a year ago
+              - link "article-4 10 min read Interpreting Market Makers' Gamma Exposure Heatmaps a year ago" [ref=e211] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2024/10/Interpreting_Market_Makers_Gamma_Exposure_Heatmaps.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=NRm3LSZfxxkdXF4XtPuhlwpYKqs%3D&Expires=2088951114
+                - img "article-4" [ref=e213]
+                - generic [ref=e214]:
+                  - paragraph [ref=e216]: 10 min read
+                  - paragraph [ref=e217]: Interpreting Market Makers' Gamma Exposure Heatmaps
+                  - paragraph [ref=e218]: a year ago
+              - link "article-3 15 min read Analyzing Breakdown by Strike Chart a year ago" [ref=e219] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2024/10/ANALYZING_BREAKDOWN_BY_STRIKE.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=LLyqllVR9uVJlIWGz0WGPYQzctY%3D&Expires=2088951114
+                - img "article-3" [ref=e221]
+                - generic [ref=e222]:
+                  - paragraph [ref=e224]: 15 min read
+                  - paragraph [ref=e225]: Analyzing Breakdown by Strike Chart
+                  - paragraph [ref=e226]: a year ago
+        - generic [ref=e227]:
+          - generic [ref=e228]:
+            - generic [ref=e229]:
+              - paragraph [ref=e230]: Featured Video
+              - link "View Channel" [ref=e231] [cursor=pointer]:
+                - /url: https://www.youtube.com/@OptionsDepth
+            - iframe [ref=e233]:
+              
+          - generic [ref=e235]:
+            - iframe [ref=e238]:
+              
+            - generic [ref=e239]:
+              - link "Daily stock news" [ref=e240] [cursor=pointer]:
+                - /url: https://www.tradingview.com/markets/stocks-usa/key-events/
+                - generic [ref=e241]: Daily stock news
+              - text: By TradingView
+  - region "Notifications Alt+T"

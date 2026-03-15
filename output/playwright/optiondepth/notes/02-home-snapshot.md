@@ -1,0 +1,790 @@
+- generic [ref=e2]:
+  - generic [ref=e76]:
+    - generic [ref=e77]:
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e81]
+          - list [ref=e94]:
+            - listitem [ref=e95]:
+              - link "Home" [ref=e96] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e97]
+                - generic [ref=e99]: Home
+            - listitem [ref=e100]:
+              - link "My Dashboard" [ref=e101] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e102]
+                - generic [ref=e107]: My Dashboard
+            - listitem [ref=e108]:
+              - link "Market Maker’s Exposure" [ref=e109] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e110]
+                - generic [ref=e114]: Market Maker’s Exposure
+            - listitem [ref=e115]:
+              - link "Positional Insights" [ref=e116] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e117]
+                - generic [ref=e119]: Positional Insights
+            - listitem [ref=e120]:
+              - link "Depth View" [ref=e121] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e122]
+                - generic [ref=e127]: Depth View
+            - listitem [ref=e128]:
+              - link "Knowledge Base" [ref=e129] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e130]
+                - generic [ref=e132]: Knowledge Base
+            - listitem [ref=e133]:
+              - link "Data Shop" [ref=e134] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e135]
+                - generic [ref=e139]: Data Shop
+            - listitem [ref=e140]:
+              - link "API Units" [ref=e141] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e142]
+                - generic [ref=e146]: API Units
+        - button "PA" [ref=e148] [cursor=pointer]:
+          - generic [ref=e150]: PA
+      - generic [ref=e151]:
+        - generic [ref=e152]:
+          - img [ref=e153]
+          - button [ref=e166] [cursor=pointer]:
+            - img [ref=e167]
+        - list [ref=e170]:
+          - listitem [ref=e171]:
+            - link "Home" [ref=e172] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e173]
+              - generic [ref=e175]: Home
+          - listitem [ref=e176]:
+            - link "My Dashboard" [ref=e177] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e178]
+              - generic [ref=e183]: My Dashboard
+          - listitem [ref=e184]:
+            - link "Market Maker’s Exposure" [ref=e185] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e186]
+              - generic [ref=e190]: Market Maker’s Exposure
+          - listitem [ref=e191]:
+            - link "Positional Insights" [ref=e192] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e193]
+              - generic [ref=e195]: Positional Insights
+          - listitem [ref=e196]:
+            - link "Depth View" [ref=e197] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e198]
+              - generic [ref=e203]: Depth View
+          - listitem [ref=e204]:
+            - link "Knowledge Base" [ref=e205] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e206]
+              - generic [ref=e208]: Knowledge Base
+          - listitem [ref=e209]:
+            - link "Data Shop" [ref=e210] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e211]
+              - generic [ref=e215]: Data Shop
+          - listitem [ref=e216]:
+            - link "API Units" [ref=e217] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e218]
+              - generic [ref=e222]: API Units
+        - generic [ref=e227]:
+          - generic [ref=e228]: PA
+          - generic [ref=e229]:
+            - paragraph [ref=e230]: Pawan Agarwal
+            - paragraph [ref=e231]: pawan.agarwal@gmail.com
+          - img [ref=e232]
+    - button [ref=e234] [cursor=pointer]:
+      - img [ref=e236]
+    - main [ref=e240]:
+      - generic [ref=e241]:
+        - generic [ref=e242]:
+          - generic [ref=e243]:
+            - paragraph [ref=e245]: Economic Calendar
+            - generic [ref=e247]:
+              - iframe [ref=e250]:
+                - generic [ref=f4e3]:
+                  - generic [ref=f4e4]:
+                    - generic [ref=f4e6]:
+                      - generic "Only high importance" [ref=f4e7]:
+                        - img [ref=f4e8]:
+                          - img [ref=f4e9]
+                      - generic "Countries" [ref=f4e11]:
+                        - img [ref=f4e12]:
+                          - img [ref=f4e13]
+                    - generic [ref=f4e17]:
+                      - generic [ref=f4e21]: March 14
+                      - generic [ref=f4e23]:
+                        - generic "Mar 14, 2026, 16:55 GMT-7" [ref=f4e24]:
+                          - time [ref=f4e26]
+                        - generic [ref=f4e28]:
+                          - img [ref=f4e30]
+                          - img "Low importance" [ref=f4e32]:
+                            - img [ref=f4e33]
+                        - generic [ref=f4e37]:
+                          - generic [ref=f4e38]: Export Growth Revised*
+                          - img [ref=f4e40]:
+                            - img [ref=f4e41]
+                        - generic [ref=f4e43]:
+                          - generic [ref=f4e45]:
+                            - generic [ref=f4e46]: "28.7"
+                            - generic [ref=f4e47]: "%"
+                          - generic [ref=f4e50]: —
+                          - generic [ref=f4e52]:
+                            - generic [ref=f4e53]: "33.8"
+                            - generic [ref=f4e54]: "%"
+                      - generic [ref=f4e56]:
+                        - img "Low importance" [ref=f4e59]:
+                          - img [ref=f4e60]
+                        - generic [ref=f4e64]:
+                          - generic [ref=f4e65]: Import Growth Revised*
+                          - img [ref=f4e67]:
+                            - img [ref=f4e68]
+                        - generic [ref=f4e70]:
+                          - generic [ref=f4e72]:
+                            - generic [ref=f4e73]: "7.5"
+                            - generic [ref=f4e74]: "%"
+                          - generic [ref=f4e77]: —
+                          - generic [ref=f4e79]:
+                            - generic [ref=f4e80]: "11.6"
+                            - generic [ref=f4e81]: "%"
+                      - generic [ref=f4e83]:
+                        - img "Low importance" [ref=f4e86]:
+                          - img [ref=f4e87]
+                        - generic [ref=f4e91]:
+                          - generic [ref=f4e92]: Trade Balance Revised*
+                          - img [ref=f4e94]:
+                            - img [ref=f4e95]
+                        - generic [ref=f4e97]:
+                          - generic [ref=f4e99]:
+                            - generic [ref=f4e100]: 15.38 B
+                            - generic [ref=f4e101]: $
+                          - generic [ref=f4e104]: —
+                          - generic [ref=f4e106]:
+                            - generic [ref=f4e107]: 8.71 B
+                            - generic [ref=f4e108]: $
+                      - generic [ref=f4e112]: March 15
+                      - generic [ref=f4e114]:
+                        - generic "Mar 15, 2026, 08:00 GMT-7" [ref=f4e115]:
+                          - time [ref=f4e117]
+                        - generic [ref=f4e119]:
+                          - img [ref=f4e121]
+                          - img "Medium importance" [ref=f4e123]:
+                            - img [ref=f4e124]
+                        - generic [ref=f4e128]:
+                          - generic [ref=f4e129]: GDP YY*
+                          - img [ref=f4e131]:
+                            - img [ref=f4e132]
+                        - generic [ref=f4e134]:
+                          - generic [ref=f4e136]:
+                            - generic [ref=f4e137]: "3.54"
+                            - generic [ref=f4e138]: "%"
+                          - generic [ref=f4e140]:
+                            - generic [ref=f4e141]: "3.55"
+                            - generic [ref=f4e142]: "%"
+                          - generic [ref=f4e144]:
+                            - generic [ref=f4e145]: "3.83"
+                            - generic [ref=f4e146]: "%"
+                      - generic [ref=f4e148]:
+                        - generic "Mar 15, 2026, 09:30 GMT-7" [ref=f4e149]:
+                          - time [ref=f4e152]
+                        - generic [ref=f4e154]:
+                          - img [ref=f4e156]
+                          - img "Medium importance" [ref=f4e158]:
+                            - img [ref=f4e159]
+                        - generic [ref=f4e163]:
+                          - generic [ref=f4e164]: CPI MM
+                          - img [ref=f4e166]:
+                            - img [ref=f4e167]
+                        - generic [ref=f4e169]:
+                          - generic [ref=f4e172]: Coming in 21:40
+                          - generic [ref=f4e174]:
+                            - generic [ref=f4e175]: "0.1"
+                            - generic [ref=f4e176]: "%"
+                          - generic [ref=f4e178]:
+                            - generic [ref=f4e179]: −0.3
+                            - generic [ref=f4e180]: "%"
+                      - generic [ref=f4e182]:
+                        - img "Medium importance" [ref=f4e185]:
+                          - img [ref=f4e186]
+                        - generic [ref=f4e190]:
+                          - generic [ref=f4e191]: CPI YY
+                          - img [ref=f4e193]:
+                            - img [ref=f4e194]
+                        - generic [ref=f4e196]:
+                          - generic [ref=f4e199]: Coming in 21:40
+                          - generic [ref=f4e201]:
+                            - generic [ref=f4e202]: "1.9"
+                            - generic [ref=f4e203]: "%"
+                          - generic [ref=f4e205]:
+                            - generic [ref=f4e206]: "1.8"
+                            - generic [ref=f4e207]: "%"
+                      - generic [ref=f4e209]:
+                        - generic "Mar 15, 2026, 14:30 GMT-7" [ref=f4e210]:
+                          - time [ref=f4e212]
+                        - generic [ref=f4e214]:
+                          - img [ref=f4e216]
+                          - img "Medium importance" [ref=f4e218]:
+                            - img [ref=f4e219]
+                        - generic [ref=f4e223]:
+                          - generic [ref=f4e224]: Business PSI*
+                          - img [ref=f4e226]:
+                            - img [ref=f4e227]
+                        - generic [ref=f4e231]:
+                          - generic [ref=f4e232]: "50.6"
+                          - generic [ref=f4e233]: Index
+                      - generic [ref=f4e235]:
+                        - generic "Mar 15, 2026, 14:45 GMT-7" [ref=f4e236]:
+                          - time [ref=f4e238]
+                        - generic [ref=f4e240]:
+                          - img [ref=f4e242]
+                          - img "Low importance" [ref=f4e244]:
+                            - img [ref=f4e245]
+                        - generic [ref=f4e249]:
+                          - generic [ref=f4e250]: Elec Card Retail Sale MM
+                          - img [ref=f4e252]:
+                            - img [ref=f4e253]
+                        - generic [ref=f4e257]:
+                          - generic [ref=f4e258]: −1.1
+                          - generic [ref=f4e259]: "%"
+                      - generic [ref=f4e261]:
+                        - img "Low importance" [ref=f4e264]:
+                          - img [ref=f4e265]
+                        - generic [ref=f4e269]:
+                          - generic [ref=f4e270]: Elec Card Retail Sale YY
+                          - img [ref=f4e272]:
+                            - img [ref=f4e273]
+                        - generic [ref=f4e277]:
+                          - generic [ref=f4e278]: "0.4"
+                          - generic [ref=f4e279]: "%"
+                      - generic [ref=f4e281]:
+                        - generic "Mar 15, 2026, 17:01 GMT-7" [ref=f4e282]:
+                          - time [ref=f4e284]
+                        - generic [ref=f4e286]:
+                          - img [ref=f4e288]
+                          - img "Medium importance" [ref=f4e290]:
+                            - img [ref=f4e291]
+                        - generic [ref=f4e295]:
+                          - generic [ref=f4e296]: House Price Rightmove MM*
+                          - img [ref=f4e298]:
+                            - img [ref=f4e299]
+                        - generic [ref=f4e303]:
+                          - generic [ref=f4e304]: "0"
+                          - generic [ref=f4e305]: "%"
+                      - generic [ref=f4e307]:
+                        - img "Medium importance" [ref=f4e310]:
+                          - img [ref=f4e311]
+                        - generic [ref=f4e315]:
+                          - generic [ref=f4e316]: House Price Rightmove YY*
+                          - img [ref=f4e318]:
+                            - img [ref=f4e319]
+                        - generic [ref=f4e323]:
+                          - generic [ref=f4e324]: "0"
+                          - generic [ref=f4e325]: "%"
+                      - generic [ref=f4e327]:
+                        - generic "Mar 15, 2026, 18:30 GMT-7" [ref=f4e328]:
+                          - time [ref=f4e330]
+                        - generic [ref=f4e332]:
+                          - img [ref=f4e334]
+                          - img "Medium importance" [ref=f4e336]:
+                            - img [ref=f4e337]
+                        - generic [ref=f4e341]:
+                          - generic [ref=f4e342]: China House Prices MM*
+                          - img [ref=f4e344]:
+                            - img [ref=f4e345]
+                        - generic [ref=f4e349]:
+                          - generic [ref=f4e350]: −0.4
+                          - generic [ref=f4e351]: "%"
+                      - generic [ref=f4e353]:
+                        - img "Medium importance" [ref=f4e356]:
+                          - img [ref=f4e357]
+                        - generic [ref=f4e361]:
+                          - generic [ref=f4e362]: China House Prices YY*
+                          - img [ref=f4e364]:
+                            - img [ref=f4e365]
+                        - generic [ref=f4e369]:
+                          - generic [ref=f4e370]: −3.1
+                          - generic [ref=f4e371]: "%"
+                      - generic [ref=f4e373]:
+                        - generic "Mar 15, 2026, 19:00 GMT-7" [ref=f4e374]:
+                          - time [ref=f4e376]
+                        - generic [ref=f4e378]:
+                          - img [ref=f4e380]
+                          - img "High importance" [ref=f4e382]:
+                            - img [ref=f4e383]
+                        - generic [ref=f4e387]:
+                          - generic [ref=f4e388]: Industrial Output YY
+                          - img [ref=f4e390]:
+                            - img [ref=f4e391]
+                        - generic [ref=f4e395]:
+                          - generic [ref=f4e396]: "5"
+                          - generic [ref=f4e397]: "%"
+                      - generic [ref=f4e399]:
+                        - img "Medium importance" [ref=f4e402]:
+                          - img [ref=f4e403]
+                        - generic [ref=f4e407]:
+                          - generic [ref=f4e408]: Industrial Production YTD YY*
+                          - img [ref=f4e410]:
+                            - img [ref=f4e411]
+                      - generic [ref=f4e415]:
+                        - img "Medium importance" [ref=f4e418]:
+                          - img [ref=f4e419]
+                        - generic [ref=f4e423]:
+                          - generic [ref=f4e424]: Retail Sales YTD YY*
+                          - img [ref=f4e426]:
+                            - img [ref=f4e427]
+                      - generic [ref=f4e431]:
+                        - img "High importance" [ref=f4e434]:
+                          - img [ref=f4e435]
+                        - generic [ref=f4e439]:
+                          - generic [ref=f4e440]: Retail Sales YY
+                          - img [ref=f4e442]:
+                            - img [ref=f4e443]
+                        - generic [ref=f4e447]:
+                          - generic [ref=f4e448]: "2.5"
+                          - generic [ref=f4e449]: "%"
+                      - generic [ref=f4e451]:
+                        - img "Medium importance" [ref=f4e454]:
+                          - img [ref=f4e455]
+                        - generic [ref=f4e459]:
+                          - generic [ref=f4e460]: Unemp Rate Urban Area
+                          - img [ref=f4e462]:
+                            - img [ref=f4e463]
+                      - generic [ref=f4e467]:
+                        - img "Low importance" [ref=f4e470]:
+                          - img [ref=f4e471]
+                        - generic [ref=f4e475]:
+                          - generic [ref=f4e476]: Urban Investment (YTD)YY
+                          - img [ref=f4e478]:
+                            - img [ref=f4e479]
+                        - generic [ref=f4e483]:
+                          - generic [ref=f4e484]: −2.1
+                          - generic [ref=f4e485]: "%"
+                      - generic [ref=f4e487]:
+                        - generic "Mar 15, 2026, 22:30 GMT-7" [ref=f4e488]:
+                          - time [ref=f4e490]
+                        - generic [ref=f4e492]:
+                          - img [ref=f4e494]
+                          - img "Low importance" [ref=f4e496]:
+                            - img [ref=f4e497]
+                        - generic [ref=f4e501]:
+                          - generic [ref=f4e502]: Trade Balance
+                          - img [ref=f4e504]:
+                            - img [ref=f4e505]
+                        - generic [ref=f4e509]:
+                          - generic [ref=f4e510]: 9.721 B
+                          - generic [ref=f4e511]: EUR
+                      - generic [ref=f4e513]:
+                        - generic "Mar 15, 2026, 23:00 GMT-7" [ref=f4e514]:
+                          - time [ref=f4e516]
+                        - generic [ref=f4e518]:
+                          - img [ref=f4e520]
+                          - img "Medium importance" [ref=f4e522]:
+                            - img [ref=f4e523]
+                        - generic [ref=f4e527]:
+                          - generic [ref=f4e528]: Current Account*
+                          - img [ref=f4e530]:
+                            - img [ref=f4e531]
+                        - generic [ref=f4e535]:
+                          - generic [ref=f4e536]: 1.2 B
+                          - generic [ref=f4e537]: EUR
+                      - generic [ref=f4e539]:
+                        - generic "Mar 15, 2026, 23:30 GMT-7" [ref=f4e540]:
+                          - time [ref=f4e542]
+                        - generic [ref=f4e544]:
+                          - img [ref=f4e546]
+                          - img "Low importance" [ref=f4e548]:
+                            - img [ref=f4e549]
+                        - generic [ref=f4e553]:
+                          - generic [ref=f4e554]: WPI Food Articles YY*
+                          - img [ref=f4e556]:
+                            - img [ref=f4e557]
+                        - generic [ref=f4e561]:
+                          - generic [ref=f4e562]: "1.55"
+                          - generic [ref=f4e563]: "%"
+                      - generic [ref=f4e565]:
+                        - img "Medium importance" [ref=f4e568]:
+                          - img [ref=f4e569]
+                        - generic [ref=f4e573]:
+                          - generic [ref=f4e574]: WPI Food Index YY *
+                          - img [ref=f4e576]:
+                            - img [ref=f4e577]
+                        - generic [ref=f4e581]:
+                          - generic [ref=f4e582]: "1.41"
+                          - generic [ref=f4e583]: "%"
+                      - generic [ref=f4e585]:
+                        - img "Low importance" [ref=f4e588]:
+                          - img [ref=f4e589]
+                        - generic [ref=f4e593]:
+                          - generic [ref=f4e594]: WPI Fuel YY*
+                          - img [ref=f4e596]:
+                            - img [ref=f4e597]
+                        - generic [ref=f4e601]:
+                          - generic [ref=f4e602]: −4.01
+                          - generic [ref=f4e603]: "%"
+                      - generic [ref=f4e605]:
+                        - img "Low importance" [ref=f4e608]:
+                          - img [ref=f4e609]
+                        - generic [ref=f4e613]:
+                          - generic [ref=f4e614]: WPI Inflation YY*
+                          - img [ref=f4e616]:
+                            - img [ref=f4e617]
+                        - generic [ref=f4e619]:
+                          - generic [ref=f4e621]:
+                            - generic [ref=f4e622]: "2"
+                            - generic [ref=f4e623]: "%"
+                          - generic [ref=f4e625]:
+                            - generic [ref=f4e626]: "1.81"
+                            - generic [ref=f4e627]: "%"
+                      - generic [ref=f4e629]:
+                        - img "Low importance" [ref=f4e632]:
+                          - img [ref=f4e633]
+                        - generic [ref=f4e637]:
+                          - generic [ref=f4e638]: WPI Mfg Inflation*
+                          - img [ref=f4e640]:
+                            - img [ref=f4e641]
+                        - generic [ref=f4e645]:
+                          - generic [ref=f4e646]: "2.86"
+                          - generic [ref=f4e647]: "%"
+                      - generic [ref=f4e651]: March 16
+                      - generic [ref=f4e653]:
+                        - generic "Mar 16, 2026, 00:00 GMT-7" [ref=f4e654]:
+                          - time [ref=f4e656]
+                        - generic [ref=f4e658]:
+                          - img [ref=f4e660]
+                          - img "Low importance" [ref=f4e662]:
+                            - img [ref=f4e663]
+                        - generic [ref=f4e667]:
+                          - generic [ref=f4e668]: Trade Balance *
+                          - img [ref=f4e670]:
+                            - img [ref=f4e671]
+                        - generic [ref=f4e675]:
+                          - generic [ref=f4e676]: 75.9 B
+                          - generic [ref=f4e677]: NOK
+                      - generic [ref=f4e679]:
+                        - generic "Mar 16, 2026, 01:00 GMT-7" [ref=f4e680]:
+                          - time [ref=f4e682]
+                        - generic [ref=f4e684]:
+                          - img [ref=f4e686]
+                          - img "Low importance" [ref=f4e688]:
+                            - img [ref=f4e689]
+                        - generic [ref=f4e693]:
+                          - generic [ref=f4e694]: Budget Balance*
+                          - img [ref=f4e696]:
+                            - img [ref=f4e697]
+                        - generic [ref=f4e701]:
+                          - generic [ref=f4e702]: −214.5 B
+                          - generic [ref=f4e703]: TRY
+                      - generic [ref=f4e705]:
+                        - generic [ref=f4e706]:
+                          - img [ref=f4e708]
+                          - img "Medium importance" [ref=f4e710]:
+                            - img [ref=f4e711]
+                        - generic [ref=f4e715]:
+                          - generic [ref=f4e716]: PPI MM
+                          - img [ref=f4e718]:
+                            - img [ref=f4e719]
+                        - generic [ref=f4e721]:
+                          - generic [ref=f4e723]:
+                            - generic [ref=f4e724]: "0.1"
+                            - generic [ref=f4e725]: "%"
+                          - generic [ref=f4e727]:
+                            - generic [ref=f4e728]: −0.7
+                            - generic [ref=f4e729]: "%"
+                      - generic [ref=f4e731]:
+                        - img "Medium importance" [ref=f4e734]:
+                          - img [ref=f4e735]
+                        - generic [ref=f4e739]:
+                          - generic [ref=f4e740]: PPI YY
+                          - img [ref=f4e742]:
+                            - img [ref=f4e743]
+                        - generic [ref=f4e745]:
+                          - generic [ref=f4e747]:
+                            - generic [ref=f4e748]: −2.8
+                            - generic [ref=f4e749]: "%"
+                          - generic [ref=f4e751]:
+                            - generic [ref=f4e752]: −3
+                            - generic [ref=f4e753]: "%"
+                      - generic [ref=f4e755]:
+                        - generic "Mar 16, 2026, 02:00 GMT-7" [ref=f4e756]:
+                          - time [ref=f4e758]
+                        - generic [ref=f4e760]:
+                          - img [ref=f4e762]
+                          - img "Low importance" [ref=f4e764]:
+                            - img [ref=f4e765]
+                        - generic [ref=f4e769]:
+                          - generic [ref=f4e770]: Current Account Balance
+                          - img [ref=f4e772]:
+                            - img [ref=f4e773]
+                        - generic [ref=f4e775]:
+                          - generic [ref=f4e777]:
+                            - generic [ref=f4e778]: 28.65 B
+                            - generic [ref=f4e779]: CZK
+                          - generic [ref=f4e781]:
+                            - generic [ref=f4e782]: 8.51 B
+                            - generic [ref=f4e783]: CZK
+                      - generic [ref=f4e846]: March 17
+                      - generic [ref=f4e904]: March 18
+                      - generic [ref=f4e1023]: March 19
+                      - generic [ref=f4e1132]: March 20
+                      - generic [ref=f4e1183]: March 22
+                      - generic [ref=f4e1195]: March 23
+                      - generic [ref=f4e1283]: March 24
+                      - generic [ref=f4e1351]: March 25
+                      - generic [ref=f4e1443]: March 26
+                      - generic [ref=f4e1535]: March 27
+                      - generic [ref=f4e1580]: March 28
+                      - generic [ref=f4e1585]: March 29
+                      - generic [ref=f4e1594]: March 30
+                      - generic [ref=f4e1715]: March 31
+                      - generic [ref=f4e1861]: April 1
+                      - generic [ref=f4e1972]: April 2
+                      - generic [ref=f4e2044]: April 3
+                      - generic [ref=f4e2079]: April 4
+                      - generic [ref=f4e2092]: April 5
+                      - generic [ref=f4e2104]: April 6
+                      - generic [ref=f4e2163]: April 7
+                      - generic [ref=f4e2253]: April 8
+                      - generic [ref=f4e2371]: April 9
+                      - generic [ref=f4e2600]: April 10
+                      - generic [ref=f4e2665]: April 12
+                      - generic [ref=f4e2678]: April 13
+                      - generic [ref=f4e2749]: April 14
+                      - generic [ref=f4e2781]: April 15
+                    - link "More events" [ref=f4e2786] [cursor=pointer]:
+                      - /url: https://www.tradingview.com/economic-calendar?utm_campaign=events&utm_medium=widget&utm_source=app.optionsdepth.com
+                      - generic [ref=f4e2788]: More events
+                      - img [ref=f4e2789]:
+                        - img [ref=f4e2790]
+                  - generic [ref=f4e2792]:
+                    - link "Visit TradingView — financial charting platform and trading community":
+                      - /url: https://www.tradingview.com?utm_campaign=events-logo&utm_medium=widget&utm_source=app.optionsdepth.com
+                    - img [ref=f4e2794]
+                    - img [ref=f4e2797]
+              - generic [ref=e251]:
+                - link "Economic Calendar" [ref=e252] [cursor=pointer]:
+                  - /url: https://www.tradingview.com/markets/currencies/economic-calendar/
+                  - generic [ref=e253]: Economic Calendar
+                - text: By TradingView
+          - generic [ref=e254]:
+            - generic [ref=e255]:
+              - paragraph [ref=e256]: Articles Spotlight
+              - link "View More" [ref=e257] [cursor=pointer]:
+                - /url: https://optionsdepth.com/resources/
+            - generic [ref=e259]:
+              - link "article-6 7 min read Market Makers' Charm Exposure Projection a year ago" [ref=e260] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2025/01/Market_Makers_Charm_Exposure_Heatmaps.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=onOrtriE6Fv9ZHediEf0WFMF8qY%3D&Expires=2088950182
+                - img "article-6" [ref=e262]
+                - generic [ref=e263]:
+                  - paragraph [ref=e265]: 7 min read
+                  - paragraph [ref=e266]: Market Makers' Charm Exposure Projection
+                  - paragraph [ref=e267]: a year ago
+              - link "article-5 25 min read Delta Hedging Fundamentals a year ago" [ref=e268] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2024/11/Delta_Hedging_Fundamentals.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=1Lbj9S7mQIEUD8DCUEB04S1jnCA%3D&Expires=2088950182
+                - img "article-5" [ref=e270]
+                - generic [ref=e271]:
+                  - paragraph [ref=e273]: 25 min read
+                  - paragraph [ref=e274]: Delta Hedging Fundamentals
+                  - paragraph [ref=e275]: a year ago
+              - link "article-4 10 min read Interpreting Market Makers' Gamma Exposure Heatmaps a year ago" [ref=e276] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2024/10/Interpreting_Market_Makers_Gamma_Exposure_Heatmaps.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=pJ4bWr4yEADJOVQzJA7QLmP0u44%3D&Expires=2088950182
+                - img "article-4" [ref=e278]
+                - generic [ref=e279]:
+                  - paragraph [ref=e281]: 10 min read
+                  - paragraph [ref=e282]: Interpreting Market Makers' Gamma Exposure Heatmaps
+                  - paragraph [ref=e283]: a year ago
+              - link "article-3 15 min read Analyzing Breakdown by Strike Chart a year ago" [ref=e284] [cursor=pointer]:
+                - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/documents/2024/10/ANALYZING_BREAKDOWN_BY_STRIKE.pdf?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=gyKrXI9IyMK%2By%2FWaYfR6735NB0o%3D&Expires=2088950182
+                - img "article-3" [ref=e286]
+                - generic [ref=e287]:
+                  - paragraph [ref=e289]: 15 min read
+                  - paragraph [ref=e290]: Analyzing Breakdown by Strike Chart
+                  - paragraph [ref=e291]: a year ago
+        - generic [ref=e292]:
+          - generic [ref=e293]:
+            - generic [ref=e294]:
+              - paragraph [ref=e295]: Featured Video
+              - link "View Channel" [ref=e296] [cursor=pointer]:
+                - /url: https://www.youtube.com/@OptionsDepth
+            - iframe [ref=e298]:
+              - generic "YouTube Video Player" [ref=f3e3]:
+                - generic [ref=f3e5]:
+                  - link "Photo image of OptionsDepth" [ref=f3e7] [cursor=pointer]:
+                    - /url: https://www.youtube.com/channel/UC-nHA5Op0il8oaR-EuzqcZQ?embeds_referring_euri=https%3A%2F%2Fapp.optionsdepth.com%2F
+                  - link "Full Market Makers Delta Hedging Course For Traders (100% Free)" [ref=f3e10] [cursor=pointer]:
+                    - /url: https://www.youtube.com/watch?v=b4Vpqa0zgYs
+                  - button "More" [ref=f3e12] [cursor=pointer]:
+                    - generic [ref=f3e13]:
+                      - img
+                - button "Play" [ref=f3e16] [cursor=pointer]:
+                  - img
+          - generic [ref=e300]:
+            - iframe [ref=e303]:
+              - generic [active] [ref=f5e1]:
+                - generic [ref=f5e3]:
+                  - generic [ref=f5e5]:
+                    - heading "Top Stories" [level=1] [ref=f5e7]
+                    - generic [ref=f5e10]:
+                      - link [ref=f5e11] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:6635e4cd6094b:0-adbe-adobe-stock-sinks-8-after-long-term-ceo-departs-earnings-were-solid-though/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e12]:
+                          - generic [ref=f5e13]:
+                            - generic [ref=f5e14]:
+                              - list [ref=f5e15]:
+                                - listitem [ref=f5e16]
+                              - generic "Mar 13, 2026, 01:13 PDT" [ref=f5e17]
+                            - generic [ref=f5e18]: "ADBE: Adobe Stock Sinks 8% After Long-Term CEO Departs. Earnings Were Solid, Though."
+                      - link [ref=f5e19] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:c65cc52c3094b:0-lcid-lucid-stock-drifts-lower-after-big-reveal-robotaxis-and-cash-flow-dreams-ahead/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e20]:
+                          - generic [ref=f5e21]:
+                            - list [ref=f5e23]:
+                              - listitem [ref=f5e24]
+                            - generic [ref=f5e26]: "LCID: Lucid Stock Drifts Lower After Big Reveal. Robotaxis and Cash Flow Dreams Ahead."
+                      - link [ref=f5e27] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:bc8e42aa7094b:0-nbis-nebius-stock-rallies-16-after-nvidia-injects-2-billion-into-neocloud/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e28]:
+                          - generic [ref=f5e29]:
+                            - generic [ref=f5e30]:
+                              - list [ref=f5e31]:
+                                - listitem [ref=f5e32]
+                              - generic "Mar 12, 2026, 00:46 PDT" [ref=f5e33]
+                            - generic [ref=f5e34]: "NBIS: Nebius Stock Rallies 16% After Nvidia Injects $2 Billion into Neocloud"
+                      - link [ref=f5e35] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:367f8c2fd094b:0-orcl-oracle-stock-surges-after-solid-earnings-report-it-s-the-backlog-again/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e36]:
+                          - generic [ref=f5e37]:
+                            - generic [ref=f5e38]:
+                              - list [ref=f5e39]:
+                                - listitem [ref=f5e40]
+                              - generic "Mar 11, 2026, 00:36 PDT" [ref=f5e41]
+                            - generic [ref=f5e42]: "ORCL: Oracle Stock Surges After Solid Earnings Report. It's the Backlog Again."
+                      - link [ref=f5e43] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:7f3484749094b:0-mstr-strategy-stock-jumps-4-on-fresh-1-3-billion-bitcoin-purchase/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e44]:
+                          - generic [ref=f5e45]:
+                            - generic [ref=f5e46]:
+                              - list [ref=f5e47]:
+                                - listitem [ref=f5e48]
+                                - listitem [ref=f5e49]
+                              - generic "Mar 9, 2026, 23:57 PDT" [ref=f5e50]
+                            - generic [ref=f5e51]: "MSTR: Strategy Stock Jumps 4% on Fresh $1.3 Billion Bitcoin Purchase"
+                      - link [ref=f5e52] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:7f18fa416094b:0-tsla-tesla-stock-charges-higher-after-musk-touts-agi-breakthrough-big-if-true/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e53]:
+                          - generic [ref=f5e54]:
+                            - generic [ref=f5e55]:
+                              - list [ref=f5e56]:
+                                - listitem [ref=f5e57]
+                              - time [ref=f5e58]: Mar 4
+                            - generic [ref=f5e59]: "TSLA: Tesla Stock Charges Higher After Musk Touts AGI Breakthrough. Big If True."
+                      - link [ref=f5e60] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:3af75f698094b:0-amazon-under-pressure-as-data-centers-go-dark-after-middle-east-drone-attack/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e61]:
+                          - generic [ref=f5e62]:
+                            - generic [ref=f5e63]:
+                              - list [ref=f5e64]:
+                                - listitem [ref=f5e65]
+                              - time [ref=f5e66]: Mar 3
+                            - generic [ref=f5e67]: Amazon Under Pressure as Data Centers Go Dark After Middle East Drone Attack
+                      - link [ref=f5e68] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:ccbdbc9c1094b:0-crwv-coreweave-stock-falls-9-on-timid-guidance-big-debt-pile/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e69]:
+                          - generic [ref=f5e70]:
+                            - generic [ref=f5e71]:
+                              - list [ref=f5e72]:
+                                - listitem [ref=f5e73]
+                              - time [ref=f5e74]: Feb 26
+                            - generic [ref=f5e75]: "CRWV: CoreWeave Stock Falls 9% on Timid Guidance, Big Debt Pile"
+                      - link [ref=f5e76] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:75cb1dcd9094b:0-nflx-netflix-stock-soars-after-streamer-walks-away-from-warner-bros-deal/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e77]:
+                          - generic [ref=f5e78]:
+                            - generic [ref=f5e79]:
+                              - list [ref=f5e80]:
+                                - listitem [ref=f5e81]
+                                - listitem [ref=f5e82]
+                              - time [ref=f5e83]: Feb 26
+                            - generic [ref=f5e84]: "NFLX: Netflix Stock Soars After Streamer Walks Away from Warner Bros Deal"
+                      - link [ref=f5e85] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:08c37d76f094b:0-nvda-nvidia-stock-steady-despite-record-revenue-94-profit-jump/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e86]:
+                          - generic [ref=f5e87]:
+                            - generic [ref=f5e88]:
+                              - list [ref=f5e89]:
+                                - listitem [ref=f5e90]
+                              - time [ref=f5e91]: Feb 25
+                            - generic [ref=f5e92]: "NVDA: Nvidia Stock Steady Despite Record Revenue, 94% Profit Jump"
+                      - link [ref=f5e93] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:a7fc4e506094b:0-lcid-lucid-stock-drops-5-despite-revenue-beat-bright-growth-outlook/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e94]:
+                          - generic [ref=f5e95]:
+                            - generic [ref=f5e96]:
+                              - list [ref=f5e97]:
+                                - listitem [ref=f5e98]
+                              - time [ref=f5e99]: Feb 24
+                            - generic [ref=f5e100]: "LCID: Lucid Stock Drops 5% Despite Revenue Beat, Bright Growth Outlook"
+                      - link [ref=f5e101] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:5ea2dbc22094b:0-nvda-nvidia-stock-gains-ahead-of-earnings-release-what-traders-are-watching/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e102]:
+                          - generic [ref=f5e103]:
+                            - generic [ref=f5e104]:
+                              - list [ref=f5e105]:
+                                - listitem [ref=f5e106]
+                              - time [ref=f5e107]: Feb 24
+                            - generic [ref=f5e108]: "NVDA: Nvidia Stock Gains Ahead of Earnings Release. What Traders Are Watching"
+                      - link [ref=f5e109] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:b9c08f5a7094b:0-klar-klarna-stock-plummets-27-despite-first-1-billion-revenue-what-happened/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e110]:
+                          - generic [ref=f5e111]:
+                            - generic [ref=f5e112]:
+                              - list [ref=f5e113]:
+                                - listitem [ref=f5e114]
+                              - time [ref=f5e115]: Feb 19
+                            - generic [ref=f5e116]: "KLAR: Klarna Stock Plummets 27% Despite First $1 Billion Revenue. What Happened?"
+                      - link [ref=f5e117] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:0cbf8f3fc094b:0-wmt-walmart-stock-drops-after-strong-earnings-results-it-s-in-the-guidance/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e118]:
+                          - generic [ref=f5e119]:
+                            - generic [ref=f5e120]:
+                              - list [ref=f5e121]:
+                                - listitem [ref=f5e122]
+                              - time [ref=f5e123]: Feb 19
+                            - generic [ref=f5e124]: "WMT: Walmart Stock Drops After Strong Earnings Results. It’s in the Guidance."
+                      - link [ref=f5e125] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/tradingview:a93d2395f094b:0-fig-figma-stock-surges-16-after-upbeat-earnings-solid-growth-outlook/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - article [ref=f5e126]:
+                          - generic [ref=f5e127]:
+                            - generic [ref=f5e128]:
+                              - list [ref=f5e129]:
+                                - listitem [ref=f5e130]
+                              - time [ref=f5e131]: Feb 18
+                            - generic [ref=f5e132]: "FIG: Figma Stock Surges 16% After Upbeat Earnings, Solid Growth Outlook"
+                      - link "Keep reading" [ref=f5e135] [cursor=pointer]:
+                        - /url: https://www.tradingview.com/news/?utm_campaign=timeline&utm_medium=widget&utm_source=app.optionsdepth.com
+                        - generic [ref=f5e138]:
+                          - text: Keep
+                          - generic [ref=f5e139]:
+                            - text: reading
+                            - img [ref=f5e140]:
+                              - img [ref=f5e141]
+                  - generic [ref=f5e143]:
+                    - link "Visit TradingView — financial charting platform and trading community":
+                      - /url: https://www.tradingview.com?utm_campaign=timeline-logo&utm_medium=widget&utm_source=app.optionsdepth.com
+                    - img [ref=f5e145]
+                    - img [ref=f5e148]
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Mar 13, 2026, 01:03 PDT
+            - generic [ref=e304]:
+              - link "Daily stock news" [ref=e305] [cursor=pointer]:
+                - /url: https://www.tradingview.com/markets/stocks-usa/key-events/
+                - generic [ref=e306]: Daily stock news
+              - text: By TradingView
+  - region "Notifications Alt+T"

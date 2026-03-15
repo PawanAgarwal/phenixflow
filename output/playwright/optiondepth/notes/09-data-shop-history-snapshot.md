@@ -1,0 +1,376 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - list [ref=e21]:
+            - listitem [ref=e22]:
+              - link "Home" [ref=e23] [cursor=pointer]:
+                - /url: /home
+                - img [ref=e24]
+                - generic [ref=e26]: Home
+            - listitem [ref=e27]:
+              - link "My Dashboard" [ref=e28] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e29]
+                - generic [ref=e34]: My Dashboard
+            - listitem [ref=e35]:
+              - link "Market Maker’s Exposure" [ref=e36] [cursor=pointer]:
+                - /url: /market-makers
+                - img [ref=e37]
+                - generic [ref=e41]: Market Maker’s Exposure
+            - listitem [ref=e42]:
+              - link "Positional Insights" [ref=e43] [cursor=pointer]:
+                - /url: /positional-insight
+                - img [ref=e44]
+                - generic [ref=e46]: Positional Insights
+            - listitem [ref=e47]:
+              - link "Depth View" [ref=e48] [cursor=pointer]:
+                - /url: /depth-view
+                - img [ref=e49]
+                - generic [ref=e54]: Depth View
+            - listitem [ref=e55]:
+              - link "Knowledge Base" [ref=e56] [cursor=pointer]:
+                - /url: /knowledge-base
+                - img [ref=e57]
+                - generic [ref=e59]: Knowledge Base
+            - listitem [ref=e60]:
+              - link "Data Shop" [ref=e61] [cursor=pointer]:
+                - /url: /data-shop
+                - img [ref=e62]
+                - generic [ref=e66]: Data Shop
+            - listitem [ref=e67]:
+              - link "API Units" [ref=e68] [cursor=pointer]:
+                - /url: /api-units
+                - img [ref=e69]
+                - generic [ref=e73]: API Units
+        - button "PA" [ref=e75] [cursor=pointer]:
+          - generic [ref=e77]: PA
+      - generic [ref=e78]:
+        - generic [ref=e79]:
+          - img [ref=e80]
+          - button [ref=e93] [cursor=pointer]:
+            - img [ref=e94]
+        - list [ref=e97]:
+          - listitem [ref=e98]:
+            - link "Home" [ref=e99] [cursor=pointer]:
+              - /url: /home
+              - img [ref=e100]
+              - generic [ref=e102]: Home
+          - listitem [ref=e103]:
+            - link "My Dashboard" [ref=e104] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=e105]
+              - generic [ref=e110]: My Dashboard
+          - listitem [ref=e111]:
+            - link "Market Maker’s Exposure" [ref=e112] [cursor=pointer]:
+              - /url: /market-makers
+              - img [ref=e113]
+              - generic [ref=e117]: Market Maker’s Exposure
+          - listitem [ref=e118]:
+            - link "Positional Insights" [ref=e119] [cursor=pointer]:
+              - /url: /positional-insight
+              - img [ref=e120]
+              - generic [ref=e122]: Positional Insights
+          - listitem [ref=e123]:
+            - link "Depth View" [ref=e124] [cursor=pointer]:
+              - /url: /depth-view
+              - img [ref=e125]
+              - generic [ref=e130]: Depth View
+          - listitem [ref=e131]:
+            - link "Knowledge Base" [ref=e132] [cursor=pointer]:
+              - /url: /knowledge-base
+              - img [ref=e133]
+              - generic [ref=e135]: Knowledge Base
+          - listitem [ref=e136]:
+            - link "Data Shop" [ref=e137] [cursor=pointer]:
+              - /url: /data-shop
+              - img [ref=e138]
+              - generic [ref=e142]: Data Shop
+          - listitem [ref=e143]:
+            - link "API Units" [ref=e144] [cursor=pointer]:
+              - /url: /api-units
+              - img [ref=e145]
+              - generic [ref=e149]: API Units
+        - generic [ref=e154]:
+          - generic [ref=e155]: PA
+          - generic [ref=e199]:
+            - paragraph [ref=e200]: Pawan Agarwal
+            - paragraph [ref=e201]: pawan.agarwal@gmail.com
+          - img [ref=e156]
+    - button [ref=e158] [cursor=pointer]:
+      - img [ref=e160]
+    - generic [ref=e163]:
+      - generic [ref=e165]:
+        - tablist [ref=e167]:
+          - tab "Purchase" [selected] [ref=e168] [cursor=pointer]
+          - tab "Buying History" [ref=e169] [cursor=pointer]
+        - tabpanel "Purchase" [ref=e202]:
+          - generic [ref=e203]:
+            - generic [ref=e204]:
+              - generic [ref=e205]:
+                - generic [ref=e206]:
+                  - heading "Choose Your Data Package" [level=1] [ref=e207]
+                  - generic [ref=e211] [cursor=pointer]:
+                    - img [ref=e213]
+                    - generic [ref=e215]: Jan 2026 - Feb 2026
+                - generic [ref=e217]:
+                  - generic [ref=e218] [cursor=pointer]:
+                    - img [ref=e219]
+                    - heading "Gamma" [level=4] [ref=e220]
+                    - paragraph [ref=e221]:
+                      - generic [ref=e222]: $149
+                      - text: /month
+                    - checkbox [ref=e225]
+                  - generic [ref=e226] [cursor=pointer]:
+                    - img [ref=e227]
+                    - heading "Charm" [level=4] [ref=e228]
+                    - paragraph [ref=e229]:
+                      - generic [ref=e230]: $149
+                      - text: /month
+                    - checkbox [ref=e233]
+                  - generic [ref=e234] [cursor=pointer]:
+                    - img [ref=e235]
+                    - heading "Positional" [level=4] [ref=e236]
+                    - paragraph [ref=e237]:
+                      - generic [ref=e238]: $159
+                      - text: /month
+                    - combobox [ref=e241]:
+                      - generic [ref=e242]:
+                        - generic: Select DTE Range
+                      - img [ref=e244]
+                    - checkbox [ref=e248]
+                  - generic [ref=e249] [cursor=pointer]:
+                    - img [ref=e250]
+                    - heading "Bundle" [level=4] [ref=e251]
+                    - paragraph [ref=e252]:
+                      - generic [ref=e253]: $249
+                      - text: /month
+                    - generic [ref=e254]:
+                      - paragraph [ref=e255]: Gamma
+                      - paragraph [ref=e256]: Charm
+                      - paragraph [ref=e257]: "Positional: 0-60DTE"
+                    - radio [ref=e258]
+              - generic [ref=e260]:
+                - tablist [ref=e261]:
+                  - tab "Gamma" [selected] [ref=e262] [cursor=pointer]
+                  - tab "Charm" [ref=e263] [cursor=pointer]
+                  - tab "Positional" [ref=e264] [cursor=pointer]
+                - tabpanel "Gamma" [ref=e265]:
+                  - generic [ref=e266]:
+                    - generic [ref=e268]:
+                      - heading "General Description" [level=2] [ref=e269]
+                      - paragraph [ref=e270]:
+                        - text: Market maker (MM)
+                        - strong [ref=e271]: gamma exposure
+                        - text: plays a crucial role in shaping market dynamics, as it dictates the intensity and direction of MM hedging activity in response to underlying price changes.
+                      - paragraph [ref=e272]:
+                        - text: Gamma measures the rate of change of delta, meaning that as the underlying price moves, MMs must
+                        - strong [ref=e273]: adjust their hedges accordingly
+                        - text: —buying when the price falls and selling when it rises in
+                        - strong [ref=e274]: positive gamma regimes
+                        - text: ", and doing the opposite in"
+                        - strong [ref=e275]: negative gamma environments
+                        - text: .
+                      - list [ref=e276]:
+                        - listitem [ref=e277]:
+                          - strong [ref=e278]: "Positive Gamma:"
+                          - text: Leads to stabilizing hedging flows, dampening volatility.
+                        - listitem [ref=e279]:
+                          - strong [ref=e280]: "Negative Gamma:"
+                          - text: Amplifies price swings, potentially increasing price swings.
+                      - paragraph [ref=e281]:
+                        - text: This dataset is computed using the
+                        - strong [ref=e282]: entire MM options inventory
+                        - text: ", covering all strikes and expirations, and is projected throughout the trading session. The result is a"
+                        - strong [ref=e283]: gamma exposure surface
+                        - text: ", visualizing how MMs' positioning evolves over time, helping traders anticipate key liquidity zones and market stability or instability."
+                      - paragraph [ref=e284]:
+                        - text: 🔽
+                        - strong [ref=e285]: A sample file is available below to visualize the data format.
+                      - separator [ref=e286]
+                      - heading "Technical Description" [level=2] [ref=e287]
+                      - paragraph [ref=e288]:
+                        - text: Each day’s gamma projection is stored as a
+                        - strong [ref=e289]: single CSV file
+                        - text: ", named using the following format:"
+                      - paragraph [ref=e290]:
+                        - text: 📂
+                        - strong [ref=e291]: "File Notation:"
+                        - code [ref=e292]: daily_gamma_YYMMDD.csv
+                      - heading "Data Structure & Resolution" [level=3] [ref=e293]
+                      - paragraph [ref=e294]:
+                        - text: The dataset is structured in an
+                        - strong [ref=e295]: elongated format
+                        - text: ", with each row representing gamma exposure at a specific price level and time interval. The data is projected at a"
+                        - strong [ref=e296]: high resolution
+                        - text: ", computed at:"
+                      - list [ref=e297]:
+                        - listitem [ref=e298]:
+                          - strong [ref=e299]: "Price intervals:"
+                          - text: 2.5 SPX points
+                        - listitem [ref=e300]:
+                          - strong [ref=e301]: "Time intervals:"
+                          - text: 5-minute increments throughout the trading session
+                      - paragraph [ref=e302]:
+                        - strong [ref=e303]: "Columns:"
+                      - list [ref=e304]:
+                        - listitem [ref=e305]:
+                          - strong [ref=e306]: ticker
+                          - text: – Underlying asset (e.g., SPX)
+                        - listitem [ref=e307]:
+                          - strong [ref=e308]: effective_date
+                          - text: – Date of computation (YYYY/MM/DD)
+                        - listitem [ref=e309]:
+                          - strong [ref=e310]: sim_datetime
+                          - text: – Timestamp of the projected gamma exposure (YYYY/MM/DD HH:MM)
+                        - listitem [ref=e311]:
+                          - strong [ref=e312]: price
+                          - text: – Underlying asset price level (sampled every 2.5 points)
+                        - listitem [ref=e313]:
+                          - strong [ref=e314]: value
+                          - text: – Gamma exposure at the corresponding price level
+                      - paragraph [ref=e315]:
+                        - strong [ref=e316]: "Structure:"
+                      - table [ref=e317]:
+                        - rowgroup [ref=e318]:
+                          - row "ticker effective_date sim_datetime price value" [ref=e319]:
+                            - columnheader "ticker" [ref=e320]:
+                              - code [ref=e321]: ticker
+                            - columnheader
+                            - columnheader
+                            - columnheader "effective_date" [ref=e322]:
+                              - code [ref=e323]: effective_date
+                            - columnheader
+                            - columnheader
+                            - columnheader "sim_datetime" [ref=e324]:
+                              - code [ref=e325]: sim_datetime
+                            - columnheader
+                            - columnheader
+                            - columnheader "price" [ref=e326]:
+                              - code [ref=e327]: price
+                            - columnheader
+                            - columnheader
+                            - columnheader "value" [ref=e328]:
+                              - code [ref=e329]: value
+                        - rowgroup [ref=e330]:
+                          - row "SPX 2024/12/02 2024/12/02 02:00 6195 -351.176" [ref=e331]:
+                            - cell "SPX" [ref=e332]:
+                              - code [ref=e333]: SPX
+                            - cell
+                            - cell
+                            - cell "2024/12/02" [ref=e334]:
+                              - code [ref=e335]: 2024/12/02
+                            - cell
+                            - cell
+                            - cell "2024/12/02 02:00" [ref=e336]:
+                              - code [ref=e337]: 2024/12/02 02:00
+                            - cell
+                            - cell
+                            - cell "6195" [ref=e338]:
+                              - code [ref=e339]: "6195"
+                            - cell
+                            - cell
+                            - cell "-351.176" [ref=e340]:
+                              - text: "-"
+                              - code [ref=e341]: "351.176"
+                          - row "SPX 2024/12/02 2024/12/02 02:00 6192.5 -387.613" [ref=e342]:
+                            - cell "SPX" [ref=e343]:
+                              - code [ref=e344]: SPX
+                            - cell
+                            - cell
+                            - cell "2024/12/02" [ref=e345]:
+                              - code [ref=e346]: 2024/12/02
+                            - cell
+                            - cell
+                            - cell "2024/12/02 02:00" [ref=e347]:
+                              - code [ref=e348]: 2024/12/02 02:00
+                            - cell
+                            - cell
+                            - cell "6192.5" [ref=e349]:
+                              - code [ref=e350]: "6192.5"
+                            - cell
+                            - cell
+                            - cell "-387.613" [ref=e351]:
+                              - text: "-"
+                              - code [ref=e352]: "387.613"
+                          - row "SPX 2024/12/02 2024/12/02 02:00 6190 -422.585" [ref=e353]:
+                            - cell "SPX" [ref=e354]:
+                              - code [ref=e355]: SPX
+                            - cell
+                            - cell
+                            - cell "2024/12/02" [ref=e356]:
+                              - code [ref=e357]: 2024/12/02
+                            - cell
+                            - cell
+                            - cell "2024/12/02 02:00" [ref=e358]:
+                              - code [ref=e359]: 2024/12/02 02:00
+                            - cell
+                            - cell
+                            - cell "6190" [ref=e360]:
+                              - code [ref=e361]: "6190"
+                            - cell
+                            - cell
+                            - cell "-422.585" [ref=e362]:
+                              - code [ref=e363]: "-422.585"
+                      - heading "Interpretation of Gamma Value" [level=4] [ref=e364]:
+                        - strong [ref=e365]: Interpretation of Gamma Value
+                      - paragraph [ref=e366]:
+                        - text: The
+                        - strong [ref=e367]: value
+                        - text: column represents
+                        - strong [ref=e368]: the rate of change of market makers' delta exposure for a 2.5-point move in SPX
+                        - text: . In other words, it reflects how much market makers’ hedging requirements will shift as the SPX price moves by 2.5 points.
+                      - list [ref=e369]:
+                        - listitem [ref=e370]:
+                          - strong [ref=e371]: A highly positive gamma value
+                          - text: suggests MMs will hedge in a way that counteracts price moves, stabilizing the market.
+                        - listitem [ref=e372]:
+                          - strong [ref=e373]: A negative gamma value
+                          - text: suggests MMs will be forced to sell as prices decline and buy as prices rise, reinforcing price movements and increasing volatility.
+                      - paragraph [ref=e374]:
+                        - text: This format allows for
+                        - strong [ref=e375]: seamless integration into modeling frameworks, enabling traders to track MM hedging dynamics over time and price levels
+                        - text: with granular precision.
+                    - link "Download Sample File" [ref=e379] [cursor=pointer]:
+                      - /url: https://nyc3.digitaloceanspaces.com/optionsdepth-prod-bucket/media/daily_gamma_20250131.csv?AWSAccessKeyId=DO00EHMHJ8UAFBDK9T7K&Signature=u89fN3lGvzuhIqhoCacL78D5cMU%3D&Expires=2088951436
+                      - img [ref=e380]
+                      - text: Download Sample File
+            - generic [ref=e384]:
+              - generic [ref=e385]:
+                - paragraph [ref=e386]:
+                  - text: Checkout
+                  - generic [ref=e387]: (0)
+                - generic [ref=e388]:
+                  - paragraph [ref=e389]: No. of Months
+                  - paragraph [ref=e390]:
+                    - generic [ref=e391]: "2"
+                    - text: months
+                - generic [ref=e392]:
+                  - paragraph [ref=e393]: "From: Jan 2026"
+                  - paragraph [ref=e394]: "To: Feb 2026"
+              - generic [ref=e395]:
+                - generic [ref=e396]:
+                  - paragraph [ref=e397]: Sub Total
+                  - paragraph [ref=e398]: $0
+                - button "Pay Now" [ref=e399] [cursor=pointer]
+      - generic [ref=e178]:
+        - generic [ref=e179]:
+          - heading "Checkout (0)" [level=3] [ref=e180]
+          - button [ref=e181] [cursor=pointer]:
+            - img [ref=e182]
+        - generic [ref=e186]:
+          - generic [ref=e187]:
+            - generic [ref=e188]:
+              - paragraph [ref=e189]: No. of Months
+              - paragraph [ref=e190]: 2 months
+            - generic [ref=e191]:
+              - paragraph [ref=e192]: "From: Jan 2026"
+              - paragraph [ref=e193]: "To: Feb 2026"
+          - generic [ref=e194]:
+            - generic [ref=e195]:
+              - paragraph [ref=e196]: Sub Total
+              - paragraph [ref=e197]: $0
+            - button "Pay Now" [ref=e198] [cursor=pointer]
+  - region "Notifications Alt+T"
