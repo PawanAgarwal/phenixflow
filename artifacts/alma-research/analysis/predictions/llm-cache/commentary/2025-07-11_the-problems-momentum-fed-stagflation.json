@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:00:04.217Z",
+  "inputHash": "8e082dc1dbe17da8cd244232960b5a4a06cc01ee",
+  "payload": {
+    "responseId": "resp_09e8771779706fad0069b7641f3358819fb1bb94858b3d5ebf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "When market finds equilibrium, it will reverse sharply.",
+          "condition": "",
+          "expected_result": "Within 30 trading days of a local equilibrium being identified (e.g., consolidation at prior high), SPX will decline by at least 5% from that peak."
+        },
+        {
+          "instrument": "Fed Funds",
+          "prediction_text": "Market expects at least one cut by EoY.",
+          "condition": "by end of year",
+          "expected_result": "The effective Fed Funds rate will be lowered at least once by the Federal Reserve before December 31, 2025."
+        },
+        {
+          "instrument": "US Treasury yields",
+          "prediction_text": "After Trump renewed tariff storm, the Fed Funds moved a bit up on current rate levels, and went down on lower rates, still expect a cut.",
+          "condition": "",
+          "expected_result": "Short-term Treasury yields (2y) will initially rise on tariff news then revert and fall below their pre-news level within 10 trading days, reflecting renewed expectations of a rate cut."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upward strength is declining fast while breadth and sentiment metrics show extreme compliance, implying the rally creates leverage that will be used as collateral for more growth supporting inflationary pressures.",
+          "condition": "",
+          "expected_result": "Despite weakening momentum and breadth, SPX will reach a new intraday or closing all-time high within the next 60 trading days driven by leveraged flows."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "cachedAt": "2026-03-16T04:28:08.078Z",
+  "inputHash": "128f08e913f06d58cfdb30f029c180a08d1717cb",
+  "payload": {
+    "responseId": "resp_0a31b6ad45f9af8f0069b786cebb9881a09f8b6c65b0e97df0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-11T14:57:18.998Z",
+          "instrument": "",
+          "prediction_text": "If the intraday spot mean reversion keeps going, especially near the JPM level, volatility will decrease.",
+          "condition": "close to the JPM lvl",
+          "expected_result": "Implied volatility (IV) falls over the subsequent intraday period compared with current IV"
+        },
+        {
+          "made_at": "2025-03-11T15:03:36.026Z",
+          "instrument": "",
+          "prediction_text": "If CPI comes down a bit, that will accelerate very short-term volatility selling.",
+          "condition": "CPI comes down a bit",
+          "expected_result": "Short-term implied volatility declines and net vol-seller flows increase within days of a lower-than-expected CPI print"
+        },
+        {
+          "made_at": "2025-03-11T16:55:16.179Z",
+          "instrument": "ES futures",
+          "prediction_text": "If gamma increases, it should lower volatility.",
+          "condition": "gamma increases",
+          "expected_result": "Measured implied volatility for ES-related options declines after gamma increases"
+        },
+        {
+          "made_at": "2025-03-11T16:56:31.444Z",
+          "instrument": "ES futures",
+          "prediction_text": "Higher local gamma will pin momentum to the long GEX strike because market makers trade more against the move.",
+          "condition": "higher local gamma",
+          "expected_result": "ES spot price remains near the long GEX strike (pinning) and shows reduced trend continuation while gamma is elevated"
+        },
+        {
+          "made_at": "2025-03-11T17:01:31.854Z",
+          "instrument": "ES futures",
+          "prediction_text": "When momentum reaches the line and gamma increases, volatility that supported the move will turn against it (i.e., volatility will rise and oppose the momentum).",
+          "condition": "momentum reaches the line and gamma increases",
+          "expected_result": "Volatility increases and upward momentum in ES stalls or reverses after gamma rises"
+        },
+        {
+          "made_at": "2025-03-11T17:04:43.808Z",
+          "instrument": "ES futures",
+          "prediction_text": "Increasing color (flow) will raise local gamma, and volatility is expected to increase in response.",
+          "condition": "color (flow) increases",
+          "expected_result": "Local gamma metrics rise and implied volatility for ES increases following intensified flow/color"
+        },
+        {
+          "made_at": "2025-03-11T17:07:06.346Z",
+          "instrument": "ES futures",
+          "prediction_text": "If momentum is close to the long GEX strike when intraday vol shows a color effect, charm will attract momentum to the long GEX.",
+          "condition": "momentum close to long GEX strike AND intraday vol shows color effect",
+          "expected_result": "ES spot moves toward and becomes pinned at the long GEX strike within the intraday session"
+        },
+        {
+          "made_at": "2025-03-11T17:07:06.346Z",
+          "instrument": "ES futures",
+          "prediction_text": "If momentum is close to the local gamma minimum lines, it will likely break through them.",
+          "condition": "momentum close to local gamma min lines",
+          "expected_result": "ES spot breaches the local gamma minimum lines (breakout) rather than reversing at those lines"
+        }
+      ]
+    }
+  }
+}

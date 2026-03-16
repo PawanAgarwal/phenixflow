@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:16:14.862Z",
+  "inputHash": "2250933e5122e47aa0b6025a8d4e4bfb240f0d41",
+  "payload": {
+    "responseId": "resp_07891e5e473275450069b767e825588197a74a786a2e1eaa5a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/support gamma cluster around 6720-6745 acting as a magnet/brake to downside; heatmap shows concentrated blue/green peak near ~6745-6720.",
+          "condition": "price moves toward 6720-6745",
+          "expected_result": "Price should slow/revert and stabilize back toward centroid (~6799) or the downside pivot target area (6685-6700) with reduced downside momentum."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "High-probability rejection/peak gamma zone at ~6833-6847 (gamma peak and trough lines converge) forming an upside brake.",
+          "condition": "price approaches 6830-6850",
+          "expected_result": "Upward advances into 6830-6850 should meet resistance and likely stall or reverse back toward the pivot/centroid (~6798-6800)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upper sticky gamma region / strong magnet centered near 6909-6947 (deep blue area) that will attract price if volatility pushes high.",
+          "condition": "sustained vol pickup pushing price above ~6870",
+          "expected_result": "Expect accelerated travel toward 6910-6947 where gamma liquidity concentrates, increasing chance of pinning or consolidation in that range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intermediate sticky trough around 6660-6685 (gamma trough and green contours) acting as a local brake before lower reversion target.",
+          "condition": "price moves below 6725 pivot toward downside target",
+          "expected_result": "Price is likely to slow or bounce around 6660-6685 before testing lower levels; use as a short-term support zone for mean-reversion trades."
+        }
+      ]
+    }
+  }
+}

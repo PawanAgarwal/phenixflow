@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T01:58:03.929Z",
+  "inputHash": "d15bb40f7d3a84636d34ebb61c0ecb97b7c31d95",
+  "payload": {
+    "responseId": "resp_0a6b1450e49a1a2b0069b7639d18b48196a4c2c5fcf746dede",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If reversion occurs, SPX will reach 5900.18.",
+          "condition": "reversion",
+          "expected_result": "SPX prints 5900.18 or a lower low that equals or breaches 5900.18"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "If reversion occurs, ES=F will reach 5926.38 with VIX moving toward 19.13.",
+          "condition": "reversion",
+          "expected_result": "ES=F prints 5926.38 and VIX trades near 19.13"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A close beyond 5900.18 for SPX or 5926.38 for ES=F would be short-run trend shifting.",
+          "condition": "close beyond these lines",
+          "expected_result": "Daily close above 5900.18 (SPX) or 5926.38 (ES=F) followed by continuation in the same direction over the next 1–5 trading sessions"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "When model rises above ~77–80% SPX flip to short delta (expect downside bias).",
+          "condition": "model >77% (≈80%)",
+          "expected_result": "Market positioning shifts and SPX exhibits net negative delta behavior with increased downside pressure within days of the threshold breach"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "Centroid is at 5983.28 for the intraday structure.",
+          "condition": "intraday structure in force",
+          "expected_result": "Price gravitates toward or frequently revisits 5983.28 during the trading day"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "Downside pivot at 5949.63; a break below this line is expected to coincide with declining volatility.",
+          "condition": "price breaks below 5949.63",
+          "expected_result": "Price trades below 5949.63 and implied volatility measures decline thereafter intraday"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "Upside pivot at 6001.36 defines the intraday upper pivot.",
+          "condition": "intraday structure in force",
+          "expected_result": "Price fails to sustain moves above 6001.36 or returns to the range defined by pivots after touching it"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "At 5931 there is a vanna flip where lower vol can break through that line.",
+          "condition": "price at or near 5931 with lower volatility",
+          "expected_result": "Price moves decisively through 5931 when implied volatility is compressing"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "5910 is expected to act as a nice support.",
+          "condition": "intraday trading",
+          "expected_result": "Price holds above 5910 and rebounds after touching or approaching that level"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "The pattern is a long fly centered around 5965 and overall favors ranging action with only one tradeable move in the first hour or around 2 PM.",
+          "condition": "current pattern (long fly centered 5965)",
+          "expected_result": "Price oscillates in a range around 5965 with at most one clear directional impulse in the first trading hour or near 14:00 local time"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "Lower volatility is expected if price breaks below the long-fly local downside (negative local downside speed).",
+          "condition": "price breaks below the long-fly local downside",
+          "expected_result": "Implied volatility contracts following the break below the long-fly downside level"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "5950, 6000 and 6030 are potential pins.",
+          "condition": "intraday trading",
+          "expected_result": "Price exhibits pinning behavior (extended time spent or closes near) at one or more of 5950, 6000, or 6030 during the trading day"
+        }
+      ]
+    }
+  }
+}

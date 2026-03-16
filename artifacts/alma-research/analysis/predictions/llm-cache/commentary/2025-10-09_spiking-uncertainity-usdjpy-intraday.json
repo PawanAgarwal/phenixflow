@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:04:48.270Z",
+  "inputHash": "bd284467bfcb86043cb3ae34f96ab3bc8510ac6b",
+  "payload": {
+    "responseId": "resp_0d70a5a10dd73a950069b76536059c81959984acacc7a88ef9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Expect a heavy upside volatility move toward ~6787.49 with pinning to the upside pivot thereafter.",
+          "condition": "price reaches upside pivot 6769.51 / upper wing of IC",
+          "expected_result": "Price spikes upward to near 6787.49 then becomes pinned around 6769.51–6787.49 (limited downside) during the session"
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Expect downside magnetism toward 6702.47 with support around the downside pivot.",
+          "condition": "price moves lower toward lower wing of IC",
+          "expected_result": "Price is drawn down to ~6702.47 and finds support/price stalls near 6721.07–6702.47"
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Centroid balance will occur in the 6733.02–6741.17 area, revealing flow shifts and determining intraday bias.",
+          "condition": "",
+          "expected_result": "Price trades and clusters in the 6733.02–6741.17 range for a material portion of the session, after which intraday spot/vol beta shifts (positive) and spot/skew beta shifts (negative) if alignment occurs"
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Primary intraday expectation is an up-day with momentum and quick upside vol bets, and a vol-sell edge on the downside.",
+          "condition": "",
+          "expected_result": "Overall session returns are net positive (up-day) with rapid intraday rallies and heavier upside option activity while downside option selling increases liquidity on dips"
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Secondary bet: a reversion from the upper wing of the IC back toward 6755 with pinning during the power hour.",
+          "condition": "price reaches upper wing of IC (~6775/80)",
+          "expected_result": "After touching the upper wing (~6775–6780), price reverts down toward ~6755 and is pinned near 6755 during the power hour"
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Tertiary outcome: the iron-condor holds and price remains sticky within the wings.",
+          "condition": "",
+          "expected_result": "Price remains contained within the IC bounds (~6715/20–6775/80) for most of the session, exhibiting low directional extension"
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Quaternary outcome: downside volatility burns off and market ranges.",
+          "condition": "",
+          "expected_result": "Volatility on the downside decreases and price consolidates in a tight range without sustained directional moves"
+        }
+      ]
+    }
+  }
+}

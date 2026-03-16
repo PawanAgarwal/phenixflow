@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:30:39.608Z",
+  "inputHash": "272d23ddd7b9f634f2355f231ea7fa897d1166e1",
+  "payload": {
+    "responseId": "resp_076632c79403431e0069b78768ec1081928f16b265219825f4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-02-23T21:00:35.675Z",
+          "instrument": "",
+          "prediction_text": "Above the center, dealers become longer delta over time and will sell futures.",
+          "condition": "above the center",
+          "expected_result": "Futures prices will be sold (downward pressure) as dealer delta increases over time"
+        },
+        {
+          "made_at": "2026-02-23T21:04:02.465Z",
+          "instrument": "",
+          "prediction_text": "There is a point where spot needs a push towards the center because convexity peaks and gamma-resistance is strongest.",
+          "condition": "when convexity peaks given the steepness of the speed profile",
+          "expected_result": "Spot price will be pushed toward the centroid/center (mean-reversion toward center)"
+        },
+        {
+          "made_at": "2026-02-23T21:13:25.139Z",
+          "instrument": "",
+          "prediction_text": "A magnet (convexity cluster) will influence momentum direction but will not generate a mean-reverting process.",
+          "condition": "presence of a convexity cluster (magnet)",
+          "expected_result": "Price momentum direction probabilities will be skewed toward the magnet without producing consistent mean reversion"
+        },
+        {
+          "made_at": "2026-02-23T21:14:16.077Z",
+          "instrument": "",
+          "prediction_text": "The market will be volatile rangebound around the centroid with some stickiness.",
+          "condition": "",
+          "expected_result": "Price will oscillate within a range near the centroid, showing persistent pauses/stickiness near that level"
+        }
+      ]
+    }
+  }
+}

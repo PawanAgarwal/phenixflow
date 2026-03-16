@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:01:15.351Z",
+  "inputHash": "4621f1e767c2fc685e47c2b14bc1a6ce46932f00",
+  "payload": {
+    "responseId": "resp_0a68c436f43e5fc00069b7645fcd2c8191a6b6d7d4578dd293",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market overall expectation is downside liquidity below 6239.75 as downside pivot towards 6200.",
+          "condition": "",
+          "expected_result": "Price will move below 6239.75 and approach 6200 during the forecast period."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The centroid area of the profile falls to 6270.40 - 6276.26, where spot must decide direction.",
+          "condition": "",
+          "expected_result": "Price will trade within 6270.40–6276.26 before either moving toward lower liquidity or extending into a right-tail move."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The upside pivot is at 6295.32, near the weekly upside target and monthly VWMA.",
+          "condition": "",
+          "expected_result": "If price rises to 6295.32 it will encounter resistance associated with the weekly upside target and monthly VWMA, limiting further upside."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "During the day 6250 will serve as the center of the fly pattern and the most likely pin for the day.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward and spend significant time around 6250 intraday."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "After 2PM there will be a local pivot at 6276–6280; above this line spot can be pinned to 6285–6288 in the power-hour and then suppressed back to 6250.",
+          "condition": "Price > 6276–6280 after 2PM",
+          "expected_result": "Price will be held around 6285–6288 during the power-hour and subsequently move back toward 6250."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The main intraday target between the upside/downside pivots is 6250.",
+          "condition": "",
+          "expected_result": "Price will move toward 6250 as the expected target while remaining between the main pivots."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside maximum is coded at 6305.",
+          "condition": "",
+          "expected_result": "Price will not exceed 6305 (acts as an intraday upside cap) during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside maximum is coded at 6203 (after 12:10am mostly).",
+          "condition": "Time > 00:10 (after 12:10am)",
+          "expected_result": "Price will not fall below 6203 after 00:10 unless volatility breaks the projected bounds."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility spikes below the centroid and does not calm at 6242 during the AM, price can go down to 6165–6160 and then be pinned to 6180.",
+          "condition": "Volatility increases sharply below the centroid and price fails to stabilize at 6242 during the AM",
+          "expected_result": "Price will decline to the 6160–6165 range and subsequently be held around 6180 (pinning)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Alma expects a bull trap in the Friday - OpEx week window forcing trapped bulls to realize losses or close small gains, providing selling flow.",
+          "condition": "Friday - OpEx week window",
+          "expected_result": "A short-lived rally (bull trap) will reverse, producing selling pressure and net downside in the referenced window."
+        }
+      ]
+    }
+  }
+}

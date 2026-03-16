@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T02:11:47.809Z",
+  "inputHash": "e3142b45da7411469744631e8cbba56a842a3574",
+  "payload": {
+    "responseId": "resp_0f9af22eb9b7abf30069b766dce1a4819d88308c3166564449",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-12-13T01:22:32.112Z",
+          "instrument": "",
+          "prediction_text": "The market will eventually gravitate back down (from the current level) rather than sustaining liquidity there.",
+          "condition": "if the profile persists",
+          "expected_result": "Price moves lower from current level over subsequent trading sessions, closing below the current range within days"
+        },
+        {
+          "made_at": "2025-12-13T01:33:41.329Z",
+          "instrument": "unspecified (price levels 6850-6950)",
+          "prediction_text": "The gap below will act as a vacuum with a magnet downward, pulling price down toward the gap when speed is negative and downside vol is sold.",
+          "condition": "speed is negative between 6850 and 6950",
+          "expected_result": "Price moves down into the gap area below 6850 within subsequent trading sessions, showing acceleration toward that zone"
+        },
+        {
+          "made_at": "2025-12-13T01:34:46.104Z",
+          "instrument": "unspecified (price levels 6850-6950)",
+          "prediction_text": "When speed profile is positive liquidity is expected upward and the stability/ magnet is at 6950 rather than 6850, so price will be attracted to 6950.",
+          "condition": "speed profile is positive",
+          "expected_result": "Price moves upward toward 6950 and holds/supports around 6950 on retests within subsequent sessions"
+        },
+        {
+          "made_at": "2025-12-13T11:07:25.922Z",
+          "instrument": "",
+          "prediction_text": "The gap is the support.",
+          "condition": "",
+          "expected_result": "Price finds support at the gap level and bounces or consolidates there on the next retest"
+        }
+      ]
+    }
+  }
+}

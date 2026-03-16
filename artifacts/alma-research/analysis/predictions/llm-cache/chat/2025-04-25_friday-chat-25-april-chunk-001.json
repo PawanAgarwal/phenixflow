@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:28:34.052Z",
+  "inputHash": "12a5936b9c3c89d545d17d4339decd64e8eec797",
+  "payload": {
+    "responseId": "resp_0dcf5f97581c367c0069b786ecbfec8197b470c11a0b675725",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-04-25T09:13:23.120Z",
+          "instrument": "",
+          "prediction_text": "Market is setting for a top at 5643.31.",
+          "condition": "",
+          "expected_result": "Price will reach 5643.31 (top)"
+        },
+        {
+          "made_at": "2025-04-25T09:13:23.120Z",
+          "instrument": "ES",
+          "prediction_text": "ES target is 5606.47 with a margin of error up to 5689.25 (high vol).",
+          "condition": "",
+          "expected_result": "ES price will reach 5606.47, possibly as high as 5689.25 under high volatility"
+        },
+        {
+          "made_at": "2025-04-25T09:13:23.120Z",
+          "instrument": "",
+          "prediction_text": "Primal downside target is 4956.95 then 4802; if those are taken out, 4380.73 and 3996.42 may follow.",
+          "condition": "if 4956.95 and 4802 are taken out",
+          "expected_result": "If 4956.95 and 4802 are breached, price will subsequently move to 4380.73 and potentially 3996.42"
+        },
+        {
+          "made_at": "2025-04-25T15:55:17.324Z",
+          "instrument": "",
+          "prediction_text": "5465.49 is a very important intraday pivot.",
+          "condition": "",
+          "expected_result": "Price will pivot or react around 5465.49 intraday (support/resistance or directional flip)"
+        }
+      ]
+    }
+  }
+}

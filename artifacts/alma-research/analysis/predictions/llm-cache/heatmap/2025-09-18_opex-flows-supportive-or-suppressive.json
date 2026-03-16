@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:44.769Z",
+  "inputHash": "dcbdcf4080703ae9be1e883164307aad3c25504b",
+  "payload": {
+    "responseId": "resp_09fb660a5304d1a80069b764f9e5d8819f955dc3b2eb46c7bb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong supportive cluster (gamma peak) centered ~6668 pushing intraday magnetic zone between 6667.5–6688.1; upside pin potential to 6685–6700 then likely reversion back into centroid",
+          "condition": "price trades above 6675.12",
+          "expected_result": "Short-term pin to 6685 then test 6698–6700 within session followed by reversion back toward 6668–6675 range"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6639.35 (shifting toward 6623.55 after 13:00) acts as a hard brake; failure to hold signals clear push lower with magnet toward 6590 and strongest support cluster at 6557.4",
+          "condition": "price closes below 6639.35 (or falls through 6623.55 after 13:00)",
+          "expected_result": "Accelerated downside travel toward 6590, with likely further support and sticky zone at 6557.40"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "During the AM, 6714.97 is a magnetic upside zone—likely to attract price if momentum is upward but resides above main centroid so expect reversion if tested",
+          "condition": "intraday move reaches 6714.97 in AM",
+          "expected_result": "Temporary stall or pin near 6714.97, then reversion back toward 6670–6688 centroid band"
+        }
+      ]
+    }
+  }
+}

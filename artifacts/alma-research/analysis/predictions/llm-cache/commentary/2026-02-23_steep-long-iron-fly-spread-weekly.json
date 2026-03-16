@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:15:24.152Z",
+  "inputHash": "48e9eca9e1247f783aed03fa4c03338e6c88f121",
+  "payload": {
+    "responseId": "resp_058afc36c53778720069b767b64e188194b2950cf790ece9a4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Market structure looks weak as long as it remains under 6950.77",
+          "condition": "ES < 6950.77",
+          "expected_result": "Price will exhibit continued weakness (downward bias) while below 6950.77, increasing probability of further downside moves"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Market structure is weak if ES is below 6977",
+          "condition": "ES < 6977",
+          "expected_result": "Downside pressure on structure will remain, raising likelihood of declines toward lower support levels"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Watch ES 6855 for downside move confirmation",
+          "condition": "ES breaks below 6855",
+          "expected_result": "A confirmed break below 6855 will trigger a downside move and likely accelerate declines"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market expects strong liquidity and support at December lows and snapback at November lows in the worst case",
+          "condition": "",
+          "expected_result": "If prices approach December or November lows, liquidity will absorb selling and produce sharp snapback recoveries"
+        },
+        {
+          "instrument": "CL",
+          "prediction_text": "The market is buying calls on oil as Iran risk spikes",
+          "condition": "Iran risk spikes around Feb 26/Genf negotiations",
+          "expected_result": "Increased call buying will push up implied volatility and likely lead to higher oil prices or larger upside option-based positioning"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "I don’t expect any rate cuts until June or September",
+          "condition": "",
+          "expected_result": "Policymakers will not implement interest-rate cuts before June, maintaining current rate levels through at least May"
+        }
+      ]
+    }
+  }
+}

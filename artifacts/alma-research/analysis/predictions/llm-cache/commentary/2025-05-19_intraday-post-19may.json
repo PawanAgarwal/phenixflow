@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:57:07.035Z",
+  "inputHash": "52f0d3f92db62598cbade091f1da41f2beb0c602",
+  "payload": {
+    "responseId": "resp_021a22b8b517b5840069b7636d3cfc819f8004a712e828ad1e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The speed profile will turn positive if price falls below 5895.55.",
+          "condition": "price < 5895.55",
+          "expected_result": "Speed profile becomes net positive (measurable increase in short-term momentum metrics) after price crosses below 5895.55."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The index should take out 5991.54 to the upside and volatility should decline; otherwise the market will remain unstable and illiquid.",
+          "condition": "price > 5991.54",
+          "expected_result": "Price breaks above 5991.54 and implied volatility decreases (IV down) following the breakout."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price reaches the downside pivot at 5933.65, the speed profile will start to shift and risk of downside will increase, becoming net positive under the zero speed and pushing vol up toward 5860 first.",
+          "condition": "price = 5933.65",
+          "expected_result": "After touching 5933.65, short-term speed metrics shift toward positive (downside momentum) and implied volatility rises as price moves toward 5860."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the speed profile becomes net positive under the zero speed, downside/volatility will expand toward 5805/5795 where longer downside gamma should take effect.",
+          "condition": "speed profile net positive under zero speed",
+          "expected_result": "Price moves toward 5805–5795 and implied volatility increases, with option gamma exposure indicating longer downside gamma influence at that zone."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Low volatility is required to break above the coding zero vanna at 5926, but the profile does not favor that, so a break above 5926 is unlikely without relatively low vol.",
+          "condition": "price > 5926 AND implied volatility is relatively low",
+          "expected_result": "Price breaks and sustains above 5926 only if implied volatility decreases; otherwise price will fail to break above 5926."
+        }
+      ]
+    }
+  }
+}

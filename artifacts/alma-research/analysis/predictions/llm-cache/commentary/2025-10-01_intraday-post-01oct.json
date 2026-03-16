@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:04:16.299Z",
+  "inputHash": "56782414eb6bcaf9013e3972d86ead7d93f64bda",
+  "payload": {
+    "responseId": "resp_0eb61120e9d853f40069b76516e078819197e69af61b62e893",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "If spot is above the centroid (6658.70) during the power hour, the centroid will act as an unbreakable pivot and the market will reject it (spot will stay above).",
+          "condition": "spot is above 6658.70 during the power hour",
+          "expected_result": "Price remains above 6658.70 through the power hour and does not break below it"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If spot is below the centroid (6658.70) during the power hour, the centroid will act as an unbreakable pivot and the market will reject it (spot will stay below).",
+          "condition": "spot is below 6658.70 during the power hour",
+          "expected_result": "Price remains below 6658.70 through the power hour and does not break above it"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Above the upside pivot 6667.45 there is potential for price to move toward ~6690.",
+          "condition": "price moves above 6667.45",
+          "expected_result": "Price advances to approximately 6690 after breaching 6667.45"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If put skew is bid, the next downside target is 6601.",
+          "condition": "put skew is bid",
+          "expected_result": "Price declines to 6601"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If a left-tail event materializes (priced at ~23.60% probability), the downside target is 6585.",
+          "condition": "left-tail event materializes",
+          "expected_result": "Price falls to 6585"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If spot cannot retake the pivot (6637.41) before the power hour, the local magnet will be 6610 (weak).",
+          "condition": "spot cannot take back 6637.41 before the power hour",
+          "expected_result": "Price gravitates toward and pins near 6610"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Otherwise price will shoot back up from either 6620 or 6600 and pin to the pivot (6637.41).",
+          "condition": "no left-tail event and pivot 6637.41 not broken by a sustained downside move",
+          "expected_result": "Price rebounds from 6620 or 6600 and moves back to pin at 6637.41"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market is pricing more probability to the downside with higher volatility, but speculative 0DTE long put positions will be closed on prints, generating local support through dealer buyback flows.",
+          "condition": "speculative 0DTE long puts are printed",
+          "expected_result": "Dealer buybacks after long-put prints create local support, limiting further downside and reducing immediate volatility"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Today will be a momentum trading day with momentum revealing itself during the AM session.",
+          "condition": "AM session unfolds",
+          "expected_result": "Directional (momentum) moves emerge in the AM session, leading to sustained intraday trending rather than rangebound action"
+        }
+      ]
+    }
+  }
+}

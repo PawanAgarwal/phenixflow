@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:07.824Z",
+  "inputHash": "704af4f724f602d738c90f651b514039f5638b37",
+  "payload": {
+    "responseId": "resp_0d66a2bacbc0ba9a0069b76499be90819fa7c6ad1d9ff27588",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning magnet at ~6500 (red gamma ridge) — heatmap shows concentrated gamma and a black contour focused on 6500 that will attract spot intraday.",
+          "condition": "SPX trades within 6490–6510",
+          "expected_result": "Spot will gravitate toward and spend material time near 6500; expect reversion back to ~6470 after any brief excursions above 6500."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky support/low-probability-break zone around 6452.8–6444.3 (downside pivot) — visible gamma trough/peak structure near 6445 and clustered contours indicating support.",
+          "condition": "Spot approaches 6452.8–6444.3",
+          "expected_result": "High chance of bounce from this zone; selling call skew or fading downside is favorable — if held, spot will pin toward 6427.47 only if downside liquidity is pulled."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary rejection/upper tail around 6484.5–6500 (upside pivot / short-term hard stop) — yellow troughs and contours show a right-tail entry at ~6484.5 feeding into the 6500 ridge.",
+          "condition": "SPX rallies above 6479 and reaches 6484.5",
+          "expected_result": "Expect a brief push to 6500 then reversion back toward the 6470 pin; one minor path may stall at ~6485 during power-hour but overall reversion likely."
+        }
+      ]
+    }
+  }
+}

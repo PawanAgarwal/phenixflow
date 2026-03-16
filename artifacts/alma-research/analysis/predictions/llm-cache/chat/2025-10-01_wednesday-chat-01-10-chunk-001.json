@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:29:40.415Z",
+  "inputHash": "cb6d6d0ef93539932ae7dd2f7e5ffac72f27b7ac",
+  "payload": {
+    "responseId": "resp_0302e8395223256a0069b787300fb4819586c3f74e15810571",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-10-01T18:42:17.485Z",
+          "instrument": "",
+          "prediction_text": "When the market trades above the centroid right after the opening, put hedges will be closed causing buyback flow and no resistance to the upside.",
+          "condition": "market trades above the centroid right after the opening",
+          "expected_result": "Instruments with open put hedges will see buyback buying pressure and price will move upward with reduced resistance"
+        },
+        {
+          "made_at": "2025-10-01T18:50:03.231Z",
+          "instrument": "",
+          "prediction_text": "If volatility-adjusted price is below the pivot level, then wait.",
+          "condition": "volatility adjusted price is below the pivot level",
+          "expected_result": "Traders should refrain from initiating new directional positions until price moves above the pivot or volatility conditions change"
+        }
+      ]
+    }
+  }
+}

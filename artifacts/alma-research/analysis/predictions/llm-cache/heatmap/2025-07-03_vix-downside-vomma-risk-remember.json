@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:59:43.297Z",
+  "inputHash": "56a42d956b5e17cb93e644a76f11a074847933af",
+  "payload": {
+    "responseId": "resp_04a4fd6df798303e0069b76408e840819db265019b7606ea6c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong gamma peak/sticky zone around 6251-6275 (centroid noted 6237.71-6251.11 with heatmap 6251.57 and 6275.82 levels). Expect price to gravitate toward and be contained in this corridor intraday, acting as a reversion magnet.",
+          "condition": "none",
+          "expected_result": "If SPX moves away from 6238–6276, expect reversion back into the 6238–6276 corridor within the session (high probability mean reversion)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside brake/support cluster around 6179-6195 with deeper support near 6130-6155 (heatmap risk levels at 6194.8 and 6179.02; 6154.77 and 6130.61 at 99.73%). These act as stronger downside pins if market sells off.",
+          "condition": "SPX breaks below 6221.52 checkpoint",
+          "expected_result": "Upon breach of 6221.52, expect price to test and potentially stall/reverse between 6179–6195; if selling continues, expect a move toward 6130–6155 as next strong support."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside cap/pinning risk around 6280–6324 (heatmap shows 6280/90 as intraday max and 6324 noted at 99.73%). This area is a likely rejection/peg zone into OpEx week.",
+          "condition": "none",
+          "expected_result": "If SPX rallies, expect difficulty clearing 6280–6324; likely rejection or pinning within that range during the session and into OpEx."
+        }
+      ]
+    }
+  }
+}

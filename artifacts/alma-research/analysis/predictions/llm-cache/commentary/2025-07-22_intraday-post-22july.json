@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:00:59.103Z",
+  "inputHash": "ae035f445fd12cb081cdc69f0f26b8c604fe531b",
+  "payload": {
+    "responseId": "resp_0d801409c655a3360069b7645062d0819e9c37540dbd2eb5fe",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price will range around the centroid 6289.95 for today with capped upside and managed downside (a bit tighter than usual).",
+          "condition": "",
+          "expected_result": "Intraday price remains within a narrow range centered near 6289.95 for the trading day, showing limited net directional movement."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "In the powerhour there will be a pivot/‘line in the sand’ at 6293 that governs subsequent intraday flow.",
+          "condition": "powerhour",
+          "expected_result": "During the final trading hour, price shows clear responsiveness to 6293, with reversals or consolidation occurring near that level rather than trending away."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If spot is above 6293, the centroid (6289.95) can pull price toward itself.",
+          "condition": "spot above 6293",
+          "expected_result": "When price is above 6293, it subsequently drifts down toward ~6289.95 within the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If spot is above 6293, the 6310/00 zone can magnetize the spot.",
+          "condition": "spot above 6293",
+          "expected_result": "When price is above 6293, it moves up toward the 6310/6300 zone during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot at 6280.09 can be broken only if realized volatility decreases around it and bid is on the left wing of the smirk.",
+          "condition": "decreasing realized vol around 6280.09 AND bid on left wing of smirk",
+          "expected_result": "Price breaks below 6280.09 during the session only after observed drop in realized volatility and option/bid structure showing left-wing bid pressure."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the downside pivot is broken, 6252 is the support level and 6260 can magnetize price after 1PM.",
+          "condition": "6280.09 broken",
+          "expected_result": "After a break below 6280.09, price moves toward and tests 6252, with a tendency to gravitate to ~6260 after 13:00 local time."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot is 6301.83; above this line the 6310 gamma will gravitationally attract spot, pronounced after 2:50PM.",
+          "condition": "price above 6301.83 (after 14:50)",
+          "expected_result": "Once price is >6301.83 and after 14:50, price moves toward and clusters near 6310, showing reduced tendency to escape that level."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The upside pivot (6301.83) could be broken only if volatility increases and there is bid on the right wing of the smirk, enabling a move up to a maximum near 6346 (unlikely).",
+          "condition": "volatility increases AND bid on right wing of smirk",
+          "expected_result": "With rising volatility and right-wing option bid, price breaks convincingly above 6301.83 and extends toward ~6346, including a break above ~6323 to escape 6310 attraction."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market expects artificial liquidity between the centroid and 6310 gamma, with some downside imbalance during the day but nothing serious.",
+          "condition": "",
+          "expected_result": "Intraday order flow shows persistent liquidity/support between ~6289.95 and 6310, while downside pressure appears limited and does not produce sustained large declines."
+        }
+      ]
+    }
+  }
+}

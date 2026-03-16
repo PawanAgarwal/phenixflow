@@ -13,6 +13,7 @@ const COMMUNITY_PAGE_LIMIT = 25;
 const ALMA_USER_ID = 204864402;
 const ALMA_HANDLE = 'alma271828';
 const SCRIPT_VERSION = 4;
+const DEFAULT_INCREMENTAL_OVERLAP_HOURS = Math.max(0, Number(process.env.ALMA_EXPORT_INCREMENTAL_OVERLAP_HOURS || 120) || 120);
 const APPROVED_SKIPS_FILENAME = 'approved-skips.json';
 const DEFAULT_APPROVED_SKIPS = [
   {
@@ -67,6 +68,11 @@ function toBool(value) {
   if (value === undefined || value === null) return false;
   const normalized = String(value).trim().toLowerCase();
   return normalized === '1' || normalized === 'true' || normalized === 'yes';
+}
+
+function toNumber(value, fallback = 0) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric : fallback;
 }
 
 function nowIso() {
@@ -160,6 +166,37 @@ function sortDescByIso(items, key) {
     const bMs = Date.parse(b?.[key] || '') || 0;
     return bMs - aMs;
   });
+}
+
+function compareIsoDesc(left = '', right = '') {
+  const leftMs = Date.parse(left || '') || 0;
+  const rightMs = Date.parse(right || '') || 0;
+  return rightMs - leftMs;
+}
+
+function shiftIsoByHours(isoValue, hoursDelta = 0) {
+  const baseMs = Date.parse(isoValue || '');
+  if (!Number.isFinite(baseMs)) return null;
+  return new Date(baseMs + (Number(hoursDelta) || 0) * 60 * 60 * 1000).toISOString();
+}
+
+function buildIncrementalCutoff(isoValue, overlapHours = DEFAULT_INCREMENTAL_OVERLAP_HOURS) {
+  if (!isoValue) return null;
+  return shiftIsoByHours(isoValue, -Math.max(0, Number(overlapHours) || 0));
+}
+
+function isIsoAfter(left = '', right = '') {
+  const leftMs = Date.parse(left || '');
+  const rightMs = Date.parse(right || '');
+  if (!Number.isFinite(leftMs) || !Number.isFinite(rightMs)) return false;
+  return leftMs > rightMs;
+}
+
+function isIsoAtOrBefore(left = '', right = '') {
+  const leftMs = Date.parse(left || '');
+  const rightMs = Date.parse(right || '');
+  if (!Number.isFinite(leftMs) || !Number.isFinite(rightMs)) return false;
+  return leftMs <= rightMs;
 }
 
 function safeFilename(value, fallback = 'file') {
@@ -834,7 +871,8 @@ async function ensurePublicationAccess(publicationPage) {
   return sessionState;
 }
 
-async function fetchArchivePagesForScope(publicationPage, scope) {
+async function fetchArchivePagesForScope(publicationPage, scope, options = {}) {
+  const incrementalCutoffIso = options.incrementalCutoffIso || null;
   const pages = [];
   const posts = [];
   let offset = 0;
@@ -864,18 +902,26 @@ async function fetchArchivePagesForScope(publicationPage, scope) {
       offset,
       limit: ARCHIVE_PAGE_LIMIT,
       count: items.length,
+      incrementalCutoffIso,
       archiveUrl,
       items,
     });
-    posts.push(...items);
+    const scopedItems = incrementalCutoffIso
+      ? items.filter((item) => isIsoAfter(item?.post_date || '', incrementalCutoffIso))
+      : items;
+    posts.push(...scopedItems);
     console.log(`[alma-export] archive ${scope.label} offset=${offset} count=${items.length}`);
+    if (incrementalCutoffIso && items.some((item) => isIsoAtOrBefore(item?.post_date || '', incrementalCutoffIso))) {
+      console.log(`[alma-export] archive ${scope.label} reached incremental cutoff ${incrementalCutoffIso}`);
+      break;
+    }
     if (items.length < ARCHIVE_PAGE_LIMIT) break;
     offset += ARCHIVE_PAGE_LIMIT;
   }
   return { pages, posts };
 }
 
-async function fetchArchivePosts(publicationPage) {
+async function fetchArchivePosts(publicationPage, options = {}) {
   const sections = await fetchPublicationSections(publicationPage);
   const scopes = [
     { label: 'root', sectionId: null, sectionSlug: null, sectionName: 'Root archive' },
@@ -890,7 +936,7 @@ async function fetchArchivePosts(publicationPage) {
   const allPages = [];
   const allPosts = [];
   for (const scope of scopes) {
-    const result = await fetchArchivePagesForScope(publicationPage, scope);
+    const result = await fetchArchivePagesForScope(publicationPage, scope, options);
     allPages.push(...result.pages);
     allPosts.push(...result.posts);
   }
@@ -901,7 +947,8 @@ async function fetchArchivePosts(publicationPage) {
   };
 }
 
-async function fetchCommunityFeed(chatPage) {
+async function fetchCommunityFeed(chatPage, options = {}) {
+  const incrementalCutoffIso = options.incrementalCutoffIso || null;
   const pages = [];
   const threads = [];
   let before = null;
@@ -924,14 +971,22 @@ async function fetchCommunityFeed(chatPage) {
     pages.push({
       before,
       count: pageThreads.length,
+      incrementalCutoffIso,
       more: payload.json.more || false,
       moreAfter: payload.json.moreAfter || false,
       moreBefore: payload.json.moreBefore || false,
       threads: pageThreads,
     });
-    threads.push(...pageThreads);
+    const scopedThreads = incrementalCutoffIso
+      ? pageThreads.filter((item) => isIsoAfter(item?.communityPost?.created_at || '', incrementalCutoffIso))
+      : pageThreads;
+    threads.push(...scopedThreads);
     console.log(`[alma-export] chat feed page before=${before || 'latest'} count=${pageThreads.length}`);
     const lastCreatedAt = pageThreads[pageThreads.length - 1]?.communityPost?.created_at || null;
+    if (incrementalCutoffIso && pageThreads.some((item) => isIsoAtOrBefore(item?.communityPost?.created_at || '', incrementalCutoffIso))) {
+      console.log(`[alma-export] chat feed reached incremental cutoff ${incrementalCutoffIso}`);
+      break;
+    }
     if (!payload.json.moreBefore || !lastCreatedAt || seenCursors.has(lastCreatedAt)) break;
     seenCursors.add(lastCreatedAt);
     before = lastCreatedAt;
@@ -1876,13 +1931,15 @@ function writeArchivePageSnapshots(baseDir, pages, label = '') {
 async function exportPosts({
   outputDir,
   refresh,
+  incremental = false,
+  incrementalCutoffIso = null,
   existingManifest,
   publicationPage,
   approvedSkips,
 }) {
   const postsBaseDir = path.join(outputDir, 'posts');
   ensureDir(postsBaseDir);
-  const archive = await fetchArchivePosts(publicationPage);
+  const archive = await fetchArchivePosts(publicationPage, { incrementalCutoffIso });
   writeJson(path.join(postsBaseDir, 'sections.json'), archive.sections);
   const pagesByScope = new Map();
   for (const pageItem of archive.pages) {
@@ -1924,7 +1981,13 @@ async function exportPosts({
         || Number(existingFolderMetadata.fetchHttpStatus) !== 200
       ),
     );
+    const shouldRefreshIncrementalWindow = Boolean(
+      incremental
+      && incrementalCutoffIso
+      && isIsoAfter(post.post_date, incrementalCutoffIso),
+    );
     const shouldFetch = refresh
+      || shouldRefreshIncrementalWindow
       || !fs.existsSync(metadataPath)
       || !fs.existsSync(htmlPath)
       || !fs.existsSync(textPath)
@@ -2016,11 +2079,21 @@ async function exportPosts({
     });
   }
 
+  const mergedEntries = sortDescByIso(
+    dedupeBy(
+      postEntries.concat(
+        (existingManifest?.posts || []).filter((item) => !postEntries.some((entry) => String(entry.id) === String(item.id))),
+      ),
+      (item) => String(item.id),
+    ),
+    'postDate',
+  );
+
   return {
-    entries: sortDescByIso(postEntries, 'postDate'),
+    entries: mergedEntries,
     fetchedCount,
     skippedCount,
-    totalCount: postEntries.length,
+    totalCount: mergedEntries.length,
   };
 }
 
@@ -2035,6 +2108,8 @@ function filterAlmaInboxThreads(inboxSnapshot) {
 async function exportChats({
   outputDir,
   refresh,
+  incremental = false,
+  incrementalCutoffIso = null,
   existingManifest,
   chatPage,
   inboxPage,
@@ -2046,7 +2121,7 @@ async function exportChats({
   const inboxSnapshot = await fetchInboxSnapshot(inboxPage);
   writeJson(path.join(chatsBaseDir, 'inbox-snapshot.json'), inboxSnapshot);
 
-  const feed = await fetchCommunityFeed(chatPage);
+  const feed = await fetchCommunityFeed(chatPage, { incrementalCutoffIso });
   writeArchivePageSnapshots(chatsBaseDir, feed.pages, 'feed');
 
   const existingById = new Map((existingManifest?.chats || []).map((item) => [String(item.id), item]));
@@ -2066,7 +2141,12 @@ async function exportChats({
     const chatUrl = `${SUBSTACK_BASE_URL}/chat/${PUBLICATION_ID}/post/${thread.id}`;
     const existingItem = existingById.get(String(thread.id));
     const existingFolderMetadata = readJsonIfExists(metadataPath, null);
-    const shouldFetch = refresh || !fs.existsSync(metadataPath) || !fs.existsSync(postJsonPath)
+    const shouldRefreshIncrementalWindow = Boolean(
+      incremental
+      && incrementalCutoffIso
+      && isIsoAfter(thread.created_at, incrementalCutoffIso),
+    );
+    const shouldFetch = refresh || shouldRefreshIncrementalWindow || !fs.existsSync(metadataPath) || !fs.existsSync(postJsonPath)
       || !fs.existsSync(repliesJsonPath) || !fs.existsSync(htmlPath) || !fs.existsSync(textPath);
     const approvedReplySkipExists = Boolean(
       existingFolderMetadata?.replyFetchSkipped && existingFolderMetadata?.replySkipReason,
@@ -2268,13 +2348,23 @@ async function exportChats({
     });
   }
 
+  const mergedEntries = sortDescByIso(
+    dedupeBy(
+      chatEntries.concat(
+        (existingManifest?.chats || []).filter((item) => !chatEntries.some((entry) => String(entry.id) === String(item.id))),
+      ),
+      (item) => String(item.id),
+    ),
+    'createdAt',
+  );
+
   return {
-    entries: sortDescByIso(chatEntries, 'createdAt'),
+    entries: mergedEntries,
     inboxSnapshot,
     inboxThreads: filterAlmaInboxThreads(inboxSnapshot),
     fetchedCount,
     skippedCount,
-    totalCount: chatEntries.length,
+    totalCount: mergedEntries.length,
   };
 }
 
@@ -2283,6 +2373,9 @@ function buildManifest({
   cdpHttpUrl,
   postExport,
   chatExport,
+  runMode = 'full-scan',
+  incrementalOverlapHours = 0,
+  checkpoints = {},
 }) {
   return {
     scriptVersion: SCRIPT_VERSION,
@@ -2294,6 +2387,9 @@ function buildManifest({
       substackChatBaseUrl: `${SUBSTACK_BASE_URL}/chat/${PUBLICATION_ID}`,
     },
     sync: {
+      mode: runMode,
+      checkpoints,
+      incrementalOverlapHours,
       latestPostDate: postExport.entries[0]?.postDate || null,
       oldestPostDate: postExport.entries[postExport.entries.length - 1]?.postDate || null,
       latestChatDate: chatExport.entries[0]?.createdAt || null,
@@ -2317,7 +2413,7 @@ function buildManifest({
 async function main() {
   const args = parseArgs(process.argv);
   if (toBool(args.help)) {
-    console.log('Usage: node artifacts/alma-research/tools/export-alma-substack-archive.js [--out artifacts/alma-research] [--refresh 1] [--wipe 1]');
+    console.log('Usage: node artifacts/alma-research/tools/export-alma-substack-archive.js [--out artifacts/alma-research] [--refresh 1] [--wipe 1] [--incremental 1] [--overlap-hours 120]');
     return;
   }
 
@@ -2336,6 +2432,18 @@ async function main() {
   }
 
   const existingManifest = readJsonIfExists(manifestPath, null);
+  const incremental = !refresh && !wipe && (
+    args.incremental === undefined
+      ? Boolean(existingManifest)
+      : toBool(args.incremental)
+  );
+  const incrementalOverlapHours = Math.max(0, toNumber(args['overlap-hours'], DEFAULT_INCREMENTAL_OVERLAP_HOURS));
+  const postIncrementalCutoffIso = incremental
+    ? buildIncrementalCutoff(existingManifest?.sync?.latestPostDate || null, incrementalOverlapHours)
+    : null;
+  const chatIncrementalCutoffIso = incremental
+    ? buildIncrementalCutoff(existingManifest?.sync?.latestChatDate || null, incrementalOverlapHours)
+    : null;
 
   const { publicationPage, chatPage, inboxPage } = await createCdpPages(DEFAULT_CDP_HTTP_URL);
   try {
@@ -2344,6 +2452,8 @@ async function main() {
     const postExport = await exportPosts({
       outputDir,
       refresh,
+      incremental,
+      incrementalCutoffIso: postIncrementalCutoffIso,
       existingManifest,
       publicationPage,
       approvedSkips,
@@ -2351,6 +2461,8 @@ async function main() {
     const chatExport = await exportChats({
       outputDir,
       refresh,
+      incremental,
+      incrementalCutoffIso: chatIncrementalCutoffIso,
       existingManifest,
       chatPage,
       inboxPage,
@@ -2361,6 +2473,14 @@ async function main() {
       cdpHttpUrl: DEFAULT_CDP_HTTP_URL,
       postExport,
       chatExport,
+      runMode: incremental ? 'incremental' : 'full-scan',
+      incrementalOverlapHours,
+      checkpoints: {
+        previousLatestPostDate: existingManifest?.sync?.latestPostDate || null,
+        previousLatestChatDate: existingManifest?.sync?.latestChatDate || null,
+        postIncrementalCutoffIso,
+        chatIncrementalCutoffIso,
+      },
     });
     writeJson(manifestPath, manifest);
 
@@ -2372,6 +2492,9 @@ async function main() {
       chatCount: chatExport.totalCount,
       postsFetchedThisRun: postExport.fetchedCount,
       chatsFetchedThisRun: chatExport.fetchedCount,
+      mode: manifest.sync.mode,
+      postIncrementalCutoffIso,
+      chatIncrementalCutoffIso,
       latestPostDate: manifest.sync.latestPostDate,
       latestChatDate: manifest.sync.latestChatDate,
     }, null, 2));

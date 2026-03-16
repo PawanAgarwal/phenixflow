@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:15:31.587Z",
+  "inputHash": "ad23a71fe74f0d562f501b323343355e477dccdb",
+  "payload": {
+    "responseId": "resp_0c5871c3831147280069b767c0e7848197bc956a4e9339569e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "ES will experience continued pressure after failing to hold the pivot at 6960/65, making downside moves more likely.",
+          "condition": "failure to hold 6960/65 pivot",
+          "expected_result": "Price declines toward the key downside pivot around 6860/65"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES trades through 6900/05 it will confirm prevailing market sentiment direction.",
+          "condition": "trade through 6900/05",
+          "expected_result": "Subsequent price action will align with the breakout direction (sustained move higher if through to the upside, or sustained move lower if through to the downside)"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:08.752Z",
+  "inputHash": "b4fdc81e6a92dcf2f06950a3acd8e2122fec3e59",
+  "payload": {
+    "responseId": "resp_02cd27c9ca9c1be40069b763a8cee481978e4cf51b4f731d1c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky / pinning magnet around the centroid ~5974 (day’s center). Upside is capped near 5986 (upside pivot) due to large long-gamma bar; break requires high vol and would likely trigger a squeeze toward ~6022. Strong downside support/trough cluster near 5854–5887 where long gamma builds; 5887 marks the start of strong long-gamma support and 5854 is a deeper sticky trough.",
+          "condition": "price breaks and holds above 5986 with rising realized vol",
+          "expected_result": "If 5986 is broken on increasing vol, expect price to travel to and test ~6022 within the same squeeze move. If 5986 fails, stay capped under 5986 and expect mean reversion back toward centroid ~5974 or lower."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 5957; breach of 5957 removes near-term centroid support and opens the same downside corridor toward the long-gamma region around 5887–5854.",
+          "condition": "price breaks and closes below 5957 on session time-frame (intraday)",
+          "expected_result": "On confirmed break below 5957, expect accelerated downside toward 5887, with 5854 as a likely sticky support zone where dealers’ long-gamma should absorb selling and produce reversion."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Rejection/resistance band between ~5999–6010 (68–Risk level area) indicated by elevated gamma and option density — likely to repel rallies intraday without strong vol expansion.",
+          "condition": "intraday approach into 5999–6010 without vol expansion",
+          "expected_result": "Expect intraday rejection or consolidation when price reaches 5999–6010; use failure there to re-enter short or trim long exposure."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:39.661Z",
+  "inputHash": "10807c1c67556402ffe7ebd7eb9cdf930e12f97e",
+  "payload": {
+    "responseId": "resp_04c4526a975a21070069b7670f007c819f96e872ac87f2fdaf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/primary sticky zone around 6910.75–6926.48 will act as a magnet in the PM session — price likely pins back to this range after intraday excursions.",
+          "condition": "none",
+          "expected_result": "If SPX moves away from 6910.75–6926.48 during the session, expect a reversion back into that range within the same trading day (price trades into 6910.75–6926.48 at least once)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primal pinning target at 6900.82 (strong sticky level) — likely short-term support/pin if price drops toward it.",
+          "condition": "none",
+          "expected_result": "On a downside move, SPX should find support or pin near 6900.82 (price touches/holds within ±5 points for a sustained period or rebounds within one hour)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6868.42 with target 6852.68 — expect a reversion back toward ~6880–6900 rather than a clean breakdown; local support cluster at 6840/6830–6820 if 6852.68 fails.",
+          "condition": "break below 6852.68",
+          "expected_result": "If SPX breaks and closes below 6852.68, expect price to find support in the 6830–6840 area and either stall or revert upward from that zone within the next few sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6937.57 with target 6941.10 — likely a rejection/reversion back toward the centroid (6910.75–6926.48) after touching the upside target.",
+          "condition": "price reaches 6937.57–6941.10",
+          "expected_result": "If SPX trades into 6937.57–6941.10, expect a pullback toward the centroid range (6910.75–6926.48) within the same trading day (price moves back at least ~10–20 points lower)."
+        }
+      ]
+    }
+  }
+}

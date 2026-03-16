@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:28:17.009Z",
+  "inputHash": "8d6936b15a915182febd015695593e7c6950bc31",
+  "payload": {
+    "responseId": "resp_0cc189757cad4e210069b786db2f088192afae046e60ffc33e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-28T20:47:56.382Z",
+          "instrument": "",
+          "prediction_text": "Upside volatility will remain sticky and rangebound under negative gamma, with volatility-of-volatility stabilizing lower.",
+          "condition": "",
+          "expected_result": "Implied and realized upside volatility stay elevated relative to downside but show limited directional expansion; vol-of-volatility measures decline or flatten over the next sessions."
+        },
+        {
+          "made_at": "2025-03-28T21:21:03.316Z",
+          "instrument": "",
+          "prediction_text": "If only dealer flows dominate, upward spot moves will be slowed and upward ranges compressed as dealers sell into the rally due to long-gamma exposure.",
+          "condition": "dealer flows are the primary market driver",
+          "expected_result": "During spot rallies, price momentum weakens and intraday/upside range size contracts versus prior sessions, coinciding with net selling by dealers."
+        },
+        {
+          "made_at": "2025-03-28T21:22:51.914Z",
+          "instrument": "",
+          "prediction_text": "If spot moves down while dealers are short gamma, downside moves will face less resistance and ranges can expand, producing spot down with rising volatility.",
+          "condition": "dealers are short gamma",
+          "expected_result": "Downward price moves accelerate with larger intraday ranges and an increase in implied and realized volatility during declines."
+        },
+        {
+          "made_at": "2025-03-28T21:31:21.210Z",
+          "instrument": "",
+          "prediction_text": "If buying flow comes from positive vanna hedging while momentum declines, intraday implied volatility in that tenor will fall.",
+          "condition": "buying flow from positive vanna hedging and intraday momentum declines",
+          "expected_result": "Implied volatility for the affected tenor decreases intraday alongside falling momentum."
+        }
+      ]
+    }
+  }
+}

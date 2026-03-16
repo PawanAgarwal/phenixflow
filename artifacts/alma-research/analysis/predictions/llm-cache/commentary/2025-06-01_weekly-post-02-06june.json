@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T01:57:54.660Z",
+  "inputHash": "038c951ef4e4aede9cb16b099e30d5b7c2cb1853",
+  "payload": {
+    "responseId": "resp_09d4bc8a7bf8a5bb0069b76391d42c819d8b00fc285d72d081",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will be range-bound consolidation with a flat-to-positive drift, producing approximately 0.5–1% weekly return until a malign macro event.",
+          "condition": "until malign macro event hits the tape",
+          "expected_result": "SPX closes the week within a ~0.5–1% gain from the prior week's close and trades within the described range without a decisive trend move"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "June OpEx will be supportive and volume will be low.",
+          "condition": "",
+          "expected_result": "During June options expiry week, aggregate market volume will be below its recent 4-week average and price action will lack strong directional conviction"
+        },
+        {
+          "instrument": "10-year Treasury yield",
+          "prediction_text": "10-year Treasury yields have stabilized around 4.45% but funding-stress signals point to ongoing fragility.",
+          "condition": "",
+          "expected_result": "10-year Treasury yield remains near 4.45% (±0.1%) over the short term while swap spreads or term-structure metrics remain elevated relative to recent baselines"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX key line at 5884.03—a break below 5797.38 would prove bearish momentum.",
+          "condition": "break below 5797.38",
+          "expected_result": "After SPX trades below 5797.38, further downside follows over the next sessions (e.g., closing lower by at least 1–2%) confirming bearish momentum"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "ES key line at 5898.67—a break below 5811.60 would prove bearish momentum.",
+          "condition": "break below 5811.60",
+          "expected_result": "After ES trades below 5811.60, further downside follows over the next sessions (e.g., closing lower by at least 1–2%) confirming bearish momentum"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX key line 20.20–22.92 indicates levels to watch for sentiment shifts.",
+          "condition": "",
+          "expected_result": "VIX trading within 20.20–22.92 will correspond with neutral-to-mildly elevated risk sentiment; moves above 22.92 will coincide with rising risk-off flows"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES takes 5935, we can see 5977 or even 6000 (market looks capped at 6000).",
+          "condition": "ES takes 5935",
+          "expected_result": "After ES trades at or above 5935, price advances to at least 5977 within the near term, with potential extension to 6000 but meeting strong resistance near 6000"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX range implied by volatility projects 5981.84–5841.53 for the period.",
+          "condition": "",
+          "expected_result": "SPX trading stays within the 5981.84–5841.53 bounds during the referenced period"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "ES range implied by volatility projects 5984.92–5842.57 for the period.",
+          "condition": "",
+          "expected_result": "ES trading stays within the 5984.92–5842.57 bounds during the referenced period"
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "NDX range implied by volatility projects 1660.35–21021.62.",
+          "condition": "",
+          "expected_result": "NDX (as reported) trades within 1660.35–21021.62 during the referenced period"
+        },
+        {
+          "instrument": "NQ=F",
+          "prediction_text": "NQ=F range implied by volatility projects 1686.71–21051.28.",
+          "condition": "",
+          "expected_result": "NQ=F trades within 1686.71–21051.28 during the referenced period"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX range implied by volatility projects 19.94–17.19.",
+          "condition": "",
+          "expected_result": "VIX remains within 17.19–19.94 during the referenced period"
+        }
+      ]
+    }
+  }
+}

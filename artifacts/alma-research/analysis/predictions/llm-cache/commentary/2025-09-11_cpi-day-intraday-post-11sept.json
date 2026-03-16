@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:03:11.555Z",
+  "inputHash": "bd7e5f88179ad6081fea2d3737f640bb156743b8",
+  "payload": {
+    "responseId": "resp_0f89a36bc55455560069b764da3dd0819f9f282c754f3327f8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If CPI print is within the expected range, the market will be muted and the 'good news = bad news' reaction will be mitigated.",
+          "condition": "CPI print within the expected range",
+          "expected_result": "SPX will not exhibit a large negative move; price action remains near pre-print levels with limited downside volatility"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Only a very-very hot CPI print would trigger a left-tail move toward 6469.96 (or even 6445).",
+          "condition": "CPI print very-very hot",
+          "expected_result": "SPX will drop toward 6469.96 and could reach as low as 6445"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The market is betting on an upward spike at the print followed by a reversion back to the upside pivot/centroid area.",
+          "condition": "CPI print (general)",
+          "expected_result": "SPX will spike up intraday after the print, then revert back downward to the identified upside pivot/centroid region"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Even a hotter-than-expected print is unlikely to trigger significant downside according to the implied distribution.",
+          "condition": "CPI print hotter-than-expected",
+          "expected_result": "SPX will not experience significant sustained downside; any initial weakness will be limited and short-lived"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:57:01.142Z",
+  "inputHash": "850da9c6d4df4eaa035f4e199b32eb27eababcaa",
+  "payload": {
+    "responseId": "resp_02470e55de30fcdf0069b76366be908192af5aef9ac5867712",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning / sticky zone centered around the centroid ~5874 (cluster 5855–5907). Heatmap shows concentrated gamma trough/peak and reduced vol; spot is likely to be held or revert toward this zone intraday.",
+          "condition": "none",
+          "expected_result": "SPX will gravitate back to and trade within 5855–5907 during the trading day, with multiple re-tests rather than sustained breakouts beyond that range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upward resistance / rejection band near 5906.85–5955 (5907 acts as a gamma cap). Heatmap shows concentrated gamma and rising peak above centroid indicating difficulty sustaining moves above ~5907 without higher vol.",
+          "condition": "spot rallies toward 5907–5955",
+          "expected_result": "If SPX approaches 5907–5955, expect intraday rejection or slow grind—moves above 5955 will require a measurable rise in realized volatility to stick; otherwise price should fail and reverse."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside support corridor around 5835 (zero vanna coding) and next support at ~5750. Heatmap + notes show positive convexity at 5835 making it relatively easier to hold; a break below 5835 exposes 5750 as the next sticky support.",
+          "condition": "SPX breaks decisively below 5835",
+          "expected_result": "Following a decisive break under 5835, SPX is likely to travel toward and find support around 5750 within the session."
+        }
+      ]
+    }
+  }
+}

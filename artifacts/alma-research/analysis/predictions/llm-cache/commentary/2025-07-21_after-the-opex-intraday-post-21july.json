@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:00:52.669Z",
+  "inputHash": "6a5e28c678ffc52ceef30a07826034c39eed6530",
+  "payload": {
+    "responseId": "resp_05acba12e3f7a68b0069b76448be08819ea4d320947368f027",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the market produces a daily close below 6321.75 (ES=F) / 6281.89 (SPX), there will be no snowball effect but it will reinforce a slow momentum shift toward liquidity areas.",
+          "condition": "daily close below 6321.75 (ES=F) / 6281.89 (SPX)",
+          "expected_result": "Momentum shifts lower with price gravitating toward nearby liquidity levels rather than triggering a cascading sell-off; subsequent sessions show lower highs or increased trading volume near lower liquidity bands"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The market is expected to range in the weekly zone I for the next two weeks, with a heavy but capped right tail (spot up/vol up spike) as FOMC approaches.",
+          "condition": "during the next 2 weeks as FOMC approaches",
+          "expected_result": "Price trades within the identified weekly zone for two weeks with intermittent upside spikes accompanied by rising implied volatility that quickly reverse or cap out near the zone's upper boundary"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday centroid at 6310.63 will act as a very strong pivot after 12:40 AM.",
+          "condition": "after 12:40 AM",
+          "expected_result": "Price repeatedly reverts to or rotates around 6310.63, with it acting as support when above and resistance when below during intraday trading"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Above the centroid, the upside pivot is 6321.19 with a max upside target of 6338–6340.",
+          "condition": "price trades above 6310.63",
+          "expected_result": "Price moves up to test 6321.19 and can extend to reach 6338–6340 during the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Below 6322 in the afternoon, the spot is expected to be pinned to 6320 with 6325 acting as resistance during the power hour.",
+          "condition": "afternoon and price below 6322",
+          "expected_result": "Price remains near 6320 for the afternoon, failing to sustain moves above 6325 during the power hour"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Below the centroid, the key pivot is 6298.43 and high volatility is needed to break it.",
+          "condition": "price below 6310.63",
+          "expected_result": "6298.43 holds as a magnetic pivot unless a high-volatility move occurs; without such vol, price will bounce or gravitate back toward 6298.43 rather than decisively breach it"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is mild support at 6280–6285, especially strong during the last 1.5 hours, with a max downside today of 6231.",
+          "condition": "during the last 1.5 hours and intraday session",
+          "expected_result": "Price finds support and bounces within 6280–6285 late in the session; if momentum continues downward, the intraday low can extend to 6231 but not significantly below during the day"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A vol pivot at 6268–6265 will act as strong support/resistance after 2:30 PM, where downside volatility is expected to catch up.",
+          "condition": "after 2:30 PM",
+          "expected_result": "Price reaction intensifies around 6265–6268 with increased realized and implied volatility; moves through this zone result in larger intraday swings"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If price goes down, it will have a harder time climbing back after 12:20 AM, with 6255 as significant resistance during the last 1.5 hours and capable of pushing price back to 6235 if 6247 cannot hold during the power hour.",
+          "condition": "after 12:20 AM and during the last 1.5 hours / power hour",
+          "expected_result": "Following a downward move, rallies fail to sustain above 6255 late in the session; a failure of 6247 during the power hour leads to a further drop toward ~6235"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is betting on a 6300 pin with occasional upside spikes presented as spot up/vol up events.",
+          "condition": "intraday trading as expressed by market positioning",
+          "expected_result": "Price frequently oscillates and closes near 6300 while producing sporadic upward spikes accompanied by increases in volatility"
+        }
+      ]
+    }
+  }
+}

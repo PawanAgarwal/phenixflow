@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:02:05.942Z",
+  "inputHash": "73c54ca5f1a13e2da08ce0de1353429c12bd1385",
+  "payload": {
+    "responseId": "resp_0eac6a59f8f5fc160069b764983e608191bf9ed41c0767386b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market will remain unconcerned about a near-term downturn from stagflation as long as earnings resilience supports highs.",
+          "condition": "earnings resilience supports highs",
+          "expected_result": "Major equity indices will not decline more than 3% in the near term while earnings remain strong"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Thursday and Friday profit-taking may show up on the tape.",
+          "condition": "Thursday or Friday",
+          "expected_result": "Equity prices will experience measurable intraday sell-offs on Thursday or Friday (e.g., daily decline >0.5%)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Slowing growth will cause a timely repricing that hurts valuation rather than an instant market shift.",
+          "condition": "sustained slowing growth",
+          "expected_result": "Valuation multiples (e.g., P/E) will decline over subsequent weeks, reducing index-level valuations by a noticeable margin (e.g., 5-10%)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Tail hedge demand will continue to climb as tariff risk materializes.",
+          "condition": "tariff risk materializes",
+          "expected_result": "Demand for tail-hedge instruments (e.g., deep OTM put option open interest or put-call skew) will increase significantly"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The main market regime will be low-volatility oscillation that burns options premium for both bulls and bears.",
+          "condition": "",
+          "expected_result": "Realized volatility will remain low and rangebound, producing theta decay dominance and resulting in net option premium erosion for short-dated options (0DTE/1DTE) over the near term"
+        }
+      ]
+    }
+  }
+}

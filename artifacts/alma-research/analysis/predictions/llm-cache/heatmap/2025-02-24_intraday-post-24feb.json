@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:52:19.220Z",
+  "inputHash": "6447a827d50d671af548e6d3b77ccf050c7501b0",
+  "payload": {
+    "responseId": "resp_0e6fe0dbe62563dc0069b7624e3e248195925f1ecf8b135cf6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/attractive zone around 5955–5960 (customer short iron‑condor region) creating a magnet; heatmap shows concentrated gamma peak there that will pin or slow price action.",
+          "condition": "price approaches 5955–5960",
+          "expected_result": "Price likely stalls or is pinned near 5955–5960; expect reversion or limited progress through that band within the trading day unless large volatility drop allows breakout."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance / zero‑vanna line near 6053 acting as a brake; the heatmap and author note indicate this level must be cleared with calming vol to push higher.",
+          "condition": "volatility calms and price tests 6053",
+          "expected_result": "If vol falls and price breaks and holds above 6053, expect further upside travel; if not, price should reverse and head back toward the 5970 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Reversion / rejection level near ~5974 (negative speed environment favors move back down to this level if upside fails).",
+          "condition": "attempted upside fails to breach 6053",
+          "expected_result": "Price will likely revert toward ~5974 and find rejection there, increasing the chance of continued pressure back to the 5955–5960 sticky zone."
+        }
+      ]
+    }
+  }
+}

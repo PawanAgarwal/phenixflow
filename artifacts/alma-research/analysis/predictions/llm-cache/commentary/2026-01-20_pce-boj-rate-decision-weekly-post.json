@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:13:27.308Z",
+  "inputHash": "bfdb4b11a40575d71bb5bb226d52523ad89f3acd",
+  "payload": {
+    "responseId": "resp_06a19346b15595a20069b767416bb0819d83b589869202e87b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES=F",
+          "prediction_text": "The zone on ES=F is a major sentiment-shifting pivot with a primal downside target of the 90-day SMA (and November lows for a left-tail).",
+          "condition": "",
+          "expected_result": "ES=F will decline to the 90-day simple moving average (or November lows) within the coming correction period."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Some volatility will come now, but not a bearish turn yet — market cannot get enough bid to go above 7000–7100 area (above 7k blocked).",
+          "condition": "",
+          "expected_result": "SPX will experience increased intraday and multi-day volatility without establishing a sustained downtrend, and will fail to sustain a breakout above the ~7000 level."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Short-vol and short-vvol trades are overcrowded, volatility is pinned and complacency must be washed out.",
+          "condition": "",
+          "expected_result": "Implied and realized volatility will rise from current pinned/low levels, producing losses for crowded short-volatility positions."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Rotation remains the base case, while small caps are pricing in a vol event into FOMC.",
+          "condition": "ahead of the FOMC meeting",
+          "expected_result": "Small-cap indices will underperform large-cap/rotation-favored sectors and show greater implied volatility leading into the FOMC meeting."
+        },
+        {
+          "instrument": "JPY",
+          "prediction_text": "If BoJ communication pushes investors to price earlier tightening, US momentum stock selling can be expected due to Japanese investors reducing unhedged dollar/US equity exposure.",
+          "condition": "BoJ communication signals earlier tightening",
+          "expected_result": "US momentum stocks will decline as Japanese investors reduce unhedged dollar and US equity positions following BoJ signals of earlier tightening."
+        }
+      ]
+    }
+  }
+}

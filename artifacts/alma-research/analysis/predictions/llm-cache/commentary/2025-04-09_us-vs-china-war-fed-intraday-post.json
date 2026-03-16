@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T01:55:02.625Z",
+  "inputHash": "d8c11837c710b8e4595bf71b7bce1168e023ad34",
+  "payload": {
+    "responseId": "resp_07728bcaa6b1e2280069b762ef8880819f85d0f309ddbc40df",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will reach 4300–4000 in the near term.",
+          "condition": "",
+          "expected_result": "SPX index prints a daily close at or below 4300 within the next 30 trading days (and potentially down to 4000)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The aggregated net centroid is at 4859.11 implying downside if long speed dynamics and shorter spot/vol beta are realized.",
+          "condition": "",
+          "expected_result": "If price action reflects long speed dynamics and shorter spot/vol beta, SPX will decline from current levels toward the downside pivot at 4570.95 within the following intraday to multi-day period."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot is 4570.95 implying support/target on declines.",
+          "condition": "",
+          "expected_result": "SPX will trade to or test 4570.95 (intraday low or daily close) during the decline scenario described."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot is 4900.72 acting as resistance for rallies today.",
+          "condition": "",
+          "expected_result": "SPX will fail to sustain above 4900.72 intraday and will either reverse below it or be rejected at that level during the trading session referenced."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum can only stabilize above 5121.58 if spot/vol beta realizes down.",
+          "condition": "spot/vol beta realizes down",
+          "expected_result": "If spot/vol beta moves down, SPX will achieve and sustain trading above 5121.58 for a period of at least one full trading day, indicating stabilization of momentum."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is a zero vanna line at 4924.42 with positive vanna convexity, so low intraday vol is needed to break above this line.",
+          "condition": "intraday volatility remains low",
+          "expected_result": "SPX will break and hold above 4924.42 intraday if realized volatility remains subdued during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Charm flip is at 4992.48 with negative convexity which mechanically doesn’t favor vol decline.",
+          "condition": "",
+          "expected_result": "If SPX approaches 4992.48, options-implied dynamics will favor continued or rising implied volatility rather than a sustained decline in IV around that level."
+        }
+      ]
+    }
+  }
+}

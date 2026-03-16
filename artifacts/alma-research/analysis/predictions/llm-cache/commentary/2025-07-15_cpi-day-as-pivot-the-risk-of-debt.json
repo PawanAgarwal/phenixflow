@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T02:00:25.830Z",
+  "inputHash": "4dacae96e0e64a533c143ce2c74c789136a60462",
+  "payload": {
+    "responseId": "resp_07eb5e4e0abcdcaa0069b7642c88d881a19d1cc076ea2e531a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "A stronger CPI report is more likely and would take September rate cuts off the table.",
+          "condition": "CPI print stronger than consensus",
+          "expected_result": "Market reprices to reduce probability of September Fed cuts (e.g., rates futures show higher terminal rates)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A milder upside core inflation print of +0.23% m/m would leave some room for September cuts.",
+          "condition": "Core CPI = +0.23% m/m",
+          "expected_result": "Market reprices to increase probability of September Fed cuts (e.g., rates futures show lower terminal rates)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Centroid lies at 6308.88 and acts as a crucial pivot for intraday positioning.",
+          "condition": "",
+          "expected_result": "Price gravitates toward and oscillates around 6308.88 during the trading session"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "High gamma at 6350 will be magnetic and can reject spot if volatility decreases sharply.",
+          "condition": "Volatility decreases sharply",
+          "expected_result": "Price is rejected away from 6350 rather than breaking through it"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot at 6326.51 will attract price toward 6350 gamma if upside volatility is high, producing fakeouts into 6390.",
+          "condition": "Upside volatility is high",
+          "expected_result": "Price makes fakeout moves up to ~6390 but fails to sustain without breaking 6390"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Breaking above 6390 is required to trigger a melt-up toward 6450 via a gamma squeeze.",
+          "condition": "6390 is broken to the upside",
+          "expected_result": "Sustained rally to around 6450 (gamma squeeze)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot at 6273.65 is a very strong support that will hold unless CPI is very bad.",
+          "condition": "CPI not very bad",
+          "expected_result": "Price will hold above 6273.65 and not breach that level"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Primal downside target is 6202 as a maximum move below the downside pivot in a normal downside scenario.",
+          "condition": "Downside pressure without extreme CPI shock",
+          "expected_result": "Price can fall toward ~6202 but not significantly below it"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Level 6238 is magnetic between the downside pivot and downside max and can trap spot below the pivot into the afternoon.",
+          "condition": "Into the afternoon trading after CPI",
+          "expected_result": "Price becomes stuck around 6238 and remains below the downside pivot during the afternoon"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A pivot at 6245 after 2:30 PM will enable a retest of 6285 and likely a close at 6260 if price moves above it.",
+          "condition": "Price rises above 6245 after 2:30 PM",
+          "expected_result": "Price retests ~6285 and likely closes near ~6260"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price stays below 6245 after 2:30 PM, the market will be suppressed toward 6225.",
+          "condition": "Price remains below 6245 after 2:30 PM",
+          "expected_result": "Price moves toward ~6225 by close"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A very bad CPI print could take out optimism and push price down to a primal downside target of 6128 where liquidity will support spot.",
+          "condition": "Very bad CPI print",
+          "expected_result": "Price falls to ~6128 and finds liquidity/support there"
+        }
+      ]
+    }
+  }
+}

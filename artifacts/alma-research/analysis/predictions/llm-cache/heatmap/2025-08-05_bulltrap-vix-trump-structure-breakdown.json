@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:01:40.809Z",
+  "inputHash": "07cfb64c40acbeb7f6117372ab27ee1fac0870d7",
+  "payload": {
+    "responseId": "resp_09a762c81a7626410069b7647dec5c819dad038ca73035a499",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong resistance / pinning magnet cluster around 6368–6375 (heatmap red ridge and centroid guidance at 6371.52). Expect rejection or pin near this zone if price approaches from below.",
+          "condition": "SPX trades up into 6368–6375",
+          "expected_result": "Price will stall and likely reverse or pin within 6368–6375 during session; failure to hold above leads to reversion toward 6330–6338 within the day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / sticky zone around 6330–6338 (gamma trough/centroid activity and described intraday pivot at 6337). Market expects reversion between ~6338 and lower support near 6271.",
+          "condition": "Intraday price remains between 6338 and 6271 before 14:00",
+          "expected_result": "Price will tend to revert toward 6338–6330 on bounces, providing high-probability short-term mean reversion opportunities."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower wing / secondary support around 6295–6306 (visible heatmap gamma peak/trough contours and listed risk levels at ~6306 and 6298). Acts as a pin-to level if 6313 breaks.",
+          "condition": "Price drops below 6313",
+          "expected_result": "Price is likely to be pinned or find support near 6295–6306; expect limited downside beyond this band intraday and potential bounce back toward ~6330."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher break target corridor to 6388–6403 if spot gets trapped above ~6335 and volatility/ skew sell-off occurs (not the market's base case but conditional pathway).",
+          "condition": "Spot remains above 6335 in first two hours and realized vol calms (skew sold)",
+          "expected_result": "Slow grind up to 6388–6403 with potential pin near 6403 in power hour; otherwise failure to sustain will cap near 6371–6375."
+        }
+      ]
+    }
+  }
+}

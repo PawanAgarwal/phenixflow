@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:27:51.970Z",
+  "inputHash": "8ffd7b6b5f56b2ce3a86d31c5a54d870f0f63f9c",
+  "payload": {
+    "responseId": "resp_0e4c285a39aa9dc40069b786c1a1948194b1f33a093fa2538a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-26T22:05:20.260Z",
+          "instrument": "SPX",
+          "prediction_text": "SPX overall direction is likely slowly grinding lower into March expiration.",
+          "condition": "",
+          "expected_result": "SPX price will decline gradually through the week(s) leading into March options expiration."
+        },
+        {
+          "made_at": "2025-02-26T22:05:20.260Z",
+          "instrument": "SPX",
+          "prediction_text": "Downward moves will be vol-compressed due to downside longer gamma daily.",
+          "condition": "",
+          "expected_result": "Realized volatility on SPX during downward moves into March expiry will decrease (vol compression) relative to recent realized levels."
+        },
+        {
+          "made_at": "2025-02-28T22:10:01.597Z",
+          "instrument": "SPX",
+          "prediction_text": "We are in negative speed environment with shorter upside gamma and longer downside gamma, producing vol up/delta down and a gamma-squeeze-ish setup (less resistance to upside).",
+          "condition": "",
+          "expected_result": "Short-term SPX dynamics will show rising implied and/or realized volatility concurrent with downward delta pressure, and potential rapid upside moves due to reduced upside gamma resistance."
+        },
+        {
+          "made_at": "2025-02-26T23:08:50.034Z",
+          "instrument": "SPX",
+          "prediction_text": "If the market opens and moves down toward the downside sigma level, momentum will slow, vol will go down, IV will be bid as traders buy puts, and then a mean reversion bounce is likely when a threshold is hit.",
+          "condition": "market moves down toward the downside sigma level after open",
+          "expected_result": "After a decline toward the downside sigma level and attendant IV bid from put buying, SPX will reverse and bounce from that extreme."
+        },
+        {
+          "made_at": "2025-02-27T23:41:13.694Z",
+          "instrument": "SPX",
+          "prediction_text": "Post-OpEx the market will not be able to break above key levels and vol will increase into the PM; expect slow spot decay.",
+          "condition": "",
+          "expected_result": "After options expiration, SPX will fail to break above prior key resistance levels, exhibit gradual downward drift, and implied volatility will rise into the afternoon session."
+        }
+      ]
+    }
+  }
+}

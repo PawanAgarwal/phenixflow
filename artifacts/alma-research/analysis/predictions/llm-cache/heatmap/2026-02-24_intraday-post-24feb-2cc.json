@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:28.253Z",
+  "inputHash": "ca5fb4685706e1e65804277c13482a8c786d0b28",
+  "payload": {
+    "responseId": "resp_0bfe4ff1a63375610069b767b87fe0819cac7e2314acf0636e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid (gamma center) near 6829.8 acts as a strong reversion line — heatmap shows sticky center making it hard to break; expect reversion into this level from moves away.",
+          "condition": "any move >~10 pts away from 6829.8",
+          "expected_result": "Price will gravitate back toward ~6829-6843 within the session; use this zone for mean-reversion entries/targets."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot around 6858.6 with a rejection/target zone near 6903.5; heatmap shows gamma accumulation above 6858 and potential pin at ~6925 if momentum decreases.",
+          "condition": "break and sustain above 6858.6",
+          "expected_result": "Initial upside travel to 6900–6905; if vol falls and momentum weakens, potential pin/rejection around 6910–6925."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at ~6813.9 and a very sticky support/target zone near 6768.2 (margin ~6750); heatmap shows strong supportive gamma trough around 6768.",
+          "condition": "break and sustain below 6813.9",
+          "expected_result": "Price likely to find support and slow/revert in the 6750–6775 area; use 6750 as downside protective boundary."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Short-term intraday pivots: ES pivot 6885 as primary reference with downside confirmation 6855 and upside confirmation 6905 (per accompanying post).",
+          "condition": "price crosses and holds either confirmation level",
+          "expected_result": "If ES holds above 6905 expect continuation higher; if ES holds below 6855 expect further downside toward the noted ES intraday targets."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "cachedAt": "2026-03-16T04:29:18.905Z",
+  "inputHash": "c1679df307af286a68ee0ca4b0aeb94144c4808f",
+  "payload": {
+    "responseId": "resp_099a3012c71bebfb0069b7871187448197bc8a4de672f60906",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-07T18:10:59.069Z",
+          "instrument": "",
+          "prediction_text": "If price is above 6251 in the afternoon, price will gravitate to and oscillate in a 6251-6282 channel with 6273 acting as a magnetic pivot.",
+          "condition": "price above 6251 (afternoon)",
+          "expected_result": "Price will move into and trade within the 6251-6282 range, repeatedly touching or reverting to 6273."
+        },
+        {
+          "made_at": "2025-07-07T18:10:59.069Z",
+          "instrument": "",
+          "prediction_text": "If the upside pivot is broken, the market can reach as high as 6300 with a 6280-6300 channel forming after 14:30 and 6285 acting as a pin.",
+          "condition": "upside pivot broken",
+          "expected_result": "Price will advance toward 6300 and trade between 6280 and 6300, with 6285 producing pinning behavior."
+        },
+        {
+          "made_at": "2025-07-07T18:10:59.069Z",
+          "instrument": "",
+          "prediction_text": "If the market opens below the centroid, price will oscillate between the centroid and the downside pivot with 6215 potentially pinning in the last 1.5 hours.",
+          "condition": "market opens below the centroid",
+          "expected_result": "Price will oscillate between the centroid and the downside pivot, and 6215 will act as a pin in the final 90 minutes."
+        },
+        {
+          "made_at": "2025-07-07T18:15:18.556Z",
+          "instrument": "",
+          "prediction_text": "If move slows down toward 6273, the gamma squeeze bet should be closed for a small win because theta decay will erode returns.",
+          "condition": "momentum slows near 6273",
+          "expected_result": "Closing the position will capture a small profit before theta decay reduces returns."
+        },
+        {
+          "made_at": "2025-07-07T18:47:38.991Z",
+          "instrument": "",
+          "prediction_text": "A volatility spike would create a blowoff top, but overall vomma supply makes any vol spikes likely to be sold and moderated.",
+          "condition": "volatility spike occurs",
+          "expected_result": "Price will experience a rapid spike (blowoff top) that is then sold into, leading to moderated volatility thereafter."
+        },
+        {
+          "made_at": "2025-07-07T18:47:38.991Z",
+          "instrument": "",
+          "prediction_text": "Into July OpEx, positioning will leave increased upside gamma behind, which depending on spot can be stabilizing or suppressive for price.",
+          "condition": "into July OpEx (post-expiry positioning effect)",
+          "expected_result": "Post-OpEx market behavior will shift due to increased upside gamma, resulting in either price stabilization or suppression depending on spot level."
+        },
+        {
+          "made_at": "2025-07-07T18:48:18.325Z",
+          "instrument": "",
+          "prediction_text": "The bear market can be delayed toward year-end or may start in August.",
+          "condition": "",
+          "expected_result": "A broad market downturn will either be postponed until late in the year or begin in August."
+        },
+        {
+          "made_at": "2025-07-07T18:50:37.023Z",
+          "instrument": "",
+          "prediction_text": "For this week, if the market gives the centroid, the preferred action is to buy while remaining cautious of the structure.",
+          "condition": "market gives the centroid",
+          "expected_result": "Enter long positions at the centroid and expect upward movement from that level, monitoring structure for invalidation."
+        }
+      ]
+    }
+  }
+}

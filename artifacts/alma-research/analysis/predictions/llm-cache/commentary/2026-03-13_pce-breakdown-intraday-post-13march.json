@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:47:10.891Z",
+  "inputHash": "02e0b3a742625d7c7903a09d6dfe308adf78477e",
+  "payload": {
+    "responseId": "resp_0722d9380c42b4ad0069b761027e9081a2971bbcd42aa794b5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "ES will use 6705 as the intraday pivot that determines direction.",
+          "condition": "",
+          "expected_result": "Intraday price will respect 6705 as the pivot, with holds above leading to an intraday upside bias and failures below leading to further downside."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "A trade above 6740 will confirm an intraday upward correction for ES.",
+          "condition": "ES trades above 6740",
+          "expected_result": "ES will initiate an intraday upward correction and rally away from the downside zone during the session."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If 6740 is not confirmed, ES will target 6585.",
+          "condition": "ES fails to trade above 6740",
+          "expected_result": "ES will decline to and reach 6585."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The downside move is overextended and, if liquidity remains, the market will stabilize in the downside zone.",
+          "condition": "liquidity is still there",
+          "expected_result": "Intraday price will stop making new lows and instead trade sideways or bounce within the downside zone rather than extend lower."
+        }
+      ]
+    }
+  }
+}

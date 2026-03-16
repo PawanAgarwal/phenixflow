@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:14:45.208Z",
+  "inputHash": "3ac10950b52c2f3dc800a7bb7c715e7c98abf81c",
+  "payload": {
+    "responseId": "resp_0ee250e2b419176d0069b7678dc81c819d84ea2ad2ff87d8a8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky centroid zone around 6967–6978 acting as a consolidation/pinning area; market likely to oscillate and pin near this zone intraday.",
+          "condition": "price is between 6967.15 and 6978.25",
+          "expected_result": "Price will spend majority of intraday trading time within 6967–6978, showing multiple reverts to the zone (>=3 touches) before a clear breakout."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot near 6927.90 with a local target ~6894.22; if downside pivot is taken, expect extension toward 6860–6870 before mean reversion back to the pivot and pinning at ~6928.",
+          "condition": "price breaks and trades below 6927.90",
+          "expected_result": "Price will move toward 6894 and may extend to 6860–6870, then reverse back up to near 6927.90 within the same trading session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot around 6995.49 is a strong rejection level; if broken early (AM) it targets 7009.98 with heavy pin risk at that upside target.",
+          "condition": "price breaks and sustains above 6995.49 (preferably during AM session)",
+          "expected_result": "Price will push toward 7009.98 and may stall/pin near 7005–7010; failure to hold above 6995.49 results in rejection back below the pivot."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma peaks and heatmap intensity show resistance cluster in the 7020–7050 area (visible heavy gamma ridge) likely to act as a higher-term rejection/braking zone.",
+          "condition": "price approaches 7020–7050",
+          "expected_result": "Price will slow and likely reject or stall upon reaching 7020–7050, with limited through-rate and increased probability of reversal."
+        }
+      ]
+    }
+  }
+}

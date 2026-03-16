@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:53.255Z",
+  "inputHash": "32edf08d253d3454fd37905764b650838eb3a9ed",
+  "payload": {
+    "responseId": "resp_0cd2a30b1a837b930069b7671c72f481a0a5d223f706427950",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday gamma magnet / sticky zone centered near 6945-6968 (centroid ~6963.6). Market is likely to remain rangebound around ~6945 with a pull toward the centroid if pushed away.",
+          "condition": "",
+          "expected_result": "Price will gravitate back to the 6945–6968 area within the session; moves outside this band should revert back toward ~6963 within hours absent a volatility shock."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot / short-term support around 6938.9 with a nearer local gamma magnet at ~6945; break of the pivot requires increased volatility and would target ~6886.",
+          "condition": "Significant intraday volatility or sustained selling pressure",
+          "expected_result": "If 6938.86 breaks on elevated volatility, expect price to travel toward ~6885.94 within the same trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / resistance around 6972.5 with rejection zone near ~6987; the 6987 level acts as rejecting resistance likely to push price back toward the pivot.",
+          "condition": "Failed breakout above 6987 with no volatility expansion",
+          "expected_result": "If price tests 6972.49–6987.05 and fails to sustain above 6987, expect a reversion back toward ~6963–6972 (the pivot/centroid area) during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower sticky/gamma accumulation around ~6810–6825 (visible as a concentrated gamma peak) that would act as a magnet if price sold off significantly.",
+          "condition": "Significant intraday sell-off toward lower levels",
+          "expected_result": "On a deeper intraday decline, price is likely to be attracted to and find support/reversion in the 6810–6825 area before further downside continuation."
+        }
+      ]
+    }
+  }
+}

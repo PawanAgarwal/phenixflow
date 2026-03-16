@@ -1,0 +1,19 @@
+{
+  "cachedAt": "2026-03-16T04:30:17.600Z",
+  "inputHash": "5486fca5a3819963965a12373e7f162ae09e57bf",
+  "payload": {
+    "responseId": "resp_08fee21072fa746e0069b7875715d0819181a9d222913711ff",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-01-15T22:56:44.938Z",
+          "instrument": "futures / SPY",
+          "prediction_text": "If futures move away from fair value to the downside, arbitrageurs will buy futures and sell the underlying basket / SPY, rebalancing prices back toward fair value.",
+          "condition": "futures move below fair value",
+          "expected_result": "Futures price rises and SPY/underlying basket falls, narrowing the gap toward fair value."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:57:58.448Z",
+  "inputHash": "122c1c6d5ec3fc890d7a73d6f7efbef2b53dc38a",
+  "payload": {
+    "responseId": "resp_009569365bf033f00069b7639e46208197a857e9173e78e4a1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky gamma zones (pinning) visible around 5800–5810 and 5848–5885 (primal range). These bands act as short-term magnets where market is likely to gravitate and be held/reverted into during the session.",
+          "condition": "price approaches 5848-5885 or 5800-5810",
+          "expected_result": "If SPX moves into either band, expect increased mean-reversion trades and price to stall or revert toward the center of the band within the same trading day (bounce back toward ~5865 from lower band or toward ~5820 from the lower pocket)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid at 5852.87 is a key dynamic/sentiment pivot: a close below it would shift distribution bearish; intraday rejection is likely near this level if sellers dominate.",
+          "condition": "close below 5852.87",
+          "expected_result": "A close below 5852.87 should see follow-through lower toward the 5837.8–5827.8 support zone within subsequent sessions; increased put-delta buying by dealers may provide transient support but overall bias turns more bearish."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside volatility relief threshold around 5893.24—above this level vol is expected to calm and gamma influence reduces, making sustained rallies more likely if crossed.",
+          "condition": "price rises above 5893.24",
+          "expected_result": "If SPX trades and holds above 5893.24, expect lower intraday volatility and a higher probability of extension toward the next gamma peaks near ~5930–5970 rather than immediate reversion to the primal range."
+        }
+      ]
+    }
+  }
+}

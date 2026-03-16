@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:59:54.099Z",
+  "inputHash": "2c3a7591977512cb039bef5c25309ecf8b85e670",
+  "payload": {
+    "responseId": "resp_0164e59c4fcda5ad0069b76412b14c819c9bd9cee73b9b82e4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong gamma peak / sticky zone at ~6264-6265 (red ridge at current time) aligning with script risk level; this area is magnetic into the power hour and likely to pin or slow price movement.",
+          "condition": "price approaches 6264-6265 during RTH/power hour",
+          "expected_result": "Price will gravitate toward and spend time around 6264-6265, showing reduced momentum and multiple re-tests (pinning) rather than fast through-moves"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary strong rejection / support cluster visible around ~6196-6204 (gamma trough and outlined peaks); this level is a pronounced downside magnet after ~14:50 and acts as a support zone.",
+          "condition": "price moves down toward 6196-6204 after 14:50 ET",
+          "expected_result": "Price will find support and likely bounce or stall in the 6196-6204 range with higher probability of reversal upward from that area"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upper resistance corridor / sticky zone around ~6331-6336 (gamma accumulation at top of heatmap) suggesting limited extension beyond ~6335 without strong flow.",
+          "condition": "upside push from current levels toward 6330-6336",
+          "expected_result": "Price will encounter strong resistance near 6330-6336 and is likely to stall or reverse when reaching this corridor"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid area noted at ~6233-6234 acts as a pivot; if spot holds above it the upper wing (~6248 then toward 6264) becomes magnetic, if below it downside tilt increases.",
+          "condition": "SPX relative to centroid 6233-6234 at session open/early intraday",
+          "expected_result": "If SPX > 6233-6234, expect upward bias toward 6248 then 6264; if SPX < 6233-6234, expect increased downside probability toward 6210-6200 cluster"
+        }
+      ]
+    }
+  }
+}

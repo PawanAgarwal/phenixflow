@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:04:13.908Z",
+  "inputHash": "3df81c8d49fe2893952f3170d5a17f2dff715fd2",
+  "payload": {
+    "responseId": "resp_02b96784afc414850069b765168cdc819cb601da4e27f1814c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning / sticky zone around 6670–6678 (centroid ~6678.14 and upside pivot 6697.41 supports reversion toward 6670). Heatmap shows concentrated gamma/peaks and a warm band near these levels indicating pin risk.",
+          "condition": "price holds upside pivot and centroid before PM session",
+          "expected_result": "SPX will gravitate back to and spend significant time between 6670–6678 within the PM session; failed breakouts above 6697 should revert toward ~6670."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Rejection / support band at ~6649 with low probability to break; if briefly broken the maximum intraday downside target is ~6608 with likely reversion back to 6640–6655 (6655 is a local reject level).",
+          "condition": "if 6649 is breached before ~11:30 AM",
+          "expected_result": "Price may fall to ~6608 intraday then reverse and pin back into the 6640–6655 range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside spike and secondary pin near 6715–6737 if call demand persists; heatmap shows call-side gamma peaks layered above 6690–6715 creating a travel corridor upward from the centroid/upside pivot.",
+          "condition": "call skew/demand does not decline after testing the upside pivot (~6697)",
+          "expected_result": "SPX will spike up toward 6715 and potentially as high as ~6736 and then show reversion/pinning pressure in the 6715–6736 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky downside gamma concentration near 6550–6575 (visible gamma trough/peak contours lower on the map) that will act as a stronger support zone if price falls significantly.",
+          "condition": "",
+          "expected_result": "Any intraday decline that reaches 6550–6575 should see buying/support and slower price travel below that band."
+        }
+      ]
+    }
+  }
+}

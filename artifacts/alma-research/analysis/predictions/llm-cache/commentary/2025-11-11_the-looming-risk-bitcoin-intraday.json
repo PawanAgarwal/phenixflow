@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:09:57.006Z",
+  "inputHash": "d5d17c2d3bcdc62b01323e2e7a5bff440885b8db",
+  "payload": {
+    "responseId": "resp_022e182861ec1dd20069b7666bd70881a3b6637ad8ab93e0d5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "BTC",
+          "prediction_text": "Bitcoin will range between 6848 and 6755 after ~11:40 AM, producing a ranging/reversion environment.",
+          "condition": "after 11:40 AM",
+          "expected_result": "BTC price will remain within 6848–6755 for the day, enabling profitable reversion trades rather than sustained trend moves"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Centroid/hedge balance will sit at 6787.46–6799.19 where realized volatility is neutral.",
+          "condition": "",
+          "expected_result": "BTC will gravitate toward and trade around 6787.46–6799.19 while hedging flows remain balanced and realized volatility shows no mechanical skew"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Downside pivot at 6782.86 will lead toward a downside target of 6754.97 if downside momentum occurs.",
+          "condition": "",
+          "expected_result": "If BTC moves below 6782.86, price will continue to decline toward 6754.97"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Upside pivot at 6827.33 will lead toward an upside target of 6857.49 if upside momentum occurs.",
+          "condition": "",
+          "expected_result": "If BTC moves above 6827.33, price will continue to advance toward 6857.49"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Both-way volatility will pick up locally but breaking out of the 6755–6848 range is very unlikely.",
+          "condition": "",
+          "expected_result": "Implied and realized volatility will increase intraday near the range edges, yet BTC will fail to sustain a breakout beyond 6755–6848 during the session"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "If an upside breakout occurs, 6875 (±20) is the upside pin where price may stall.",
+          "condition": "if upside breakout occurs",
+          "expected_result": "On an upside breakout above the range, BTC will stall or be pinned near 6875 (with a margin to 6895) rather than rapidly extending higher"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "If a downside breakout occurs, 6726 is the downside pin where price may stall.",
+          "condition": "if downside breakout occurs",
+          "expected_result": "On a downside breakout below the range, BTC will stall or be pinned near 6726 rather than rapidly extending lower"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Market prices a slightly higher probability of downside but the primary expectation is range-bound trading rather than a directional breakout.",
+          "condition": "",
+          "expected_result": "Probability-implied skew will show ~8% more downside chance than upside, yet BTC will remain primarily range-bound rather than breaking out during the stated window"
+        }
+      ]
+    }
+  }
+}

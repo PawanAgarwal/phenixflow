@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:29:18.341Z",
+  "inputHash": "371a83b9a6300af63449d15e1729f2fa1fcd770f",
+  "payload": {
+    "responseId": "resp_0005e0211ec6dc7b0069b78719345481a1ba362f8d5652a41d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-15T13:15:10.989Z",
+          "instrument": "ES=F",
+          "prediction_text": "ES=F is likely to retest the 68.2% level down.",
+          "condition": "",
+          "expected_result": "ES=F price moves down to retest the 68.2% retracement level."
+        },
+        {
+          "made_at": "2025-07-15T13:46:48.728Z",
+          "instrument": "ES=F",
+          "prediction_text": "If ES=F shows strength, price may reach the 6320 point of control (POC).",
+          "condition": "ES=F shows strength",
+          "expected_result": "ES=F price rises to around 6320 (POC)."
+        },
+        {
+          "made_at": "2025-07-15T17:01:37.408Z",
+          "instrument": "SPX",
+          "prediction_text": "Downside long gammas are expected to arrive for SPX.",
+          "condition": "",
+          "expected_result": "Options positioning leads to increased long-gamma exposure on the downside for SPX, amplifying downside moves."
+        },
+        {
+          "made_at": "2025-07-15T17:49:19.139Z",
+          "instrument": "SPX",
+          "prediction_text": "Longer downside gamma is expected.",
+          "condition": "",
+          "expected_result": "SPX will experience prolonged increased long-gamma exposure on the downside, supporting larger downside responsiveness."
+        }
+      ]
+    }
+  }
+}

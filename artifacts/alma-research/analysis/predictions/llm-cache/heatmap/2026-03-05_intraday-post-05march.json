@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:15:55.318Z",
+  "inputHash": "77d77c034bf20feffab445e643c8aac75f85aec3",
+  "payload": {
+    "responseId": "resp_0cb75e2eff20c98e0069b767d635e8819396683fafae0b6ec2",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid at 6853 acts as a high-probability intraday reversion band; price likely to revert toward ~6850 if it strays moderately away.",
+          "condition": "price moves >10-15 pts away from 6853",
+          "expected_result": "Price reverses back toward the 6845–6865 area (centroid) within the trading session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky/support zone and reversion target around 6746–6778 with heavy downside suppression; these levels act as a supportive magnet in PM session.",
+          "condition": "downside momentum or intraday sell-off",
+          "expected_result": "Price finds support and bounces from 6778–6746; failure to hold leads only after breach below ~6670."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance cluster around 6901–6910 with 6930 as a dynamic breakout threshold; stabilization toward 6950 likely only if price clears 6930.",
+          "condition": "price breaks and holds above 6930",
+          "expected_result": "Price extends to 6940–6950 (stabilization); if 6930 is rejected, expect failure to reach 6950 and potential reversion to centroid."
+        }
+      ]
+    }
+  }
+}

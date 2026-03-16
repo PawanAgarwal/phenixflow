@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:55:12.127Z",
+  "inputHash": "79e3799a48c5d25d80a28c003ffbc6b2b9a9018f",
+  "payload": {
+    "responseId": "resp_06d34c10851868700069b762f9e8b0819da57727c8d65126dd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "(index)",
+          "prediction_text": "If intraday volatility declines above the pivot at 5487.34, that will be a very bullish confirmation with calls gaining momentum.",
+          "condition": "volatility declines above 5487.34",
+          "expected_result": "Call option implied and underlying index price will rise and show sustained upside momentum after the decline in intraday volatility above 5487.34."
+        },
+        {
+          "instrument": "(index)",
+          "prediction_text": "Calls will gain momentum with higher volatility only after the index reaches 5533.32.",
+          "condition": "index reaches 5533.32",
+          "expected_result": "Call option volumes and implied vols increase and the underlying index will continue upward from 5533.32 showing call-dominant activity."
+        },
+        {
+          "instrument": "(index)",
+          "prediction_text": "Puts will gain momentum if the pivot at 5393.88 is breached.",
+          "condition": "index breaches 5393.88",
+          "expected_result": "Put option volumes and implied vols increase and the underlying index will move lower following the breach of 5393.88."
+        },
+        {
+          "instrument": "(index)",
+          "prediction_text": "Downside can extend to at least 5287.36 if volatility catches up.",
+          "condition": "volatility increases (catches up)",
+          "expected_result": "Underlying index will decline toward or reach 5287.36 as volatility-driven selling accelerates."
+        },
+        {
+          "instrument": "(index)",
+          "prediction_text": "Charm flows and vanna imply mild gamma increase and support above ~5200, stabilizing downside.",
+          "condition": "index remains above ~5200",
+          "expected_result": "Gamma increases slightly and downside price pressure will be cushioned, reducing likelihood of large drops while the index stays above ~5200."
+        }
+      ]
+    }
+  }
+}

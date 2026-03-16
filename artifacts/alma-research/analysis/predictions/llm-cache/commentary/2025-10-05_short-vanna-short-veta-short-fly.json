@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:04:31.514Z",
+  "inputHash": "088d569313e54ea49a294dda0e1edb713f1ba977",
+  "payload": {
+    "responseId": "resp_0d3a6db46f6048660069b76526e08c819380c5b445907dad3b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "U.S. equity large-caps",
+          "prediction_text": "Broad cap-weighted beta will remain supported in the near term due to large-cap inflows, keeping risk-on conditions until earnings or a prolonged shutdown re-prices things.",
+          "condition": "until earnings or a prolonged shutdown re-prices things",
+          "expected_result": "Large-cap indices will hold gains or drift higher while small/mid caps underperform, maintaining positive cap-weighted returns until the condition occurs"
+        },
+        {
+          "instrument": "GLD",
+          "prediction_text": "Gold rally will continue to be supported by the Fed’s easing bias and upside risk to breakevens, making gold act as a hedge to inflation/real-rate factors rather than a compounding asset.",
+          "condition": "",
+          "expected_result": "GLD will exhibit positive performance correlated with lower real yields and higher breakevens, increasing in price as real yields fall"
+        },
+        {
+          "instrument": "GLD",
+          "prediction_text": "Gold is vulnerable to a left-tail move (sharp downside) if real yields back up or the curve steepens.",
+          "condition": "if real yields back up or the curve steepens",
+          "expected_result": "GLD will experience a significant decline (material drawdown) following a sustained rise in real yields or a steepening yield curve"
+        },
+        {
+          "instrument": "GLD/XAU",
+          "prediction_text": "ETF inflow stall or reversal would expose gold downside, so protect with puts or collars.",
+          "condition": "if ETF inflows stop or reverse",
+          "expected_result": "GLD/XAU prices will fall, and put or collar protection will be needed to limit losses"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Dispersion-friendly structures and defined-risk downside (put spreads) are preferable into any shutdown headline shock.",
+          "condition": "into any shutdown headline shock",
+          "expected_result": "Single-name dispersion trades and put-spread defined-risk positions will outperform or limit losses relative to naked index exposure during shutdown-related market stress"
+        },
+        {
+          "instrument": "10y Treasury/real yields",
+          "prediction_text": "Rates lead gold, so a backup in real yields will hurt gold; hedge with TY/US put spreads or bear-steepener options sized to gold–rates beta.",
+          "condition": "",
+          "expected_result": "A rise in 10y real yields will precede and correlate with a decline in gold prices, and hedges (TY/US put spreads or payer steepener spreads) will offset losses in gold positions"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:28:52.071Z",
+  "inputHash": "21276082b8bc2131bdd6b5ecb73b03bf81f2e6a4",
+  "payload": {
+    "responseId": "resp_07bd4b9d2cb770940069b787012c3c8196b0da5af89d276d40",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-05T13:29:28.991Z",
+          "instrument": "ES",
+          "prediction_text": "5950 for ES is the primal target.",
+          "condition": "",
+          "expected_result": "ES futures trade up to 5950."
+        },
+        {
+          "made_at": "2025-06-05T13:29:28.991Z",
+          "instrument": "ES",
+          "prediction_text": "If the line breaks, weakness manifests and the buy is out; next buy zone is 5925/20 with a 10pt stop-loss; below this, move is bearish.",
+          "condition": "line breaks",
+          "expected_result": "If the specified line breaks, ES declines below 5920 and market becomes bearish; otherwise buy around 5925–5920 with a 10-point stop-loss."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:26.200Z",
+  "inputHash": "a4c7d9322e902afadb114532b2874ac96309e093",
+  "payload": {
+    "responseId": "resp_0b6fddfd511959100069b766c61bb4819090e7809bf6d7d230",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky centroid / local pin in 6868–6892 area with upper-bound stickiness at ~6892.49; market likely to gravitate and hold around 6868–6887 and resist clean move above 6892 without strong vols demand.",
+          "condition": "none",
+          "expected_result": "SPX trades and re-tests 6868–6887 repeatedly; any move above 6892 fails or quickly reverts unless accompanied by sustained upside vol demand; expect rangebound action around these levels for the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance at 6870.26 acting as near-term cap after the first hour; initial morning can breach it but thereafter it should cap upside.",
+          "condition": "none",
+          "expected_result": "If SPX does not break 6870.26 within the first hour, price fails higher attempts and reverses back toward the centroid (6868–6887) or downside pivot."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6847.18 with a primary reversion target into 6825–6830 (mean-reversion zone back to center); max downside sticky support near 6792.47.",
+          "condition": "none",
+          "expected_result": "On a sell move toward 6847.18, expect SPX to bounce/revert around 6825–6830; a sustained break below 6825 with low RV and heavy put skew could push price toward 6792, where strong stickiness/support should appear."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Options heatmap gamma shows concentrated sticky support band in the low-6700s (~6725–6735) and strong tail gamma interest above ~6930–6960 indicating upper corridor resistance; likely intraday travel corridor is between low-6700s support and mid-6900s resistance if volatility shifts.",
+          "condition": "none",
+          "expected_result": "If SPX drifts below 6825, price may find deeper support and slow travel near 6725–6735; conversely, significant upside flow could push toward 6930–6960 where gamma offers resistance and pinning potential."
+        }
+      ]
+    }
+  }
+}

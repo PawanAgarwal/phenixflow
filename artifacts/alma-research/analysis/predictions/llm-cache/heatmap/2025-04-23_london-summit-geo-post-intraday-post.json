@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:55:52.225Z",
+  "inputHash": "3aec78cfef631908f2f4cc56406050e6eba9dc64",
+  "payload": {
+    "responseId": "resp_0e07609f4a4e51e90069b7632270a081a2b3d9522ca6e1bc0b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky range / rejection zone at 5410–5445 (zero vanna upside line). If volatility decreases quickly, price is likely to be rejected here and remain stuck inside the range.",
+          "condition": "volatility decreases rapidly",
+          "expected_result": "Price stalls or reverses near 5410–5445 within the session; fails to sustain a break above 5445 within 1-2 trading days."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / pinning magnet at ~5214–5219 (zero vanna and charm-flip area). Low vol needed to break below this area, so it should act as intraday support and a pinning level.",
+          "condition": "none",
+          "expected_result": "Price gravitates toward and holds near 5214–5219 during intraday trading; downward breaks through 5210 are limited or short-lived."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance corridor around 5330–5380 (gamma peak/trough cluster). This zone is likely to slow upward movement and produce reversion if tested.",
+          "condition": "none",
+          "expected_result": "When price reaches 5330–5380, momentum slows and a pullback of at least 10–25 points occurs within the same session."
+        }
+      ]
+    }
+  }
+}

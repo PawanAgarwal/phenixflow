@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:05:40.902Z",
+  "inputHash": "22f07510cee1057f6373c4f80a0ddff152c41053",
+  "payload": {
+    "responseId": "resp_0a8cadd6824b6bdd0069b7656e02708196ad2791bfbafb3f0b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong supportive/pinning cluster around 6682-6701 (downside hedge area) — heatmap shows concentrated gamma trough/peak and listed 95.4%/99.73% risk levels at ~6682 and ~6654-6626 indicating sticky support and left-tail pin potential.",
+          "condition": "open below 6777/80",
+          "expected_result": "If SPX opens below 6777-6780, expect a grind down and pinning into the 6682–6701 area (spot to revisit and spend time near 6682–6701 within the session)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pivot/resistance at ~6777-6780 — identified as a crucial local pivot on the heatmap and in the post; will be hard to break intraday.",
+          "condition": "none",
+          "expected_result": "If SPX approaches 6777–6780 from either side, expect rejection or slow progress through that band; price likely to stall and reverse or grind under/over it rather than run decisively through on first approach."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sold/short gamma concentration toward 6800-6810 — heatmap shows heavier sold upside exposure and listed pivots (~6800.8 and 6810) creating a rejection zone and limiting upside travel.",
+          "condition": "move above 6777/80",
+          "expected_result": "If SPX moves above 6777–6780, expect resistance and possible reversion back toward 6722–6766 with likely struggle to sustain above 6800–6810; intraday spike to 6800–6810 should face rejection."
+        }
+      ]
+    }
+  }
+}

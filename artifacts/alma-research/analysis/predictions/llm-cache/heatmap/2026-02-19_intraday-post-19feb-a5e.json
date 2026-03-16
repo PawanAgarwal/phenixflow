@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:06.725Z",
+  "inputHash": "7eaeb2f8dfdcb08c1b562abe0915acae17330bdf",
+  "payload": {
+    "responseId": "resp_058b3b21bdb62fee0069b767a263948197b93ffb727fb91b82",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid at 6840.77 acts as a magnetic support — price is likely to be pulled toward ~6840 with a margin of error ~6810–6815.",
+          "condition": "spot below 6872 (suppression)",
+          "expected_result": "If SPX trades below 6872, expect intraday reversion/gravitation into 6840±30 (target zone 6810–6840) within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong downside pivot/support cluster around 6687.88–6677.58 — very supportive zone and a likely magnet if momentum continues down.",
+          "condition": "break below 6810/6815 with low local RV and high put skew",
+          "expected_result": "If price breaks below 6810–6815 under low realized vol and elevated put skew, expect travel toward and testing of 6745–6750, then into 6688–6678 support zone."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky magnet / resistance area at ~6964.6–6968 (with local turning point near 6900–6905). 6930 is a nearer local magnet.",
+          "condition": "upside vol remains high before 14:00–14:00–14:00–(PM expiry window)",
+          "expected_result": "If upside vol stays elevated, price can be pinned toward 6964–6968; otherwise expect rejection at 6900–6905 with intraday failure to sustain above ~6930."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Key threshold: 6872.77 is the net call/put border — staying below it should keep spot suppressed; breach above signals upside room.",
+          "condition": "price relative to 6872.77",
+          "expected_result": "If SPX remains below 6872.77 expect continued suppression and limited upside; if it clears and holds above 6872.77, expect reduced suppression and greater likelihood of moves toward 6930–6965 range."
+        }
+      ]
+    }
+  }
+}

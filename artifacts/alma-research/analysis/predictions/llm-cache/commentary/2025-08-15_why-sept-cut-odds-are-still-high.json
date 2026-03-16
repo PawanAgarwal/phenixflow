@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:02:01.587Z",
+  "inputHash": "626d58efc978e957a2799a6859fb5b3ac7644961",
+  "payload": {
+    "responseId": "resp_04da66beecb29fcd0069b7649264b08190877a603cf988e6a1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "10 yr",
+          "prediction_text": "10 yr is expected to hover ~4.3% because of tariff worries and heavy Treasury supply.",
+          "condition": "",
+          "expected_result": "10-year Treasury yield will trade around 4.3% over the near term (within a few weeks to a couple months)."
+        },
+        {
+          "instrument": "Fed policy rate",
+          "prediction_text": "This Sept cut is expected to be a hawkish cut (25bp) followed by more cuts in 2026 as tariff effects start to fade.",
+          "condition": "if Fed trims the policy rate 25bp in September",
+          "expected_result": "Fed will cut the policy rate by 25 basis points in September with communication that is cautious/hawkish, and subsequently implement additional rate cuts in 2026."
+        },
+        {
+          "instrument": "MMF yields",
+          "prediction_text": "Fed cut would lower MMF yields, which could unlock some money out of cash over time.",
+          "condition": "if the Fed cuts rates",
+          "expected_result": "money market fund yields will decline, leading to net outflows from cash/MMFs into other asset classes over subsequent weeks to months."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A small Fed cut in September won’t over-ease financial conditions because long rates stay firm due to supply and term-premium concerns.",
+          "condition": "if long rates remain firm on supply & term-premium concerns",
+          "expected_result": "financial conditions will remain relatively tight despite a small September rate cut, limiting immediate easing effects on risk assets."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A slow sell-off would ease the wealth-effect caused inflationary pressures.",
+          "condition": "if there is a slow market sell-off",
+          "expected_result": "consumer demand and inflationary pressures from wealth effects will moderate over time following the gradual decline in asset prices."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "I don’t see a bearish trend now, only high odds for a pullback; no long-term positions recommended.",
+          "condition": "",
+          "expected_result": "markets will likely experience a near-term pullback/correction rather than a sustained bearish trend, so avoid initiating long-term directional positions now."
+        }
+      ]
+    }
+  }
+}

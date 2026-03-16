@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:10.765Z",
+  "inputHash": "430e29bad0f4be33608b6ab80572097a1298bb3a",
+  "payload": {
+    "responseId": "resp_0f02ffe2a31354060069b766f3e72081a1afe66783d2de148d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/pivot cluster around 6792-6793 acts as a sticky magnet/support zone; market likely to revert toward this centroid when away from it.",
+          "condition": "price moves away from 6792-6793",
+          "expected_result": "Price will gravitate back toward 6792-6793 within the trading session (reversion trade opportunity)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot near 6815 with a short-term upside target ~6834 that is sticky — expect reversion back to the centroid rather than sustained break above without a strong convex vol bid.",
+          "condition": "price reaches 6833-6835 without significant convex vol bid",
+          "expected_result": "Price will reverse back down toward 6792-6793 (centroid) rather than continue above 6835."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot ~6768 with downside target ~6716 aligned with lower wing of iron-condor; downside is supported and harder to break — more likely to revert up from 6768 toward centroid.",
+          "condition": "price tests 6765-6770",
+          "expected_result": "Price will hold and rebound toward 6792-6793 rather than break below 6716; a break below 6768 is lower probability."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky wings of the iron-condor at ~6716 (lower wing) and ~6815 (upper wing) create a travel corridor between ~6715 and ~6835 where price is likely to remain intraday.",
+          "condition": "intraday trading continues under current positioning",
+          "expected_result": "Price will trade predominantly inside the 6715–6835 corridor, with mean reversion toward centroid ~6792."
+        }
+      ]
+    }
+  }
+}

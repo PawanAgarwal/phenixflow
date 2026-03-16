@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:04:06.780Z",
+  "inputHash": "bbda70abee3da0f20efc6398734cd5d14d943828",
+  "payload": {
+    "responseId": "resp_0988d3f8632280060069b7650ff7388196ac8ad080d673453c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid support cluster around 6622.85–6629.48 acts as a significant pivot; expect price to gravitate back to this centroid through the day (ranging behaviour).",
+          "condition": "none",
+          "expected_result": "SPX will trade back toward 6623–6629 within the session after intraday excursions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6613.27 is fragile in the first hour; a break below this level should accelerate downside into pin at 6600 and then the primal support zone 6580–6585.",
+          "condition": "price breaks and closes below 6613.27 early session",
+          "expected_result": "If SPX closes below 6613.27 within the first hour, expect a move to 6600 and then 6580–6585 within the same trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If downside is contained, 6550 is the intraday downside max which would produce a sharp snap-back (reversion) to 6583 or 6600.",
+          "condition": "price reaches 6550",
+          "expected_result": "On a move down to 6550, expect a quick reversal rally back to 6583–6600 intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6652.38 with a short-term upside target zone 6665.72–6673 that offers a reversion opportunity back toward the centroid; after 14:30 a vanna flip makes 6652.38 harder to break and sustained bids could pin to 6690–6693.",
+          "condition": "price sustains above 6652.38 (especially after 14:30)",
+          "expected_result": "If SPX holds above 6652.38, expect a move to 6666–6673 intraday and potential pinning to 6690–6693 if realized vol calms and call skew remains bid."
+        }
+      ]
+    }
+  }
+}

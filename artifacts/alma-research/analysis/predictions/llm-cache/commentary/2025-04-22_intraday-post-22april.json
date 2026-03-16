@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T01:55:38.100Z",
+  "inputHash": "a587e0becf9651995325107e864b36c40be1b4ee",
+  "payload": {
+    "responseId": "resp_0ed1dafcd82eed9c0069b7631347a481a1b85cf55fa655e598",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The main centroid of the whole profile will act as a focal level at 5181.43 for intraday positioning.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward or spend significant time around 5181.43 during the intraday session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside puts beginning to print at 5138.22 implies that a drop toward 5138.22 followed by rising volatility would show the downside is finding bids.",
+          "condition": "if vol catches up",
+          "expected_result": "If price moves toward 5138.22 and volatility increases, bids will step in and price will halt declines or bounce from ~5138.22."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upward move stabilizing above 5247.06 would indicate a serious upside move.",
+          "condition": "stabilizing above 5247.06",
+          "expected_result": "If price closes and holds above 5247.06, further upside continuation is likely in the short term."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Zero vanna at 5160 means low volatility is sufficient for price to break through that level.",
+          "condition": "",
+          "expected_result": "Price will more easily break and trade through 5160 during low-volatility conditions, requiring less vol to sustain the move."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Below 4980 the downside move can stabilize.",
+          "condition": "price below 4980",
+          "expected_result": "If price falls below 4980, the decline will likely find support and trading will consolidate rather than accelerate lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5301 is the key gamma level where increased volatility can produce a small gamma-fueled squeeze upward.",
+          "condition": "if vol catches up at 5301",
+          "expected_result": "If price reaches 5301 with rising volatility, a short squeeze/gamma squeeze will push price higher from that level."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility is low at 5301, momentum is likely to be rejected and the move will fail.",
+          "condition": "if vol is low at 5301",
+          "expected_result": "Price will fail to sustain gains at 5301 and will reverse or stall rather than continue upward."
+        }
+      ]
+    }
+  }
+}

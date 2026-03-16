@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:00:49.290Z",
+  "inputHash": "e33796ee54b812141d44a17d0efe8d18e8fa3462",
+  "payload": {
+    "responseId": "resp_09d2110d16bbbbb10069b7644b438081939efb3ec1b4031669",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong long-gamma gravitational magnet near 6350 — heatmap shows a persistent gamma peak there making 6350 highly attractive to pin if price moves above the centroid.",
+          "condition": "SPX trades above centroid ~6318.86 and confirms 6329.09-6330.23",
+          "expected_result": "Price will gravitate toward and test 6350 (pinning attempt); expect slowing momentum near 6350 and increased pinning probability within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid at ~6318.86 acting as intraday pivot and support/resistance; the profile is steep so centroid will repel/hold moves until volatility provides convexity.",
+          "condition": "intraday price approaches centroid (~6318.86) after 10:20 AM",
+          "expected_result": "Price will stall or reverse around 6318-6320; moves through this level require a volatility expansion to sustain continuation."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Magnetic support around 6300 that becomes stronger late in the session (last 1.5 minutes) as a sticky support if volatility remains low.",
+          "condition": "volatility remains low into the close",
+          "expected_result": "Price will be supported near 6300 in the power hour/close and likely return toward 6300 if it drifts away earlier in the day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower oscillation band between ~6297 and 6280 where volatility can pick up and enable downside escape toward the daily minimum around 6258.",
+          "condition": "price falls into 6297-6280 zone and volatility increases",
+          "expected_result": "Price can break down through 6280 and travel toward 6258 (daily min) before mean-reverting back toward 6300; if it stays below too long, expect capping at ~6280 in the power hour."
+        }
+      ]
+    }
+  }
+}

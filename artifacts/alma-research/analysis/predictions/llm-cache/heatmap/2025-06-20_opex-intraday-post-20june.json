@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:58.454Z",
+  "inputHash": "97858565b984e115a711f0969751f81323f6b2a6",
+  "payload": {
+    "responseId": "resp_06e4901cbc1c3b6d0069b763dd1278819194aec930c2e50f12",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning magnet at 6000 for AM expiration — large notional and delta decay likely to pin price to ~6000 if spot holds the 5970–5980 area into AM expiry.",
+          "condition": "spot holds 5970–5980 into AM expiration (and stays above downside pivot)",
+          "expected_result": "Price gravitates toward and spends time near 6000 within the AM expiry window; reduced intraday volatility and measurable delta decay on the 6000 strike."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot / local charm pivot around 5953–5958 — if price drops below this pivot and vol increases, dealers’ positioning will push spot toward the 5896–5902 primal target (with strong pinning toward 5850 below that).",
+          "condition": "price breaks and trades below 5953–5958 with rising volatility before late session",
+          "expected_result": "Price moves toward 5896–5902 within the last 1.5–2 hours; if it continues below that zone, further pinning toward ~5850 occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside rejection zone / cap in the 6007–6018 area (vanna flip zone) — significant resistance expected around ~6007–6018 with very limited extension past ~6025.",
+          "condition": "attempted rally above 6000 into afternoon",
+          "expected_result": "Rallies stall or reverse between 6007 and 6018; price rarely exceeds 6025 during the session."
+        }
+      ]
+    }
+  }
+}

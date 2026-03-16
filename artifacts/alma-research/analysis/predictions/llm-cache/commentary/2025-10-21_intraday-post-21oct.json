@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:05:23.663Z",
+  "inputHash": "f0a4fe2c80e4ba91cf6cdc607e88c164fd9e0c3e",
+  "payload": {
+    "responseId": "resp_08bdd1d79afdf7700069b7655fd16081938ea64e28f6d5e5cc",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "VIX",
+          "prediction_text": "If VIX breaks below 18s it can be easily dumped down to 15s with heavy vol suppression.",
+          "condition": "VIX breaks below 18s",
+          "expected_result": "VIX falls to the 15s range (around 15.0–15.9) accompanied by reduced implied volatility levels"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If VIX breaks below 18s puts will be bought back, pinning SPX spot to 6740.",
+          "condition": "VIX breaks below 18s",
+          "expected_result": "SPX trades and holds near 6740 due to put buybacks"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "19.5, 20s and 21s are local pins for VIX.",
+          "condition": "",
+          "expected_result": "VIX gravitates toward and finds short-term support/resistance around 19.5–21 levels (price action shows repeated reversals or congestion there)"
+        }
+      ]
+    }
+  }
+}

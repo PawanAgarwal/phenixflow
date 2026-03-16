@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:05:50.496Z",
+  "inputHash": "cbabe6c9ed820a83cc186c15dc5de2577c4fc3e6",
+  "payload": {
+    "responseId": "resp_08857b3ea84f533c0069b76579e8a481978adb8b6d9f4a6902",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Intraday we will continue to see upside realized vol while realized vol of vol is sold (RV selling), reinforcing weekly zomma supply.",
+          "condition": "",
+          "expected_result": "Measured intraday realized volatility rises on upside moves while higher-frequency realized vol-of-vol metrics (e.g., daily or intraday RV-of-RV) decline or show net selling flows."
+        },
+        {
+          "instrument": "6640/30",
+          "prediction_text": "CTAs will remain net buyers but will continue cutting until 6640/30 are broken.",
+          "condition": "until 6640/30 are broken",
+          "expected_result": "CTA net buying flows taper off and position adjustments continue; if price breaches 6640/30, CTA behavior shifts (increased selling or reduced buying)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Big players will act to produce intraday stability by dumping upside vol bets, causing upside vols to be sold down during intraday sessions.",
+          "condition": "",
+          "expected_result": "Intraday implied volatility on upside strikes or short-dated options decreases as dealers/large players sell upside vol, coinciding with realized upside moves being converted into sold options positions."
+        }
+      ]
+    }
+  }
+}

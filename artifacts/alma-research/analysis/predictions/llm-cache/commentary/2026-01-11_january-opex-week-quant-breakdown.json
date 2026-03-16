@@ -1,0 +1,120 @@
+{
+  "cachedAt": "2026-03-16T02:13:20.471Z",
+  "inputHash": "77724e070e510089872ffd6092d95ba51681f380",
+  "payload": {
+    "responseId": "resp_0568ea543bd4c2f90069b7672b57708192b0b13546b4911941",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid of the profile is at 6902.91 (with margin of error 6859.01) implying balanced impact there.",
+          "condition": "",
+          "expected_result": "SPX will trade near 6902.91 (±43.9) during the OpEx week."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot is at 6835.10 with target 6793.01 (the most supportive cluster).",
+          "condition": "",
+          "expected_result": "If SPX moves down to the downside pivot 6835.10, it will continue toward and reach 6793.01."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot is at 7016.02 with target of 7070.29 and stabilization only above the pivot; target is magnetic if vol declines above the pivot.",
+          "condition": "SPX rises above 7016.02",
+          "expected_result": "SPX will stabilize above 7016.02 and move toward 7070.29, especially if implied volatility declines."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Profile favors a wide rangebound with a net positive drift while downside is protected.",
+          "condition": "",
+          "expected_result": "SPX will trade in a broad range during the week with an overall upward bias, limited sustained downside moves."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Path of least resistance for implied volatility is upward; market expects IV to be rangebound with a flat-to-positive drift.",
+          "condition": "",
+          "expected_result": "Implied volatility (VIX/option IVs) will generally drift flat-to-higher over the week rather than collapse."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market expects a reversion from the downside in the worst case (vomma projected downside zone 6853.06 - 6889.41).",
+          "condition": "",
+          "expected_result": "If SPX falls into 6853.06–6889.41, it will revert higher rather than continue a strong breakdown."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vomma projected upside zone 7011.15 - 7032.36 where a vol move can take the spot and shift it to supportive from below and supportive above.",
+          "condition": "",
+          "expected_result": "If SPX moves into 7011.15–7032.36 on rising vomma-driven vol, that zone will provide support and attract further upside or stabilization."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The week will open hectic to provide room for short vol trades and upside moves, converging toward moderate risk-taking.",
+          "condition": "",
+          "expected_result": "Early-week SPX volatility and directional moves will be higher, enabling short-volatility positioning and intraday upside moves before sentiment calms."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "CPI release is expected to trap long vol traders with no directional bias, followed by optimistic stabilization later.",
+          "condition": "Post-CPI release",
+          "expected_result": "After CPI, short-vol traders will be caught in volatility spikes but markets will calm and stabilize into optimism later in the week."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "For Thursday, traders are expected to start taking profit from short vol/short skew trades and momentum cools down, creating more vulnerable downside.",
+          "condition": "Thursday of OpEx week",
+          "expected_result": "SPX momentum will slow on Thursday and downside vulnerability will increase as profit-taking occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "On Friday consolidation and risk-off is expected, a shift back from speculation into protective stance but not outright bearishness.",
+          "condition": "Friday of OpEx week",
+          "expected_result": "SPX will consolidate and show risk-off characteristics on Friday without a pronounced bearish trend."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "ES weekly range priced by vol is 7060.33 - 6949.67 with margin-of-error bounds 7087.09, 6922.91.",
+          "condition": "",
+          "expected_result": "ES will trade within 6949.67–7060.33 during the week, with extremes potentially reaching 6922.91 or 7087.09."
+        },
+        {
+          "instrument": "SPY",
+          "prediction_text": "SPY weekly range priced by vol is 699.64 - 688.50 with margin-of-error bounds 702.33, 685.81.",
+          "condition": "",
+          "expected_result": "SPY will trade within 688.50–699.64 during the week, with extremes possibly at 685.81 or 702.33."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX is expected in the range 15.98 - 13.00 with vol-based bounds 16.70, 12.28.",
+          "condition": "",
+          "expected_result": "VIX will trade between 13.00 and 15.98 during the week, possibly reaching up to 16.70 or down to 12.28."
+        },
+        {
+          "instrument": "QQQ",
+          "prediction_text": "QQQ weekly range priced by vol is 634.06 - 619.24 with vol bounds 637.65, 615.65.",
+          "condition": "",
+          "expected_result": "QQQ will trade within 619.24–634.06 during the week, with extremes near 615.65 or 637.65."
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "NDX weekly range priced by vol is 26065.30 - 25467.22 with vol bounds 26209.94, 25322.58.",
+          "condition": "",
+          "expected_result": "NDX will trade within 25467.22–26065.30 during the week, possibly touching 25322.58 or 26209.94."
+        },
+        {
+          "instrument": "NVDA",
+          "prediction_text": "NVDA weekly range priced by vol is 189.66 - 180.06 with vol bounds 191.98, 177.74.",
+          "condition": "",
+          "expected_result": "NVDA will trade within 180.06–189.66 during the week, with possible extremes at 177.74 or 191.98."
+        },
+        {
+          "instrument": "TLT",
+          "prediction_text": "TLT weekly range priced by vol is 88.54 - 87.32 with vol bounds 88.83, 87.03.",
+          "condition": "",
+          "expected_result": "TLT will trade within 87.32–88.54 during the week, possibly reaching 87.03 or 88.83."
+        }
+      ]
+    }
+  }
+}

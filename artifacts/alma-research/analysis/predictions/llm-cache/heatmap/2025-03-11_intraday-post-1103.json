@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:53:27.173Z",
+  "inputHash": "d391a9c0d2470b165ca956e43654ddeb9266f0c5",
+  "payload": {
+    "responseId": "resp_09f7b46d14c49a090069b762912884819dbec7a555af6106a9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows strong gamma support cluster between 5585 and 5655 (longer gamma effect) — acts as a sticky/support zone and likely magnet if price drifts down into it.",
+          "condition": "",
+          "expected_result": "If SPX approaches 5585–5655, expect deceleration of downside moves and increased pinning/mean reversion toward mid of that band within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is a zero-vanna / resistance level near 5679 that will require higher local vol to break — functions as an upside rejection/brake level in typical conditions.",
+          "condition": "",
+          "expected_result": "If SPX tests ~5679 without a volatility spike, expect rejection and reversal lower; only a clear volatility increase should allow sustained break above 5679."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma peak / resistance structure visible around ~5500 (large localized gamma intensity) — a nearby sticky/reversion area that can act as a short-term magnet from below and a rejection zone from above.",
+          "condition": "",
+          "expected_result": "If SPX moves toward ~5500, expect price to slow and either pin near that level or reverse direction within the trading day."
+        }
+      ]
+    }
+  }
+}

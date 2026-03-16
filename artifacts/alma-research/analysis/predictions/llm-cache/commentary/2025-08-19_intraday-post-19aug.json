@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:02:12.793Z",
+  "inputHash": "116cbab58d5652fbd071533f097038a2dc4fda6b",
+  "payload": {
+    "responseId": "resp_0fc5fc70394a2e9b0069b7649f06888196896abe9b32f6d1ba",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The ceasefire initiatives will backfire.",
+          "condition": "",
+          "expected_result": "Geopolitical tensions increase, leading to wider risk asset drawdowns and safe-haven inflows (e.g., bonds, MMFs) within Q3–Q4 2025."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Trump will suffer controversy and political exposure.",
+          "condition": "",
+          "expected_result": "Increased political volatility causing short-term market sell-offs or heightened bid for safe assets around related news events."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Some Covid-like crisis will emerge after late November this year.",
+          "condition": "after late November 2025",
+          "expected_result": "Renewed risk-off market behavior with rising volatility, declines in equities, and increased demand for bonds and cash-equivalents."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Investors are cashing out and money is flowing into bonds and MMFs.",
+          "condition": "",
+          "expected_result": "Ongoing net outflows from equities into money-market funds and increased bond purchases, pressuring equity prices and lowering yields volatility."
+        },
+        {
+          "instrument": "options",
+          "prediction_text": "Any reversion trade must be confirmed fast and is better executed with 1–2 DTE options today.",
+          "condition": "today",
+          "expected_result": "Successful mean-reversion trades will require very short-dated (1–2 day) options; longer-dated reversion trades will likely fail or be less profitable."
+        },
+        {
+          "instrument": "options premium",
+          "prediction_text": "If reversion is not confirmed fast, further premium collection outside of the projected vol ranges is the recommended play.",
+          "condition": "",
+          "expected_result": "Options sellers should collect premium by selling volatility beyond current projected ranges, resulting in profit if realized volatility remains below sold strikes."
+        }
+      ]
+    }
+  }
+}

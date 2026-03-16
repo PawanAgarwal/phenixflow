@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:18.749Z",
+  "inputHash": "b29ff3b59521d0c0d3f9d1201c912224867a42ec",
+  "payload": {
+    "responseId": "resp_079168b970fa07430069b764a4eda4819f89efe2f9ebd9e6c0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/pinning zone around 6441–6444 acts as an intraday pivot and likely pin after 14:00; spot expected to gravitate back to 6435–6450 with difficulty breaking away without convexity.",
+          "condition": "after 14:00 (post 2PM)",
+          "expected_result": "Price remains in 6435–6450 and repeatedly reverts toward 6441–6444 through the afternoon (multiple touches or brief excursions only)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / resistance near 6465 (with short-term max around 6478–6473) — requires increased convexity/vol to push and may pin spot to ~6465 if above 6461 after 13:40.",
+          "condition": "spot > 6461 after 13:40–13:50",
+          "expected_result": "Price moves toward and stalls around 6465; intraday highs test 6473–6478 but fail to sustain above them, returning toward centroid range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and support around 6423.95 with a lower target/strong rejection zone at ~6383–6375; heatmap shows more liquidity and stickiness below the centroid making downside reversion more probable if centroid breaks.",
+          "condition": "break and hold below centroid (~6441) before 14:00",
+          "expected_result": "Price drops toward 6423.95 and, if momentum continues, reaches 6383–6375 where it finds support and shows reversion or consolidation."
+        }
+      ]
+    }
+  }
+}

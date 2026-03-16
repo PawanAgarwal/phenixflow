@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:57:37.731Z",
+  "inputHash": "a69e5f71b30fb32a3ba2472a32cce5122b9674a6",
+  "payload": {
+    "responseId": "resp_07c532ae8b067cc10069b7638c36388194b6c718007b21673d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky / pinning magnet area around 5800–5827 (centroid coding 5851.27–5867 but heatmap shows concentrated gamma trough/peak around 5800–5810) indicating downside support and likely reversion toward this zone if price moves lower.",
+          "condition": "price trades below 5826.83 and volatility does not accelerate to push further down",
+          "expected_result": "Price should find support and revert back to the 5800–5827 area within the trading day; downside break below 5800 without quick vol pickup is unlikely."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / rejection corridor near 5900–5940 (notably a big gamma bar at 5900 and local vanna flip at ~5940) acting as a brake on upside moves.",
+          "condition": "upside attempt without local volatility calming (low vol continuation)",
+          "expected_result": "Rallies toward 5900–5940 should stall and reverse; expect rejection back toward 5850–5875 if price reaches this corridor."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intermediate downside braking around 5756 with early braking impact about 10 points above (~5766) as a secondary support zone (heatmap shows gamma structure near 5750–5765).",
+          "condition": "momentum carries price through 5800 into 5826–5800 instability and vol begins to increase",
+          "expected_result": "If 5800 gives way, price should slow and find a braking/reversion zone near 5766–5756, producing at least a short-term bounce."
+        }
+      ]
+    }
+  }
+}

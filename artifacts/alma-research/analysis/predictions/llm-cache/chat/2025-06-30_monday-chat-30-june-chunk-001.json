@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:29:05.399Z",
+  "inputHash": "a93f682fd23bb6391960731bd53ab3fa5407da98",
+  "payload": {
+    "responseId": "resp_0a1a7fef7ec7b0dc0069b7870c1cc4819299a32e67e8a4661a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-30T19:27:20.210Z",
+          "instrument": "",
+          "prediction_text": "Volatility will increase starting next week Tuesday or Wednesday.",
+          "condition": "next week Tuesday/Wednesday",
+          "expected_result": "Measured volatility metrics (e.g., VIX or realized intraday volatility) will rise noticeably compared with the prior week, with a sustained increase through the following days."
+        },
+        {
+          "made_at": "2025-06-30T19:27:20.210Z",
+          "instrument": "",
+          "prediction_text": "August will be a period of elevated risk.",
+          "condition": "August",
+          "expected_result": "Market risk indicators (e.g., implied volatility, drawdown magnitude, or realized volatility) will be higher during August than in June–July, indicating elevated market risk."
+        },
+        {
+          "made_at": "2025-06-30T21:35:07.841Z",
+          "instrument": "",
+          "prediction_text": "If the bearish pivot plays out in August, expect a coordinated selloff rather than a left-tail event.",
+          "condition": "bearish pivot plays out in August",
+          "expected_result": "Markets will experience a broad, coordinated decline across assets (widespread selling) rather than a sudden, extreme one-off left-tail crash; declines will be correlated across major indices and sectors."
+        }
+      ]
+    }
+  }
+}

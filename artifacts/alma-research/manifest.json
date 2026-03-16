@@ -1,6 +1,6 @@
 {
   "scriptVersion": 4,
-  "exportedAt": "2026-03-15T16:41:00.166Z",
+  "exportedAt": "2026-03-16T04:26:56.139Z",
   "cdpHttpUrl": "http://127.0.0.1:58210",
   "publication": {
     "id": 2679129,
@@ -8,22 +8,59 @@
     "substackChatBaseUrl": "https://substack.com/chat/2679129"
   },
   "sync": {
-    "latestPostDate": "2026-03-14T23:57:40.583Z",
+    "mode": "incremental",
+    "checkpoints": {
+      "previousLatestPostDate": "2026-03-14T23:57:40.583Z",
+      "previousLatestChatDate": "2026-03-13T20:38:31.966Z",
+      "postIncrementalCutoffIso": "2026-03-09T23:57:40.583Z",
+      "chatIncrementalCutoffIso": "2026-03-08T20:38:31.966Z"
+    },
+    "incrementalOverlapHours": 120,
+    "latestPostDate": "2026-03-15T20:23:36.565Z",
     "oldestPostDate": "2025-01-25T15:00:43.365Z",
     "latestChatDate": "2026-03-13T20:38:31.966Z",
     "oldestChatDate": "2025-02-01T05:47:37.512Z",
-    "postCount": 364,
+    "postCount": 365,
     "chatCount": 312
   },
   "stats": {
-    "postsFetchedThisRun": 0,
-    "postsSkippedThisRun": 364,
-    "chatsFetchedThisRun": 1,
-    "chatsSkippedThisRun": 311,
+    "postsFetchedThisRun": 6,
+    "postsSkippedThisRun": 0,
+    "chatsFetchedThisRun": 5,
+    "chatsSkippedThisRun": 0,
     "inboxThreadCount": 4,
     "almaInboxThreadCount": 1
   },
   "posts": [
+    {
+      "id": 190947960,
+      "slug": "new-wave-of-inflation-first-island",
+      "title": "New wave of inflation, First Island Chain blockade, OpEx week | Weekly post (16-20/March)",
+      "canonicalUrl": "https://stochvoltrader.substack.com/p/new-wave-of-inflation-first-island",
+      "postDate": "2026-03-15T20:23:36.565Z",
+      "audience": "only_paid",
+      "sectionId": 183037,
+      "sectionSlug": "market-analysis",
+      "sectionName": "Market analysis",
+      "folderName": "2026-03-15_new-wave-of-inflation-first-island",
+      "fetchStatus": "fetched",
+      "fetchHttpStatus": 200,
+      "extracted": {
+        "title": "New wave of inflation, First Island Chain blockade, OpEx week | Weekly post (16-20/March)",
+        "metaDescription": "Iran The focal point of the Iranian offensive is now economic strangulation, not a traditional operational breakthrough.",
+        "textLength": 13310,
+        "sourceUrl": "https://stochvoltrader.substack.com/p/new-wave-of-inflation-first-island"
+      },
+      "assets": {
+        "images": 7,
+        "linked": 7
+      },
+      "files": {
+        "metadata": "posts/2026-03-15_new-wave-of-inflation-first-island/metadata.json",
+        "html": "posts/2026-03-15_new-wave-of-inflation-first-island/source.html",
+        "text": "posts/2026-03-15_new-wave-of-inflation-first-island/content.txt"
+      }
+    },
     {
       "id": 190979255,
       "slug": "about-the-first-island-chain-blockade",
@@ -45,7 +82,7 @@
       },
       "assets": {
         "images": 6,
-        "linked": 1
+        "linked": 6
       },
       "files": {
         "metadata": "posts/2026-03-14_about-the-first-island-chain-blockade/metadata.json",
@@ -74,7 +111,7 @@
       },
       "assets": {
         "images": 6,
-        "linked": 6
+        "linked": 7
       },
       "files": {
         "metadata": "posts/2026-03-13_pce-breakdown-intraday-post-13march/metadata.json",
@@ -103,7 +140,7 @@
       },
       "assets": {
         "images": 3,
-        "linked": 3
+        "linked": 4
       },
       "files": {
         "metadata": "posts/2026-03-12_intraday-post-12march-fa0/metadata.json",
@@ -132,7 +169,7 @@
       },
       "assets": {
         "images": 4,
-        "linked": 4
+        "linked": 5
       },
       "files": {
         "metadata": "posts/2026-03-11_intraday-post-11march/metadata.json",
@@ -161,7 +198,7 @@
       },
       "assets": {
         "images": 3,
-        "linked": 3
+        "linked": 4
       },
       "files": {
         "metadata": "posts/2026-03-10_intraday-post-10march-a1a/metadata.json",
@@ -10586,9 +10623,9 @@
       "id": "789a0fb8-06a7-4034-a873-48c7125be0b2",
       "body": "WEEKEND CHAT (13/March)",
       "createdAt": "2026-03-13T20:38:31.966Z",
-      "updatedAt": "2026-03-15T13:43:40.305Z",
+      "updatedAt": "2026-03-16T02:13:46.472Z",
       "audience": "only_paid",
-      "commentCount": 81,
+      "commentCount": 104,
       "reactionCount": 1,
       "isLocked": false,
       "folderName": "2026-03-13_weekend-chat-13-march",
@@ -10598,8 +10635,8 @@
       "pageStatus": 200,
       "replyFetchSkipped": false,
       "deletedFallback": false,
-      "replyCount": 74,
-      "assets": 15,
+      "replyCount": 96,
+      "assets": 20,
       "files": {
         "metadata": "chats/2026-03-13_weekend-chat-13-march/metadata.json",
         "postJson": "chats/2026-03-13_weekend-chat-13-march/post.json",

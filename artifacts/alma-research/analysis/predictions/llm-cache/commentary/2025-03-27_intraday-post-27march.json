@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T01:54:25.130Z",
+  "inputHash": "1581d05502690ffdeeb26ffc5b93fd5f7c78ee5c",
+  "payload": {
+    "responseId": "resp_06a65dc0bf2f71020069b762c628888195b1aa0ed01ba0ef75",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "If price falls below 5755.42, realized volatility should expand intraday if bears get momentum.",
+          "condition": "price < 5755.42",
+          "expected_result": "Intraday realized volatility increases compared with prior period and downside follow-through occurs (larger negative returns and higher vol measures)."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "The real bear pivot is 5676.72, and a move below it will confirm a true bearish momentum driven by vol.",
+          "condition": "price < 5676.72",
+          "expected_result": "Sustained intraday downside moves with rising realized volatility and failure to reclaim 5676.72 during the session."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "If price rises above 5788.98, upside momentum is indicated and vol should decrease approaching that level.",
+          "condition": "price > 5788.98",
+          "expected_result": "Intraday realized volatility decreases as price approaches/clears 5788.98 and upside continuation occurs."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Above 5768, net long gamma awaits and the upside 5870 can be magnetic.",
+          "condition": "price > 5768",
+          "expected_result": "Price gravitates toward 5870 with reduced local intraday volatility and bullish flow dominating."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "5689.46 is the zero vanna line; with positive vanna convexity, low local intraday vol is needed to break through it.",
+          "condition": "price ≈ 5689.46 (approach)",
+          "expected_result": "Breakout through 5689.46 only occurs when local intraday realized volatility is low; otherwise price stalls or reverts."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "To the downside, 5638.49 is the level where mechanical downside vol should be suppressed.",
+          "condition": "price ≈ 5638.49 (approach)",
+          "expected_result": "Downside moves slow or stabilize near 5638.49 and realized volatility compresses on the way down."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "5731.60 is a potential point to stabilize momentum if volatility decreases there.",
+          "condition": "price ≈ 5731.60",
+          "expected_result": "Price stabilization or a pause in directional movement occurs at 5731.60 accompanied by lower realized volatility."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Charm flip at 5700 with negative convexity implies overall gamma decay that favors vol expansion rather than vol decline.",
+          "condition": "price ≈ 5700",
+          "expected_result": "Realized volatility increases around 5700 and gamma decay leads to larger moves rather than volatility compression."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Market is currently showing mean reversion, so price action should bounce around the mean within the defined rangebound margin of error.",
+          "condition": "price within rangebound margin of error around the mean",
+          "expected_result": "Price repeatedly reverts toward the mean with limited trending breakout and oscillatory moves around the mean."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "The author expects a bulltrap via a reversion trade and prefers a long vol intraday risk/reward as vol may be dumped on buyers later.",
+          "condition": "intraday upside move (bullish leg)",
+          "expected_result": "Initial upside move fails to sustain (reversion), presenting profitable long-vol trades and subsequent vol dumping on those long positions."
+        }
+      ]
+    }
+  }
+}

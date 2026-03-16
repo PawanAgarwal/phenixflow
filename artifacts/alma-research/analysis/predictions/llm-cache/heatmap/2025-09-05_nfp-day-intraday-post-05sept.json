@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:05.964Z",
+  "inputHash": "86621c081bf12e05e8f00d6fb7739f6c76691530",
+  "payload": {
+    "responseId": "resp_08d0b0cf3927f0f50069b764d429b8819d8e8d220ab127c6d8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/gamma pin and cap cluster around 6540–6560 (upper bound of intraday centroid). Heatmap shows concentrated gamma peak and red (high liquidity) band there — likely pinning and volatility burning if price moves up.",
+          "condition": "price approaches 6540–6560",
+          "expected_result": "Price will gravitate toward and stall/pin in the 6540–6560 range; expect reduced realized volatility and range-bound action there for the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/reversion zone and downside magnet between 6450–6485 (downside pivot ~6483.7 with magnetic pull back to lower wing of IC at 6450). Heatmap shows a red/warmer trough and gamma concentration near 6450–6455.",
+          "condition": "price drops below 6483.7 during open hour",
+          "expected_result": "If broken early, price is likely to travel to 6426–6450 (target ~6426.45) but will commonly be magnetized back toward 6450–6485; expect mean reversion signals around 6450."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Larger downside sticky corridor/cluster around 6375–6395 (visible gamma peak and warm band) that can act as a deeper support/rejection zone if the initial downside fails to hold.",
+          "condition": "sustained move lower past 6426 area",
+          "expected_result": "Price likely to find support and slow declines in the 6375–6395 corridor, with higher chance of intraday bounce or consolidation there."
+        }
+      ]
+    }
+  }
+}

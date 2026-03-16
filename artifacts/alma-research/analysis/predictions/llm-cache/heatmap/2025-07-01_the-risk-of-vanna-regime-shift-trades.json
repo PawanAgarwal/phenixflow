@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:59:31.944Z",
+  "inputHash": "a0e0acabc61e9a18a0e42b8c0a1c37b20de17ddf",
+  "payload": {
+    "responseId": "resp_067c2601073c22500069b763fde6e88190ba582c71492c7496",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday pin/sticky zone around 6170–6176 (gamma peak and red heat cluster) acting as central magnet; price likely to revert to this area if momentum drifts away.",
+          "condition": "none",
+          "expected_result": "If SPX moves away from 6170–6176 by >6–8 points intraday, expect a high-probability reversion back into 6170–6176 within the day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside wing resistance cluster ~6222–6245 with a visible gamma trough/peak slope; breaking above 6245 is the unlikeliest but would target extension to 6250+ temporarily.",
+          "condition": "break above 6245",
+          "expected_result": "If SPX closes and holds above 6245, expect continued short-term travel toward 6250–6260 within the same session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside wing support/reversion around 6160 and stronger support corridor ~6148–6150 (IC wing gravitational field); these levels serve as local reversion/stop zones.",
+          "condition": "move below 6160",
+          "expected_result": "If SPX breaches 6160, expect a quick intraday bounce or stall near 6148–6150; failure to hold 6148–6150 would open path to lower gamma band near ~6100–6070."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday travel corridor biased to chop between ~6170 central band and the 6220–6230 upper shelf — odds favor range-bound action and short fast reversions at the edges.",
+          "condition": "none",
+          "expected_result": "Expect most price action to remain between 6170 and 6225 for the trading day; trade setups should favor quick reversion scalps at the edges rather than trend-following."
+        }
+      ]
+    }
+  }
+}

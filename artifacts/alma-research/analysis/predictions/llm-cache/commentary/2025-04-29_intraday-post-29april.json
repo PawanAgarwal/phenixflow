@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:55:58.606Z",
+  "inputHash": "ffd497fe6b1838ac7003ef2f439b23e8f70f0fe1",
+  "payload": {
+    "responseId": "resp_0791b96bf596c5a80069b76329486c819195c9acf5357b305f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market environment is flat-to-negative with a centroid at 5514.63.",
+          "condition": "",
+          "expected_result": "Price will oscillate around 5514.63 with no sustained trend during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot at 5485.78 will act as the near-term pivot level.",
+          "condition": "",
+          "expected_result": "If price moves toward 5485.78, expect bounce or consolidation rather than immediate large continuation through that level without additional vol triggers."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Watch volatility impact near 5498.30 when assessing the 5485.78 pivot.",
+          "condition": "",
+          "expected_result": "If volatility increases at ~5498.30, price is more likely to break through the 5485.78 pivot; if volatility remains subdued, the pivot should hold."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside requires 5560.08 to get taken out.",
+          "condition": "",
+          "expected_result": "A sustained move above 5560.08 will signal bullish breakout and likely continuation higher."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5450 is a big gamma level and if it breaks, high volatility is needed and mean reversion thresholds should be checked.",
+          "condition": "break of 5450",
+          "expected_result": "If price breaks below 5450 with high volatility, expect large intraday moves followed by attempts at mean reversion toward higher thresholds."
+        }
+      ]
+    }
+  }
+}

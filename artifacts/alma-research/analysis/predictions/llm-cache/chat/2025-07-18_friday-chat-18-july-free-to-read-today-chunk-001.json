@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:29:23.969Z",
+  "inputHash": "0035f6f5e7dcd34f2896483b718682c8a8181166",
+  "payload": {
+    "responseId": "resp_031c99f04682d91e0069b7871e70788196bfd9a2ae88312f02",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-18T13:25:41.594Z",
+          "instrument": "",
+          "prediction_text": "If gamma increases, local delta-hedging flow will counter momentum and compress daily returns.",
+          "condition": "gamma increases",
+          "expected_result": "Daily returns will show reduced dispersion (lower daily return volatility) compared to prior period."
+        },
+        {
+          "made_at": "2025-07-18T13:29:23.781Z",
+          "instrument": "",
+          "prediction_text": "When customers are long upside IV skew (long upside gamma and vega), dealers short gamma/vega will trade with the momentum and create illiquidity.",
+          "condition": "customers long upside IV skew",
+          "expected_result": "Market liquidity on upside moves will deteriorate, producing larger price moves and wider bid-ask spreads during upside momentum."
+        },
+        {
+          "made_at": "2025-07-18T13:32:03.500Z",
+          "instrument": "",
+          "prediction_text": "When customers short vomma (sell volatility-of-volatility), momentum will face counterflow and volatility will be suppressed reflexively.",
+          "condition": "customers short vomma",
+          "expected_result": "Implied and realized volatility will decline and exhibit muted spikes compared to periods without short vomma positioning."
+        }
+      ]
+    }
+  }
+}

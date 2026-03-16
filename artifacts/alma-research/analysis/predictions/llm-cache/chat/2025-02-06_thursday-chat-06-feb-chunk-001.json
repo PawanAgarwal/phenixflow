@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:27:17.490Z",
+  "inputHash": "c030cc7523bc15f2d042d812bed8a5d686bcee84",
+  "payload": {
+    "responseId": "resp_00fba5ff022084490069b7869fbb0c819d92f619ab7138d531",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-06T09:04:52.231Z",
+          "instrument": "",
+          "prediction_text": "If volatility is low, I will avoid trading 0DTE and perhaps not trade that day.",
+          "condition": "volatility is low",
+          "expected_result": "No 0DTE trades will be taken that day; potentially no trades at all."
+        },
+        {
+          "made_at": "2025-02-06T14:32:59.101Z",
+          "instrument": "",
+          "prediction_text": "One wing of the short-fly structure will be magnetic (based on price it is the upper wing), and customer interest will need to boost intraday vol to break out of the fly.",
+          "condition": "customer interest increases intraday",
+          "expected_result": "Intraday volatility will expand and price will break out of the short-fly range toward the upper wing."
+        },
+        {
+          "made_at": "2025-02-06T14:35:08.435Z",
+          "instrument": "",
+          "prediction_text": "Dealer flow will prevent volatility from expanding too much to the downside while maintaining a long upside speed profile.",
+          "condition": "",
+          "expected_result": "Downside vol expansion will be suppressed and upward price movement will retain higher momentum."
+        },
+        {
+          "made_at": "2025-02-06T15:49:34.457Z",
+          "instrument": "broad market (ES implied)",
+          "prediction_text": "This is still bullish for the overall trend despite three consecutive up days.",
+          "condition": "",
+          "expected_result": "The overall market trend will continue to be bullish following the recent advance."
+        }
+      ]
+    }
+  }
+}

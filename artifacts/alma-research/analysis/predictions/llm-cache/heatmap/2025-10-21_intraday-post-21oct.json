@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:05:32.233Z",
+  "inputHash": "44723f7ffac1e8a6a03131ad30e55318d8e31989",
+  "payload": {
+    "responseId": "resp_0d65f857f4f31d1f0069b76563df7c8196bbd3c7e52f619a17",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / short-fly center and local sticky area around 6715–6722; spot likely to gravitate toward this range intra-day.",
+          "condition": "none",
+          "expected_result": "SPX trades into and spends time around 6715–6722 during the session (price touches or holds within this range for a sustained period)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and sticky support near 6711.7 with a local downside target and sticky level at ~6665 (with a wider margin to ~6640 if vol spikes).",
+          "condition": "if price breaks below 6711.68 or vol increases",
+          "expected_result": "After break below 6711.68 (or a volatility spike), SPX moves toward 6665 and may extend to ~6640 if volatility rises further."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Pin potential / rejection zone below centroid at ~6695 — likely to act as a short-term pin if spot slides below the centroid but above the downside pivot.",
+          "condition": "price slides below the centroid (~6715–6722) but remains above 6711.68",
+          "expected_result": "SPX stalls or pins near 6695 with limited momentum through that level before either reverting back to centroid or breaking toward the downside pivot."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and sticky resistance at 6740.75; if touched and vol picks up, shorter-gamma action can push a mean reversion toward ~6772.5 before reverting to the pivot.",
+          "condition": "if price reaches 6740.75 and volatility increases",
+          "expected_result": "SPX tests 6740.75 and, with higher vol, extends toward ~6772.5 then reverts back toward 6740.75."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "VIX-related pin zones: VIX in the high teens (18s) can allow VIX to be driven lower and pin SPX around 6740; VIX 19.5–21 act as local pins that support spot.",
+          "condition": "VIX moves to/through 18–21 ranges",
+          "expected_result": "If VIX falls into the 15–18 area, expect SPX to be pinned near 6740; if VIX is 19.5–21, those levels act as support/pinning for SPX preventing large downside moves."
+        }
+      ]
+    }
+  }
+}

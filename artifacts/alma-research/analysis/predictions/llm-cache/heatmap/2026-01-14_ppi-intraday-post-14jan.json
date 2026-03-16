@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:21.268Z",
+  "inputHash": "f378614423501966fa1008b4d2d23c36d6154b5f",
+  "payload": {
+    "responseId": "resp_0c1541b492dd8cab0069b7673a24d081a38efc3d7f5cc3dd3c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong downside sticky zone and magnetic pull around 6867–6870 (centroid support and local pin). Heatmap shows concentrated negative gamma/support area near ~6867 that should attract price and resist sustained upside moves.",
+          "condition": "price moves toward 6870 area",
+          "expected_result": "Price is likely to gravitate to and hold/linger around 6867–6870; expect limited upside beyond this zone and possible reversion back toward centroid (~6896.7) if tested."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside rejection corridor and resistance cluster around 6925–6940 (pivot/pinning region and gamma trough/peak alignment). The heatmap shows a lighter gamma ridge here that can pin and reject rallies.",
+          "condition": "price rallies above current level toward 6925–6940",
+          "expected_result": "Rallies into 6925–6940 are likely to stall or reverse, producing a reversion back toward the centroid (~6896.7) or down toward the 6870 pin."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher resistance band and potential cap near 6983–7059 (upside targets and high-confidence gamma concentrations). The heatmap and script targets show elevated gamma/resistance above ~6980 that can limit extended upside.",
+          "condition": "sustained buying pushes price above ~6980",
+          "expected_result": "Price is likely to be capped between ~6980 and ~7060, with increased probability of mean reversion from that band back toward the pivot (~6938–6940) or centroid."
+        }
+      ]
+    }
+  }
+}

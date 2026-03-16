@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T02:02:41.606Z",
+  "inputHash": "616f7ec54d425ce3f4bcb041de65d6d0305b7507",
+  "payload": {
+    "responseId": "resp_037fed80f79867320069b764b12c08819c9b93500b2c092cbd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The market's main bet is a pin within the centroid, skewed to its lower bound where it expects the most liquidity.",
+          "condition": "",
+          "expected_result": "Spot remains within the centroid range and gravitates toward the lower bound (around 6447.75–6452.75), showing limited directional movement away from that area during the trading day."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The centroid 6447.75–6452.75 will act as a structural pivot after 12:40pm and will decide if spot will be pinned to 6460 or to 6440, especially the 6450.29 line.",
+          "condition": "after 12:40pm",
+          "expected_result": "Price behavior around 6450.29 determines direction: sustained trading above it leads to pinning near ~6460; sustained trading below it leads to pinning near ~6440."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The downside pivot at 6444.74 is expected to attract liquidity and act as a pin during the day unless skew is bid and realized in intraday RV to break it.",
+          "condition": "",
+          "expected_result": "Price will repeatedly revisit and hold at ~6444.74 (pin), unless increased put buying/realized volatility breaks below, in which case price will move lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If intraday volatility catches up before 13:20pm, there is a chance to retest the 6400/6390 area, though with low probability.",
+          "condition": "volatility increases before 13:20pm",
+          "expected_result": "Price will decline to test 6400–6390 intra-day if realized volatility rises before 13:20."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility does not increase before 13:20pm, price will return to the downside pivot or after that hour be trapped to 6420–6425.",
+          "condition": "volatility does not increase before 13:20pm",
+          "expected_result": "Price will revert to ~6444.74 and likely become confined around 6420–6425 after 13:20."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The upside pivot is 6465.80 and will be a pin in the PM unless call skew is shown in intraday vol to break it.",
+          "condition": "",
+          "expected_result": "Price will trade up to and hold at ~6465.80 (pin) during the PM; it will only break above this level if aggressive call buying drives intraday volatility."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the upside pivot 6465.80 breaks during the AM, spot has a chance to hit 6493/6500 but will revert back.",
+          "condition": "break of 6465.80 during the AM",
+          "expected_result": "Price will run to test 6493–6500 intra-day then reverse back toward the pivot or centroid later in the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If call bid is aggressive, 6479 becomes a main pivot after 2pm and will decide a magnet to 6460/70 range or to 6488.",
+          "condition": "aggressive call buying after 2pm",
+          "expected_result": "Price will rotate around 6479 and then either be pulled back to ~6460–6470 or be attracted higher toward ~6488 depending on follow-through."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The most likely scenario is ranging around 6444.74 with the market pinned there and some AM upside momentum.",
+          "condition": "",
+          "expected_result": "Price will trade in a range centered on ~6444.74 with brief upward movement in the morning but remain pinned near that level for the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Second likeliest is a pin to the upside pivot after a retest of the highs.",
+          "condition": "",
+          "expected_result": "Price will retest higher levels and then become pinned at the upside pivot (~6465.80), maintaining elevated intraday levels."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Less likely is a retest of the lows.",
+          "condition": "",
+          "expected_result": "Price will break lower and test previous low levels (e.g., ~6390–6400), but this outcome has low probability."
+        }
+      ]
+    }
+  }
+}

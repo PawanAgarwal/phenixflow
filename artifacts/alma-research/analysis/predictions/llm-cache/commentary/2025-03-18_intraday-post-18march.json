@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:53:52.579Z",
+  "inputHash": "b6f7fe715004a625d313446842d68bd16e4898b6",
+  "payload": {
+    "responseId": "resp_046eb656751493560069b762a8c678819d8c1edea5fae91191",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Puts can print starting at 5624.77, increasing downside option pressure.",
+          "condition": "price at or below 5624.77",
+          "expected_result": "Increased put open interest and option selling activity leading to greater downside option supply observable in options volume and OI data"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside shorter put gamma will have an effect as a downside pull around 5580, at least canceling supportive flows.",
+          "condition": "price at or below 5580",
+          "expected_result": "Acceleration of downward price movement or pressure that offsets prior supportive flows, measurable as price declines or reduced bid liquidity near 5580"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pressure becomes relevant above 5707.40, with stabilization needing a break of 5735.",
+          "condition": "price above 5707.40",
+          "expected_result": "Reduced downside gamma and increased upside momentum; if price then breaks 5735, intraday stabilization with higher probability of continued upside or range-holding above that level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5654.36 is the main pivot for intraday price action.",
+          "condition": "",
+          "expected_result": "Price will rotate around 5654.36, with directional moves likely to originate from tests and rejections of this level, observable as clustered price action and increased touch frequency"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Positioning-derived support/resistance at 5631, 5676, 5692, and 5585 will act as intraday reaction points.",
+          "condition": "",
+          "expected_result": "Price will find intraday support or resistance and exhibit bounces or rejections at these levels, observable in short-term price reversals or pauses near each level"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Puts start to print at 18.83, amplifying suppressive vanna/charm flows and contributing to vol decline.",
+          "condition": "VIX at or below 18.83",
+          "expected_result": "Increased put activity causing downward pressure on VIX, observable as falling VIX levels and increased put option volume/OI"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "21.5 is a pivot to avoid upside short gamma with 26 acting as a magnet.",
+          "condition": "",
+          "expected_result": "VIX trading below 21.5 will reduce upside short-gamma risk; if VIX moves toward 26 it will tend to be attracted to that level, observable as continuation toward 26 if momentum increases"
+        },
+        {
+          "instrument": "VIX/VVIX",
+          "prediction_text": "VIX and VVIX should correlate positively during the day to confirm further vol decline and supportive hedge unwind into tomorrow.",
+          "condition": "",
+          "expected_result": "Observed positive correlation between intraday VIX and VVIX time series coinciding with decreasing VIX levels and reduced hedging activity into the next day"
+        }
+      ]
+    }
+  }
+}

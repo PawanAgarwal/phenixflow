@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:04:37.368Z",
+  "inputHash": "51cee8bf26f035ef6839ae931dd4958cd4af40e2",
+  "payload": {
+    "responseId": "resp_0acd16bcb84d98f60069b7652d37a481a1b46d169632b8909c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "USD will remain lackluster with a mild tactical USD-bearish bias in the near term.",
+          "condition": "",
+          "expected_result": "USD index declines modestly over the coming days/weeks versus recent levels"
+        },
+        {
+          "instrument": "JPY",
+          "prediction_text": "Alma will not chase a near-term long-JPY trade unless there is fresh negative BoJ guidance; risk of a BoJ hike in October could alter JPY direction.",
+          "condition": "fresh negative BoJ guidance or BoJ hikes in October",
+          "expected_result": "If BoJ gives fresh negative guidance or hikes, JPY strengthens materially; absent that, no new long-JPY positions will be initiated and JPY likely stays near current levels or weaker"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Equity tech sector inflows will resume, supporting tech and driving dispersion (single-name vol > index vol).",
+          "condition": "",
+          "expected_result": "Tech-heavy equities outperform broad index and single-stock volatility rises relative to index volatility over subsequent weeks"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Intraday: price will stick around the center of the fly during the AM within a wider range, then experience aggressive vol burning into the PM.",
+          "condition": "FOMC Minutes release scheduled tomorrow at 2PM",
+          "expected_result": "During the morning session spot stays near the intraday center with moderate range; volatility spikes and larger directional moves (vol burning) occur in the afternoon near/after the Minutes"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Intraday secondary bet: there will be a downside retest following the AM activity.",
+          "condition": "market reaction to FOMC Minutes or continued positioning imbalance",
+          "expected_result": "Price will retest lower intraday lows set earlier that day within a few hours after the Minutes"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Intraday tertiary bet: there will be an upside retest, primarily as a pin if spot breaks upward.",
+          "condition": "spot becomes unchained upwards (breaks higher)",
+          "expected_result": "Price briefly pins near a higher level (failed break) leading to short-lived upside spikes rather than sustained reversion"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Intraday quaternary bet: there is a possible upside move with reversion.",
+          "condition": "",
+          "expected_result": "Price moves higher intraday but subsequently reverts back toward the prior mean/center within the same trading session"
+        }
+      ]
+    }
+  }
+}

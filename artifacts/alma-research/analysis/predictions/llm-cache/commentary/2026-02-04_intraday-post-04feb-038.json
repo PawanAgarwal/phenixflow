@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:14:19.002Z",
+  "inputHash": "b51e84f615f2f556c300405790c104886b15da30",
+  "payload": {
+    "responseId": "resp_0d63391731ef03bf0069b76777c9988197a8e52f3edd036870",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Markets are expected to be cautiously more calm on Tuesday with optimism in the AM and moderation in the PM, followed by consolidation after Tuesday.",
+          "condition": "Tuesday",
+          "expected_result": "Lower realized intraday volatility on Tuesday versus prior session, with net intraday gains in the morning and reduced range/volume in the afternoon, then reduced price movement and tighter ranges in sessions after Tuesday"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Headline risk will be significantly higher during the February period due to geopolitical tensions (US/EU conflict and Iran), making price jumps more likely.",
+          "condition": "February period",
+          "expected_result": "Increased frequency of sudden intraday price gaps or spikes across risk assets during February compared with January, observable as higher number of >1% moves or elevated intraday realized volatility"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T01:57:47.231Z",
+  "inputHash": "0da57a88157926c8956b2222ee94e8c602968857",
+  "payload": {
+    "responseId": "resp_00420cd3c384896e0069b763930d1481979cba579b16c5ad40",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid support/pinning around 5928.75–5947.46 (aligns with yesterday’s high and zero vanna). Market likely to hold above this zone to sustain bullish momentum; breaking above 5965.13 would confirm continuation to the upside.",
+          "condition": "price > 5965.13",
+          "expected_result": "If price breaks and holds above 5965.13, expect intraday continuation higher from ~5965 toward near-term gamma peaks (~5980–6015) within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside sticky/support corridor and dealer-long-gamma support visible between ~5893 and 5885; deeper support cluster at ~5856–5846 with strong gamma interest below (and a larger magnet area around 5800–5750 if vol jumps).",
+          "condition": "price < 5893",
+          "expected_result": "If price falls below 5893, expect put-heavy dealer support to slow/stop declines around 5885–5850; if an outside vol shock occurs, expect accelerated move toward 5800–5750 where larger option interest should pin or slow prices."
+        }
+      ]
+    }
+  }
+}

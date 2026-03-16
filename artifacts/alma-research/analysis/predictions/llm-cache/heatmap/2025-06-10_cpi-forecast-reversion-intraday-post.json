@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:21.673Z",
+  "inputHash": "ab6193ff71cd8a3b7c0e41ec32006f9fe41747db",
+  "payload": {
+    "responseId": "resp_093f1c0c83a4d9b30069b763b80df08197807135717ea4a675",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong gamma peak / sticky zone around 6043–6050 (resistance). Expect selling pressure there and likely rejection on intraday rally to that band.",
+          "condition": "price reaches 6043–6050",
+          "expected_result": "Price rejects near 6043–6050 and falls back toward ~5995 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / magnet region centered near ~6027 acts as a pivot where vol picks up and direction is decided; the 6034.86 level is an upside pivot and 6000.32 is a downside pivot (momentum deceleration).",
+          "condition": "price around 6027–6035",
+          "expected_result": "If vol increases at 6027–6035, market squeezes up toward 6047–6050; if vol falls, price drifts back to 6000–5995 and may pin to 6000–6002."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / sticky gamma trough visible ~5950–5955 and a lower support area near 5910–5915; these act as reversion anchors if 6000 fails.",
+          "condition": "price falls below 5995/5985",
+          "expected_result": "Price will retest 5955–5950; if that breaks, expect extension toward 5910–5915."
+        }
+      ]
+    }
+  }
+}

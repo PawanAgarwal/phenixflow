@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:02:38.528Z",
+  "inputHash": "aa2be4334e9b43ad8eb7db14f60890c39d395802",
+  "payload": {
+    "responseId": "resp_0362e41150751f7f0069b764b79cb481a2a70b3b7adc745acc",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Central supportive liquidity (gamma peak/centroid of the short fly) between ~6428.5 and ~6433.1 will act as a sticky support zone; expect price to gravitate toward and hold in that band while intraday structure remains intact.",
+          "condition": "SPX trading above or near 6428.5-6433.1",
+          "expected_result": "Price gravitates back to 6428–6434 and shows multiple re-tests or consolidation there (minutes to hours) rather than trending away immediately."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pin/rejection zone at ~6437.6–6445/50 (upside pivot and immediate cap). If upside vol/bid on skew is absent, the heatmap signals rejection there.",
+          "condition": "Price reaches 6437.58–6445/50 without significant rise in upside option skew/vol",
+          "expected_result": "Price stalls or reverses near 6438–6450 within a short timeframe (intraday) and fails to sustain a break higher."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower retest and reversal target around 6414.9 down to ~6400 with a harder support/zero-vanna line near 6381.4; heatmap shows higher probability of a downside retest than a squeeze up.",
+          "condition": "Put skew picks up and intraday realized vol increases on the downside",
+          "expected_result": "Price falls to retest 6400 (with possible extension to 6381) and then reverses back toward the centroid (6428–6435) within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Low-probability upside squeeze corridor toward ~6476–6480 if upside vol catches up to realized vol (requires notable upside vol/buying pressure).",
+          "condition": "Significant increase in upside option buying/realized upside vol during intraday",
+          "expected_result": "Price accelerates above 6445/50 and reaches 6476–6480 within the session."
+        }
+      ]
+    }
+  }
+}

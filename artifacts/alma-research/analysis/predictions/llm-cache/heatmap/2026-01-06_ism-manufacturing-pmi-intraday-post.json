@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:53.306Z",
+  "inputHash": "712da4435795de86238f8ea9ee1db2ea4362c05e",
+  "payload": {
+    "responseId": "resp_04e56f7f7f8e3c350069b7671ef8ac8193b73d44da7ce945fb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid sticky zone (gamma magnet) centered at 6905–6911 acts as strong consolidation/pinning area; market likely rangebounds around this band intraday.",
+          "condition": "",
+          "expected_result": "Price will oscillate and spend majority of intraday time between 6905 and 6911; expect limited sustained breaks beyond this band without a major news trigger."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance near 6926 with an upside target/pinning area at ~6936; breakout above 6926 is low probability and likely rejects back toward centroid.",
+          "condition": "",
+          "expected_result": "If price approaches 6926, expect rejection or brief test with reversion back toward 6905–6911; only a strong news-driven move can push and pin price toward ~6950."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/resistance (support-to-break) around 6879 with a magnetic downside target near 6858 and a wider error margin toward 6820–6830 if vol surges.",
+          "condition": "",
+          "expected_result": "If price breaks below 6879, expect travel toward 6858 where it will likely find support and revert; in case of volatility pickup, price may extend to the 6820–6830 area before mean reversion."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Deep gamma basin / sticky support visible ~6780–6790 (strong negative gamma concentration) likely to slow and absorb downward moves.",
+          "condition": "",
+          "expected_result": "If price falls into 6780–6790, expect deceleration of downside momentum and higher probability of bounce/reversion back above 6800."
+        }
+      ]
+    }
+  }
+}

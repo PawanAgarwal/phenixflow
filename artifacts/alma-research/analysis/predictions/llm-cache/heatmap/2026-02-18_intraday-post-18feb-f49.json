@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:01.909Z",
+  "inputHash": "0d532c09de1a09f3d75ea1c5ffd9a9422d0fe1b5",
+  "payload": {
+    "responseId": "resp_09f15eecc92bef570069b7679dbf98819697e4a4302d6aa75c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky support zone ~6708-6710 (99.73% tail level) with gamma peak support visible near 6670-6680; market likely to find support and revert upward toward 6759-6785 centroid/pivot area.",
+          "condition": "price approaches 6708-6710",
+          "expected_result": "Price will hold or bounce from 6708-6710 and trade back up toward 6759-6785 within the same session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday magnetic sticky resistance cluster around 6910-6945 (95.4%–99.73% cluster) with gamma peak around 6920-6930; upside is likely to stall and revert under ~6950 unless significant call skew/buying occurs.",
+          "condition": "price rallies into 6910-6945",
+          "expected_result": "Price will encounter resistance and fail to sustain above ~6950, reversing back below 6910-6945 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / line-in-the-sand near 6825 (also noted 6806) acting as reversion magnet; intra-day moves away from centroid are likely to revert back toward ~6825.",
+          "condition": "price moves more than ~15-20 pts away from 6825",
+          "expected_result": "Price will gravitate back toward 6825 (±~20 pts) rather than breaking decisively through it during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside momentum braking pivot near 6785 with target/support at 6759 and tolerable margin down to ~6708; the 6785 level functions as a test — hold implies support, break targets 6759-6708 sticky zone.",
+          "condition": "price breaks below 6785",
+          "expected_result": "Price will continue down toward 6759 and may reach the sticky support area around 6708 if 6785 is decisively broken."
+        }
+      ]
+    }
+  }
+}

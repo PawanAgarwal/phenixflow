@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:13:07.969Z",
+  "inputHash": "016eedf17cf60bd84ade04df3a92c6a167bf3a58",
+  "payload": {
+    "responseId": "resp_0468fd4b7e5116420069b7672b2c088194b9d9076b8d4466b9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/support centroid around 6935–6948 (noted 6941.47–6948.75 with 6935.50 influence) — market likely to gravitate back to this zone; heatmap shows concentrated gamma/pinning there.",
+          "condition": "none",
+          "expected_result": "If SPX moves away intraday, expect reversion back into 6935–6948 within the session (price returns to that range within hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance near 6976.6 with upside target and sticky zone at ~7001.3 — breaking 6976.6 requires persistent realized vol down plus strong call buying; otherwise likely rejection back to centroid.",
+          "condition": "SPX breaks and holds above 6976.56 with supportive call buying and reduced RV",
+          "expected_result": "On a clean break and hold above 6976.56, expect follow-through to 7001.31 (test of ~7000) within the next trading day; if break fails, expect rejection back toward 6935–6948."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/resistance at ~6899.3 with downside target ~6864.3; if broken the area becomes pinning (sticky) lower — heatmap shows gamma troughs and rejection setup above that level.",
+          "condition": "SPX breaks and holds below 6899.32",
+          "expected_result": "On a sustained break below 6899.32, expect a move toward 6864.27 within the session to next day; if 6899.32 holds, expect price to remain rangebound and revert to centroid 6935–6948."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher-probability intraday range between roughly 6860–7018 (noted heatmap bands at 7018.68 and 6824.24 with concentrated gamma bands inside) — market likely to trade within that corridor with sticky nodes at centroid and near 7000/6870 clusters.",
+          "condition": "none",
+          "expected_result": "Price to remain largely contained within ~6860–7020 during the near-term trading sessions, with intraday reversions at the centroid (6935–6948) and potential short squeezes toward ~7000 if upside pivot is cleared."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:14:48.658Z",
+  "inputHash": "23ca7dc7c6f7de86cf177484c127932a98ae4ea6",
+  "payload": {
+    "responseId": "resp_08c8e32c864604040069b767916d3481a1b08a9780ce851ff3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma concentration and dark heatmap band above 7050–7065 acting as a sticky resistance / magnet to upside moves; likely rejection if price approaches that band.",
+          "condition": "price rises into 7050–7065",
+          "expected_result": "Price is likely to stall or reverse downward from 7050–7065 within same session (visible rejection, failed breakout)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Notable gamma trough and orange/red supply area around 6830–6850 indicating a sticky downside zone that can absorb selling and magnetize price lower toward 6820–6850 before mean reversion.",
+          "condition": "price falls into 6850–6830",
+          "expected_result": "Price should slow and cluster in 6830–6850, with increased chance of short-term bounce/reversion back toward 6900–6940 within hours."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pin / peak structure and centroid region plotted near 6927–6941 acting as a reversion anchor; market is prone to gravitate back to this 6925–6945 band after intraday excursions.",
+          "condition": "any intraday move away from centroid",
+          "expected_result": "Price is likely to revert back to 6925–6945 within the trading day (mean reversion to centroid)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and short-term pin near 7000–7015 shown by contour clustering — breakout above 7000–7015 would confirm bullish run toward 7030–7010 target bands shown on heatmap.",
+          "condition": "price breaks and holds above 7000–7015",
+          "expected_result": "Expect continuation up to ~7025–7040 (test of upper contour band) within the session."
+        }
+      ]
+    }
+  }
+}

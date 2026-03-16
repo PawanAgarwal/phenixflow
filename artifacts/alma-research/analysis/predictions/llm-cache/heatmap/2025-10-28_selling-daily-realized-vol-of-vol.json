@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:05:56.852Z",
+  "inputHash": "08cdd7b74f4d1bdf1ef31ee35496b8c1dc2bc58b",
+  "payload": {
+    "responseId": "resp_0520f37287777bbf0069b7657eccf8819f87d38cbd2f05362e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning / sticky zone around 6868 — market likely to gravitate back to this daily line in the sand into session end; acts as intraday reversion magnet.",
+          "condition": "price away from 6868 during PM (especially after 14:00)",
+          "expected_result": "Price will revert toward 6868 within the session (move of ~5-20 pts back to 6868 before close)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside rejection zone / heavy resistance near 6905–6908 where significant rejecting force exists; move above 6905.35 would likely trigger uncontrolled upside but is unlikely.",
+          "condition": "price fails to break above 6905.35",
+          "expected_result": "Price will be rejected and reverse lower from 6905–6908 within hours after approach."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot / short-term support cluster at ~6837.6 with an initial target near 6819.96; losing 6810 opens a low-probability deeper pin toward ~6770.",
+          "condition": "break below 6837.59 (follow-through to 6819.96)",
+          "expected_result": "Price will move down to ~6819.96; if 6810 is subsequently broken, price may travel further toward ~6770."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:54:54.012Z",
+  "inputHash": "d21f43d9f052804b53e837133a44512e0f318908",
+  "payload": {
+    "responseId": "resp_032dac8a9461df780069b762e2cfc08195bbbd31218b326d60",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "I call for a stagflationary NFP print with very low or stagnant job growth and rising or non-declining unemployment.",
+          "condition": "",
+          "expected_result": "Reported US Non-Farm Payrolls will show very low net job gains or contraction and unemployment will rise or fail to decline for that monthly release."
+        },
+        {
+          "instrument": "10-year yield",
+          "prediction_text": "Yields will drop as market participants hedge downside risks and slow economic growth.",
+          "condition": "",
+          "expected_result": "The 10-year Treasury yield will decline meaningfully relative to the prior close (e.g., a sustained intraday or multi-day drop of several basis points)."
+        },
+        {
+          "instrument": "Gold futures",
+          "prediction_text": "If the current downtrend continues, gold will become less attractive and fall further as investors shift to cash or liquid bonds.",
+          "condition": "if the trend continues",
+          "expected_result": "Gold futures prices will continue declining beyond the current ~3% drop, producing additional daily losses over subsequent sessions."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Realized vol of vol is declining, which foreshadows a potential braking of VIX's decline and a reload into a final vol squeeze after a short consolidation.",
+          "condition": "",
+          "expected_result": "After a period of declining vol of vol and short consolidation, VIX will reverse its downward trend and spike higher, indicating a short-term vol squeeze."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Dealer/option flow activity may suppress volatility further by vol-selling, enabling prices to be pushed above key pivots if vol is successfully suppressed.",
+          "condition": "",
+          "expected_result": "If option/ dealer vol-selling occurs intraday, realized volatility will fall and the underlying price will move above the stated pivot levels (e.g., breach 5277.21 upside momentum confirmation)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Intraday mechanical gamma dynamics (charm flip ~5250, zero vanna 5112.48) can cause intraday vol suppression and price pinning around those levels.",
+          "condition": "",
+          "expected_result": "Price will pin or consolidate near ~5250 (and show support/resistance behavior near 5112.48 and 5250) with reduced intraday volatility consistent with gamma-induced suppression."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The main vol pivot is 5261.81 with upside momentum confirmation at 5277.21; if price moves above the pivot, 5333.62 is reachable.",
+          "condition": "",
+          "expected_result": "SPX will trade above 5261.81 and then above 5277.21, with a subsequent move toward 5333.62 within the same intraday session or short-term horizon."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downward centroid is 5175.81 and between 5070 and 5248 the speed profile is very steep, so sellers will attempt to sell gamma below to brake downside moves.",
+          "condition": "",
+          "expected_result": "If SPX approaches the 5070–5248 range, intraday price moves will show rapid downward speed, and increased gamma-selling below those levels will be observed as attempts to slow or reverse declines."
+        }
+      ]
+    }
+  }
+}

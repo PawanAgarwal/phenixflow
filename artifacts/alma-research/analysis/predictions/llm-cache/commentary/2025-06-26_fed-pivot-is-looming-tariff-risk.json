@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:59:07.140Z",
+  "inputHash": "cc60d106c898b6dc6d90022b97489ba73f066ad7",
+  "payload": {
+    "responseId": "resp_04e0edb31e47c2b90069b763e289888194bc69e7e05b6d98eb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "FFF6",
+          "prediction_text": "A dovish shock such as a weak NFP print would drive 5-year yields sharply lower.",
+          "condition": "weak NFP print",
+          "expected_result": "5-year Treasury yield falls materially more than long-end yields within 1-3 trading days, increasing 5s30s steepening"
+        },
+        {
+          "instrument": "NQ/RTY ratio",
+          "prediction_text": "The NQ/RTY ratio will be supported into July 4 and continue to spike as mega-caps front-run a dovish pivot via vol-sensitive flows and dealer/ETF hedging.",
+          "condition": "through July 4 leading into July 8 tariff deadline",
+          "expected_result": "NQ/RTY ratio rises into July 4 and shows further intraday jumps around vol events, with Nasdaq outperforming Russell over the following week"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If July 8 reciprocal-tariff deadline and August catalysts materialize, volatility control funds will sell into rising vol, CTAs will unwind steepeners, and buybacks will fail to absorb a broad sell-off causing yields and equities to snap back sharply.",
+          "condition": "July 8 tariff cliff and August catalysts materialize",
+          "expected_result": "Both long-term yields and broad equity indices decline sharply within days of the tariff cliff, with increased realized volatility and widened credit spreads"
+        },
+        {
+          "instrument": "Equities",
+          "prediction_text": "Sentiment and dealer/ETF hedging will support equities into July 4, muting a near-term vol squeeze.",
+          "condition": "leading into July 4",
+          "expected_result": "Equity indices exhibit lower realized volatility and limited downside (no large intraday drawdowns) through July 4 despite headline risks"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If August inflation prints show only a temporary tariff bump, markets may still price in Fed cuts by Q4, bolstering risk assets.",
+          "condition": "August inflation prints show only temporary tariff-driven bump",
+          "expected_result": "Fed-funds futures price increased probability of one or more cuts by Q4 and equity indices rally within weeks after the data release"
+        },
+        {
+          "instrument": "5s30s Treasury spread",
+          "prediction_text": "The 5-year vs 30-year Treasury spread will continue to widen (bear-steepen) as belly prices move on front-end rate-cut bets while long-end yields stay elevated on fiscal concerns.",
+          "condition": "",
+          "expected_result": "5s30s spread increases further over coming weeks, driven by falling 5-year yields relative to 30-year yields"
+        }
+      ]
+    }
+  }
+}

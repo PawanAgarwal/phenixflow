@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:04:53.575Z",
+  "inputHash": "c6c5c738e7ebe0c0be8947698cfa837412702872",
+  "payload": {
+    "responseId": "resp_0531eb42fc3561230069b7653a0b2c8190b30880f2dbddcc1d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The most supportive range is the centroid of 6690.75.",
+          "condition": "",
+          "expected_result": "Price will trade and find support around 6690.75 (price spends significant time near this level)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Below 6690.75, the downside gamma is magnetic towards 6682.47.",
+          "condition": "price moves below 6690.75",
+          "expected_result": "Price will be pulled down toward 6682.47 (reach or test 6682.47)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Above 6690.75 there is vacuum up towards 6767.49 if the upside pivot of 6736.95 is broken (to leave behind the downside gravity).",
+          "condition": "price breaks above 6736.95",
+          "expected_result": "Price will accelerate upward and move toward 6767.49 (reach or test 6767.49)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The vacuum up effect is the strongest in the first hours.",
+          "condition": "during the first hours of trading",
+          "expected_result": "Upward moves, if they occur, will be faster and larger early in the session (higher intraday rate of ascent vs later hours)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Locally, the 6748/52 zone is very hard to break if spot doesn’t open above this, and then the upside pivot is pinning.",
+          "condition": "spot does not open above 6748–6752",
+          "expected_result": "Price will fail to breach the 6748–6752 zone and the upside pivot will act as a pinning level (price remains below and is held down by this zone)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside max is 6780 then reversion back to the 6760s area.",
+          "condition": "price reaches upside extremes",
+          "expected_result": "Price will reach up to ~6780 and then pull back to the 6760s (a reversal from ~6780 into the 6760s)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Local positioning favors more downside or ranging around the centroid and 6703.71/6710.44 area.",
+          "condition": "",
+          "expected_result": "Price will either trend lower or trade sideways around 6703.71–6710.44 (test or consolidate in that range)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The pricing implies ranging or up, but local effects favor ranging or down; overall expectation: ranging.",
+          "condition": "",
+          "expected_result": "Price will predominantly range during the session rather than trend strongly up or down (limited directional movement within a defined band)."
+        }
+      ]
+    }
+  }
+}

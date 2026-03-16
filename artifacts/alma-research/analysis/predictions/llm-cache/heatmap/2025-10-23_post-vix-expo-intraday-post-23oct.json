@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:05:45.795Z",
+  "inputHash": "41a3fd3fc2fed43c5c236e42b8a9d8ce30a09b5a",
+  "payload": {
+    "responseId": "resp_016fb07e6e19b5140069b76572f448819d8a2cd2c511d50278",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/range magnet around 6705–6716 acting as primary pinning/range zone; heatmap shows gamma trough/peak concentration there so price likely to revert to this centroid if it strays.",
+          "condition": "none",
+          "expected_result": "Price will trade back into and spend time within 6705–6716 during the session (multiple touches or consolidation)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local support/brake around 6670–6675 due to zero vanna/oscillation acting as a hard reversion level; breaking below requires realized vol to rise and put skew to be bid.",
+          "condition": "none",
+          "expected_result": "Price will fail to sustain breaks below 6670–6675 and will revert upward toward ~6700–6740 unless realized volatility increases materially."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside target/support cluster at ~6625 with stronger skew testing and a maximum downside band near 6570–6572 if volatility catches up; heatmap shows concentrated gamma/support in that area.",
+          "condition": "none",
+          "expected_result": "If downward momentum continues, expect a move to ~6625 as the near downside objective; in a volatility spike the market can extend toward ~6570–6572."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance/peak around 6752–6780 with strong resistance at ~6752 and potential pin near 6780; short-term squeeze to 6800 is low probability but would likely revert to 6760–6780.",
+          "condition": "none",
+          "expected_result": "Rallies will meet resistance at ~6752 and are likely to stall or reverse in the 6750–6780 band; any brief move toward 6800 should reverse back to ~6760–6780."
+        }
+      ]
+    }
+  }
+}

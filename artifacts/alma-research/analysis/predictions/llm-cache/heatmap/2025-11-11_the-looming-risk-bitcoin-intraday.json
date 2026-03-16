@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:10:04.583Z",
+  "inputHash": "f41a542fdbec1bc2feae934d30798f9bb6c4d1a1",
+  "payload": {
+    "responseId": "resp_03128ad909c8890e0069b76675322881a08f2f47f5684db9c4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday pinning / reversion zone centered ~6812-6799 with centroid around 6787–6799 where hedging flows balance. Heatmap shows concentrated gamma and a neutral band implying price is likely to gravitate and be kept in that area.",
+          "condition": "None",
+          "expected_result": "SPX to trade and revert into the 6787–6812 area repeatedly during the session; expect limited sustained breakouts while price remains near centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Defined intraday range with downside pivot ~6782.86 and downside target ~6754.97; heatmap shows sticky gamma troughs and support accumulation near ~6755 indicating likely reversion or bounce if that level is tested.",
+          "condition": "Price tests 6755 area",
+          "expected_result": "If SPX reaches ~6755, expect a measurable bounce/reversion back toward the centroid (6787–6812) within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot ~6827.33 with upside target ~6857.49; heatmap indicates resistance above the centroid and a low-probability breakout. Significant gamma and a pin near 6875 act as rejection/ceiling if momentum carries beyond target.",
+          "condition": "Price breaks above 6857.49 with sustained call skew bid",
+          "expected_result": "If SPX breaks and holds above 6857.49, expect extension toward 6875 (with margin to ~6895). Otherwise expect rejection and reversion back toward the centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower tail risk indicated around ~6726 with put skew creating a deeper downside pin if realized volatility spikes; this functions as an extended downside magnet below the primary range.",
+          "condition": "Sustained increase in put skew / realized volatility to the downside",
+          "expected_result": "SPX may be pulled toward ~6726 as a lower magnet; expect bounce attempts or consolidation after reaching that level."
+        }
+      ]
+    }
+  }
+}

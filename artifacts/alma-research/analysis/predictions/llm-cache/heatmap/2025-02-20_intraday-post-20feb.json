@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:51:59.616Z",
+  "inputHash": "010ded08d752dcaddc70e0cb7c1e881bc85cae36",
+  "payload": {
+    "responseId": "resp_0f454ced62d55fdf0069b762379fa0819d8977c869b6294cb1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma support (pinning) in the 6115–6107 area — heatmap and author code note show concentrated positive gamma there, likely to act as a support/magnet intraday.",
+          "condition": "price approaches or falls into 6115–6107",
+          "expected_result": "Price will find buying pressure and stall or revert upward within the range; expect a bounce or consolidation above ~6107 within a few hours of touching the zone."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero-vanna flip resistance levels at ~6151 and ~6072.5 — these lines are identified as volatility-break thresholds; breaking them requires elevated vol.",
+          "condition": "price attempts to break above 6151 or below 6072.5",
+          "expected_result": "If price reaches 6151, it will meet resistance and is likely to stall or reverse unless volatility increases; similarly a move below 6072.5 will require vol pickup to continue and otherwise should see rejection/reversion."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "High gamma peak / sticky rejection zone near 6270–6285 (late-day) — heatmap shows a concentrated red peak circled around ~6270–6285 indicating a sticky area that will attract price or cause rejections.",
+          "condition": "price moves toward 6270–6285",
+          "expected_result": "Price will slow, be attracted to, or be rejected at this zone; expect increased order flow and a higher probability of consolidation or reversal when touching 6270–6285."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Net positive speed environment between 6100–6145 favoring intraday vol decay — heatmap shading and author note indicate gamma/speed profile that supports mean reversion and volatility compression in this corridor.",
+          "condition": "price stays within 6100–6145",
+          "expected_result": "Volatility should decay and price should show mean-reverting behavior (tightening ranges and smaller intraday moves) while inside this corridor."
+        }
+      ]
+    }
+  }
+}

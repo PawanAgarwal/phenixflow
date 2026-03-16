@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:01:50.832Z",
+  "inputHash": "4d49f6b5b57f028f8c6381d63f73b93cd160e037",
+  "payload": {
+    "responseId": "resp_09cdf093ad23c20b0069b76487780481a383120cae1866df17",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market keeps trending at the centroid of the weekly OpEx positioning.",
+          "condition": "",
+          "expected_result": "Price action will remain clustered around the weekly OpEx centroid, showing limited directional deviation through the OpEx week."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market expects inflation on the front-end (1-3 year window) as a result of tariffs that will moderate later.",
+          "condition": "",
+          "expected_result": "Inflation-sensitive front-end instruments will price in higher inflation for 1–3 year maturities, causing short-term inflation swap/forward breakevens and nearby Treasury yields to rise relative to longer maturities."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market expects a neutral CPI print today, which will expand the risk window and uncertainty until PPI and Jackson Hole.",
+          "condition": "CPI print is neutral",
+          "expected_result": "Risk assets will trade with increased range and elevated uncertainty, with downside capped by mechanical OpEx flows until PPI and Jackson Hole events."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If inflationary pressures are not significant or there is a small hint of cooling toward disinflation and a September cut becomes more likely, the market will take profit.",
+          "condition": "Evidence of disinflation or increased likelihood of a September Fed cut",
+          "expected_result": "Risk assets will experience profit-taking leading to corrective price moves (modest declines) after the disinflation signal."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A hot inflationary print would cause some selling and expand the window to PPI again to prove or disprove the trend.",
+          "condition": "Hot CPI print",
+          "expected_result": "Immediate selling in risk assets, increasing volatility and extending downside pressure until PPI confirms or refutes higher inflation."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Good (better-than-expected) CPI print and squeeze up is the least expected; instead expect some hedge unwind and temporal happiness.",
+          "condition": "Better-than-expected CPI print",
+          "expected_result": "A modest short-covering squeeze occurs but is limited and short-lived, followed by hedge unwind rather than sustained bullish continuation."
+        },
+        {
+          "instrument": "VIX IV",
+          "prediction_text": "VIX implied volatility has been dumped into today reflecting well-supplied vomma and lower option IV.",
+          "condition": "",
+          "expected_result": "VIX implied volatility remains suppressed intraday, leaving option IV lower and reducing realized vol spikes unless a surprise inflation print triggers rapid IV expansion."
+        }
+      ]
+    }
+  }
+}

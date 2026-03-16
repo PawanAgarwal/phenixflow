@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T01:55:46.050Z",
+  "inputHash": "9365b780d34101784927a201c74fa34819979789",
+  "payload": {
+    "responseId": "resp_08824ea577fac5bc0069b7631719c481a297c8a6adb53b886a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will not have a meaningful gap-up until it convincingly breaks out of its range and stabilizes with the VIX back below 20 and progress on US/EU/CN diplomatic fronts.",
+          "condition": "SPX convincingly breaks out of its range and stabilizes; VIX < 20; diplomatic progress on US/EU/CN",
+          "expected_result": "SPX trades and closes above the current range high for multiple sessions while VIX falls below 20 and news shows diplomatic progress among US/EU/CN"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If market fears manifest, SPX will fall to 4300.",
+          "condition": "market fears manifest",
+          "expected_result": "SPX declines to 4300 within the next period of elevated risk sentiment"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility should mechanically decrease if price moves to the downside and increase if price moves to the upside relative to current pivots.",
+          "condition": "price moves to downside of pivots or upside of pivots",
+          "expected_result": "Implied volatility falls when price moves down toward downside pivot and rises when price moves up toward upside pivot"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Speed profile is overall and locally negative with a centroid at 5367.17, implying downside bias around current levels.",
+          "condition": "current speed profile remains negative with centroid at 5367.17",
+          "expected_result": "SPX exhibits net downward intraday drift from current levels consistent with negative speed profile"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5316.78 is the downside pivot and should act as a short-term support reference.",
+          "condition": "price approaches 5316.78",
+          "expected_result": "SPX will find short-term support or increased buyer interest near 5316.78, producing a pause or bounce"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5462.70 is the upside pivot and should act as a short-term resistance reference.",
+          "condition": "price approaches 5462.70",
+          "expected_result": "SPX will encounter resistance or selling pressure near 5462.70, producing a stall or pullback"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If volatility decreases fast, the 5410-5445 range can become sticky and reject momentum past the 5444.91 zero-vanna line.",
+          "condition": "volatility decreases rapidly",
+          "expected_result": "SPX trades within and fails to break decisively above 5444.91, remaining confined to 5410-5445"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Breaking beyond the upside zero-vanna at 5444.91 requires high volatility.",
+          "condition": "volatility increases",
+          "expected_result": "SPX breaks and sustains trading above 5444.91 only if implied volatility rises significantly"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5214 is a zero-vanna line where relatively low volatility is needed to break through.",
+          "condition": "price approaches 5214",
+          "expected_result": "If implied volatility is low, SPX can move through 5214 more easily; if not, 5214 will act as friction"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5420 is a potential pin if volatility decreases, concentrating price near that level in the final 30–40 minutes.",
+          "condition": "volatility decreases near session end",
+          "expected_result": "SPX pins near 5420 during the last 30–40 minutes of the trading session"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX pivot of 18.76 to the downside implies a lower threshold for volatility compressing.",
+          "condition": "VIX moves toward downside pivot",
+          "expected_result": "VIX reaches or trades near 18.76 indicating volatility compression"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX pivot of 43.87 to the upside implies a regime of large volatility expansion if reached.",
+          "condition": "VIX moves toward upside pivot",
+          "expected_result": "VIX rises to or trades near 43.87, indicating significant volatility expansion"
+        }
+      ]
+    }
+  }
+}

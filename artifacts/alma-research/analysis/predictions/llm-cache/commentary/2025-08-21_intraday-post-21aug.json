@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:02:16.602Z",
+  "inputHash": "b5e20bc803113f5d4a13641c5e4b7b58cb612035",
+  "payload": {
+    "responseId": "resp_0e851c65c93beb6d0069b764a486d881a294510fb0df97e817",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "There will be a capped volatility spike on Tuesday and Wednesday with a downside target of 6364.33.",
+          "condition": "Tuesday and Wednesday",
+          "expected_result": "Price falls to 6364.33 (or below) within the specified two-day window"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A cautious short bias initiated at 6480.28 will continue to work as downside momentum continues.",
+          "condition": "None",
+          "expected_result": "Price declines further from 6480.28 (net negative return for short position initiated at that level)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Vomma supply will prevent markets from undergoing a volatility squeeze.",
+          "condition": "None",
+          "expected_result": "Volatility does not compress into a narrow squeeze; realized or implied volatility remains elevated or does not drop sharply despite price moves"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Minutes will keep upside inflation risk as the greater concern and the Committee will signal a desire to hold rates, with only two governors favoring a 25 bp cut.",
+          "condition": "None",
+          "expected_result": "Policy guidance and minutes indicate no imminent rate cuts and highlight upside inflation risk; communications imply hold rather than easing (no near-term cut action)"
+        }
+      ]
+    }
+  }
+}

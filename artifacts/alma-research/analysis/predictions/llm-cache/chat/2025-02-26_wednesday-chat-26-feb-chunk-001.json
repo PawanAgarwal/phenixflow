@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T04:27:47.196Z",
+  "inputHash": "05e3c976440223f450ba4c7a4c5d2a06932ee5e7",
+  "payload": {
+    "responseId": "resp_0f1ab3ffd4f9b9770069b786bdc47881a08fca8a4025225aa7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-26T11:02:57.634Z",
+          "instrument": "",
+          "prediction_text": "Short downside speed will produce longer downside gamma below the center at ~5985/90.",
+          "condition": "",
+          "expected_result": "Below ~5985–5990, downside gamma will increase and persist, producing extended negative gamma dynamics."
+        },
+        {
+          "made_at": "2025-02-26T11:16:45.308Z",
+          "instrument": "",
+          "prediction_text": "Take intraday call reversion trades after the downside target is reached (wait for the downside target and shoot).",
+          "condition": "after the downside target is reached",
+          "expected_result": "Once the downside target is hit, short-term call buys for reversion will profit as price reverts upward."
+        },
+        {
+          "made_at": "2025-02-26T11:19:35.669Z",
+          "instrument": "",
+          "prediction_text": "Implied volatility is expected to be sold (IV will decline).",
+          "condition": "",
+          "expected_result": "Implied volatility levels will fall over the ensuing period."
+        },
+        {
+          "made_at": "2025-02-26T12:20:37.757Z",
+          "instrument": "",
+          "prediction_text": "There is a bull-side edge into March options expiry (bullish into March opex).",
+          "condition": "into March opex",
+          "expected_result": "Spot or upside option performance will outperform into March expiry, reflecting bullish bias."
+        },
+        {
+          "made_at": "2025-02-26T21:36:38.210Z",
+          "instrument": "",
+          "prediction_text": "Buy short-term volatility and sell long-term volatility.",
+          "condition": "",
+          "expected_result": "Short-term IV will rise relative to long-term IV, making long short-term vol/short long-term vol positions profitable."
+        },
+        {
+          "made_at": "2025-02-26T21:40:46.723Z",
+          "instrument": "NVDA",
+          "prediction_text": "Expect selling pressure after NVDA earnings (sell after ER).",
+          "condition": "after NVDA earnings release",
+          "expected_result": "NVDA share price will decline following the earnings release."
+        }
+      ]
+    }
+  }
+}

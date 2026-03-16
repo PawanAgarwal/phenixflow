@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:27:58.618Z",
+  "inputHash": "abdfc10a74128814041e190307eaef93266cdcaf",
+  "payload": {
+    "responseId": "resp_0fa86d8bf1f474cf0069b786ca653081a09c8d54c1d5b94cf9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-07T09:11:40.526Z",
+          "instrument": "SPX/VIX (implied)",
+          "prediction_text": "There will be an upward move in the oscillating market despite a negative drift, producing shorter upside volatility and more edge on calls.",
+          "condition": "",
+          "expected_result": "SPX rises intraday/near-term while VIX falls or shows reduced upside spikes, resulting in shorter-duration upside vol and profitable call premium moves."
+        },
+        {
+          "made_at": "2025-03-07T15:03:57.371Z",
+          "instrument": "SPX (5720/5725 region)",
+          "prediction_text": "The 5720/5725 level is a support where local long gamma exposure will hold and cause a bounce.",
+          "condition": "",
+          "expected_result": "SPX tests 5720–5725 and then reverses higher (bounce) rather than breaking decisively lower."
+        },
+        {
+          "made_at": "2025-03-07T21:55:43.682Z",
+          "instrument": "SPX",
+          "prediction_text": "If the market goes down toward my second target it will revert to the upside to disrupt algos and avoid a too-fast downside move.",
+          "condition": "market moves down toward the second target",
+          "expected_result": "SPX, upon reaching the specified lower target, will reverse higher rather than continuing a rapid decline."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:53:42.653Z",
+  "inputHash": "1fc186617a0797a1128d836a258d4820f61d1376",
+  "payload": {
+    "responseId": "resp_0461e480b1351f8e0069b7629fb6e8819d86c19b6adf3d0ca6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero-vanna pivot ~5607 acts as a magnet/sticky level; heatmap shows long-fly centered near 5600 so expect price to gravitate toward and pin around 5600–5607 absent a volatility breakout.",
+          "condition": "none",
+          "expected_result": "Price will revert to and trade sideways near 5600–5607 within the trading day; any move away should face increased pinning pressure back to that range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support cluster / sticky zone around 5531–5540 (gamma peak and trough visible) providing a floor—likely rejection zone on downside tests.",
+          "condition": "none",
+          "expected_result": "On intraday drops toward 5531–5540, expect visible rejection and short-term bounces within the same session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance cluster around 5652 and momentum threshold near 5689.49; 5652 is near short-gamma resistance and 5689.49 is the break level where calm vol could allow stabilization higher.",
+          "condition": "none",
+          "expected_result": "Attempts to rally into 5652 should stall or reverse; a clean break and sustained trade above ~5689.5 with reduced vol will likely lead to stabilization and further upside continuation."
+        }
+      ]
+    }
+  }
+}

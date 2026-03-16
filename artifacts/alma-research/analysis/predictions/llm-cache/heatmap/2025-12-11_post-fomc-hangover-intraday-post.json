@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:11:35.465Z",
+  "inputHash": "fa9c1038aaa106b5bbb23ac10a479b3a12d17fc6",
+  "payload": {
+    "responseId": "resp_08b4afdbdd5d60790069b766d14724819583d9a942c272d565",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong downside pin / support around 6795-6800 (gamma peak / sticky zone) with elevated negative gamma just below creating a magnet to ~6795-6800; local support/brake at 6830-6840 as secondary sticky zone.",
+          "condition": "price moves downward toward 6840",
+          "expected_result": "Spot will be attracted and pin between 6795-6800 (primary) or stall/revert around 6830-6840 (secondary); expect limited follow-through below ~6770 without further vol expansion."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Reversion / rejection zone near 6880-6915 where a vanna-flip / gamma trough suggests resistance and potential mean reversion back lower (possible reversion from ~6914 toward 6880).",
+          "condition": "price rallies above 6880 toward 6915",
+          "expected_result": "Price likely to be rejected or revert inside the 6880-6915 band, failing sustained break unless volatility increases significantly."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upper resistance corridor near 6925-6935 with a magnet at ~6930 as a higher-target/escape level if upside momentum builds (weaker than downside pin).",
+          "condition": "sustained upside momentum / vol uptick",
+          "expected_result": "Spot may travel toward and test ~6930; absent vol acceleration, expect struggle to remain above that level."
+        }
+      ]
+    }
+  }
+}

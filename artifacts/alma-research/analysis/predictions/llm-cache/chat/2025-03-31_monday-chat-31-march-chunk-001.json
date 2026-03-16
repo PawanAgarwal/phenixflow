@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:28:19.949Z",
+  "inputHash": "83ca728a448408614f9b1cd030e1be14c692b8c1",
+  "payload": {
+    "responseId": "resp_01c4fb787b3179610069b786de0a4881a1b9fa151f014b17f3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-31T18:50:48.201Z",
+          "instrument": "market (SPX)",
+          "prediction_text": "It will be bullish if it stabilizes above that very far level I marked.",
+          "condition": "stabilizes above that very far level I marked",
+          "expected_result": "Market price remains above the marked level for a sustained period (e.g., daily closes above the level for 3+ trading sessions) leading to upward trend continuation"
+        },
+        {
+          "made_at": "2025-03-31T19:19:52.849Z",
+          "instrument": "",
+          "prediction_text": "If inflation is not stopped, it will flip into a deflationary spiral.",
+          "condition": "inflation is not stopped",
+          "expected_result": "Macro indicators show accelerating price declines (CPI/PCE turning negative year-over-year) and persistent falling inflation expectations over subsequent quarters"
+        },
+        {
+          "made_at": "2025-04-01T03:52:35.041Z",
+          "instrument": "options/volatility market",
+          "prediction_text": "My bias has always been supportive of a March opEx and a volatility event after.",
+          "condition": "March options expiration (opEx) occurs",
+          "expected_result": "Increased realized and implied volatility following March opEx, evidenced by a rise in VIX and option implied vols compared with pre-opEx levels"
+        }
+      ]
+    }
+  }
+}

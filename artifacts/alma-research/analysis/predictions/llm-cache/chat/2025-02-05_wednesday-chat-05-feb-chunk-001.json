@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:27:15.282Z",
+  "inputHash": "7601743580ff6c0b6fcd128127a870a0d5809e55",
+  "payload": {
+    "responseId": "resp_0fd29e237b468cf20069b7869e2dd081a2be972b25467d04e9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-05T09:04:56.100Z",
+          "instrument": "",
+          "prediction_text": "I am long IC, betting that volatility will increase.",
+          "condition": "",
+          "expected_result": "Implied and/or realized volatility for the instrument labeled IC will rise from current levels over the trader's holding period."
+        },
+        {
+          "made_at": "2025-02-05T14:35:17.071Z",
+          "instrument": "",
+          "prediction_text": "Pricing implies a volatility crush next Friday around the earnings/expiration expo.",
+          "condition": "next week Friday expo",
+          "expected_result": "Implied volatility will drop materially on the specified Friday (expiration/earnings), producing lower option prices compared with levels earlier in the week."
+        },
+        {
+          "made_at": "2025-02-05T14:37:43.926Z",
+          "instrument": "SPX",
+          "prediction_text": "I'll go long SPX (through SPY options) when it hits 6000/6005.",
+          "condition": "SPX hits 6000/6005",
+          "expected_result": "A long SPX position via SPY options will be initiated at or immediately after SPX reaches the 6000–6005 level."
+        }
+      ]
+    }
+  }
+}

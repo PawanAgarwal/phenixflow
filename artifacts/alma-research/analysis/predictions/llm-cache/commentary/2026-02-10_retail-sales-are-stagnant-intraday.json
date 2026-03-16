@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:37.622Z",
+  "inputHash": "517ac96616f82c3cdfb20209e7bb582565673aee",
+  "payload": {
+    "responseId": "resp_0c80c6d62223d66d0069b767877d4081a19af4c32ba4879967",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES is between 6960 and 6970 that band will act as a line-in-the-sand (centroid/pivot) for price action today.",
+          "condition": "price is between 6960 and 6970",
+          "expected_result": "Price will respect the 6960–6970 band and show constrained intraday behavior (rejections or bounces) rather than trending through it immediately"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES approaches 7005–7010 that zone will act as an upside pivot and potential resistance.",
+          "condition": "price approaches 7005–7010",
+          "expected_result": "Price will encounter resistance at 7005–7010 and is likely to stall or reverse rather than break decisively higher"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Today is expected to be choppy with false breakouts and benign stabilization showing up as reversal mechanics rather than smooth trend.",
+          "condition": "",
+          "expected_result": "Intraday price action will show short-lived breakouts that reverse and frequent reversals (choppiness) instead of a sustained directional trend"
+        }
+      ]
+    }
+  }
+}

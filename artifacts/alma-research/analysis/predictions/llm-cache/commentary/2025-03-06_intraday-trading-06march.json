@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T01:53:01.479Z",
+  "inputHash": "eb530f91991f5bdda886f41c9f95ec69ee612401",
+  "payload": {
+    "responseId": "resp_0a1155257011e48f0069b762714f148194abe3eee1eac297b4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Spot will move toward 5770/5775/5900/5905 today as the iron condor martingale whale provides fresh opportunities.",
+          "condition": "",
+          "expected_result": "SPX trades at or within 5 points of any of 5770, 5775, 5900, or 5905 during the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The upside gamma magnet around 58465882 (pivot line) can affect spot vol and theta, implying price attraction or volatility change near that level.",
+          "condition": "price approaches 58465882",
+          "expected_result": "If SPX approaches 58465882, intraday implied volatility and theta dynamics will shift measurably (>=5% change in IV or noticeable change in theta decay rate) relative to prior 30-minute baseline"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The downside wing of the iron condor at 5804.23 will act as a reference for downside gamma effects.",
+          "condition": "price approaches 5804.23",
+          "expected_result": "If SPX approaches 5804.23, intraday downside gamma-related measures will change (IV or option delta exposures shift by >=5%) and price shows increased support or pinning behavior near that level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero vanna is at 5830.96 and is estimated into PM at 5834.97, implying lower vol needed for that PM price.",
+          "condition": "",
+          "expected_result": "SPX closes near 5834.97 in the PM session with intraday implied volatility lower than the morning session by at least 3%"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local negative charm convexity and low gamma will give room for volatility to increase.",
+          "condition": "",
+          "expected_result": "Implied volatility for SPX increases by at least 5% intraday while gamma measures remain low/declining"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Main momentum pivot at 5807.05 is the level that confirms further upside into Friday if held/broken.",
+          "condition": "SPX holds above or breaks above 5807.05",
+          "expected_result": "If SPX remains above 5807.05 for a sustained period (>30 minutes) or breaks above it with momentum, price continues higher over the next trading day(s) (net move >0.5%)"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday behavior is an unstable squeeze-ish upside where the smirk gets bid, favoring intraday long call exposure.",
+          "condition": "",
+          "expected_result": "Intraday skew (25-delta call vs put) tightens and call Vega demand increases, with relative call IV rising more than put IV by >=3% while spot ascends"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If spot can hold 5701, put decay can help hold the market (supportive effect).",
+          "condition": "SPX stays at or above 5701",
+          "expected_result": "While SPX remains >=5701, downside moves are limited and net intraday downside returns are muted (<0.5% drawdown) due to put premium decay"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "March OpEx rolling level 5717 is key; above 5717 tail puts provide supportive vanna/charm flows, producing net upward momentum into a supportive March OpEx before a flush.",
+          "condition": "SPX is above 5717",
+          "expected_result": "If SPX is >5717 into March OpEx, order flow and option-related flows will be net supportive, resulting in a measured uptick in spot (>=0.5%) and/or reduced downside tail risk as reflected by lower left-tail IV"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Alma will likely hit long ES on this pattern, viewing current action as a short-term bottom.",
+          "condition": "",
+          "expected_result": "A long futures (ES) position is initiated intraday and results in a profitable move (ES rises by >=0.5% from entry within the next 1-3 trading days)"
+        }
+      ]
+    }
+  }
+}

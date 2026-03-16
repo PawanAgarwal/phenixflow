@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:10:30.164Z",
+  "inputHash": "758e29383738d74faceb8f407c20fc02a321015b",
+  "payload": {
+    "responseId": "resp_0a82c9dcba28c6110069b76690407881a3b7b1f87391e6f307",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows concentrated downside gamma/support cluster around 6550–6544 with a put-spread pocket at ~6550/6505 acting as a short-term magnet/turning area. There is limited room for downside intraday unless vol spikes; if vol rises that pocket can give way toward 6490–6450 where larger gamma should absorb moves.",
+          "condition": "if downside vol rises (vol catches up)",
+          "expected_result": "Price should gravitate toward 6550–6544 and attempt a bounce; if volatility increases through that pocket, expect an extended move to 6490–6450 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside gamma peak / resistance corridor present near 6702–6745 (upside pivot 6674.83 with target 6702.49, margin to 6745) acting as rejection zone and cap for intraday rallies.",
+          "condition": "if rally resumes toward upside pivot",
+          "expected_result": "Rallies up to ~6700 should encounter resistance and likely fail or stall; rejections near 6700–6745 should produce intraday pullbacks toward the centroid (~6566–6599)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid and sticky zone between ~6566 and ~6599 (centroid 6566.18–6598.75) representing the prevailing intraday mean where price is likely to revert absent directional shock.",
+          "condition": "absent major volatility event (NVDA ER/NFP shock)",
+          "expected_result": "Price should revert to and trade around 6566–6599 during the session; breaches of this band indicate follow-through toward the support or resistance corridors above."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:59:12.769Z",
+  "inputHash": "0194a8b0022f1020eb9f084f27844e2378adb748",
+  "payload": {
+    "responseId": "resp_0816cfb1a22236930069b763eb520081a0af22bd5ba0541fd4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / pinning magnet around 6090-6091 (daily centroid coded at 6090.99). Expect price to gravitate toward and be held near this level when below opening momentum.",
+          "condition": "SPX below 6111",
+          "expected_result": "Price reverts to and pins near 6090 ±5 points (approx. 6085–6095) during the session, acting as support/sticky zone."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and pin zone at ~6124.7 with immediate resistance ~6140 and main resistance at 6145. Heatmap shows concentrated gamma/peaks in this area increasing pinning probability into the power hour.",
+          "condition": "SPX trades above 6111 and stays above into afternoon (post 13:50)",
+          "expected_result": "Price moves toward 6124–6140 and is likely pinned between 6125–6145; failure above 6145 limits further upside."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma and strong downside support cluster around 6037 (weekly upperline/pivot) with maximal downside level near ~5994 per script outputs.",
+          "condition": "Volatility spikes or local vol 'catches up' while price moves lower",
+          "expected_result": "If downside momentum accelerates, price can travel down to retest 6037 and as a lower bound potentially 5990–5995 where larger gamma/support accumulates."
+        }
+      ]
+    }
+  }
+}

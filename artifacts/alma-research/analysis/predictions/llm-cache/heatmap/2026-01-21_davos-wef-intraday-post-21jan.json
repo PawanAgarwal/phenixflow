@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:13:34.294Z",
+  "inputHash": "503f4722a3c5589d85c2c2b10ae022f4c7e07c62",
+  "payload": {
+    "responseId": "resp_0851bc82706c7de10069b76749503881a3a91940ff256c661f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky downside zone / heavy negative gamma concentrated around ~6680–6709 with strong blue (negative gamma) indicating dealer hedging that defends downside; a localized deep negative gamma pocket at ~6560 indicating a tail target if downside momentum continues.",
+          "condition": "None",
+          "expected_result": "Price likely to find short-term support and resistance to further declines in the 6680–6710 area (expect bounces/reversions there); if downside breaks through and momentum continues, market may travel toward ~6560 where a tail-pinning magnet is visible."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside 'reversion' / sticky resistance corridor near ~6780–6865 with gamma peaks and warm color (less negative to neutral) around 6818 pivot and 6865 target—a line-in-the-sand zone at ~6780–6790 that can flip to pin price or cause reversion.",
+          "condition": "If market trades above 6780–6790 and holds",
+          "expected_result": "Expect realized vol selling and a move toward 6818 pivot and potentially 6864–6865 pin during the PM; if it fails to hold above 6780–6790, expect rejection and reversion lower."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:06.148Z",
+  "inputHash": "1b6917cb2980da3722fee0128304193ca0f2ca11",
+  "payload": {
+    "responseId": "resp_0d51cb5f3164e1cd0069b764d3f7d88192bef0b42a6c28b550",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Visible large positive gamma/positive charm bars around ~6420 and ~6480 indicate sticky upside resistance (dealer sold calls) that will cap rallies into those strikes; heatmap suggests dealers will hedge by buying futures below these strikes, creating magnetic pull toward just below 6420–6480.",
+          "condition": "SPX approaches 6420–6480",
+          "expected_result": "If SPX moves up toward 6420–6480, expect slowing upside momentum and increased probability of a reversal or stall within ~10–20 pts below those levels; trade near-term sell/neutral strategies or tighten longs when inside that band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Concentrated negative gamma exposure (large negative bars) near ~6410 and ~6480 implies strong rejection zones—dealer positioning will amplify moves away from those strikes, producing intraday reversion once touched.",
+          "condition": "SPX touches ~6410 or ~6480",
+          "expected_result": "Upon touch of ~6410 or ~6480, expect a quick mean-reversion move of ~10–30 pts away from the touched strike within the session; consider short-lived counter-trend scalps or protective exits."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Net charm/gex curve shows a sticky corridor between roughly 6440–6460 where gamma exposure is closer to neutral, suggesting this range acts as a travel corridor with lower friction for spot to move through intraday.",
+          "condition": "SPX trading inside 6440–6460",
+          "expected_result": "While SPX remains in 6440–6460, expect smoother price travel with reduced probability of strong rejection; directional moves can continue through the corridor until hitting the stronger gamma walls at ~6420 or ~6480."
+        }
+      ]
+    }
+  }
+}

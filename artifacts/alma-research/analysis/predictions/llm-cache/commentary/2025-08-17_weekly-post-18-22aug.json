@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T02:02:12.429Z",
+  "inputHash": "96d2cd4e2d59c2afbc7f4f7cad841adc5f2c4ae0",
+  "payload": {
+    "responseId": "resp_09313b5361e2e6880069b764968ea481a0be2ab998c1a826bf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Spot will range in the centroid zone 6326.53 - 6386.96 as entities artificially stabilize it.",
+          "condition": "",
+          "expected_result": "SPX price remains within 6326.53–6386.96 for the coming week (no sustained close outside this range for more than two trading days)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If profit-taking and investor insecurity strengthen before Wednesday, spot can be unpinned and fall below the centroid.",
+          "condition": "before Wednesday",
+          "expected_result": "SPX produces a sustained move closing below 6326.53 within the window ending Wednesday. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Any vol spike will be sold due to vomma supply, capping upside.",
+          "condition": "",
+          "expected_result": "VIX or implied vol spikes above current levels will be followed within 1–3 trading days by increased option sell flow and a decline in implied volatility back toward or below pre-spike levels (no new sustained vol regime)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The first target for any upstick is 13.59% vol, which would take spot to 6364.33 during the week.",
+          "condition": "",
+          "expected_result": "If implied volatility rises to 13.59%, SPX will trade at or near 6364.33 within the same week. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If put skew catches a bid at the 13.59% vol / 6364.33 area, downside target for the week is 6324.73.",
+          "condition": "put skew catches a bid at 13.59% vol / 6364.33",
+          "expected_result": "Following a bid in put skew at that area, SPX will decline to 6324.73 within the week. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum code predicts spot should produce a mean of 6492.08 during the week to accumulate positive imbalance and push upside.",
+          "condition": "",
+          "expected_result": "The arithmetic mean of SPX intraday prices for the week will be approximately 6492.08, coinciding with renewed upside momentum and higher closes later in the week. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A mean of 6438.99 would accelerate the momentum imbalance downward.",
+          "condition": "",
+          "expected_result": "If the week's intraday mean for SPX is near 6438.99, price momentum will deteriorate and lead to lower intraday lows and downward progression of the momentum indicator. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Spot can be unpinned within the window until Wednesday; after that spot will mostly get stabilized where it is.",
+          "condition": "after Wednesday",
+          "expected_result": "If no unpinning move occurs by Wednesday, SPX will show reduced intraday volatility and remain near current levels for the remainder of the week. "
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Volatility is suppressed at 10.76%; vol selling is very strong during the week below the centroid area.",
+          "condition": "",
+          "expected_result": "VIX/IV remains near or below 10.76% for most of the week, with limited sustained increases and net downward pressure on implied volatility. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The first half of the week can be favorable for spot down/vol up move to grind below the centroid towards the liquidity support (especially Tuesday-Wednesday).",
+          "condition": "especially Tuesday-Wednesday",
+          "expected_result": "SPX will trend downward toward liquidity support levels (~6297.01–6324.73) between Tuesday and Wednesday, accompanied by a temporary rise in implied volatility. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is strong liquidity support within the centroid range and below towards 6297.01.",
+          "condition": "",
+          "expected_result": "SPX will find buying interest near 6297.01 such that declines to that level are met with rebounds rather than sustained breaks lower within the week. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Entities want to make spot range in the centroid zone and artificially stabilize there, creating a flatter right-tail and lack of fear of downside vol spike.",
+          "condition": "",
+          "expected_result": "Orderbook and option positioning will result in reduced upside convexity and limited downside tail events, with price action displaying rangebound behavior and fewer large down moves during the week. "
+        }
+      ]
+    }
+  }
+}

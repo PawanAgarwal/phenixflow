@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:14:17.660Z",
+  "inputHash": "895758ddabfe2b5ca08c56b0c71ae896645b4ac0",
+  "payload": {
+    "responseId": "resp_07406ac9451b6a9a0069b76774b020819790200cbaacf0fd08",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES futures",
+          "prediction_text": "I’m bullish on a move towards 7040.",
+          "condition": "until it holds above 6955/60 zone",
+          "expected_result": "ES futures price will rise to 7040 while remaining above 6955–6960"
+        },
+        {
+          "instrument": "ES futures",
+          "prediction_text": "6955/60 zone is a pivot.",
+          "condition": "",
+          "expected_result": "If ES futures remain above 6955–6960, bullish bias persists; if they close below, the pivot is considered lost and bullish view invalidated"
+        },
+        {
+          "instrument": "ES futures",
+          "prediction_text": "The strongest spot is 6970/80 zone.",
+          "condition": "",
+          "expected_result": "6970–6980 will act as a reliable support area where buying interest is expected to emerge for ES futures"
+        },
+        {
+          "instrument": "ES futures",
+          "prediction_text": "If it loses 7k, that would be my first target to step in.",
+          "condition": "if it loses 7000",
+          "expected_result": "If ES futures fall below 7000, entry orders will be initiated aiming for a trade around that decline level"
+        },
+        {
+          "instrument": "ES futures",
+          "prediction_text": "If pivot is lost, I’m only in if it goes down to 6900, bet less conviction.",
+          "condition": "if pivot (6955/60) is lost",
+          "expected_result": "If ES futures close below 6955–6960, a lower-probability position may be taken only if price reaches 6900"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:05:23.046Z",
+  "inputHash": "b8167d24e67077939c3df7b1d11268f033133417",
+  "payload": {
+    "responseId": "resp_0692708b831bbdca0069b7655bcc7c8190a12679b1cb2a9bbc",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong centroid/pivot around 6736 (6735.95) acting as a line in the sand — market is likely to revert to and pin near this level after intraday moves.",
+          "condition": "price moves away from 6736 by more than ~15 pts",
+          "expected_result": "Price will gravitate back toward 6720–6748 within the session and spend extended time (pin) near ~6736 after 14:00 UTC."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/brake cluster around 6680–6699 (local gamma support) that will slow or grind any downward move.",
+          "condition": "downward drift from centroid towards 6680–6699",
+          "expected_result": "Downward moves should decelerate between 6699 and 6680 and likely consolidate there before any break; expect bounce or range-bound action in 6680–6700 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivots and target ladder near 6652 with primary target ~6617 and secondary ~6590; 6550 is a tail max if vol spikes but will likely revert.",
+          "condition": "sustained break below 6652 (downside pivot) or volatility spike",
+          "expected_result": "If 6652 breaks, price should travel toward 6617 then 6590; in a vol spike price can reach ~6550 but should revert back toward 6590–6617 afterwards."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot near 6743 with a possible squeeze to 6765–6770 but low probability; upside action requires opening above the centroid.",
+          "condition": "market opens above 6736 (centroid) or sustained push above 6743",
+          "expected_result": "If triggered, expect a short squeeze up to roughly 6765–6770 followed by reversion/pinning back toward 6743–6736."
+        }
+      ]
+    }
+  }
+}

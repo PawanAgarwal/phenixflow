@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:11:29.086Z",
+  "inputHash": "5746a3c44bb5b8ec6abd40c08dc3d003afb53003",
+  "payload": {
+    "responseId": "resp_0a0cd22b2b94326a0069b766ce4ba0819fb554997f8e07f54b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "As long as SPX does not break 6789.19 on the daily, the rebound continues.",
+          "condition": "daily close below 6789.19",
+          "expected_result": "If SPX remains above 6789.19 on daily closes, price will continue to trend higher (rebound) in subsequent sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the 6789.19 area is broken and confirmed, the market would go to 6450/6400.",
+          "condition": "confirmed break of 6789.19",
+          "expected_result": "After a confirmed break below 6789.19, SPX will decline toward the 6450–6400 range."
+        }
+      ]
+    }
+  }
+}

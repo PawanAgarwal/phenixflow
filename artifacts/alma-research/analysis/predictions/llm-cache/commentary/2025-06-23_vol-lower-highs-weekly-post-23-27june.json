@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T01:58:50.359Z",
+  "inputHash": "77ee6757b80101319ca69fccb35ca905d4ef51a2",
+  "payload": {
+    "responseId": "resp_049643cf009728b50069b763d6e4708196ac76c76cffbb4d81",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Volatility will make higher lows over the coming week.",
+          "condition": "",
+          "expected_result": "Realized volatility and implied volatility series will show a sequence of weekly lows that are higher than the previous week's low."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The suppressive vol-selling feedback loop that generated a short-side reversion signal will continue to pressure markets unless spot falls back below the sentiment-flip level.",
+          "condition": "spot falls below the sentiment-flip level",
+          "expected_result": "If spot drops below the sentiment-flip level, the short-side reversion signal will reassert and downside price moves (closing lower) will increase in probability and magnitude."
+        }
+      ]
+    }
+  }
+}

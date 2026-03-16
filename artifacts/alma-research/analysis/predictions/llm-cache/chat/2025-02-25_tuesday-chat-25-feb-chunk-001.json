@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:27:45.490Z",
+  "inputHash": "cc0d330e1be6a51df2d67f9ef31ea1c4c4e7d954",
+  "payload": {
+    "responseId": "resp_01e6d7528500df040069b786b92284819583c6ceae6c9c4da8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-25T15:14:21.574Z",
+          "instrument": "VIX",
+          "prediction_text": "If volatility stays high because certain participants are triggered and add to vol, the market can form a battle near the vanna flip and then calm down to break above the flip.",
+          "condition": "volatility stays high because certain participants are triggered and add to vol",
+          "expected_result": "VIX remains elevated, price action oscillates near the identified vanna flip point, then volatility calms and VIX moves higher above the flip level"
+        },
+        {
+          "made_at": "2025-02-25T15:20:17.711Z",
+          "instrument": "SPX",
+          "prediction_text": "5921 level is pivotal to the downside: if spot is at 5921 then spot will move down with vol down toward the left wing of the fly.",
+          "condition": "spot at or breaking 5921",
+          "expected_result": "SPX declines from ~5921 accompanied by declining implied volatility, moving price toward the left wing of the identified fly structure"
+        },
+        {
+          "made_at": "2025-02-25T15:20:17.711Z",
+          "instrument": "SPX",
+          "prediction_text": "To the upside, zero vanna has shifted up to 5958 and you need low vol to break that.",
+          "condition": "low volatility",
+          "expected_result": "SPX rises above 5958 when implied volatility is low"
+        },
+        {
+          "made_at": "2025-02-25T15:21:41.288Z",
+          "instrument": "SPX 5885 puts",
+          "prediction_text": "If the pivot breaks, sell 5885 puts.",
+          "condition": "pivot breaks",
+          "expected_result": "Sell SPX 5885 put options after the pivot level breaks"
+        },
+        {
+          "made_at": "2025-02-25T23:28:06.089Z",
+          "instrument": "volatility",
+          "prediction_text": "At the point where gamma decrease to the downside starts to accelerate, we can expect volatility to catch up.",
+          "condition": "gamma decrease to the downside starts to accelerate",
+          "expected_result": "Implied volatility increases following an accelerating decrease in downside gamma"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:10:57.178Z",
+  "inputHash": "ebb4db60b04bfdaf9a9797bcdefcb8044b72f6ca",
+  "payload": {
+    "responseId": "resp_030ee6f24a3fd0cf0069b766aafe2081a0a326099896a53a00",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong rejection / sticky zone just below ~6900 (around 6885-6905) indicated by concentrated red gamma—likely cap on upside into the session. Also strong support/attraction zone near 6720-6740 (deep blue below centroid) that will pin/hold price if downside push continues.",
+          "condition": "none",
+          "expected_result": "SPX will struggle to sustain rallies above ~6885-6905; expect intraday reversals or stalls there. On weakness, expect gravity toward and holding at ~6720-6740 with limited downside beyond 6719 without significant new flow."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pinning magnet from the intraday iron-condor wings around 6805-6810 (lower IC wing) and 6875-6880 (upper IC wing) creating a bi-modal pin effect — spot likely to gravitate to nearest wing within the IC.",
+          "condition": "price inside 6805-6875",
+          "expected_result": "If SPX trades inside 6805–6875, price will tend to be attracted toward and remain near either ~6805–6810 or ~6875–6880 (nearest wing) rather than traverse the center."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / mean-reversion corridor centered ~6742–6769 (green gamma peak tracks) acting as a reversion level if price breaks below the 6790/95 hold zone—market will grind down to and linger near this centroid area.",
+          "condition": "price fails to hold 6790-6795",
+          "expected_result": "If SPX breaks and closes below 6790–6795, expect a drift/reversion toward ~6742–6769 and consolidation there."
+        }
+      ]
+    }
+  }
+}

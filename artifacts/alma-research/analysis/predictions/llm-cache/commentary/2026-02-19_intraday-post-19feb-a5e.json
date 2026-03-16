@@ -1,0 +1,18 @@
+{
+  "cachedAt": "2026-03-16T02:14:58.184Z",
+  "inputHash": "82810d87b9bcd952bbb2d3c5cc2760171142c5d6",
+  "payload": {
+    "responseId": "resp_0424b4a6d3bfc55c0069b767a013f8819cb2fd156d21979121",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX is below 6872.77, spot will be under structural and mechanical suppression.",
+          "condition": "SPX below 6872.77",
+          "expected_result": "SPX will trade with downward bias and face selling pressure resulting in lower intraday prices while below 6872.77"
+        }
+      ]
+    }
+  }
+}

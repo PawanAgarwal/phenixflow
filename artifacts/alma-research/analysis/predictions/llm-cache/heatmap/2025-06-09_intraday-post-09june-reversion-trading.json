@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:58:20.809Z",
+  "inputHash": "a56a4e491ca1dbdd8f65d4115e8cf1e3afa5f629",
+  "payload": {
+    "responseId": "resp_0fcd019742e97ef80069b763b72420819ebf1a46ba2c05fcd1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong resistance / pinning magnet at 6022 (vanna flip). Heatmap shows gamma peak and high density around 6022 that will attract price and act as resistance after mid-morning.",
+          "condition": "price approaches 6022 after 11:20am",
+          "expected_result": "Price stalls or reverses near 6022; expect a rejection back toward 5997–5971.5 within the next 30–90 minutes of the touch"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local upside pivot at 6046 is a higher resistance requiring significant flow to break; local positive gamma above will absorb up moves.",
+          "condition": "price tests 6046",
+          "expected_result": "If tested, price will struggle to sustain above 6046 and likely be pushed back below 6022 without materially large volume/vol-buying"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / main downside target cluster around 5971.50 with secondary support at 5946 (absolute low per vol profile). Heatmap shows a gamma trough/peak configuration concentrated near 5970–5946.",
+          "condition": "price breaks below 5997",
+          "expected_result": "Price likely travels to 5971.5 first; on further breakdown, expect continuation to 5946 as the intraday low target"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky gamma zone / short-term magnet around 5950–5955 (visible dense heat at ~5950), likely to trap activity and cause chop.",
+          "condition": "price moves down into 5955–5950 area",
+          "expected_result": "Expect sideways chop and short-term pinning in the 5950–5955 range for multiple bars before a directional resolve toward 5946 or a reversion back to 5971.5"
+        }
+      ]
+    }
+  }
+}

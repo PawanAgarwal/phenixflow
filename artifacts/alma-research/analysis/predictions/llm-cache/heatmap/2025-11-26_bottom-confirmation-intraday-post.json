@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:10:53.680Z",
+  "inputHash": "a03b66d63ffe97c502ff96238907e6d8c0c2802f",
+  "payload": {
+    "responseId": "resp_0f9d3095042191c60069b766a7017081a3b2ab493c051763fa",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/pressure zone around 6830–6840 (deep blue gamma ridge) acting as resistance/pinning area; upside target 6829.98 noted as a hard 0DTE wall unlikely to be broken today.",
+          "condition": "price approaches 6825–6840",
+          "expected_result": "Price is likely to stall or revert near 6825–6840; expect limited follow-through above 6829.98 during the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pin and short-term magnet at ~6795 (explicit local pin) creating a high-probability hang zone just above the centroid.",
+          "condition": "intraday flow moves toward 6795",
+          "expected_result": "Price will gravitate toward and spend time pinned near 6795 before making directional moves"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and sticky area at ~6770.59 with a downside target rotation toward ~6707–6725; 6745/55 is a pivotal climb zone — failure there likely leads to pinning near 6725/30.",
+          "condition": "price breaks below 6770.59 or fails to hold 6745–6755",
+          "expected_result": "If 6770.59 is breached or 6745–6755 cannot hold, expect reversion down to 6725–6707 with increased probability of pinning in that range"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid near 6808 (6808.06) — market shows higher liquidity above the centroid and thin left-tail below, indicating asymmetric resistance/support dynamics.",
+          "condition": "general intraday positioning remains as stated",
+          "expected_result": "Price will find stronger resistance above centroid (~6808) and be more prone to sharper drops toward the downside targets than sustained climbs without volatility spikes"
+        }
+      ]
+    }
+  }
+}

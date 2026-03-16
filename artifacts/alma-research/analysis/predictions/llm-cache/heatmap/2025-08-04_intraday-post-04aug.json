@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:01:25.973Z",
+  "inputHash": "c19164b3943ad8c92ddbeae08dab1543e704fe47",
+  "payload": {
+    "responseId": "resp_0b82f588e2b8a2660069b7646c59188193879d64947767dbff",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning / sticky zone near 6250–6255 (day’s fly center). Heatmap shows concentrated gamma/red density projecting pin at ~6250 during session and into power-hour.",
+          "condition": "price approaches 6250–6255",
+          "expected_result": "Price will be held/pinned around 6250–6255 for a period (limited travel >±10 pts) and revert back toward that band within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside rejection / pin cluster at 6285–6290 — if price moves above 6276/80 pivot, heatmap shows pin to 6285–6288 in power-hour (gamma peak just above 6280).",
+          "condition": "price breaches 6276–6280 to the upside",
+          "expected_result": "Price is likely to be attracted/pinned up into 6285–6290 and struggle to sustain north of that band, generating rejection or reversion back below 6280."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside sticky / magnet area around 6160–6180 — heatmap shows strong gamma/peak and red intensity ~6160 with troughs around 6180 indicating likely pin if volatility accelerates lower.",
+          "condition": "price drops below centroid area (~6242) with increased volatility",
+          "expected_result": "Price may accelerate toward 6160–6180 and then become pinned there (bounce or consolidation) rather than quickly continuing much lower."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday centroid and local pivot zone ~6270–6276 acts as decision area — heatmap gradients concentrate toward this centroid, indicating this range will be a focal point for directional choice.",
+          "condition": "price trades inside 6270–6276",
+          "expected_result": "Market will either revert toward 6250 or push toward the upside pivot (~6295–6305) after testing 6270–6276; expect short-term chop and lower conviction until one side wins."
+        }
+      ]
+    }
+  }
+}

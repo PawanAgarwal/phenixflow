@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:58:27.082Z",
+  "inputHash": "dc8bb5c666f51cc9a4c62e310ab9e6d52dd67f00",
+  "payload": {
+    "responseId": "resp_070d6bc99635b8500069b763bdc9c8819687166f8b87e1ea56",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Continued vol selling will keep market swings contained and stabilize the downside for now.",
+          "condition": "",
+          "expected_result": "Intraday and multi-day SPX realized volatility remains suppressed and price stays within recent range rather than making large directional moves (no >2% one-day moves)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If Israel refrains from additional attacks, the geo-risk premium in oil will fade and a sustained jump above current oil levels is unlikely.",
+          "condition": "No additional attacks from Israel",
+          "expected_result": "Crude oil prices decline or revert toward pre-attack levels within days to weeks; oil does not record a sustained breakout above the recent peak (no multi-day trend higher)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Any new escalation in the Middle East will keep energy markets jittery and equity risk premia elevated, injecting downside risk into global equities.",
+          "condition": "New escalation in the Middle East",
+          "expected_result": "Oil and energy volatility spike and equity implied volatilities rise; equity indices experience downward pressure with increased probability of multi-day declines (>1-2%)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A vol-of-vol event (e.g., credit shock or geopolitical flashpoint) would reverse vol positioning and absorb downside gammas, causing larger market moves.",
+          "condition": "Occurrence of a vol-of-vol event such as a credit shock or new geopolitical flashpoint",
+          "expected_result": "Rapid expansion in VIX and VVIX and a sharp directional move in SPX (significant one- to three-day moves, e.g., >2%), breaking recent range and defeating premium-selling strategies."
+        }
+      ]
+    }
+  }
+}

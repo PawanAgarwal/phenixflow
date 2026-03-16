@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:06:10.310Z",
+  "inputHash": "c732cbea61335e929ad7d988b81e371e22caa58d",
+  "payload": {
+    "responseId": "resp_0356f1bd4e1bb4d70069b76584a700819cbf250de22ad32a5a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price will remain weakly sticky in the 6892.14 - 6900.64 area after 2PM.",
+          "condition": "after 2PM",
+          "expected_result": "Market mid/price stays within 6892.14–6900.64 for the remainder of the trading day following 2PM"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price breaks above the upside pivot at 6905.44, it will move toward 6934.98 as a daily maximum reversion.",
+          "condition": "price breaks above 6905.44",
+          "expected_result": "Price reaches 6934.98 within the same trading session after crossing 6905.44"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A break above the upside pivot and further continuation could pin price near 6980 (±20).",
+          "condition": "sustained break above 6905.44 and continued upside flow",
+          "expected_result": "Price pins near 6980 with a margin of error of approximately 7000–6960 during intraday trading"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price falls below the downside pivot at 6870.40, it will move toward the downside target of 6822.47.",
+          "condition": "price breaks below 6870.40",
+          "expected_result": "Price reaches 6822.47 within the same trading session after crossing 6870.40"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If negative headline risk (bad news) occurs, intraday downside target is 6750 with a further ultimate downside to 6680 before reverting.",
+          "condition": "material negative headline/bad news",
+          "expected_result": "Price drops to 6750 intraday and may extend to 6680 before subsequently reverting back up toward 6750"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market is most likely to range with occasional upsticks (centroid/pivot-driven ranging with additional upticks).",
+          "condition": "",
+          "expected_result": "Price trades primarily within the identified centroids/pivots with intermittent upward moves rather than a sustained directional breakout"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Second most likely scenario is a downward move followed by reversion.",
+          "condition": "",
+          "expected_result": "Price experiences a decline toward downside pivots/targets and then reverses back toward prior centroids/pivots within the session"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Third most likely outcome is an upside pin near the higher targets.",
+          "condition": "",
+          "expected_result": "Price becomes pinned near the upside target region (around 6934.98–6980) for a sustained period intraday"
+        }
+      ]
+    }
+  }
+}

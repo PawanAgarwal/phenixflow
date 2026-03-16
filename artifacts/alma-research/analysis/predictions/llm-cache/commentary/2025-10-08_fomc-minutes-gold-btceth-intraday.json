@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:04:45.389Z",
+  "inputHash": "c2f8196da23ab2db0a96200193d4b3d87339f2c1",
+  "payload": {
+    "responseId": "resp_01d466372dc8749b0069b7653292f8819196f785ef00c4b9f7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is likely to show an upside squeeze on the FOMC Minutes with a pin to the upper bound of the identified IC (6740/6745) and supportive centroid area around 6716.69-6718.17.",
+          "condition": "FOMC Minutes release at 2PM",
+          "expected_result": "Spot rallies toward and pins near the IC upper bound (~6740–6745) after the Minutes, with price gravitating back to the centroid (6716.69–6718.17) if intraday momentum fades."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If spot trades below 6688/6690 during the power hour, 6680 can pin near end of day.",
+          "condition": "spot below 6688/6690 during power hour",
+          "expected_result": "Price holds around 6680 into the end of the trading day (pinning at ~6680)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6707.04 must be broken with strong downside bid to reach the primal downside target of 6672.48, after which spot is expected to revert back up toward the centroid.",
+          "condition": "break below 6707.04 with strong downside bid",
+          "expected_result": "Price falls to ~6672.48 then subsequently reverts higher toward the centroid (6716.69–6718.17)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6730.81 should lead to a move toward 6757.49 with potential end-of-day pin at 6740 if the pivot is held in the last 1.5 hours.",
+          "condition": "pivot at 6730.81 is held in the last 1.5 hours",
+          "expected_result": "Price moves up to ~6757.49 and may pin around 6740 into the close."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The upside max (above the IC) looks very unlikely to be broken; breaking it would require very strong call skew bid and calming realized vol, and if broken 6780 is a magnet.",
+          "condition": "very strong call skew bid and realized vol calms to allow break above upside max",
+          "expected_result": "Price breaks above the IC upside max and is drawn toward ~6780."
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "Gold is expected to run up another ~$1,000 over the next year due to central bank demand and ETF inflows.",
+          "condition": "",
+          "expected_result": "Gold price increases by approximately $1,000 within the next 12 months."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Bitcoin is likely to continue to be supported by inflows and leverage chasing upside, making it more durable while positioning and flows dominate in a light data calendar.",
+          "condition": "shutdown-light data calendar (positioning and flows dominate)",
+          "expected_result": "Bitcoin sustains or advances in price driven by ETF/inflow demand and leveraged positioning until major data returns."
+        }
+      ]
+    }
+  }
+}

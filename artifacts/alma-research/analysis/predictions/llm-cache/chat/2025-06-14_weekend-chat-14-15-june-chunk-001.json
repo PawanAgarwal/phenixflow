@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:28:54.768Z",
+  "inputHash": "318e7ac2d782ed729158f7c369d9a74a597d5fdc",
+  "payload": {
+    "responseId": "resp_0e78af754ee0ddc30069b78704333881a29c317ad7f7336e2b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-15T22:10:36.129Z",
+          "instrument": "",
+          "prediction_text": "Market opened right at the weekly pivot.",
+          "condition": "",
+          "expected_result": "Price remains at or oscillates around the weekly pivot level in the subsequent trading session(s)."
+        },
+        {
+          "made_at": "2025-06-16T08:14:27.572Z",
+          "instrument": "VIX",
+          "prediction_text": "I would long VIX during July.",
+          "condition": "during July",
+          "expected_result": "VIX rises during July relative to its level at the start of July, allowing long positions entered in July to gain value."
+        }
+      ]
+    }
+  }
+}

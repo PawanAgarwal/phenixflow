@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:06:03.431Z",
+  "inputHash": "8d329e145983bf89d81c83d86f912bd700a666fb",
+  "payload": {
+    "responseId": "resp_0f500dcbcbee36340069b7658454d4819dbce0d8ac80835b7c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong sticky centroid band ~6887–6894 with visible long color and gamma support; market likely to pin/gravitate to this centroid if trading inside the IC.",
+          "condition": "spot inside 6887–6894",
+          "expected_result": "Price will gravitate and spend most of the session in 6887–6894 (pinning, low net drift) with reduced realized intraday volatility."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower wing support concentrated around ~6835 (most supportive zone / gamma trough) — visible strong blue/green trough and seller convexity below the IC.",
+          "condition": "intraday retest of lows / spot approaches 6835",
+          "expected_result": "Price will find support and rebound from ~6834–6836, reversing back toward 6850–6885 within a few hours."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance/convexity pressure around ~6940 with a gamma peak cluster near ~6975–6985 (red ridge) — breakout above IC would face short-term squeeze but low probability.",
+          "condition": "sustained push above 6940",
+          "expected_result": "If price clears 6940, expect a fast squeeze toward 6975–6985 then likely reversion back toward 6960–6940 (bounce-and-revert within same session)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid lower-pin alternative: small local pin near ~6887 (explicit small long color concentration) acting as a short-term magnet if SPX is below 6895 in PM.",
+          "condition": "spot < 6895 in PM session",
+          "expected_result": "Price will pin to ~6887 for several print intervals before any directional breakout."
+        }
+      ]
+    }
+  }
+}

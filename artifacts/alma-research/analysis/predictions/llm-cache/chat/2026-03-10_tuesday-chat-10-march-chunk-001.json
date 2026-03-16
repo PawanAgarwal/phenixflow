@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:30:43.556Z",
+  "inputHash": "ac98044cb94bd47be04bf3292cf10b2b73c7b2e4",
+  "payload": {
+    "responseId": "resp_059f0bc6844ff1840069b7876d9cf08192a8d9c36436258fbd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-03-10T17:33:26.646Z",
+          "instrument": "",
+          "prediction_text": "Market momentum will follow the provided levels, which help you understand the momentum.",
+          "condition": "",
+          "expected_result": "Price momentum will change direction or accelerate at the provided levels as indicated by prior level-based confirmations."
+        },
+        {
+          "made_at": "2026-03-10T17:44:40.054Z",
+          "instrument": "",
+          "prediction_text": "If a pivot level is confirmed broken, momentum will turn on and downside clusters will become gravitational.",
+          "condition": "pivot level is confirmed to be broken",
+          "expected_result": "After the pivot break, price momentum will accelerate downward and price will cluster around identified downside levels."
+        },
+        {
+          "made_at": "2026-03-10T17:44:40.054Z",
+          "instrument": "",
+          "prediction_text": "Above a certain pivot, momentum will catch a bid, volatility will rise, gamma will fall, and the move will accelerate toward a certain cluster.",
+          "condition": "price moves above the specified pivot",
+          "expected_result": "Following a break above the pivot, price will accelerate upward toward the target cluster accompanied by rising implied volatility and falling gamma."
+        },
+        {
+          "made_at": "2026-03-10T17:45:49.155Z",
+          "instrument": "",
+          "prediction_text": "If momentum declines while volatility is catching a bid, the market may still go down but is likely to overshoot.",
+          "condition": "momentum decreases while volatility increases",
+          "expected_result": "Price will continue downward and likely extend beyond expected support levels (overshoot) rather than smoothly reversing."
+        }
+      ]
+    }
+  }
+}

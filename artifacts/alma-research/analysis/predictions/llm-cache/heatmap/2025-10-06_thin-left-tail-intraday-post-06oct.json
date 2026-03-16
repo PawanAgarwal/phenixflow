@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:04:41.959Z",
+  "inputHash": "260375b2d35b336ae123f62eef6fa4ccdd03b070",
+  "payload": {
+    "responseId": "resp_0f87c06b3647039f0069b76534bdd88194961b2e0300fc6b67",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky / support band around the centroid upper bound ~6710-6715; market likely to gravitate and pin here intraday.",
+          "condition": "price near 6710-6715",
+          "expected_result": "Price will hold and consolidate at 6710-6715 for the next several hours; failed breaks above will revert back into this band within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary pin at 6750 acting as upside magnet; occasional short spikes through to ~6770 but reversion back to 6750 is likely.",
+          "condition": "upside momentum/vol realization",
+          "expected_result": "If price breaks toward 6750, expect a test of 6750 and possible extension to ~6770, followed by a reversion back to 6750 within the same trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside is well-supplied with a local pin around 6680 and a downside pivot at 6706; left-tail thin so strong moves lower are less likely without a trigger.",
+          "condition": "downside skew becomes bid or market sell-off",
+          "expected_result": "If downside pressure occurs, price may test 6706 then 6680 as support levels; absent a major catalyst, large breaches below 6680 are unlikely intraday."
+        }
+      ]
+    }
+  }
+}

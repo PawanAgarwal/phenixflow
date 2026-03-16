@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:20.617Z",
+  "inputHash": "0860322de31426dd34d86800029554d1aa6f879e",
+  "payload": {
+    "responseId": "resp_03614aef5f3a3daa0069b767ac0e188197a07cc0b5c93678ec",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky centroid zone between 6840–6856 acting as local magnet; price likely to remain rangebound there in PM and revert toward centroid if touched.",
+          "condition": "price near 6840–6856",
+          "expected_result": "Price will trade and spend time inside 6840–6856 over the session; intraday oscillations will revert back to that range within a few hours."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance around 6898 (with additional resistance ~6905–6910); breaking and holding above ~6910 required to stabilize upside toward the sticky target near 6939.",
+          "condition": "price closes and holds above 6910",
+          "expected_result": "If price holds above 6910, expect follow-through toward 6938–6940 within the session; otherwise upside will likely fail at 6898–6910 and roll back."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/support at ~6830 with a reversion target near 6792; the pivot from below will act as a momentum breaker if price approaches from below.",
+          "condition": "price touches 6830 and continues downward momentum",
+          "expected_result": "A touch of 6830 followed by continuation will likely push price toward 6790–6795 where a reversal/reversion is probable."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher-probability range corridor centered on the centroid (approx 6835–6882) where market is fragile but expected to trade most of the session; wider volatile rangebound behavior favored over a clean trending breakout.",
+          "condition": "intraday activity",
+          "expected_result": "Price will oscillate within ~6835–6882 for most of the day, producing repeated rejections near the edges rather than sustained breakout."
+        }
+      ]
+    }
+  }
+}

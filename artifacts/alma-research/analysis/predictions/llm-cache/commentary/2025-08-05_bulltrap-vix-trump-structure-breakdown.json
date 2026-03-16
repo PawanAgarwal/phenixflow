@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:01:32.533Z",
+  "inputHash": "90c9d98d8a01df5b4ce15614045c9f000520f83e",
+  "payload": {
+    "responseId": "resp_02c957a3834791910069b7646ed6808197a15db13d9d6dfecf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Volatility will be suppressed during the month and managed to avoid a large expansion, producing a slow sell rather than a sharp black-swan event.",
+          "condition": "",
+          "expected_result": "VIX and realized volatility remain contained with no large spikes; daily moves in major indices stay within recent ranges over the next month"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility leg-up risk will materialize in the Friday-to-OpEx week window, especially over the weekend.",
+          "condition": "Friday-to-OpEx week (especially the weekend)",
+          "expected_result": "VIX and option-implied volatility rise noticeably during the specified OpEx weekend compared with the preceding week, producing larger-than-normal gap moves in major indices"
+        },
+        {
+          "instrument": "DJ (or index with level 6416.01)",
+          "prediction_text": "If price falls below 6416.01 the market will head toward equilibrium and begin accumulating negative returns.",
+          "condition": "price falls below 6416.01",
+          "expected_result": "Following a break below 6416.01, the index trends lower over subsequent days, with net negative returns and lower local lows established"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The current rally is a bulltrap and will materialize this week mostly as ranging, with a possibility of a double top.",
+          "condition": "",
+          "expected_result": "Price fails to sustain upside breakout, trading back into the prior range and forming a sideways pattern for the week; a double-top formation may occur with two nearby highs followed by a decline"
+        },
+        {
+          "instrument": "(IC) 6290/95 - 6355/60",
+          "prediction_text": "Centroid is between 6352.94 and 6354.48, with liquidity attraction toward 6333.21 and a right-tail resistance around 6371.52.",
+          "condition": "",
+          "expected_result": "Intraday price action gravitates toward 6353 and tests down toward ~6333; upside attempts stall near 6371.52"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Before 2PM, reversions are likely between 6338.17 (resistance/support pivot) and 6271.28 (important support).",
+          "condition": "before 2PM",
+          "expected_result": "Price oscillates between ~6338 and ~6271 prior to 14:00, providing mean-reversion opportunities in that range"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6338.17 can be broken if intraday volatility increases, which would open a target toward the 6368-6371.52 area.",
+          "condition": "if vol catches up (intraday volatility increases) and spot breaks 6338.17",
+          "expected_result": "A breakout above 6338.17 during rising intraday volatility leads to a rally toward 6368–6371.52"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "After 2PM, the market pivots at 6337 to decide whether to pin to 6355 or move to 6330, with an additional pivot at 6313 determining pin to 6295 or to 6330.",
+          "condition": "after 2PM",
+          "expected_result": "Post-14:00 price action shows a decisive move from 6337 either up toward 6355 or down toward 6330; if price reaches 6313, subsequent movement pins toward 6295 or reverts to 6330"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6371.52 can be breached in the first two hours only if spot gets trapped above 6335, skew is sold, and realized volatility calms, leading to a slow grind up to 6403 and potential pin at 6388 during powerhour.",
+          "condition": "within first 2 hours AND spot trapped above 6335 AND skew is sold AND realized volatility calms",
+          "expected_result": "Price grinds up from above 6335 through 6371.52 toward 6403, with price pinning near 6388 during the powerhour if above that level"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market is betting on vol selling and theta buying, implying continued ranging behavior rather than a sustained breakout.",
+          "condition": "",
+          "expected_result": "Implied volatilities decline modestly (vol-selling) and time decay-dominated strategies benefit while the index trades in a sideways range without sustained directional breakout"
+        }
+      ]
+    }
+  }
+}

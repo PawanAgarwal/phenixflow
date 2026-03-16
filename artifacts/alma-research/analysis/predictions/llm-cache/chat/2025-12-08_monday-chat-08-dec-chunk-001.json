@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:29:59.901Z",
+  "inputHash": "a664f5a4c43c6469d44ee624334bf5d875f1768a",
+  "payload": {
+    "responseId": "resp_0bd07da56cdcec670069b78744736481908ad844f263e5dd90",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-12-08T23:40:58.995Z",
+          "instrument": "",
+          "prediction_text": "If volatility catches up by roughly 5% or more, the vanna profile will shift because vega and vomma profiles shift across strikes.",
+          "condition": "volatility increases by >= 5%",
+          "expected_result": "Vanna profile measurably changes; vega and vomma across strikes move consistent with the shift (observable in option Greeks and implied vol surfaces)."
+        },
+        {
+          "made_at": "2025-12-08T23:40:58.995Z",
+          "instrument": "",
+          "prediction_text": "Downside volatility will react faster than upside volatility across strikes, causing the vanna profile to shift.",
+          "condition": "",
+          "expected_result": "Implied vol for lower strikes rises faster than for higher strikes following volatility moves (steeper skew); vanna exposures change accordingly."
+        }
+      ]
+    }
+  }
+}

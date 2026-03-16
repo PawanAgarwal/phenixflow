@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:28:53.771Z",
+  "inputHash": "275be0acd3b94bccd9f3d664db76e32894dfb7d0",
+  "payload": {
+    "responseId": "resp_0e9ad1199087ca840069b786fe4aa4819f8d48a9b946eebb0c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-05-27T21:01:09.219Z",
+          "instrument": "",
+          "prediction_text": "The market will break out of the call spread range to the upside, elevating volatility and pushing call implied volatility higher.",
+          "condition": "",
+          "expected_result": "Spot price moves above the call spread range and call IV rises materially within 1-5 trading days."
+        },
+        {
+          "made_at": "2025-05-27T21:11:29.408Z",
+          "instrument": "",
+          "prediction_text": "If volatility realizes to the upside, it would cause a blow-off-top style spot spike.",
+          "condition": "volatility realizes to the upside",
+          "expected_result": "A rapid, large upward spike in spot price occurring within a short time window (hours to a few days) after an increase in realized volatility."
+        },
+        {
+          "made_at": "2025-05-27T21:22:45.065Z",
+          "instrument": "bonds",
+          "prediction_text": "There is no demand support for bonds.",
+          "condition": "",
+          "expected_result": "Bond prices will fail to find buying interest and either stagnate or decline over the next few sessions."
+        },
+        {
+          "made_at": "2025-05-27T22:04:33.724Z",
+          "instrument": "",
+          "prediction_text": "If GDP is stronger, the market will interpret that as the Fed needing to act on inflation again, leading to a higher-for-longer rate outlook.",
+          "condition": "GDP is stronger",
+          "expected_result": "Markets price in a higher-for-longer interest rate path (e.g., yields rise and rate-sensitive assets decline) following release of stronger GDP data."
+        }
+      ]
+    }
+  }
+}

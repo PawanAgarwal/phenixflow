@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:28:52.448Z",
+  "inputHash": "170f629871604478a4ae8995ceeaf8fec234bdca",
+  "payload": {
+    "responseId": "resp_0cd9e4127a8551af0069b787025e70819dbd81172371b26666",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-13T11:09:20.518Z",
+          "instrument": "",
+          "prediction_text": "The reversion model shows 5641.08 as the target.",
+          "condition": "",
+          "expected_result": "Price moves to 5641.08."
+        },
+        {
+          "made_at": "2025-06-13T11:09:20.518Z",
+          "instrument": "",
+          "prediction_text": "Market should finally break and close below 5960 to confirm downward trend.",
+          "condition": "break and close below 5960",
+          "expected_result": "Price closes below 5960, confirming a downward trend."
+        }
+      ]
+    }
+  }
+}

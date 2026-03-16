@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:10:46.725Z",
+  "inputHash": "437206106a8615e9adb607e08e0eb5e9f2383040",
+  "payload": {
+    "responseId": "resp_0c2bc7c5df2adf420069b766a0bff481a1a980de218bf22537",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The upside pivot (Oct 27 gap up area) must be filled with low volatility to ease pressure and confirm the move.",
+          "condition": "fill of Oct 27 gap up area with low volatility",
+          "expected_result": "SPX will trade through and close within the Oct 27 gap up area with reduced intraday volatility, reducing downside pressure and supporting further upside continuation"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "CTA sell trigger at 6710 should be taken out by close to decrease institutional selling pressure.",
+          "condition": "price close above 6710 by the close",
+          "expected_result": "Taking out 6710 will reduce institutional selling pressure, diminishing near-term downside risk and supporting additional upside moves"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Big money starts rebalancing and taking risk on Tuesday, initiating consolidation on Monday.",
+          "condition": "start of week with Monday consolidation and Tuesday rebalancing",
+          "expected_result": "Bitcoin will enter a consolidation phase on Monday followed by renewed buying and net inflows on Tuesday, driving price higher or stabilizing after the initial consolidation"
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "The move higher still requires confirmation despite recent gains and should show evidence of consolidation and low volatility through the pivot area.",
+          "condition": "evidence of consolidation and low volatility through identified pivot area",
+          "expected_result": "Gold will trade sideways with lower realized volatility through the pivot area, validating a bullish consolidation and increasing the probability of further upside"
+        }
+      ]
+    }
+  }
+}

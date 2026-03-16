@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:51:51.451Z",
+  "inputHash": "c41c3f897abb4def1dbb7dcd72d0f0ff5388cf4c",
+  "payload": {
+    "responseId": "resp_0cf8db78d659e3840069b76231f30081968f135605755b5353",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Volatility will decay intraday between 6100–6145, producing intraday vol decay.",
+          "condition": "SPX between 6100 and 6145",
+          "expected_result": "Implied volatility measures (e.g., VIX or SPX option IV) decline during the trading day compared with open levels"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The 6135 level will be hard to break through intraday and will act as resistance (pinning point).",
+          "condition": "None",
+          "expected_result": "SPX price fails to close decisively above 6135 during the trading session and revisits lower levels after attempts to breach it"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma support will keep SPX supported in the 6115–6107 range, preventing a sustained drop below that band.",
+          "condition": "None",
+          "expected_result": "SPX does not trade and close below 6107 during the session; any moves toward that band are met with bounces higher"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero vanna flip levels at 6151 and 6072.5 will require lower volatility to be crossed and thus act as barriers unless implied vol decreases.",
+          "condition": "None",
+          "expected_result": "SPX crossing above 6151 or below 6072.5 occurs only after a measurable drop in implied volatility compared with current intraday levels"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A steep speed profile at 6145 favors pinning around that level intraday.",
+          "condition": "None",
+          "expected_result": "SPX trades and spends an outsized portion of intraday time near 6145, ending the session close to that level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market makers' long iron-condor positioning will push spot/vol beta down and keep vanna and 22d put/call skew longer into February expiry.",
+          "condition": "None",
+          "expected_result": "Spot/vol correlation metrics decline and 22-day put/call skew remains elevated (little shift toward spot-driven skew flattening) through the February expiry date"
+        }
+      ]
+    }
+  }
+}

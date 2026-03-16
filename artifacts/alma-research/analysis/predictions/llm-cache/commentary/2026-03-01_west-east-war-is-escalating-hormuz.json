@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:16:02.444Z",
+  "inputHash": "163386ac604d1fa5bc00fc663c1eda6eb5d343d8",
+  "payload": {
+    "responseId": "resp_02040a2df3f001a30069b767d422f88192afe6de7f76af00b7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Oil",
+          "prediction_text": "Oil prices will be pushed above $90-95 due to destabilisation of the Middle East and damaged supply chains.",
+          "condition": "",
+          "expected_result": "Brent or WTI closes above $90 and sustains levels near or above $95 within the coming weeks following escalation in the Persian Gulf."
+        },
+        {
+          "instrument": "Oil",
+          "prediction_text": "Geo-risk premium on oil and gas products has spiked by as much as 50% (implying materially higher near-term prices while transit remains disrupted).",
+          "condition": "",
+          "expected_result": "Market-implied risk premium measures (e.g., oil forward curve spreads or volatility) increase by up to ~50% versus pre-disruption baselines while Gulf transit disruptions persist."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "I expect the Iranian aggression to peak around the OPEX week with heightened market disruption.",
+          "condition": "around the OPEX week",
+          "expected_result": "Risk assets and energy prices show peak volatility and directional moves coinciding with the specified OPEX week (measurable increase in realised or implied volatility)."
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "In the second half of the year the Japanese government will no longer tolerate a persistently weak yen, creating left-tail carry-trade risk.",
+          "condition": "in the second half of the year",
+          "expected_result": "JPY strength manifests as a sustained appreciation versus major crosses (e.g., USD/JPY down materially) and periods of sharp yen jumps that cause losses for carry-trade positions."
+        },
+        {
+          "instrument": "NVIDIA",
+          "prediction_text": "Signs of delays and overspending at NVIDIA will be visible and act as a leading indicator of the AI bubble's end.",
+          "condition": "",
+          "expected_result": "NVIDIA reports operational delays or increased capital/expenditure guidance and the stock declines meaningfully (e.g., >10% from recent levels) following such disclosures."
+        },
+        {
+          "instrument": "TSMC",
+          "prediction_text": "Wall Street is expecting slippage and slowdown at TSMC in the second quarter, which when realised will contribute to the AI bubble bursting.",
+          "condition": "second quarter",
+          "expected_result": "TSMC reports revenue or shipment slippage in the second quarter and the stock declines materially, coinciding with broader sector weakness."
+        },
+        {
+          "instrument": "GCC put options (regional markets)",
+          "prediction_text": "Gulf states have halted put trading on exchanges until Tuesday, indicating suppressed downside hedging and potential for abrupt repricing when resumed.",
+          "condition": "when put trading resumes",
+          "expected_result": "Resumption of put trading is followed by increased demand and a spike in put prices/volatility, producing abrupt downward repricing in regional oil-linked assets."
+        },
+        {
+          "instrument": "Oil-derived gas prices (regional gas markets)",
+          "prediction_text": "If a Saudi refinery or the Petroline pipeline is hit, it could slow oil price increases but generate a spike in gas prices.",
+          "condition": "if refinery or Petroline pipeline is hit",
+          "expected_result": "Upon confirmed damage to the refinery or Petroline, regional/national gas prices (LNG/JET/industrial gas) spike sharply (measured >20% intraday/short-term rise) while oil price reaction differs (temporary moderation or localized impact)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Geopolitical tensions will seemingly ease slightly during the summer, reducing immediate market stress before the next critical window in November.",
+          "condition": "during the summer",
+          "expected_result": "Measured geopolitical risk indicators and market volatility decline through the summer months compared with spring levels, then rise again approaching November."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Markets are likely to 'wake up' to longer-term effects of geo risk toward the end of next week, reversing the current short-term suppression.",
+          "condition": "end of next week",
+          "expected_result": "Market realised/implied volatility and risk premia increase materially by the end of next week compared to intraday/early-week levels, with directional moves in risk assets reflecting reassessment of geo risk."
+        }
+      ]
+    }
+  }
+}

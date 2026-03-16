@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:36.118Z",
+  "inputHash": "17e59833f139929865c34625940c0eb3ccbefe80",
+  "payload": {
+    "responseId": "resp_0f351a62697ccbf20069b7674c0550819792b73be4bcb50b1e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "OEX/SPX",
+          "prediction_text": "The rotation is ongoing and we can expect more volatility in the rotation given current sentiment.",
+          "condition": "",
+          "expected_result": "Intraday and near-term realized volatility for OEX/SPX will increase over its recent baseline, producing larger price swings than the prior session(s)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Citadel and BlackRock buying dips provides deep passive support that compresses the kurtosis of expected return distributions.",
+          "condition": "",
+          "expected_result": "Downside tail events for broad equity indices will be less frequent or less extreme than historical averages, with returns showing reduced kurtosis versus a prior comparison period."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Left-tail risk persists until the diplomatic conflict is resolved, but the left-tail will remain thin and managed.",
+          "condition": "diplomatic conflict unresolved",
+          "expected_result": "Significant abrupt market crashes (large negative jumps) will be unlikely while the conflict remains unresolved, with downside moves occurring more gradually rather than as sharp crashes."
+        }
+      ]
+    }
+  }
+}

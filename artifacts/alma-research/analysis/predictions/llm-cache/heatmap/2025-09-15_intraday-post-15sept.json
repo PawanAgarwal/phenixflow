@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:35.538Z",
+  "inputHash": "7d037cf35db92c8c1e05ca846a091ba9b0592d50",
+  "payload": {
+    "responseId": "resp_0daf5d7189e0cf450069b764f209cc81a097e0fcc0468d9b30",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/pinning zone around 6594–6604 (primary magnet). Heatmap shows concentrated gamma peak and red ridge near ~6610–6620 capping upside; centroid area (6594–6604) likely to pin price intraday with reversion attempts away from it.",
+          "condition": "none",
+          "expected_result": "SPX will trade and spend significant time between 6590 and 6605; expect reversion back to this range after intraday excursions within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/cap at ~6604 with resistance/capping from vanna near ~6615–6620 (hot red gamma ridge). A fast long-vol / call-skew bid could push through but heatmap shows strong resistance.",
+          "condition": "call skew catches bid and intraday vols realize",
+          "expected_result": "If call skew bids and vol rises, SPX can breach 6604 and test 6615–6620; otherwise upside should stall and reverse below 6615."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot around 6578 with deeper put-skew test required near ~6563; downside target/likely rejection zone at 6548–6550 where reversion is expected.",
+          "condition": "put skew catches bid and intraday vol-up",
+          "expected_result": "If puts bid and vol increases, SPX will drop to test 6563 and likely travel to 6548–6550 then revert higher; absent vol lift, downside should remain above ~6560–6575."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:54:47.447Z",
+  "inputHash": "b55c92fa753e5aa2dc7c93f479667d48d7dade27",
+  "payload": {
+    "responseId": "resp_0620add6a1fcebbc0069b762d2df3881a1a60dd3e9f63f858a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The main pivot from vol profile is 5608.09.",
+          "condition": "",
+          "expected_result": "Price will rotate around 5608.09, exhibiting mean reversion toward this level during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If bulls get momentum, we should see it above 5592.20 already.",
+          "condition": "bulls get momentum",
+          "expected_result": "Price will break above 5592.20 and sustain higher intraday levels."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Bear pivot is 5565.88.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward or find resistance/support behavior near 5565.88, with downside pressure if it breaches lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Zero vanna line at 5585.46 requires low vol to break through.",
+          "condition": "low volatility",
+          "expected_result": "Price will fail to cross 5585.46 unless volatility declines; with low vol, a clean break above 5585.46 will occur."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5519.96 is the level where longer downside gamma will show its stabilization effect with flow at 5487.48; any vol decline here is natural.",
+          "condition": "",
+          "expected_result": "If price reaches ~5519.96 (and/or 5487.48), downside gamma will dampen moves causing volatility to compress and price to stabilize."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Bulls would need 5662 to break with decreasing vol to stabilize upward.",
+          "condition": "decreasing volatility",
+          "expected_result": "A break above 5662 accompanied by falling volatility will lead to a stabilizing upward trend."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Charm flip at 5576 is negative above and positive below, implying steep negative convexity above 5515 and mechanical gamma decay during the day giving more room for volatility.",
+          "condition": "",
+          "expected_result": "If price stays above 5576 (and particularly above 5515), convexity will be negative and gamma exposure will decay intraday, resulting in increased intraday volatility and larger price swings."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Below the JPM put strike, if market-maker deltas make higher lows (if vol up) and lower highs (if vol down) and this compression is flat, that's a natural consequence of vanna exposure; a much steeper tendency (~5%) signals strong directional foreign flows.",
+          "condition": "compression is flat",
+          "expected_result": "Price action will show compressed ranges with higher-lows on MM deltas when vol rises and lower-highs when vol falls, indicating muted directional moves; if the compression steepens by ~5%, expect a strong directional move driven by foreign flows."
+        }
+      ]
+    }
+  }
+}

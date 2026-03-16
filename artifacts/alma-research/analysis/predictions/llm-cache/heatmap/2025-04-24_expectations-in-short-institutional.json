@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:55:51.251Z",
+  "inputHash": "4fc44cd6d61beed757e3e39f9eeb1aff06c8e832",
+  "payload": {
+    "responseId": "resp_08ec7bf3be1a8e980069b763214c3481938973597e866d20dc",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma peak cluster and trough alignment around 5310–5338 (centroid 5316.62–5337.94) — acts as a pin/mean-reversion magnet. Heatmap shows concentrated gamma that will resist sustained moves away and encourage consolidation near this band.",
+          "condition": "price near 5316–5338",
+          "expected_result": "Price should gravitate back into and trade sideways within ~5310–5340 over the next session(s); rejections of moves beyond this range likely and mean reversion toward the centroid expected."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upper short-IC resistance band / gamma trough around 5445–5450 — a sticky rejection zone where short iron-condor wings create resistance and volatility should drop if price tests and fails the band.",
+          "condition": "price approaches 5445–5450",
+          "expected_result": "Expect rejection or deceleration of upside momentum with decreased intraday vol; price likely to stall and reverse lower from ~5440–5460."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/free zone near 5277 (pivot 5276.96) where price can escape IC constraining effects — a likely break point if selling accelerates.",
+          "condition": "price breaks below 5276.96 with momentum",
+          "expected_result": "If price breaks and holds below ~5277, expect extended downside travel away from the IC range toward lower gamma clusters (test of ~5200–5250 area possible)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Mid-range sticky/zero-vanna anchoring near 5366.89 — a secondary pin where calmer vols produce rangebound trade.",
+          "condition": "volatility calms on both sides / low vol regime",
+          "expected_result": "Price should settle and oscillate around ~5360–5375 while vanna/vega are low, maintaining a narrow intraday corridor."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:51:55.458Z",
+  "inputHash": "5756094a1cbaf287b3a5d92f5125f667c36b16f1",
+  "payload": {
+    "responseId": "resp_03fbff7f0383351d0069b76233f77881939bbbd1468f938f2a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pin / sticky zone between 6095–6110 (local short-fly cluster) creating a local pin that burns vol and attracts price to stay around this area intraday.",
+          "condition": "price approaches 6095–6110",
+          "expected_result": "SPX will gravitate toward and spend increased time in 6095–6110; expect reduced realized vol and failed sustained moves away for at least 30–90 minutes after approach"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support (stronger) around 6120 acting as a brake; downside vanna flip below ~6048 gives stronger support below but 6120 is the nearer intraday magnet.",
+          "condition": "price tests 6120 from above",
+          "expected_result": "SPX should find buying/support near 6120 and bounce within the session; a decisive break below would require vol contraction or push toward the 6048 vanna flip level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / weaker brake at the upside zero-vanna around 6145–6150; upside break requires volatility to decrease, otherwise momentum likely stalls below this level.",
+          "condition": "price rallies toward 6145–6150",
+          "expected_result": "If vol does not drop, SPX will fail to sustain a break above 6145–6150 and reverse; if vol falls, a clean break above 6145 can lead to sustained upside continuation toward ~6260 area noted as a longer-term peak cluster"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Large sticky resistance / peak gamma cluster near ~6265–6285 (upper heatmap peak) acts as a magnet if price moves well above 6150, likely slowing or pinning upside travel.",
+          "condition": "price moves above 6160 with continuation",
+          "expected_result": "SPX is likely to slow and accumulate in the 6265–6285 range, showing reversion or consolidation rather than a rapid continuation through that band"
+        }
+      ]
+    }
+  }
+}

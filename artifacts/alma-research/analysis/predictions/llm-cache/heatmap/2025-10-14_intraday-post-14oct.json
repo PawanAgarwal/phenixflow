@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:05:04.761Z",
+  "inputHash": "64701103021b65641830e95067f73a97a92a3f6c",
+  "payload": {
+    "responseId": "resp_03668f5bffb61c580069b76549406481a397e268481089ba40",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid around 6545 is sticky — expect reversion/pinning pressure to hold spot near ~6545 if price moves toward it during the session.",
+          "condition": "spot approaches 6545",
+          "expected_result": "Price will gravitate back to and spend time near 6545 (pinning/reversion) rather than continuing a sustained break away within the same session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "IC (iron condor) wing resistance between ~6605–6690 creates a strong upside brake; moves above the centroid toward the IC range are likely to stall and reverse inside that band.",
+          "condition": "spot > centroid (~6545) and trending higher into 6605–6690",
+          "expected_result": "Upward moves will slow near 6616–6677 and face increasing resistance across 6605–6690, producing intra-day reversals or consolidation rather than clean breaks higher."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at ~6517 is supportive and likely to hold intraday; if breached the next supportive level is near 6487.",
+          "condition": "price tests 6516.92",
+          "expected_result": "Price will find support and bounce at ~6517; only on a confirmed break below 6517 should traders expect travel toward ~6487."
+        }
+      ]
+    }
+  }
+}

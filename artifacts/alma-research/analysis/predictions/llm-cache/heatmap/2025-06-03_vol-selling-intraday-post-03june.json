@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:05.778Z",
+  "inputHash": "d7f2a44ea25379426bd901548e97ef169ffe37af",
+  "payload": {
+    "responseId": "resp_063a929b0bfd6d5b0069b763a84c3c8195b483095cd70370a8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong sticky gamma / peak cluster just below 5750 (around 5740–5760) that will act as a magnet and support if price drops; expect intraday mean-reversion toward that zone from higher levels.",
+          "condition": "SPX trades down toward 5760–5740",
+          "expected_result": "Price should find support and slow/stop declines near 5760–5740 and likely bounce back several ticks within the session (testable by observing a reversal or decreased speed of decline within that range)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Visible gamma peak/trough structure around 5900–5915 (centroid area near 5912) acts as a local resistance/brake with a vanna flip at ~5902; breaking above requires elevated vol while failure should produce rejection.",
+          "condition": "SPX approaches 5900–5915 (near 5902 vanna flip)",
+          "expected_result": "If vol is low, expect rejection and a pullback from 5900–5915; if vol rises and breaks through 5902, price can accelerate higher toward 5946 (intraday upside target noted)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Clustered gamma peaks around 5940–5960 create a sticky corridor—should pin or slow price movement inside 5940–5960 if price reaches that area, providing resistance to quick moves away.",
+          "condition": "SPX trades into 5940–5960",
+          "expected_result": "Price will likely stall or consolidate within 5940–5960, requiring a notable volatility drop or spike to escape that corridor; expect limited directional follow-through while pinned."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:29:51.406Z",
+  "inputHash": "8f52c5f7e73cd3d5078ca0715e7b4ca8ec6573a2",
+  "payload": {
+    "responseId": "resp_081cd52f58e510420069b78738643c819db637c0731b44f398",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-11-13T15:48:56.212Z",
+          "instrument": "",
+          "prediction_text": "We are close to the daily downside target.",
+          "condition": "",
+          "expected_result": "Price will reach or be near the day's downside target level."
+        },
+        {
+          "made_at": "2025-11-13T16:27:10.018Z",
+          "instrument": "",
+          "prediction_text": "6700/6680 at max, due to volatility; 6715 and 6745 can be pin targets.",
+          "condition": "",
+          "expected_result": "Price will reach as low as 6700–6680 at most, and may pin to 6715 or 6745."
+        },
+        {
+          "made_at": "2025-11-13T18:28:41.791Z",
+          "instrument": "",
+          "prediction_text": "The weekly centroid is at 6716.80; watch it for the day.",
+          "condition": "",
+          "expected_result": "Price will interact with or gravitate toward 6716.80 during the trading day."
+        },
+        {
+          "made_at": "2025-11-13T18:29:00.242Z",
+          "instrument": "",
+          "prediction_text": "If the centroid fails, downside puts start to print into Friday.",
+          "condition": "centroid fails",
+          "expected_result": "Put option buying activity (increased put prints) will begin and increase into Friday, indicating expected downside price movement."
+        }
+      ]
+    }
+  }
+}

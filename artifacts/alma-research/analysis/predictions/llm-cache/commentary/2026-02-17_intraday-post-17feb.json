@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:14:53.482Z",
+  "inputHash": "23bc93c89f99ad98a9b4e08514f43a2099809f12",
+  "payload": {
+    "responseId": "resp_0c207d986a3a98ec0069b76798c04881a285bbd406cda0a970",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "6850/60 is the main pivotal area and will act as strong resistance.",
+          "condition": "",
+          "expected_result": "ES will fail to break above 6850–6860 and reverse lower after reaching that range."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Downside momentum will be confirmed if 6835 is taken out.",
+          "condition": "6835 is taken out",
+          "expected_result": "ES will continue lower toward targets 6790 and then 6750–6760."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Targets on the downside are 6790 and 6750/60.",
+          "condition": "Downside momentum confirmed (6835 taken out)",
+          "expected_result": "ES will reach 6790 and subsequently 6750–6760."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "An upside move will be confirmed if 6905 is taken out.",
+          "condition": "6905 is taken out",
+          "expected_result": "ES will continue higher toward targets 6920–6930."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Upside target after a confirmed breakout is 6920/30.",
+          "condition": "Upside move confirmed (6905 taken out)",
+          "expected_result": "ES will reach 6920–6930."
+        }
+      ]
+    }
+  }
+}

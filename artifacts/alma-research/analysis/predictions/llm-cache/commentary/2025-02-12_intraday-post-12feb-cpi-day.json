@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:51:30.838Z",
+  "inputHash": "fbe8e5286b8008ea624356317f19938c44431c3d",
+  "payload": {
+    "responseId": "resp_0f3988a75787ccc40069b762165e5081a084a96fc6e2b08de5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "After open funds will offload their positions.",
+          "condition": "",
+          "expected_result": "SPX will decline in the early US session following the open due to institutional selling."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If price holds above the charm and vanna flips (around 6015 and ~6008.71), a magnetic effect to the upside will occur.",
+          "condition": "price remains above charm flip ~6015 and vanna flip ~6008.71",
+          "expected_result": "SPX will be pulled higher, exhibiting upward drift or rallies toward resistance levels (e.g., ~6086 and 6160)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If spot breaks below the vanna flip, the only support would be at ~5945 first, then ~5925, with vol traders likely to cover as the market approaches the wings.",
+          "condition": "spot breaks below vanna flip (~6008.71)",
+          "expected_result": "SPX will fall toward ~5945, and potentially to ~5925 as volatility compresses and vol traders cover."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "I code 6047.10 as pivotal and will tell me what the market wants.",
+          "condition": "",
+          "expected_result": "SPX direction and subsequent flow will hinge on whether price stays above or below 6047.10, with above bias favoring upside continuation and below favoring downside moves."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "I code 6048 and 6086 as local support and resistance lines from a gamma perspective.",
+          "condition": "",
+          "expected_result": "SPX will find short-term support near 6048 and encounter resistance near 6086 in intraday trading."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Magnetic effect would start to kick in at 6085.73 to the upside.",
+          "condition": "price reaches or holds near 6085.73",
+          "expected_result": "SPX will experience increased upside attraction, making further gains toward the 6160 fly wing more likely."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Still reversion trading environment; better risk/reward on the call side, meaning puts are expensive and there is no edge to short them.",
+          "condition": "",
+          "expected_result": "Intraday traders will have a higher-probability opportunity using mean-reversion trades and buying calls rather than buying puts or initiating new swing shorts."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vol is expected to be sold after the premarket call demand and CPI excitement passes.",
+          "condition": "post-CPI initial hedging subsides",
+          "expected_result": "Implied volatility on SPX and VIX will decline after initial post-CPI call buying, reducing option prices."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX is relatively sold for today, then increased tail call demand into expo.",
+          "condition": "",
+          "expected_result": "VIX will trade lower through the day but may see renewed upside spikes later due to tail call demand into expiries."
+        }
+      ]
+    }
+  }
+}

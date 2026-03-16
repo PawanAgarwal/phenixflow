@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:59:36.652Z",
+  "inputHash": "45d797b37199be479138f94f37f85871e40b9ba1",
+  "payload": {
+    "responseId": "resp_0f8862f978f196f50069b764041d908194a93546b6649e6897",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma centroid and peak cluster around 6192.5–6193.1 indicates a sticky zone / magnet near current levels (6198). Expect price to gravitate toward 6192–6200 intraday.",
+          "condition": "none",
+          "expected_result": "SPX trades back into 6192–6200 range within the session (intraday reversion to centroid)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside gamma resistance band around 6234.5 with a noted 6243 fakeout margin — a likely reversion target and strong cap during power hour.",
+          "condition": "price rallies above 6207.46 pivot",
+          "expected_result": "If SPX breaks above 6207.46, momentum should stall near 6230–6245 with highest rejection probability at ~6234–6243."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside support cluster and pivot zone at 6176–6180 (identified as especially strong in last 1.5 hours) with a downside minimum near 6150 — strong rejection expected at 6176–6180.",
+          "condition": "price sells off from current levels",
+          "expected_result": "On a downward move, SPX should find support/reject around 6176–6180 and is unlikely to sustainably breach 6150 intraday."
+        }
+      ]
+    }
+  }
+}

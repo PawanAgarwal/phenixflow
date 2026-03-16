@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:04:27.217Z",
+  "inputHash": "075571cd9cb264cd48205e66c8bd4fbf3c7c05fd",
+  "payload": {
+    "responseId": "resp_0b2f5091001b5cf30069b7651f68e4819e84f94c6cc25aab00",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "GOLD",
+          "prediction_text": "If price breaks and confirms above the upside pivot at 6744.24 with at least a 115.11% increase in call skew accompanied by relatively higher realized intraday volatility and subsequent vol selling, the upside pivot will be conquered and a continued upside move is expected.",
+          "condition": "break and confirm above 6744.24 with ≥115.11% increase in call skew and higher realized intraday vol followed by vol selling",
+          "expected_result": "Sustained upside continuation beyond 6744.24 into the 6745–6755 area and higher intraday prices"
+        },
+        {
+          "instrument": "GOLD",
+          "prediction_text": "After 1:40 PM the 6736 line becomes sticky and the 6745/55 area turns rejecting, making further upside difficult.",
+          "condition": "time after 13:40 local intraday",
+          "expected_result": "Price will stall or reverse near 6736 and face rejection/resistance in the 6745–6755 area"
+        },
+        {
+          "instrument": "GOLD",
+          "prediction_text": "The centroid area 6726.70–6733.61 is the intraday pivot and significant magnetic center for price action at the open.",
+          "condition": "market open position relative to centroid",
+          "expected_result": "Opening above the centroid will bias intraday flows toward premium collection/bullish positioning; opening below increases probability of downside testing"
+        },
+        {
+          "instrument": "GOLD",
+          "prediction_text": "If price falls below the downside pivot at 6702.31, the upside magnetic field fades and the market can retest 6655–6660 before 1:00 PM.",
+          "condition": "price breaks below 6702.31 before 13:00",
+          "expected_result": "Price will move down to retest the 6655–6660 area prior to 13:00"
+        },
+        {
+          "instrument": "GOLD",
+          "prediction_text": "If the market opens below the centroid and downside pivot shows strength via put vol, a fast downside momentum move is possible, suited to 1DTE trades, but downside probability is generally lower.",
+          "condition": "open below centroid with strong put vol at downside pivot",
+          "expected_result": "Rapid intraday downside momentum suitable for very short-dated (1DTE) trades toward lower intraday levels (e.g., 6655–6680)"
+        },
+        {
+          "instrument": "GOLD",
+          "prediction_text": "6708–6714 is a sticky downside range that the market may revert to during intraday action.",
+          "condition": "intraday trading around centroid and pivots",
+          "expected_result": "Price will gravitate toward or become pinned in the 6708–6714 range during the session"
+        },
+        {
+          "instrument": "GOLD",
+          "prediction_text": "The 6744.24 level is a key resistance pivot where negative charm flows are pronounced and breaking it requires significant skew/vol confirmation.",
+          "condition": "intraday approach to 6744.24",
+          "expected_result": "Without the specified skew/vol confirmation, price will be rejected at or near 6744.24; with confirmation, price will break higher"
+        }
+      ]
+    }
+  }
+}

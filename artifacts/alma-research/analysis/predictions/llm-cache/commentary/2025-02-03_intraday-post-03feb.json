@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T01:50:09.243Z",
+  "inputHash": "71a6388b33257c3e0bfb5cdca81f38f81a7bb144",
+  "payload": {
+    "responseId": "resp_01fc6e54206753520069b761a1af708190b11e66ad6c711125",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Net negative speed profile will act as an accelerant to the upside in today's session.",
+          "condition": "during today's session",
+          "expected_result": "SPX will exhibit intraday upside acceleration with larger/faster up-moves (higher upside return magnitude or frequency versus downside)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX rebounds, implied volatility will not materially calm.",
+          "condition": "if SPX rebounds",
+          "expected_result": "ATM implied volatility (or VIX) will show little or no decline during the price rebound (no significant drop in IV on upward moves)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX falls toward 5929.5 (zero vanna), implied volatility will cool down slightly.",
+          "condition": "if SPX falls toward 5929.5",
+          "expected_result": "ATM implied volatility will decline modestly as price approaches 5929.5."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "When SPX reaches 6042.5 (upside net vanna flip), dealer flows will switch and trigger buy-backs.",
+          "condition": "when SPX reaches 6042.5",
+          "expected_result": "algorithms will buy to hedge, producing net buying pressure and a decline in implied volatility."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The 5967–5970 area is the main pivot where price should stabilize and exit the magnetic influence of the 5945/25 put spread.",
+          "condition": "if SPX reaches 5967–5970",
+          "expected_result": "price will stabilize or reverse higher from that area (downward momentum will slow and consolidation or a rebound is likely)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6017 will act as another notable pivot/resistance point.",
+          "condition": "if SPX approaches 6017",
+          "expected_result": "price will pause or reverse near 6017, increasing the probability of a short-term stall or rejection."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Charm will be suppressive in the 5929–6042 range starting after 2:35 PM.",
+          "condition": "after 2:35 PM while SPX is between 5929 and 6042",
+          "expected_result": "price movement will be damped with lower realized volatility and smaller directional moves within that range."
+        }
+      ]
+    }
+  }
+}

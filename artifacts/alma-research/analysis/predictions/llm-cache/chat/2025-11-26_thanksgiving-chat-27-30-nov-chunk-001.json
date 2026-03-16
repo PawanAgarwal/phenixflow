@@ -1,0 +1,82 @@
+{
+  "cachedAt": "2026-03-16T04:30:05.002Z",
+  "inputHash": "df11d0e19589ea4cec074eaff9a283b3858f95f1",
+  "payload": {
+    "responseId": "resp_011192de05a876dc0069b7873f85088195a287f6f9ede7acc1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-11-26T22:58:38.765Z",
+          "instrument": "",
+          "prediction_text": "Vanna will cause a rally.",
+          "condition": "",
+          "expected_result": "Spot price increases (rally) following vanna-driven flows within the next trading session(s)."
+        },
+        {
+          "made_at": "2025-11-26T23:09:17.160Z",
+          "instrument": "",
+          "prediction_text": "If you buy a call, dealers short delta on sold calls will buy spot (supporting upside).",
+          "condition": "You buy a call",
+          "expected_result": "Dealers hedge by buying spot, producing upward pressure on the spot price shortly after the call purchase."
+        },
+        {
+          "made_at": "2025-11-26T23:29:56.367Z",
+          "instrument": "",
+          "prediction_text": "Go long when you see constant increasing buying volume and decreasing selling volume as spot approaches your target support level.",
+          "condition": "Constant increasing buying volume and decreasing selling volume as spot approaches target support",
+          "expected_result": "Entering a long position at that trigger leads to a higher probability of a subsequent price rise from the support level."
+        },
+        {
+          "made_at": "2025-11-26T23:38:37.830Z",
+          "instrument": "",
+          "prediction_text": "If a prior agreed higher price level is retested and buying volume does not increase while bears take control, bullish interest has declined and the retest will show diminished buy-side interest.",
+          "condition": "Retest of a prior higher pivotal level with no increase in buying volume and bears taking control",
+          "expected_result": "The retest will fail to produce a sustained bounce; price will be more likely to move lower on the retest."
+        },
+        {
+          "made_at": "2025-11-27T00:05:26.586Z",
+          "instrument": "",
+          "prediction_text": "Supportive downside liquidity leveraged through market makers will influence price dynamics (implying dealers' hedging creates predictable flows).",
+          "condition": "",
+          "expected_result": "Market-maker hedging of sold downside exposure supplies liquidity that cushions downside moves and creates mechanically predictable flows in spot during downturns."
+        },
+        {
+          "made_at": "2025-11-27T00:08:02.094Z",
+          "instrument": "",
+          "prediction_text": "Customers heavily selling downside gammas makes the market makers' speed profile very steep, affecting intraday price responsiveness.",
+          "condition": "",
+          "expected_result": "Spot will react more rapidly (steeper speed) to moves in underlying due to market-maker hedging when customers have sold downside gamma."
+        },
+        {
+          "made_at": "2025-11-27T00:09:09.833Z",
+          "instrument": "",
+          "prediction_text": "Customer selling of downside volatility mechanically increases downside liquidity via market-maker hedging.",
+          "condition": "",
+          "expected_result": "Downside moves will encounter increased liquidity and potentially smaller immediate price impact due to market-maker hedges absorbing selling pressure."
+        },
+        {
+          "made_at": "2025-11-27T00:10:26.445Z",
+          "instrument": "",
+          "prediction_text": "Selling gamma reduces realized volatility; changes in gamma (speed) act like vanna for realized volatility, altering short-term volatility behavior.",
+          "condition": "",
+          "expected_result": "Periods following gamma selling will exhibit lower realized volatility compared with periods of gamma buying, measurable over ensuing sessions."
+        },
+        {
+          "made_at": "2025-11-27T00:14:37.287Z",
+          "instrument": "",
+          "prediction_text": "Illiquidity (vacuum) expectations to the upside push spot/realized-vol correlation upward and create right-skewed distributions with lower vol downward and higher vol upward.",
+          "condition": "",
+          "expected_result": "Price moves will show greater upside volatility than downside (right skew), with realized vol rising more on upward moves than downward moves over the following sessions."
+        },
+        {
+          "made_at": "2025-11-30T17:30:49.613Z",
+          "instrument": "",
+          "prediction_text": "Traders net selling upside calls and buying downside puts creates a net positive dealer vanna profile that produces a constant passive dealer buying flow and will make spot grind upward.",
+          "condition": "",
+          "expected_result": "Spot will trend upward gradually (grind up) as dealer hedging of that skew generates sustained passive buying pressure."
+        }
+      ]
+    }
+  }
+}

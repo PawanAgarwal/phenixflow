@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:52:36.322Z",
+  "inputHash": "43172fc5ba30d9efebf9f91123d1000f6f06055a",
+  "payload": {
+    "responseId": "resp_010c7076e554bcf30069b76258ed6c819fbc8e25748d39b272",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vol has to calm down for price to break above 5914 due to positive vanna convexity.",
+          "condition": "break above 5914",
+          "expected_result": "Volatility (IV) will decline prior to and during a sustained move above 5914"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Expect vol to increase when spot breaks below the downside vanna flip at 5795.65 due to negative vanna convexity.",
+          "condition": "break below 5795.65",
+          "expected_result": "Implied volatility will rise following a break below 5795.65"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Short-term acceleration to the upside (short-term gamma squeeze) toward the vanna flip is likely from current negative speed environment with increased spot/vol beta.",
+          "condition": "",
+          "expected_result": "SPX will experience a short-lived rapid upward move toward the vanna flip level (around 5795.65–5914) characterized by rising price and elevated intraday volume/volatility"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5854.77 is the pivot for the intraday upside acceleration toward the vanna flip.",
+          "condition": "",
+          "expected_result": "If SPX trades above 5854.77, intraday upside acceleration toward the vanna flip levels becomes more likely; if it trades below, upside acceleration is less likely"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market makers will buy deltas in the opening, producing lift, but will sell as long charm exposure increases put deltas if spot cannot grind above 5934.48 before PM.",
+          "condition": "spot does not grind above 5934.48 before PM",
+          "expected_result": "Market makers will net sell deltas into the afternoon, creating downward pressure on SPX into PM"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX is likely forming a near-term bottom and a mean reversion up is probable.",
+          "condition": "",
+          "expected_result": "SPX will show a rebound from recent lows consistent with a near-term bottom (higher lows and upward short-term price drift)"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX should hold above 5953.38 to confirm upward momentum.",
+          "condition": "hold above 5953.38",
+          "expected_result": "If SPX remains above 5953.38, short-term upward momentum will be confirmed and further upside is more likely"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Longer-term upward momentum requires SPX to conquer 6119.32.",
+          "condition": "conquer 6119.32",
+          "expected_result": "A sustained move above 6119.32 will indicate longer-term upward momentum for SPX"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Watch for sudden spikes in near-term VIX call prices as signals of increasing tail-risk expectations; accumulation of VIX call spreads suggests stickier high VIX environment rather than left-tail fear.",
+          "condition": "",
+          "expected_result": "A sudden rise in near-term VIX call prices will precede or coincide with VIX remaining elevated (sticky high levels) rather than a transient spike"
+        }
+      ]
+    }
+  }
+}

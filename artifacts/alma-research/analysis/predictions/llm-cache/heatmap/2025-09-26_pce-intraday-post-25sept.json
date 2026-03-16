@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:04:15.311Z",
+  "inputHash": "bfd2cfbc4953a9505295154abd56a9e99717c5b3",
+  "payload": {
+    "responseId": "resp_0f33f6faadd016a40069b76518ae48819c806cf372c8aa9811",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning/centroid around ~6600-6605 (centroid given 6598.23–6601.29, spot 6604.72). Heatmap shows sticky gamma cluster centered here supporting mean reversion to this level throughout the session.",
+          "condition": "",
+          "expected_result": "Price will revert toward and spend significant time near 6598–6605; failed breakout attempts above or below will likely reverse back into this range within the day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / resistance zone at ~6621.8 with strong gamma trough/peak structure near 6638–6655 creating a top/floor after 13:30; 6645 noted as a pin if upside pivot holds.",
+          "condition": "If price trades and holds above 6621.77 after 13:30",
+          "expected_result": "Price is likely to gravitate toward 6645 and may extend to 6655–6660 as the intraday upside target."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot / support zone at ~6583.9 with nearby support cluster at 6570/6560; heavy supply of downside vol makes a break less likely unless vol spikes.",
+          "condition": "Only in case of a very bad data print with vol spike",
+          "expected_result": "If downside pivot at 6583.93 breaks, expect rapid travel to 6570–6560 and potentially to 6475–6480 as the next target before a likely mean-reversion rally."
+        }
+      ]
+    }
+  }
+}

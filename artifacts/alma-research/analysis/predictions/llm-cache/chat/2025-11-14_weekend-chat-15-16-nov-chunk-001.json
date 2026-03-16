@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:29:50.246Z",
+  "inputHash": "6d947acd65aba3a38d140b956184cb899f1f82ed",
+  "payload": {
+    "responseId": "resp_0cf91d3fd11103230069b7873946fc819c92909666d58337e6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-11-14T23:48:23.099Z",
+          "instrument": "NVDA",
+          "prediction_text": "NVDA earnings will trigger elevated volatility and likely long-vomma and heavy short-speed option flow patterns.",
+          "condition": "NVDA ER",
+          "expected_result": "Post-earnings intraday and multi-day option-implied volatility and trade flow will increase significantly compared with pre-earnings levels, with noticeable long-vomma and short-speed positioning signatures"
+        },
+        {
+          "made_at": "2025-11-14T23:48:23.099Z",
+          "instrument": "US NFP / U.S. equities/VIX",
+          "prediction_text": "Next week's NFP release will be a large volatility trigger that increases VIX and market volatility around the print.",
+          "condition": "NFP",
+          "expected_result": "VIX and realized market volatility will spike in the hours surrounding the NFP release relative to the preceding 24-hour baseline"
+        },
+        {
+          "made_at": "2025-11-14T23:48:23.099Z",
+          "instrument": "VIX",
+          "prediction_text": "VIX will experience an 'expo' event (sharp expansion) during the coming week driven by the heavy event schedule.",
+          "condition": "event-heavy week (NVDA ER, NFP, OpEx)",
+          "expected_result": "VIX index level will rise noticeably (>=5% intraday move or >1-2 point increase) during one or more sessions that week compared with the prior week's session range"
+        }
+      ]
+    }
+  }
+}

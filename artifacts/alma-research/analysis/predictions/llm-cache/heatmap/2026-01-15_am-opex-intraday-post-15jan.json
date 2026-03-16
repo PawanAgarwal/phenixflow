@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:20.832Z",
+  "inputHash": "b4b4ae12968e4404ab0e5732d79016302acae20e",
+  "payload": {
+    "responseId": "resp_0f7f1b88da749fc70069b767393f3c8191a4670eff0251ab23",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky support zone around 6857.7 with local sticky margin down to ~6828; expects downside drag and price to find support and stall in this area.",
+          "condition": "price approaches 6857.68-6828",
+          "expected_result": "Price will slow and hold/bounce within 6828–6858 rather than accelerate lower within the next intraday session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot near 6951.8 acts as a rejection line; breaking it is low probability intraday and more likely to reject back down toward ~6990 (pin) if reached; if broken early it can become a short-term stabilization zone with target toward 7029.6.",
+          "condition": "price tests 6951.84",
+          "expected_result": "If price fails at 6951.84, expect rejection down toward ~6990 (pin) or lower support bands; if price breaks and holds above 6951.84 within the first 2 hours, expect stabilization and continuation up toward 7029.55."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid located at ~6884.2 acts as a local magnet/support between upside and downside pivots; price likely to revert toward this level during intraday mean reversion moves.",
+          "condition": "intraday mean reversion attempt",
+          "expected_result": "Price will gravitate back toward ~6884.2 within the session when short-term momentum exhausts."
+        }
+      ]
+    }
+  }
+}

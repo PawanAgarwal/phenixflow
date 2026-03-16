@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:46.280Z",
+  "inputHash": "6e9d77806ae1316dcc374af12bd0a69a02927e82",
+  "payload": {
+    "responseId": "resp_08b9e8b5ea58bd7c0069b7671829c8819183db535769364d51",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid at ~6859.7 is a sticky magnet/support zone — expect price to gravitate back to mid-6850s during the session.",
+          "condition": "none",
+          "expected_result": "SPX to revert toward 6855–6865 within the day when price moves away by ~10–30 pts."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky target/pivot around 6920–6930 acting as resistance — heatmap shows concentrated gamma and a sticky upside band near 6920–6930.",
+          "condition": "price rallies above 6890",
+          "expected_result": "If SPX trades above 6890, expect rejection or stall into 6920–6930; likely pullback after touching that band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside sticky/pinning zone around 6824–6828 — holding below ~6828 increases chance of pin to low-6820s into close.",
+          "condition": "price holds below 6828 into power hour",
+          "expected_result": "SPX to remain pinned near 6820–6828 (limited downside extension) during the power hour."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower sticky gamma bulk in the mid-6700s (around 6720–6750) provides a deeper support band if a larger sell-off occurs — heavy negative gamma below current levels creates a corridor toward mid-6700s.",
+          "condition": "sustained break below 6810",
+          "expected_result": "If SPX breaks and stays below 6810, price likely travels toward 6720–6750 where gamma provides support and selling momentum slows."
+        }
+      ]
+    }
+  }
+}

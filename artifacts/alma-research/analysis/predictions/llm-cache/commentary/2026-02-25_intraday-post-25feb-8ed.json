@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:15:25.001Z",
+  "inputHash": "fad214156df883e3a029385c2d6be3a7fa926e13",
+  "payload": {
+    "responseId": "resp_001fbb6a81b7c3b00069b767b97e84819d9e245cbaa9ef7809",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "NVDA",
+          "prediction_text": "NVDA is expected to beat Q4 FY2026 earnings consensus but not shock the market.",
+          "condition": "",
+          "expected_result": "NVDA reports EPS/revenue above consensus (revenue ≈ $65.6–$66.2B or higher) but market reaction is muted (no >3% gap move up on the beat)."
+        },
+        {
+          "instrument": "NVDA",
+          "prediction_text": "The market will focus on the composition of NVDA's revenue beat—how much comes from end-user demand versus infrastructure demand.",
+          "condition": "",
+          "expected_result": "If NVDA's release shows a larger proportion of infrastructure-driven revenue, NVDA stock outperforms relative to a beat driven by end-user demand; if end-user demand dominates, relative outperformance is smaller or stock underperforms on similar headline beats."
+        }
+      ]
+    }
+  }
+}

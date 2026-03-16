@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:13:50.774Z",
+  "inputHash": "76f41e230632004be4252d077987a7df7c0c27a0",
+  "payload": {
+    "responseId": "resp_0c9fb0ad3dd7ca980069b76757d10881a38748834bf1ac440e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid corridor ~6966–6969 acts as a line-in-the-sand and local pin (high probability). Market likely to revert to or pin near 6950 if it breaches centroid downward.",
+          "condition": "price moves below centroid (~6966)",
+          "expected_result": "Price reverts toward 6950–6966 over the session; increased pinning/low volatility around 6950–6968."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6942 with target 6904 is a supportive pinner — downside moves are likely to find support and prompt reversion back to centroid.",
+          "condition": "price approaches 6942–6905",
+          "expected_result": "Bounce/reversion back up toward centroid (≈6966–6975) after touching 6942–6904 range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot ~6978 with magnetic target ~6995 (noted 6980/6988 intra‑day significance) — resistance to break above 6978 unless price clears 6970–6975 early.",
+          "condition": "price breaks and holds above 6975 in AM",
+          "expected_result": "Continuation up to 6990–6995 area; 6980–6988 act as intermediate magnets/retest levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma heatmap shows concentrated sticky/attractive zones near ~6849–6875 and again near ~7050–7084 (long-dated gamma clusters) suggesting these ranges will be sticky magnets if price moves that far.",
+          "condition": "price drifts toward those ranges",
+          "expected_result": "Price slowdown and mean-reversion behavior when reaching 6849–6875 or 7050–7084, with increased order flow friction."
+        }
+      ]
+    }
+  }
+}

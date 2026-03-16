@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:57:49.843Z",
+  "inputHash": "eb6f66b69aeaebf02472e4d9b993487b67916e0a",
+  "payload": {
+    "responseId": "resp_04ed163d692128870069b76394b0008192bbe6349fb5277794",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "A close below 5852.87 will shift the distribution towards more bearish.",
+          "condition": "close below 5852.87",
+          "expected_result": "Price action will show increased downside bias and higher probability of further declines following the close below 5852.87."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5837.81 - 5827.77 is the key downside zone that the market may approach.",
+          "condition": "",
+          "expected_result": "If price reaches 5837.81-5827.77, market makers' delta buying of puts will increase, producing support and likely short-term buying pressure."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility should calm down above 5893.24.",
+          "condition": "price above 5893.24",
+          "expected_result": "Realized and implied volatility will decrease while price remains above 5893.24, leading to narrower intraday ranges."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5885 - 5848 is the primal range to look for mean reversion trading.",
+          "condition": "",
+          "expected_result": "Price trading within 5885-5848 will present higher probability mean-reversion opportunities (bounces toward the range midpoint)."
+        }
+      ]
+    }
+  }
+}

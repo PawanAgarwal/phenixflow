@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:51:49.792Z",
+  "inputHash": "6279db74b47e8c75ffd5451a2f0071615d454a4b",
+  "payload": {
+    "responseId": "resp_04f3d0c8862610310069b7622fd2cc819eb665d91925713664",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES (S&P 500 futures)",
+          "prediction_text": "A settlement of VIX below 16.73 will trigger some mild buyback flows on ES futures as hedges unwind.",
+          "condition": "VIX settlement below 16.73",
+          "expected_result": "Short-term net buying pressure in ES futures leading to a measurable uptick in ES price within the next 1 trading day after settlement"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Accumulation of short call gamma into March Opex creates a 'time bomb' that increases the odds of spot up/vol up moves being realized soon if volatility is realized.",
+          "condition": "Realization of volatility (an uptick in realized vol) into March Opex",
+          "expected_result": "Rapid increase in VIX and option-implied volatility around March Opex and concurrent upward moves in underlying equity indices, producing losses for short call-gamma positions"
+        },
+        {
+          "instrument": "6100 support level (underlying unspecified)",
+          "prediction_text": "6100 is a strong support and a strong pin where zero vanna oscillates near, suggesting price will tend to gravitate toward or be held at this level intraday.",
+          "condition": "",
+          "expected_result": "Price will test and hold near 6100, showing intraday rejection of moves below that level and repeated price pinning within a narrow range around 6100"
+        },
+        {
+          "instrument": "6126 upside level (underlying unspecified)",
+          "prediction_text": "6126 is the local upside zero vanna and low volatility is needed for price to break above this level, though a break is possible.",
+          "condition": "",
+          "expected_result": "If realized volatility remains low, price will break above 6126 within the intraday session; if vol increases, the break is less likely"
+        }
+      ]
+    }
+  }
+}

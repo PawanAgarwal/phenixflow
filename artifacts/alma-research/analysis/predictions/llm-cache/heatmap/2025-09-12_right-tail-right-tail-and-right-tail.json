@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:22.698Z",
+  "inputHash": "bab4cb8849831e253877c37440afe364f66e4715",
+  "payload": {
+    "responseId": "resp_01c1b7295000b59d0069b764e58894819f83fa41f9f89cd903",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid support zone ~6550–6566 acts as intraday magnet/support (especially after 13:00). Expect reversion into this range if price drifts.",
+          "condition": "price drifts away from centroid in AM",
+          "expected_result": "SPX will revert into 6550–6566 and find support there (bounce or consolidation) after ~13:00."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside magnetic/pinning region and primary right-tail target around 6607–6613 (with practical margin up to ~6620). Call skew must remain bid to reach/hold above these levels.",
+          "condition": "call skew stays bid and breaks above 6595",
+          "expected_result": "SPX moves toward 6607–6613 (possible pin to 6600 or 6580) and can extend to ~6620 if momentum/low realized vol persists."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Minor downside pivot and left-tail rejection zone near 6540–6550 with deeper left-tail target ~6508–6532 if downside skew kicks in.",
+          "condition": "put skew strengthens / left-tail activates",
+          "expected_result": "SPX will likely first test 6540–6550; if selling continues, price can travel to ~6532 down to ~6508 as the left-tail target."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:06.950Z",
+  "inputHash": "dd2f4623aa04e528be54061a748dd5ccb8d7dec0",
+  "payload": {
+    "responseId": "resp_09cfbe459e3e3a0b0069b764986c9881a28afc019919ac5a0c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong centroid and distribution congestion around 6456 with a right-tail pivot cluster near 6482–6483; if spot stays above ~6479 it will likely get pinned toward the 6482–6483 upside pivot (possible travel up to ~6500 in extreme cases).",
+          "condition": "spot > 6479",
+          "expected_result": "Spot moves/pins into the 6480–6500 area; short-lived pushes above 6500 unlikely and likely to revert back toward 6482–6456."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma concentration and support indicated in the 6407–6400 area with an important support/pin zone near 6440 and deeper support around 6407.18 and 6400–6380; distribution is heavy at and below the centroid suggesting downside is well supplied.",
+          "condition": "spot fails to hold 6479 and rolls below 6443",
+          "expected_result": "Price reverts toward and pins around 6440, with further travel and support clustering into the 6407–6380 area; break below 6443 increases probability of move toward ~6420–6407."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A high-probability upside cap is visible near 6503–6540 (6503 acting as daily maximum with very low probability to break); market structure shows strong resistance/gamma peak above 6500 making sustained break above 6503 unlikely.",
+          "condition": "none",
+          "expected_result": "Attempts to rally above ~6503 will likely fail or be short-lived; expect rejection or mean reversion back toward 6482–6456 rather than a sustained push above 6540."
+        }
+      ]
+    }
+  }
+}

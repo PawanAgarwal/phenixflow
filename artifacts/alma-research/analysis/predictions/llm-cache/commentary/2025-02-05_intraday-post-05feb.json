@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:50:55.159Z",
+  "inputHash": "b9e2e31e9dc660405b4e4cb13e2659c8f6e0c508",
+  "payload": {
+    "responseId": "resp_0411498f66503bbb0069b761fae6388195bda6adb73b9b278c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday long-side reversion trades are likely to move prices toward the 6055 line.",
+          "condition": "price remains within 5995–6055 range",
+          "expected_result": "SPX will rise intraday from current levels toward ~6055"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum can break below 5995 if there is vol bid.",
+          "condition": "volatility is bid",
+          "expected_result": "SPX will decline and breach 5995"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum can break above 6055 if there is vol offer.",
+          "condition": "volatility is offered",
+          "expected_result": "SPX will rally and breach 6055"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Net dealer skewness being moderately long should provide some stabilization around current levels.",
+          "condition": "",
+          "expected_result": "SPX will show reduced downside follow-through and trade in a more stable range near current prices"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero vanna/inflexion points at ~6050.37 and ~5985.52 (5993 as net zero speed) imply these levels will act as key pivots for intraday flows.",
+          "condition": "",
+          "expected_result": "SPX will exhibit pivoting behavior or notable flow reactions when approaching 6050.37, 5993, or 5985.52"
+        }
+      ]
+    }
+  }
+}

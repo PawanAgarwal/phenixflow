@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T02:00:35.506Z",
+  "inputHash": "408efc68addc65ddcaf06074ca8161510c7e26d3",
+  "payload": {
+    "responseId": "resp_0880123825c4ba2f0069b76433b1f4819ca4ed89a063b6f905",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid is at 6242.27 and will act as a very strong pivot after 10:30 AM.",
+          "condition": "after 10:30 AM",
+          "expected_result": "Price will gravitate toward and respect 6242.27, showing support/resistance behavior at that level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6230.76 will start to trigger downside long-gamma behavior.",
+          "condition": "price reaches 6230.76",
+          "expected_result": "Market positioning will produce long-gamma dynamics, increasing demand/support and reducing downside momentum"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6205 is strong support especially during the last 1.5 hours.",
+          "condition": "during the last 1.5 hours of the trading session",
+          "expected_result": "Price will find support near 6205 and fail to sustain a decisive break below it without a volatility pickup"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If volatility catches up to the downside and breaks through 6205, price will be magnetically drawn to 6180 (low probability).",
+          "condition": "volatility increases sufficiently to break below 6205",
+          "expected_result": "Price will decline toward 6180"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6263.46 is especially strong after 10:30 AM and effectively unbreakable in the power hour.",
+          "condition": "after 10:30 AM, particularly during the power hour",
+          "expected_result": "Price will hold above 6263.46 and resist downside pressure, making break below unlikely during the power hour"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If volatility increases to the upside and breaks through 6263.46, a gamma squeeze can push price up to the 6283–6300 range.",
+          "condition": "volatility increases and price breaks above 6263.46",
+          "expected_result": "Price will rally into the 6283–6300 range driven by squeeze dynamics"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "From the 6283–6300 area price will likely gravitate back toward 6263, or towards 6280 if it can hold 6273 into the power hour.",
+          "condition": "price reaches 6283–6300 area and holds 6273 into the power hour",
+          "expected_result": "Price will either revert back toward 6263, or, if 6273 holds, stabilize around 6280"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The upside maximum can only be exceeded in the first two hours if volatility calms down.",
+          "condition": "within first two trading hours and volatility calms down",
+          "expected_result": "Price may break above the stated upside maximum levels during the first two hours; otherwise the maximum will hold"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6308 is the line in the sand: price will either pin to 6310 or reject back below the 6300/6283 ‘max’.",
+          "condition": "price approaches 6308–6310",
+          "expected_result": "Price will either pin near 6310 or fail and reverse back below the 6300–6283 area"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is expected to range because there is no clear trend.",
+          "condition": "",
+          "expected_result": "Price will trade sideways within the identified support/resistance/pivot levels rather than establishing a sustained directional trend"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Volatility of volatility is well supplied into OpEx, meaning vol-compression is presently being managed but vol can expand into OpEx.",
+          "condition": "into OpEx",
+          "expected_result": "Implied and realized volatility may expand during OpEx periods, increasing option prices and intraday moves"
+        }
+      ]
+    }
+  }
+}

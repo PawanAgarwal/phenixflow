@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T01:52:27.242Z",
+  "inputHash": "ee91b8d2c06fddaba352deb5c2cddaf2c1f9fefe",
+  "payload": {
+    "responseId": "resp_0e190b7c31342ba60069b762564a0481a281c9b4da92eefa3f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-28T22:10:01.597Z",
+          "instrument": "",
+          "prediction_text": "There will be increased volatility due to a net-lowered gamma profile with shorter upside gamma and longer downside gamma.",
+          "condition": "",
+          "expected_result": "Observed realized volatility increases relative to prior baseline over the next trading sessions; options IV and intraday price swings widen."
+        },
+        {
+          "made_at": "2025-03-06T10:06:11.642Z",
+          "instrument": "",
+          "prediction_text": "Risk levels act as prove/disprove levels of current directional momentum, implying price will revert when statistical reversion thresholds are hit.",
+          "condition": "",
+          "expected_result": "When price reaches the statistical reversion threshold levels, probability of directional reversal increases and price shows measurable mean reversion within the subsequent session(s)."
+        },
+        {
+          "made_at": "2025-03-06T10:54:24.031Z",
+          "instrument": "",
+          "prediction_text": "If ROC is positive, realized volatility will go up; if ROC is negative, realized volatility will go down.",
+          "condition": "ROC positive or ROC negative",
+          "expected_result": "Measured realized volatility rises following periods with positive ROC and falls following periods with negative ROC, within the next few trading periods."
+        }
+      ]
+    }
+  }
+}

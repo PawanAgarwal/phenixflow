@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:27:10.049Z",
+  "inputHash": "0989eb550899862afbea8d54502c2f29bc772ce5",
+  "payload": {
+    "responseId": "resp_02e335f22c8250fc0069b78697fd64819c8c6931e3014a6b6c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-02T23:28:08.012Z",
+          "instrument": "ES",
+          "prediction_text": "Price will dance around 5955 and I will start to take a long position on it.",
+          "condition": "price around 5955",
+          "expected_result": "ES holds near 5955 and subsequently moves higher from that area, enabling a profitable long trade entry"
+        },
+        {
+          "made_at": "2025-02-02T23:32:36.204Z",
+          "instrument": "ES",
+          "prediction_text": "5955 is a critical pivot area on the daily timeframe.",
+          "condition": "price at or near 5955",
+          "expected_result": "5955 acts as a pivot, causing price to either reverse or consolidate around that level on the daily chart"
+        },
+        {
+          "made_at": "2025-02-03T11:37:36.408Z",
+          "instrument": "",
+          "prediction_text": "As price falls, they will have to buy back less and less, so volatility will expand.",
+          "condition": "price continuing to fall",
+          "expected_result": "Implied or realized volatility increases as price declines"
+        },
+        {
+          "made_at": "2025-02-03T11:42:29.431Z",
+          "instrument": "",
+          "prediction_text": "If we are at the edge of the right wing of the distribution, the pivot will suck momentum towards the center (mean reversion toward the center).",
+          "condition": "current position at the edge of the right wing of the distribution",
+          "expected_result": "Price momentum reverses and moves back toward the distribution center (pivot)"
+        }
+      ]
+    }
+  }
+}

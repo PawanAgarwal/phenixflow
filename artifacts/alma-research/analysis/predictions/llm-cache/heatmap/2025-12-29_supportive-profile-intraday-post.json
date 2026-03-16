@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:30.225Z",
+  "inputHash": "e80733f78f5cd800645719de9dab9cff718d57ef",
+  "payload": {
+    "responseId": "resp_0664aeb9b7fa747c0069b76707c9a8819786dce63d3bc6265b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky centroid band ~6890–6895 acts as intra-day magnet; expect price to gravitate toward and hold in this band during low-volatility periods.",
+          "condition": "none",
+          "expected_result": "Price will return to and trade sideways within 6890–6895 for at least 30–90 minutes after minor moves away, providing mean-reversion opportunities."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside rejection zone around 6955 (upside target) with a pivot at ~6922; 6955 likely to reject spot unless 6930 holds into PM, in which case 6945 can pin.",
+          "condition": "If 6930 holds into the PM session",
+          "expected_result": "If 6930 remains supported into PM then price will pin near 6945; otherwise rallies toward 6955 will be rejected and reverse back below 6930."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot ~6882 with a downside target at ~6856 acting as a reversion zone back to the pivot; if price breaks below pivot into 2PM, local magnet near 6869.",
+          "condition": "Hold below 6882 into 14:00 ET (2PM)",
+          "expected_result": "Price will travel down to the 6856 area (or 6869 magnet) and then revert back up toward the 6882 pivot."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/support band near ~6842–6843 (99.73% speed/importance) providing a lower brake zone if market sells off.",
+          "condition": "none",
+          "expected_result": "On extended downside moves, price will encounter support and slow/reverse around 6842–6843."
+        }
+      ]
+    }
+  }
+}

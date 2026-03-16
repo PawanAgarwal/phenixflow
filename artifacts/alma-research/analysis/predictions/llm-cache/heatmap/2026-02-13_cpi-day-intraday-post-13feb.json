@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:54.544Z",
+  "inputHash": "8cb5e3906a7aa0115de58b1f2dfc1f0739a34adb",
+  "payload": {
+    "responseId": "resp_09c3780835a911600069b767995bcc81a0b405178e510c10b0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/support gamma concentrated around 6750–6765 (deep blue), acting as a magnet and support corridor. Market is likely to gravitate toward and hold this band intraday if below 6830.",
+          "condition": "SPX trades below 6830 in the AM session",
+          "expected_result": "Price will be pulled toward 6750–6765 and show stabilization or bounce there within the trading day; downside breaches should be shallow and short-lived."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary downside pivot/target cluster near 6714–6720 (dotted/low gamma trough and heatmap concentration) — a key support/brake zone if selling continues past the 6750 magnet.",
+          "condition": "If 6750–6765 fails to hold",
+          "expected_result": "Price should find support and pause or reverse between 6714–6720; expect increased liquidity and reduced further acceleration lower."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance cluster and potential pinning zone around 6890–6930 (lighter blue/neutral band with gamma peaks), with 6916/6930 noted as upside pivots — upside momentum needs bull volume to clear this area.",
+          "condition": "SPX rallies above 6830 with confirmed bull volume",
+          "expected_result": "Price will attempt to reach and test 6890–6930; failure to decisively break above this band should result in rejection back toward 6750–6830."
+        }
+      ]
+    }
+  }
+}

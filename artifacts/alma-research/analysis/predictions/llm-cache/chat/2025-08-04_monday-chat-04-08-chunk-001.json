@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:29:32.266Z",
+  "inputHash": "50abf0af03849835dcf1ad14d79fe7a5f7e1f0a9",
+  "payload": {
+    "responseId": "resp_0f280bc901529f4b0069b78723586481959c6196d51d4532b9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-08-04T15:46:42.376Z",
+          "instrument": "",
+          "prediction_text": "If the price continues trending above the line over the next 1.5 hours, today's action will fill the gap and burn volatility, and tomorrow it will likely give back some gains and form a rangebound pattern.",
+          "condition": "trend remains above the line over the next 1.5 hours",
+          "expected_result": "gap gets filled today, realized volatility declines (vol-compression), and tomorrow price pulls back from intraday highs into a rangebound pattern"
+        },
+        {
+          "made_at": "2025-08-04T15:46:42.376Z",
+          "instrument": "",
+          "prediction_text": "Volatility will be sold/managed, producing a stairstep decay in spot due to mild vomma supply.",
+          "condition": "",
+          "expected_result": "implied and realized volatility decline gradually and spot exhibits a stair-step downtrend (serial small declines) rather than sharp moves"
+        },
+        {
+          "made_at": "2025-08-04T21:04:18.041Z",
+          "instrument": "",
+          "prediction_text": "Market trading above the centroid is right-tail biased, so the plan is to go long.",
+          "condition": "market is above the centroid",
+          "expected_result": "price exhibits right-tail bias (upside skew) and long directional positions profit"
+        },
+        {
+          "made_at": "2025-08-04T21:10:45.168Z",
+          "instrument": "",
+          "prediction_text": "Selling intraday puts at the centroid and selling vega/vomma/gamma/speed will create a right-skewed distribution that props spot and brakes downward momentum.",
+          "condition": "sell intraday puts heavily at the centroid and sell vega/vomma/gamma/speed",
+          "expected_result": "spot is supported near the centroid, downside accelerations are slowed (rejection of fast drops), and distribution of returns becomes right-skewed"
+        },
+        {
+          "made_at": "2025-08-04T21:28:50.935Z",
+          "instrument": "",
+          "prediction_text": "The break of the participants' bet line (including weekly basis) signals a strongly forced move.",
+          "condition": "line that participants were betting on is broken",
+          "expected_result": "price experiences a forced, large directional move (increased directional move and higher realized volatility)"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:14:37.405Z",
+  "inputHash": "09a545a6fdfb6cfd0434f6fd217e5296fb4ef80e",
+  "payload": {
+    "responseId": "resp_07b91697d61476720069b7678625788194b9873322cdf818bf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside gamma cluster / resistance around 7050-7075 (deep red) will repel rallies; expect selling pressure into that band.",
+          "condition": "",
+          "expected_result": "SPX fails to close above 7050–7075 on intraday session; any intraday rally reverses within that band back toward 6990–7000."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky resistance and pinning magnet near 6990–6995 (lighter blue ridge and annotated pivot); spot likely to be pinned there if call bids persist before 14:00.",
+          "condition": "sustained call bid / high call volume before 14:00 UTC-",
+          "expected_result": "SPX trades and holds near 6990–6995 for at least 30–90 minutes rather than trending decisively away."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support (sticky pivot) at ~6920 with local magnetic field; downside is contained until ~6896 where a breakout becomes likely if volatility increases.",
+          "condition": "volatility increase (noticeable put buying or higher realized vol)",
+          "expected_result": "If vol rises, SPX breaks below 6896 and moves toward 6840–6880; otherwise SPX should find support and rebound from ~6920."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Reversion/support target around 6840–6860 (gamma trough / left-tail target)—a likely mean-reversion area if price drops through the 6920 pivot and hits the left-tail target.",
+          "condition": "price breaks and closes below 6896 with rising volatility",
+          "expected_result": "After break below 6896, SPX trades down to 6840–6860 within the next intraday session and shows signs of reversal/pinning there."
+        }
+      ]
+    }
+  }
+}

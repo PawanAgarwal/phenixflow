@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:05:18.235Z",
+  "inputHash": "dd97262bd698c671200af54897d5a29a411cb561",
+  "payload": {
+    "responseId": "resp_0847dd9b568114810069b765572c78819f95f2324f5caa5515",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid zone 6531–6568 acts as main intraday pivot; touches should produce reversion buys toward the centroid rather than sustained breaks.",
+          "condition": "price touches 6531.05–6567.67",
+          "expected_result": "Price will revert back into the centroid zone within the same trading session (move of ~10–40 pts) rather than trending away."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside sticky/support cluster around 6494.78 down to 6487.40 where downside gamma absorbs volatility and pins price; breaking through requires headline/outlier flow.",
+          "condition": "price approaches 6494.78",
+          "expected_result": "Price will slow and hold/oscillate between ~6494.78 and 6487.40 for an extended period (30–180 minutes) instead of cascading lower."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and short-term pinning/magnetic area near 6650 with a vacuum above 6678.63 that can accelerate price to ~6697.46 if 6678.63 is cleared.",
+          "condition": "price clears and holds above 6678.63",
+          "expected_result": "Price is likely to accelerate toward 6697.46 (target ~25–40 pts higher) during the PM session; if 6678.63 fails, expect price to be magnetized to 6650 instead."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "High-probability intraday range: sticky/support below at ~6490–6495 and resistance/magnet band at ~6650–6700, implying most intraday travel will remain between these bands.",
+          "condition": "",
+          "expected_result": "Price will trade predominantly within ~6490–6700 for the session, with reversion toward centroid (6531–6568) on intraday touches."
+        }
+      ]
+    }
+  }
+}

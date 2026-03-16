@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:28:22.173Z",
+  "inputHash": "2568c7a9b20b1f1df8f041cea49b3f05794adac2",
+  "payload": {
+    "responseId": "resp_091df79ce28f0da60069b786e1788c81a3a284d55b42dba88c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-04-04T20:58:12.395Z",
+          "instrument": "",
+          "prediction_text": "vol selling is coming.",
+          "condition": "",
+          "expected_result": "Increased selling pressure in volatility instruments (e.g., VIX, options implied vols) within the next few trading sessions."
+        },
+        {
+          "made_at": "2025-04-04T21:32:16.953Z",
+          "instrument": "",
+          "prediction_text": "vol selling will cause rangebounding, or a small upgrinding, rebound.",
+          "condition": "",
+          "expected_result": "Undervolatility due to vol selling, the underlying equity market will trade in a horizontal range or slowly grind higher over the following days to weeks."
+        },
+        {
+          "made_at": "2025-04-04T21:44:11.969Z",
+          "instrument": "",
+          "prediction_text": "the brake will be successful, and market will consolidate.",
+          "condition": "vol selling is already happening",
+          "expected_result": "Equity indices will stop trending down and enter a consolidation phase (sideways price action) over the coming days."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:53:08.140Z",
+  "inputHash": "de00571747ee42e4acbd057f81dcfcf39f7dcdde",
+  "payload": {
+    "responseId": "resp_0a4af86a9521049d0069b7627dd8b8819ca9e1474bd979c973",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside gamma magnet / sticky zone around 5900–5910; heatmap shows a gamma peak and red hotspot near ~5908–5910 indicating likely pinning and resistance—market is likely to gravitate toward and stall there.",
+          "condition": "",
+          "expected_result": "Price moves toward 5900–5910 and shows reduced momentum/rejections when touching the band (multiple tests or intraday consolidation within ±5 points of the zone)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma magnet / support cluster around 5765–5775 with a strong gamma peak at ~5770 producing a red hotspot (iron-condor wing). Expect pinning and sticky behavior near this level.",
+          "condition": "",
+          "expected_result": "Price moves toward 5765–5775 and finds support or reversion back upward within the session (bounce or consolidation within ±5 points of the zone)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intermediate sticky corridor between ~5800 and ~5850 created by broad gamma trough/contours (yellow/black bands) — price likely to travel within or pause across this corridor before breaking to the magnets above/below.",
+          "condition": "",
+          "expected_result": "Price trades and spends extended time inside 5800–5850 with measured rangebound action (several intraday oscillations confined to the corridor) prior to a clear breakout to the 5770 or 5900 magnets."
+        }
+      ]
+    }
+  }
+}

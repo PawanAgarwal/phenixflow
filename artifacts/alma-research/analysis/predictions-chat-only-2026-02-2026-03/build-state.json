@@ -1,0 +1,2520 @@
+{
+  "stateVersion": 1,
+  "builtAt": "2026-03-16T04:36:11.094Z",
+  "buildConfig": {
+    "chatMode": "chat-only",
+    "llmEnabled": true,
+    "outputRoot": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/analysis/predictions-chat-only-2026-02-2026-03",
+    "outputSuffix": "chat-only-2026-02-2026-03",
+    "sourceFilter": "",
+    "targetMonths": [
+      "2026-02",
+      "2026-03"
+    ]
+  },
+  "sync": {
+    "latestPostDate": "2026-03-15T20:23:36.565Z",
+    "latestChatDate": "2026-03-13T20:38:31.966Z",
+    "latestSourceTimestamp": "2026-03-13T20:38:31.966Z",
+    "latestPredictionMadeAt": "2026-03-12T10:27:20.179Z",
+    "latestHeatmapMadeAt": ""
+  },
+  "counts": {
+    "sourceCount": 311,
+    "dailyRows": 41,
+    "weeklyRows": 3,
+    "commentaryRows": 40,
+    "scriptRows": 1,
+    "heatmapRows": 0
+  },
+  "sources": [
+    {
+      "id": "chat-c2c8ca56-f5dd-4eb5-9d8e-4dfbda917ad8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-01_chat-c2c8ca56-f5dd-4eb5-9d8e-4dfbda917ad8/content.txt",
+      "timestamp": "2025-02-01T05:47:37.512Z",
+      "title": "2025-02-01_chat-c2c8ca56-f5dd-4eb5-9d8e-4dfbda917ad8",
+      "sourceHash": "69c71a6c90b1bbac5116465279609f807c62b93d"
+    },
+    {
+      "id": "chat-a54875c9-dda1-430d-9e22-c2e842a9ec6e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-02_two-things-1-i-m-collecting-datas-job-family-etc-soon-i-come-i-start-to-write-the-first-weekly-analysis-posts-in-those-p/content.txt",
+      "timestamp": "2025-02-02T19:48:46.471Z",
+      "title": "Two things:\n1) I'm collecting datas, job, family etc. soon I come I start to write the first weekly analysis posts. In those posts there will be advanced stuffs just like what you saw on twitter, but I will be more detailed. \nWeekly posts are only to set the tone for the week, what we can wait, and look how the daily positionings diverging from them if any. \n\n2) Everyday I will create a daily thread in this chat. Pls use that as daily chat to avoid chaos here. And there you can discuss, share ideas, charts etc. anything. \nNo rules. Only one rule: don't attack on each other. If there is a conflict, solve it in private. As you could read in my welcome post. Anything else... even memes and cursing is allowed, but of course... without ruining the whole conversation. Respect to each other. \n\nI won't always be here online during the whole day. If I intraday trade, or anything, I will tell it before the session starts. \nIf you have questions for me specifically, tag me, and when I'm at desk, I will answer them. \nAnd you can also try to help each other, as there are a lot of high knowledge plp among us :) \n\nkind regards,\n~A",
+      "sourceHash": "c3e68f10ccc169c787631ed13b1b01295495ebd3"
+    },
+    {
+      "id": "chat-03918d31-3dc8-4638-8208-06e93da708e0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-02_sunday-chat-02-feb/content.txt",
+      "timestamp": "2025-02-02T23:24:44.400Z",
+      "title": "SUNDAY CHAT, (02/feb)",
+      "sourceHash": "f5a6143c8386caddbe650199a0b08f23307525df"
+    },
+    {
+      "id": "chat-2a715eaa-5cbf-4f9a-b3e2-845966ed9833",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-03_monday-chat-03-feb/content.txt",
+      "timestamp": "2025-02-03T10:41:26.601Z",
+      "title": "MONDAY CHAT (03/feb)",
+      "sourceHash": "c1cda3149e1391e6880a93c88676ce94cd8f24fb"
+    },
+    {
+      "id": "chat-5ec8d5aa-9fac-4e6d-aef1-3f6a28632ae4",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-03_trading-signals/content.txt",
+      "timestamp": "2025-02-03T15:41:09.242Z",
+      "title": "TRADING SIGNALS",
+      "sourceHash": "2bc783084e7944183b2c027586a057281cdb3409"
+    },
+    {
+      "id": "chat-1f9c1f19-f1da-4229-9300-c63e885806a9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-04_tuesday-chat-04-feb/content.txt",
+      "timestamp": "2025-02-04T08:43:48.668Z",
+      "title": "TUESDAY CHAT (04/feb)",
+      "sourceHash": "8c2c008e3d7974cfce838bd4b84b46d0aa3cb8db"
+    },
+    {
+      "id": "chat-50698111-844c-499a-b01a-edc519b41f17",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-05_wednesday-chat-05-feb/content.txt",
+      "timestamp": "2025-02-05T08:53:37.645Z",
+      "title": "WEDNESDAY CHAT (05/feb)",
+      "sourceHash": "42445ba0a33d94680ff2c37d465cc390537373fa"
+    },
+    {
+      "id": "chat-e81b46a0-a316-49c0-91a0-c32ef6e0a6aa",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-06_thursday-chat-06-feb/content.txt",
+      "timestamp": "2025-02-06T07:16:29.158Z",
+      "title": "THURSDAY CHAT (06/feb)",
+      "sourceHash": "a65e5f1f454f4bd3d1b5e907a6a17fd118d1a301"
+    },
+    {
+      "id": "chat-c7377091-192e-4f37-86dd-386364242613",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-07_friday-chat-07-feb/content.txt",
+      "timestamp": "2025-02-07T08:48:28.495Z",
+      "title": "FRIDAY CHAT (07/feb)",
+      "sourceHash": "4d266e0c1188224105b84da6c094331966fd4c3a"
+    },
+    {
+      "id": "chat-0503358b-2365-4419-9913-7f55f5c44c99",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-08_weekend-chat-08-09-feb/content.txt",
+      "timestamp": "2025-02-08T12:37:47.910Z",
+      "title": "WEEKEND CHAT (08-09/feb)",
+      "sourceHash": "359131ff0c85708aed1e2cfa35e25024de0cfce4"
+    },
+    {
+      "id": "chat-382b140e-ddbf-4258-bdf7-4e02532e5682",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-10_monday-chat-10-feb/content.txt",
+      "timestamp": "2025-02-10T10:33:53.875Z",
+      "title": "MONDAY CHAT (10/feb)",
+      "sourceHash": "b92ee4a62f8b997faec2a035ad53ff9d2092ac1c"
+    },
+    {
+      "id": "chat-5a23284c-6f07-48be-950d-5be2b2ed3be6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-11_tuesday-chat-11-feb/content.txt",
+      "timestamp": "2025-02-11T06:08:56.933Z",
+      "title": "TUESDAY CHAT (11/feb)",
+      "sourceHash": "5005802427b976e7c5eca574ba180744984b15e1"
+    },
+    {
+      "id": "chat-7157c9c7-0ff8-403a-af27-ada299397032",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-12_wednesday-chat-12-feb/content.txt",
+      "timestamp": "2025-02-12T09:32:37.354Z",
+      "title": "WEDNESDAY CHAT (12/feb)",
+      "sourceHash": "c1b90dfdf44dc5a772856197dab9512e198e838d"
+    },
+    {
+      "id": "chat-141e5025-6740-4c55-b877-f70eadbfe9a6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-13_thursday-chat-13-feb/content.txt",
+      "timestamp": "2025-02-13T11:29:38.888Z",
+      "title": "THURSDAY CHAT (13/feb)",
+      "sourceHash": "71ac7bf6220acd149208b323688ef374a9bf32ce"
+    },
+    {
+      "id": "chat-e5e476cb-0806-4ba8-a896-4134391f318f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-14_friday-chat-14-feb/content.txt",
+      "timestamp": "2025-02-14T11:14:05.738Z",
+      "title": "FRIDAY CHAT (14/feb)",
+      "sourceHash": "1fdb1f6740a2c7d3ddab975d4366517d7ad45c56"
+    },
+    {
+      "id": "chat-90fdcc1e-e6ad-4032-bbef-8169bb03d50e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-15_weekend-chat-15-18-feb/content.txt",
+      "timestamp": "2025-02-15T08:34:44.574Z",
+      "title": "WEEKEND CHAT (15-18/feb)",
+      "sourceHash": "99eec9d8c146c8f1ffd485d537b2115d659a6cb3"
+    },
+    {
+      "id": "chat-87aa4c1e-85a4-4f19-ab24-40ee5f0cba73",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-18_tuesday-chat-18-feb/content.txt",
+      "timestamp": "2025-02-18T14:45:51.793Z",
+      "title": "Tuesday chat (18/feb)",
+      "sourceHash": "9676698ecb4120ed0a8a3a8d81b53aedd8b3a25e"
+    },
+    {
+      "id": "chat-1fd9cdac-eef3-4827-8890-2556d15020c2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-19_wednesday-chat-19-feb/content.txt",
+      "timestamp": "2025-02-19T10:19:35.888Z",
+      "title": "WEDNESDAY CHAT (19/feb)",
+      "sourceHash": "f9349abca8a47c487baf934f4c73928f20103d5c"
+    },
+    {
+      "id": "chat-7fd10fe8-accf-4466-991c-e831c757082a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-20_thursday-chat-20-feb/content.txt",
+      "timestamp": "2025-02-20T09:11:19.002Z",
+      "title": "THURSDAY CHAT (20/feb)",
+      "sourceHash": "f1d20ac28a75a512e583783423d86bee12b9caf8"
+    },
+    {
+      "id": "chat-51e0c19d-31f7-4f09-8195-0c06feaa9453",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-21_friday-chat-21-feb-opex-day/content.txt",
+      "timestamp": "2025-02-21T08:36:15.519Z",
+      "title": "FRIDAY CHAT (21/feb)\nOpEx Day",
+      "sourceHash": "c91e88a53f270f6c0c51f911c92f49408f8463fd"
+    },
+    {
+      "id": "chat-a21b46c3-2e5d-4fce-8f43-2dd8f3c3beb0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-22_weekend-chat-22-23-feb/content.txt",
+      "timestamp": "2025-02-22T10:40:20.933Z",
+      "title": "WEEKEND CHAT (22-23/feb)",
+      "sourceHash": "ed3a5b49d3ea0a4d6e2ac481eb3758df2468fca8"
+    },
+    {
+      "id": "chat-a2aa1e33-44db-47ef-a8f7-20da2e4bde13",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-24_monday-chat-24-feb/content.txt",
+      "timestamp": "2025-02-24T11:32:35.634Z",
+      "title": "MONDAY CHAT (24/feb)",
+      "sourceHash": "f370196484b57ef4dced387617fac63bc7decdfa"
+    },
+    {
+      "id": "chat-c346d7dc-2cee-4ede-9b4d-a152fe09a2ef",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-25_tuesday-chat-25-feb/content.txt",
+      "timestamp": "2025-02-25T11:53:20.792Z",
+      "title": "TUESDAY CHAT (25/feb)",
+      "sourceHash": "e7664988047f0afcaa372a1ade1027ad1206f15b"
+    },
+    {
+      "id": "chat-cfb6d722-09d2-4103-9fe3-89798b2767b9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-26_wednesday-chat-26-feb/content.txt",
+      "timestamp": "2025-02-26T08:35:03.506Z",
+      "title": "WEDNESDAY CHAT (26/feb)",
+      "sourceHash": "1b81f24ed6f2818e9369b601a50d6e9229a75360"
+    },
+    {
+      "id": "chat-398075ab-2aac-41d1-bf37-8fda43ccf9aa",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-26_q-and-a-channel/content.txt",
+      "timestamp": "2025-02-26T20:01:32.459Z",
+      "title": "Q&A Channel",
+      "sourceHash": "4de41cc12dc6e40f4515525d9356995cedfa0e0c"
+    },
+    {
+      "id": "chat-fae0a82c-70d9-4349-b56c-b922433732b0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-27_thursday-chat-27-feb/content.txt",
+      "timestamp": "2025-02-27T08:33:57.563Z",
+      "title": "THURSDAY CHAT (27/feb)",
+      "sourceHash": "ee7517260a02f4ad6f85fd57f2173c9cf2320f7f"
+    },
+    {
+      "id": "chat-6c743938-f120-4fde-9a32-aaef73361e65",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-02-28_friday-chat-28-feb/content.txt",
+      "timestamp": "2025-02-28T11:21:09.281Z",
+      "title": "FRIDAY CHAT (28/feb)",
+      "sourceHash": "7c2ba8017374ceaf26c5de76d0605430c22c421e"
+    },
+    {
+      "id": "chat-4a146c6d-cb25-4b56-be44-aa20e3d9890e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-01_weekend-chat-01-02-march/content.txt",
+      "timestamp": "2025-03-01T09:13:14.684Z",
+      "title": "WEEKEND CHAT (01-02/march)",
+      "sourceHash": "72990302f789131a445a2f48da56dcfc99ad4066"
+    },
+    {
+      "id": "chat-b16a38e2-4960-48c6-9d74-4519625a9932",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-03_monday-chat-03-march/content.txt",
+      "timestamp": "2025-03-03T09:41:08.371Z",
+      "title": "MONDAY CHAT (03/March)",
+      "sourceHash": "720b212389a03659361548efdea77bef944e5f75"
+    },
+    {
+      "id": "chat-b9db616e-2920-4392-a8bd-a96e9ed06530",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-04_tuesday-chat-04-mar/content.txt",
+      "timestamp": "2025-03-04T07:35:52.894Z",
+      "title": "TUESDAY CHAT (04/mar)",
+      "sourceHash": "4e349910acf05974507757b64c63fc2c02ebd375"
+    },
+    {
+      "id": "chat-f226b9cb-6ffd-48c3-8c35-fbe8f79987db",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-05_wednesday-chat-05-mar/content.txt",
+      "timestamp": "2025-03-05T10:39:52.359Z",
+      "title": "WEDNESDAY CHAT (05/mar)",
+      "sourceHash": "023d044e1225609341cbb6efb632e0f703a6e4ce"
+    },
+    {
+      "id": "chat-e90a766a-33bd-48b7-badd-43280efc8bb1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-06_thrusday-chat-06-march/content.txt",
+      "timestamp": "2025-03-06T09:53:08.881Z",
+      "title": "THRUSDAY CHAT (06/march)",
+      "sourceHash": "85e03b26bde3ac52bbc0910cd3ad98efbfe8b688"
+    },
+    {
+      "id": "chat-a9e8711e-02fa-4494-922a-d5580c13c50e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-07_friday-chat-07-march/content.txt",
+      "timestamp": "2025-03-07T08:52:31.282Z",
+      "title": "FRIDAY CHAT (07/march)",
+      "sourceHash": "20bdf5004108957c46d53e1871f860a5058ec85a"
+    },
+    {
+      "id": "chat-b7921451-f556-4358-8d1f-26eb449ae101",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-08_weekend-chat-08-09-march/content.txt",
+      "timestamp": "2025-03-08T08:41:52.501Z",
+      "title": "WEEKEND CHAT (08-09/march)",
+      "sourceHash": "c4830be03f38e8c133196c76b3fc46cabe78ef64"
+    },
+    {
+      "id": "chat-1461d345-0968-4d67-86c3-1d869b2d1c93",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-10_monday-chat-10-mar/content.txt",
+      "timestamp": "2025-03-10T06:17:13.197Z",
+      "title": "MONDAY CHAT (10/mar)",
+      "sourceHash": "c9ff44f57b6804bda74f82f4320b0291c46c0011"
+    },
+    {
+      "id": "chat-6aba7fed-906d-4f21-bfc5-e4f09ae83712",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-11_tuesday-chat-11-mar/content.txt",
+      "timestamp": "2025-03-11T06:49:47.639Z",
+      "title": "TUESDAY CHAT (11/mar)",
+      "sourceHash": "6e33aaa5655618da5e25dcc94a3d5edaaba78e20"
+    },
+    {
+      "id": "chat-ac9c7f88-c078-463f-815e-1aa82cc02034",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-12_wednesday-chat-12-march/content.txt",
+      "timestamp": "2025-03-12T11:42:46.657Z",
+      "title": "WEDNESDAY CHAT (12/march)",
+      "sourceHash": "94ab62f55c17a2f988fcadc314bd9749aa7f7cf1"
+    },
+    {
+      "id": "chat-a740fd7a-4c30-4d18-a92f-22932347bddd",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-13_thrusday-chat-13-mar/content.txt",
+      "timestamp": "2025-03-13T09:46:07.365Z",
+      "title": "THRUSDAY CHAT (13/mar)",
+      "sourceHash": "760e6bdc5c00ae6511c33dbe3e8af0b2db037069"
+    },
+    {
+      "id": "chat-06bd6959-837e-49a4-8f01-fd76576965fa",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-14_friday-post-14-march/content.txt",
+      "timestamp": "2025-03-14T08:17:39.787Z",
+      "title": "FRIDAY POST (14/march)",
+      "sourceHash": "3d72eec6dae089874d13cfd66264117b6c98c169"
+    },
+    {
+      "id": "chat-4e1496bf-1c0d-4b19-b7d8-9b77b81d4205",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-15_weekend-post-15-16-march/content.txt",
+      "timestamp": "2025-03-15T07:42:03.536Z",
+      "title": "WEEKEND POST (15-16/march)",
+      "sourceHash": "c7ee582936d886a6f3a4a4dace40e61ef15fde6c"
+    },
+    {
+      "id": "chat-61e2ba63-f4b9-42ca-8e9e-f84b936216d8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-17_monday-chat-17-march/content.txt",
+      "timestamp": "2025-03-17T07:22:53.869Z",
+      "title": "MONDAY CHAT (17/march)",
+      "sourceHash": "ac581a56a7544e296ac8269da38ba5db8fed1bb6"
+    },
+    {
+      "id": "chat-71691a07-60d8-44ff-ad5f-00cdbfaf6df7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-18_tuesday-chat-18-march/content.txt",
+      "timestamp": "2025-03-18T12:38:03.456Z",
+      "title": "TUESDAY CHAT (18/march)",
+      "sourceHash": "6c1f66ea83d98f602d853d22b6ab7341d494d759"
+    },
+    {
+      "id": "chat-5f4bf948-eaf7-4c2e-94a4-eb637207a935",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-19_wednesday-chat-19-march/content.txt",
+      "timestamp": "2025-03-19T09:26:45.978Z",
+      "title": "WEDNESDAY CHAT (19/march)",
+      "sourceHash": "753039caa12e166d00d9e6ab72a8e8acb1f00fab"
+    },
+    {
+      "id": "chat-4ab9f1cd-c1d5-43e7-8978-9f7a6736ba62",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-20_thursday-chat-20-march/content.txt",
+      "timestamp": "2025-03-20T09:48:11.089Z",
+      "title": "THURSDAY CHAT (20/march)",
+      "sourceHash": "97e163f207cf117e236c5576515230d339820225"
+    },
+    {
+      "id": "chat-f1bb39ef-6467-4e6c-bc19-7dcb50969214",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-21_friday-chat-21-march/content.txt",
+      "timestamp": "2025-03-21T08:02:55.568Z",
+      "title": "FRIDAY CHAT (21/march)",
+      "sourceHash": "072178c0da42aca0e3d16027fc7bdf0936b9d1ca"
+    },
+    {
+      "id": "chat-70b7d183-a8ee-4593-a158-ae354ef81645",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-22_weekend-chat-22-23-march/content.txt",
+      "timestamp": "2025-03-22T13:12:23.532Z",
+      "title": "WEEKEND CHAT (22-23/march)",
+      "sourceHash": "c28a84df8b5ec239c0527b0752d570e292424218"
+    },
+    {
+      "id": "chat-c5669fc4-763f-4011-a109-b31485d5fb91",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-24_monday-chat-24-march/content.txt",
+      "timestamp": "2025-03-24T08:17:10.396Z",
+      "title": "MONDAY CHAT (24/march)",
+      "sourceHash": "eaf783fc2f3f72187a8b28e92ea1cfb8ed012f17"
+    },
+    {
+      "id": "chat-8126eeab-b7af-4e89-a830-4d0acf1c085e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-25_tuesday-chat-25-march/content.txt",
+      "timestamp": "2025-03-25T12:00:50.765Z",
+      "title": "TUESDAY CHAT (25/march)",
+      "sourceHash": "9c28b5ce2dbe86bb65c6e572695d91c526a1f38a"
+    },
+    {
+      "id": "chat-22ad1a50-85ec-48df-9108-2199665121f5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-26_wednesday-chat-26-march/content.txt",
+      "timestamp": "2025-03-26T09:36:49.570Z",
+      "title": "WEDNESDAY CHAT (26/march)",
+      "sourceHash": "84b02869d77a43063cc06d90e31bdccea48a822f"
+    },
+    {
+      "id": "chat-f76bd2d1-5d59-4555-a6a5-a64fe5ad1eb7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-27_thursday-chat-27-march/content.txt",
+      "timestamp": "2025-03-27T09:08:42.787Z",
+      "title": "THURSDAY CHAT (27/march)",
+      "sourceHash": "ed0f9dd600a90750294045791881e533bda273e5"
+    },
+    {
+      "id": "chat-8dec5892-097c-405c-bbf0-efb388de253e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-28_friday-chat-28-march/content.txt",
+      "timestamp": "2025-03-28T10:57:38.870Z",
+      "title": "FRIDAY CHAT (28/march)",
+      "sourceHash": "f41e11a61f8f4584f62947de8767e7615bd3a193"
+    },
+    {
+      "id": "chat-d8a64f61-45dd-4e28-9cbe-f29bcf9ff6de",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-29_weekend-chat-29-30-march/content.txt",
+      "timestamp": "2025-03-29T12:53:16.355Z",
+      "title": "WEEKEND CHAT (29-30/march)",
+      "sourceHash": "23fd0a8d86326d3bfa68ee1cc278c4a5ec18b5a1"
+    },
+    {
+      "id": "chat-d318942e-2746-4597-9da3-7bd0383e150d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-03-31_monday-chat-31-march/content.txt",
+      "timestamp": "2025-03-31T09:57:53.907Z",
+      "title": "MONDAY CHAT (31/march)",
+      "sourceHash": "0c59b92090b28103a6cff5927955192c3620bd7c"
+    },
+    {
+      "id": "chat-a157dbba-c0f7-42cf-8766-b8e0deed6b88",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-01_tuesday-chat-1-april/content.txt",
+      "timestamp": "2025-04-01T11:57:10.313Z",
+      "title": "TUESDAY CHAT (1/April)",
+      "sourceHash": "8ce7f3baa592bb24f42befebaec4ca9779a79cf9"
+    },
+    {
+      "id": "chat-84cb6a25-aa90-4d3a-a415-297e0e8cc7ea",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-02_wednesday-chat-02-april/content.txt",
+      "timestamp": "2025-04-02T09:36:55.463Z",
+      "title": "WEDNESDAY CHAT (02/April)",
+      "sourceHash": "84ffbf6110d8ab02e3d3d3e910cb583d2221c3f0"
+    },
+    {
+      "id": "chat-ab4cbfdf-83c5-412a-ab16-a4d8a8aa5e25",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-03_thursday-chat-03-april/content.txt",
+      "timestamp": "2025-04-03T10:04:56.113Z",
+      "title": "THURSDAY CHAT (03/April)",
+      "sourceHash": "461499c1daccaeb3ebf064b0b7aeabc927ecd15a"
+    },
+    {
+      "id": "chat-bfd390a2-5498-4613-be25-069c52caddd5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-04_friday-chat-04-april/content.txt",
+      "timestamp": "2025-04-04T07:27:07.123Z",
+      "title": "FRIDAY CHAT (04/April)",
+      "sourceHash": "792fb43de8b1dd41eb9cd758d5f04e98cb989930"
+    },
+    {
+      "id": "chat-c63955c4-560f-400c-9f3c-579305b697af",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-05_weekend-chat-05-06-april/content.txt",
+      "timestamp": "2025-04-05T08:23:38.963Z",
+      "title": "WEEKEND CHAT (05-06/April)",
+      "sourceHash": "b6e4ebd41e27c7610d0566f072b4bd5174a9df48"
+    },
+    {
+      "id": "chat-23c5c747-5fb1-426b-84af-02fcb18dada0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-07_monday-chat-07-april/content.txt",
+      "timestamp": "2025-04-07T09:00:01.033Z",
+      "title": "MONDAY CHAT (07/April)",
+      "sourceHash": "d90524fe0df66a92d26ddf32685f92dc0249628d"
+    },
+    {
+      "id": "chat-500af945-c1be-4412-8f60-0bae97497078",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-08_tuesday-chat-08-april/content.txt",
+      "timestamp": "2025-04-08T08:27:23.241Z",
+      "title": "TUESDAY CHAT (08/April)",
+      "sourceHash": "fd3026857f64278366ba95acb1390d0ba9370468"
+    },
+    {
+      "id": "chat-5803cc72-8c6d-4c24-b976-2b6503f48a2a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-09_wednesday-chat-09-april/content.txt",
+      "timestamp": "2025-04-09T09:06:29.269Z",
+      "title": "WEDNESDAY CHAT (09/April)",
+      "sourceHash": "a4f0c1dbe825d54e599cda085b7d31077af9f7a6"
+    },
+    {
+      "id": "chat-bb33f86b-cf9f-44f2-bbf2-7d890c3b46b5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-10_thursday-chat-10-april/content.txt",
+      "timestamp": "2025-04-10T08:58:34.743Z",
+      "title": "THURSDAY CHAT (10/April)",
+      "sourceHash": "de7b5cd4d8da433d997bc0050ddb3f0ae78b3a9c"
+    },
+    {
+      "id": "chat-d177120f-df66-4c73-86dc-75ed503b1280",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-11_friday-chat-11-april/content.txt",
+      "timestamp": "2025-04-11T09:29:17.948Z",
+      "title": "FRIDAY CHAT (11/April)",
+      "sourceHash": "497c0fe334cf15db14e7d97b290d47dfe7b9cb31"
+    },
+    {
+      "id": "chat-fa1dd5f8-df74-4dd8-b552-60fa27834f0a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-11_weekend-chat-12-april/content.txt",
+      "timestamp": "2025-04-11T23:05:07.746Z",
+      "title": "WEEKEND CHAT (12/April)",
+      "sourceHash": "d59317598d050d152b32aa31ff723c0009381eb7"
+    },
+    {
+      "id": "chat-26b60f30-39ad-471e-b996-ee356f2553c5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-14_monday-chat-14-april/content.txt",
+      "timestamp": "2025-04-14T11:36:53.233Z",
+      "title": "MONDAY CHAT (14/April)",
+      "sourceHash": "9d1eeab8d59e73b443939002e61cb625ae25bebb"
+    },
+    {
+      "id": "chat-a255722b-909c-4d5d-9333-2e65febf9452",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-15_tuesday-chat-15-april/content.txt",
+      "timestamp": "2025-04-15T09:07:21.964Z",
+      "title": "TUESDAY CHAT (15/April)",
+      "sourceHash": "95e687ee7e3f586977f9ff4583b0cbfc33ede52f"
+    },
+    {
+      "id": "chat-62b5d65b-9efb-42e1-bc9a-facec1b6bf0c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-16_wednesday-chat-16-april/content.txt",
+      "timestamp": "2025-04-16T10:00:00.909Z",
+      "title": "WEDNESDAY CHAT (16/April)",
+      "sourceHash": "029411f51b4a3d82dfa5e3e69fb929566f03a855"
+    },
+    {
+      "id": "chat-2c312f5e-3cd0-4e2c-8eb9-dbcf64acdd76",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-17_thursday-post-17-april/content.txt",
+      "timestamp": "2025-04-17T10:41:48.558Z",
+      "title": "THURSDAY POST (17/April)",
+      "sourceHash": "c7ce50a22546059d519702b670fdb801525ba6b9"
+    },
+    {
+      "id": "chat-5f132a54-4e1d-43da-a517-333c65d4c8b9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-18_weekend-chat-18-20-april/content.txt",
+      "timestamp": "2025-04-18T11:18:13.033Z",
+      "title": "WEEKEND CHAT (18-20/April)",
+      "sourceHash": "1a55500629ae332e6599fa3607ee6fc8e0afc3fe"
+    },
+    {
+      "id": "chat-263b0f0b-37ed-4f3f-989d-3880e957c649",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-20_monday-chat-21-april/content.txt",
+      "timestamp": "2025-04-20T23:08:49.119Z",
+      "title": "MONDAY CHAT (21/April)",
+      "sourceHash": "c47f14332a1c096cdb18970d369c91e2bb592f1e"
+    },
+    {
+      "id": "chat-4085b59e-30c0-409d-8d20-801c5d540ab1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-22_tuesday-chat-22-april/content.txt",
+      "timestamp": "2025-04-22T09:53:11.604Z",
+      "title": "TUESDAY CHAT (22/April)",
+      "sourceHash": "dedef6816cc382d9123bb1851f4533356dc1241b"
+    },
+    {
+      "id": "chat-15398e5d-d5e6-476f-bcd8-33de61945259",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-23_wednesday-chat-23-april/content.txt",
+      "timestamp": "2025-04-23T09:23:33.008Z",
+      "title": "WEDNESDAY CHAT (23/April)",
+      "sourceHash": "a11ac65da567cf04538e7f7ff51ba8fe3280ac7e"
+    },
+    {
+      "id": "chat-9f0568ff-998c-4a3c-a1c7-425b8d2864f6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-24_thursday-chat-24-april/content.txt",
+      "timestamp": "2025-04-24T11:15:20.144Z",
+      "title": "THURSDAY CHAT (24/April)",
+      "sourceHash": "e0c99e272349522a6af4122d4ec2e80fbd91196c"
+    },
+    {
+      "id": "chat-79645abe-59b4-43ce-bf0d-7cfcff94f32a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-25_friday-chat-25-april/content.txt",
+      "timestamp": "2025-04-25T09:13:08.066Z",
+      "title": "FRIDAY CHAT (25/April)",
+      "sourceHash": "c77fdaa1c0719200bf4efe3462edbb9b625203b0"
+    },
+    {
+      "id": "chat-f1821aec-3a16-46da-8b41-75477fffd186",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-25_weekend-chat-26-27-april-free-to-read/content.txt",
+      "timestamp": "2025-04-25T20:58:43.953Z",
+      "title": "WEEKEND CHAT (26-27/April)\n//free to read//",
+      "sourceHash": "6dcf1ccc738686d3089a022d6e3a636ac4811ab8"
+    },
+    {
+      "id": "chat-1b7e97f2-b9ed-4e18-a20e-1eba9d94cbfa",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-28_monday-chat-28-april/content.txt",
+      "timestamp": "2025-04-28T11:17:04.043Z",
+      "title": "MONDAY CHAT (28/April)",
+      "sourceHash": "7954113c9a6d4fbd9d67a3bd656f6426b8791cc8"
+    },
+    {
+      "id": "chat-76e3c719-e5be-4698-90d7-490afeb10380",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-29_tuesday-chat-29-april/content.txt",
+      "timestamp": "2025-04-29T08:39:21.554Z",
+      "title": "TUESDAY CHAT (29/April)",
+      "sourceHash": "c293128e2c14f5fdbc98d6b6e99b367b610577b5"
+    },
+    {
+      "id": "chat-db56beea-0d14-44eb-83e3-9379e73d7507",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-04-30_wednesday-chat-30-april/content.txt",
+      "timestamp": "2025-04-30T11:25:11.941Z",
+      "title": "WEDNESDAY CHAT (30/April)",
+      "sourceHash": "62ab25cbbbc5fb9081ae0b2eae42fc0f2b8363dc"
+    },
+    {
+      "id": "chat-e1abcded-e612-49a9-8e35-5b7d47a063e5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-01_thursday-chat-1-may/content.txt",
+      "timestamp": "2025-05-01T12:55:47.113Z",
+      "title": "THURSDAY CHAT (1/May)",
+      "sourceHash": "dd8d07489819fd39e23802cb33f1dac5981f3183"
+    },
+    {
+      "id": "chat-d91d4437-2a45-4037-a869-e0dfd0b0dd98",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-02_friday-chat-2-may/content.txt",
+      "timestamp": "2025-05-02T10:25:00.621Z",
+      "title": "FRIDAY CHAT (2/May)",
+      "sourceHash": "57dd1c836d0537e432be269c06f4be74536a6fee"
+    },
+    {
+      "id": "chat-7f4dafa2-8de3-4c32-8b39-859969d7dbb4",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-03_weekend-chat-3-4-may/content.txt",
+      "timestamp": "2025-05-03T10:27:23.565Z",
+      "title": "WEEKEND CHAT (3-4/May)",
+      "sourceHash": "ca1d6a89345688955c36544e26b993d899c897bb"
+    },
+    {
+      "id": "chat-864214e2-f814-4615-86bc-cbc944d0bbdb",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-05_monday-chat-05-may/content.txt",
+      "timestamp": "2025-05-05T08:59:40.842Z",
+      "title": "MONDAY CHAT (05/May)",
+      "sourceHash": "ddd5a4179a22a0c032970460b59384eabe2f61bf"
+    },
+    {
+      "id": "chat-ec33bb23-6d5a-40d1-8e92-43471b54cf56",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-06_tuesday-chat-06-may/content.txt",
+      "timestamp": "2025-05-06T12:26:14.783Z",
+      "title": "TUESDAY CHAT (06/May)",
+      "sourceHash": "61f2f87370ca7d6b3c0d6dd651e870ab02b561dc"
+    },
+    {
+      "id": "chat-a28ed931-f0cc-4492-bdea-c0402c5f5366",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-07_wednesday-chat-07-may/content.txt",
+      "timestamp": "2025-05-07T11:09:15.933Z",
+      "title": "WEDNESDAY CHAT (07/May)",
+      "sourceHash": "8f0349adfd15e88b375866cb2516315c9fd8bf28"
+    },
+    {
+      "id": "chat-035eb1a8-2ebf-40bc-a9ce-16c989e3f38e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-08_thursday-chat-08-may/content.txt",
+      "timestamp": "2025-05-08T12:45:45.115Z",
+      "title": "THURSDAY CHAT (08/May)",
+      "sourceHash": "cf7e41ed9ea378957dd8ac4a38d19a3d9b480323"
+    },
+    {
+      "id": "chat-c0b1b974-a1b3-4cf2-ab6f-aabb19ca2346",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-09_friday-chat-09-may/content.txt",
+      "timestamp": "2025-05-09T13:11:45.376Z",
+      "title": "FRIDAY CHAT (09/May)",
+      "sourceHash": "39015b945fd3f1efd06a49f3ad90b1afe8194698"
+    },
+    {
+      "id": "chat-ba7ba2d9-b4fd-4534-831d-36e483622186",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-10_weekend-chat-10-11-may/content.txt",
+      "timestamp": "2025-05-10T13:36:46.157Z",
+      "title": "WEEKEND CHAT (10-11/May)",
+      "sourceHash": "952f8a43adafe9bf5fbd1393175977a197070301"
+    },
+    {
+      "id": "chat-ee128818-ce80-44d8-8aa4-5bd40eff8350",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-12_monday-chat-12-may/content.txt",
+      "timestamp": "2025-05-12T09:06:41.932Z",
+      "title": "MONDAY CHAT (12/May)",
+      "sourceHash": "0f4ca7b955c50b31c047f4579c1a2e56dcbfca8c"
+    },
+    {
+      "id": "chat-a0e65120-408c-4454-b3e5-85714db3c669",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-13_tuesday-chat-13-may/content.txt",
+      "timestamp": "2025-05-13T09:39:40.815Z",
+      "title": "TUESDAY CHAT (13/May)",
+      "sourceHash": "8f522824ce9930ef1266fd47e260957f7ea2b9b7"
+    },
+    {
+      "id": "chat-23c1ccae-81bc-4192-8a11-18b0f7764dce",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-14_wednesday-post-14-may/content.txt",
+      "timestamp": "2025-05-14T07:45:22.906Z",
+      "title": "WEDNESDAY POST (14/May)",
+      "sourceHash": "2943aeba3b2906ccb145ba517962aac85b333349"
+    },
+    {
+      "id": "chat-a556021b-21ba-4cc8-9f7a-49ba1d89741f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-15_thursday-chat-15-may/content.txt",
+      "timestamp": "2025-05-15T13:02:04.752Z",
+      "title": "THURSDAY CHAT (15/May)",
+      "sourceHash": "0b7c694c3976ecf7feb1a0059957c7429b57c911"
+    },
+    {
+      "id": "chat-e740506b-3872-457e-a89f-1bc608b0b226",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-16_friday-chat-16-may/content.txt",
+      "timestamp": "2025-05-16T12:06:38.012Z",
+      "title": "FRIDAY CHAT (16/May)",
+      "sourceHash": "14c4194ad2e8fc6c8d410d6d25b744310ebb4b08"
+    },
+    {
+      "id": "chat-4442ec28-0e13-4427-a323-a199b47ff753",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-17_weekend-chat-17-18-may/content.txt",
+      "timestamp": "2025-05-17T13:57:30.716Z",
+      "title": "WEEKEND CHAT (17/18/May)",
+      "sourceHash": "e89a7fa62372717e1b8b5995a22d83d4aa020836"
+    },
+    {
+      "id": "chat-30ed54a3-45be-4759-8342-3035099e5178",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-19_monday-chat-19-may/content.txt",
+      "timestamp": "2025-05-19T11:13:41.242Z",
+      "title": "MONDAY CHAT (19/May)",
+      "sourceHash": "8000ab91ef074311592dfe22ca5fdbbcf49b0c73"
+    },
+    {
+      "id": "chat-8c0a21a3-aadb-4556-90cc-e8e516769412",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-20_tuesday-chat-20-may/content.txt",
+      "timestamp": "2025-05-20T13:16:22.930Z",
+      "title": "TUESDAY CHAT (20/May)",
+      "sourceHash": "a7ead7442b6dfb7aad7955de9b4a6440de145b23"
+    },
+    {
+      "id": "chat-0ab7b278-229f-4d47-ac71-be576763d0e0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-21_wednesday-post-21-may/content.txt",
+      "timestamp": "2025-05-21T12:47:02.927Z",
+      "title": "WEDNESDAY POST (21/May)",
+      "sourceHash": "73be59ff2aab3b0a69ac49303309e9ea02ee80ff"
+    },
+    {
+      "id": "chat-48c5a6f6-953f-495d-a60c-d238f6f22526",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-22_thursday-chat-22-may/content.txt",
+      "timestamp": "2025-05-22T13:14:37.345Z",
+      "title": "THURSDAY CHAT (22/May)",
+      "sourceHash": "b61e00ac15a0a493d75078f9ae145c55227872c1"
+    },
+    {
+      "id": "chat-cc4a0c58-0784-4f9a-b331-1edc3eedf590",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-23_friday-chat-23-may/content.txt",
+      "timestamp": "2025-05-23T13:10:16.337Z",
+      "title": "FRIDAY CHAT (23/May)",
+      "sourceHash": "4632966dbabcc84f30218159008c3970cc5f646f"
+    },
+    {
+      "id": "chat-a6bfe731-0505-4bc0-b861-c39a2431167d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-24_weekend-chat-24-26-may/content.txt",
+      "timestamp": "2025-05-24T06:08:56.876Z",
+      "title": "WEEKEND CHAT (24-26/May)",
+      "sourceHash": "8c7c16044961cc946cce911be0b39d0ba42e51f4"
+    },
+    {
+      "id": "chat-c97b2464-f7a7-40a8-8504-90bc478a69ba",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-27_tuesday-chat-27-may/content.txt",
+      "timestamp": "2025-05-27T13:08:25.742Z",
+      "title": "TUESDAY CHAT (27/May)",
+      "sourceHash": "3dd56ff4b4a15d09db159e45f157eef5c789cdb6"
+    },
+    {
+      "id": "chat-20577ef8-1be2-4afd-ae8c-343b5e4f2936",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-28_wednesday-chat-28-may/content.txt",
+      "timestamp": "2025-05-28T12:41:37.106Z",
+      "title": "WEDNESDAY CHAT (28/May)",
+      "sourceHash": "7c260a73c3dfb64c9fb45af4be964b328917e46f"
+    },
+    {
+      "id": "chat-f4f672fb-d1f7-4fb3-8c9f-a5c20f9ce75d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-29_thursday-chat-29-may/content.txt",
+      "timestamp": "2025-05-29T12:07:10.754Z",
+      "title": "THURSDAY CHAT (29/May)",
+      "sourceHash": "1a42fd069ef5a4ecaa86df6d7b4d5a89e67aa399"
+    },
+    {
+      "id": "chat-1713f327-7ff0-4b53-bc55-b3440792f9c9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-05-30_friday-chat-30-may/content.txt",
+      "timestamp": "2025-05-30T12:36:45.778Z",
+      "title": "FRIDAY CHAT (30/May)",
+      "sourceHash": "aa21056b165294a59a5d5db4f9063b4d35bbaef2"
+    },
+    {
+      "id": "chat-27520880-d361-4cba-85bd-e04d870fccf3",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-05_thursday-chat-05-june/content.txt",
+      "timestamp": "2025-06-05T13:18:09.896Z",
+      "title": "THURSDAY CHAT (05/June)",
+      "sourceHash": "0335d4ca87295872d8dc2efa02792448a26ed57f"
+    },
+    {
+      "id": "chat-7d8176bf-c2c8-4b0d-a8bd-2d3d0147e2c1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-06_friday-post-06-june/content.txt",
+      "timestamp": "2025-06-06T12:23:38.940Z",
+      "title": "FRIDAY POST (06/June)",
+      "sourceHash": "8fa6bb255ec48cc11bb2721cb8914601c913b47e"
+    },
+    {
+      "id": "chat-7ba24142-0d0d-477c-a1f8-009ddfb16118",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-09_monday-chat-09-june/content.txt",
+      "timestamp": "2025-06-09T10:34:52.705Z",
+      "title": "MONDAY CHAT (09/June)",
+      "sourceHash": "a2737ba5dda63f5b71f865f374f39157ef2e0ba2"
+    },
+    {
+      "id": "chat-eb13010d-8021-4d01-9786-7d45a0e1fabc",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-10_tuesday-chat-10-june/content.txt",
+      "timestamp": "2025-06-10T11:48:25.027Z",
+      "title": "TUESDAY CHAT (10/June)",
+      "sourceHash": "123c8d7b570319dbae3b905e070eab05b73944e6"
+    },
+    {
+      "id": "chat-911381ba-866e-40f2-879d-a0541c2f58cb",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-11_wednesday-chat-11-june/content.txt",
+      "timestamp": "2025-06-11T12:28:35.762Z",
+      "title": "WEDNESDAY CHAT (11/June)",
+      "sourceHash": "a8d0972b207dd2972f6274c5bfdf1fb85985dd27"
+    },
+    {
+      "id": "chat-020412af-d60e-4d5e-9a9f-68616cf0a1ca",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-12_thursday-chat-12-june/content.txt",
+      "timestamp": "2025-06-12T13:04:00.698Z",
+      "title": "THURSDAY CHAT (12/June)",
+      "sourceHash": "803a6823f4169b55e0b70774da14ea5686acb68f"
+    },
+    {
+      "id": "chat-3148c1a5-11b2-4d98-8e90-1b8acb520a14",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-13_friday-chat-13-june/content.txt",
+      "timestamp": "2025-06-13T10:59:56.752Z",
+      "title": "FRIDAY CHAT (13/June)",
+      "sourceHash": "41eabc5079d13acc548d9c9f63d3756bb0a1eb5f"
+    },
+    {
+      "id": "chat-e08cbb9f-1928-49fd-b1fe-a1222c0761ab",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-14_weekend-chat-14-15-june/content.txt",
+      "timestamp": "2025-06-14T09:47:06.881Z",
+      "title": "WEEKEND CHAT (14-15/June)",
+      "sourceHash": "8e73361652c9cff384b49a812af591eb4660eb89"
+    },
+    {
+      "id": "chat-0fa25cc9-b8cf-4e1d-8f78-18d4ae1f3c8f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-16_monday-chat-16-june/content.txt",
+      "timestamp": "2025-06-16T10:47:23.209Z",
+      "title": "MONDAY CHAT (16/June)",
+      "sourceHash": "4afc4915a16b0d499435ae6d67d3e8081767919f"
+    },
+    {
+      "id": "chat-1921aecb-e113-4f6e-93d3-e5e43039bb50",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-17_tuesday-chat-17-june/content.txt",
+      "timestamp": "2025-06-17T10:08:30.642Z",
+      "title": "TUESDAY CHAT (17/June)",
+      "sourceHash": "0a455ab8913aa491d6bc53babe0e0b8adcad537b"
+    },
+    {
+      "id": "chat-b517f6ac-05d9-477e-afe7-9056b5d3cf03",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-18_wednesday-chat-18-june/content.txt",
+      "timestamp": "2025-06-18T11:57:31.038Z",
+      "title": "WEDNESDAY CHAT (18/June)",
+      "sourceHash": "2cb863ebd705eee862c2188eef902c966cd2c314"
+    },
+    {
+      "id": "chat-5132ad80-70b7-404b-91df-5353f420fd41",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-20_friday-chat-20-june/content.txt",
+      "timestamp": "2025-06-20T11:33:22.426Z",
+      "title": "FRIDAY CHAT (20/June)",
+      "sourceHash": "6bb31cc0758aca03ea4007de6e75c9b9e5b60de0"
+    },
+    {
+      "id": "chat-17d71937-485f-4347-a8e0-33820376561a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-21_weekend-chat-21-22-june/content.txt",
+      "timestamp": "2025-06-21T06:33:36.929Z",
+      "title": "WEEKEND CHAT (21-22/June)",
+      "sourceHash": "f6f034cee147a44e1532c22d00d92278f42333c8"
+    },
+    {
+      "id": "chat-1293311f-6491-443a-bcbf-ad88f78897ca",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-23_monday-chat-23-june/content.txt",
+      "timestamp": "2025-06-23T12:44:15.505Z",
+      "title": "MONDAY CHAT (23/June)",
+      "sourceHash": "acf01d551e7aeb6d54e2245691a6a8ff4c689fad"
+    },
+    {
+      "id": "chat-5697a72e-7ab5-4102-ad02-26af3f165ada",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-24_tuesday-post-24-june/content.txt",
+      "timestamp": "2025-06-24T11:32:09.899Z",
+      "title": "TUESDAY POST (24/June)",
+      "sourceHash": "4244b9e24af6828ea7eb3a951609c3aecae0c7fe"
+    },
+    {
+      "id": "chat-7fc1b550-a08c-4e6a-b0d4-715166723963",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-25_wednesday-chat-25-june/content.txt",
+      "timestamp": "2025-06-25T13:09:54.512Z",
+      "title": "WEDNESDAY CHAT (25/June)",
+      "sourceHash": "83d6de2ad94839a16335442b9988f64cc0cad473"
+    },
+    {
+      "id": "chat-061002b1-9235-4b84-a60e-67d66d7d995f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-26_thrusday-chat-26-june/content.txt",
+      "timestamp": "2025-06-26T12:37:52.639Z",
+      "title": "THRUSDAY CHAT (26/June)",
+      "sourceHash": "a94209c51fd92257ced151c545cc91eb432a8c9c"
+    },
+    {
+      "id": "chat-fe766a29-8f0f-41e1-bfe7-931dfd7a40af",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-27_friday-chat-27-june/content.txt",
+      "timestamp": "2025-06-27T09:25:43.856Z",
+      "title": "FRIDAY CHAT (27/June)",
+      "sourceHash": "8185f37dfca39fc933a3a024491963872c90246f"
+    },
+    {
+      "id": "chat-7a6f150e-8796-4472-83c7-c14602ea00d2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-28_weekend-chat-28-29-june/content.txt",
+      "timestamp": "2025-06-28T11:32:35.165Z",
+      "title": "WEEKEND CHAT (28-29/June)",
+      "sourceHash": "2b9398c2154f2e11cca0d173b3553532003167f8"
+    },
+    {
+      "id": "chat-cfed4cd8-17d8-4bd4-b3e1-8e8c6fd18278",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-06-30_monday-chat-30-june/content.txt",
+      "timestamp": "2025-06-30T12:26:21.519Z",
+      "title": "MONDAY CHAT (30/June)",
+      "sourceHash": "538137f8779ff483b1ba7cfc0ee16dae7c654e92"
+    },
+    {
+      "id": "chat-3c26636b-4093-414d-b074-176332eee16c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-01_tuesday-chat-01-july/content.txt",
+      "timestamp": "2025-07-01T09:11:46.638Z",
+      "title": "TUESDAY CHAT (01/July)",
+      "sourceHash": "fad402e2a88e1bd6fbf22e875e8fc487948b600d"
+    },
+    {
+      "id": "chat-5aada0ac-b986-4805-8fbb-aec5a0e6bec3",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-02_wednesday-chat-02-july/content.txt",
+      "timestamp": "2025-07-02T12:04:49.317Z",
+      "title": "WEDNESDAY CHAT (02/July)",
+      "sourceHash": "f80e7967376e8cb930995a6413cdefa57349f1bd"
+    },
+    {
+      "id": "chat-a4f39e0b-319b-4944-ab45-d9f35a80a23c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-03_thursday-chat-03-july/content.txt",
+      "timestamp": "2025-07-03T12:18:43.290Z",
+      "title": "THURSDAY CHAT (03/July)",
+      "sourceHash": "6de0a1e0dcf101c9712bbad3638196773d0609b2"
+    },
+    {
+      "id": "chat-6e8d97d8-6507-42b4-a9cb-91881cf4d0d0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-03_weekend-chat-4-6-july/content.txt",
+      "timestamp": "2025-07-03T21:58:45.723Z",
+      "title": "WEEKEND CHAT (4-6/July)",
+      "sourceHash": "34cecdee0fc1ebe70a25398db32dfb1983c1f7b5"
+    },
+    {
+      "id": "chat-6e6e38ac-d1e9-4fe5-8e09-5794c9e1ca96",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-07_monday-chat-07-july/content.txt",
+      "timestamp": "2025-07-07T09:52:57.953Z",
+      "title": "MONDAY CHAT (07/July)",
+      "sourceHash": "1ec8c54754a630888ee5de162e41fdce3f52a862"
+    },
+    {
+      "id": "chat-4468e470-d28f-4050-b7b1-6e563c90e96f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-08_tuesday-chat-08-july/content.txt",
+      "timestamp": "2025-07-08T13:06:36.527Z",
+      "title": "TUESDAY CHAT (08/July)",
+      "sourceHash": "6d240304fb07d9e47914adf274ee28f7c27e8283"
+    },
+    {
+      "id": "chat-c00bed53-30dd-4634-854b-9d239e629b59",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-09_wednesday-chat-09-july/content.txt",
+      "timestamp": "2025-07-09T12:30:05.654Z",
+      "title": "WEDNESDAY CHAT (09/July)",
+      "sourceHash": "f7dcbe1c2c66620441e2615a77a7df671e7e7c3e"
+    },
+    {
+      "id": "chat-bbdc9073-2f08-47fc-9411-3cf7ffc0f628",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-10_thrusday-chat-10-july/content.txt",
+      "timestamp": "2025-07-10T12:11:14.786Z",
+      "title": "THRUSDAY CHAT (10/July)",
+      "sourceHash": "1dc8755f44d8a31d284c9bfc8867ba61a771e17e"
+    },
+    {
+      "id": "chat-db8c70fe-0808-4698-bbbd-9818872edbb7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-11_friday-chat-11-july/content.txt",
+      "timestamp": "2025-07-11T11:07:52.785Z",
+      "title": "FRIDAY CHAT (11/July)",
+      "sourceHash": "923d3edaa4bf95d90f93bd213e96a555dfcd214f"
+    },
+    {
+      "id": "chat-5977ccdc-1a13-4386-8f60-64678df503f8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-11_weekend-chat-12-13-july/content.txt",
+      "timestamp": "2025-07-11T20:55:52.702Z",
+      "title": "WEEKEND CHAT (12-13/July)",
+      "sourceHash": "e4e67feccda1cb984d691cb929172f77b19f42d4"
+    },
+    {
+      "id": "chat-d7f5ca3d-9162-4fdd-b095-04e6459623b3",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-14_monday-chat-14-july/content.txt",
+      "timestamp": "2025-07-14T10:58:04.910Z",
+      "title": "MONDAY CHAT (14/July)",
+      "sourceHash": "da3eb1fee8cc900e83dfbcdf10c08ae6ee083d29"
+    },
+    {
+      "id": "chat-7874a60a-4741-4c55-afe7-d1a68e2fbdd7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-15_tuesday-chat-15-july/content.txt",
+      "timestamp": "2025-07-15T11:22:09.861Z",
+      "title": "TUESDAY CHAT (15/July)",
+      "sourceHash": "4f0054feab1dc43fdad1998c240c7f8836e6e71a"
+    },
+    {
+      "id": "chat-98e0f805-0335-4ec8-b28d-a54cddb1b1f6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-16_wednesday-chat-16-july/content.txt",
+      "timestamp": "2025-07-16T10:13:35.049Z",
+      "title": "WEDNESDAY CHAT (16/July)",
+      "sourceHash": "53beb5191bcbd09cba6a095a18bce0a020920f50"
+    },
+    {
+      "id": "chat-80f5480d-07f9-466e-8e85-8a6be30e0b89",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-17_thursday-chat-17-july/content.txt",
+      "timestamp": "2025-07-17T11:50:25.139Z",
+      "title": "THURSDAY CHAT (17/July)",
+      "sourceHash": "f720696589b08c8168575d613e91538c553799de"
+    },
+    {
+      "id": "chat-cefb48bf-557b-4c05-93d0-d50c02699d44",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-18_friday-chat-18-july-free-to-read-today/content.txt",
+      "timestamp": "2025-07-18T12:17:36.604Z",
+      "title": "FRIDAY CHAT (18/July)\n(Free to read today)",
+      "sourceHash": "2eb0c150d41bcf649aac6e3ae483544daf81e40a"
+    },
+    {
+      "id": "chat-938a555f-a1f2-468e-bc15-f21f877b9d02",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-18_weekend-chat-19-20-july-free/content.txt",
+      "timestamp": "2025-07-18T22:23:06.291Z",
+      "title": "WEEKEND CHAT (19-20/July)\n(Free)",
+      "sourceHash": "5274e920639242f42a14aa2bd97a437d19105fa2"
+    },
+    {
+      "id": "chat-cbbe8770-e67d-4ed9-82d2-bfa102853042",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-21_monday-chat-21-july/content.txt",
+      "timestamp": "2025-07-21T12:51:03.108Z",
+      "title": "MONDAY CHAT (21/July)",
+      "sourceHash": "b6cc33de0872252a9358f486d91817c01337e6b4"
+    },
+    {
+      "id": "chat-d417da79-3404-4ef5-b5cc-1413d9dc7ce4",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-22_tuesday-chat-22-july/content.txt",
+      "timestamp": "2025-07-22T11:22:16.756Z",
+      "title": "TUESDAY CHAT (22/July)",
+      "sourceHash": "98b5e34387d59383a429b7d73c737291e6deb61d"
+    },
+    {
+      "id": "chat-88bf87b4-fc64-4198-9d48-39118d262f1e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-23_wednesday-chat-23-july/content.txt",
+      "timestamp": "2025-07-23T11:35:15.575Z",
+      "title": "WEDNESDAY CHAT (23/July)",
+      "sourceHash": "1d2031dd9b70312335511629062bbbb1f9160aa8"
+    },
+    {
+      "id": "chat-b9d4b3c0-486e-4915-bd2b-d3569a376044",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-07-23_vacation-chat-24-july-1-aug/content.txt",
+      "timestamp": "2025-07-23T20:53:37.366Z",
+      "title": "\"VACATION\" CHAT (24/July - 1/Aug)",
+      "sourceHash": "6ef064426070a2b836934003f0511df797b68765"
+    },
+    {
+      "id": "chat-197b528a-2798-4b4c-92eb-75b7a0a8d7ff",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-04_monday-chat-04-08/content.txt",
+      "timestamp": "2025-08-04T13:04:47.257Z",
+      "title": "MONDAY CHAT (04/08)",
+      "sourceHash": "107bc09b489707bdc07034ae8543085cf92ead08"
+    },
+    {
+      "id": "chat-b4fd5270-ac0f-4955-85a0-cc61c6e12a18",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-05_tuesday-chat-05-08/content.txt",
+      "timestamp": "2025-08-05T13:08:30.215Z",
+      "title": "TUESDAY CHAT (05/08)",
+      "sourceHash": "867a0c790d231b9a5f395ab95414fe037c8e520b"
+    },
+    {
+      "id": "chat-ed57b970-d88f-490c-9311-cdf4b2c9342d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-06_wednesday-chat-06-aug/content.txt",
+      "timestamp": "2025-08-06T11:59:15.792Z",
+      "title": "WEDNESDAY CHAT (06/Aug)",
+      "sourceHash": "5fa7d278dd79cf30bd76ebe3e069ec4edda8a255"
+    },
+    {
+      "id": "chat-d17a0c06-2f9d-4f08-8487-283df9579258",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-07_thursday-chat-07-aug/content.txt",
+      "timestamp": "2025-08-07T08:51:10.386Z",
+      "title": "THURSDAY CHAT (07/Aug)",
+      "sourceHash": "fb1e6d857a9df452f622943a5040a5fd41d8e0c7"
+    },
+    {
+      "id": "chat-e94ef748-6c32-4d84-9b5b-f0c9b2488390",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-08_friday-post-08-aug/content.txt",
+      "timestamp": "2025-08-08T09:35:30.730Z",
+      "title": "FRIDAY POST (08/Aug)",
+      "sourceHash": "07f17c88b29875834b2212db99313641f442e1d2"
+    },
+    {
+      "id": "chat-79225a92-0752-44d0-9005-a5cdfdfa9a0c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-08_weekend-chat-9-10-aug/content.txt",
+      "timestamp": "2025-08-08T21:45:59.346Z",
+      "title": "WEEKEND CHAT (9-10/Aug)",
+      "sourceHash": "109074310d37e89a5740bff5c89b9033111b4722"
+    },
+    {
+      "id": "chat-b56efc38-7904-4f1e-945d-d180b423bac8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-11_monday-chat-11-aug/content.txt",
+      "timestamp": "2025-08-11T10:28:21.303Z",
+      "title": "MONDAY CHAT (11/Aug)",
+      "sourceHash": "b1ddf706f45c0ae869f390a3afde9b86155b4083"
+    },
+    {
+      "id": "chat-f95c254e-7d8d-43cc-b433-87f409ccd426",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-12_tuesday-post-12-aug/content.txt",
+      "timestamp": "2025-08-12T12:10:51.708Z",
+      "title": "TUESDAY POST (12/Aug)",
+      "sourceHash": "5c47237dd004a46cba45c0ad4006b26f01eb1eba"
+    },
+    {
+      "id": "chat-0302b145-18e8-45b8-99e7-ce9b9a888964",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-13_wednesday-chat-13-aug/content.txt",
+      "timestamp": "2025-08-13T11:39:24.995Z",
+      "title": "WEDNESDAY CHAT (13/Aug)",
+      "sourceHash": "31ac25bd5433b27a1cee124f59d70c3ce074b616"
+    },
+    {
+      "id": "chat-eca28282-cb55-448d-b74a-2965f131a867",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-14_thursday-chat-14-08/content.txt",
+      "timestamp": "2025-08-14T13:00:44.033Z",
+      "title": "THURSDAY CHAT (14/08)",
+      "sourceHash": "b94d6637836598df9d042671f1df2e7bc9e68e32"
+    },
+    {
+      "id": "chat-77c012d9-7862-408d-9de8-d14e1c89ecad",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-15_friday-chat-15-08/content.txt",
+      "timestamp": "2025-08-15T12:24:06.912Z",
+      "title": "FRIDAY CHAT (15/08)",
+      "sourceHash": "5339aba46f1b27c6c5e60d61f095a3f7f7980fc5"
+    },
+    {
+      "id": "chat-3af4e076-e642-4520-8a63-aaa5594ad0b1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-16_weekend-chat-16-17-aug/content.txt",
+      "timestamp": "2025-08-16T06:19:18.009Z",
+      "title": "WEEKEND CHAT (16-17/Aug)",
+      "sourceHash": "61716ce5d636986a850d8812f8b14239cf6c2c9c"
+    },
+    {
+      "id": "chat-ed046157-c0a8-49ca-b2d3-c634a7fa772e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-18_monday-chat-18-08/content.txt",
+      "timestamp": "2025-08-18T12:52:59.844Z",
+      "title": "MONDAY CHAT (18/08)",
+      "sourceHash": "d5fb83a81cb2d96129fe2d0a33ac82ccecbcd797"
+    },
+    {
+      "id": "chat-a3c6ce06-87c9-4d94-b146-fa0478faf8af",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-19_tuesday-chat-19-08/content.txt",
+      "timestamp": "2025-08-19T09:58:40.960Z",
+      "title": "TUESDAY CHAT (19/08)",
+      "sourceHash": "e7a5e61b7cc9ec39ad067115207c86f3b1b9b1be"
+    },
+    {
+      "id": "chat-219acea0-fa0f-4398-957b-01a3b1530f1b",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-21_thursday-chat-21-08/content.txt",
+      "timestamp": "2025-08-21T11:34:39.452Z",
+      "title": "THURSDAY CHAT (21/08)",
+      "sourceHash": "ae93b39788979e5469520e3e04f87dec6998a5e6"
+    },
+    {
+      "id": "chat-2e7a19bf-e898-4980-b934-7c5f6a3aa89f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-22_friday-chat-22-08/content.txt",
+      "timestamp": "2025-08-22T10:41:20.399Z",
+      "title": "FRIDAY CHAT (22/08)",
+      "sourceHash": "aca49151389c961f916d347090999a49d9ac2df6"
+    },
+    {
+      "id": "chat-59793945-5088-43b9-a713-7e85018327af",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-23_weekend-chat-23-24-08/content.txt",
+      "timestamp": "2025-08-23T10:49:14.919Z",
+      "title": "WEEKEND CHAT (23-24/08)",
+      "sourceHash": "ebe1eef882e10a364e44974c5cbecdc23cbf3295"
+    },
+    {
+      "id": "chat-9ced62da-d203-46ea-9c49-1384ead93d88",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-25_monday-post-25-08/content.txt",
+      "timestamp": "2025-08-25T08:25:52.842Z",
+      "title": "MONDAY POST (25/08)",
+      "sourceHash": "e9f76b318574ceab3391de8a59c33660d0bcbda6"
+    },
+    {
+      "id": "chat-52109992-df7d-4400-8eaa-e8ba4bc4cf72",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-26_chat-52109992-df7d-4400-8eaa-e8ba4bc4cf72/content.txt",
+      "timestamp": "2025-08-26T10:02:25.413Z",
+      "title": "2025-08-26_chat-52109992-df7d-4400-8eaa-e8ba4bc4cf72",
+      "sourceHash": "70885e018186c199a6e9ee7b6d21fd82631357d1"
+    },
+    {
+      "id": "chat-2bc89494-c387-4fd3-82ed-7ca18a62f53d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-27_wednesday-chat-27-08/content.txt",
+      "timestamp": "2025-08-27T10:50:46.685Z",
+      "title": "WEDNESDAY CHAT (27/08)",
+      "sourceHash": "b6e2469cfcf4640c1b82c1b8a0d319e25dcefc8e"
+    },
+    {
+      "id": "chat-e1e270ab-5394-4f7a-bb25-bd1990171193",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-28_thursday-chat-28-08/content.txt",
+      "timestamp": "2025-08-28T12:56:29.129Z",
+      "title": "THURSDAY CHAT (28/08)",
+      "sourceHash": "facae825526382047b426023dc6a97a7297a5217"
+    },
+    {
+      "id": "chat-582cb09e-d07c-4eec-9f8c-808620adf909",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-29_friday-chat-29-08/content.txt",
+      "timestamp": "2025-08-29T11:35:28.571Z",
+      "title": "FRIDAY CHAT (29/08)",
+      "sourceHash": "9c0153675f79ba3bd569efb778dc53cefae36bbf"
+    },
+    {
+      "id": "chat-172dc4f6-1514-47d4-81db-3d719a3e806e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-08-29_weekend-chat-30-08-01-09/content.txt",
+      "timestamp": "2025-08-29T21:12:01.544Z",
+      "title": "WEEKEND CHAT (30/08 -01/09)",
+      "sourceHash": "1c4b8bb527e91b14083a29e264755bd59e926d60"
+    },
+    {
+      "id": "chat-66b76e43-bc51-41c5-8128-de44c0af64a7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-02_tuesday-chat-02-09/content.txt",
+      "timestamp": "2025-09-02T10:36:38.186Z",
+      "title": "TUESDAY CHAT (02/09)",
+      "sourceHash": "0bab98ed7ffd644bda11b7e4095cc5b25dfd0d12"
+    },
+    {
+      "id": "chat-76576e65-241f-4498-9d09-0922afde58c9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-03_wednesday-chat-03-09/content.txt",
+      "timestamp": "2025-09-03T13:13:11.510Z",
+      "title": "WEDNESDAY CHAT (03/09)",
+      "sourceHash": "e6ffed3e22ba0c4f7f0c8c018f98d89c4ce5e454"
+    },
+    {
+      "id": "chat-f8483842-3ecc-4dd9-af8e-9489b3627948",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-04_thursday-chat-04-09/content.txt",
+      "timestamp": "2025-09-04T12:40:15.842Z",
+      "title": "THURSDAY CHAT (04/09)",
+      "sourceHash": "e536b7a339cdedc09c36759929d432e3a3770daa"
+    },
+    {
+      "id": "chat-33c2ee32-dc51-4c1e-b91d-528c28967884",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-05_friday-chat-05-09/content.txt",
+      "timestamp": "2025-09-05T10:58:43.339Z",
+      "title": "FRIDAY CHAT (05/09)",
+      "sourceHash": "827c17f22dc58f351f126cc9ce3dd6bf811e3ee3"
+    },
+    {
+      "id": "chat-4307887e-6b39-46f1-90e2-ac59d5b6b84c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-06_weekend-chat-06-07-09/content.txt",
+      "timestamp": "2025-09-06T08:39:51.349Z",
+      "title": "WEEKEND CHAT (06-07/09)",
+      "sourceHash": "8ba0bafde2627514c73cf600f524e5b9b9e19e12"
+    },
+    {
+      "id": "chat-73e5fd75-ebc7-423d-8026-072dade7444e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-08_monday-chat-08-09/content.txt",
+      "timestamp": "2025-09-08T10:52:58.552Z",
+      "title": "MONDAY CHAT (08/09)",
+      "sourceHash": "553f1c84243882eacde1d989f68eef6feaa10a42"
+    },
+    {
+      "id": "chat-c00364f2-6451-4c7e-adf6-e9142a597716",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-09_tuesday-chat-09-sept/content.txt",
+      "timestamp": "2025-09-09T12:01:24.628Z",
+      "title": "TUESDAY CHAT (09/Sept)",
+      "sourceHash": "20227fe1387e95ef959f3737a7f1bb10a7789562"
+    },
+    {
+      "id": "chat-16b9a8d0-b300-4a60-b313-18f517fb4bb7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-10_wednesday-chat-10-09/content.txt",
+      "timestamp": "2025-09-10T11:43:29.637Z",
+      "title": "WEDNESDAY CHAT (10/09)",
+      "sourceHash": "0c997b0017cf9a7ceb10905355732b02b16854ef"
+    },
+    {
+      "id": "chat-b1b1105b-b4e5-4cb4-869e-e69f8e62a4b6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-11_thursday-chat-11-09/content.txt",
+      "timestamp": "2025-09-11T11:48:17.204Z",
+      "title": "THURSDAY CHAT (11/09)",
+      "sourceHash": "3a7e4bbeaaf8e1e30c0396e3f77cef804dd3f65a"
+    },
+    {
+      "id": "chat-66121fc7-d707-42d7-b700-350fac4e32c6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-12_friday-chat-12-09/content.txt",
+      "timestamp": "2025-09-12T11:31:39.729Z",
+      "title": "FRIDAY CHAT (12/09)",
+      "sourceHash": "316197d6212767d3560f3b879f873ef7c4ef9586"
+    },
+    {
+      "id": "chat-2bbdcfbb-925e-46ea-adf6-d38dc6b1c97c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-15_monday-chat-15-09/content.txt",
+      "timestamp": "2025-09-15T11:32:52.224Z",
+      "title": "MONDAY CHAT (15/09)",
+      "sourceHash": "6598f039100f41c81042c542bfcee89129c3f53a"
+    },
+    {
+      "id": "chat-42957f18-fc41-4e99-b96e-d355341b2ed3",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-16_tuesday-chat-16-sept/content.txt",
+      "timestamp": "2025-09-16T13:04:56.899Z",
+      "title": "TUESDAY CHAT (16/Sept)",
+      "sourceHash": "7cd6bce5f685127d6587fa3ef58159eafa846f52"
+    },
+    {
+      "id": "chat-9fb69f2d-ba4b-40c2-85c2-b34d9bce6ef2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-17_wednesday-chat-17-sept-fomc-day-3/content.txt",
+      "timestamp": "2025-09-17T11:02:43.758Z",
+      "title": "WEDNESDAY CHAT (17/Sept)\nFOMC DAY <3",
+      "sourceHash": "5d3c1ef6fc8b7871b617d8234f51c742d480837b"
+    },
+    {
+      "id": "chat-2df10190-20fb-4316-8c69-2f0ff459ad30",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-18_thursday-chat-18-09/content.txt",
+      "timestamp": "2025-09-18T12:55:20.997Z",
+      "title": "THURSDAY CHAT (18/09)",
+      "sourceHash": "8a2543af2d9ac3f508b55a09aa4d74f9383939aa"
+    },
+    {
+      "id": "chat-f65b0aaf-4ab9-4d3d-b00a-ee31f35d1edd",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-19_friday-chat-19-09/content.txt",
+      "timestamp": "2025-09-19T10:04:22.591Z",
+      "title": "FRIDAY CHAT (19/09)",
+      "sourceHash": "c97b26c5abcd4f17498eabec0f2066a1e12118ba"
+    },
+    {
+      "id": "chat-a3739861-44cd-4a5d-b989-fa018ccc4a6d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-19_weekend-chat-20-21-09/content.txt",
+      "timestamp": "2025-09-19T21:25:23.264Z",
+      "title": "WEEKEND CHAT (20-21/09)",
+      "sourceHash": "b1add0287b599ec21d7d7b984274cd451208c628"
+    },
+    {
+      "id": "chat-68246dc4-41e2-414e-8f80-b581292e5488",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-22_monday-chat-22-09/content.txt",
+      "timestamp": "2025-09-22T09:00:18.211Z",
+      "title": "MONDAY CHAT (22/09)",
+      "sourceHash": "81ee340392fa8dc406b111947d07b49b2d7ec12d"
+    },
+    {
+      "id": "chat-2725a76b-06c7-42af-ba59-58062c5ff468",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-23_tuesday-chat-23-09/content.txt",
+      "timestamp": "2025-09-23T13:04:05.222Z",
+      "title": "TUESDAY CHAT (23/09)",
+      "sourceHash": "e5347b223815cbd0edfd70c42c55647b740b76aa"
+    },
+    {
+      "id": "chat-af5796f1-2bdd-4532-8265-1b8467f35190",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-24_wednesday-chat-24-09/content.txt",
+      "timestamp": "2025-09-24T13:02:08.738Z",
+      "title": "WEDNESDAY CHAT (24/09)",
+      "sourceHash": "b8d7376ba0ccc32e81acf085723b101079f64376"
+    },
+    {
+      "id": "chat-3b5461e8-16a3-472a-a219-40f22a9b4987",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-25_thursday-chat-25-09/content.txt",
+      "timestamp": "2025-09-25T11:32:49.161Z",
+      "title": "THURSDAY CHAT (25/09)",
+      "sourceHash": "5956f8d57745da3fa0af95bf610e8368d5ab0572"
+    },
+    {
+      "id": "chat-466b8080-1233-4478-b4ed-e16adc1a0a23",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-26_friday-chat-26-09/content.txt",
+      "timestamp": "2025-09-26T12:37:52.649Z",
+      "title": "FRIDAY CHAT (26/09)",
+      "sourceHash": "83a59466834d1f7d1d90a9b949d95a9d7f33b540"
+    },
+    {
+      "id": "chat-bc032146-d3b9-4a55-b346-fd20521915f9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-26_weekend-chat-27-28-09/content.txt",
+      "timestamp": "2025-09-26T22:28:10.925Z",
+      "title": "WEEKEND CHAT (27-28/09)",
+      "sourceHash": "48b670e1666b614c852f45e8ea222b32726a8a53"
+    },
+    {
+      "id": "chat-090a97d0-274b-442a-97b4-1691ebea04e8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-29_monday-chat-29-09/content.txt",
+      "timestamp": "2025-09-29T12:37:31.944Z",
+      "title": "MONDAY CHAT (29/09)",
+      "sourceHash": "bf6d0764c0d3bc47608c7a7be57bd1f29e0c2430"
+    },
+    {
+      "id": "chat-192fe854-dce1-472c-a793-16faa2dde3bb",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-09-30_tuesday-chat-30-09/content.txt",
+      "timestamp": "2025-09-30T12:06:10.368Z",
+      "title": "TUESDAY CHAT (30/09)",
+      "sourceHash": "bb9c754f530dd77be5ed0f1938a68ffff4dc2c6e"
+    },
+    {
+      "id": "chat-26a35f0a-f3b1-4e30-be1c-b78a89fc64f8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-01_wednesday-chat-01-10/content.txt",
+      "timestamp": "2025-10-01T11:49:54.764Z",
+      "title": "WEDNESDAY CHAT (01/10)",
+      "sourceHash": "87a598fa0266a12040ea0012f1f370b702ed94da"
+    },
+    {
+      "id": "chat-bae31527-7b92-4467-869d-594297dd47c1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-02_thursday-chat-02-10/content.txt",
+      "timestamp": "2025-10-02T12:47:16.926Z",
+      "title": "THURSDAY CHAT (02/10)",
+      "sourceHash": "40452f66583820e090fc4ef5de4d75eff0979db9"
+    },
+    {
+      "id": "chat-008b359d-e17c-497c-a5a3-f0e8162cbd3d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-03_friday-post-03-10/content.txt",
+      "timestamp": "2025-10-03T09:41:17.961Z",
+      "title": "FRIDAY POST (03/10)",
+      "sourceHash": "5071efc7e19cad7c543610edf8b4a86e6c2a6ed3"
+    },
+    {
+      "id": "chat-13b118fa-84ee-4ee8-9dc7-b31cd0a98f54",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-03_weekend-chat-4-5-10/content.txt",
+      "timestamp": "2025-10-03T23:27:10.142Z",
+      "title": "WEEKEND CHAT (4-5/10)",
+      "sourceHash": "3dd319dd56c572048c6ac6a87bd9f99b989227bd"
+    },
+    {
+      "id": "chat-5b5e22e9-47ff-43ce-8444-9ed6fcfe67c2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-06_monday-chat-06-10/content.txt",
+      "timestamp": "2025-10-06T09:19:11.433Z",
+      "title": "MONDAY CHAT (06/10)",
+      "sourceHash": "920e5a516783b000d974ab93f449c3b322ada23f"
+    },
+    {
+      "id": "chat-dc98fd2e-af91-4f9b-8133-c62fbd95b2ba",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-07_tuesday-chat-07-10/content.txt",
+      "timestamp": "2025-10-07T12:18:52.777Z",
+      "title": "TUESDAY CHAT (07/10)",
+      "sourceHash": "9c9267aab4528e8d6b0824a78cd20ae94e7c3ee2"
+    },
+    {
+      "id": "chat-440bce43-a89a-4e34-8999-1c1f3559ccde",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-08_wednesday-chat-08-10/content.txt",
+      "timestamp": "2025-10-08T12:59:29.699Z",
+      "title": "WEDNESDAY CHAT (08/10)",
+      "sourceHash": "6cb68d75d529918ab441030d6c35d5d19d6ac062"
+    },
+    {
+      "id": "chat-d0a2d6e9-ab20-4682-a0d3-895c3f8f71f2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-09_thursday-chat-09-10/content.txt",
+      "timestamp": "2025-10-09T13:12:16.488Z",
+      "title": "THURSDAY CHAT (09/10)",
+      "sourceHash": "066eceb1d61622271cc709fe67f6ec3fdcac8ddf"
+    },
+    {
+      "id": "chat-e2fa3b0c-4cdd-4952-80c9-cce395945261",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-10_friday-chat-10-10/content.txt",
+      "timestamp": "2025-10-10T13:05:18.269Z",
+      "title": "FRIDAY CHAT (10/10)",
+      "sourceHash": "86b17a18b539d5f346c03c3d61c9b467a628bf6a"
+    },
+    {
+      "id": "chat-e22a5886-20d5-4c9f-ac5c-6bf7cc540c15",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-11_weekend-chat-11-12-oct/content.txt",
+      "timestamp": "2025-10-11T10:54:49.936Z",
+      "title": "WEEKEND CHAT (11-12/Oct)",
+      "sourceHash": "fd3049d42cfb2bc6c24b6d9148ebbbc4fe69448c"
+    },
+    {
+      "id": "chat-aa47251a-b55a-405c-9642-a72598aa630a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-13_monday-chat-13-10/content.txt",
+      "timestamp": "2025-10-13T12:09:56.639Z",
+      "title": "MONDAY CHAT (13/10)",
+      "sourceHash": "5c41741ca0ccfe28059cc2d5205f03cfb9d43c78"
+    },
+    {
+      "id": "chat-a76a9a81-1974-42dc-a39a-38388e35e411",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-14_tuesday-chat-14-10/content.txt",
+      "timestamp": "2025-10-14T09:12:16.093Z",
+      "title": "TUESDAY CHAT (14/10)",
+      "sourceHash": "536681af8cb3edadf5a93b9f6d7c63228d838166"
+    },
+    {
+      "id": "chat-fa96a3da-cd9c-4746-a7e2-c804dfdb4529",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-15_wednesday-chat-15-10/content.txt",
+      "timestamp": "2025-10-15T09:14:21.878Z",
+      "title": "WEDNESDAY CHAT (15/10)",
+      "sourceHash": "6609a57a6ad1d32f13fd4906e68a233e3efc1501"
+    },
+    {
+      "id": "chat-619e0756-4041-46ea-bef6-ea9482047194",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-16_thursday-chat-16-10/content.txt",
+      "timestamp": "2025-10-16T13:02:10.423Z",
+      "title": "THURSDAY CHAT (16/10)",
+      "sourceHash": "e8f3cebc3d4abf21747542b0d63a2262ef22dd3a"
+    },
+    {
+      "id": "chat-4a0d4724-1feb-421d-9ae0-8131a0327b03",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-17_friday-chat-17-oct/content.txt",
+      "timestamp": "2025-10-17T12:15:11.331Z",
+      "title": "FRIDAY CHAT (17/Oct)",
+      "sourceHash": "8ec44bd505bf879a0333361268164b2fa1802a9b"
+    },
+    {
+      "id": "chat-bdb606f5-d8f7-4dc8-a3de-3e6588e6d25d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-17_weekend-chat-18-19-oct/content.txt",
+      "timestamp": "2025-10-17T21:02:52.166Z",
+      "title": "WEEKEND CHAT (18-19/Oct)",
+      "sourceHash": "d420d04842713f738c28531e6eb80bd522122b2c"
+    },
+    {
+      "id": "chat-82fbd543-6b52-4894-94f8-a0eb1ef002b2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-20_monday-chat-20-10/content.txt",
+      "timestamp": "2025-10-20T11:03:37.062Z",
+      "title": "MONDAY CHAT (20/10)",
+      "sourceHash": "4d2d6cef86bf10e17e20cae2d9264c11a5e0ed10"
+    },
+    {
+      "id": "chat-55b6d5d5-951f-4df2-bfc6-5198bf12e616",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-21_tuesday-chat-21-10/content.txt",
+      "timestamp": "2025-10-21T12:15:25.216Z",
+      "title": "TUESDAY CHAT (21/10)",
+      "sourceHash": "19eaa5c9b00241d1570d59f4d79bdee65a01371e"
+    },
+    {
+      "id": "chat-86a61861-ce96-44e3-a6d8-2f2cc2854c71",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-22_wednesday-chat-22-10/content.txt",
+      "timestamp": "2025-10-22T12:54:07.085Z",
+      "title": "WEDNESDAY CHAT (22/10)",
+      "sourceHash": "5c9308a6fe6ad5777b6be5526b436dd10f780cdd"
+    },
+    {
+      "id": "chat-3a71baf7-f74f-4c70-b319-3e57d7d5d002",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-23_thursday-post-23-10/content.txt",
+      "timestamp": "2025-10-23T10:44:03.886Z",
+      "title": "THURSDAY POST (23/10)",
+      "sourceHash": "57d004441e156250e28b761c6ccbee5b413be05c"
+    },
+    {
+      "id": "chat-eee79799-1b77-4e1f-aab4-c60195957e8f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-24_friday-post-24-oct/content.txt",
+      "timestamp": "2025-10-24T13:09:06.780Z",
+      "title": "FRIDAY POST (24/Oct)",
+      "sourceHash": "95f733253d0b7a0425aac9d0999441db5cc82784"
+    },
+    {
+      "id": "chat-ad393be5-08e3-49b6-8bd9-651c149ddbb4",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-24_weekend-chat-25-26-10/content.txt",
+      "timestamp": "2025-10-24T21:16:36.169Z",
+      "title": "WEEKEND CHAT (25-26/10)",
+      "sourceHash": "1fac38da24768331f0ca6274bb07f8ae69867474"
+    },
+    {
+      "id": "chat-42bed965-6e95-4d54-af27-f310d5705c70",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-27_monday-chat-27-oct/content.txt",
+      "timestamp": "2025-10-27T12:42:28.621Z",
+      "title": "MONDAY CHAT (27/Oct)",
+      "sourceHash": "ecb9b1c85350e58f7130d7caa79df0e79a100e26"
+    },
+    {
+      "id": "chat-08950fb0-1dd5-493a-b0a2-d735db64628f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-28_tuesday-chat-28-oct/content.txt",
+      "timestamp": "2025-10-28T12:39:17.304Z",
+      "title": "TUESDAY CHAT (28/Oct)",
+      "sourceHash": "6b96267a55bf2b9b00869bc9e4131519ead37a0d"
+    },
+    {
+      "id": "chat-96b1631e-d006-4411-8bc3-e6aed4401987",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-29_wednesday-chat-29-10/content.txt",
+      "timestamp": "2025-10-29T13:13:33.543Z",
+      "title": "WEDNESDAY CHAT (29/10)",
+      "sourceHash": "58d72dc98bb1cf66599327b8892c7eaa058f68ab"
+    },
+    {
+      "id": "chat-97e1b100-4ac5-462d-adcf-12619e21b9b0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-30_thursday-chat-30-oct/content.txt",
+      "timestamp": "2025-10-30T12:33:03.943Z",
+      "title": "THURSDAY CHAT (30/Oct)",
+      "sourceHash": "150da6cb4c1644ef1cd8ee5527f3b68ac2239bcc"
+    },
+    {
+      "id": "chat-24409cca-a95c-41b6-b325-2d8813c808af",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-10-31_friday-chat-31-oct/content.txt",
+      "timestamp": "2025-10-31T11:30:14.852Z",
+      "title": "FRIDAY CHAT (31/Oct)",
+      "sourceHash": "7c1c746cf167b2ddd006b6b23b3450b710660f82"
+    },
+    {
+      "id": "chat-7e921542-f24d-4c15-a71c-8a18485c871c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-01_weekly-chat-01-09-nov/content.txt",
+      "timestamp": "2025-11-01T10:51:48.976Z",
+      "title": "WEEKLY CHAT (01 - 09/Nov)",
+      "sourceHash": "19cc1226adb886ee7311bf89de9cf121eeccb260"
+    },
+    {
+      "id": "chat-78a0f8a5-2432-4c8e-aafe-e3492004e0cb",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-10_monday-chat-10-nov/content.txt",
+      "timestamp": "2025-11-10T13:03:22.599Z",
+      "title": "MONDAY CHAT (10/Nov)",
+      "sourceHash": "7b8ea20dc37a76108a6b317d419bfd3aad602b2e"
+    },
+    {
+      "id": "chat-663b335e-b4b9-482b-8ad7-51f1a0f7918a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-11_tuesday-chat-11-nov/content.txt",
+      "timestamp": "2025-11-11T11:02:44.223Z",
+      "title": "TUESDAY CHAT (11/Nov)",
+      "sourceHash": "c4c3cab0ac26874002616c562b4bcf83fbb7e8c3"
+    },
+    {
+      "id": "chat-26bec434-6393-47aa-985d-25bb57fd5ea8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-12_wednesday-chat-12-nov/content.txt",
+      "timestamp": "2025-11-12T14:09:34.729Z",
+      "title": "WEDNESDAY CHAT (12/Nov)",
+      "sourceHash": "261357ef82128e05be821afa05f0b34eea1a5b63"
+    },
+    {
+      "id": "chat-c2cf688e-7a9e-4a7b-bce2-fef1ff53ac95",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-13_thursday-chat-13-nov/content.txt",
+      "timestamp": "2025-11-13T13:50:45.089Z",
+      "title": "THURSDAY CHAT (13/Nov)",
+      "sourceHash": "572ff2d4499225cc3c15aee769d4c156db196991"
+    },
+    {
+      "id": "chat-c9e78fb8-86e4-473d-881d-01290863a605",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-14_friday-chat-14-nov/content.txt",
+      "timestamp": "2025-11-14T14:14:40.383Z",
+      "title": "FRIDAY CHAT (14/Nov)",
+      "sourceHash": "d981bc79880935d8baa2d305d055209e444a2d63"
+    },
+    {
+      "id": "chat-5e0a756e-8880-4ce1-bfad-dbff43c5e410",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-14_weekend-chat-15-16-nov/content.txt",
+      "timestamp": "2025-11-14T23:46:30.896Z",
+      "title": "WEEKEND CHAT (15-16/Nov)",
+      "sourceHash": "057d9006d79e66c34c7d36f68c12f8c388121427"
+    },
+    {
+      "id": "chat-9d2d576f-1bbd-47b6-a38c-577e3c3916c8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-17_monday-chat-17-nov/content.txt",
+      "timestamp": "2025-11-17T13:45:05.032Z",
+      "title": "MONDAY CHAT (17/Nov)",
+      "sourceHash": "d9f5c45f62b90792a0ffeac5823085190567eb07"
+    },
+    {
+      "id": "chat-df31b812-bdce-46fa-a658-23305ab1ee86",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-19_wednesday-chat-19-nov/content.txt",
+      "timestamp": "2025-11-19T14:24:42.133Z",
+      "title": "WEDNESDAY CHAT (19/Nov)",
+      "sourceHash": "ce3eabd3ba69a1a3ac811501bf1b56de6064ea09"
+    },
+    {
+      "id": "chat-045ea33a-19b9-43e1-84c1-3a93c159b090",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-20_thursday-chat-20-nov/content.txt",
+      "timestamp": "2025-11-20T13:59:14.289Z",
+      "title": "THURSDAY CHAT (20/Nov)",
+      "sourceHash": "f68b612f5f455a93c14ae72802d73a87dd020625"
+    },
+    {
+      "id": "chat-502bfae0-219f-4aed-856f-0a063e8b367a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-21_friday-chat-21-nov/content.txt",
+      "timestamp": "2025-11-21T13:30:27.183Z",
+      "title": "FRIDAY CHAT (21/Nov)",
+      "sourceHash": "bdab2661a40a71180e1f79a47f33f31a474fc278"
+    },
+    {
+      "id": "chat-48115a96-098c-49a5-88df-220b08f106b1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-21_weekend-chat-22-23-nov/content.txt",
+      "timestamp": "2025-11-21T23:11:59.504Z",
+      "title": "WEEKEND CHAT (22-23/Nov)",
+      "sourceHash": "07f2270a8151a757e48ffb5e9c601e61af3b9460"
+    },
+    {
+      "id": "chat-94087c70-8278-478d-8dd0-9f450160347a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-24_monday-chat-24-nov/content.txt",
+      "timestamp": "2025-11-24T14:09:11.504Z",
+      "title": "MONDAY CHAT (24/Nov)",
+      "sourceHash": "e1629e03cce5b04e6a90eac560f268ce03fc06b4"
+    },
+    {
+      "id": "chat-ccf41c33-35ab-47a0-a58b-7bdd2f94cacd",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-25_tuesday-post-25-nov/content.txt",
+      "timestamp": "2025-11-25T14:03:54.153Z",
+      "title": "TUESDAY POST (25/Nov)",
+      "sourceHash": "0525e5204bcd96a435f2616c0534377a4cb5fb1c"
+    },
+    {
+      "id": "chat-1ec93c4d-d836-4f0f-92c1-ec889fd474f7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-26_wednesday-chat-26-nov/content.txt",
+      "timestamp": "2025-11-26T14:00:36.969Z",
+      "title": "WEDNESDAY CHAT (26/Nov)",
+      "sourceHash": "667116f5c630a7fcab25a524d0db4b44136488f1"
+    },
+    {
+      "id": "chat-4c38d682-86a0-4e4b-b382-f1fc4253d12d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-26_thanksgiving-chat-27-30-nov/content.txt",
+      "timestamp": "2025-11-26T21:25:09.859Z",
+      "title": "THANKSGIVING CHAT (27-30/Nov)",
+      "sourceHash": "4ab2c928c82f271bbbe3ea544670f99c46c3aee8"
+    },
+    {
+      "id": "chat-0ae8e5f2-89be-4d5c-bf11-546f6dd46be1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-11-26_your-testimonials/content.txt",
+      "timestamp": "2025-11-26T21:43:59.831Z",
+      "title": "YOUR TESTIMONIALS",
+      "sourceHash": "6343c40e139f7ece4c3fdea33720c0ad20a1a032"
+    },
+    {
+      "id": "chat-0f073050-0c68-43d8-92af-23d0f1166cde",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-01_monday-chat-01-dec/content.txt",
+      "timestamp": "2025-12-01T13:02:15.362Z",
+      "title": "MONDAY CHAT (01/Dec)",
+      "sourceHash": "eae5634d603b56f5117e847a9037cdd1ed374b4f"
+    },
+    {
+      "id": "chat-b82382de-d9f5-46ae-9fbf-bbc5e2772fbf",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-02_tuesday-chat-02-dec/content.txt",
+      "timestamp": "2025-12-02T14:03:34.710Z",
+      "title": "TUESDAY CHAT (02/Dec)",
+      "sourceHash": "6cb24a7e2d53d27af27535053a4c4ae061e618b5"
+    },
+    {
+      "id": "chat-88bff385-aa54-4d4a-9035-330ecd8c1ecb",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-03_wednesday-chat-03-dec/content.txt",
+      "timestamp": "2025-12-03T14:15:07.038Z",
+      "title": "WEDNESDAY CHAT (03/Dec)",
+      "sourceHash": "cea3d75681e8e239d046027233990ac683e6524c"
+    },
+    {
+      "id": "chat-4b4f4f7f-225c-4086-b546-b3d22ae15d63",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-04_thursday-chat-04-dec/content.txt",
+      "timestamp": "2025-12-04T12:26:50.561Z",
+      "title": "THURSDAY CHAT (04/Dec)",
+      "sourceHash": "bd66938ce9d611822ef7c93fdaa1cc0247e0ef1a"
+    },
+    {
+      "id": "chat-938be0a7-6f74-4f3f-9b30-654b2917a5d0",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-05_friday-chat-05-dec/content.txt",
+      "timestamp": "2025-12-05T14:19:24.582Z",
+      "title": "FRIDAY CHAT (05/Dec)",
+      "sourceHash": "b22e9570afe76658681f87a279aac3ef5076349a"
+    },
+    {
+      "id": "chat-e29025bb-cea5-42f6-a7d4-fa72363b5f63",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-05_weekend-chat-06-07-dec/content.txt",
+      "timestamp": "2025-12-05T21:34:09.831Z",
+      "title": "WEEKEND CHAT (06-07/Dec)",
+      "sourceHash": "ed66adc28d376509d3c9e63420663fcc6d9c5608"
+    },
+    {
+      "id": "chat-8cb67874-ccaa-4c64-a7aa-42b8683136f5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-08_monday-chat-08-dec/content.txt",
+      "timestamp": "2025-12-08T13:31:55.752Z",
+      "title": "MONDAY CHAT (08/Dec)",
+      "sourceHash": "a5f9de6bb9847a31969f02c5dd78078b860a34be"
+    },
+    {
+      "id": "chat-d0b4bdd1-1e37-4791-8247-b3b727a4cb65",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-09_tuesday-chat-09-dec/content.txt",
+      "timestamp": "2025-12-09T13:27:27.326Z",
+      "title": "TUESDAY CHAT (09/Dec)",
+      "sourceHash": "e470d178684abe327597b211ab825ef677ba157d"
+    },
+    {
+      "id": "chat-f4d074e2-1788-4cac-af58-dfb321a07b44",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-10_wednesday-chat-10-dec/content.txt",
+      "timestamp": "2025-12-10T14:03:36.814Z",
+      "title": "WEDNESDAY CHAT (10/Dec)",
+      "sourceHash": "5e7ae031024c0ee036a29f27fd02bac9d3bb93ae"
+    },
+    {
+      "id": "chat-8fb15f09-8754-41e3-9c4c-bba93560da4b",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-11_thursday-chat-11-dec/content.txt",
+      "timestamp": "2025-12-11T13:32:45.729Z",
+      "title": "THURSDAY CHAT (11/Dec)",
+      "sourceHash": "79741528a6838a7e10be7a80efc5f2731185c481"
+    },
+    {
+      "id": "chat-24686a67-0b4b-4278-a0fd-d483915e9ba8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-12_friday-chat-12-dec/content.txt",
+      "timestamp": "2025-12-12T14:07:23.198Z",
+      "title": "FRIDAY CHAT (12/Dec)",
+      "sourceHash": "daaeb273278d3d4ebecf54abe24d0b421052c408"
+    },
+    {
+      "id": "chat-a9f6f9d7-b5cd-4b79-b413-d250e535c0c2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-13_weekend-chat-13-14-dec/content.txt",
+      "timestamp": "2025-12-13T11:15:57.281Z",
+      "title": "WEEKEND CHAT (13-14/Dec)",
+      "sourceHash": "be971adab729baaafece6d04282b4bcd6d48acb9"
+    },
+    {
+      "id": "chat-7315019b-7f18-4c3f-afc6-6b7f3ed19e43",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-15_monday-chat-15-dec/content.txt",
+      "timestamp": "2025-12-15T14:15:26.281Z",
+      "title": "MONDAY CHAT (15/Dec)",
+      "sourceHash": "2570850c3cae40057a8a7b69911e679f25414e01"
+    },
+    {
+      "id": "chat-778df180-64da-45be-9788-e52b7ce8b4f4",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-16_tuesday-chat-16-dec/content.txt",
+      "timestamp": "2025-12-16T14:10:53.283Z",
+      "title": "TUESDAY CHAT (16/Dec)",
+      "sourceHash": "e0bd207a18f3715cb47aa8429eabe81b22a61ab0"
+    },
+    {
+      "id": "chat-7b4b272c-be97-413a-b72c-5c9031059c59",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-17_wednesday-chat-17-dec/content.txt",
+      "timestamp": "2025-12-17T14:13:51.003Z",
+      "title": "WEDNESDAY CHAT (17/Dec)",
+      "sourceHash": "c1aec5dfaa9b475f5a4d933545021d313cc73d6c"
+    },
+    {
+      "id": "chat-3d57498d-208d-4972-84f1-578c84bf8a1e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-18_thursday-chat-18-dec/content.txt",
+      "timestamp": "2025-12-18T12:55:31.678Z",
+      "title": "THURSDAY CHAT (18/Dec)",
+      "sourceHash": "3d27d2e94a661aeafacdacfaa242eec8d65b6a33"
+    },
+    {
+      "id": "chat-c84f1925-62a7-4f0e-9e46-8c26b1abd909",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-19_friday-chat/content.txt",
+      "timestamp": "2025-12-19T13:49:58.158Z",
+      "title": "FRIDAY CHAT",
+      "sourceHash": "2759f04c2643d320308f89d54b0ce4c54682dfcb"
+    },
+    {
+      "id": "chat-1e406a79-7e49-4a79-b891-88157e67e7b6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-20_weekend-chat-20-21-dec/content.txt",
+      "timestamp": "2025-12-20T04:15:36.564Z",
+      "title": "WEEKEND CHAT (20-21/Dec)",
+      "sourceHash": "cdb20fbbc112ecec8d4b2f57926e432bb0257b3b"
+    },
+    {
+      "id": "chat-ee26ef85-fcb9-4e06-ab29-1670c051e00f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-22_monday-chat-22-dec/content.txt",
+      "timestamp": "2025-12-22T14:12:30.567Z",
+      "title": "MONDAY CHAT (22/Dec)",
+      "sourceHash": "801930b6d15feb83812cfa61831e0cfbb9e5419d"
+    },
+    {
+      "id": "chat-5fbb25cd-38a4-46e6-828a-82cf3287485a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-23_tuesday-chat-23-dec/content.txt",
+      "timestamp": "2025-12-23T14:22:02.377Z",
+      "title": "TUESDAY CHAT (23/Dec)",
+      "sourceHash": "5423b6468356311131bd306963a3266d4ad1d8be"
+    },
+    {
+      "id": "chat-c79018f8-c61e-473c-bbcd-e478cb3e5bb9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-24_wednesday-christmas-chat-24-dec/content.txt",
+      "timestamp": "2025-12-24T12:15:26.885Z",
+      "title": "WEDNESDAY... CHRISTMAS CHAT (24/Dec)",
+      "sourceHash": "0b4de430286c1ac7f9c220140b686a9d893cf227"
+    },
+    {
+      "id": "chat-87e524c8-10a7-4aee-84db-d727358be21c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2025-12-24_holiday-chat-25-dec-04-jan/content.txt",
+      "timestamp": "2025-12-24T21:51:01.986Z",
+      "title": "HOLIDAY CHAT (25/Dec-04/Jan)",
+      "sourceHash": "c57e51f5f5a58e5ecc5323e24d287abcf3f54ece"
+    },
+    {
+      "id": "chat-d67611c6-3405-4c6d-8156-a7c0293e4f7b",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-05_monday-chat-05-jan/content.txt",
+      "timestamp": "2026-01-05T14:11:32.419Z",
+      "title": "MONDAY CHAT (05/Jan)",
+      "sourceHash": "eff707c8eb5b929f95d8d842956a15fccf4b960e"
+    },
+    {
+      "id": "chat-f52bdb50-68cf-43fc-9bff-d7d8cdd32d9b",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-06_tuesday-chat-06-jan/content.txt",
+      "timestamp": "2026-01-06T14:12:40.344Z",
+      "title": "TUESDAY CHAT (06/Jan)",
+      "sourceHash": "4fc5ff4c3b54da02a5ee30057a8dfbfe1157b389"
+    },
+    {
+      "id": "chat-ce5d9071-2d64-4c2c-ab4b-fec306c4a380",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-07_wednesday-chat-07-jan/content.txt",
+      "timestamp": "2026-01-07T13:43:54.232Z",
+      "title": "WEDNESDAY CHAT (07/Jan)",
+      "sourceHash": "7939cfd48b7953fc55ec493682bc1787e01bdd6d"
+    },
+    {
+      "id": "chat-acd6cb22-a467-48bd-849d-b5735acc6c8f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-08_thursday-chat-08-jan/content.txt",
+      "timestamp": "2026-01-08T14:10:27.120Z",
+      "title": "THURSDAY CHAT (08/Jan)",
+      "sourceHash": "b83259a6c400ada68e7bc946b66badd91844427e"
+    },
+    {
+      "id": "chat-ffe11ca0-c826-48a5-9878-c1ac03bc87c2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-09_friday-chat-09-jan/content.txt",
+      "timestamp": "2026-01-09T14:12:48.366Z",
+      "title": "FRIDAY CHAT (09/jan)",
+      "sourceHash": "f36b912b5152042473ba67d17ab07571d8eb8051"
+    },
+    {
+      "id": "chat-138e60e8-6f5b-456b-a5e4-dad778f58731",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-09_weekend-chat-10-11-jan/content.txt",
+      "timestamp": "2026-01-09T22:50:53.540Z",
+      "title": "WEEKEND CHAT (10-11/Jan)",
+      "sourceHash": "c16ff2f06bae099e3ca9cb4b2a8a324b2a213902"
+    },
+    {
+      "id": "chat-16cd8e93-d08d-4e59-af4c-5b4dddc3054b",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-12_monday-chat-12-jan/content.txt",
+      "timestamp": "2026-01-12T14:06:39.575Z",
+      "title": "MONDAY CHAT (12/Jan)",
+      "sourceHash": "4b744ceddb189dcc8e864a6aa1648a0d7d492731"
+    },
+    {
+      "id": "chat-c667cbed-d3b5-4134-a690-10476a538642",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-13_tuesday-chat-13-jan/content.txt",
+      "timestamp": "2026-01-13T13:57:34.034Z",
+      "title": "TUESDAY CHAT (13/Jan)",
+      "sourceHash": "1ca7637fd03437c94282a9d4c90003fe67618593"
+    },
+    {
+      "id": "chat-c5ad59e7-a683-44eb-91dc-54c0a1032a2f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-14_wednesday-chat-14-jan/content.txt",
+      "timestamp": "2026-01-14T14:12:51.419Z",
+      "title": "WEDNESDAY CHAT (14/Jan)",
+      "sourceHash": "d3dcf5fa03839e2367b04c86057d65d1a9df5f5b"
+    },
+    {
+      "id": "chat-07141989-b4ad-4b9f-98d8-ce79aa8a7e4e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-15_thursday-chat-15-jan/content.txt",
+      "timestamp": "2026-01-15T14:08:57.237Z",
+      "title": "THURSDAY CHAT (15/Jan)",
+      "sourceHash": "7dfafb43f15ad7585b337b24da7c6be6bd88c1a7"
+    },
+    {
+      "id": "chat-6bf176b2-b044-4a21-a633-4dc7fdb22e9d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-16_friday-chat-16-jan/content.txt",
+      "timestamp": "2026-01-16T14:05:21.446Z",
+      "title": "FRIDAY CHAT (16/Jan)",
+      "sourceHash": "6a50c2c6c3a6f03397398ec1b37707248f9050cc"
+    },
+    {
+      "id": "chat-db2348a0-d9fb-4aea-b740-339eec6b4ba8",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-16_weekend-chat-17-29-jan/content.txt",
+      "timestamp": "2026-01-16T21:17:42.277Z",
+      "title": "WEEKEND CHAT (17-29/Jan)",
+      "sourceHash": "30382a75046c2cfc018094505660ed81798d858b"
+    },
+    {
+      "id": "chat-531d22f0-c3af-4b15-ac9a-177bb564322a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-20_tuesday-chat-20-jan/content.txt",
+      "timestamp": "2026-01-20T13:48:35.396Z",
+      "title": "TUESDAY CHAT (20/Jan)",
+      "sourceHash": "7da87ce2b6362d42d70bda925c6f882ce55e817b"
+    },
+    {
+      "id": "chat-bd830bac-f4ef-4767-b551-7ca63acccd2c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-21_wednesday-chat-21-jan/content.txt",
+      "timestamp": "2026-01-21T14:04:03.334Z",
+      "title": "WEDNESDAY CHAT (21/Jan)",
+      "sourceHash": "30164e2d8ca667e2c88253bd63b144b051f01a89"
+    },
+    {
+      "id": "chat-7a2e7a4c-ab4b-466d-9dbf-a8976d25f10d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-22_thursday-chat-22-jan/content.txt",
+      "timestamp": "2026-01-22T14:23:13.609Z",
+      "title": "THURSDAY CHAT (22/Jan)",
+      "sourceHash": "1e8567f86238121c4af41c762142def5f85aec8a"
+    },
+    {
+      "id": "chat-f0a5a8f6-0631-4b59-bc78-73cb10740f7f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-23_friday-chat-23-jan/content.txt",
+      "timestamp": "2026-01-23T13:58:38.595Z",
+      "title": "FRIDAY CHAT (23/Jan)",
+      "sourceHash": "27773fdfffc09c1fb7d5be5046ef29281a732794"
+    },
+    {
+      "id": "chat-d09cdfa2-e091-4ff4-9804-9dcd6de15ab9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-23_free-weekend-chat-23-jan/content.txt",
+      "timestamp": "2026-01-23T21:24:57.313Z",
+      "title": "Free WEEKEND CHAT (23/Jan)",
+      "sourceHash": "bb0e80a69c885ec6bdcb0eb6ed9b83fdbf76fff1"
+    },
+    {
+      "id": "chat-1769e6ee-f0aa-4322-ad8e-f29720121a74",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-26_monday-chat-26-jan/content.txt",
+      "timestamp": "2026-01-26T14:14:33.163Z",
+      "title": "MONDAY CHAT (26/Jan)",
+      "sourceHash": "bded2fd2b6e1ee0b6c225c9e8cde88187a4c2c0b"
+    },
+    {
+      "id": "chat-e2619ed5-bb40-44aa-b57a-a063ffddee4c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-27_tuesday-chat-27-jan/content.txt",
+      "timestamp": "2026-01-27T14:12:32.747Z",
+      "title": "TUESDAY CHAT (27/Jan)",
+      "sourceHash": "4818f4f7b2df61404218e1eac7d311629fa0cb97"
+    },
+    {
+      "id": "chat-597a3cb4-09b4-4f1f-a4d2-6d54b05d3237",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-28_wednesday-chat-28-jan/content.txt",
+      "timestamp": "2026-01-28T14:26:27.684Z",
+      "title": "WEDNESDAY CHAT (28/Jan)",
+      "sourceHash": "bf61d6e0fdd8845c88ef54564818df8d4ee4d1db"
+    },
+    {
+      "id": "chat-744104d4-017d-458d-b532-39b69fcc60c2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-29_chat-744104d4-017d-458d-b532-39b69fcc60c2/content.txt",
+      "timestamp": "2026-01-29T14:25:08.654Z",
+      "title": "2026-01-29_chat-744104d4-017d-458d-b532-39b69fcc60c2",
+      "sourceHash": "65c7a074551bae8f15caaa5354c117c8cdcd73df"
+    },
+    {
+      "id": "chat-ee789c43-cc08-4150-9b34-f73a5682bb0b",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-30_friday-chat-30-jan/content.txt",
+      "timestamp": "2026-01-30T00:56:00.388Z",
+      "title": "FRIDAY CHAT (30/Jan)",
+      "sourceHash": "7868dbfab4f1fc923c1134138b9bd10b1ffdd3a8"
+    },
+    {
+      "id": "chat-f05ff106-1202-4e6a-8f11-fb5501c02ab7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-01-30_weekend-chat-31-jan-01-feb/content.txt",
+      "timestamp": "2026-01-30T21:07:40.165Z",
+      "title": "WEEKEND CHAT (31/Jan - 01/Feb)",
+      "sourceHash": "07125551a5327398f246267e8f8c560a7b6f7bea"
+    },
+    {
+      "id": "chat-09da7711-e93f-427b-8870-100e8d82f6ec",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-02_monday-chat-02-feb/content.txt",
+      "timestamp": "2026-02-02T14:09:09.528Z",
+      "title": "MONDAY CHAT (02/Feb)",
+      "sourceHash": "2566cc4781adbb9e8049f4c8dbfa395d85d03a95"
+    },
+    {
+      "id": "chat-4990296f-dcb4-4c74-8baf-e925f0e6b75f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-03_tuesday-chat-03-feb/content.txt",
+      "timestamp": "2026-02-03T14:12:25.734Z",
+      "title": "TUESDAY CHAT (03/Feb)",
+      "sourceHash": "2f4e98e2e8d2feb126ebf7cea7dc095ae08d2d7e"
+    },
+    {
+      "id": "chat-c657dea2-97a9-4a9f-8eba-6b323613df80",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-04_wednesday-chat-04-feb/content.txt",
+      "timestamp": "2026-02-04T14:19:01.098Z",
+      "title": "WEDNESDAY CHAT (04/Feb)",
+      "sourceHash": "277588ac698830a17ecd85f56ee884dea1886906"
+    },
+    {
+      "id": "chat-f13dd7a1-876d-4614-a402-6677e02bb45e",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-05_thursday-chat-05-feb/content.txt",
+      "timestamp": "2026-02-05T14:20:26.627Z",
+      "title": "THURSDAY CHAT (05/Feb)",
+      "sourceHash": "07e47a629b54f109f0ed7d836785b63e52930b51"
+    },
+    {
+      "id": "chat-b2006f1a-229f-4b4c-aa27-d6483f4847b9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-06_friday-chat-06-feb/content.txt",
+      "timestamp": "2026-02-06T11:58:02.905Z",
+      "title": "FRIDAY CHAT (06/Feb)",
+      "sourceHash": "09631a9df04b0b2238434f7f741575553b308d72"
+    },
+    {
+      "id": "chat-3c18f981-2c08-4ee9-80a2-d9c55b589fd6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-07_weekend-chat-07-08-feb/content.txt",
+      "timestamp": "2026-02-07T00:22:17.005Z",
+      "title": "WEEKEND CHAT (07-08/Feb)",
+      "sourceHash": "a3c3d9950776aed351ef605e80a5d96a8ca13b19"
+    },
+    {
+      "id": "chat-3c0b52ff-ca2c-493b-a2a2-f0b0c855fc0f",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-09_monday-chat-09-feb/content.txt",
+      "timestamp": "2026-02-09T13:49:00.277Z",
+      "title": "MONDAY CHAT (09/Feb)",
+      "sourceHash": "aa5f5a0ea5804996c7b56feda54c596f11a81110"
+    },
+    {
+      "id": "chat-96734f26-633d-4729-8dc8-3ce6419c901a",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-10_tuesday-chat-10-feb/content.txt",
+      "timestamp": "2026-02-10T14:04:36.469Z",
+      "title": "TUESDAY CHAT (10/Feb)",
+      "sourceHash": "521860a203577444efa640dedcfdb49f0451f828"
+    },
+    {
+      "id": "chat-91950309-a7c8-4830-8bdb-139bd571c373",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-11_wednesday-chat-11-feb/content.txt",
+      "timestamp": "2026-02-11T14:06:53.193Z",
+      "title": "WEDNESDAY CHAT (11/Feb)",
+      "sourceHash": "a9606b7ab46cbf70acaa9c3339b8add58450e008"
+    },
+    {
+      "id": "chat-8a9518d2-9a54-411b-b39f-aeb00814f657",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-12_thursday-chat-12-feb/content.txt",
+      "timestamp": "2026-02-12T14:19:58.807Z",
+      "title": "THURSDAY CHAT (12/Feb)",
+      "sourceHash": "01a37073c22e371868426bae1d24565b586c8487"
+    },
+    {
+      "id": "chat-5a4948f3-4c34-458c-b55b-e4e6218ef74d",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-13_friday-chat-13-feb/content.txt",
+      "timestamp": "2026-02-13T14:17:23.566Z",
+      "title": "FRIDAY CHAT (13/Feb)",
+      "sourceHash": "a842452782c425e7d3134276dd7fedf2fa0b311f"
+    },
+    {
+      "id": "chat-834ba223-495c-49ea-b39d-4b6d2de5e0df",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-17_tuesday-post-17-feb/content.txt",
+      "timestamp": "2026-02-17T14:13:09.002Z",
+      "title": "TUESDAY POST (17/Feb)",
+      "sourceHash": "e9327c97bdf6935bf2206ffa556aa2fb3e5dddb8"
+    },
+    {
+      "id": "chat-d1e920ac-4cdd-4bc7-a750-28b337ef9c90",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-18_wednesday-chat-18-feb/content.txt",
+      "timestamp": "2026-02-18T14:15:11.122Z",
+      "title": "WEDNESDAY CHAT (18/Feb)",
+      "sourceHash": "b8bab9c35e98f0a5a8ac3f49f7c32915d3d92604"
+    },
+    {
+      "id": "chat-60262fcb-8e1e-4a5e-8fa4-bcf8aeeae071",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-19_thursday-chat-19-feb/content.txt",
+      "timestamp": "2026-02-19T14:21:41.412Z",
+      "title": "THURSDAY CHAT (19/Feb)",
+      "sourceHash": "a8e3c273f17a8cca3b8a93a2a40d8eda39599531"
+    },
+    {
+      "id": "chat-d82f47c0-b628-4d17-89ea-2cacf487e662",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-20_friday-chat-20-feb/content.txt",
+      "timestamp": "2026-02-20T14:15:26.773Z",
+      "title": "FRIDAY CHAT (20/Feb)",
+      "sourceHash": "84a7c2e9b3268e48a5ce50e3a2b2fee1a20fe0b8"
+    },
+    {
+      "id": "chat-75b2f839-b7e1-4727-8085-4797a0d3a9c5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-20_weekend-chat-21-22-feb/content.txt",
+      "timestamp": "2026-02-20T21:06:56.752Z",
+      "title": "WEEKEND CHAT (21-22/Feb)",
+      "sourceHash": "f969488c66dc9b8907a45cc737a50ed3b2bd5ced"
+    },
+    {
+      "id": "chat-5d995869-d39f-45d0-80cb-52315be046d7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-23_monday-chat-23-feb/content.txt",
+      "timestamp": "2026-02-23T14:03:43.528Z",
+      "title": "MONDAY CHAT (23/Feb)",
+      "sourceHash": "7eea8f8d2bfbfaf99c32834f7b3712060573cba3"
+    },
+    {
+      "id": "chat-b545753e-7880-4806-ab85-4670f6ef5d7c",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-24_tuesday-chat-24-feb/content.txt",
+      "timestamp": "2026-02-24T14:14:19.196Z",
+      "title": "TUESDAY CHAT (24/Feb)",
+      "sourceHash": "2dc9cfd3775942f95d3c98fe3048ed155549bf81"
+    },
+    {
+      "id": "chat-c8d15a17-a8df-405b-ba1d-18feb38c3c62",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-26_thursday-chat-26-feb/content.txt",
+      "timestamp": "2026-02-26T14:12:08.818Z",
+      "title": "THURSDAY CHAT (26/Feb)",
+      "sourceHash": "0a186dcbffbda8dc5a9146c6ab76e24ebb0dfd3a"
+    },
+    {
+      "id": "chat-14153aa3-f426-4a6a-a84c-77b6d7ed1916",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-27_friday-chat-27-feb/content.txt",
+      "timestamp": "2026-02-27T14:00:34.769Z",
+      "title": "FRIDAY CHAT (27/Feb)",
+      "sourceHash": "e34647ad30c8ead5ec890ffbaec21cbe6e774cf2"
+    },
+    {
+      "id": "chat-198eb15f-04e0-4f0f-b627-a1390d22dc96",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-02-27_weekend-chat-28-feb-01-march/content.txt",
+      "timestamp": "2026-02-27T21:08:51.285Z",
+      "title": "WEEKEND CHAT (28/Feb - 01/March)",
+      "sourceHash": "81c711aaef53fea2b863cbfaa5c324c741ce3b3f"
+    },
+    {
+      "id": "chat-ede1cc56-a221-4328-ae67-b48f9a3064b1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-02_monday-chat-02-march/content.txt",
+      "timestamp": "2026-03-02T14:00:10.842Z",
+      "title": "MONDAY CHAT (02/March)",
+      "sourceHash": "4a450460be2183e8ac65ca46a0c55a56c5698acb"
+    },
+    {
+      "id": "chat-9fc4f129-5fe2-4777-b737-92e67f5d84f5",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-03_tuesday-chat-03-march/content.txt",
+      "timestamp": "2026-03-03T13:59:05.103Z",
+      "title": "TUESDAY CHAT (03/March)",
+      "sourceHash": "2adcfbe13e5713f3878ee5611ec2ffacec19483b"
+    },
+    {
+      "id": "chat-e49df7da-fd21-4dc6-90b8-331ac41bce38",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-04_wednesday-chat-04-march/content.txt",
+      "timestamp": "2026-03-04T14:10:21.216Z",
+      "title": "WEDNESDAY CHAT (04/March)",
+      "sourceHash": "b4418bf1b9734b28c249468a11503032f3660265"
+    },
+    {
+      "id": "chat-ec70f59d-75e3-4eae-a713-69702b0dc3c9",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-05_thursday-chat-05-march/content.txt",
+      "timestamp": "2026-03-05T13:58:31.675Z",
+      "title": "THURSDAY CHAT (05/March)",
+      "sourceHash": "7c9e56856da6c7d8a2132f4b8fd459affe3fe0ff"
+    },
+    {
+      "id": "chat-2e24c7ac-1c7b-48da-8fa1-835a0ef17262",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-06_friday-chat-06-march/content.txt",
+      "timestamp": "2026-03-06T14:12:28.644Z",
+      "title": "FRIDAY CHAT (06/March)",
+      "sourceHash": "945f5b8f56f00ca4399c1f070e3ede0da9086314"
+    },
+    {
+      "id": "chat-f5a9f38b-6ef0-403e-a230-e2e9136847a2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-06_weekend-chat-07-08-march/content.txt",
+      "timestamp": "2026-03-06T21:17:48.526Z",
+      "title": "WEEKEND CHAT (07-08/March)",
+      "sourceHash": "cb719453173c44a3f97ca7b50a67b8f1f8345509"
+    },
+    {
+      "id": "chat-c8d554cb-70b4-41aa-a881-bf4935993e17",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-10_tuesday-chat-10-march/content.txt",
+      "timestamp": "2026-03-10T13:01:30.937Z",
+      "title": "TUESDAY CHAT (10/March)",
+      "sourceHash": "69d308980fc93a3cab8d82313435eb93479d0e76"
+    },
+    {
+      "id": "chat-87daafd5-7704-4c45-b47c-2385b3d567b6",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-11_wednesday-chat-11-march/content.txt",
+      "timestamp": "2026-03-11T13:12:02.738Z",
+      "title": "WEDNESDAY CHAT (11/March)",
+      "sourceHash": "b917a036d6b5bba932961837e206cc098699e8e8"
+    },
+    {
+      "id": "chat-0a9083df-5787-45de-aa96-6fafef2c26a1",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-12_thursday-chat-12-march/content.txt",
+      "timestamp": "2026-03-12T13:06:10.976Z",
+      "title": "THURSDAY CHAT (12/March)",
+      "sourceHash": "4b3335c59271f94659fc46d178ab9ee905643e93"
+    },
+    {
+      "id": "chat-f27c68ab-3692-473a-8d7b-b9140927d4e7",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-13_friday-chat-13-march/content.txt",
+      "timestamp": "2026-03-13T13:22:34.729Z",
+      "title": "FRIDAY CHAT (13/March)",
+      "sourceHash": "1073658213ee56b575b566fd6b146c01687417cc"
+    },
+    {
+      "id": "chat-789a0fb8-06a7-4034-a873-48c7125be0b2",
+      "sourceType": "chat",
+      "sourcePath": "chats/2026-03-13_weekend-chat-13-march/content.txt",
+      "timestamp": "2026-03-13T20:38:31.966Z",
+      "title": "WEEKEND CHAT (13/March)",
+      "sourceHash": "9de2ee7f37f32772e5d2660c4a452019ce25ce2d"
+    }
+  ]
+}

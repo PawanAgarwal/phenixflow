@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:01:54.305Z",
+  "inputHash": "3a92921f6337b8eb6efab2986c39bfafa52fe18a",
+  "payload": {
+    "responseId": "resp_0e6576caea19821d0069b7648ac5a081a2a7ebc84c393d910b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The market will move down to a downside target of 6138.99 (the 91.27% reversion signal has been hit).",
+          "condition": "",
+          "expected_result": "Index level reaches 6138.99 or lower"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Increase weighting toward downside hedges, but do not size up hedges until 6307.32 is confirmed broken.",
+          "condition": "6307.32 is confirmed broken",
+          "expected_result": "Once price closes decisively below 6307.32, initiate or increase hedge positions to a larger size"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "OpEx will prevent the price from falling today (no further immediate downside through option expiry).",
+          "condition": "option expiry (OpEx) occurring",
+          "expected_result": "Price will hold above current levels through the OpEx time window and not break significantly lower during that period"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside is overpriced and momentum is overstretched, so odds favor downside bets in the near term.",
+          "condition": "",
+          "expected_result": "Short or bearish trades will outperform long/bullish trades over the near-term risk window"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "This will provide a buy-the-dip opportunity (after the downside reversion completes and volatility/imbalances cool).",
+          "condition": "downside reversion completes and volatility/imbalances cool",
+          "expected_result": "After the decline and subsequent volatility contraction, long entries (buy-the-dip) will be profitable as prices rebound"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Time correction can cool down imbalances and volatility, enabling stabilization and a ranging market rather than an immediate trend continuation.",
+          "condition": "",
+          "expected_result": "Following a period of time-based consolidation, volatility will compress and price will enter a range instead of continuing a strong one-directional move"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "High reversion signals historically appear up to ~1 month or ~90 points before actual tops, so current signals may precede the ultimate top rather than coincide with it.",
+          "condition": "",
+          "expected_result": "An identified high reversion signal will be followed by further price divergence for up to ~1 month or ~90 points before the market reaches its final local top"
+        }
+      ]
+    }
+  }
+}

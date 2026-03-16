@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:55:33.957Z",
+  "inputHash": "674cbd149d0618a9f5179e1f9d7035a31f74c164",
+  "payload": {
+    "responseId": "resp_0e15dd0238733dc40069b7630fd29081968f877747c873dd00",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma and sold-put cluster create a magnetic pin near 5262–5263; downside prints below 5353.68 make 5262.33 a high-probability magnet/support where price may be pinned or mean-revert.",
+          "condition": "trade stays below 5353.68",
+          "expected_result": "Price will gravitate toward and test ~5262.33 within the session, showing increased buying/support and limited sustained trade below that level (reversion or pinning)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Call pivot and upside resistance at ~5440; sustained trade above 5440 is required for calls to gain momentum and for further upside travel corridor to open.",
+          "condition": "price breaks and holds above 5440.00",
+          "expected_result": "Once >5440 and held, expect accelerated upside follow-through toward higher clustered gamma levels (next notable gamma activity ~5528), with reduced likelihood of immediate reversion to sub-5440 levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero-vanna line near 5432.55 acts as a volatility-sensitive flip: below it less vanna support (easier to reject upside), above it long-gamma support shifts and 5528.46 becomes a meaningful support from long-gamma perspective.",
+          "condition": "price crosses above 5432.55",
+          "expected_result": "If price crosses above 5432.55, expect vanna to favor upside and price to find additional support toward ~5528.46; if it stays below, upside attempts are more likely to be rejected around the 5430–5440 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Significant long-gamma support around 5313.37 if price rejects resistance while below the zero-vanna line; this level can serve as a near-term reversion/support.",
+          "condition": "price remains below 5432.55 and rejects upside",
+          "expected_result": "Price will likely revert toward and find support at ~5313.37, showing buying interest and reduced downside expansion through that level."
+        }
+      ]
+    }
+  }
+}

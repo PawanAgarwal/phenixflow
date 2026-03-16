@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T04:29:13.086Z",
+  "inputHash": "06942cbf01f4c483abbd6453110be4ca6ae30b9d",
+  "payload": {
+    "responseId": "resp_0d74ef4f42c726180069b7871286748196bd228d3348226437",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-09T16:04:28.129Z",
+          "instrument": "",
+          "prediction_text": "It will push the spot towards a very important resistance that coincides with a vanna flip or very high gamma bar and a mean reversion threshold level.",
+          "condition": "",
+          "expected_result": "Spot price moves up to the identified resistance level and shows characteristics of a vanna flip/high gamma bar or touches the mean reversion threshold"
+        },
+        {
+          "made_at": "2025-07-09T16:04:51.595Z",
+          "instrument": "",
+          "prediction_text": "The environment is short-speed, so downside gamma will be longer.",
+          "condition": "",
+          "expected_result": "Downside gamma metrics (e.g., option gamma exposure) increase in magnitude and persist for an extended period relative to prior short-term observations"
+        },
+        {
+          "made_at": "2025-07-09T16:05:36.448Z",
+          "instrument": "",
+          "prediction_text": "The downside gamma is within the range and the path is clear towards that level.",
+          "condition": "",
+          "expected_result": "Price moves toward the stated range boundary while downside gamma remains dominant and aligns with the directional path"
+        },
+        {
+          "made_at": "2025-07-09T16:06:08.284Z",
+          "instrument": "",
+          "prediction_text": "Downside gamma is positive.",
+          "condition": "",
+          "expected_result": "Net downside gamma exposure registers as positive (i.e., gamma positioning favors downside) on available option/gamma metrics"
+        },
+        {
+          "made_at": "2025-07-09T16:12:36.744Z",
+          "instrument": "",
+          "prediction_text": "There will be downside long gamma.",
+          "condition": "",
+          "expected_result": "Market shows sustained long gamma behavior on the downside, manifested by convexity in downside moves and option gamma profiles indicating long gamma"
+        },
+        {
+          "made_at": "2025-07-09T16:14:31.848Z",
+          "instrument": "",
+          "prediction_text": "If OTM calls are mirrored, price will be aggressively suppressed downward near the pivot and mean reversion thresholds.",
+          "condition": "mirror of aggressive suppression in OTM calls exists",
+          "expected_result": "Price declines toward the pivot and mean reversion thresholds with evidence of suppression (reduced upward advances, increased downward pressure)"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:03:16.816Z",
+  "inputHash": "b5a6e7885b33cfc7c34deee95a98cd9a59b305e0",
+  "payload": {
+    "responseId": "resp_028e69f0dd2e40560069b764d8b1a081a3904a67b5d2c2da64",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Supportive liquidity is expected right below the upside pivot of 6505.83 with 6490 as a daily magnet and 6463.73–6479.80 as the centroid.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward and spend significant time around 6490, oscillating within 6463.73–6479.80 during the trading day."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6513 is a line in the sand for right-tail bets and is unlikely to be broken; if broken, next resistances are 6530 and 6550.",
+          "condition": "",
+          "expected_result": "Price will fail to sustainably close above 6513 most of the day; if price does close above 6513, it will proceed to test 6530 and then 6550."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6550/55 is a hard stop that will swallow upside volatility, then revert back to 6513 and finish the day around 6520 (or pin 6550 if 6530 is held during the power-hour).",
+          "condition": "6530 is held during the power-hour",
+          "expected_result": "If 6530 is held in the power-hour, price will pin at 6550; otherwise, after an attempt to reach 6550/55 the market will reverse to ~6513 and settle near 6520 by the close."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside skew could catch bid at 6469.93 triggering intraday realized volatility and a retest of the lower bound of the centroid, with a margin of error to ~6450/45 if vol stays higher, then revert back.",
+          "condition": "",
+          "expected_result": "If downside skew bid occurs at 6469.93, price will drop toward ~6463.73–6479.80 lower bound and possibly as low as ~6450–6445 before reversing back into the centroid range."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "After 2:20 PM, 6460 is a local pivot and the market will either finish the day in the 6440/50 zone or get pulled back up to 6490.",
+          "condition": "time >= 14:20 local market time",
+          "expected_result": "Post-14:20 price action will result in close either within 6440–6450 or back toward 6490."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Very low probability retest of 6408/6400 will occur, then revert to 6425 or 6440/50; market only hedges this scenario in small size.",
+          "condition": "",
+          "expected_result": "If price reaches 6408–6400, it will quickly rebound to 6425 or into the 6440–6450 area rather than stay lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The primal intraday bet is a pin at 6490 with reversion from 6413.",
+          "condition": "",
+          "expected_result": "Price will pin at 6490 during the session and, if it falls to ~6413, will revert back upward rather than continue lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Secondary intraday outcome is a breakout above 6513.",
+          "condition": "",
+          "expected_result": "Price will break and sustain above 6513, leading to subsequent tests of 6530 and 6550."
+        }
+      ]
+    }
+  }
+}

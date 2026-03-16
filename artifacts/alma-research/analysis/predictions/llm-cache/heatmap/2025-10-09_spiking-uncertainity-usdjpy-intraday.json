@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:04:53.836Z",
+  "inputHash": "3b196d9cd0a61d4314fb7907bedeca40b93c17ec",
+  "payload": {
+    "responseId": "resp_0710881a0462df940069b7654076c88197820b09f64174e91e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky iron condor between ~6715-6780 with strong pinning magnet around 6755-6769; downside magnetic support near 6721 (lower wing) and strong downside gamma support ~6702.5. Upside vacuum towards ~6787 with likely quick vol-led push then pin back to the pivot.",
+          "condition": "price reaches upper wing (~6775-6787)",
+          "expected_result": "Quick upside vol surge to ~6787 then reversion/pin back toward 6755-6769 within the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside magnet and sticky support cluster around 6721 (downside pivot) and 6702.47 (strong downside gamma trough) making 6700-6725 a supportive corridor where spot is likely to stick or find reversion bids.",
+          "condition": "price falls toward 6725-6700",
+          "expected_result": "Price should find support and revert higher toward the IC centroid (6733-6741) or 6755 within the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid balance zone at 6733.02-6741.17 acts as flow-shift reveal — expect spot to gravitate there if upside vacuum and downside magnet balance, with potential shift in spot/vol beta.",
+          "condition": "flow/skew alignment occurs",
+          "expected_result": "Spot consolidates in 6733-6741 range and either transitions to a positive spot beta (upside continuation) or pins back to 6755-6769 depending on subsequent flows"
+        }
+      ]
+    }
+  }
+}

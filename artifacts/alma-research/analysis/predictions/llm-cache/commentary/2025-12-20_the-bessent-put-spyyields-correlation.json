@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:12:11.871Z",
+  "inputHash": "3723a37bf7d9b43420fc7bee970b2f28b5294274",
+  "payload": {
+    "responseId": "resp_0b969b08ad45425d0069b766f441e48191b6042caa2c1dd20e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX/yields",
+          "prediction_text": "The longer-term SPX/yields correlation will remain or flip sharply positive, supporting equities through a growth-focused interpretation of macro prints.",
+          "condition": "",
+          "expected_result": "SPX prices rise while long-term yields do not spike; correlation metric moves into and stays in positive territory over weeks to months"
+        },
+        {
+          "instrument": "10-year Treasury yield",
+          "prediction_text": "Bessent-style long-end support measures will stabilize long-term Treasury yields and reduce tail risk in yield swings.",
+          "condition": "",
+          "expected_result": "Intraday and interday realized volatility of 10-year yields falls and extreme yield moves (> X basis points per day) become less frequent in the following weeks"
+        },
+        {
+          "instrument": "U.S. equities (SPX)",
+          "prediction_text": "Pro-cyclical systematic flows enabled by reduced rates tail risk will push markets higher via a reflexive wealth-effect loop (technicals→news→liquidity→momentum).",
+          "condition": "",
+          "expected_result": "SPX posts sustained upward momentum with higher highs over the subsequent months and reduced drawdowns during macro data releases"
+        },
+        {
+          "instrument": "U.S. Treasuries (long-end)",
+          "prediction_text": "Liquidity-support buybacks and reserve-management T-bill purchases will act as a form of hidden QE, loosening financial conditions and prioritizing growth financing over fighting inflation.",
+          "condition": "",
+          "expected_result": "Term premium compresses and long-end yields decline or stabilize despite inflation prints; measures of financial conditions ease over the following quarter"
+        },
+        {
+          "instrument": "AI-related equities/hyperscalers",
+          "prediction_text": "Concentrated AI-infrastructure spending will create a long-term downside gap if real-economy payoff is smaller than the buildout-driven demand.",
+          "condition": "",
+          "expected_result": "Relative underperformance of AI-infrastructure/hyperscaler stocks versus broader market over the medium term (months to years), with increasing downside risk metrics for those names"
+        },
+        {
+          "instrument": "Market volatility",
+          "prediction_text": "When conditions ease due to hidden QE measures, leverage will expand and volatility will compress; conversely, volatility will rise and leverage will be cut when conditions tighten, causing boom-and-bust cycles.",
+          "condition": "",
+          "expected_result": "Periods following liquidity-support interventions show lower VIX and higher margin/leverage metrics; subsequent tightening events correspond to marked VIX spikes and deleveraging episodes"
+        }
+      ]
+    }
+  }
+}

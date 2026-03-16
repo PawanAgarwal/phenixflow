@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:04:45.730Z",
+  "inputHash": "79b39758d4cd755ce008170e9e98ea4aa4661291",
+  "payload": {
+    "responseId": "resp_05d63c7cb1fcefd50069b7653581c08190a531bbc0164c4b0f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Center gamma cluster / sticky zone around 6733.7–6735.0 — price likely to remain stuck and mean-revert to this range during the AM unless a strong trigger occurs.",
+          "condition": "",
+          "expected_result": "SPX trades back into and oscillates within 6733.7–6735.0 for the next few hours (AM session), with multiple touches and limited sustained breakouts away from this range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / convexity test at 6747.72 — expect elevated volatility near this level and a possible breakout up toward the 6785 area before reverting to the pivot.",
+          "condition": "price reaches 6747.72",
+          "expected_result": "If SPX trades through 6747.72, it will move up toward ~6785 within the same trading day before reversing back toward 6747.72 (pinning behavior)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pin level at 6773 if 6755–6760 holds into 13:25 (1:25 PM) — holding that local pivot increases chance of pinning to 6773.",
+          "condition": "6755–6760 holds into 13:25 (1:25 PM)",
+          "expected_result": "SPX pins around 6773 after 13:25, showing limited movement away from 6773 for the remainder of the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot / sticky support around 6723.72 with local resistance at 6707.14 — downside max reach ~6675–6680 before a pin back to 6707.14.",
+          "condition": "price moves below the centroid toward downside pivot",
+          "expected_result": "SPX may drop to ~6675–6680 and then be pinned back to ~6707.14 within the same session (reversal after testing downside max)."
+        }
+      ]
+    }
+  }
+}

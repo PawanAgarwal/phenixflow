@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:33.474Z",
+  "inputHash": "3f6a82886c01bf5116d84868657a6ad36370e269",
+  "payload": {
+    "responseId": "resp_004b06c8d256dd820069b764eff49481979d96d88c349b7e01",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong liquidity and centroid support around 6590–6608 with the profile centroid at ~6594–6608; heatmap shows a deep supportive (vol-swallowing) zone that should act as a magnet/pinning area intraday.",
+          "condition": "price trades into 6590–6608",
+          "expected_result": "SPX should gravitate back to and pin in the 6590–6608 range; downside bounces likely from this zone with limited follow-through lower while pinned"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance near 6631 with secondary pinning around 6635–6645 if upside momentum and put skew sell-off drive realized vol lower (vanna flip). Heatmap shows a concentration of gamma/peaks near 6630–6635.",
+          "condition": "put skew is sold heavily (vol suppression realized)",
+          "expected_result": "SPX can break above 6631 and run toward 6645 and pin around 6635 during the power hour"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the centroid is broken early (AM break), the next supportive pin is around 6565; heatmap lower gamma trough indicates 6565 as the immediate downside anchor with no larger measured downside target shown.",
+          "condition": "centroid (6594–6608) breaks to the downside in the AM",
+          "expected_result": "Price should find support and pin near 6565 with limited extension below while that pin holds"
+        }
+      ]
+    }
+  }
+}

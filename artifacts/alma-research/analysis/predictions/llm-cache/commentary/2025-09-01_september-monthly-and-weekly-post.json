@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:02:54.109Z",
+  "inputHash": "b352024b47b2ae5ce0043b481c38cf4d0818faa7",
+  "payload": {
+    "responseId": "resp_0a5fbe10fe8306bd0069b764c1ac8081969e2f987ac73fd5f3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "S&P 500",
+          "prediction_text": "If SPX is above 6469.51, the market will face more vol selling with a heavy pivot at 6505/6519.75 and a main upside target of 6557.93 (with margin to 6604.11).",
+          "condition": "SPX > 6469.51",
+          "expected_result": "Price moves up toward 6557.93 and may extend to 6604.11 while implied volatility declines (vol selling observed) around the pivot 6505–6519.75."
+        },
+        {
+          "instrument": "S&P 500",
+          "prediction_text": "If SPX holds 6214.22, the left-tail vacuum-down will not take effect and the primal downside target is 6318.35 (with 6251.27 as a margin of error).",
+          "condition": "SPX >= 6214.22",
+          "expected_result": "Price will find support and revert toward ~6318.35, with 6251.27 acting as a lower tolerance before further downside."
+        },
+        {
+          "instrument": "S&P 500",
+          "prediction_text": "If volatility runs out of control and skew strengthens at 6214.22, a left-tail vacuum-down can take the market down to 6067.08 (with vanna-implied max to 5870).",
+          "condition": "Skew strengthens at SPX = 6214.22 and volatility spikes",
+          "expected_result": "Rapid crash-style decline to ~6067.08, with extreme scenario reaching down toward ~5870 if hedges fail."
+        },
+        {
+          "instrument": "S&P 500",
+          "prediction_text": "Into monthly OpEx the market expects downside volatility to ignite in the 6322.39–6366.64 range and upside capped near 6532.63–6566.64 with suppressed volatility.",
+          "condition": "During monthly OpEx week",
+          "expected_result": "Price will trade within ~6322–6367 on downside tests and up to ~6533–6567 on the upside while implied volatility compresses to lower levels (~8.25%)."
+        },
+        {
+          "instrument": "S&P 500",
+          "prediction_text": "The reversion model indicates an ~84.15% probability of reversion with a downside reversion target at 6278.57.",
+          "condition": "",
+          "expected_result": "Price will revert toward ~6278.57 with high probability (≈84%), implying mean-reversion from recent moves."
+        },
+        {
+          "instrument": "S&P 500",
+          "prediction_text": "For the month to remain positively imbalanced, the market needs to produce a monthly average price of 6450.61; otherwise price will move toward equilibrium lower levels.",
+          "condition": "",
+          "expected_result": "If monthly average <6450.61, price will drift down toward the distribution body/equilibrium (below 6450.61)."
+        },
+        {
+          "instrument": "S&P 500",
+          "prediction_text": "The market expects volatility to remain supplied until September OpEx, then volatility supply will fade into OpEx leading to a range expansion and then a volatility squeeze on FOMC.",
+          "condition": "Timeline: until Sept OpEx → OpEx week → FOMC",
+          "expected_result": "Implied volatility will stay muted until OpEx, then increase (range expansion) during OpEx week, followed by a volatility compression/squeeze around FOMC guidance."
+        }
+      ]
+    }
+  }
+}

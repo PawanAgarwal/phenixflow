@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:30:22.846Z",
+  "inputHash": "a821e0607fa95754e923da1a9bf88a03fad9ef7a",
+  "payload": {
+    "responseId": "resp_0a6d94f040ded7a50069b787592aa4819cba0978073333341f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-01-21T16:54:11.681Z",
+          "instrument": "",
+          "prediction_text": "Until diplomacy is not clear, the market will be under pressure.",
+          "condition": "diplomacy not clear",
+          "expected_result": "Broad equity markets decline or fail to rally while geopolitical/diplomatic uncertainty persists"
+        },
+        {
+          "made_at": "2026-01-21T16:54:11.681Z",
+          "instrument": "",
+          "prediction_text": "If selling happens, the decline will resemble a 'spot decay' trend like Feb–Mar last year.",
+          "condition": "selling happens",
+          "expected_result": "Price falls gradually over weeks in a persistent downtrend rather than sharp crashes, mirroring Feb–Mar prior-year pattern"
+        },
+        {
+          "made_at": "2026-01-22T02:13:26.346Z",
+          "instrument": "",
+          "prediction_text": "Higher vvol will cause vol to change faster and increase the probability of spot moving into tail outcomes.",
+          "condition": "vvol is higher",
+          "expected_result": "Observed realized volatility rises quickly and extreme returns (tails) occur more frequently"
+        },
+        {
+          "made_at": "2026-01-22T02:17:05.395Z",
+          "instrument": "",
+          "prediction_text": "Suppression of downside convexity will cap volatility and provide passive support for markets.",
+          "condition": "",
+          "expected_result": "Volatility stabilizes or decreases and market declines are limited due to mechanisms that suppress downside convexity"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:53:06.614Z",
+  "inputHash": "5c1c4c726c844a3797f8829f9e87ba470fd3ac3f",
+  "payload": {
+    "responseId": "resp_0b6c4f98eceb76790069b7627873cc8190be1c3bb1013e291c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "IC",
+          "prediction_text": "Spot is vulnerable to volatility and may move away from the current pivot due to very low gamma.",
+          "condition": "",
+          "expected_result": "Increased spot price movement magnitude (higher intraday realized volatility) relative to recent low-gamma baseline, measurable within the trading day."
+        },
+        {
+          "instrument": "IC",
+          "prediction_text": "If market holds above 5652.24 through the event, event hedges will not print and event vol will not spike.",
+          "condition": "market holds above 5652.24",
+          "expected_result": "Options volumes and implied volatility tied to the event show no significant intraday spike compared with pre-event levels; tail-hedge and ATM volumes do not increase further."
+        },
+        {
+          "instrument": "IC",
+          "prediction_text": "If NFP prints in line, event vol can be dampened and a temporal squeeze is expected.",
+          "condition": "NFP prints in line",
+          "expected_result": "Short-term implied volatility falls intraday and spot rallies briefly (price moves toward recent local highs) producing a squeeze that reverses within the same trading session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Vanna flip at 5791.5 requires relatively lower vol to be broken, so a break above 5791.5 implies reduced volatility regime.",
+          "condition": "break above 5791.5",
+          "expected_result": "Price sustaining above 5791.5 coincides with a decline in implied volatility measures (VIX or short-term SPX-IV) and continued upside follow-through."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside vanna flip at 5682.41 requires higher vol to be broken, so a break below 5682.41 implies increased volatility regime.",
+          "condition": "break below 5682.41",
+          "expected_result": "Price sustaining below 5682.41 coincides with a rise in implied volatility measures and increased option hedging flow consistent with higher realized volatility."
+        },
+        {
+          "instrument": "IC",
+          "prediction_text": "Below the pivot gamma will increase over time (positive charm convexity), causing market makers to lengthen delta and sell futures.",
+          "condition": "price below pivot 5736.29",
+          "expected_result": "Measurable increase in gamma/exposure metrics over the session and observable net selling pressure in futures markets (net futures selling) when spot remains below 5736.29."
+        },
+        {
+          "instrument": "IC",
+          "prediction_text": "Above the pivot gamma will decrease over time (negative charm convexity), steepening the short speed profile and amplifying positive charm flows.",
+          "condition": "price above pivot 5736.29",
+          "expected_result": "Measured gamma exposure falls through the session and short-speed profile steepens, accompanying flows consistent with market makers shortening deltas and reduced hedging demand."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market expects down overall with intraday reversion environment despite event-driven squeezes.",
+          "condition": "",
+          "expected_result": "Net directional bias is downward: intraday intrumental returns show more frequent and larger down moves relative to up moves, and mean-reversion signals dominate (prices revert to short-term means) during the trading day."
+        }
+      ]
+    }
+  }
+}

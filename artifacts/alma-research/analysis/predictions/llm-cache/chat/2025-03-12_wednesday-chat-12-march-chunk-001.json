@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:28:02.687Z",
+  "inputHash": "c58a5e0e87da5cb7d226b58ddeca95ee98d3ebe9",
+  "payload": {
+    "responseId": "resp_0183963a7f38f4c70069b786cfd1d4819f8d75c2f5c5e9ef8e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-12T16:53:27.077Z",
+          "instrument": "",
+          "prediction_text": "If volatility is high and the move happens while volatility calms, the ATM will produce a peak in gamma slightly below the gamma peak.",
+          "condition": "vol is high; the move happens and vol starts to calm down",
+          "expected_result": "Observe ATM gamma rising to a peak slightly below the prior gamma peak as realized volatility falls after the move"
+        },
+        {
+          "made_at": "2025-03-12T17:38:53.497Z",
+          "instrument": "",
+          "prediction_text": "If there is less volatility, the option delta curve will flatten.",
+          "condition": "less vol",
+          "expected_result": "Measure option deltas across strikes and observe a flatter delta-vs-strike curve compared with higher-volatility periods"
+        }
+      ]
+    }
+  }
+}

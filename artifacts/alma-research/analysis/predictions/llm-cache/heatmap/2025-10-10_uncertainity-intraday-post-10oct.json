@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:05:01.532Z",
+  "inputHash": "cc2dcab9546b03c90a77758e2445d2398e079dbf",
+  "payload": {
+    "responseId": "resp_0b0c18520e62422d0069b76546245481a2a3a78dfff99ab0ea",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong downside pin/magnetic gamma around 6682–6691 (magnet at 6682.47, centroid near 6690.75) creating sticky support; price likely to gravitate back to this band if it moves away.",
+          "condition": "any move away from 6682–6691",
+          "expected_result": "Price will revert to and trade within 6682–6691 within the session (bounce or consolidation around that band)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Hard rejection/sticky zone at 6748–6752 (described as very hard to break unless spot opens above it); upside pivot at 6736.95 acts as a pin — breaking 6736.95 is required to release downside gravity.",
+          "condition": "spot does not open above 6748–6752",
+          "expected_result": "Upward attempts into 6748–6752 will be rejected and price will fail to sustain above, holding below the zone or reversing lower toward the 6700–6690 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Near-term upside vacuum toward ~6767–6780 if upside pivot is cleared; upside maximum coded at 6780 with expected reversion back into mid-6760s.",
+          "condition": "break and hold above upside pivot 6736.95 and clear 6748–6752",
+          "expected_result": "Price can run up toward 6767–6780, then reverse back toward ~6760s (failure to sustain above 6780 leads to reversion)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support corridor / very supportive cluster around 6703.7–6710.4 (local positioning shows support/ranging around the centroid and this area).",
+          "condition": "none",
+          "expected_result": "Price is likely to range or find support within 6703.7–6710.4, limiting downside below this corridor in the short term."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:10:51.486Z",
+  "inputHash": "d70085646f5c156afafb20fc46d69ee93287f036",
+  "payload": {
+    "responseId": "resp_0269c2caf014c7bc0069b766a4fda8819c8478e791e8c15304",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The 6750/6700 area will act as a sell-volatility zone and is crucial to hold for continuation of the rally toward 7000 into December.",
+          "condition": "",
+          "expected_result": "SPX will not close below 6700 for multiple sessions and will trend higher toward 7000 over the following weeks."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "RV suppression should occur in the 6800/6850 area, with 6850 potentially creating a hard stop for the spot and 6840 as the strongest local pin.",
+          "condition": "",
+          "expected_result": "SPX will stall or reverse near 6840–6850, failing to sustain a move above 6850 on intraday attempts."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6800 becomes very strong support into the last 1 hour of the session.",
+          "condition": "",
+          "expected_result": "If SPX approaches 6800 in the final hour, it will hold and bounce rather than close below 6800 that day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the market opens above 6850 then 6890 remains a hard resistance after 11PM.",
+          "condition": "market opens above 6850",
+          "expected_result": "SPX will struggle to break and close above 6890 in trading after 23:00, reversing or stalling around that level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the market breaks below 6800 during the first 2–3 hours with heightened downside vol, the 6775/6750 region will be very supportive and potentially push the spot back to 6785.",
+          "condition": "SPX breaks below 6800 within first 2–3 hours with heightened downside volatility",
+          "expected_result": "SPX will find support between 6775 and 6750 and then rebound to approximately 6785 intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The odds favor a benign close due to supportive positioning and EOM vanna/charm flows.",
+          "condition": "",
+          "expected_result": "SPX will close the session within or near the pivotal range (no large gap or tail), showing limited realized volatility into the close."
+        }
+      ]
+    }
+  }
+}

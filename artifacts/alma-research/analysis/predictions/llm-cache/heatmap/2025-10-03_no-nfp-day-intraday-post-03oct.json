@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:04:29.122Z",
+  "inputHash": "ee10e4bdcf1fa510a0e23e23edaf4aee64fc6ebd",
+  "payload": {
+    "responseId": "resp_0232982c4e963f010069b765271f1c81a38c38a41a86912fdf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid range support around 6740–6749; if SPX holds this centroid expect sticky upside and premium-collecting action, with magnet toward upside pivot ~6751 and potential pin at ~6768 (upsticks to 6775 possible).",
+          "condition": "SPX remains within 6740–6749 (centroid)",
+          "expected_result": "Price drifts/magnetizes to 6751 then tests/parks near 6768; upside should show limited momentum and remain between 6750–6775 for the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at ~6720; a break below opens momentum to downside target ~6678 but requires confirmation from put skew bid near 6690; expected reversion/pinning back at ~6700 after the move.",
+          "condition": "Break and close below 6720 with put skew bidding around 6690",
+          "expected_result": "Price accelerates toward ~6678, then reverts and pins near ~6700 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky rejection/support zones visible lower around 6619–6643 and mid 6667–6683 (gamma peaks/troughs); these levels act as stronger anchors if price extends through the initial downside target.",
+          "condition": "SPX extends below 6678",
+          "expected_result": "Price finds stronger resistance to further declines and likely stalls or reverts upon approaching 6667–6643 cluster (bounce or consolidation expected)."
+        }
+      ]
+    }
+  }
+}

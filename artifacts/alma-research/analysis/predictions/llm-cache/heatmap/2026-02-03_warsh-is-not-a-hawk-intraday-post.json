@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:24.738Z",
+  "inputHash": "41057c45be0ca0ebb1154d9cdd81358171d9639b",
+  "payload": {
+    "responseId": "resp_03827a1d6fd7defa0069b76779e3648193ad8cfffd6a0a69d5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pin / sticky zone at 6970–6980 (strongest spot). Market likely to pin and reject moves away from this zone.",
+          "condition": "price near 6970–6980",
+          "expected_result": "Price will gravitate back to and stall in the 6970–6980 range within the session; fail to sustain moves far beyond it without clear breakout momentum."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside magnet / support cluster at ~6920 with tolerance to 6900–6905 if accepted; a deeper defensive zone around 6868–6896 exists as lower support.",
+          "condition": "if price breaks below 6945 pivot or centroid moves lower",
+          "expected_result": "If 6945 pivot is lost, expect price to test 6920 and potentially extend to 6900–6905 during PM; further support/resistance around 6868–6896 will slow declines."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside “line in the sand” resistance at ~7005 with target/pin at ~7025 (margin to 7030). Likely rejection back toward 6980 if upside fails.",
+          "condition": "price approaches 7005",
+          "expected_result": "Price will likely fail near 7005 and be pushed back toward 6980; if 7005 is cleared in the AM, price should move toward ~7025 (allowing up to ~7030)."
+        }
+      ]
+    }
+  }
+}

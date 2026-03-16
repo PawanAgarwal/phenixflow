@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:03.482Z",
+  "inputHash": "c0e00c84501dd362754836a0a7cf11c093575e3d",
+  "payload": {
+    "responseId": "resp_0bee18ece9988a800069b766aedf0481959a732ba94ee03cab",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside gamma/pin cluster centered around 6880–6895 signaling a pinning magnet near 6880 with resistance; heatmap shows concentrated red/blue mixing at ~6890 indicating options interest that will attract/hold price.",
+          "condition": "price approaches 6880–6895 before 14:00 EST",
+          "expected_result": "If SPX reaches 6880–6895 it is likely to stall/pin there and fail to sustain a break higher; expect price to gravitate back toward centroid (~6810–6820) or retreat to the upside pivot target 6875 if not breached."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky centroid band around 6809–6819 visible as a sustained gamma zero/peak region, acting as a magnet and short-term support/resistance zone.",
+          "condition": "intraday price within 6805–6820",
+          "expected_result": "Price will tend to linger/rotate in the 6809–6819 band; expect multiple rejections or short bounces from this area before a directional breakout."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local support/brake zone shown by gamma trough/peaks at 6780–6785 that can reject declines and propel the market back toward the centroid.",
+          "condition": "price tests 6780–6785 with elevated intraday volatility",
+          "expected_result": "A test of 6780–6785 is likely to produce a rejection and a rebound toward 6810–6820 (centroid) rather than a clean continuation lower to the downside pivot target ~6769.97."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma concentration and target cluster around 6745–6755 (visible orange/red oval) representing a rejection/absorption zone and the heatmap’s downside target area.",
+          "condition": "price moves below 6769",
+          "expected_result": "If price breaks below 6769, expect travel toward 6745–6755 where further absorption/rejection should occur; this is the likely maximum downside travel for the session."
+        }
+      ]
+    }
+  }
+}

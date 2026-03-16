@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:57:29.024Z",
+  "inputHash": "5e3c5c028ea6dccd3fbe6ff55214d4740c1ec6a3",
+  "payload": {
+    "responseId": "resp_04be2cfdfec6ea7b0069b76383900c819eada2d438ad2babeb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma peak and trough concentrated around 5850–5860 and a strong trough/peak cluster near 5820–5835 indicate magnet/pinning pressure in the 5820–5860 area. Zero-vanna coded at 5833.47 suggests low volatility needed to break above; 5855 gamma likely to push price down on approaches.",
+          "condition": "price approaches 5820–5860 region",
+          "expected_result": "Expect price to stall/pin between ~5820–5860; failure to produce sustained low vol break above 5833.47/5855 will result in reversion lower toward ~5785–5810"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Larger gamma concentration and a visible peak near 5770–5785 act as a downside pin/return magnet with reduced option volume below that band (vol decline expected).",
+          "condition": "price drops toward 5770–5785",
+          "expected_result": "Price likely to slow and be held/pulled back around 5770–5785; anticipate a bounce or chop rather than a clean break unless vol expands significantly"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Farther resistance cluster and higher gamma area around 5908–5922 represent upside rejection zones; 5922 coded as a hard max squeeze level.",
+          "condition": "price rallies toward 5908–5922",
+          "expected_result": "Expect strong resistance and likely rejection or volatile chop near 5908–5922; a clean breakout above 5922 is low probability without a sustained vol surge"
+        }
+      ]
+    }
+  }
+}

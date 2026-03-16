@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T01:53:23.043Z",
+  "inputHash": "c3ba59c3b86e38c5412cef12f120af30e32c250e",
+  "payload": {
+    "responseId": "resp_0a877a9fd4e0897a0069b7628e772c8197b0bf9aee58da2844",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong support / pivot around 5678–5687 (crucial pivot). If price holds here expect buyback flows and mean reversion back toward ~5725. If this level breaks with rising volatility expect a violent flush lower.",
+          "condition": "price breaks below 5678–5687 with increasing volatility",
+          "expected_result": "If break occurs, SPX will drop rapidly below 5678 toward lower gamma troughs (target zones below ~5650); if 5678–5687 holds, price will rebound toward 5725 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky gamma ridge and rejection zone around 5725–5750 visible as a gamma peak band — acts as a magnet/pinning area if market moves up from the pivot.",
+          "condition": "price moves up from 5678–5687",
+          "expected_result": "Price is likely to slow or reverse near 5725–5750; expect consolidation or rejection there before any further continuation higher."
+        }
+      ]
+    }
+  }
+}

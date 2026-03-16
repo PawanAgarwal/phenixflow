@@ -1,0 +1,18 @@
+{
+  "cachedAt": "2026-03-16T02:04:56.910Z",
+  "inputHash": "c052b6ac8ff6a0dceee3410c3b70563322c58996",
+  "payload": {
+    "responseId": "resp_00b4feca8a44cd7c0069b765469c688195911865e72a136aa5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Equity implied volatility will increase more than rates volatility on upcoming policy days, enabling cross-asset hedges that profit from equity–rates correlation flips.",
+          "condition": "policy days",
+          "expected_result": "Equity implied volatility rises by a measurable amount greater than rates volatility (e.g., equity IV increase > rates vol increase) around the policy event, producing positive P&L for long equity vol / short rates vol spread trades."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:12:29.240Z",
+  "inputHash": "200c99881251b0dda9fffa21578a64adefcf4f2b",
+  "payload": {
+    "responseId": "resp_02cb14c87e8bb8290069b76706cce08195a60cb5cd3dbc040a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning / sticky zone around 6921–6925 (upside pivot at 6921.32; noted pin to 6923). Heatmap shows pronounced positive gamma ridge at ~6920–6930 indicating magnet and likely intraday pin.",
+          "condition": "None",
+          "expected_result": "SPX will gravitate toward and spend time pinned between 6921 and 6925 during the session; trades away from this band should mean-revert back toward it."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside brake / short-term target at ~6887–6890 (downside pivot 6889.24 with target 6887.32). Heatmap shows strong negative gamma below ~6890 creating resistance to further sustained downside.",
+          "condition": "None",
+          "expected_result": "If SPX revisits 6887–6890, expect rejection or deceleration of downward moves and a high probability of a bounce back toward the 6920s pin."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid control near 6906.2 (centroid noted at 6906.20) acting as the decision level for which wing of the iron-condor the market will pin to; heatmap shows balanced gamma around this area suggesting low realized vol and range-bound behavior.",
+          "condition": "None",
+          "expected_result": "SPX trading and holding near 6906–6910 increases likelihood of range-bound action and eventual pinning to either the 6921–6925 upside band or the 6887–6890 downside band by close."
+        }
+      ]
+    }
+  }
+}

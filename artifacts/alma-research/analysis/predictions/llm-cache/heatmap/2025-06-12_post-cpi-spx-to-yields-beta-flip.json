@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:36.309Z",
+  "inputHash": "4a152a9b3cdcd479d1ea96926e2ca0cfff8517dd",
+  "payload": {
+    "responseId": "resp_0fa0bee88ae2540f0069b763c6bb48819f9fd24d245b81a497",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/support zone around 5890-5900 (deep blue heat + gamma peak at ~5890) acting as a magnet into the power hour; price likely to gravitate back toward this zone if selling stalls.",
+          "condition": "intraday momentum fades / into power hour",
+          "expected_result": "SPX to revert toward 5890-5900 within the same trading day (measurable move of ~20-40 pts from current levels)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/support cluster between 5946.5 and 5966.4 (noted as centroid/last supportive zone) — holds as near-term support; a break below 5940.54 will activate downside gamma and accelerate downward pressure.",
+          "condition": "break below 5940.54",
+          "expected_result": "If SPX closes/prints below 5940.54, expect increased downside momentum and continuation lower by at least 15-30 pts within session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance at ~6012-6065 region (zero vanna line at 5994 with margin of error 6007.5); heatmap shows gamma peaks/ troughs near 6000–6020 and a stronger resistance band near ~6065-6100 — these levels should cap rallies absent a vol catch-up.",
+          "condition": "price attempts to rally into afternoon without a vol spike",
+          "expected_result": "SPX likely to struggle to sustain moves above 6012 and to fail to exceed 6065 intraday; any attempts toward 6065 will likely reverse back toward 6000-5950."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:15:27.875Z",
+  "inputHash": "83cae5329479729f8b814e51f384865e879ddd38",
+  "payload": {
+    "responseId": "resp_0d20ecb6847c75a50069b767b8b70c81a3a6ac2a1f8a1466f8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Brent",
+          "prediction_text": "Military action against Iran in March would massively drive up oil prices above the $90s.",
+          "condition": "military action against Iran in March",
+          "expected_result": "Brent front-month price rises above $90 per barrel within one week of the action"
+        },
+        {
+          "instrument": "gasoil",
+          "prediction_text": "Damage to Arab oil refineries and shadow fleets would especially drive up distillate/gasoil prices and maintain a distillate premium (crack spread bid) in March and May.",
+          "condition": "damage to Arab oil refineries and shadow fleets following military action",
+          "expected_result": "Gasoil March and May contract prices increase and the gasoil–Brent crack spread widens beyond its current levels within two weeks"
+        },
+        {
+          "instrument": "Brent front-month vs 6-month spread",
+          "prediction_text": "The ongoing decline in the Brent front-month versus 6-month spread indicates adaptation and suggests the front-month may not move as strongly as near-term physical signals would imply.",
+          "condition": "",
+          "expected_result": "The Brent front-month minus 6-month calendar spread continues to narrow over the next month"
+        },
+        {
+          "instrument": "Brent",
+          "prediction_text": "Massive call demand for May 26 expiry implies the market is pricing in higher May Brent prices consistent with military action expectations.",
+          "condition": "market pricing of May 26 options (massive call demand)",
+          "expected_result": "Implied volatility and call open interest for May 26 Brent options increase and market-implied probability of Brent > strike rises for strikes near current levels within weeks"
+        },
+        {
+          "instrument": "gasoil",
+          "prediction_text": "Massive call demand for May expiry in gasoil implies the market is pricing a higher gasoil price by May.",
+          "condition": "massive call demand for May gasoil options",
+          "expected_result": "Gasoil May option implied volatility and call open interest increase and implied probability of higher May gasoil settlement rises within weeks"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market is strongly complacent about long-term risks despite short-term pricing of military action.",
+          "condition": "",
+          "expected_result": "Long-dated oil implied volatilities remain lower than short-dated vols, preserving a term-structure complacency over the next month"
+        }
+      ]
+    }
+  }
+}

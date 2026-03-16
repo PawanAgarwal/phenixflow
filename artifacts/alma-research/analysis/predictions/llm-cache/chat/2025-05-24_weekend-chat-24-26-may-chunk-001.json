@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:28:47.418Z",
+  "inputHash": "deaa225819c2db83aae1a81df44a2f2339960756",
+  "payload": {
+    "responseId": "resp_0bb1e31acdf6ca130069b786fc78f881a3bd6cfc6d2508fb36",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-05-24T06:15:50.774Z",
+          "instrument": "NVDA",
+          "prediction_text": "5704.30 is a big weekly level for the next week and may be reassessed after Tuesday opening.",
+          "condition": "after Tuesday opening",
+          "expected_result": "Price will test and potentially react (hold, break, or reverse) around 5704.30 within the following week"
+        },
+        {
+          "made_at": "2025-05-24T06:15:50.774Z",
+          "instrument": "NVDA",
+          "prediction_text": "NVDA earnings report is a potential volatility trigger.",
+          "condition": "NVDA earnings report (ER)",
+          "expected_result": "Implied and realized volatility for NVDA will increase around the earnings event, leading to larger intraday price moves"
+        }
+      ]
+    }
+  }
+}

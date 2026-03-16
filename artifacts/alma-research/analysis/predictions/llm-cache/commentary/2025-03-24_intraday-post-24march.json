@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T01:54:13.073Z",
+  "inputHash": "7ca0750cecf31dc49d28be083e03b26603e89d95",
+  "payload": {
+    "responseId": "resp_073ba5b36e9c65930069b762ba2fb4819e82b3affa5fcd05f0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Spot will gravitate toward the centroid at 5739.30 in the current net flat-to-positive speed profile.",
+          "condition": "",
+          "expected_result": "Index/spot price moves to within a short-range band around 5739.30 during the intraday session"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If vol further crushes at 5748.69, spot will be pinned to 5750.",
+          "condition": "vol decreases at 5748.69",
+          "expected_result": "Price remains near 5750 and shows limited downside movement while implied/realized vol falls"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If vol increases at 5748.69, spot/vol beta will move up toward 5773.88.",
+          "condition": "vol increases at 5748.69",
+          "expected_result": "Index/spot rises toward ~5773.88 accompanied by higher implied/realized volatility"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Above 5688.5 one should see net vol decline to achieve stabilization if customers are serious about sold calls.",
+          "condition": "price > 5688.5",
+          "expected_result": "Implied and realized volatility decline after price moves above 5688.5, leading to a stabilization or reduction in intraday volatility levels"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The downside pivot is 5695.60 where an increase in vol will allow puts to pull the price downwards and the move will gain momentum if vol gets realized.",
+          "condition": "vol increases at 5695.60",
+          "expected_result": "Price accelerates downward from ~5695.60 with rising implied and realized vol and extended negative returns"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5610 is a zero vanna line requiring low vol to break through.",
+          "condition": "",
+          "expected_result": "A break below 5610 occurs only if implied/realized volatility is low; otherwise price fails to sustain a break below this level"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Above 5614.97 charm is net supportive, and above 5677 charm convexity is positive, which should steepen the positive speed profile and help intraday spot/vol beta realize lower if customers sell calls.",
+          "condition": "price > 5677",
+          "expected_result": "Price action shows steepening positive speed (stronger upward drift) and implied/realized vol declines (lower spot/vol beta) consistent with call-selling pressure"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Vol is consolidating and trending lower with supporting lower vvol, potentially setting up a grinding-lower phase for spot.",
+          "condition": "",
+          "expected_result": "Implied and realized volatility trend downward alongside decreasing vvol and spot drifts gradually lower over subsequent sessions"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Bloomberg’s higher RV implies vol may mean-revert upward after recent realizations, leading to potential vol increases.",
+          "condition": "",
+          "expected_result": "Measured realized volatility (per Bloomberg methodology) increases toward historical averages, producing higher realized and implied volatility readings over coming sessions"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Street positioning suggests there is room to be short vomma and short vol, long dispersion and short VIX to boost liquidity; this is the author's short-term bet to be monitored for realization.",
+          "condition": "",
+          "expected_result": "Strategies that are short vomma/short vol or long dispersion/short VIX produce positive P&L if implied volatility compresses and VIX falls while dispersion trades widen as forecasted"
+        }
+      ]
+    }
+  }
+}

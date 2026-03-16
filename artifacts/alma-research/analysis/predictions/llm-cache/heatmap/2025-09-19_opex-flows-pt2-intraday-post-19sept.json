@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:03:48.842Z",
+  "inputHash": "99a44fe58b197cfc2ce5b83b782adf623af05ebd",
+  "payload": {
+    "responseId": "resp_08e10d8fe607c06c0069b764fc124c81958b58d04e8b862f16",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday support/centroid zone around 6591–6611 (dealer gamma centroid) should hold as a downside buffer; local zero vanna at 6602 reinforces stickiness in this band.",
+          "condition": "",
+          "expected_result": "SPX will find buying/support and stall or reverse higher when approaching 6591–6611 during the trading day; sustained break below this band is unlikely without elevated put-skew (>~11%)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary magnetic center / fly center at ~6632.5 is the most likely mean-reversion target (ranging magnet); price should gravitate toward this level throughout the session.",
+          "condition": "",
+          "expected_result": "If SPX moves away intraday, it will tend to revert back toward ~6632.5 within the same day (multiple touches or consolidation near that level)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6641.10 leading into a local gamma peak around 6650 acts as a rejection / pinning zone; a weaker, shorter-speed call build could extend to 6668–6670 then revert back to ~6650.",
+          "condition": "SPX breaks above 6641.10",
+          "expected_result": "After breaking 6641.10, SPX is likely to be attracted toward 6650; if call skew picks up, SPX may reach 6668–6670 briefly before reversing back toward 6650."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower-probability downside magnet/pin near 6585 if put skew accelerates; this corresponds to a deeper pin to FOMC lows scenario.",
+          "condition": "Put skew increases materially (market-implied put demand rises toward modeled ~11% chance or higher)",
+          "expected_result": "SPX may retest FOMC lows and be pinned toward ~6585 if put skew catches up; otherwise this move is unlikely."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Large gamma troughs/peaks visible near ~6530–6535 (shorter-dated local gamma concentration) create a sticky rejection band on the lower intraday edge—acts as a nearer-term support/rejection area below the centroid.",
+          "condition": "",
+          "expected_result": "If SPX falls below the centroid, expect increased buying interest and fading below ~6530–6535, producing a bounce or consolidation there before any deeper move."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:57:24.098Z",
+  "inputHash": "2b8dc4b277946d242ea00c382ba2265f39c3afab",
+  "payload": {
+    "responseId": "resp_0569265ab94b96070069b7637e388c819095fd0969bfbfebbd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky gamma cluster centered around ~5875 acting as a pin/magnet; concentrated gamma trough (red) indicates price likely to gravitate toward and be pinned near 5875 during the session.",
+          "condition": "price remains within intraday range and vol does not spike (no short-squeeze)",
+          "expected_result": "SPX will move toward and spend significant time near 5875; expect reversion back to ~5875 within same trading day if price wanders +/- ~15-25 points."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance / rejection zone around 5940–5975 (noted upside zero vanna ~5940 and upside zero vanna coding at 5975) where gamma/positioning will cap rallies and likely trigger volatility cooling and rejection.",
+          "condition": "market attempts sustained move above ~5940 without large volatility increase",
+          "expected_result": "Price will stall or reverse between 5940 and 5975; rallies above this band will likely fail unless accompanied by a volatility spike that breaks the vanna level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside break targets below the 5875 pin if volatility falls and price stays below the upside pivot: initial break target ~5852 with secondary targets at ~5800/5796 (mean-reversion extended levels).",
+          "condition": "SPX stays below upside pivot (5919/5944 area) and volatility decreases sharply",
+          "expected_result": "If vol compresses and SPX remains below the upside pivot, expect a drop first to ~5852 and, on continuation, to ~5800–5796."
+        }
+      ]
+    }
+  }
+}

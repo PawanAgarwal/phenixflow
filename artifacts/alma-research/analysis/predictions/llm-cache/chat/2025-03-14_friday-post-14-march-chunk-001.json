@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:28:06.854Z",
+  "inputHash": "7d0ed12d344dbaf5a5ddc0b6cd8fb0bb52a113bb",
+  "payload": {
+    "responseId": "resp_0f57bf26ef44d07b0069b786d2ca6c819799e667303b51caa7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-14T08:17:51.369Z",
+          "instrument": "",
+          "prediction_text": "Price will bounce into OpEx.",
+          "condition": "",
+          "expected_result": "Market price moves higher in the days leading up to options expiration (OpEx) relative to the level at 2025-03-14."
+        },
+        {
+          "made_at": "2025-03-14T15:46:49.093Z",
+          "instrument": "",
+          "prediction_text": "The market will bounce first before resuming a down move.",
+          "condition": "",
+          "expected_result": "After a short-term upward move (bounce), the market resumes a downward trend and reaches new lower intraday or close levels within subsequent trading sessions."
+        },
+        {
+          "made_at": "2025-03-14T15:55:44.713Z",
+          "instrument": "",
+          "prediction_text": "Expect a bounce accompanied by volatility crush and a supportive OpEx.",
+          "condition": "",
+          "expected_result": "Market displays a short-term price increase while realized and implied volatility decline (vol crush) as it approaches OpEx, with price holding at or above the bounce level into expiration."
+        }
+      ]
+    }
+  }
+}

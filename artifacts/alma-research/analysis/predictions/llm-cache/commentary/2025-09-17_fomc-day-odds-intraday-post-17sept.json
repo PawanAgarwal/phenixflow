@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:03:37.218Z",
+  "inputHash": "05a25bdcb0b9c2a2544213805386e1c67c2137de",
+  "payload": {
+    "responseId": "resp_049e6858be59f1660069b764ee1728819dbfaa0c7ac1d68de3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid at 6558.42–6577.58 will act as the most supportive range intraday.",
+          "condition": "after 11.50AM",
+          "expected_result": "Price will hold within or above 6558.42–6577.58 and show support (rebound or limited downside) rather than breaking below it."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There will be a local pin at 6590 if the centroid holds.",
+          "condition": "centroid holds",
+          "expected_result": "Price will gravitate toward and spend time near 6590 (repeated touches / low net drift away) during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6550.96 will lead to a primal target of 6504.92 (with margin of error to 6475) if broken.",
+          "condition": "break below 6550.96",
+          "expected_result": "Price will move down to around 6504.92, possibly reaching as low as ~6475."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "In extreme hawkish guidance events a break below the downside pivot could extend to a lowest target of 6415.",
+          "condition": "extreme hawkish guidance / extreme event",
+          "expected_result": "Price will decline further to approximately 6415."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6623.61 will lead to a primal upside target of 6655 (margin of error to 6675) if broken.",
+          "condition": "break above 6623.61",
+          "expected_result": "Price will rise to around 6655, possibly reaching up to ~6675."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "On very good news a further upside to 6700 is possible, then pin to 6675.",
+          "condition": "very good news",
+          "expected_result": "Price will spike to about 6700 and then settle/pin around 6675."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The reversion model indicates a 93.50% probability of reversion, implying the market is topped and will slowly rebalance after OpEx.",
+          "condition": "after OpEx",
+          "expected_result": "Price will revert (decline or mean-revert) gradually from current highs over subsequent sessions rather than continuing a sustained rally."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Some ES=F selling can be expected intraday.",
+          "condition": "FOMC day / current positioning",
+          "expected_result": "ES futures will show net selling pressure intraday, producing downward moves or increased downside ticks relative to upside."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "VIX exposure will have limited impact so volatility is unlikely to spike dramatically despite option skew pricing.",
+          "condition": "current VIX exposure and skew dynamics",
+          "expected_result": "Implied and realized volatility will remain muted intraday (no large vol-expansion), with limited sharp increases in VIX."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:13:26.404Z",
+  "inputHash": "8a065269aae788bbb6cbddd26ab5cd9676be7be9",
+  "payload": {
+    "responseId": "resp_01e58c77773724b10069b767417f4c81978c92211630ddb764",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The market rebound is not yet timely and should not be trusted as a sustained recovery.",
+          "condition": "",
+          "expected_result": "Price will fail to sustain gains and will reverse within short term after the spike in volume, resulting in lower highs and renewed downside movement."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Today's very big spike in volume means the market will be customer-driven rather than market‑maker flow‑driven.",
+          "condition": "",
+          "expected_result": "Price action will show directional moves consistent with retail/institutional customer orders (larger, more persistent trends) rather than tight, mean‑reverting market‑maker behavior."
+        },
+        {
+          "instrument": "US Treasuries",
+          "prediction_text": "The Danish pension fund sale of about $100 million in US Treasuries reinforces a global sentiment shift that could pressure Treasuries.",
+          "condition": "",
+          "expected_result": "Treasury prices will decline (yields rise) as selling pressure contributes to wider risk‑off flows and higher yields."
+        },
+        {
+          "instrument": "Japan (BoJ focus)",
+          "prediction_text": "Short-term main concern is Japan, implying Japanese markets may exhibit instability around BoJ actions.",
+          "condition": "BoJ rate decision",
+          "expected_result": "Japanese bond and equity markets will show increased volatility and potential directional moves (e.g., JGB yields rising or Nikkei falling) in response to the BoJ decision."
+        }
+      ]
+    }
+  }
+}

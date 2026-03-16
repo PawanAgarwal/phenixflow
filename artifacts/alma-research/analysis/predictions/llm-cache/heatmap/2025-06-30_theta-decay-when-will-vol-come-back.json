@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:59:29.860Z",
+  "inputHash": "7011e2e43edc303aab47c5ddd0cb1710067b7a30",
+  "payload": {
+    "responseId": "resp_00495196b4c51e8f0069b763faa710819cb23f4f702938ee09",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong resistance / pinning magnet around 6205–6213 driven by concentrated call spread and centroid; heatmap shows a red high-gamma band centered ~6200–6215 acting as a rejection zone to upside.",
+          "condition": "price approaches 6205–6213",
+          "expected_result": "Expect intraday rejection or slow-upside progress — quick mean-reversion sell opportunity (short calls or buy puts) with tight stop if level holds; target initial reversion back to ~6174."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Immediate support pivot at ~6173.95 visible as a darker trough line on the heatmap; acts as the primary intraday support for range trades.",
+          "condition": "price falls to 6173.95",
+          "expected_result": "Expect bounce/reversion to the 6205–6213 area; trade long (calls) for a fast scalp with stop below 6173.95 and target back toward 6200–6215."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If 6173.95 breaks, strong lower support corridor around 6143–6153 shown as a concentrated gamma/band that should push price back toward 6174.",
+          "condition": "6173.95 breaks decisively",
+          "expected_result": "Expect intraday mean reversion up to 6173.95; use small-sized long positions (calls) aiming for 6170–6175 with stop below 6143."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a higher sticky resistance zone near ~6235–6250 (lighter but persistent peaks on the right), representing an elevated barrier if vol calms and upside momentum appears.",
+          "condition": "vol calms and price sustains move above 6213",
+          "expected_result": "Price likely to travel up toward 6235–6250 and may stall/pin there — consider trimming longs or initiating short-gamma hedges in that band."
+        }
+      ]
+    }
+  }
+}

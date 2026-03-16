@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:16:27.265Z",
+  "inputHash": "ba0aa5f441f67a60f5182e1c1d3f4dc50b7e2061",
+  "payload": {
+    "responseId": "resp_0dc45ce4c1833c3c0069b767f34f14819798b971720f8e6de5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday pin / reversion zone around centroid ~6719 (visible as a persistent green gamma peak). Market expected to gravitate back to ~6719 into PM if it trades away.",
+          "condition": "",
+          "expected_result": "If SPX moves away intraday, expect a reversion back to ~6719 within the PM session (tradeable mean-reversion target)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside brake / rejection cluster around 6624–6661 (gamma peak and 99.73% / 95.4% risk levels). This area is a sticky support/pin with customer short put spread exposure noted.",
+          "condition": "",
+          "expected_result": "SPX is likely to find support and stall between 6624 and 6661; anticipate a bounce back toward ~6650–6719 if price reaches this band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance / low-probability break above pivot ~6784 with target ~6821; strong reversion potential at 6800–6810 back to 6770–6760, and possible rejection at ~6840 if vol remains bid.",
+          "condition": "",
+          "expected_result": "If SPX approaches 6780–6820, expect rejection or reversion back toward 6760–6770; only a sustained break above ~6821 with falling vol would allow extension toward 6840."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Near-term tone set by 6740–6750 band (watch reaction to this band pre-open). Reaction here will determine whether price leans toward the upside pivot or downside brake.",
+          "condition": "",
+          "expected_result": "If SPX holds above 6740–6750, bias toward retesting 6770–6784; if rejected at 6740–6750, expect move down to the 6660–6624 support zone."
+        }
+      ]
+    }
+  }
+}

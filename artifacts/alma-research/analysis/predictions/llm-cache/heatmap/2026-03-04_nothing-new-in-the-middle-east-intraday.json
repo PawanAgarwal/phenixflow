@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:50.139Z",
+  "inputHash": "300d2bf273b397c2a3d7a7f7590fa83da538d206",
+  "payload": {
+    "responseId": "resp_03f7b8a3211483de0069b767cf1f0c819e938ca5afabb722db",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma peak / sticky zone near 6960-6970 acting as an upside rejection band — heatmap shows concentrated blue (positive gamma) up there, likely to pin/reject rallies into that area.",
+          "condition": "price approaches 6960-6970",
+          "expected_result": "Price stalls or gets rejected and reverts lower within 1-2 trading hours after touching 6960-6970."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma trough / downside magnet around 6665-6675 (left-tail support) creating a sticky reversion area — heatmap blue/green contours below indicate support and high-probability reversion if lower momentum appears.",
+          "condition": "price falls toward 6665-6675",
+          "expected_result": "Price finds support and reverts higher from 6665-6675 within the same trading session in absence of sustained low realized volatility."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Midday centroid / strong reversion line at ~6810 acting as a 'line in the sand' — surrounding orange to neutral gamma suggesting high-probability reversion back toward centroid.",
+          "condition": "price deviates away from 6810 (either direction)",
+          "expected_result": "Price reverts back toward 6810 within the session; breaks of 6810 are low probability without a drop in realized volatility."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local downside pivot support cluster around 6740-6760 (gamma trough and risk-level contours) functioning as a brake on declines and a probable bounce zone.",
+          "condition": "price tests 6740-6760",
+          "expected_result": "Downside momentum slows and market bounces or consolidates at 6740-6760 rather than accelerating lower."
+        }
+      ]
+    }
+  }
+}

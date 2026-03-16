@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:02:52.384Z",
+  "inputHash": "bcdf87256a886b81c146739503e7ff687cb001ed",
+  "payload": {
+    "responseId": "resp_064f54765a4396e40069b764c5ae888196b9f4f51fcd85dae7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside pivot/resistance zone at 6454.24–6464.83. If spot clears above this range after 11:35am the next magnet is ~6485; otherwise expect rejection back into 6464.83–6475 (pin).",
+          "condition": "SPX trades above 6464.83 after 11:35 NY time",
+          "expected_result": "Price moves toward 6485 within the session; if it fails to hold above 6464.83, price reverts and pins near 6475"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Definitive downside pivot at 6419.63; this is the key support to watch intraday. A break would accelerate price toward the 6400 area with lower support 6380/6375 as strong put pin levels.",
+          "condition": "SPX trades below 6419.63",
+          "expected_result": "Price accelerates toward 6400 and may test 6380–6375 as supportive/pinning zone (overnight or early session)"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Magnetic support around 6425–6430: if futures (ES/SPX) fail to rebound from ~6430, downside pressure will target the 6419.63 pivot.",
+          "condition": "Futures fail to rebound from ~6430",
+          "expected_result": "Price moves down to 6419.63 pivot and may test 6400 if selling continues"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Extreme left-tail pin: if 6380 is broken overnight, expect a pin at ~6375 with dealer buyback into the U.S. session.",
+          "condition": "SPX trades below 6380 overnight",
+          "expected_result": "Price pins near 6375 and a buyback into the U.S. session is likely"
+        }
+      ]
+    }
+  }
+}

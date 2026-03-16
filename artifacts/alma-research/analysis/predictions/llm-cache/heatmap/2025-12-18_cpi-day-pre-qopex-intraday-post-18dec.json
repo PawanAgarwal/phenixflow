@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:05.390Z",
+  "inputHash": "e9d8273417a7df22632829b27dd38ca0f6182062",
+  "payload": {
+    "responseId": "resp_062e54f0384bd52f0069b766ed351481959722222f18c970e5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid (most important zone) around 6729.8–6739.2 acting as a sticky/pinning area — heatmap shows concentrated gamma and speed flips there making it hard to break decisively.",
+          "condition": "None",
+          "expected_result": "Price will gravitate toward and spend time pinned in the 6729–6739 range; expect limited sustained moves away without a clear volatility squeeze."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6697.6 with a near-term support/target at ~6665 and secondary support cluster near 6630–6640; deep gamma build below ~6618 suggests overshoot risk but likely reversion back to 6665.",
+          "condition": "If price breaks below 6697.6",
+          "expected_result": "Move toward 6665 (primary) and possibly 6630–6640 (secondary); in a high-volatility flush price can overshoot to ~6618 then revert toward 6665."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6790.45 with an initial upside target ~6839.4; significant pinning potential around 6750 (±30 pts) after an initial break, and vol-selling above ~6810–6815 supports stabilization toward upside target.",
+          "condition": "If price breaks above 6790.45 during AM session",
+          "expected_result": "Price likely reaches ~6839 and then pins/stabilizes around 6750±30 after initial moves; low probability break above ~6848 without a squeeze, but a continued squeeze could push toward ~6880."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Max left-tail downside scenario target near 6592.6 — low-probability boundary indicated by model and deep gamma cluster further down.",
+          "condition": "If downside vol is flushed and vol dynamics change (left-tail event)",
+          "expected_result": "In an extreme downside event, price can reach ~6592.6 as the modeled max downside."
+        }
+      ]
+    }
+  }
+}

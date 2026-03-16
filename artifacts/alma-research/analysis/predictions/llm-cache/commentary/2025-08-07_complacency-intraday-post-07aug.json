@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T02:01:36.199Z",
+  "inputHash": "c15f8607ce6317fb76252aa4fcc12bb6d1a39579",
+  "payload": {
+    "responseId": "resp_02c10e71ae69394d0069b764733568819d851f560354763e6f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "BTC",
+          "prediction_text": "Bitcoin will have a liquidity grab towards 130k in the near-term.",
+          "condition": "",
+          "expected_result": "BTC price will rise to approximately 130,000 within the near-term (days to weeks)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The market won’t go below 6350 today and will go upward, with centroid in the 6360.44 - 6366.16 zone separating 6350 liquidity magnet from the small right-tail.",
+          "condition": "",
+          "expected_result": "SPX will remain above 6350 intraday and trade within or above the 6360.44–6366.16 zone during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The upside pivot is at 6412.51 and market bets on liquidity there, but reaching that level is very unlikely.",
+          "condition": "",
+          "expected_result": "SPX will not reach 6412.51 during the session (price stays below 6412.51)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6388 is a crucial pivot and seems very unbreakable; price will be either above or below this line and will respect it.",
+          "condition": "",
+          "expected_result": "SPX will exhibit price behavior that does not sustainably cross and hold beyond 6388 during the session; moves will reverse around that level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If price is above 6388, the 6405 line will act as a vanna flip and will push the spot back down after 1:50 PM.",
+          "condition": "price above 6388 after 1:50 PM",
+          "expected_result": "After 13:50 local time, SPX will reverse downward from around 6405 when trading above 6388."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Before 1:50 PM, if spot starts to range at 6400 and volatility along with put skew is being sold, then 6427 would be a magnet and form a double-top.",
+          "condition": "before 13:50, spot ranges near 6400 and vol and put skew are sold",
+          "expected_result": "SPX will be attracted to and attempt to reach ~6427, producing a double-top formation intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6400 is weakly but magnetically attractive intraday.",
+          "condition": "",
+          "expected_result": "SPX price will gravitate toward ~6400 during the session even if not strongly supported."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Below 6388, 6372 is a weak support but overall price will most likely revert back down towards the centroid and pin to 6350.",
+          "condition": "",
+          "expected_result": "If SPX falls below 6388, it will likely move through 6372 and continue down toward and pin near 6350 intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "After 2:30 PM, if spot is still above the centroid, 6380 will be magnetic during the last 30 minutes.",
+          "condition": "after 14:30, spot remains above the centroid (6360.44–6366.16 zone)",
+          "expected_result": "Between 14:30 and market close, SPX will be attracted to and trade toward ~6380."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "For any downside you must see sudden unexpected headlines; absent those, pivot is 6325.84 with downside max of 6293.",
+          "condition": "no sudden unexpected headlines",
+          "expected_result": "SPX downside will be limited intraday with a pivot around 6325.84 and an intraday low not below ~6293."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is betting on rangebound action with a modest upside bias today.",
+          "condition": "",
+          "expected_result": "SPX will trade in a relatively narrow intraday range overall, with slight net upside from open to close rather than a strong directional move."
+        }
+      ]
+    }
+  }
+}

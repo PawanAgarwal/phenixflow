@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:58:42.528Z",
+  "inputHash": "3b732bbf8c503a8b8eb9ff1cb925c3a0a85a5856",
+  "payload": {
+    "responseId": "resp_0db61f5192e5b6430069b763cda9d481919a4b80773eba2aa7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "(index implied S&P/ES?)",
+          "prediction_text": "Centroid at 5974.00 will act as a crucial pivot for intraday momentum after 10:33am.",
+          "condition": "after 10:33am",
+          "expected_result": "Price will gravitate toward and rotate around 5974.00, with momentum changing sign at that level."
+        },
+        {
+          "instrument": "(index implied S&P/ES?)",
+          "prediction_text": "Strong support near 5908.48 will hold after 1:30pm unless volatility is aggressively sold.",
+          "condition": "after 1:30pm",
+          "expected_result": "Price will not close below 5908.48; any breach requires marked vol-selling pressure."
+        },
+        {
+          "instrument": "(index implied S&P/ES?)",
+          "prediction_text": "A pin will occur at 5825 if price moves below the strong support area.",
+          "condition": "price moves below 5908.48",
+          "expected_result": "Price will be pinned near 5825 (low volatility/congestion around that strike) rather than trending away."
+        },
+        {
+          "instrument": "(index implied S&P/ES?)",
+          "prediction_text": "Daily pivot area around 6022.98 will act as very strong support but can be broken if volatility increases.",
+          "condition": "volatility catches up (rises)",
+          "expected_result": "If realized vol rises, price will break below/through 6022.98; otherwise it will be supported at that level."
+        },
+        {
+          "instrument": "(index implied S&P/ES?)",
+          "prediction_text": "Absolute max at 6054.98 will act as a vanna-flip rejection level, suppressing further upside.",
+          "condition": "none",
+          "expected_result": "Price will be rejected near 6054.98, failing to sustain moves above it (intraday cap on upside)."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:01:37.542Z",
+  "inputHash": "0990a8c39ad45d182ec61adfcace7ca69fd924d9",
+  "payload": {
+    "responseId": "resp_0916a6708cb3870c0069b7647b52cc81a292a17e426bb8e1de",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday pivot / centroid around 6282–6292 acting as central magnet; price is unlikely to break this range during the day and should gravitate back toward it if it moves away.",
+          "condition": "none",
+          "expected_result": "If SPX trades away from 6282–6292, expect reversion back into 6282–6292 within the same trading day (hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside support cluster at ~6263 with stronger support and fake-out potential down to 6245–6240; if spot stays above 6258 late in the day there is a pinning magnet toward 6240 in last 1.5 hours.",
+          "condition": "spot > 6258 in last 1.5 hours",
+          "expected_result": "If spot >6258 entering final 1.5 hours, SPX will gravitate toward and pin near 6240 by close. If spot falls below 6258 earlier, 6240 acts as stronger magnet with potential deeper touch to 6231–6240 before reverting to ~6258–6263."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at ~6332 with volatility calming there and a capped extension toward 6352 (pin) if right-side skew/bid flows persist; max extension near 6368 if right wing strongly bid.",
+          "condition": "right-wing skew remains bid / upside flow continues",
+          "expected_result": "If upside flow persists, SPX will test 6332 then likely revert or pin near 6352; maximum intraday extension to ~6368 with low probability of sustained break above that."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:16:31.868Z",
+  "inputHash": "a0cfdcd2aee7eb442e740518f745747d30a0660c",
+  "payload": {
+    "responseId": "resp_02669800339f6bf00069b767ef121881a3908853af206a5d64",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Brent",
+          "prediction_text": "Freight disruptions and a declared high-risk zone around the First Island Chain will cause oil prices to rise due to longer detours and constrained energy imports.",
+          "condition": "China scales up blockade-like harassment of shipping in the First Island Chain",
+          "expected_result": "Brent spot price increases measurably versus prior 30-day average (e.g., >5% move) within 4–8 weeks of sustained harassment"
+        },
+        {
+          "instrument": "Maersk",
+          "prediction_text": "Major shipping companies will avoid Chinese control zones and incur longer detours, raising operating costs and reducing throughput.",
+          "condition": "Major shipping companies reroute to avoid Chinese control zones",
+          "expected_result": "Maersk reported transit times or voyage distances increase and quarterly EBITDA margin declines relative to prior quarter by a measurable amount (e.g., >2 percentage points) in the next quarter"
+        },
+        {
+          "instrument": "MSC",
+          "prediction_text": "Major shipping companies will avoid Chinese control zones and incur longer detours, raising operating costs and reducing throughput.",
+          "condition": "Major shipping companies reroute to avoid Chinese control zones",
+          "expected_result": "MSC operational metrics show increased voyage times and reduced port calls; freight rates on affected lanes rise by >10% over baseline within 4–8 weeks"
+        },
+        {
+          "instrument": "Global insurance (War Risk) premiums",
+          "prediction_text": "Lloyd’s and global insurers will reclassify the region as high-risk, driving up war-risk insurance premiums for transits through the area.",
+          "condition": "Insurers classify First Island Chain routes as War Risk due to sustained harassment and incidents",
+          "expected_result": "War-risk insurance premiums for relevant routes increase by a measurable amount (e.g., double or >50%) within weeks of classification"
+        },
+        {
+          "instrument": "European gas and power markets",
+          "prediction_text": "Slowdown of shipments and rerouting will cause freight-driven stagflation and lead to power outages and industrial shutdowns in parts of Europe and the US, pressuring energy prices and industrial activity.",
+          "condition": "Sustained shipment slowdowns from First Island Chain friction leading to supply disruptions in weeks",
+          "expected_result": "Regional wholesale power prices and industrial input price indices rise >5% and reported industrial outages/shutdown incidents increase within 4–12 weeks"
+        },
+        {
+          "instrument": "Brent",
+          "prediction_text": "The April–May period is the main market risk window, with elevated upside risk to oil prices.",
+          "condition": "April–May risk window materializes as described",
+          "expected_result": "Brent shows significant volatility and net upside during April–May relative to March realized volatility (e.g., average daily ATR increases and net monthly return > baseline months)"
+        }
+      ]
+    }
+  }
+}

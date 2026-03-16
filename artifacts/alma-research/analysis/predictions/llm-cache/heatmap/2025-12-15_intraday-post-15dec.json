@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:11:55.967Z",
+  "inputHash": "d892c2da7b5de094b267d953e03a72cbbf6f94b5",
+  "payload": {
+    "responseId": "resp_0bd6b6a417317ad00069b766e46e4c81978a1d4ef8ea9c07ee",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/sticky zone at ~6835-6844 acting as a pin (high chance price gravitates/pins to this band).",
+          "condition": "",
+          "expected_result": "Price will gravitate toward and spend time around 6835–6844; intraday prints should cluster in this range and revert back to it after moves away."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pin potential at 6850 (local magnet / resistance-support flip).",
+          "condition": "",
+          "expected_result": "If price approaches 6850 it will slow and likely stall or reverse; expect multiple touches and short-term rejections or pins at ~6850."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at ~6888 with a local magnet/target at ~6900 — possible breakout window until ~13:30; 6870 is a nearer resistance to watch.",
+          "condition": "Price breaks and holds above 6888 before 13:30 UTC?",
+          "expected_result": "Sustained trade above 6888 will likely reach ~6900; failure to clear 6870/6888 before 13:30 increases chance of reversion to centroid (6835–6844)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at ~6810 with initial downside target ~6795 and quicker reversion paths back to 6850 if the move is fast; if stuck near 6828–6830 expect reversion to ~6815.",
+          "condition": "",
+          "expected_result": "A move below 6810 should reach ~6795; if drop is sharp expect a bounce back toward 6850, whereas a slow/contained drop near 6828–6830 will likely settle around 6815."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Left-tail scenario support levels and gap-fill path: local oscillation around 6800 with subsequent gap-fill toward 6750 (with 6770 as a local line in the sand).",
+          "condition": "",
+          "expected_result": "If downside momentum persists, price will oscillate near 6800 then continue toward 6750, with 6770 acting as a likely temporary support/rejection level."
+        }
+      ]
+    }
+  }
+}

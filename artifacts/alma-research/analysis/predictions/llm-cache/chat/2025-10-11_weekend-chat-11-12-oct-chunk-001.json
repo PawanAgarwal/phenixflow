@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:29:41.815Z",
+  "inputHash": "35f44f96fe0a5027f5b5309935865bcc56440546",
+  "payload": {
+    "responseId": "resp_02b4c393fbe123ea0069b7873148ac81a18e46948f29dcd946",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-10-15T09:29:37.984Z",
+          "instrument": "",
+          "prediction_text": "If a certain line is broken, there are high odds for the spot to revert.",
+          "condition": "a certain line is broken",
+          "expected_result": "Price will reverse direction (revert) after breaking the specified line."
+        },
+        {
+          "made_at": "2025-10-15T09:29:37.984Z",
+          "instrument": "",
+          "prediction_text": "If I see long upward speed and a relatively flat speed profile, the spot will climb up and be supported every step up like a ladder.",
+          "condition": "long upward speed with a relatively flat speed profile",
+          "expected_result": "Price will trend upward in a stepped manner, with successive supports forming on each advance."
+        },
+        {
+          "made_at": "2025-10-15T09:29:37.984Z",
+          "instrument": "",
+          "prediction_text": "If the downside speed profile is steeper (heavy selling), I will bet on an upside momentum with higher confidence.",
+          "condition": "downside speed profile is steeper (heavy selling)",
+          "expected_result": "An upside momentum rally is likely to follow despite prior heavy selling."
+        }
+      ]
+    }
+  }
+}

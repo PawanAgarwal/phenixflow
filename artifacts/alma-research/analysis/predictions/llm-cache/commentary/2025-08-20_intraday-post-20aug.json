@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:02:18.739Z",
+  "inputHash": "6693cdddf371ce86e33c67c1b673a48599369f7d",
+  "payload": {
+    "responseId": "resp_0564b492e9dea6620069b764a0f778819c90ffcba312ef4502",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market is betting on a pin to the centroid of the profile at 6398.93.",
+          "condition": "",
+          "expected_result": "Price will be drawn and trade at or very near 6398.93 during the session (pinning behavior)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Expect heavy liquidity until 6388.53, and below this opens the gate for a grind-down towards 6375/70.",
+          "condition": "",
+          "expected_result": "If price falls below 6388.53, it will continue down toward the 6375–6370 area (grind lower)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "After a grind-down to 6375/70, expect reversion back to the center of the fly.",
+          "condition": "price reaches 6375–6370",
+          "expected_result": "Price will reverse direction and move back toward the centroid (~6398.93)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside can materialize only if price opens above the centroid line.",
+          "condition": "price opens above the centroid line",
+          "expected_result": "An upward move will occur, enabling bullish scenarios described (skew selling and targets)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Skew is sold at 6412.63 upside pivot with target 6430/35 (margin to 6440); if 6425 holds after 1:10 PM it can pin.",
+          "condition": "price trades/sells skew at 6412.63 and 6425 holds after 13:10",
+          "expected_result": "Price will reach 6430–6435 (possibly 6440) and may pin near that level in the afternoon.  "
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Less likely right-tail scenario: heavy skew selling above the upside pivot could pin to 6440 during the PM, with upsticks to 6450.",
+          "condition": "heavy skew selling above the upside pivot",
+          "expected_result": "Price will be pinned near 6440 in the afternoon with intraday spikes up to 6450. "
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Heavy skew bid and stubborn consolidation at 6375/70 could produce a grind lower to 6355 and pin back to 6370.",
+          "condition": "heavy skew bid and consolidation at 6375/70",
+          "expected_result": "Price will grind down to ~6355 then revert and be pinned around 6370. "
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Today will be good for fast reversion trading during the AM.",
+          "condition": "morning session (AM)",
+          "expected_result": "Prices will show quick mean-reversion moves suitable for intraday reversion trades in the morning. "
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Author leans toward put selling at 6370 and 6325 and shorting 0DTEs at the center of the fly.",
+          "condition": "none",
+          "expected_result": "Trading activity will favor selling puts around strikes corresponding to 6370 and 6325 and initiating short 0DTE positions at the fly center, reflecting expected limited downside and mean reversion."
+        }
+      ]
+    }
+  }
+}

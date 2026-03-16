@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:00.853Z",
+  "inputHash": "9565b2365924a67f94081d1145ec1d4bceb1d316",
+  "payload": {
+    "responseId": "resp_0f7e7945173afe920069b7679db8cc8192b279685941aa58ad",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong support / stabilizer around the centroid at ~6775 (centroid labeled 6775.06) — heatmap shows sticky gamma and a blue/neutral band there, making 6770–6785 a reversion zone.",
+          "condition": "price approaches 6770–6785",
+          "expected_result": "Price is likely to halt declines and revert higher toward 6805–6835 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local magnet / pivot zone at ~6757 (downside pivot 6757.09) with nearby rejection target ~6715 — gamma trough/peak structure indicates 6750–6765 will attract and stabilize price; failure leads to deeper rejection.",
+          "condition": "price breaks below 6757",
+          "expected_result": "Price should travel toward and test ~6715 as the next rejection/support level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong resistance cluster and rejection corridor between ~6850–6860 (noted pivotal area; heatmap shows warm gamma and gamma-zero contours there) — acts as a brake on upside moves.",
+          "condition": "price rallies up to 6850–6860",
+          "expected_result": "Upside is likely to be rejected or stall; expect pullback toward the centroid/6805 area unless 6905 is taken out."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher resistance/pinning region near ~6905–6930 (heatmap shows concentrated gamma activity and peaks around 6900–6935) — crossing this region would confirm upside continuation.",
+          "condition": "price takes out 6905",
+          "expected_result": "Expect continuation to targets ~6920–6930 (and potentially toward 6950+ where further heatmap peaks exist)."
+        }
+      ]
+    }
+  }
+}

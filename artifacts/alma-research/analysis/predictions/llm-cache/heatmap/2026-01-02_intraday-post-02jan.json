@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:12:38.945Z",
+  "inputHash": "7a621e91b512ab8cceb1d0b71d032db748be2d7a",
+  "payload": {
+    "responseId": "resp_0754476acf7f5cd90069b7671075108192b2c7562533ed43fd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/reversion zone around 6828–6869 (downside pivot 6869.76 with target 6828.87; 6855 noted as local support). Heatmap shows concentrated negative gamma (blue) below this band reinforcing support and likely pinning into the PM.",
+          "condition": "price moves below 6890 (line in the sand)",
+          "expected_result": "If SPX crosses and stays below 6890, expect mean reversion toward 6869–6829 with high chance of finding support near 6855; use 6812 as margin of error (fail = move below 6812)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky/pinning area near 6921–6940 (upside pivot 6921.84, target 6933.45; PM action likely to pin spot to ~6920 with smaller chance of 6940). Heatmap shows concentrated positive gamma (warm band) centered ~6890–6935 acting as a magnet.",
+          "condition": "price holds above 6890 and advances",
+          "expected_result": "If SPX holds above 6890 and pushes higher, expect pinning between ~6920–6940 with 6933–6940 as likely reversion/pinning levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong long-term resistance cluster near 6939–6965 (99.73% / high-probability gamma concentration displayed at ~6939–6965 on heatmap and script outputs). This acts as an upper rejection zone.",
+          "condition": "sustained intraday rally toward 6940+",
+          "expected_result": "On rallies into 6939–6965, expect increased selling pressure and rejection / pause; likely limited follow-through above ~6965 without further catalysts."
+        }
+      ]
+    }
+  }
+}

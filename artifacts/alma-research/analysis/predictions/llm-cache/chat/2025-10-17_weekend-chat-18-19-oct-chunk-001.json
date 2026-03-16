@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:29:44.910Z",
+  "inputHash": "ce5109eba1d763009cdb2d85bf40c84bf8482cd1",
+  "payload": {
+    "responseId": "resp_0bd79007d153d9900069b78734855c8192861d59be2bcfe886",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-10-21T22:22:32.096Z",
+          "instrument": "",
+          "prediction_text": "I will buy when it is at my target.",
+          "condition": "when it is at my target",
+          "expected_result": "Place a buy order at the specified target price; execution occurs when market reaches that price."
+        },
+        {
+          "made_at": "2025-10-21T22:24:36.638Z",
+          "instrument": "",
+          "prediction_text": "For reversion, tighter range and sharp steep resistances from where the spot is expected to revert.",
+          "condition": "price in a tighter range with sharp steep resistances",
+          "expected_result": "Price will revert (move back toward the mean) from the identified resistances after trading in a tighter range."
+        }
+      ]
+    }
+  }
+}

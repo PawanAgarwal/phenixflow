@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:03:59.817Z",
+  "inputHash": "e21edf0cce8fe25f81fa88642fdca64a233b374b",
+  "payload": {
+    "responseId": "resp_0b39a87f6f64aec50069b7650ab4908195aeabaf2e4e88044c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Window of Risk has officially opened and the market may continue to show elevated volatility since post-OpEx Tuesday.",
+          "condition": "post-OpEx Tuesday",
+          "expected_result": "SPX will exhibit increased intraday volatility relative to the prior week, with larger price swings and potential trendshifts"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If inflation (PCE) prints above 0.25% m/m, three‑month annualised core PCE will push above 3.5% and raise doubts about disinflation.",
+          "condition": "PCE print above 0.25% m/m",
+          "expected_result": "Three‑month annualised core PCE > 3.5%, increasing market concern about slowing disinflation and likely prompting risk asset weakness and rising yields"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "PCE tomorrow is way more important and a print in the 0.28–0.35% m/m range would signal continued inflationary pressure from shelter.",
+          "condition": "PCE print between 0.28% and 0.35% m/m",
+          "expected_result": "Market reaction consistent with higher inflation: risk assets decline and yields rise; investors treat news as reinforcing inflation persistence"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Short-term sentiment is shifting towards ‘bad news are bad news, good news are good news’, implying macro surprises will amplify SPX moves in their logical direction.",
+          "condition": "",
+          "expected_result": "Positive macro surprises lead to SPX gains and negative macro surprises lead to SPX losses with larger-than-normal response magnitude"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:34.298Z",
+  "inputHash": "28bd46b54ba2cc422b65545138d0aa220788fb5b",
+  "payload": {
+    "responseId": "resp_0edde530ac1a77cf0069b767838a9c81a28f891255b8ba4c8b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows concentrated put-selling and gamma trough around 6750–6765 (centroid ~6774 aligning with downside pivot), creating a sticky reversion zone that the market is defending; visible gamma heat just above 6730 and another magnetic cluster at ~6670–6620.",
+          "condition": "price <= 6750",
+          "expected_result": "Price should gravitate back up toward 6770–6790 (reversion to centroid/pivot); strong support between 6730–6765 will likely hold intraday unless broken decisively."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside gamma peaks and customer short call positioning concentrated around 6895–6915 (local pin near 6900 and upside target ~6914), implying a pin/rejection zone where upside vol may calm and price may be capped.",
+          "condition": "price >= 6915",
+          "expected_result": "If price reaches/breaches 6915, expect initial rejection or pinning pressure near 6895–6915; sustained break above 6915 required to confirm bullish momentum."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intermediate rejection/band area visible near 6840–6865 (gamma trough/peaks), forming a weaker resistance band that may stall rallies before the 6895 area.",
+          "condition": "",
+          "expected_result": "Rallies into 6840–6865 are likely to slow or reverse intraday; watch for failure there to confirm move back toward 6750s."
+        }
+      ]
+    }
+  }
+}

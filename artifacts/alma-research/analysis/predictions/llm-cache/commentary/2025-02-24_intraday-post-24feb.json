@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T01:52:14.052Z",
+  "inputHash": "e666df2e7b9d21c9ec81068b27548fe5c7ba08b3",
+  "payload": {
+    "responseId": "resp_0bd990b1d6b4cb620069b7624739f88194a15a7b752cd0de09",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "5955/60/6055/60 iron condor",
+          "prediction_text": "Price will be unable to break out of the iron condor unless the condor is closed during the day (otherwise IV increase will cause losses to the sellers).",
+          "condition": "",
+          "expected_result": "Price stays within the 5955–6060 iron condor range for the session; implied volatility rises if sellers remain short, causing mark-to-market losses for the condor."
+        },
+        {
+          "instrument": "6053 (upside zero vanna)",
+          "prediction_text": "Volatility should calm down in order for price to break above the upside zero vanna at 6053; otherwise negative speed will cause 5974 to be hit.",
+          "condition": "if intraday volatility calms on a fix-strike basis near 6041–6050",
+          "expected_result": "If vol calms near 6041–6050, price breaks above 6053; if not, price falls to 5974."
+        },
+        {
+          "instrument": "~6009.83 center (MM net long butterfly)",
+          "prediction_text": "The profile sets the stage for vol expansion towards the center ~6009.83, with relatively calm vol toward the upward wing.",
+          "condition": "",
+          "expected_result": "Implied volatility increases centered around 6009.83 (vol-expansion focused near that level) while upside wing vols remain comparatively stable."
+        },
+        {
+          "instrument": "6041.77 (AM level)",
+          "prediction_text": "Vol traders should feel the negative speed effect around 6041.77, making it harder for price to break the iron condor.",
+          "condition": "",
+          "expected_result": "Market makers and vol traders show increased adverse gamma/speed exposure around 6041.77, leading to behavior that suppresses upside breakout attempts."
+        },
+        {
+          "instrument": "6009.83 (key pivot)",
+          "prediction_text": "The key pivot is the center 6009.83 to the downside, with pinning at 5965.",
+          "condition": "",
+          "expected_result": "Price gravitates toward or is held down by 6009.83 and shows pinning behavior near 5965 during the session."
+        },
+        {
+          "instrument": "6041/50 area (vanna flip)",
+          "prediction_text": "Momentum has a chance to break through the vanna flip during the AM session only if intraday vol cools off on a fix strike basis in the 6041/50 area, though probability is low.",
+          "condition": "intraday volatility cools off on a fix-strike basis in the 6041–6050 area during the AM session",
+          "expected_result": "If vol cools in the AM near 6041–6050, momentum breaks above the vanna flip and price moves higher; otherwise no breakout occurs."
+        },
+        {
+          "instrument": "6090",
+          "prediction_text": "If price opens above the vanna flip, it would easily gravitate towards 6090 (a level to be taken off this week).",
+          "condition": "price opens above the vanna flip",
+          "expected_result": "Price advances toward 6090 within the specified timeframe (this session/week as implied)."
+        }
+      ]
+    }
+  }
+}

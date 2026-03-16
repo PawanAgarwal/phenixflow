@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:04:22.874Z",
+  "inputHash": "98fc3d3181cc633b5f820b332a9ef94c859f1f1c",
+  "payload": {
+    "responseId": "resp_0b2cd6fa44b18c590069b765216dbc81a3899fc5acf67a5a41",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Term premium will fade.",
+          "condition": "",
+          "expected_result": "Measured term premium (e.g., ten-year minus real rates or five-year forward) declines over the following weeks compared to current level."
+        },
+        {
+          "instrument": "equity indices",
+          "prediction_text": "Equity index volatility will be tame and ranges will narrow.",
+          "condition": "",
+          "expected_result": "Realized volatility for major equity indices (e.g., S&P 500) declines and intraday/high-low ranges compress relative to the prior month."
+        },
+        {
+          "instrument": "gold",
+          "prediction_text": "Gold will rise.",
+          "condition": "",
+          "expected_result": "Spot gold price increases from current level over the coming weeks."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Sector dispersion will decrease.",
+          "condition": "",
+          "expected_result": "Cross-sectional return dispersion among major equity sectors falls compared with recent levels."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "GDP will decline by about 0.1–0.2 percentage points per week during a shutdown.",
+          "condition": "If government shutdown persists",
+          "expected_result": "Weekly-implied GDP growth rates show a cumulative reduction of approximately 0.1–0.2 percentage points per week, totaling ~1.2–2.4pp over a quarter-long shutdown."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Risk may become asymmetric when the shutdown ends, producing a directional move.",
+          "condition": "When shutdown ends",
+          "expected_result": "Upon resumption of data releases, market prices will move directionally (either stronger rally or selloff) beyond typical post-data-release moves, indicating asymmetric reaction."
+        }
+      ]
+    }
+  }
+}

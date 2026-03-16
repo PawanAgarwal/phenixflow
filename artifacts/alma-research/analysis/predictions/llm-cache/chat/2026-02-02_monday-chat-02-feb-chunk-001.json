@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:30:27.302Z",
+  "inputHash": "a8d88eff0dcf6999ce69969993394cd26952bc39",
+  "payload": {
+    "responseId": "resp_00cae4ee597769c70069b7875e782481959a7402db289420a9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-02-02T18:09:34.870Z",
+          "instrument": "",
+          "prediction_text": "60/65 is the support.",
+          "condition": "",
+          "expected_result": "Price will find buying interest and not close below the 60–65 level (daily close stays >=60) until support is broken."
+        },
+        {
+          "made_at": "2026-02-02T19:32:45.650Z",
+          "instrument": "",
+          "prediction_text": "The 80 to 85 line into the last 30 minutes will show a weak pin effect.",
+          "condition": "into the last 30 min",
+          "expected_result": "Price will touch or approach the 80–85 level in the final 30 minutes but will not produce a strong pin (no decisive rejection or sustained reversal from that level)."
+        },
+        {
+          "made_at": "2026-02-03T01:38:59.152Z",
+          "instrument": "",
+          "prediction_text": "Odds have shifted towards up now.",
+          "condition": "",
+          "expected_result": "Short-term probability of upward price movement increases relative to prior baseline, resulting in a higher likelihood of net gains over the next trading session(s)."
+        }
+      ]
+    }
+  }
+}

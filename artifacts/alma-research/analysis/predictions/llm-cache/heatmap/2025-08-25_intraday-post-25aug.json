@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:02:50.338Z",
+  "inputHash": "387cab9b64597ede57335ab5a8e3e07f7b5729f7",
+  "payload": {
+    "responseId": "resp_02357c2ae17c6b8c0069b764c1ecfc81a3a143a975780297f0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/structural pivot zone at 6447.75–6452.75 acting as main intraday pivot; market is likely to pin or revert around this band (especially 6450.29).",
+          "condition": "price approaches centroid 6447.75–6452.75",
+          "expected_result": "Price will stall and revert within the band or be pinned to this area for the afternoon; directional break unlikely without strong vol skew."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong support / pinning magnet at downside pivot 6444.74 — high liquidity expected there; market disfavors sustained break.",
+          "condition": "price tests 6444.74",
+          "expected_result": "Price will find support and likely bounce or remain pinned at ~6444.74; a decisive break requires realized vol and skew to the downside."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / rejection level at 6465.80 — acts as a short‑term cap; if broken early (AM) a run toward 6493–6500 is possible but expected to revert back later.",
+          "condition": "intraday call skew and realized vol show strong bid before 13:20 (AM)",
+          "expected_result": "Price breaks above 6465.80 and reaches 6493–6500, then likely reverts back toward the centroid/6450 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary pivot at 6479 after 14:00 — will decide whether market pins to 6460–6470 or extends toward 6488.",
+          "condition": "price trades near 6479 after 14:00 with call aggression",
+          "expected_result": "If 6479 holds as a pivot, price will be magnetized to 6460–6470; if 6479 is taken decisively higher, expect extension toward ~6488."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Low‑probability downside retest target around 6400–6390 if vol accelerates before 13:20; otherwise downside will be contained.",
+          "condition": "realized vol rises sharply before 13:20",
+          "expected_result": "Price can retest 6400–6390 area intraday; absent that vol surge, price will remain above the downside pivot and stay pinned."
+        }
+      ]
+    }
+  }
+}

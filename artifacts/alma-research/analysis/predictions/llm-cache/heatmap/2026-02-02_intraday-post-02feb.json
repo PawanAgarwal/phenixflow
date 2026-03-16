@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:18.723Z",
+  "inputHash": "0802b4a0f9edc2f45da8b50ee1ea098dec25ce88",
+  "payload": {
+    "responseId": "resp_09d86d0ac3306ca50069b7677347688190b1a4e0d87fe28fdb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/pinning zone between ~6825-6854 (large red/orange gamma heat) acting as support; expects spot to gravitate back toward this zone on downside attempts.",
+          "condition": "SPX trades below 6894 pivot toward 6831 target or shows downward momentum into 6860-6865 vanna flip",
+          "expected_result": "If price drops into 6860-6850 area, expect rejection and reversion back up toward 6894-6920 within the session (bounce from 6825-6854 support)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance/magnetic area around ~6950-6965 (green/yellow gamma peaks and upside pivot at 6920.84 with target ~6964.87); upside attempts are likely to stall near 6950-6965.",
+          "condition": "SPX rallies above current centroid (~6914) toward upside pivot",
+          "expected_result": "If price moves up toward 6950-6965, expect slowing momentum and likely reversal back to the 6910-6925 area (fail-to-break and reversion to pivot)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Localized rejection/‘line in the sand’ at the 6860-6865 vanna flip (visible trough/contour) with high impact for intraday reversion.",
+          "condition": "Price touches 6860-6865",
+          "expected_result": "Immediate intraday rejection from 6860-6865, initiating a rebound of ~20-50 points back toward the nearer pivot (6894-6920)."
+        }
+      ]
+    }
+  }
+}

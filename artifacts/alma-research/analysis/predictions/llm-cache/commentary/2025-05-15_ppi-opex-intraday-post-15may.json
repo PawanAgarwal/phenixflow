@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T01:56:58.698Z",
+  "inputHash": "0bbb33662e4955c7fe17d7853b7bfa4d8845e46b",
+  "payload": {
+    "responseId": "resp_017cf2a3fb9fda0a0069b7635faef881a3899335ccc730de3d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will revert with ~64.81% probability based on momentum.",
+          "condition": "",
+          "expected_result": "SPX price will move back toward its recent mean/centroid rather than continue trending away within the next short-term trading window (days)."
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "ES=F has ~63.72% probability of reversion based on momentum.",
+          "condition": "",
+          "expected_result": "ES=F futures will reverse recent directional move and return toward its short-term average within the next few trading sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid of the options profile is at 5848.63–5853.26, concentrating positioning and implying consolidation around that range.",
+          "condition": "",
+          "expected_result": "SPX will trade and consolidate within the 5848.63–5853.26 range for an extended intraday-to-multi-day period rather than breaking decisively away."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Key upside inflection is at 5939.42 and would accompany vol expansion if broken.",
+          "condition": "SPX breaks above 5939.42",
+          "expected_result": "Implied and realized volatility will increase and SPX will continue to rally following the breakout above 5939.42."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Key downside inflection is at 5772.91 and would accompany vol expansion if broken.",
+          "condition": "SPX breaks below 5772.91",
+          "expected_result": "Implied and realized volatility will increase and SPX will continue to decline after breaching 5772.91."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Odds favor a benign outcome (limited downside) into June FOMC and OpEx window.",
+          "condition": "",
+          "expected_result": "SPX will avoid a sharp sell-off and remain relatively range-bound or gradually higher through the June FOMC and OpEx dates."
+        },
+        {
+          "instrument": "VIX futures",
+          "prediction_text": "A measured equity pullback toward 5749.62 could rebuild a bullish setup into June given the current term structure in contango.",
+          "condition": "SPX/ES pull back to ~5749.62",
+          "expected_result": "VIX term structure and option positioning will favor re-establishing bullish exposure into June, supporting a rebound in equities after reaching ~5749.62."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "No vol squeeze is expected in the next monthly window; instead a slower pullback should start while SPX attempts to build stable support filling gaps.",
+          "condition": "",
+          "expected_result": "Realized volatility will not compress sharply; SPX will gradually pull back and trade lower to form support and fill gaps over the coming weeks rather than undergo a sudden volatility squeeze."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday centroid is at 5821.33 and calls pivot at 5913.52, with intraday speed profile tilted heavily negative favoring spot down/vol down.",
+          "condition": "",
+          "expected_result": "During the trading day, SPX will trend downward toward the centroid (around 5821.33) and volatility will decline unless intraday vol diverges (which would invalidate the call)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Below intraday centroids SPX can fall toward 5782.90, and if volatility catches up, to 5768.68 where longer gamma should take effect.",
+          "condition": "SPX trades below intraday centroid levels",
+          "expected_result": "SPX will decline to 5782.90 and, if realized volatility rises, further drop to approximately 5768.68 where gamma-related buying should begin to stabilize prices."
+        }
+      ]
+    }
+  }
+}

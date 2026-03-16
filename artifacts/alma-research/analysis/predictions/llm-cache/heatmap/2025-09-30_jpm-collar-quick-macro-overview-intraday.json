@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:04:22.786Z",
+  "inputHash": "7b14e06657dd994018d72110ab84eb7fcedebb01",
+  "payload": {
+    "responseId": "resp_041f744a7d9137270069b76520268c819597f6abfbf60dcb57",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong downside sticky/pinning zone around 6590–6575, with 6590 noted as very sticky and a magnet after 13:30. Heavy downside gamma below the downside pivot should pull price toward this band.",
+          "condition": "trade moves below downside pivot 6611.39",
+          "expected_result": "Price will gravitate toward and spend time at 6590–6575 within the session; expect mean-reversion bounces from that band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary intraday range between 6624–6678 with a magnetic intra-range level at ~6653; most likely trading will remain contained here for the day.",
+          "condition": "none",
+          "expected_result": "Price will oscillate within 6624–6678 for the session, repeatedly reverting toward ~6653."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance/ pinning cluster at 6678–6680 that looks unbreakable after 13:30; if call skew remains bid and vol compresses, the market can be drawn to higher magnets at 6690 and 6708.",
+          "condition": "post-13:30 with call skew bid and realized vol compressing",
+          "expected_result": "Price will stall and likely reject around 6678–6680; if conditions met, expect extension to 6690 and possible pull toward 6708 as a secondary magnet."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma supply below 6611 with heavy supply profile means downside vol-burning is likely if sellers push through, supporting mean reversion attempts.",
+          "condition": "sustained push below 6611",
+          "expected_result": "Expect rapid vol-burning and short-term mean reversion attempts back toward 6611–6624 after initial drop."
+        }
+      ]
+    }
+  }
+}

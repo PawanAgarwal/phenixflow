@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T01:54:06.989Z",
+  "inputHash": "2dccdf7f9e32b11be84b8370370424608e1a885d",
+  "payload": {
+    "responseId": "resp_09d943e756018df40069b762b4bfa88196aa5425ad3995de3c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price will pivot around 5599 and that level will determine whether calls or puts catch a bid.",
+          "condition": "",
+          "expected_result": "Price will oscillate around 5599 and directional order flow (calls vs puts) will shift depending on which side gains buying interest."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price moves above 5696 the net suppressive charm flips to net supportive.",
+          "condition": "price > 5696",
+          "expected_result": "Market microstructure will show a shift to supportive flows, increasing likelihood of further upside moves or call buying interest."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price moves above 5729.53 we might see a weaker squeeze on the call side if they can catch a bid.",
+          "condition": "price > 5729.53",
+          "expected_result": "Spot will experience a modest upward squeeze accompanied by higher implied volatility (spot up/vol up) provided call demand appears."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If puts stabilize at 5501.58 and volatility falls, price can be held at a lower level.",
+          "condition": "price ≈ 5501.58 and volatility decreases",
+          "expected_result": "Downside price stabilization near 5501.58 with reduced intraday volatility and limited further declines."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Watch for signs around 5616.25 and 5698.83 as important local pivots near the centroid.",
+          "condition": "",
+          "expected_result": "Short-term momentum and microstructure will show changes at 5616.25 and 5698.83, indicating potential local support/resistance or initiation points for flow-driven moves."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Price must overcome the vanna flip at 5630.49 and low volatility is needed for price to break through that line.",
+          "condition": "price > 5630.49",
+          "expected_result": "If volatility is low, price will more readily break above 5630.49; if volatility remains high, attempts to cross this level will likely fail or reverse."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If oscillation holds and volatility declines, price can stabilize at 5656.71 with local vanna and charm support.",
+          "condition": "volatility decreases",
+          "expected_result": "Price will gravitate to and hold around 5656.71 with reduced intraday variance due to stabilizing hedging flows."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5700 could become a potential pinning level.",
+          "condition": "",
+          "expected_result": "Price will be frequently tested and spend an extended period trading near 5700 intraday, indicating pinning behavior."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A minor squeeze may occur if price moves above 5698.83 before 1 PM and calls catch a bid.",
+          "condition": "price > 5698.83 before 2025-03-21T13:00:00Z",
+          "expected_result": "Spot will experience a minor upward squeeze with rising vols and short-term gains driven by call buying."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price rises above 5738 it can only stabilize there if volatility decreases.",
+          "condition": "price > 5738",
+          "expected_result": "Sustained trading above 5738 will occur only when implied volatility falls; otherwise price is likely to revert below 5738."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Bears will begin to feel the longer downside gamma effect at 5532 and 5500 will act as a strong magnet.",
+          "condition": "",
+          "expected_result": "Once price approaches 5532, downside gamma pressure will accelerate bearish flows and price will be drawn toward 5500, increasing probability of tests of 5500."
+        }
+      ]
+    }
+  }
+}

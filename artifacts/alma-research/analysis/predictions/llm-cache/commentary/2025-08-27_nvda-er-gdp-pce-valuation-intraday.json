@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:02:34.856Z",
+  "inputHash": "bba4199fc00a2ee14b9e42a98f0d2b0e257fb855",
+  "payload": {
+    "responseId": "resp_0a210363ddc82e8d0069b764b20ad4819ca8a41f94bc4867ef",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "NVDA",
+          "prediction_text": "NVDA will revert toward the $171.20 target (pullback) with high probability.",
+          "condition": "",
+          "expected_result": "NVDA price declines to approximately $171.20 within the next weeks/months (measurable drop from current price to $171.20)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is expected to range above the centroid 6461.86–6456.94 with supportive liquidity at the upper bound of that centroid.",
+          "condition": "",
+          "expected_result": "SPX trades mostly between ~6460 and 6470, repeatedly finding support near the centroid upper bound during the trading day(s)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If call skew catches a bid at the upside pivot 6476.54, SPX is expected to move to an upside target of 6485.98 and potentially toward 6500.",
+          "condition": "call skew catches a bid at 6476.54",
+          "expected_result": "SPX rises through 6476.54 and reaches at least 6485.98, with a possible extension to ~6500 that day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will face rejection in the 6505–6520 range.",
+          "condition": "",
+          "expected_result": "SPX fails to sustain trade above 6505 and reverses lower after touching the 6505–6520 range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6452.14 with supports at 6445/40 and 6415/20; downside max is 6388.43 and a retest of ~6400/6385 is less likely.",
+          "condition": "",
+          "expected_result": "If SPX breaks below 6452.14, price will find support near 6445–6440 or 6415–6420 and is unlikely to reach 6388.43; a move to ~6385–6400 is possible but low probability."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Most likely intraday path is ranging above the centroid with potential upsticks then reversion back until 2:10 PM, with 6480 possibly pinning if spot is above 6470.",
+          "condition": "spot is above 6470 by 2:10 PM",
+          "expected_result": "By 2:10 PM, SPX pins near 6480 (price trades and holds close to 6480) after intraday upticks and subsequent reversion to centroid area."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market-managed vol spikes via vomma supply will continue this month, tempering directional momentum unless confirmed.",
+          "condition": "",
+          "expected_result": "Intraday realized volatility spikes are increasingly met by option-seller/hedge activity, leading to muted continuation moves and frequent reversals rather than sustained directional breakouts."
+        }
+      ]
+    }
+  }
+}

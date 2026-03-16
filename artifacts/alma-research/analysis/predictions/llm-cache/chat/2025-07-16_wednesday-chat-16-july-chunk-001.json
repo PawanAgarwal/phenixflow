@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:29:19.475Z",
+  "inputHash": "d96e4fa14d0b8683343347f07ada97ffacb06d2e",
+  "payload": {
+    "responseId": "resp_0e39900e849922c80069b7871acc70819dae3a6289b42c7fa6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-16T19:23:37.043Z",
+          "instrument": "",
+          "prediction_text": "Start to take profit when you see bigger sell orders, profit taking, or decreasing directional volume, or when the price approaches a certain pivot.",
+          "condition": "seeing bigger sell orders, profit taking, or decreasing directional volume; or price approaching a certain pivot",
+          "expected_result": "Traders will close part of positions and realize gains when those volume signals or pivot proximity occur."
+        },
+        {
+          "made_at": "2025-07-16T19:24:37.666Z",
+          "instrument": "",
+          "prediction_text": "If the market disproves your position and moves against you, do not accumulate losses; consider closing unless it is a fake-out or breakout.",
+          "condition": "market moves against your position",
+          "expected_result": "Traders will exit losing positions promptly unless subsequent price action indicates a fake-out or breakout, reducing further losses."
+        },
+        {
+          "made_at": "2025-07-16T19:27:17.683Z",
+          "instrument": "",
+          "prediction_text": "Wait for your second target that you planned before taking further action.",
+          "condition": "reaching the planned second target",
+          "expected_result": "Traders will hold positions until the predefined second target is reached before adjusting or closing them."
+        }
+      ]
+    }
+  }
+}

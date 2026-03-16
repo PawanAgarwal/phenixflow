@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:03:22.749Z",
+  "inputHash": "390423a7235dc24f41e3e6e124035ba9a49dcfe8",
+  "payload": {
+    "responseId": "resp_014f1b21433924f00069b764e5a9a881938bf8be10d1bc302a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX below the 17s will be pinned towards the 14s.",
+          "condition": "",
+          "expected_result": "VIX value falls into the 14-14.99 range within the week following the post."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "If 17s is broken as a result of FOMC, 21s is the main target.",
+          "condition": "VIX breaks below or above 17s as a result of FOMC",
+          "expected_result": "VIX moves to approximately 21 (20.50–21.50) after the trigger event."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A move to 21s in VIX would result in a 6655.22 - 6513.36 (margin of error of 6479.06) for SPX.",
+          "condition": "VIX moves to approximately 21",
+          "expected_result": "SPX trades within the 6655.22–6513.36 range (with possible low to ~6479.06) following the VIX move."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is locked up into a range with downside well-supported and window of risk opens after post-OpEx Tuesday.",
+          "condition": "post-OpEx Tuesday",
+          "expected_result": "SPX breaks out of its current range to the downside or upside (increased directional price movement and higher realised volatility) in the days after the specified Tuesday."
+        }
+      ]
+    }
+  }
+}

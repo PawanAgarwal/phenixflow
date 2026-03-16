@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:01:03.710Z",
+  "inputHash": "c479b99098f92d56766df04d350a5e7493e55181",
+  "payload": {
+    "responseId": "resp_01bdece915373ebe0069b764594b8481a3b0eb689734696d9e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pivot / pin at 6317-6330 area: centroid 6317.37 creates a persistent pivot; spot above 6305.49 will be resisted at ~6323 and pinned at ~6315, with 6330 acting as a magnet.",
+          "condition": "spot > 6305.49 after 11:30am",
+          "expected_result": "Price gravitates toward 6323–6330 and shows pinning/ congestion around 6315–6330 within the same session (reversion/range-bound behavior)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/support at 6305.49 with deeper magnets at 6298 / 6282 (6288 as a critical intraday line in the sand during last 30 minutes).",
+          "condition": "spot < 6305.49 after 11:30am",
+          "expected_result": "Price moves toward 6298–6282, with 6288 acting as a firm support during final 30 minutes; expect bounce/reversion signals near these levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside squeeze ceiling in early session and intraday max target around 6353–6360 (power hour target shifts to 6360 after 13:34, 6348.14 is a trap/pin during power hour).",
+          "condition": "sustained intraday buying within first two hours or into power hour",
+          "expected_result": "Price can spike up to 6353–6360 but likely stalls or gets pinned at 6348–6360; anticipate reversal or trapped long positions near these levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Tail downside support / profit-taking target at ~6248 if volatility increases and downside momentum accelerates.",
+          "condition": "volatility picks up and downside break occurs",
+          "expected_result": "Price can travel down toward ~6248 as the primary support/target for profit taking before larger mean reversion."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:51:47.602Z",
+  "inputHash": "77a90011b06f0e2fb59f67405fd27048b38fc739",
+  "payload": {
+    "responseId": "resp_0cb4b38c0ff7711a0069b7622db17c8190ac19903baf144ae7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Volatility should decrease in order for SPX to break below 6048.",
+          "condition": "break below 6048",
+          "expected_result": "Implied volatility (e.g., VIX or short-term IV) declines prior to or during the move and SPX trades below 6048"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Volatility should decrease in order for SPX to break above 6145.",
+          "condition": "break above 6145",
+          "expected_result": "Implied volatility (e.g., VIX or short-term IV) declines prior to or during the move and SPX trades above 6145"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is a bullish intraday bias if the upside vanna flip (6145) can be broken.",
+          "condition": "break above 6145",
+          "expected_result": "SPX exhibits sustained intraday upside momentum after surpassing 6145, with higher probability of further gains during the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The odds are high that SPX will be broken to the upside (past 6145) because the asymmetric local speed profile doesn’t favor local vol increase.",
+          "condition": "none",
+          "expected_result": "SPX moves above 6145 during the session without a concurrent increase in local intraday volatility"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If price rejects the upside vanna flip, 6078 is a level where the 6100 magnetic field could hold the price.",
+          "condition": "rejection at upside vanna flip (around 6145)",
+          "expected_result": "After a rejection near 6145, SPX declines toward but holds around 6078–6100 and fails to break meaningfully below 6078"
+        }
+      ]
+    }
+  }
+}

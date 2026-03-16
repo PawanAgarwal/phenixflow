@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:57:29.952Z",
+  "inputHash": "ef27230114088b312b7733af6684ac136a009d7c",
+  "payload": {
+    "responseId": "resp_0506560edd4e1a360069b7637c98848194a96ba3d6950328e5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "30y swap spread",
+          "prediction_text": "Negative swap spreads will signal severe funding and liquidity stress and foreshadow bond‑market meltdowns and equity drawdowns unless central banks deploy liquidity backstops or adjust regulatory ratios.",
+          "condition": "",
+          "expected_result": "Swap spreads remain deeply negative and precede increased bond market volatility, a sustained selloff in long-dated Treasuries, and a correlated decline in equities within weeks to months unless policy intervention occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If momentum holds 5837.48 and volatility decreases, SPX will trade rangebound below 5850.",
+          "condition": "momentum holds 5837.48 and vol decreases",
+          "expected_result": "SPX will remain confined under 5850 for multiple intraday sessions with limited upside breakouts."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If 5822 rapidly reduces intraday volatility, ES can break through 5800.",
+          "condition": "5822 swallows vol sharply",
+          "expected_result": "ES will breach 5800 and trade below that level intraday."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If 5800 breaks without vol catching up, momentum will likely not carry ES far past the 95.4% momentum line.",
+          "condition": "5800 breaks",
+          "expected_result": "After breaking 5800, ES will show limited follow-through and fail to extend momentum significantly beyond the 95.4% line unless volatility increases."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The centroid of the intraday profile is at 5849.86, with upside shorter-dated gamma taking effect around 5865.09 and by 5871.58.",
+          "condition": "",
+          "expected_result": "Price action will gravitate toward 5849.86 intraday, and upside gamma-related buying pressure will emerge near 5865–5871, producing intraday support/resistance behavior at those levels."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The downside intraday pivot is 5813.10 but local positive speed implies vol will not calm instantly and price should make lower highs.",
+          "condition": "",
+          "expected_result": "If ES moves toward 5813.10, intraday volatility will remain elevated briefly and subsequent price action will produce a pattern of lower highs rather than immediate stabilization."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Key inflection for SPX is 5880.80 with confirmation at 5774.12 for a decisive move.",
+          "condition": "",
+          "expected_result": "A move above 5880.80 (or below 5774.12) will confirm a bullish (or bearish) inflection, leading to further sustained price movement in that direction."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Primal downside target for ES is 5743.15 with confirmation at 5794.77.",
+          "condition": "",
+          "expected_result": "If ES declines through 5794.77, it will likely continue toward 5743.15."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX key level is 20.66 with confirmation at 23.03.",
+          "condition": "",
+          "expected_result": "If VIX rises above 23.03, expect continued volatility expansion and higher realized volatility; if it stays below 20.66, expect volatility to remain subdued."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:12:20.852Z",
+  "inputHash": "bccf1f2a60b49785aa9f6e52e48accf80da7d2ed",
+  "payload": {
+    "responseId": "resp_0702e5b521e607860069b766fbf5888193b62863d3b75601e0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Speed profile is positive both locally and net, steepening below the centroid of 6858.98 - 6861.38.",
+          "condition": "price < 6858.98",
+          "expected_result": "Market steepens (short-end yields fall relative to long-end or curve slope increases) while net speed metrics show positive bias."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Customers are selling downside vol and marking the centroid zone +6853.69 as a potential supportive and sticky zone.",
+          "condition": "",
+          "expected_result": "Price will find support and show limited downside around ~6853.69, with reduced realized/decompressed downside volatility."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "There is an iron-condor (IC) at 6850/55 - 6900/05 intended to hold up the market and manipulate price to the condor wings.",
+          "condition": "",
+          "expected_result": "Price will be capped near the upper wing (~6900-6905) and supported near the lower wing (~6850-6855), trading range-bound between those levels."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Slightly more probability is staken for a downside move, with the rest being an upside stabilization at the upside pivot.",
+          "condition": "",
+          "expected_result": "Higher chance of a downside move toward the downside pivot/target than of a sustained breakout higher; if downside fails, price will stabilize near the upside pivot."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Upside pivot is at 6892.53 with upside target at 6902.54 (just right at the upper wing of the IC).",
+          "condition": "price > 6892.53",
+          "expected_result": "Price will move toward and test 6902.54; a break above 6902.54 would indicate upside follow-through."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Downside pivot is at 6823.22 with downside target of 6814, and if it happens the pivot is sticky after.",
+          "condition": "price < 6823.22",
+          "expected_result": "Price will move toward 6814 and then find persistent support near the 6823.22 pivot level."
+        },
+        {
+          "instrument": "(unspecified)",
+          "prediction_text": "Inside the IC, 6880 is the line in the sand ±5 pts to indicate which wing will pull spot towards itself.",
+          "condition": "price crosses above or below 6880 ±5 pts (i.e., >6885 or <6875) after 1PM",
+          "expected_result": "Crossing above 6885 will increase probability of an upside move toward the upper IC wing; crossing below 6875 will increase probability of a downside move toward the lower IC wing."
+        }
+      ]
+    }
+  }
+}

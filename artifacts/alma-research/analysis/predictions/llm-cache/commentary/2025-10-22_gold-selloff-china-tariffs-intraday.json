@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T02:05:40.225Z",
+  "inputHash": "9a499648b6cf8fb9d93b159c30916effc342a187",
+  "payload": {
+    "responseId": "resp_05114b571e15824a0069b7656298a0819cb84ecd03f1ca1239",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Gold",
+          "prediction_text": "I remain bullish on Gold until 3100/3200 zone holds.",
+          "condition": "3100/3200 zone holds",
+          "expected_result": "Gold rallies or does not break below the 3100–3200 zone, maintaining an overall bullish trend"
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "Late longs can be squeezed out if 4k is weak now.",
+          "condition": "4,000 is weak",
+          "expected_result": "Gold price falls further causing short-covering and squeeze-driven liquidation of late long positions"
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "3700/3800 area are on the table if 4k is weak now.",
+          "condition": "4,000 is weak",
+          "expected_result": "Gold declines toward the 3700–3800 area"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid at 6762.46 will act as a line in the sand for today and cannot be really broken once spot opens above or below it (very-very low probability).",
+          "condition": "spot opens above or below 6762.46",
+          "expected_result": "Price remains on the same side of 6762.46 for the trading day and does not cross back through it"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6732.36 supports the spot until 6672.44 and acts as a local magnet.",
+          "condition": "during AM session",
+          "expected_result": "Price finds support around 6732.36 and gravitates toward 6672.44 without breaking below 6672.44 in AM"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If 6672.44 is broken because downside volatility catches a bid, we can see 6600 today as min.",
+          "condition": "6672.44 is broken due to rising downside volatility",
+          "expected_result": "Price falls to approximately 6600 intraday"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Into the PM 6705/10 works as a local pin if 6695 can be broken before 2:30PM, otherwise it is the 6670/85 zone.",
+          "condition": "6695 broken before 2:30PM",
+          "expected_result": "Price pins or consolidates around 6705–6710 in the PM; if not broken, price pins around 6670–6685"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6775.37 gives a freeway towards 6782.49, which is a very strong pin.",
+          "condition": "price breaks above 6775.37",
+          "expected_result": "Price moves toward 6782.49 and pins at or near 6782.49"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If call skews bid and realized vol catches up, we can even see 6815 then reversion back to 6782 or 6803–6782 is more probable for EOD pin.",
+          "condition": "call skew bids and realized vol increases",
+          "expected_result": "Price rallies to ~6815 then reverts back to the 6782–6803 area by end of day"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the spot chooses up, the positioning will hold and stabilize it, suppressing volatility, favorable for premium collection strategies and reversion trades with futures.",
+          "condition": "spot moves up toward upper bounds",
+          "expected_result": "Volatility falls and price stabilizes near upper bounds, enabling premium collection and reversion futures trades"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the market chooses down, we will see some momentum and reversion, tradable with options.",
+          "condition": "spot moves down",
+          "expected_result": "Price exhibits downward momentum followed by reversion moves that create option-tradable opportunities"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is likely to range primarily with downside movements given downside speed profile and hedging.",
+          "condition": "general intraday session",
+          "expected_result": "Price trades in a range but with more frequent or larger downside moves than upside moves"
+        }
+      ]
+    }
+  }
+}

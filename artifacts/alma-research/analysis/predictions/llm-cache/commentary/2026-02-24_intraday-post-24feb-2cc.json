@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:15:20.335Z",
+  "inputHash": "5a81f9dd1508118ca7e08cef5d1b9d60e5b724fe",
+  "payload": {
+    "responseId": "resp_04337a7d7113d3650069b767aef80c81938c273350aab4606d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES trades below 6855 it confirms downside momentum.",
+          "condition": "trade below 6855",
+          "expected_result": "ES will continue lower after breaching 6855, providing a shorting opportunity or further declines from that level."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES trades above 6905 it confirms upside momentum.",
+          "condition": "trade above 6905",
+          "expected_result": "ES will continue higher after clearing 6905, providing a buying opportunity or further advances from that level."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Watch 6885 as the pivot for ES intraday direction.",
+          "condition": "none",
+          "expected_result": "Intraday price action will pivot around 6885 such that moves relative to 6885 determine short-term bias (holds above imply bullish bias; holds below imply bearish bias)."
+        }
+      ]
+    }
+  }
+}

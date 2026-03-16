@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:16:08.718Z",
+  "inputHash": "203ed0a1e05eac98109bb0307837ec300deb9739",
+  "payload": {
+    "responseId": "resp_0b878aa995cc0c580069b767e2d2cc81a2b127e6e7a91654fa",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky/support zone and local pin around 6580–6590 (gamma accumulation). Expect price to find support and stall/revert near this level on downside attempts.",
+          "condition": "price drops toward 6580–6590",
+          "expected_result": "Price is likely to halt downside momentum and bounce/revert within the 6580–6590 range within the same trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong supportive gamma cluster and downside magnet near 6564–6565 (99.73% risk level). This area is a likely grab point if left-tail moves accelerate.",
+          "condition": "strong downside momentum or gap lower",
+          "expected_result": "Price will be attracted to and likely pin or test 6564–6565 before further extension; expect at least a temporary pause or bounce there."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Reversion/upside target cluster around 6674–6741 with additional friction toward 6760. The heatmap shows upside gamma troughs/peaks indicating likely travel corridor to the 6670–6740 area.",
+          "condition": "upside momentum resumes and pivot at 6674.90 holds",
+          "expected_result": "Price is likely to travel toward and test the 6670–6740 corridor (with 6760 as an upper error margin) and show slowing/reversion within that range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance/rejection zone around 6827–6871–6915 (higher gamma concentration and risk percentiles). These levels act as sticky resistance if price reaches them.",
+          "condition": "price rallies above 6740 toward 6800+",
+          "expected_result": "Upon reaching 6825–6920, expect increased resistance and higher probability of rejection or consolidation rather than a clean breakout."
+        }
+      ]
+    }
+  }
+}

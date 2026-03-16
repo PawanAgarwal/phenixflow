@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:54:14.044Z",
+  "inputHash": "c714444dbdac92e6e1267899d3e63852720424f9",
+  "payload": {
+    "responseId": "resp_051b1e70bcee646a0069b762bf671c81949a4c316fd52e8767",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid pivot at ~5599 acts as primary magnet: price likely to gravitate back toward 5599; if held, put decay buying supports price above this level.",
+          "condition": "price moves away from 5599",
+          "expected_result": "Price reverts toward 5599 within the session (reach within ~15-40 pts of 5599)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Break above 5696 flips charm from suppressive to supportive — if price clears 5696, dealers become net supportive and a short-term upside squeeze is likely.",
+          "condition": "price closes/holds above 5696",
+          "expected_result": "SPX moves higher toward the next call squeeze area around 5729–5730 within the session (gain ~30–40 pts)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Call-side weaker squeeze / resistance zone around 5729.5–5730: expect rejection or slowdown of upside momentum near 5729.5 if reached.",
+          "condition": "price approaches 5729.5–5730",
+          "expected_result": "Price stalls or reverses there (failure to sustain gains above 5729.5 within a few bars)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Put-side support zone near 5501.6 — strong put interest creates a sticky support area and limits downside if tested.",
+          "condition": "price approaches 5501.58",
+          "expected_result": "Downside is contained and price bounces off ~5501.6 (reversal or at least a pause within session)."
+        }
+      ]
+    }
+  }
+}

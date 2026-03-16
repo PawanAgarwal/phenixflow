@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:14:14.246Z",
+  "inputHash": "323fd7179621626495dec5c98a41a46528c1f884",
+  "payload": {
+    "responseId": "resp_0b3253ee755ed62e0069b7676d61688197a0e5d31d53e2215c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "As long as SPX remains under 6976.35, downward pressure will persist.",
+          "condition": "SPX < 6976.35",
+          "expected_result": "SPX will continue to decline or fail to make sustained gains while below 6976.35"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX takes out 6976.74 weekly, the market will gain positive imbalance (upside momentum).",
+          "condition": "SPX > 6976.74 (weekly close)",
+          "expected_result": "SPX will show a sustained move higher and improved upside momentum after a weekly close above 6976.74"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "While SPX is below 6959.42, the market will accumulate negative imbalance and march towards equilibrium (further weakness).",
+          "condition": "SPX < 6959.42",
+          "expected_result": "SPX will drift lower or fail to recover, reflecting accumulated negative imbalance until it reaches a new equilibrium level"
+        },
+        {
+          "instrument": "bitcoin",
+          "prediction_text": "If balance‑sheet discipline lifts term premia and long‑end yields and the market begins to slide, easing will become unavoidable soon, increasing vulnerability in gold/crypto including Bitcoin.",
+          "condition": "If term premia rise and long‑end yields increase leading to a market slide",
+          "expected_result": "Monetary easing will be implemented soon and Bitcoin will become more vulnerable (price weakness or increased volatility) as liquidity hedges respond to policy and easing expectations"
+        },
+        {
+          "instrument": "gold",
+          "prediction_text": "Gold (as a liquidity hedge) will be increasingly vulnerable if balance‑sheet discipline pushes term premia higher and lifts long‑end yields and the market slides.",
+          "condition": "If term premia rise and long‑end yields increase leading to a market slide",
+          "expected_result": "Gold will weaken or exhibit increased volatility as investors react to higher term premia and shifting policy expectations"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market is very fragile this week, especially above the 6900 level, with supportive forces acting through volatility rather than spot support.",
+          "condition": "price > 6900 (this week)",
+          "expected_result": "Price will be prone to volatile moves and potential selloffs rather than finding stable spot-based support while above 6900 this week"
+        }
+      ]
+    }
+  }
+}

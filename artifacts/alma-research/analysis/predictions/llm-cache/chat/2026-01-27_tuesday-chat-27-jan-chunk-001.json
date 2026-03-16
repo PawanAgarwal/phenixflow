@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:30:24.083Z",
+  "inputHash": "7467f7ffc14b442442bce4a69aa72272c41184cc",
+  "payload": {
+    "responseId": "resp_001f689e7befbd380069b7875a11c081a3bdfb59ddcf0c50c6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-01-27T14:55:37.033Z",
+          "instrument": "",
+          "prediction_text": "Downside is expected locally; we are not short vanna locally.",
+          "condition": "",
+          "expected_result": "Price will move lower locally (near-term decline in spot price)."
+        },
+        {
+          "made_at": "2026-01-27T14:59:02.017Z",
+          "instrument": "",
+          "prediction_text": "Volatility can be expected.",
+          "condition": "",
+          "expected_result": "Implied or realized volatility will increase from current levels."
+        },
+        {
+          "made_at": "2026-01-27T14:59:51.457Z",
+          "instrument": "",
+          "prediction_text": "The expected volatility will be downside vol.",
+          "condition": "",
+          "expected_result": "Price moves will be downward while volatility rises (spot down, vol up)."
+        },
+        {
+          "made_at": "2026-01-27T15:02:37.670Z",
+          "instrument": "",
+          "prediction_text": "With a stronger short vanna regime and large open interest, upside moves can indirectly inflate volatility.",
+          "condition": "presence of a stronger short vanna regime and big open interest",
+          "expected_result": "An upward spot move will be accompanied by an increase in implied volatility."
+        },
+        {
+          "made_at": "2026-01-27T15:06:13.683Z",
+          "instrument": "",
+          "prediction_text": "If volatility arises from a broad sentiment shock that weakens long growth/market exposure, spot will go down and volatility will go up.",
+          "condition": "volatility originates from a broad sentiment shock that shakes long exposure on growth/markets",
+          "expected_result": "Spot price will decline and implied/realized volatility will increase (spot down, vol up)."
+        }
+      ]
+    }
+  }
+}

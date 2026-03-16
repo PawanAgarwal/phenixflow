@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:02:00.142Z",
+  "inputHash": "10766a239a9c316a2bd435867a73c17697f4331f",
+  "payload": {
+    "responseId": "resp_02b28231537da2d20069b764916c74819e94b274360b270248",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside magnet / rejection cluster around 6479-6480 (big gamma peak and hot heatmap red zone) — likely to attract price if breakout momentum occurs above 6412/6420.",
+          "condition": "price breaks and holds above 6412-6420 into late morning (by ~11:50)",
+          "expected_result": "SPX travels up to 6475-6485 within the session and faces heavy resistance/reversion attempts at that band; expect pinning or pullback from ~6479-6480."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary intraday centroid / sticky range centered near 6392-6397 with heavy gamma lines nearby — market likely to trade and revert around this centroid.",
+          "condition": "no strong breakout above upside pivot or breakdown below downside pivot (i.e., low volatility environment)",
+          "expected_result": "SPX remains within roughly 6374-6404 for extended periods, oscillating around 6392-6397 and showing reluctance to sustain directional moves away from that zone."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and short-term pinning level at 6412 (with a margin to 6420) — acts as a magnetic resistance if approached from below and as sticky cap if not convincingly cleared.",
+          "condition": "price approaches 6410-6420 without strong volatility or momentum",
+          "expected_result": "SPX stalls or pins near 6410-6420 and either reverts back toward the centroid (≈6392-6397) or, if held through 11:50, continues toward 6435-6440."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot / strong support around 6367-6360 — hard to break during power hour and will attract price if volatility calms.",
+          "condition": "price moves down toward 6367-6360 during low-volatility periods or into late session",
+          "expected_result": "SPX finds support and reverts higher from 6367-6360; if holds, expect bounce back toward the centroid (≈6390-6400)."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:57:20.689Z",
+  "inputHash": "9fd60ec7074aed4c3ff86a569a8aec13fda5796c",
+  "payload": {
+    "responseId": "resp_0203f9b19f12ef8d0069b7637b7ff4819c85b0daf22971cbec",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma/pinning cluster centered near ~5952 with a peak band ~5944–5975; this creates a sticky zone that is likely to pin price intraday and resist sustained moves away.",
+          "condition": "price inside 5944–5975",
+          "expected_result": "SPX will gravitate toward and trade sideways around 5950–5955 for the session, with reduced probability of large directional moves beyond ~5920 downside or ~5975 upside until gamma shifts."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/support around ~5909–5920 (noted as pivot and downside vanna level); heatmap shows gamma troughs and smaller peaks below current spot signaling likely reversion support.",
+          "condition": "decline toward 5910–5920",
+          "expected_result": "Price should find support and show a mean-reversion bounce back toward the 5940–5960 area within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Deeper sticky support cluster near ~5830–5835 (strong gamma concentration visible at lower edge of heatmap) acting as a strong magnet if price sells off hard.",
+          "condition": "break below ~5900 with momentum",
+          "expected_result": "If momentum carries price down, SPX is likely to be drawn to and slow/settle into the 5830–5840 area where gamma liquidity will absorb selling and increase chance of a rebound."
+        }
+      ]
+    }
+  }
+}

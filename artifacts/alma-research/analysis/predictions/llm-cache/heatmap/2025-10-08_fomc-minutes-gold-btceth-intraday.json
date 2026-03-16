@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:04:52.915Z",
+  "inputHash": "f6796fbe86b4c17baa49e28dc515d8343824d5e4",
+  "payload": {
+    "responseId": "resp_075560320e1fa3fe0069b7653d9ba881a18358428852e9c8cb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong centroid support at ~6716.7–6718.2 acting as a pin/magnet; expected to hold as primary mean reversion zone. Heatmap shows steep negative speed centered here with balanced upside/downside vacuum.",
+          "condition": "spot near or below 6718",
+          "expected_result": "Spot should gravitate back toward 6716–6719; use this area as a buy/cover zone with expectation of reversion within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "IC upper bound resistance/pin around 6740–6757 with high probability of an intraday pin to the upper IC (6757.49 as the upside target, 6740 as potential EOD pin). Heatmap shows concentrated gamma and red hotspot at this level.",
+          "condition": "upside pivot held at ~6730.8",
+          "expected_result": "If 6730.8 holds, expect moves up toward 6757 with potential EOD pin at ~6740; treat 6750–6758 as likely rejection/rotation zone unless heavy call skew bid emerges."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and strong bid around 6707 with primal downside target at ~6672.5; downside break requires substantial buying/synthetic support. Heatmap shows a trough/gamma cluster around 6672–6707.",
+          "condition": "spot breaks and stays below 6707.04",
+          "expected_result": "If below 6707, expect quick move toward 6672.48 followed by a probable revert back toward the centroid (~6717) thereafter."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher breakout magnet at ~6780 if upside momentum and skew allow breach of IC upside max (unlikely without large call skew bid). Heatmap shows a secondary gamma attractor near 6780.",
+          "condition": "sustained break above 6757.5 with calm realized vol and heavy call skew bid",
+          "expected_result": "Price can extend to ~6780 where it may pin or stall; treat 6780 as the next target/resistance on a confirmed upside breakout."
+        }
+      ]
+    }
+  }
+}

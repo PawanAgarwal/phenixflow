@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:11:12.440Z",
+  "inputHash": "e086808a40daec6629b492d69fe7600bf99e791b",
+  "payload": {
+    "responseId": "resp_0f9a769e6316db8f0069b766af6814819db4f1ab7d1d0f0734",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "BTC",
+          "prediction_text": "BTC will build a stable structure in the 74,113.30–81,297.74 support zone and then bounce out of it.",
+          "condition": "price in 74,113.30–81,297.74",
+          "expected_result": "Within weeks-to-months after entering that zone, BTC price rises at least 10% from the zone low and leaves the zone to the upside, establishing higher short-term lows."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "If BTC confirms trend continuation above 106,348.41, it will likely reach 138,241.88 and potentially 151,346.44.",
+          "condition": "close above 106,348.41",
+          "expected_result": "Within the subsequent months BTC trades at or above 138,241.88; a further extension reaches 151,346.44."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "The bear market will start once BTC breaks below the 74,113.30–81,297.74 support zone (± volatility).",
+          "condition": "close below 74,113.30–81,297.74",
+          "expected_result": "Following the break, BTC initiates a sustained downtrend that reaches the bottom target zone 40,621.76–48,388.37 within the declared multi-year window."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "The analyst will only consider buying BTC again below 60,000; alarm triggers once BTC has broken below 60,000.",
+          "condition": "close below 60,000",
+          "expected_result": "After a close below 60,000 the analyst will allocate buy orders or increase positioning; price subsequently moves toward the downside target zone 40,621.76–48,388.37."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "BTC’s downside target zone is 40,621.76–48,388.37 and is expected to be reached in a bottoming period between November 2027 and June 2030.",
+          "condition": "time between 2027-11 and 2030-06",
+          "expected_result": "At some point within Nov 2027–Jun 2030 BTC trades at least once inside 40,621.76–48,388.37."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "During 2026 BTC will experience an extended, relatively boring B-wave (multi-month consolidation/no new highs) before a long C-wave downward.",
+          "condition": "calendar year 2026",
+          "expected_result": "Throughout 2026 BTC remains range-bound with no new all-time highs for multiple months, then begins a multi-month decline (C-wave) afterward."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "After the late-2027–mid-2030 bottom and a dull consolidation, BTC will start to grind higher again and exhibit lower volatility resembling stock-market behavior.",
+          "condition": "post-bottom (after Nov 2027–Jun 2030)",
+          "expected_result": "Following the bottom and consolidation, BTC trends upward over months/years with realized volatility materially lower than prior cycle peak (e.g., 30–50% reduction in realized volatility)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "The next post-2030 bull cycle primal upside target for BTC is 220,000–260,500.",
+          "condition": "post-2030 bull cycle",
+          "expected_result": "During the next multi-year bull cycle after 2030 BTC attains prices between 220,000 and 260,500 at least once."
+        }
+      ]
+    }
+  }
+}

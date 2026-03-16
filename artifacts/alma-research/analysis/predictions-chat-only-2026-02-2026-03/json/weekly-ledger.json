@@ -1,0 +1,77 @@
+[
+  {
+    "targetWeek": "2026-03-02 to 2026-03-06",
+    "targetScope": "Monday (2026-03-02)",
+    "targetDates": [
+      "2026-03-02"
+    ],
+    "madeAt": "2026-02-26T14:14:06.409Z",
+    "sourceType": "chat",
+    "sectionKind": "commentary",
+    "sourceTitle": "THURSDAY CHAT (26/Feb)",
+    "sourcePath": "chats/2026-02-26_thursday-chat-26-feb/content.txt",
+    "instrument": "VIX",
+    "instrumentFamily": "VIX",
+    "referenceSymbol": "^VIX",
+    "referenceSource": "yahoo_chart_60m",
+    "referenceQuality": "exact",
+    "referenceValue": "18.5100",
+    "referenceAt": "2026-02-26T14:00:00.000Z",
+    "referenceLagMinutes": "14",
+    "origin": "chat_week_duration_prediction",
+    "basis": "commentary",
+    "prediction": "In the monday chat I explained why VIX has an upward pressure on Mondays + I explained the flows behind pinning-effect",
+    "condition": "",
+    "expected": "range or stall call."
+  },
+  {
+    "targetWeek": "2026-03-02 to 2026-03-06",
+    "targetScope": "Monday (2026-03-02)",
+    "targetDates": [
+      "2026-03-02"
+    ],
+    "madeAt": "2026-02-27T14:01:17.258Z",
+    "sourceType": "chat",
+    "sectionKind": "commentary",
+    "sourceTitle": "FRIDAY CHAT (27/Feb)",
+    "sourcePath": "chats/2026-02-27_friday-chat-27-feb/content.txt",
+    "instrument": "VIX",
+    "instrumentFamily": "VIX",
+    "referenceSymbol": "^VIX",
+    "referenceSource": "yahoo_chart_60m",
+    "referenceQuality": "exact",
+    "referenceValue": "21.3700",
+    "referenceAt": "2026-02-27T14:00:00.000Z",
+    "referenceLagMinutes": "1",
+    "origin": "chat_week_duration_prediction",
+    "basis": "commentary",
+    "prediction": "In the monday chat you will find insights about pinning effect and monday VIX-upward pressure",
+    "condition": "",
+    "expected": "range or stall call."
+  },
+  {
+    "targetWeek": "2026-03-16 to 2026-03-20",
+    "targetScope": "Tuesday (2026-03-17)",
+    "targetDates": [
+      "2026-03-17"
+    ],
+    "madeAt": "2026-03-12T10:27:20.179Z",
+    "sourceType": "chat",
+    "sectionKind": "commentary",
+    "sourceTitle": "WEDNESDAY CHAT (11/March)",
+    "sourcePath": "chats/2026-03-11_wednesday-chat-11-march/content.txt",
+    "instrument": "SPX",
+    "instrumentFamily": "SPX_complex",
+    "referenceSymbol": "^GSPC",
+    "referenceSource": "yahoo_chart_60m",
+    "referenceQuality": "chat_inferred_default",
+    "referenceValue": "6692.66",
+    "referenceAt": "2026-03-12T13:30:00.000Z",
+    "referenceLagMinutes": "183",
+    "origin": "chat_week_duration_prediction",
+    "basis": "commentary",
+    "prediction": "Zomma peaks on Tuesday, which is when the market will be most protected on the downside.",
+    "condition": "on Tuesday",
+    "expected": "Downside protection (via option dynamics) will be highest on Tuesday, reducing potential downside moves that day."
+  }
+]

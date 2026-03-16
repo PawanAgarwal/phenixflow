@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:29:37.323Z",
+  "inputHash": "21b7931199de96929ebd25989ea0d22b40601daf",
+  "payload": {
+    "responseId": "resp_0fb70b5fa9c227c00069b7872e245481919fe271d46553ade6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-09-22T08:34:06.971Z",
+          "instrument": "NDX",
+          "prediction_text": "If NDX breaks its current level, SPX will follow regardless of where SPX trades.",
+          "condition": "NDX breaks its current level",
+          "expected_result": "SPX moves in the same direction as NDX (follow-through break) after NDX breaks the specified level"
+        },
+        {
+          "made_at": "2025-09-22T08:53:20.494Z",
+          "instrument": "GOLD",
+          "prediction_text": "Gold will touch resistance soon and then rangebound below that resistance zone.",
+          "condition": "none",
+          "expected_result": "Gold rises to a nearby resistance level and thereafter trades within a horizontal range below that resistance"
+        }
+      ]
+    }
+  }
+}

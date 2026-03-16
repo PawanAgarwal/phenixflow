@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:01:14.478Z",
+  "inputHash": "19bb33dd36ec7a9abeea08f4ac74fafc9c344f95",
+  "payload": {
+    "responseId": "resp_052663b94c31f7280069b7645d51d481a085fb4c517cd7ef08",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The market would need to produce 6412.01 at least in order to continue accumulating the positive imbalance.",
+          "condition": "",
+          "expected_result": "SPX trades at or above 6412.01 (intraday high) within the near-term session(s)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If it can’t produce 6412.01 (i.e., only a fakeout happened), the momentum will slowly start to give back its imbalances.",
+          "condition": "SPX fails to reach 6412.01",
+          "expected_result": "SPX declines gradually from current levels, showing lower highs and lower closes over subsequent sessions and net loss of momentum indicators (e.g., MACD turning down)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The reversion model signals an 89.48% probability for a reversion with target of 5997.98.",
+          "condition": "",
+          "expected_result": "SPX moves down and reaches 5997.98 within the forecast horizon implied by the reversion model (substantial move toward 5997.98)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6291/6300 is first support (momentum confirmation zone) coinciding with the 21-days VWMA.",
+          "condition": "",
+          "expected_result": "SPX tests and holds in the 6291–6300 zone with intraday lows touching that range and subsequent stabilization or bounce.  "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid falls to 6342.73/6351.95 zone.",
+          "condition": "",
+          "expected_result": "SPX price action centers around and spends significant time within 6342.73–6351.95, evidenced by the mean/median price over the session(s) lying in that range. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot is 6465.59; that’s where the spot could stabilize, acting as a cap on momentum unless good news occurs.",
+          "condition": "",
+          "expected_result": "If SPX approaches 6465.59 it will fail to break convincingly higher and instead stall or reverse unless a material positive news catalyst occurs; intraday highs near 6465.59 followed by rejection. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot is 6249.39; breaching it would confirm the downside move.",
+          "condition": "SPX breaches 6249.39",
+          "expected_result": "After breaking below 6249.39, SPX continues lower with increased downside momentum and lower local support tests (e.g., moves toward 6291/6300 or lower)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Positioning is rangebound with a long fly around 6370/75 producing negative gamma decay, low theta, net vol up/gamma up - vol down/gamma down dynamics and flat-to-right-tailish skewness.",
+          "condition": "",
+          "expected_result": "Market remains rangebound around 6370–6375, with realized volatility staying low and option gamma-driven rebalancing causing limited spot moves within that range rather than trending breakout behavior."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If Powell doesn’t ease on the 'tariff inflation risk/uncertainty' narrative, the market will sell.",
+          "condition": "Powell does not ease on tariff inflation risk/uncertainty",
+          "expected_result": "Equity indices, including SPX, decline materially on the Fed communication day (daily close lower than previous close) and implied volatility rises."
+        }
+      ]
+    }
+  }
+}

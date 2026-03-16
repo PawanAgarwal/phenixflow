@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T01:54:15.786Z",
+  "inputHash": "4e77cddceccad6b7506d6dca870e46d2609e121d",
+  "payload": {
+    "responseId": "resp_0380bf6c1becf73f0069b762bf046c81a1a14d8048674f2d56",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Coding",
+          "prediction_text": "If directional bets catch a bid beyond 5747.94 or below 5733.86, and vol shorter spot/vol beta gets realized, the move can gain momentum.",
+          "condition": "price moves beyond 5747.94 or below 5733.86 and vol shorter spot/vol beta is realized",
+          "expected_result": "Sustained directional price movement with increased momentum in the direction of the break"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "If price trades above 5803.39, the upside directional move can gain momentum.",
+          "condition": "price > 5803.39",
+          "expected_result": "Price accelerates higher with momentum continuation"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "If price trades below 5707.01, the downside directional move can gain momentum.",
+          "condition": "price < 5707.01",
+          "expected_result": "Price accelerates lower with momentum continuation"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "5825 will act as a pin/magnet for price.",
+          "condition": "none",
+          "expected_result": "Price is likely to gravitate toward and pause around 5825"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "If vol catches offer at 5724.48, longer gamma will be in effect and you will see stabilization.",
+          "condition": "vol catches offer at 5724.48",
+          "expected_result": "Gamma profile lengthens and price stabilizes around that level"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "Zero vanna at 5697.48 requires lower vol to be broken through, after which 5640 will act as a magnet.",
+          "condition": "vol decreases sufficiently to allow break through 5697.48",
+          "expected_result": "Price breaks below 5697.48 and gravitates toward 5640"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "5775 and 5767 are potential pivots for reversion trading due to gamma.",
+          "condition": "price reaches 5775 or 5767",
+          "expected_result": "Mean-reversion opportunity arises with price expected to reverse toward the centroid range"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "Charm flip at 5713 with negative charm convexity will cause gamma decay that mechanically favors vol expansion.",
+          "condition": "price around 5713 (charm flip)",
+          "expected_result": "Gamma decays and realized/implied volatility expands"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "Estimated odds favor another magnet and pin to 5825 with a short vol, short vomma, long delta environment.",
+          "condition": "none",
+          "expected_result": "Market action will move toward 5825 while implied volatility compresses and vomma falls, benefiting short-vol positions"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "Expect a start of another leg down into or after the JPM collar expo.",
+          "condition": "into or after JPM collar expo (timing)",
+          "expected_result": "Price initiates a renewed downward leg around that event"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX downside pivot at 16.58 and upside pivot at 19.67 imply a crossroad around 18.06 where direction will be decided.",
+          "condition": "VIX trades near 18.06",
+          "expected_result": "VIX will resolve toward one pivot: fall toward 16.58 if downside wins or rise toward 19.67 if upside wins"
+        },
+        {
+          "instrument": "Coding",
+          "prediction_text": "If intraday vol continues to suppress during the day and then catches up at close, this creates pressure to hedge the downside while the market grinds higher, indicating a hidden suppressive force and potential squeeze-like dynamics.",
+          "condition": "intraday vol suppressed then realizes higher at close",
+          "expected_result": "End-of-day volatility spike with increased hedging pressure on downside, producing squeeze-like price behavior"
+        }
+      ]
+    }
+  }
+}

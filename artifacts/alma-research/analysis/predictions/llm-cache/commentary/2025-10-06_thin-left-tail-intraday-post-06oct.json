@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:04:36.550Z",
+  "inputHash": "d9ce862da435b6d52d3778353cffcf8bf6434ae8",
+  "payload": {
+    "responseId": "resp_049139b22221c7120069b76529ea6881928de42e02b57a92f2",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Centroid is at 6699.54 - 6714.11 and this range will be the most supportive range.",
+          "condition": "",
+          "expected_result": "Price will remain supported within 6699.54–6714.11, with downside breaks unlikely during the trading day."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot is 6706.25 and the center gamma pinning effect mitigates here.",
+          "condition": "",
+          "expected_result": "Price will pin or pause around 6706.25 rather than make a sustained move below it."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If downside skew is bid, it opens the gate to 6680 (also a local pin), but the market doesn’t price lower for today.",
+          "condition": "downside skew is bid",
+          "expected_result": "Price will move down to ~6680 and potentially pin there."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot is at 6737.11 where we can catch a small momentum towards 6750, that is a local pin.",
+          "condition": "",
+          "expected_result": "Price will move up to ~6750 and pause or pin at that level after reaching 6737.11."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If upside vol is realized, we can see 6770, but then reverting back to 6750 and pin there.",
+          "condition": "upside vol is realized",
+          "expected_result": "Price will spike to ~6770 and then revert back to ~6750 where it will pin."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Main bet is stickiness around the upper bound of the centroid and the center of the fly, with occasional upside spikes.",
+          "condition": "",
+          "expected_result": "Price will remain sticky near the upper centroid (~6714.11) / fly center region and exhibit intermittent short-lived upward spikes rather than sustained trends."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Secondary scenario is a 6750 pin.",
+          "condition": "",
+          "expected_result": "Price will pin at ~6750 as an alternative to centroid stickiness."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Only the third scenario is a quick retest of the downside; left-tail is very thin.",
+          "condition": "",
+          "expected_result": "A rapid move briefly retesting lower levels is possible but unlikely and any left-tail move will be small in magnitude."
+        }
+      ]
+    }
+  }
+}

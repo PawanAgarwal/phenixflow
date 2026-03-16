@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:54:38.929Z",
+  "inputHash": "135c50279c516c3134293c09c7bc894329bfc201",
+  "payload": {
+    "responseId": "resp_03ecb070a8421b930069b762d84ec48193a0ba3b001f5cb86b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Below 5558.39, longer gamma will take effect and push price lower.",
+          "condition": "price < 5558.39",
+          "expected_result": "Price will accelerate downward and trade nearer to 5550 (magnet) within the intraday session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If short speed mechanics get realized, 5550 is a potential magnet.",
+          "condition": "short speed mechanics realized",
+          "expected_result": "Price will be drawn to and test ~5550 during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Above 5722.62, volatility must decrease for stabilization; otherwise any upside move will be a bull-trap.",
+          "condition": "price > 5722.62",
+          "expected_result": "If vol decreases, price will stabilize above 5722.62; if vol does not decrease, price will reverse lower after the upside move."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Charm flip at 5665.26 with negative convexity will cause MM gamma exposure to decay into the close, providing room for higher volatility.",
+          "condition": "price around 5665.26",
+          "expected_result": "Market volatility will increase into the close as market‑maker gamma exposure decays."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Zero vanna at 5663.34 with positive vanna convexity implies lower intraday vol is needed to break through that level.",
+          "condition": "price near 5663.34",
+          "expected_result": "If intraday volatility falls, price will break above 5663.34; if not, price will fail to break through and may reverse."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "As relative volatility (RV) comes down, risk‑parity funds will slightly increase long exposures providing short‑term support and a bull‑trap.",
+          "condition": "RV decreases",
+          "expected_result": "Risk‑parity fund flows will push prices up modestly, creating a short‑term support bounce that may later fail."
+        }
+      ]
+    }
+  }
+}

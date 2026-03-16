@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:33.394Z",
+  "inputHash": "52c955ac182a32be8136f85086c3476c9e5588ab",
+  "payload": {
+    "responseId": "resp_02c1eb37751c33e40069b766cf34fc8191b6111efcc6f6f42c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong defensive/support zone around 6760-6778 (sticky area/pinning magnet). Heatmap shows concentrated positive gamma and downside vol selling into this range, making it a likely intraday floor.",
+          "condition": "price approaches 6760-6778",
+          "expected_result": "Price should bounce or stabilize within 6760-6778; downside break below this band is unlikely without sustained directional selling and rising realized vol."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Major reversion/rejection line at 6840-6850. Heatmap displays a pronounced gamma trough/line-in-the-sand there, implying low probability of a sustained break beyond this band and a likely mean-reversion when tested.",
+          "condition": "price tests 6840-6850",
+          "expected_result": "Price will likely reject or revert back toward the centroid (≈6790-6813) after touching 6840-6850 unless continuous strong bid and low realized volatility persist."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / make-or-break area at ~6869-6907. Above ~6907 the market can stabilize to the upside (vol sold); until then upside is constrained.",
+          "condition": "price rises above 6907",
+          "expected_result": "If price clears and holds above 6907, expect stabilization and reduced upside vol leading to further upside follow-through; failure to clear should cap rallies and revert toward centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/expectation zone around 6790.66 - 6812.74. Heatmap gamma concentration centers here, making it the likely intraday mean and travel corridor.",
+          "condition": "none",
+          "expected_result": "Price is likely to gravitate back to and oscillate within 6790.66–6812.74 during the trading session."
+        }
+      ]
+    }
+  }
+}

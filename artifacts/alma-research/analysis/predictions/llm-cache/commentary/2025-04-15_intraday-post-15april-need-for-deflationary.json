@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:55:15.992Z",
+  "inputHash": "7c9fda4b151660699633cddaca95e270bc824800",
+  "payload": {
+    "responseId": "resp_000a8be94e9ce36f0069b762fbaa9081a199fd6a12725c8e68",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "DXY is going down",
+          "condition": "",
+          "expected_result": "DXY declines from current level over the coming period"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Centroid is at 5340.18 and below this level the downside gamma increases sharply leading to longer spot/vol realized intraday beta",
+          "condition": "price falls below 5340.18",
+          "expected_result": "intraday realized beta increases with larger downside moves and higher spot/vol correlation after price breaches 5340.18"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Below 5283.82 the longer downside gamma effect must be seen shallowing vol and the 5205.59–5283.82 range should be sticky and stabilizing",
+          "condition": "price falls below 5283.82",
+          "expected_result": "implied volatility decreases (vol shallows) and price trades confined within 5205.59–5283.82 for a sustained intraday period"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If vol declines too fast, the pivot (5451) acts as support where longer gamma hedging mechanisms reject the momentum",
+          "condition": "volatility declines rapidly",
+          "expected_result": "price finds support near 5451 and rebounds due to gamma hedging flows"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If vol catches up, price can fall below 5205.59",
+          "condition": "volatility increases to catch up with spot moves",
+          "expected_result": "price breaks below 5205.59 and continues lower"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Above 5400 the speed profile goes positive and volatility while it tries to decline should make higher lows and lower highs as price moves up",
+          "condition": "price moves above 5400",
+          "expected_result": "price rallies with volatility contracting into a sequence of higher lows and lower highs (tightening range) as upward momentum builds"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Zero vanna at 5377.54 with positive convexity means low vol is needed to break through this and mechanically vol should decline as price moves up",
+          "condition": "price approaches and moves above 5377.54",
+          "expected_result": "implied volatility falls and price more easily breaks above 5377.54 under low-volatility conditions"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "OpEx positioning favors spot down/vol down stabilization provided volatility doesn’t catch up in the marked territories",
+          "condition": "volatility remains subdued (does not 'catch up')",
+          "expected_result": "spot stabilizes or drifts down modestly while implied volatility declines or remains low around option expiry"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Yesterday’s EOD selling favors a Wednesday reversion potential",
+          "condition": "",
+          "expected_result": "price rebounds (reverts) on Wednesday following prior end-of-day selling"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "cachedAt": "2026-03-16T04:30:05.455Z",
+  "inputHash": "04df193b44d9c9038c0eac6cb751b886b8fc4edf",
+  "payload": {
+    "responseId": "resp_0747e56f2a03d5600069b7873bf1a8819c94798561ef69bcb2",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-11-20T18:27:31.834Z",
+          "instrument": "",
+          "prediction_text": "If volatility selling persists above the lines I marked, the dynamics will support the market and that will be a clear sign the market accepts the level.",
+          "condition": "volatility selling persists above the lines I marked",
+          "expected_result": "Market price will hold above the marked lines and show sustained upward bias (rejection of downside) after persistence of volatility selling"
+        },
+        {
+          "made_at": "2025-11-20T18:30:38.370Z",
+          "instrument": "",
+          "prediction_text": "There is a chance the market stabilizes upward, but traders do not expect upside stabilization because they sold the 6780/6800 area.",
+          "condition": "none",
+          "expected_result": "Market will either show upward stabilization or fail to stabilize due to selling pressure around 6780–6800 (price rejection at that range)"
+        },
+        {
+          "made_at": "2025-11-20T18:32:46.491Z",
+          "instrument": "",
+          "prediction_text": "If the upside area is taken out, bullish structure will be building.",
+          "condition": "upside area being taken out",
+          "expected_result": "Price breaks above the marked upside area and subsequent price action forms higher highs/lows consistent with bullish structure"
+        },
+        {
+          "made_at": "2025-11-20T18:34:18.304Z",
+          "instrument": "",
+          "prediction_text": "Positioning expiring tomorrow and hedge unwind on Monday should drive market moves as it digests new data releases.",
+          "condition": "positioning expiry and hedge unwind; news/data release",
+          "expected_result": "Increased intraday moves or directional bias coinciding with expiry and hedge unwinds, and price reaction to the data release during the specified days"
+        },
+        {
+          "made_at": "2025-11-20T18:36:19.363Z",
+          "instrument": "",
+          "prediction_text": "Even reaching the downside target is unlikely today, but it could occur tomorrow or Monday.",
+          "condition": "none",
+          "expected_result": "Downside target will not be hit today but may be reached on the following trading day or Monday"
+        },
+        {
+          "made_at": "2025-11-20T18:46:35.323Z",
+          "instrument": "",
+          "prediction_text": "Reversion model implies a 50% chance of a reversion right now with target of 7054.74.",
+          "condition": "none",
+          "expected_result": "There is a coin-flip probability event where price reverts toward 7054.74 as the model's target"
+        },
+        {
+          "made_at": "2025-11-20T18:48:06.313Z",
+          "instrument": "",
+          "prediction_text": "I will buy more at my target and accept being stopped out if the structure collapses and the market heads to 6200 instead of a Santa rally.",
+          "condition": "structure collapses and market moves toward 6200",
+          "expected_result": "If structure collapses, price will move toward 6200; otherwise the user will add to long positions at their target expecting continuation of the rally"
+        },
+        {
+          "made_at": "2025-11-20T19:44:08.625Z",
+          "instrument": "",
+          "prediction_text": "If volatility selling persists, that will be supportive above the centroid.",
+          "condition": "volatility selling persists",
+          "expected_result": "Price will be supported and hold above the centroid level while volatility selling continues"
+        },
+        {
+          "made_at": "2025-11-20T19:46:14.659Z",
+          "instrument": "",
+          "prediction_text": "Above 6740/50 realized volatility should calm down toward the upside pivot that I don’t expect to be broken today.",
+          "condition": "price above 6740/6750",
+          "expected_result": "Realized volatility will decline and price will move toward the upside pivot, with the upside pivot remaining intact (not broken) during the trading day"
+        },
+        {
+          "made_at": "2025-11-20T20:24:16.385Z",
+          "instrument": "",
+          "prediction_text": "You could buy a small 0DTE put at the resistance (6780/6800) with a tight stop-loss.",
+          "condition": "place 0DTE put at 6780/6800 resistance with tight stop-loss",
+          "expected_result": "If resistance at 6780–6800 holds, the 0DTE put will gain value intraday; if broken, the stop-loss will be hit to limit loss"
+        },
+        {
+          "made_at": "2025-11-20T20:39:06.264Z",
+          "instrument": "",
+          "prediction_text": "I have a target to go short at 6790.",
+          "condition": "none",
+          "expected_result": "Price reaches 6790 where the speaker will initiate a short position"
+        },
+        {
+          "made_at": "2025-11-20T20:41:57.236Z",
+          "instrument": "",
+          "prediction_text": "If 6790 is broken, I expect price to reach 6805/6810 where I will go short again.",
+          "condition": "6790 is broken",
+          "expected_result": "Price moves up to 6805–6810 after breaking 6790, providing a re-entry opportunity to establish a short position"
+        },
+        {
+          "made_at": "2025-11-20T20:41:57.236Z",
+          "instrument": "",
+          "prediction_text": "I expect 6790 to give me 6760 at minimum (target 6730).",
+          "condition": "entry at 6790",
+          "expected_result": "Price declines from 6790 to at least 6760, with a further target of 6730 if the move continues"
+        }
+      ]
+    }
+  }
+}

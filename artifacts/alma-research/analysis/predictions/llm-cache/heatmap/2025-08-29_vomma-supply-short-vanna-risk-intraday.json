@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:52.019Z",
+  "inputHash": "caf63e48289d5bbd617fe91ed75cd3e2870131c3",
+  "payload": {
+    "responseId": "resp_0c9949d2fa8bc9df0069b764c66c108192b4c94b967a42767d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong centroid liquidity and pinning between 6452.10–6468.93; market likely to revert to this range if moved away.",
+          "condition": "any significant intraday move away from centroid",
+          "expected_result": "Price will gravitate back into 6452.10–6468.93 within the trading day (hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/traction zone at ~6472.20 with extended downside support to 6422.46–6415 (with margin to ~6405) — sells of downside vol likely to be bought into this band.",
+          "condition": "PCE prints in line / benign communication",
+          "expected_result": "If PCE is in line, downside moves will be bought and price will hold or rebound from 6422–6415 (not breach 6405 by end of session)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at ~6482.54; above this level the market is likely to get pinned toward 6500 and can extend to ~6525 (daily max) if call skew becomes heavily bid.",
+          "condition": "call skew bid post-1:15 PM or positive catalyst / stronger-than-expected PCE",
+          "expected_result": "Break and hold above 6482.54 will see price trade toward 6500 and potentially reach up to 6525 on the same day."
+        }
+      ]
+    }
+  }
+}

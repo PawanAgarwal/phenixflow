@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:15:10.388Z",
+  "inputHash": "96a1a815605026bd8d4ed8b964a558a151cfac66",
+  "payload": {
+    "responseId": "resp_02fa715093a0a6a90069b767a30fc88191b6f2bfadd02f4038",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "As long as SPX remains under 6965.66, there will be no upward trend confirmed.",
+          "condition": "SPX < 6965.66",
+          "expected_result": "SPX will not establish a sustained upward trend (no higher-highs confirming an uptrend) while it stays below 6965.66"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A weekly average spot above 6912.76 could disprove the monthly-equilibrium accumulation of negative disbalance.",
+          "condition": "weekly avg spot > 6912.76",
+          "expected_result": "The monthly-equilibrium model's expectation of accumulating negative disbalance will be invalidated (price behavior shifts away from negative accumulation) if weekly average spot exceeds 6912.76"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Keep eyes on 6768.47 for ES for any downside momentum to gain confirmation.",
+          "condition": "ES breaks below 6768.47",
+          "expected_result": "Downside momentum will be confirmed and further downward movement in ES is likely after a break below 6768.47"
+        },
+        {
+          "instrument": "NQ",
+          "prediction_text": "Keep eyes on 24,327.71 for NQ for any downside momentum to gain confirmation.",
+          "condition": "NQ breaks below 24327.71",
+          "expected_result": "Downside momentum will be confirmed and further downward movement in NQ is likely after a break below 24,327.71"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "6905 for ES is a local pivot but momentum must confirm higher to validate it.",
+          "condition": "ES rises above 6905 with confirming momentum",
+          "expected_result": "ES will use 6905 as a pivot for rangebound upside, indicating validated upward momentum if price holds above or pivots from that level with momentum"
+        },
+        {
+          "instrument": "NQ",
+          "prediction_text": "25,066.36 for NQ is a local pivot but momentum must confirm higher to validate it.",
+          "condition": "NQ rises above 25066.36 with confirming momentum",
+          "expected_result": "NQ will use 25,066.36 as a pivot for rangebound upside, indicating validated upward momentum if price holds above or pivots from that level with momentum"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If both SPX and ES lose 6600, the spot will go back to July levels as market goes against what customers expect.",
+          "condition": "SPX < 6600 AND ES < 6600",
+          "expected_result": "Market spot will decline to levels last seen in July (substantial drawdown to July-range prices) after SPX and ES drop below 6600"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vol-projected weekly sentiment bounds imply SPX should trade between 6915.80 and 6756.54 this week.",
+          "condition": "",
+          "expected_result": "SPX will remain within the range 6915.80–6756.54 during the projected week (price stays inside these bounds)"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Vol-projected weekly sentiment bounds imply ES should trade between 6930.54 and 6770.46 this week.",
+          "condition": "",
+          "expected_result": "ES will remain within the range 6930.54–6770.46 during the projected week (price stays inside these bounds)"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Vol-projected weekly sentiment bounds imply VIX should trade between 22.47 and 18.73 this week.",
+          "condition": "",
+          "expected_result": "VIX will remain within the range 22.47–18.73 during the projected week (index stays inside these bounds)"
+        }
+      ]
+    }
+  }
+}

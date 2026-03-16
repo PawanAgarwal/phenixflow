@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:56:09.694Z",
+  "inputHash": "39183ae3796378674f5a40bd7a32bb039d63d4aa",
+  "payload": {
+    "responseId": "resp_05a021774b6683650069b763338e1081918c8b3ac0b499eb9b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid around 5555 — acts as a sticky magnet/support area. Expect price to gravitate toward ~5555 on intraday mean reversion.",
+          "condition": "",
+          "expected_result": "If SPX drifts away > ~15 points, expect a reversion back to 5540–5570 within the trading session (mean-reversion to ~5555)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside magnetic/rejection region near 5630–5631 where vol and gamma increase — likely to slow or cap rallies.",
+          "condition": "",
+          "expected_result": "If SPX approaches 5630, expect decreased upside follow-through and potential rejection or consolidation with a pullback of 5–20 points from that level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside speed effect / initial support area around 5514 with stronger structural support lower near 5454–5420.",
+          "condition": "",
+          "expected_result": "If SPX breaks below 5514, expect accelerated downside toward 5450–5420; if 5514 holds, expect bounce back toward 5550–5570."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher-probability deep support cluster in the 5315–5368 area (99.7% region listed) — strong magnet for large moves lower.",
+          "condition": "",
+          "expected_result": "If SPX falls into 5368–5315, expect marked slowing of declines and increased probability of stabilization or multi-point bounce (10–40 points) within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Near-term minor sticky zone / resistance at ~5596 (listed risk level) and natural vol-rise zone around 5590–5596 that can create rejection.",
+          "condition": "",
+          "expected_result": "If SPX tests 5590–5596, expect volatility pickup and a high chance of rejection or pause; tradeable reversal of ~5–15 points likely."
+        }
+      ]
+    }
+  }
+}

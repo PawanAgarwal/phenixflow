@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T01:57:23.380Z",
+  "inputHash": "488f3edb69cfadb17017ee8d53a6a6b94989bf92",
+  "payload": {
+    "responseId": "resp_0f01991b66dd8fc50069b76377f5ac8190816f6e22bc1a1148",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If yields keep rising unchecked, a forced unwind could blow out credit conditions and force the Fed into emergency QE, pushing measured inflation sharply higher.",
+          "condition": "yields keep rising unchecked",
+          "expected_result": "Federal Reserve launches large-scale asset purchases (emergency QE) within months and measured CPI/PCE inflation rates rise noticeably (e.g., spike several percentage points above current trend) after QE begins"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Markets are likely to experience a sharp equity pullback this summer if bonds further unwind following rising yields.",
+          "condition": "further unwind in bonds",
+          "expected_result": "Major equity indices (e.g., SPX/ES) decline materially (pullback of several percent) during the summer months following bond unwind"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Centroid is at 5810.03 and the setup favors chop with downside tilt.",
+          "condition": "",
+          "expected_result": "ES price oscillates around 5810.03 with choppy trading and no sustained trend, exhibiting multiple intraday reversals rather than a directional breakout over the next sessions"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The downside pivot is 5785.21 where volatility is expected to decline and price should get pinned.",
+          "condition": "",
+          "expected_result": "ES approaches 5785.21 and intraday realized volatility falls while price consolidates (little net movement) near that level"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Upside pivot at 5860.11 is a local gamma barrier that will require rising volatility to break; above it, volatility should calm and price should stabilize.",
+          "condition": "",
+          "expected_result": "If ES breaks above 5860.11, intraday realized volatility increases during the breakout and then decreases after price sustains above 5860.11, with price settling into a more stable range higher"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If the market squeezes up, 5922 is the coded maximum.",
+          "condition": "market squeezes up",
+          "expected_result": "ES rallies toward 5922 and stalls near that level, failing to sustain a materially higher move beyond 5922 in the immediate squeeze"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Zero vanna at 5833.47 requires low volatility to be broken, while 5855 gamma is expected to push price down.",
+          "condition": "",
+          "expected_result": "ES breaks above 5833.47 only in periods of reduced volatility; attempts to reach 5855 result in downward pressure and reversals near 5855"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "20.83 (rounded to 20.87 observed) is a key pivot/sentiment level for VIX.",
+          "condition": "",
+          "expected_result": "VIX trading around 20.8 acts as a reference where moves above it correspond to increased equity downside and moves below correspond to calmer equity sessions"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If data disappoints (GDP/PCE), long–short spreads could blow out and risk assets will likely follow lower.",
+          "condition": "disappointing GDP/PCE prints",
+          "expected_result": "Following disappointing GDP or PCE releases, yield curve long–short spreads (term premium) widen meaningfully and major risk assets (e.g., ES/SPX) decline significantly in subsequent sessions"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If tariff pause snaps back in July (tariffs reimposed), policy uncertainty will rise and tighten credit conditions, weighing on risk assets.",
+          "condition": "tariffs snap back in July",
+          "expected_result": "Market-implied risk premia rise (wider credit spreads and higher CDS), and equities underperform as investors hedge or sell exposure after tariff snapback"
+        },
+        {
+          "instrument": "JPY/USD",
+          "prediction_text": "As JGB yields creep higher and the BoJ tapers purchases, the yen will strengthen as the USD/JPY carry trade unwinds.",
+          "condition": "JGB yields creep higher while BoJ tapers purchases",
+          "expected_result": "USD/JPY declines (yen strengthens) as Japanese investors repatriate capital and unwind carry trades, observable as a sustained move lower in USD/JPY exchange rate"
+        }
+      ]
+    }
+  }
+}

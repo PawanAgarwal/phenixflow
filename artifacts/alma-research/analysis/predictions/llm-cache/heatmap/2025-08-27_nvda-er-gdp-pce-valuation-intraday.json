@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:02:41.582Z",
+  "inputHash": "bf005fbe726ea5caa1df3713b5dd4c446ea5d693",
+  "payload": {
+    "responseId": "resp_0c719ab67c4c6ff10069b764bafea0819fa77ed76fa8d0dde0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market expected to range above centroid ~6462 with support cluster around 6465/6460 acting as a momentum-swallowing zone; price likely to revert back into centroid after intraday up-ticks.",
+          "condition": "spot above centroid (~6462) before 14:10 ET",
+          "expected_result": "SPX trades between 6460–6476, with failed breakouts above 6476 reverting back toward 6460–6462 within a few hours"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6476.54 marks magnetic border; if call skew bids pick up there, short-lived push to 6486–6500 is likely (low probability to break and hold above 6500).",
+          "condition": "call skew remains bid at/above 6476.54",
+          "expected_result": "SPX spikes to 6486–6500 then reverts or stalls; sustained trade above 6500 is unlikely without catalyst"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday rejection zone and sticky resistance in the 6505–6520 area — heatmap shows concentrated rejection preventing durable extension above 6505–6520.",
+          "condition": "",
+          "expected_result": "Any approach into 6505–6520 is met with rejection leading to pullback toward 6470–6485"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside supports clustered at 6445–6440 and 6415–6420 act as protective buffers; only a significant adverse event will drive a retest of lower max near 6388/6385.",
+          "condition": "",
+          "expected_result": "If weakness appears, SPX should find support and likely bounce in 6440–6415; a break below to 6388–6385 is a low-probability event requiring strong selling"
+        }
+      ]
+    }
+  }
+}

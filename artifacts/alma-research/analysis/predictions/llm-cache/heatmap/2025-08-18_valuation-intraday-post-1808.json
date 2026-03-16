@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:14.754Z",
+  "inputHash": "989c51ee7a57ba8a8fd9fc3a5b0086159fe181ea",
+  "payload": {
+    "responseId": "resp_0faf268de08564220069b7649e1f40819398d9e9a55fbad015",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma pinch / pinning magnet centered around 6500 with a concentrated red gamma peak ~6498-6502 projecting a sticky zone; if market opens above centroid it will gravitate toward upper centroid ~6463.9 then likely pin toward ~6500 as the hard right-tail cap.",
+          "condition": "Open above 6453",
+          "expected_result": "Price will move toward and spend time near 6463.9 then be pinned toward the 6498–6502 area (test within session, limited large excursions beyond 6500)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid lower bound and intraday pivot area ~6451–6453 acts as key magnetic border; opening below this range should draw spot downward toward a lower sticky band around 6430 with support/reversion pressure.",
+          "condition": "Open below 6453",
+          "expected_result": "Price will decline and be attracted to ~6430, with intraday reversion attempts failing to sustain above 6451–6453."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside risk corridor defined by put-skew interest with rejection / support cluster around 6440.6–6440.7 and a secondary support cluster near 6385–6375; 6440.67 is a magnetic ‘border of the magnetic field’ where reactivity is high.",
+          "condition": "Put skew bids appear at 6440.67/6436",
+          "expected_result": "Price will find support and show rejection attempts at 6440.6–6440.7; if broken with skew bid, further travel toward 6385–6375 becomes more likely."
+        }
+      ]
+    }
+  }
+}

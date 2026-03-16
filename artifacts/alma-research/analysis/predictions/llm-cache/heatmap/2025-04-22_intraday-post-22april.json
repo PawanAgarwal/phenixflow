@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:55:44.719Z",
+  "inputHash": "f3da1df0200c92a55b5dec721bccce5217da64d5",
+  "payload": {
+    "responseId": "resp_086d03ae67951eb80069b7631a756081a293f728f24281c0f6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma/big pinning cluster around 5160 acting as a sticky magnet and short-term resistance/support; price likely to gravitate toward and stall near 5160.",
+          "condition": "none",
+          "expected_result": "Price will gravitate to ~5160 within the session and show consolidation or repeated rejections/pivots at that level (measured by multiple touches and reduced net movement away within 1-3 hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside puts begin printing near 5138 with a support zone extending toward 4980; below 4980 downside can stabilise—expect buying interest and less momentum lower once price approaches 4980–5000.",
+          "condition": "if price declines toward 4980–5000",
+          "expected_result": "On a move to 5000–4980, observe increased bid-side flow and price stabilization or short-term reversal within 1-4 hours (reduced realized downside vs. prior 30‑min trend)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma peak / upside friction around 5301–5320 acts as a potential rejection zone unless volatility spikes; a vol pickup is required to push convincingly above this gamma barrier.",
+          "condition": "if IV/realized vol increases materially during an advance",
+          "expected_result": "With a volatility pickup, price will break and trade above 5301–5320; without vol increase, expect rejection or consolidation below 5301 within the next trading day."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:17.125Z",
+  "inputHash": "ff29ae6d7066852cad18d4c76ce50e743977ad82",
+  "payload": {
+    "responseId": "resp_0954edbe1a51cb1b0069b764dfb6748196b354eb364a5e62ee",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid support zone ~6512–6524 acts as a heavy supportive sticky zone — market likely pins inside this area after initial moves.",
+          "condition": "none",
+          "expected_result": "Price will gravitate back to and spend time pinned between 6512 and 6524 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside brake / rejection around ~6510 with a possible minor retest to ~6490–6495 if skew is bid; deeper left-tail (~6469 or ~6445) is hedged but unlikely.",
+          "condition": "skew bid (example: ~21.31%)",
+          "expected_result": "If skew is bid, price may briefly test 6490–6495 then revert back up toward the centroid (6512–6524); failure to hold will be required to reach 6469/6445."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and call-pressure zone at ~6550 will test call skew; a realized intraday spike through 6550 can push price to ~6575–6580 before reverting and pinning near ~6545.",
+          "condition": "6550 is taken out on realized intraday RV",
+          "expected_result": "A sustained move above 6550 leads to a spike toward 6575–6580, followed by mean-reversion back to ~6545 where price is likely to pin."
+        }
+      ]
+    }
+  }
+}

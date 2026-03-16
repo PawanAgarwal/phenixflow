@@ -1,0 +1,89 @@
+{
+  "cachedAt": "2026-03-16T04:28:41.976Z",
+  "inputHash": "e27ce712d1caea520f0f44baba0d9847d01044ba",
+  "payload": {
+    "responseId": "resp_073a8b4e854d0a280069b786ec0d508196b0274f0d17cb124c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-04-24T15:59:42.661Z",
+          "instrument": "",
+          "prediction_text": "Next week is risky.",
+          "condition": "",
+          "expected_result": "Market volatility and downside/upside risk will increase during the next week compared with current levels."
+        },
+        {
+          "made_at": "2025-04-24T16:02:00.915Z",
+          "instrument": "",
+          "prediction_text": "A retest of the bottom is still in play.",
+          "condition": "",
+          "expected_result": "Price will decline to retest the recent bottom level within the upcoming sessions."
+        },
+        {
+          "made_at": "2025-04-24T17:59:30.547Z",
+          "instrument": "",
+          "prediction_text": "There will be a bulltrap, because the market needs liquidity to function effectively.",
+          "condition": "",
+          "expected_result": "Price will briefly rally above recent highs (falsely signaling a breakout) then reverse lower, trapping bulls."
+        },
+        {
+          "made_at": "2025-04-24T18:28:16.331Z",
+          "instrument": "",
+          "prediction_text": "Risk after OpEx will be rangebound.",
+          "condition": "after Options Expiration (OpEx)",
+          "expected_result": "Post-OpEx price action will trade in a defined range without a sustained directional trend."
+        },
+        {
+          "made_at": "2025-04-24T18:32:30.257Z",
+          "instrument": "",
+          "prediction_text": "The market must stabilize at these lower levels.",
+          "condition": "",
+          "expected_result": "Price will hold and trade sideways near current lower levels rather than continuing a sharp decline."
+        },
+        {
+          "made_at": "2025-04-24T18:39:33.736Z",
+          "instrument": "",
+          "prediction_text": "The bear-side must be unwound (put selling is supporting the market).",
+          "condition": "",
+          "expected_result": "Put selling will provide support and reduce downside pressure, resulting in price stabilization or gradual recovery."
+        },
+        {
+          "made_at": "2025-04-24T19:02:05.135Z",
+          "instrument": "VIX",
+          "prediction_text": "I short VIX because negative speed hides right-tail risk — it is stable to the downside and unstable to the upside.",
+          "condition": "",
+          "expected_result": "VIX will be more prone to sharp upside spikes (right-tail events) despite recent downside stability; short VIX positions face risk of rapid VIX increases."
+        },
+        {
+          "made_at": "2025-04-24T21:17:30.894Z",
+          "instrument": "",
+          "prediction_text": "The April 9-10 highs will be confirmed as a sentiment line only if the market retests it and holds.",
+          "condition": "market retests the April 9-10 highs and holds",
+          "expected_result": "If price retests and holds the April 9-10 highs, that level will act as confirmed support/sentiment pivot going forward."
+        },
+        {
+          "made_at": "2025-04-24T21:19:19.544Z",
+          "instrument": "S&P 500 (ES)",
+          "prediction_text": "If the market breaks the April 9-10 line, a short squeeze will occur and 5650 is the first target.",
+          "condition": "market breaks the April 9-10 line",
+          "expected_result": "Price will spike higher in a short squeeze toward 5650 as the first actionable target."
+        },
+        {
+          "made_at": "2025-04-24T21:19:19.544Z",
+          "instrument": "VIX",
+          "prediction_text": "If VIX keeps up, a vanna squeeze will occur.",
+          "condition": "VIX continues to rise",
+          "expected_result": "Vanna-related flows will amplify option-related hedging moves, producing an additional upward move in underlying volatility and associated asset moves."
+        },
+        {
+          "made_at": "2025-04-24T21:21:50.642Z",
+          "instrument": "",
+          "prediction_text": "In an ideal case the market consolidates, becomes rangebound and takes volatility down.",
+          "condition": "",
+          "expected_result": "Price will consolidate within a range and measured volatility (VIX or realized vol) will decline from current high levels."
+        }
+      ]
+    }
+  }
+}

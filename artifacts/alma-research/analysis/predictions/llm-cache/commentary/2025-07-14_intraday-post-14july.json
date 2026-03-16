@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:00:23.912Z",
+  "inputHash": "16423cc4e6c3458ff016fc7811bbbba6ed3be8ea",
+  "payload": {
+    "responseId": "resp_03723e8883dbaed80069b7642b54e8819489c07533279f93ca",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid zone at 6241.53 - 6237.73 will act as gravity/pivot and be difficult to break, especially after 1:30 PM.",
+          "condition": "after 13:30 UTC? (1:30PM local)",
+          "expected_result": "Price will oscillate around 6241.53-6237.73 and fail to produce a sustained breakout beyond that band after 1:30 PM, with reversals toward the band on attempts to move away."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Spot needs to break through 6221.54 to the downside to escape centroid gravity and require relatively elevated volatility.",
+          "condition": "price breaks below 6221.54",
+          "expected_result": "If price closes/breaches below 6221.54 with elevated vol, price will continue moving lower away from the centroid rather than reverting to it."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Spot needs to break above 6250.15 to the upside to escape centroid gravity and require relatively elevated volatility.",
+          "condition": "price breaks above 6250.15",
+          "expected_result": "If price closes/breaches above 6250.15 with elevated vol, price will continue moving higher away from the centroid rather than reverting to it."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Above the centroid lower border, 6265 can pull the price toward itself, especially in the power hour.",
+          "condition": "spot is above the centroid lower border (≈6237.73) and during the power hour",
+          "expected_result": "Price will be attracted toward 6265 during the power hour, producing a move up to ~6265."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If spot is above the ‘upside pivot’ before 1:35 PM and above 6273, expect spot-up/vol-up gamma squeeze toward 6300 (max coded).",
+          "condition": "price > 6273 before 13:35 (1:35 PM)",
+          "expected_result": "Rapid upward move with rising implied volatility driving price toward 6300, producing a sustained move up to near 6300."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If price is above 6273 after 1:35 PM, 6285 is a local magnet.",
+          "condition": "price > 6273 after 13:35 (1:35 PM)",
+          "expected_result": "Price will drift or be attracted toward 6285, producing moves that settle near 6285."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "To the downside, 6205/6202 is the intraday minimum and very strong in the last two hours, and would push price back up to a 6225 local pin.",
+          "condition": "price reaches 6205-6202 in the last two hours of trading",
+          "expected_result": "Upon touching 6205-6202 late in the session, price will reverse and rally back toward ~6225."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The 6205/6202 line can be broken in the first hours with high volatility.",
+          "condition": "early session with high volatility",
+          "expected_result": "Price may breach below 6205-6202 during the first hours, producing a continuation lower rather than immediate reversion."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Watch 6175 where volatility should be swallowed and mean reversion thresholds lie.",
+          "condition": "price reaches 6175",
+          "expected_result": "If price hits 6175, volatility will compress and price will revert toward the mean (move back higher from that level)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Trade only in the first two hours if an upside resistance or downside support is touched and then bet on reversion.",
+          "condition": "within first two hours and a defined support or resistance is touched",
+          "expected_result": "After touching a relevant support or resistance in the first two hours, price will reverse direction (mean revert) rather than trend through the level."
+        }
+      ]
+    }
+  }
+}

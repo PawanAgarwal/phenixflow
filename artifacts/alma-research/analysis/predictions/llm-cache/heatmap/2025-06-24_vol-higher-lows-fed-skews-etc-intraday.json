@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:59:11.201Z",
+  "inputHash": "56617960ba6130be9cbb75e5511195636029f04f",
+  "payload": {
+    "responseId": "resp_017619102565ba280069b763e92e3481958f4ed5bfc4370037",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma peak / pinning zone around 6130–6134 (resistance/pinning into power hour). Heatmap shows a concentrated gamma peak at ~6133 that can attract price and cap upside unless broken.",
+          "condition": "price rallies and touches/approaches 6130–6134",
+          "expected_result": "Price is likely to stall/pin and revert or grind below 6134; failure to break convincingly suggests short-term pullback toward 6075–6088 pivot levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky/support gamma band centered near 6050–6062 (support/neutral zone). The heatmap shows a broad gamma trough/peak cluster in the 6050–6062 area creating a magnet that holds spot around current levels.",
+          "condition": "price drifts into 6050–6062",
+          "expected_result": "Price is likely to slow movement and stick in this corridor; expect limited follow-through and potential mean-reversion back toward 6088 if downside pressure eases."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside magnetic gamma/support cluster around 5990–6000 with a deeper rejection area near 5940–5916. Heatmap indicates a gamma peak at ~5998 and a strong protective cluster around 5943–5916 acting as downside defenders/pins.",
+          "condition": "downside momentum increases and spot moves below 6039 centroid",
+          "expected_result": "Initial support/reversion likely at 5990–6000; if that fails, price should find stronger rejection and pinning near 5943–5916, limiting further decline unless a large exogenous shock occurs."
+        }
+      ]
+    }
+  }
+}

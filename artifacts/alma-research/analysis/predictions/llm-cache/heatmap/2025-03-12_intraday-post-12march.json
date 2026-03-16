@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:53:34.373Z",
+  "inputHash": "66b7960394fdecbb11b7223c657cf6e46c39e3ab",
+  "payload": {
+    "responseId": "resp_02b38399694013000069b76298e73081a2a84f2955ccbe13d0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside vanna flip at ~5523 acts as a sticky support/pinning magnet — price is likely to gravitate toward and hold above 5523 unless intraday vol cools significantly.",
+          "condition": "Vol remains elevated",
+          "expected_result": "SPX will find support near 5523 and fail to sustain moves below it during the session; bounces from ~5523 within a few points observed within hours."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at ~5733 with resistances clustered at 5605 and 5670–5695 — above 5733 price can attempt to stabilize but needs intraday volatility to decrease to hold there.",
+          "condition": "Intraday volatility cools",
+          "expected_result": "If volatility falls, SPX will move above 5733 and consolidate between 5733 and ~5770; attempts to break above 5733 will result in sustained trading above that level for multiple intraday bars."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Localized resistance cluster around 5670–5695 (and secondary at 5605) likely to reject rallies — expect short-term reversion down from that range. ",
+          "condition": "None",
+          "expected_result": "SPX rallies into 5670–5695 (or 5605) will see rejection and reverse lower within the same trading session (measurable within 30–120 minutes)."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "cachedAt": "2026-03-16T04:27:48.508Z",
+  "inputHash": "372781b2459519ac46b79db2732e57dd97ad7492",
+  "payload": {
+    "responseId": "resp_0b29f6c656c553b60069b786b8c3188194bb38c5bda9d960f3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-24T14:39:03.971Z",
+          "instrument": "",
+          "prediction_text": "when investors turn bearish, market is down 20%+.",
+          "condition": "",
+          "expected_result": "Market falls by 20% or more from current levels after widespread investor bearish sentiment emerges."
+        },
+        {
+          "made_at": "2025-02-24T16:22:23.374Z",
+          "instrument": "",
+          "prediction_text": "volatility will increase (stochvol models expect vol to increase by ~33% relative to rational).",
+          "condition": "",
+          "expected_result": "Observed realized or implied volatility rises to approximately 33% higher than the model's baseline/rational level."
+        },
+        {
+          "made_at": "2025-02-24T16:52:38.335Z",
+          "instrument": "options (around 14.8–15 delta)",
+          "prediction_text": "option positions around the centroid (~14.8 - 15 delta) will capture the most vomma and vega decay.",
+          "condition": "",
+          "expected_result": "Options with ~14.8–15 delta show higher vomma exposure and net positive decay capture compared with nearer-the-money or farther-tail deltas."
+        },
+        {
+          "made_at": "2025-02-24T19:04:01.664Z",
+          "instrument": "options skew/smirk",
+          "prediction_text": "the smirk (skew) will sink and flatten.",
+          "condition": "",
+          "expected_result": "Observed option skew decreases in steepness and overall level, showing a flatter smirk compared with current term structure."
+        },
+        {
+          "made_at": "2025-02-24T19:44:06.595Z",
+          "instrument": "",
+          "prediction_text": "if price can hold above 5999 in the next 30 mins, 6010 can pin.",
+          "condition": "price holds above 5999 for the next 30 minutes",
+          "expected_result": "Price moves toward and trades at or very near 6010 (pinning) within the specified timeframe after the 30-minute hold."
+        },
+        {
+          "made_at": "2025-02-24T21:05:03.536Z",
+          "instrument": "",
+          "prediction_text": "volatility will continue to expand.",
+          "condition": "",
+          "expected_result": "Implied or realized volatility increases from current levels, indicating a continuation of vol expansion."
+        },
+        {
+          "made_at": "2025-02-24T22:16:25.924Z",
+          "instrument": "big names (large-cap stocks)",
+          "prediction_text": "they will take the market slowly down on those big names.",
+          "condition": "",
+          "expected_result": "Prices of major large-cap stocks decline gradually over the coming sessions, producing a measurable downtrend."
+        },
+        {
+          "made_at": "2025-02-24T22:18:50.791Z",
+          "instrument": "spot (equity spot market)",
+          "prediction_text": "a flush after Q1 expo, followed by a spot decay until (implied continuation).",
+          "condition": "after Q1 expo occurs",
+          "expected_result": "Following the Q1 expo, the spot equity market experiences a flush (sharp drop) and then a sustained decay (gradual decline) over the subsequent period."
+        }
+      ]
+    }
+  }
+}

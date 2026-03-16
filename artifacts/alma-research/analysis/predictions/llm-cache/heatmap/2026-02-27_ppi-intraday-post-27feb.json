@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:15:36.913Z",
+  "inputHash": "f86019a62536bf779058941f522b69985db2c7c6",
+  "payload": {
+    "responseId": "resp_0407eb90ea1968140069b767c3c1508196a2b2bd4d2f3457e3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Options heatmap shows concentrated positive gamma and a strong sticky/reversion zone around 6780–6800 (deep red hotspot to the right). This aligns with centroid/pivot overlays and suggests the market is magnetized to that area intraday.",
+          "condition": "none",
+          "expected_result": "Price will gravitate toward and test 6780–6800; expect intraday mean-reversion and support there (bounce/reversion likely within same trading day)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upper sticky/resistance band visible between ~6890–6925 (orange to light-red band with surrounding contours). Combined with text noting 6890 as local pivot and 6900 as potential pin, this area acts as a rejection/pinning zone if reached.",
+          "condition": "price approaches 6890–6925",
+          "expected_result": "If price reaches 6890–6925, expect rejection or pinning there (limited follow-through above 6925 unless volatility ignites); trade fail-above or short from that band with tight stops."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma trough/negative-gamma zone below ~6750–6775 (blue/green trough area) indicates lower liquidity and a weaker downside; downside pivot at ~6753–6771 is shown as supportive but fragile — breaking below centroid is unlikely without vol calming.",
+          "condition": "none",
+          "expected_result": "Expect strong support at 6753–6771; intraday breaks below this range are low probability without a volatility spike. Treat breaks as escalation signals rather than normal drift."
+        }
+      ]
+    }
+  }
+}

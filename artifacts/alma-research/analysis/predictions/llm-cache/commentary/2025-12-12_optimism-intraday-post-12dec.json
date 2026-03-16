@@ -1,0 +1,18 @@
+{
+  "cachedAt": "2026-03-16T02:11:33.212Z",
+  "inputHash": "ed919ae711a678599b7c0060faa61689338d1d33",
+  "payload": {
+    "responseId": "resp_0518a5442f208e970069b766d340bc819c8968036e7c28555c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "As long as SPX closes above 6800, the rebound is stable.",
+          "condition": "SPX closes above 6800",
+          "expected_result": "Price will continue to rebound (sustain gains) rather than decline; closing levels and subsequent intraday sessions will show higher lows or continued upside momentum"
+        }
+      ]
+    }
+  }
+}

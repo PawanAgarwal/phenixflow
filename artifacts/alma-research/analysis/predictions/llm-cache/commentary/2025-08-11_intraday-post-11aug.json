@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:01:53.168Z",
+  "inputHash": "6bb3966eba1a950842f44429bc2d3dd40455de69",
+  "payload": {
+    "responseId": "resp_06605ba98312cd0c0069b76486c5ac81a1861cc9362a2e3867",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The centroid is at 6392.19 - 6396.90.",
+          "condition": "",
+          "expected_result": "Price will trade mostly within the range 6392.19–6396.90 during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The upside pivot is 6412.13, especially strong during the PM, can be broken during the AM with margin of error to 6420.",
+          "condition": "If market breaks out of the centroid to the upside during the AM with low volatility and holds the upside pivot into 11:50am",
+          "expected_result": "Price will reach 6435."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If market breaks out of the centroid to the upside during the AM with low volatility but does not hold the upside pivot into 11:50am, 6412 is magnetic.",
+          "condition": "Breakout of the centroid to the upside during the AM with low volatility and failure to hold 6412 into 11:50am",
+          "expected_result": "Price will revert toward 6412 (magnet) and trade near that level."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6410 can pin in the last 2 hours.",
+          "condition": "",
+          "expected_result": "Price will gravitate to and remain near 6410 during the final two trading hours."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The downside pivot is 6367.62 and is a strong support, effectively unbreakable during the power hour.",
+          "condition": "",
+          "expected_result": "Price will not trade below 6367.62 during the power hour."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility calms at the downside pivot, 6360 will be a strong magnet.",
+          "condition": "If volatility calms around 6367.62",
+          "expected_result": "Price will move toward and cluster around 6360."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Main bet is ranging around the centroid, roughly 6400 - 6374, with more liquidity towards 6412/6420 but not beyond.",
+          "condition": "",
+          "expected_result": "Price will oscillate between ~6374 and ~6400, occasionally attracting liquidity up to 6412–6420 but failing to move beyond 6420."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market shorts upside volatility.",
+          "condition": "",
+          "expected_result": "Upward moves will be constrained and larger upside breakouts will be less likely, resulting in muted upside volatility."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6400 is a key level into the opening; market is unlikely to break this line through the session.",
+          "condition": "",
+          "expected_result": "Price will stay on the same side of 6400 as the overnight trend and will not decisively cross 6400 during the session."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:03:12.237Z",
+  "inputHash": "e7cae593c86d1418603f3ef2cc2fe99b1b6b6a1c",
+  "payload": {
+    "responseId": "resp_00157a5b502ff9080069b764da0e2c819596e3e52e82651228",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "No-event PPI will push the spot above 6530 premarket and then pin to 6545, dampening upside volatility.",
+          "condition": "PPI is a no-event",
+          "expected_result": "Spot trades >6530 premarket, then moves to and holds around 6545 with reduced upside intraday volatility"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Price will reject at 6538.08 and revert back to the 6500–6510 area, then pin to 6510 after 2PM.",
+          "condition": "secondary scenario (rejection at 6538.08)",
+          "expected_result": "Spot fails near 6538.08, declines to between 6500 and 6510, and trades/holds around 6510 after 14:00 local time"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Very-low-probability: very-good PPI will cause reversion to 6475.",
+          "condition": "PPI is very good",
+          "expected_result": "Spot falls to ~6475 intraday"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Very-low-probability: very-very good or very-very bad PPI will cause a retest of 6445.",
+          "condition": "PPI is very-very good or very-very bad",
+          "expected_result": "Spot retests ~6445 intraday"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Vomma supply will slow vol-up moves, allowing volatility to rise tomorrow in a managed, dampened way rather than sharply today.",
+          "condition": "presence of vomma supply (currently in place)",
+          "expected_result": "Implied volatility increases tomorrow but with muted spikes and less extreme vol squeezes compared with uncontrolled vol expansion"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:55:44.932Z",
+  "inputHash": "c686140f583712fd7ba64cb2bd7ec615bea63973",
+  "payload": {
+    "responseId": "resp_0f7a6cdc20e85cbd0069b7631958048191b04a5a47157bdeed",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Markets will be range-bound with negative drift and low volatility, producing spot decay similar to February but stretched in time.",
+          "condition": "",
+          "expected_result": "Price will trade sideways within a narrowing range while gradually trending downward, with realized volatility lower than recent averages over the coming weeks."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A bearish wedge or pennant will form with its apex around the April 9–10 highs.",
+          "condition": "",
+          "expected_result": "Price structure will exhibit converging highs and lows forming a wedge/pennant pattern that culminates near the April 9–10 high levels before resolving."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Centroid lies in the 5316.62 - 5337.94 area with more weight at the upper bound.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward and spend increased time in the 5316.62–5337.94 range, especially near 5337.94."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The downside pivot is 5276.96 where price will free from the iron-condor effect.",
+          "condition": "trade breaks below 5276.96",
+          "expected_result": "After breaking below 5276.96, price will accelerate downward and no longer be constrained by the prior range-bound / IC-induced resistance."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The upside pivot is 5421.59 where volatility should decrease if price wants to reject the upper wing of the iron-condor.",
+          "condition": "price approaches 5421.59",
+          "expected_result": "If price nears 5421.59 and volatility falls, price will be rejected and reverse back into the range rather than break out higher."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility calms on both sides, expect rangebound behavior around 5366.89 (near the zero vanna line).",
+          "condition": "volatility decreases on both sides",
+          "expected_result": "Price will consolidate around 5366.89 with reduced intraday movement and low realized volatility."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5285/5290 and 5445/5450 act as significant resistance (short iron-condor wings) and are pin potential.",
+          "condition": "",
+          "expected_result": "Price will be resisted when approaching 5285–5290 on the downside and 5445–5450 on the upside, increasing the likelihood of expiration pinning near these strikes."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Traders will short vega and delta into May options expiration.",
+          "condition": "into May OpEx",
+          "expected_result": "Open interest and positioning will show net short vega and short delta exposure into May expiry, increasing option-implied skew and sensitivity to volatility declines."
+        }
+      ]
+    }
+  }
+}

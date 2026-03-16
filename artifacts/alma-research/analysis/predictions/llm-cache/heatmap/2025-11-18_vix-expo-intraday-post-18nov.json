@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:10:13.125Z",
+  "inputHash": "a668ee623f8627adebd69b787dea1bad0a89639c",
+  "payload": {
+    "responseId": "resp_006f86b9469ab47a0069b766802db88193b00af310c72d5f2c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid and upside pivot cluster near 6686–6717 with an upside target ~6717 (short margin up to 6725–6730). Heatmap shows concentrated upside short-gamma (sticky/attractive zone) in this band, likely to pin or slow upside beyond ~6725–6730.",
+          "condition": "none",
+          "expected_result": "SPX will gravitate toward and stall around 6685–6717 intraday; any break above 6725–6730 will likely be met with resistance and short-lived without follow-through."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at ~6631 with a downside target ~6537 and a local pin around 6575. Heatmap shows pronounced gamma peaks/troughs near 6630–6575 indicating support/pinning and a path for reversion down to the 6530–6540 area if downside momentum builds.",
+          "condition": "none",
+          "expected_result": "If SPX breaks below 6631, expect travel toward 6575 (pin) and further toward 6537; support and pinning likely between 6570–6630 that will slow or reverse declines."
+        }
+      ]
+    }
+  }
+}

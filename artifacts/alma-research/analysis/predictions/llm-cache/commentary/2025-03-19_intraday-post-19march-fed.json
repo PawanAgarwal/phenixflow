@@ -1,0 +1,90 @@
+{
+  "cachedAt": "2026-03-16T01:54:04.265Z",
+  "inputHash": "67edd60a33456959955bdb7fd15ef629f426c6ba",
+  "payload": {
+    "responseId": "resp_0d82d76f8cd9fc1a0069b762ada5d481a2ac15a1f6439949bf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "As long as the SPX can hold the 5523.5 level, the intraday positive drift remains intact.",
+          "condition": "SPX > 5523.5",
+          "expected_result": "SPX will trend higher intraday (net positive drift) and avoid a decisive bearish move while above 5523.5"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX falls below 5523.77, the trend turns decisively more bearish.",
+          "condition": "SPX < 5523.77",
+          "expected_result": "SPX will decline further intraday with increased bearish momentum and larger downward moves after breaching 5523.77"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5611.96 is the main pivot level for today.",
+          "condition": "none",
+          "expected_result": "Price will oscillate around 5611.96 and it will act as an intraday reference where market bias shifts between bullish and bearish on moves away from it"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The vol-profile pivot from Friday AM expiration at 5622.03 will act as today’s pivot (about 10 pts above the intraday vol-profile pivot).",
+          "condition": "none",
+          "expected_result": "5622.03 will attract trading activity and act as an intraday anchor/pivot, with price frequently returning to or reacting at that level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5567.27 is a crucial level for the bulls; if puts don’t catch a bid there, the trend won’t start rolling downhill.",
+          "condition": "puts do not catch a bid at 5567.27",
+          "expected_result": "SPX will not accelerate downward from current levels and selling pressure will remain limited if options market does not bid puts at 5567.27"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5698.85 is the trend-reversal threshold for upward momentum per the vol profile.",
+          "condition": "SPX > 5698.85",
+          "expected_result": "SPX will shift to a sustained upside trend and bullish momentum will increase after clearing 5698.85"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Watch 5656.83 to see if calls catch a bid; that will signal how strong the upside could be.",
+          "condition": "calls catch a bid at 5656.83",
+          "expected_result": "If call demand emerges at 5656.83, SPX will be more likely to rally toward and above nearby resistance levels (e.g., 5698.85) with stronger upside moves"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero vanna coded at 5608 implies high vol is needed for a breakout through that level.",
+          "condition": "attempted breakout through 5608",
+          "expected_result": "A sustained breakout above 5608 will require a surge in implied volatility; without vol expansion the breakout will likely fail or be whipsawed back"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market making (MM) flows can stabilize the move above 5711.",
+          "condition": "SPX > 5711",
+          "expected_result": "If SPX moves above 5711, dealer/MM flows will provide buying/stabilization, reducing downside risk and supporting prices above that level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Below 5535.52 we should see increased spot/vol beta and longer gamma effect, favoring vol increase and a wider rangebound session.",
+          "condition": "SPX < 5535.52",
+          "expected_result": "Intraday volatility will increase, spot/vol correlation will rise, and price will trade in a wider range with larger swings when SPX is below 5535.52"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Above 5659.26 we should see decreased spot vol beta and feel the longer gamma effect (reduced sensitivity).",
+          "condition": "SPX > 5659.26",
+          "expected_result": "Intraday volatility and spot/vol responsiveness will diminish, leading to narrower moves and reduced volatility above 5659.26"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Below 5613 the charm flows turn positive, forcing dealers to sell futures and increasing short-term downward pressure.",
+          "condition": "SPX < 5613",
+          "expected_result": "Dealers will become longer delta every 5 minutes (via charm), prompting them to sell futures and causing additional short-term downward price pressure while below 5613"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Negative color (charm convexity) means gamma decay during the session, which favors more volatility and exposes underlying customer flow.",
+          "condition": "none",
+          "expected_result": "Throughout the session gamma decay will increase realized volatility and lead to larger intraday price swings, revealing customer-driven directional flows"
+        }
+      ]
+    }
+  }
+}

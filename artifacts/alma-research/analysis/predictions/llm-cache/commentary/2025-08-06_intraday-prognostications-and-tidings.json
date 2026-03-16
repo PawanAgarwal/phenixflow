@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:01:30.423Z",
+  "inputHash": "ceb67930907c16a375f3def862047c5afa809af8",
+  "payload": {
+    "responseId": "resp_075dc50a003d89d50069b7646f73b08196bedbaab061cd7d24",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The centroid range will hold as a very strong pivot today and is not expected to be broken during the day.",
+          "condition": "",
+          "expected_result": "Price will remain within 6281.83–6292.20 for the trading day; intraday high will be ≤6292.20 and intraday low will be ≥6281.83."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Price will rangebound between the pivotal levels implied by the long fly/net negative speed setup.",
+          "condition": "",
+          "expected_result": "Price will oscillate between identified downside and upside pivots (approximately 6262.60 and 6332.37) without a sustained breakout beyond them during the day."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot at 6262.60 will act as very strong support after 11:00 and may produce a fake-out down to 6245–6240.",
+          "condition": "after 11:00",
+          "expected_result": "If price tests ~6262.60 after 11:00, it will hold and either bounce or momentarily drop to 6245–6240 before returning above 6262.60."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If spot is above 6258 in the last 1.5 hours, there is pin potential at 6240; otherwise 6240 will act as the magnet.",
+          "condition": "in the last 1.5 hours and spot >6258",
+          "expected_result": "If spot >6258 during final 1.5 hours, price will gravitate to and be pinned at 6240 at close; if spot ≤6258, price will be pulled toward 6240 as the closing magnet."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Below 6277 intraday, downside longer gammas should dampen volatility and cause reversion toward 6258/60, with possible support at 6240–6231 if a rare early shock occurs.",
+          "condition": "price falls below 6277 (or rare early shock causes quick move before 11:00)",
+          "expected_result": "After breaking below 6277, realized intraday volatility will decrease and price will revert to 6258–6260; in a sudden early drop, price may reach 6240–6231 before calming and reverting to ~6258–6260."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot at 6332.37 will calm volatility and cause the spot to revert from that pivot.",
+          "condition": "",
+          "expected_result": "If price reaches ~6332.37, intraday realized volatility will decline and price will reverse lower from that level rather than continuing immediately higher."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the right wing of skew is bid, the max level is 6368.49 and 6352 would pin above the pivot if volatility calms.",
+          "condition": "right wing of skew is bid and volatility calms above 6332.37",
+          "expected_result": "Price may reach up to 6368.49; if volatility contracts above the upside pivot, price will be pinned near 6352."
+        }
+      ]
+    }
+  }
+}

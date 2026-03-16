@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:16:07.584Z",
+  "inputHash": "e601cb11facbafdb61e56fef7fd4a191eea6fa06",
+  "payload": {
+    "responseId": "resp_05e40ea2d57c74b80069b767e291fc819fba4e8131b8a80d55",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES futs",
+          "prediction_text": "Spot remains under pressure and downside is expected to be protected in the short run.",
+          "condition": "",
+          "expected_result": "ES futures will trade lower intraday with limited further downside (price decline that does not breach major weekly support levels) and reduced volatility on downside attempts."
+        },
+        {
+          "instrument": "ES futs",
+          "prediction_text": "Momentum-pivot is at 6860 with downside confirmation below 6760.",
+          "condition": "price falls below 6760",
+          "expected_result": "If ES futures trade below 6760, momentum will confirm a further downside leg, leading to additional intraday declines from current levels."
+        },
+        {
+          "instrument": "oil",
+          "prediction_text": "Short backwardation trade call on oil (expectation that near-term prices will be supported relative to deferred contracts).",
+          "condition": "",
+          "expected_result": "Front-month crude will outperform later-dated contracts, producing a narrowing of the futures spread (front-month minus deferred becomes less negative or turns positive) and relative strength in spot/near-term oil prices."
+        }
+      ]
+    }
+  }
+}

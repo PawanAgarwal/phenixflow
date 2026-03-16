@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:05:06.880Z",
+  "inputHash": "c3806a13a47f48a68656c1c9af6b0565927d50e7",
+  "payload": {
+    "responseId": "resp_0f498edc0bc98ab80069b7654d44c081918c360e16231db4f8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky center / pin area around 6670-6675 (centroid ~6672.9) — market likely to stall and revert near this zone; minor upside pivot at ~6692.6 acts as short-gamma brake toward 6725; downside pivot at ~6645.8 with acceleration toward 6592-6600 if broken.",
+          "condition": "none",
+          "expected_result": "Price will spend extended time between 6670-6695; if bid fails below 6646 expect a fast move to 6592-6600; if rallies above 6693 expect limited travel toward 6725 before resistance."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "High-probability reversion magnet at 6630-6640 (local zero vanna) — spot likely to find support and reverse back up from this area if touched.",
+          "condition": "touch 6630-6640",
+          "expected_result": "Upon touching 6630-6640, price will reverse higher within the session, targeting return toward the 6670-6690 range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong downside sticky/support cluster around 6555-6525 (longer-dated heavy gamma area visible on heatmap) — acts as deeper support if market sells through intraday pivots.",
+          "condition": "sustained break below 6600/6592",
+          "expected_result": "If price sustains below 6600/6592, expect deceleration near 6555-6525 with increased buying interest and limited further downside."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:05:15.118Z",
+  "inputHash": "4f2e33e05caaecbdd255135436bc092553c8fee6",
+  "payload": {
+    "responseId": "resp_0709354583824ebd0069b7655333d081919b8d10e482e6028b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The centroid at 6735.95 will act as a strong pivot after 2PM and will be hard to break significantly in either direction.",
+          "condition": "after 14:00 (2PM)",
+          "expected_result": "Price will remain near 6735.95 with low probability of a significant break above or below that level during the remainder of the trading day"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the market moves down to the downside pivot at 6651.85, the primal downside target is 6617.45 and secondary target is the 6590 zone.",
+          "condition": "price reaches 6651.85",
+          "expected_result": "Price will continue lower to about 6617.45 and may further move into the 6590 area"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility spikes during a downside move, price could reach 6550 as a daily maximum drawdown, then revert up toward 6590 and possibly pin to 6570.",
+          "condition": "volatility spikes during downside move",
+          "expected_result": "Price will drop to ~6550 then rebound to ~6590 and possibly stabilize near ~6570 (pinning)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the market moves up from the upside pivot at 6743.29, a squeeze toward 6765–6770 is possible, then price will likely revert and pin back to the pivot.",
+          "condition": "price reaches 6743.29",
+          "expected_result": "Price will advance to roughly 6765–6770 then reverse back and settle near 6743.29 (pin)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market has more room to go down than up today and will likely be a grind lower rather than a sharp downstick due to flat speed exposure and local gamma support around 6680.",
+          "condition": "intraday trading today",
+          "expected_result": "Price will drift lower gradually, constrained by support around 6680, rather than experiencing a rapid sharp decline"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market only has a chance to go up today if it opens above the centroid.",
+          "condition": "market opens above 6735.95",
+          "expected_result": "Upward movement becomes more likely, with the upside pivot at 6743.29 as the most probable near-term target"
+        }
+      ]
+    }
+  }
+}

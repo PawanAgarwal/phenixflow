@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:26.930Z",
+  "inputHash": "51e9c26b9ba7fc870b1a04b1b9630988902bdadd",
+  "payload": {
+    "responseId": "resp_0fb040ffe57bcd020069b7673f3b908193a78e611733b6db7a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/pinning zone around 6999-7010 (upside target marked as very sticky locally). Heatmap shows concentrated gamma and a red/orange band near ~6999–7010 indicating magnet and reversion risk back toward centroid.",
+          "condition": "price approaches 6999-7010",
+          "expected_result": "Price is likely to be pinned/reverted at 6999–7010; expect rejection or slower progress above this band and increased probability of pullback toward 6970–6950 within hours."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance/rejection cluster near 7040–7055 (large gamma peaks visible to the upside). Acts as an upper brake if price attempts excursion above the 7000 area.",
+          "condition": "price moves beyond 7010 toward 7040+",
+          "expected_result": "Price likely meets strong resistance and stalls or reverses near 7040–7055; high chance of short-term rejection back toward 6990–6960."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/sticky corridor around 6890–6870 (gamma peak/trough cluster and heatmap coloration showing stickiness). Likely to hold intra‑day as downside buffer.",
+          "condition": "price declines toward 6890–6870",
+          "expected_result": "Expect bounce or consolidation in 6890–6870; elevated probability of reversion back toward 6920–6950 rather than a clean breakdown."
+        }
+      ]
+    }
+  }
+}

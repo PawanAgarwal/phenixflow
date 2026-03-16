@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:00:33.323Z",
+  "inputHash": "0153d31d82a807a24bfa8b99fd44ec008a66f47a",
+  "payload": {
+    "responseId": "resp_0b3d2b80fa792d060069b7643a46888197929f0d20fb76c0a7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong magnetic gamma around 6350–6365 acting as an upside pin/anchor; if spot moves into this band and volatility drops expect rejection back lower (fakeouts to ~6390 possible if upside vol is high).",
+          "condition": "SPX trades into 6350–6365",
+          "expected_result": "Price will be attracted to and likely stall/reject near 6350–6365; look for reversible spikes toward ~6390 on high upside volatility but failure to clear 6390 should roll price back down."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary downside pivot/support cluster at ~6273–6285 providing intraday support and a likely reversion zone; spot can get stuck below the centroid and oscillate here in afternoon.",
+          "condition": "SPX falls toward 6273–6285",
+          "expected_result": "Price will find support and frequently revert in the 6273–6285 range; intraday bounces back toward ~6285–6300 expected from this zone."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Deeper support / downside target (max) at ~6202 with a near-term magnetic sub-level at ~6238; below 6245 in afternoon increases probability of move toward 6225–6202.",
+          "condition": "CPI print is worse than expected or SPX breaks below 6245",
+          "expected_result": "Price will be pulled down through 6245 into the 6238–6225 corridor and likely test 6202 as the primal downside target."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower extremal liquidity/support around 6128 indicated as the primal crash-support if a very bad CPI triggers a major downside move.",
+          "condition": "Very bad CPI print / strong downside shock",
+          "expected_result": "Price may accelerate lower and find concentrated support/liquidity near 6128, acting as a probable stop/support for a larger drawdown."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:56:40.771Z",
+  "inputHash": "a08470eb4fa3e0ac81bfbaa563ad57ce600e43c8",
+  "payload": {
+    "responseId": "resp_0fa895d97f7204790069b76353588c8195a995f70767483f65",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong gamma pinch / magnet around 5730 with elevated gamma peak and trough lines clustered near 5709–5730, signaling a pinning magnet that will attract price into that band if market moves are real (not fake).",
+          "condition": "price inside 5700–5740",
+          "expected_result": "Price will gravitate toward and spend time around 5709–5730; expect mean reversion back into this band within a few trading hours and increased short-term stability while there."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Visible zero-vanna / sticky barrier near 5624 (marked as a zero vanna line) creating resistance to quick breaks downward — requires lower vol to pass. Gamma structure also shows a nearby centroid at ~5651 supporting a sticky zone between ~5620–5655.",
+          "condition": "price approaches 5620–5655 from above",
+          "expected_result": "Price is likely to slow/reject near 5620–5655 and revert higher rather than cleanly break down; a decisive break below 5620 will be required to trigger larger downside flow."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside corridor shows decreasing vol and magnetization toward 5500 if price breaches lower thresholds: below 5564 the heatmap shows vol dropping and dealers likely to pull price further toward ~5500 where stabilization is expected.",
+          "condition": "price breaks and trades below 5564",
+          "expected_result": "Price is likely to continue toward 5500 and stabilize there; expect extended travel down to ~5500 within the session after breach of 5564."
+        }
+      ]
+    }
+  }
+}

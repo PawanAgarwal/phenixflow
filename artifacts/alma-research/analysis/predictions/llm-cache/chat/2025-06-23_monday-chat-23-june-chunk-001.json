@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:29:01.227Z",
+  "inputHash": "1a415b9eaeeaf16a4ec3cb2b6236d086c252f268",
+  "payload": {
+    "responseId": "resp_0764e3e9bb1047be0069b78706ced481929290623ad9d33f2b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-23T19:52:57.396Z",
+          "instrument": "SPX",
+          "prediction_text": "If volatility is supplied, SPX dealers will be long vanna.",
+          "condition": "if volatility is supplied",
+          "expected_result": "SPX dealers' net vanna position becomes long following an increase in available volatility"
+        },
+        {
+          "made_at": "2025-06-23T19:56:15.776Z",
+          "instrument": "SPX",
+          "prediction_text": "Downside risk will become very big, and volatility squeeze risk will increase.",
+          "condition": "",
+          "expected_result": "SPX experiences larger downside moves and increased likelihood of volatility squeezes"
+        },
+        {
+          "made_at": "2025-06-23T19:56:48.200Z",
+          "instrument": "SPX",
+          "prediction_text": "If downside is held, volatility spikes will be sold.",
+          "condition": "if downside is held",
+          "expected_result": "Volatility spikes in SPX will be actively sold after downside price action is contained"
+        },
+        {
+          "made_at": "2025-06-24T11:01:07.383Z",
+          "instrument": "",
+          "prediction_text": "If price is below that level, downside gamma and vega will be gravitational.",
+          "condition": "if it is below that lvl",
+          "expected_result": "Below the specified level, option market dynamics will gravitate toward increased downside gamma and vega exposure"
+        }
+      ]
+    }
+  }
+}

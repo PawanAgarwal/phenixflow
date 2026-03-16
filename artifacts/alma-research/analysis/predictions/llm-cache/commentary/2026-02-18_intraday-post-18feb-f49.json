@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:53.559Z",
+  "inputHash": "a19b613aae812aa41cec7e857727f61d8ba67df7",
+  "payload": {
+    "responseId": "resp_05092154785773180069b7679a283c81a2818fba65f4631ed2",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Structural pivot is 6880.",
+          "condition": "",
+          "expected_result": "Price will trade near 6880 and act as a pivot point for intraday direction changes (bounces or breaks) during the session."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Upside confirmation should be gained at 6905.",
+          "condition": "trade at or above 6905",
+          "expected_result": "If ES trades at or above 6905, expect follow-through upside continuation (new intraday highs) after the confirmation."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Downside confirmation at 6860.",
+          "condition": "trade at or below 6860",
+          "expected_result": "If ES trades at or below 6860, expect follow-through downside continuation (new intraday lows) after the confirmation."
+        }
+      ]
+    }
+  }
+}

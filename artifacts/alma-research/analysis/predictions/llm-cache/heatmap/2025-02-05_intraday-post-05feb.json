@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T01:51:00.532Z",
+  "inputHash": "82b8431f63d54f771aca264bd3415e254f1fae4d",
+  "payload": {
+    "responseId": "resp_003bf08ce41439900069b761ff78248192a8c1af853aa35817",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a sticky/suppressive zone between ~5995 and ~6055 created by customer long iron-condor (5995/6000 put spread and 6050/6055 call spread). This range is a potential pin area (5995 acting as downside pin) with mean-reversion bias back toward the upper edge (~6055).",
+          "condition": "price remains between 5995 and 6055 without vol bid/offer",
+          "expected_result": "Expect intraday reversion rallies toward ~6055; downside should be capped near 5995 (limited follow-through) unless substantial vol bidding appears to break below 5995."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma peak / trough lines cluster near ~6055 (gamma trough) and ~5995 (gamma peak), indicating these levels will act as short-speed boundaries and likely rejection/pinning levels intraday.",
+          "condition": "no change in gamma profile (no large trade flows)",
+          "expected_result": "Price should oscillate within the 5995–6055 corridor with increased rejection at ~5995 on down-moves and resistance around ~6055 on up-moves; breakouts require clear vol bid (below) or vol offer (above)."
+        }
+      ]
+    }
+  }
+}

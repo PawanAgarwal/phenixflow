@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:15:04.746Z",
+  "inputHash": "461cb7859154b8ca291ecf64a403db1f9947dc58",
+  "payload": {
+    "responseId": "resp_0dc1a6d08e95e1f00069b767a5fff48190a64a638113764f1f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Futures cannot gain above the marked pivot and will remain structurally weak while trading below it.",
+          "condition": "while they cannot gain above the marked pivot",
+          "expected_result": "ES will continue to trade with downward bias and fail to sustain moves above the pivot, producing lower highs or renewed selling pressure"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Watch ES at 6865/75 range as a key reference for intraday action.",
+          "condition": "at 6865/75 range",
+          "expected_result": "Price interaction at 6865–6875 will determine next directional move: rejection leads to downside continuation, while a clean breakout above leads to short-term strength"
+        }
+      ]
+    }
+  }
+}

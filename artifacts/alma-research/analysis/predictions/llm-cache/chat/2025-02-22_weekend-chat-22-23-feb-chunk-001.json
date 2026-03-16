@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:27:37.023Z",
+  "inputHash": "bf631df6655e2cbce93e4c996c18118644a84e03",
+  "payload": {
+    "responseId": "resp_0ea561ed01f78fd90069b786b3467c8197a9abafb6d6908dd4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-23T09:34:09.719Z",
+          "instrument": "",
+          "prediction_text": "Market is still bullish and could form a big-time bottom during premarket/overnight futures moves.",
+          "condition": "watch premarket session / how futures move overnight",
+          "expected_result": "Futures reverse upward overnight and cash market prints a bottom, leading to a bullish intraday rally the next session"
+        },
+        {
+          "made_at": "2025-02-23T22:31:02.189Z",
+          "instrument": "ES",
+          "prediction_text": "ES needs to take out 6116.52 level to confirm bottom.",
+          "condition": "none",
+          "expected_result": "A decisive break above 6116.52 in ES will be followed by sustained upside (confirmation of a market bottom)"
+        },
+        {
+          "made_at": "2025-02-23T14:57:44.855Z",
+          "instrument": "",
+          "prediction_text": "Participants will start to bid upside and buy leveraged calls, causing IV to rise, skew to shorten, spot to go up, and positions to become one-sided.",
+          "condition": "none",
+          "expected_result": "Increased call buying leads to higher IV, shorter skew, upward spot movement, and concentrated long-call positioning"
+        },
+        {
+          "made_at": "2025-02-22T22:46:12.614Z",
+          "instrument": "VIX",
+          "prediction_text": "The short skew phenomenon will manifest as shorter downside speed despite a decline, rather than reflecting 'market fear'.",
+          "condition": "none",
+          "expected_result": "VIX and options skew show relatively muted RV increase and compressed downside speed compared with price decline (shorter tail risk realized)"
+        }
+      ]
+    }
+  }
+}

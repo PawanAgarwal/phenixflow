@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Does 0DTE Options Trading Increase Volatility? - Source Brief</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 36px; color: #111827; line-height: 1.5; }
+    h1, h2 { margin: 0 0 12px; }
+    h1 { font-size: 24px; }
+    h2 { margin-top: 28px; font-size: 18px; }
+    p, li { font-size: 13px; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+    .meta { background: #f3f4f6; border: 1px solid #d1d5db; padding: 14px 16px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Does 0DTE Options Trading Increase Volatility?</h1>
+  <div class="meta">
+    <p><strong>Canonical source</strong>: SSRN abstract 4426358</p>
+    <p><strong>URL</strong>: <code>https://ssrn.com/abstract=4426358</code></p>
+    <p><strong>Local purpose</strong>: preserve the paper provenance used in the OptionDepth reconstruction docs.</p>
+    <p><strong>Access note</strong>: the original SSRN PDF and abstract page were blocked by SSRN Cloudflare verification from this API environment on 2026-03-15, so this local PDF is a provenance brief rather than the publisher PDF.</p>
+  </div>
+  <h2>How It Was Used</h2>
+  <ul>
+    <li>To justify treating 0DTE exposure as a meaningful intraday volatility input rather than a negligible edge case.</li>
+    <li>To motivate backtests that separate 0DTE-heavy sessions from ordinary expiry structure.</li>
+    <li>To support the claim that next-session EOD heatmaps should be stress-tested most aggressively on index products with concentrated same-day hedging pressure.</li>
+  </ul>
+  <h2>Paraphrased Takeaways Used In The Docs</h2>
+  <ul>
+    <li>The paper studies whether 0DTE options activity is associated with higher market volatility, especially in index-linked products.</li>
+    <li>The relevant mechanism for our use case is dealer hedging pressure near expiry, which can change realized intraday price behavior even when the underlying news flow is unchanged.</li>
+    <li>That makes 0DTE concentration an empirical calibration problem for our heatmap and backtest stack, not something we should ignore or assume away.</li>
+  </ul>
+  <h2>Where This Brief Is Referenced</h2>
+  <ul>
+    <li><code>OPTIONDEPTH_EOD_RECONSTRUCTION_METHOD.md</code>, Section 19</li>
+    <li><code>appendix/SOURCE_INDEX.md</code></li>
+  </ul>
+</body>
+</html>

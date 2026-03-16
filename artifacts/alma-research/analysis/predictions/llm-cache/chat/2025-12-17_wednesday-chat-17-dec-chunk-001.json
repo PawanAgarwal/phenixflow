@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:30:06.969Z",
+  "inputHash": "a4c46935ed57060dddcdcef455e6facbb5a3676f",
+  "payload": {
+    "responseId": "resp_07d7766399d382420069b7874d1d2c81a2b56c9cc7efa624b8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-12-17T19:00:37.836Z",
+          "instrument": "",
+          "prediction_text": "ideally it should pin to 6739.",
+          "condition": "",
+          "expected_result": "Price reaches and trades at 6739 (pins that level) within the current session or specified timeframe."
+        },
+        {
+          "made_at": "2025-12-17T21:27:58.595Z",
+          "instrument": "",
+          "prediction_text": "If market does not reclaim this current gap fill, then that's the next.",
+          "condition": "market does not reclaim this current gap fill",
+          "expected_result": "Following failure to reclaim the gap fill, price moves to the next identified level referenced by the speaker (entering the next expected area or target)."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:51:43.711Z",
+  "inputHash": "e8037f6ebae195458c50fa81e26f00a84b240642",
+  "payload": {
+    "responseId": "resp_088c0c0d8b2dca990069b762298ffc819d889da2f6e17f7860",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma support / pinning magnet between ~6041 and ~6109 with pronounced support at ~6096; heatmap shows dealers short gamma there creating a sticky zone that will attract price and suppress downside.",
+          "condition": "price trades into 6041–6109 zone",
+          "expected_result": "Price will gravitate back toward 6090–6100 and hold there or reverse higher within the session (bounce or consolidation around 6090–6100 within next few hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / rejection corridor around the 6210–6230 area indicated by concentrated gamma peak (red hot zone) at the top of the heatmap — a probable cap if price approaches that level.",
+          "condition": "price rises toward 6210–6230",
+          "expected_result": "Upward moves will stall or reverse near 6210–6230, yielding intraday rejection or pullback from that range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local short-speed / suppressive flow zone from ~6090 up to ~6125 with high positive charm and decreasing net color — this creates an intra-range sticky corridor (6100 acts like a pin if intact).",
+          "condition": "price remains between 6090 and 6125",
+          "expected_result": "Price will be rangebound and exhibit low realized volatility inside 6090–6125, with probable pinning near 6100 unless a clear breakout occurs."
+        }
+      ]
+    }
+  }
+}

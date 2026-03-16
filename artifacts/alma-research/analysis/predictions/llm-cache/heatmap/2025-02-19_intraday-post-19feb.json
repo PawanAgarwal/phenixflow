@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:51:58.399Z",
+  "inputHash": "a16b652d6a6b2a2202c4000af256d0b2dd567c69",
+  "payload": {
+    "responseId": "resp_0b77219793d164360069b76236360c8197be20639589e4364f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pin/support around 6100 — heatmap and commentary mark 6100 as a strong support/zero‑vanna pin that will attract price and resist downside; gamma structure provides defensive long gamma there.",
+          "condition": "price approaches or falls toward 6100",
+          "expected_result": "Price should find support and show reduced downside follow-through / bounce from ~6100 (hold for intra‑day to multi‑session timeframe)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky upside pivot / local gamma peak at ~6120–6150 — labeled local pivot/pin (highest local gamma at 6120) and asymmetric profile favors volatility and upside movement above ~6150.",
+          "condition": "price breaks and holds above 6150",
+          "expected_result": "Expect acceleration to the upside and increased volatility above 6150 with likely push toward higher gamma pockets (near 6200+)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Reversion / protection zone around 5990–6010 (bull put structure) — net long gamma in this 5990/6010 area provides a counter‑hedging flow if market falls, acting as a support/reversion zone.",
+          "condition": "price drops into 5990–6010",
+          "expected_result": "Price should experience buying/reversion pressure and limited continuation lower from the 5990–6010 band (intra‑day bounce likely)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / short‑fly rejection cluster near 6095/6100/6105 — local short fly creates a steep local short gamma/speed that provides strong pinning and theta/vol burning if price moves lower, implying resistance and rejection behavior in this band.",
+          "condition": "price approaches 6095–6105 from below",
+          "expected_result": "Expect rejection or chopped action with limited clean break through 6095–6105 unless significant buying removes the short fly exposure."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside vacuum / squeeze potential if 6200/6205 call spread exposure flips — the 6200/6205 bull call spread MM short delta/gamma creates an upside vacuum that can propel price once local flip is breached.",
+          "condition": "price breaks above local flip around 6200–6205",
+          "expected_result": "If 6200–6205 is taken, expect rapid follow‑through upside (squeeze toward next gamma peaks above 6250+) as short gamma/short delta flows unwind."
+        }
+      ]
+    }
+  }
+}

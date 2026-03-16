@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:55:30.419Z",
+  "inputHash": "0353187ba012eac7aa6236f1fc60d702a17e58b3",
+  "payload": {
+    "responseId": "resp_030868687b6a65cd0069b7630c158c81a19f2de634a0fc0273",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Volatility should calm down to the upside around the centroid at 5329.70",
+          "condition": "price at 5329.70",
+          "expected_result": "Intraday realized volatility will decrease on upside moves once price reaches 5329.70"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility should expand to the downside from the centroid at 5329.70",
+          "condition": "price at 5329.70",
+          "expected_result": "Downside moves from 5329.70 will show increasing realized volatility compared with prior intraday volatility levels"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Above 5346.42 volatility must be decreased if the price is serious about stabilizing there",
+          "condition": "price above 5346.42",
+          "expected_result": "If price remains above 5346.42, realized volatility will fall, indicating price stabilization"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "To the downside, around 5271.00 we should start to see longer gamma dampening volatility towards 5200",
+          "condition": "price at 5271.00",
+          "expected_result": "Once price reaches 5271.00, intraday volatility will be dampened with a directional bias toward 5200"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Dealers are long those puts, so whenever they go ITM, they will get shorter delta on those positions",
+          "condition": "dealer-held puts go ITM",
+          "expected_result": "Dealer hedging will reduce short-delta exposure, producing a net decrease in dealer short-delta (lessive of dealer-driven selling/hedging) after puts become ITM"
+        },
+        {
+          "instrument": "TSLA",
+          "prediction_text": "If price can hold the daily pivots, it can be stabilized until TSLA earnings report",
+          "condition": "price holds the daily pivots",
+          "expected_result": "TSLA price will show relative stability (reduced directional movement) through the period leading up to the TSLA earnings release"
+        }
+      ]
+    }
+  }
+}

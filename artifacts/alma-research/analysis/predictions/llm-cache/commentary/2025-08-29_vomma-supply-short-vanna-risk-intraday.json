@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:02:46.273Z",
+  "inputHash": "077ed3e47cb3c26000baf5b362a1e63e75bff03b",
+  "payload": {
+    "responseId": "resp_0ba8720f941d14310069b764bea0e4819e894ead5aa38c18f3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market expects most liquidity (centroid) at 6452.10 - 6468.93 and will trade in that strong range during the last 1.5 hours.",
+          "condition": "",
+          "expected_result": "SPX price remains within 6452.10–6468.93 during the specified period (last 1.5 hours of the trading session)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6472.20 will grind down to 6422.46/6415 (margin to 6405) if put IV is not sold in the centroid range.",
+          "condition": "put IV is not being sold in the centroid range (6452.10–6468.93)",
+          "expected_result": "SPX falls toward 6422.46–6415 (allowing down to 6405) after trading through 6472.20, reflecting increased downside movement."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6482.54: above this line spot will get pinned to 6500.",
+          "condition": "",
+          "expected_result": "If SPX rises above 6482.54, price will consolidate near 6500 (pinning behavior) rather than continue rapidly away from that level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If call skew is heavily bid (some catalyst), spot can squeeze up to 6525 (vanna flip after 1:15 PM serves as a daily max).",
+          "condition": "call skew becomes heavily bid (e.g., post-catalyst)",
+          "expected_result": "SPX rallies to around 6525, approaching the identified daily maximum level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If PCE is in line with expectations or communication stays benign, market will buy back downside hedges and favor downside vol selling (momentum trading and vol selling is appropriate).",
+          "condition": "PCE in line with expectations or communication stays benign",
+          "expected_result": "Put volatility is bought back and implied volatility on downside compresses while SPX either holds levels or grinds higher, enabling profitable vol-selling strategies."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If PCE is not in line with expectations, we will see some reversion downward then go back to the centroid.",
+          "condition": "PCE is not in line with expectations",
+          "expected_result": "SPX initially drops below the centroid range then reverts back into 6452.10–6468.93 after the intraday move."
+        }
+      ]
+    }
+  }
+}

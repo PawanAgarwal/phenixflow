@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:29:02.248Z",
+  "inputHash": "a85bb1dbe95102ebcbb847eb3ce00ae1fc1e98ee",
+  "payload": {
+    "responseId": "resp_071e2ac6fd8a4a760069b787092df4819782ea9c1857e12a46",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-26T17:24:59.769Z",
+          "instrument": "SPX",
+          "prediction_text": "I don't expect any bearish pullback until July 8; market is supported through July.",
+          "condition": "",
+          "expected_result": "No significant bearish pullback in SPX prior to 2025-07-08 (price does not decline by a materially-defined pullback, e.g., >3% from recent highs, before that date)."
+        },
+        {
+          "made_at": "2025-06-26T21:24:33.802Z",
+          "instrument": "",
+          "prediction_text": "Volatility will grind up later this week (vol-selling regime transitioning to higher realized/implied vols).",
+          "condition": "",
+          "expected_result": "Implied or realized volatility measures (e.g., VIX or realized vol) increase over the coming days relative to current levels, showing a detectable upward trend within the week following the timestamp."
+        },
+        {
+          "made_at": "2025-06-26T21:24:33.802Z",
+          "instrument": "",
+          "prediction_text": "We are now in a vol-selling regime (vol selling is occurring now).",
+          "condition": "",
+          "expected_result": "Market conditions consistent with vol-selling are observable immediately after the timestamp (e.g., net short volatility positioning, decreasing implied vols absent large price moves)."
+        }
+      ]
+    }
+  }
+}

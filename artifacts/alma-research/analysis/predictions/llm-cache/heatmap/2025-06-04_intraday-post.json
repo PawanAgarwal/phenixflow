@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:09.097Z",
+  "inputHash": "b0281c231d57c2c3777737a70f9f1bc88ea4aff3",
+  "payload": {
+    "responseId": "resp_020afaffa4b19dd50069b763ac143c8193b146b22e03552108",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Options heatmap shows pinning/support cluster around 5950 with nearby gamma peak/trough indicating a magnet there; centroid/long fly centered ~5983 implies market likely to gravitate back toward the 5960–5990 area if it strays.",
+          "condition": "none",
+          "expected_result": "If SPX moves away from 5960–5990 during the session, expect reversion back into that band within the day (price closes or trades multiple times inside 5960–5990)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside speed/structure marks a downside pivot near 5949.6 with a vanna flip at ~5931 and a stronger support identified near 5910; breaking below 5949.6 should reduce vol locally and make 5910 the next sticky support.",
+          "condition": "price breaks and closes below 5949.63",
+          "expected_result": "After a confirmed close below 5949.63, expect SPX to stall or find support near 5910 within the next few sessions (price tests 5910 area and shows limited follow-through below)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pins identified around 6000 and 6030 (call-side gamma peaks) creating rejection/sticky zones—these strikes act as resistance/magnet for upside moves.",
+          "condition": "none",
+          "expected_result": "If SPX rallies toward 6000–6030, expect rejection or deceleration there with price failing to sustain a breakout above 6030 during the session (multiple touches or intraday reversal at those levels)."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:05:11.403Z",
+  "inputHash": "3188c4b6e3fbcdbb06727b2539b1f278cda4ca76",
+  "payload": {
+    "responseId": "resp_0be5d4baf32150f60069b7654ca7388191ad23476f6ad8e510",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid will be in the 6706.30 - 6715.05 range and spot will move free from dealer flow around that range.",
+          "condition": "",
+          "expected_result": "SPX trades predominantly between 6706.30 and 6715.05 for a sustained period (e.g., majority of intraday ticks within this band)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6677.96 can lead to acceleration toward the primal target at 6622.44.",
+          "condition": "SPX breaks below 6677.96",
+          "expected_result": "After breaking below 6677.96, SPX declines to 6622.44 within the same trading session or next two sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Additional downside interest around 6615/6600 providing a reversion opportunity.",
+          "condition": "SPX reaches 6615-6600 area",
+          "expected_result": "Upon touching 6615-6600, SPX shows measurable mean reversion by rallying at least 0.5% from that area within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local gamma bar at 6645 can be sticky after 2PM and may affect pinning/flow between the pivot and the primal downside target.",
+          "condition": "SPX trades through 6645 after 14:00 local time",
+          "expected_result": "SPX exhibits reduced intraday variance and increased clustering of trades near 6645 for the remainder of the trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6725.97 is a sticky range due to 0DTEs and can allow a secure climb toward 6752.49 (≈6762 margin).",
+          "condition": "SPX trades above 6725.97",
+          "expected_result": "If SPX sustains above 6725.97, it advances toward 6752.49 and may reach up to ~6762 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6752.49 should provide a reversion possibility back down towards the upside pivot.",
+          "condition": "SPX reaches 6752.49 (or ~6762)",
+          "expected_result": "Upon reaching 6752.49 (or ~6762), SPX reverses and falls back at least to the upside pivot near 6725.97 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Traders expect downside risk ~30.13% more probable, implying a downside grind with slight vol rather than a vol spike.",
+          "condition": "",
+          "expected_result": "Over the near term (days to week), SPX shows a gradual downward bias with modest increases in realized volatility but no sudden large vol spike; mean daily returns are negative."
+        }
+      ]
+    }
+  }
+}

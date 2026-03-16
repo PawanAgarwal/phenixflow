@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:11.141Z",
+  "inputHash": "5894eb0eab30c0e45dcca6355b6d6fb406403cb6",
+  "payload": {
+    "responseId": "resp_036eb4ae61a557860069b7676fda488196b0938d55053e6662",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Gold",
+          "prediction_text": "Gold should revert to the old highs if volatility expands and sentiment shifts bearish.",
+          "condition": "volatility expands and sentiment shifts bearish",
+          "expected_result": "Gold price rises back to previous high levels (tests prior peaks)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Markets are likely to experience a crisis-driven bubble burst with increased volatility.",
+          "condition": "",
+          "expected_result": "Major equity indices show sharp declines with higher realized volatility"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Sentiment will pin prices near recent ranges before a decisive breakout or rejection.",
+          "condition": "",
+          "expected_result": "Price action remains rangebound near current levels until a breakout or rejection occurs with follow-through momentum"
+        }
+      ]
+    }
+  }
+}

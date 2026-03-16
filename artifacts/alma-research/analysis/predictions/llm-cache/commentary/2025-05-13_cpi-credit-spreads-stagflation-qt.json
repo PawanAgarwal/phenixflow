@@ -1,0 +1,102 @@
+{
+  "cachedAt": "2026-03-16T01:56:57.584Z",
+  "inputHash": "00be284507c23a99d7dc267ed326d8aa37a9490b",
+  "payload": {
+    "responseId": "resp_026ea924c2b0c2110069b7635ab50881a19a059c99cc6e7f9d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will revert from recent highs toward 5491.06.",
+          "condition": "",
+          "expected_result": "SPX declines to 5491.06 (or within a tight band around it) within the model's prediction horizon."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX pivot at 5664.86 will act as a short-term pivot level.",
+          "condition": "",
+          "expected_result": "SPX will rotate around 5664.86, with intraday moves reversing upon touches of that level rather than trending through it."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If intraday volatility cools sharply after taking 5847.67, SPX will reject at 5850 and pin there.",
+          "condition": "SPX takes 5847.67 and volatility cools sharply",
+          "expected_result": "SPX rallies to ~5850 and then fails to break higher, staying pinned near 5850 for a sustained intraday period."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If volatility remains stagnant or cooling, 5889.97 will likely reject and pin at 5850.",
+          "condition": "volatility stagnant or cooling",
+          "expected_result": "A move up to 5889.97 fails and reverses, leaving SPX pinned near 5850."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If volatility catches up after taking 5847.67, SPX will squeeze higher toward 5935.",
+          "condition": "SPX takes 5847.67 and volatility increases (vol catches up)",
+          "expected_result": "SPX advances to around 5935 following a volatility-driven squeeze."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 5785.77: a break below will trigger market reversion lower.",
+          "condition": "SPX breaks below 5785.77",
+          "expected_result": "SPX undergoes a mean-reversion sell-off, pushing materially lower from the break point."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero vanna coded at 5754 with positive convexity implies non-linear downside behavior around that level.",
+          "condition": "",
+          "expected_result": "Price action near 5754 will display positive convexity (sharp down moves slow or reverse nonlinearly), making directional option positions behave asymmetrically."
+        },
+        {
+          "instrument": "US10Y",
+          "prediction_text": "U.S. 10-year yield will likely hold in the 4.30–4.50% range while policy and tariff risks remain front-and-center.",
+          "condition": "policy and tariff risks remain front-and-center",
+          "expected_result": "10-year yield trades and is contained between 4.30% and 4.50% rather than breaking sustainably above or below that band."
+        },
+        {
+          "instrument": "US10Y",
+          "prediction_text": "A sustained move below 4.20% in the 10-year yield requires markedly weaker data or fresh Fed dovish signals.",
+          "condition": "markedly weaker economic data or fresh Fed dovish signals",
+          "expected_result": "10-year yield falls and remains below 4.20%."
+        },
+        {
+          "instrument": "US10Y",
+          "prediction_text": "Any surprise in inflation prints or a sudden liquidity squeeze could send yields rapidly through the 4.50% handle.",
+          "condition": "surprise inflation prints or a sudden liquidity squeeze",
+          "expected_result": "10-year yield spikes above 4.50% in a rapid move."
+        },
+        {
+          "instrument": "CDX_HY_5Y",
+          "prediction_text": "CDX High-Yield 5Y spreads will re-widen sharply above short-term trends if a fresh catalyst (e.g., hawkish Fed remarks or tariff escalations) hits.",
+          "condition": "hawkish Fed remarks or tariff escalations",
+          "expected_result": "CDX HY 5Y spreads widen materially above current short-term trend levels."
+        },
+        {
+          "instrument": "CDX_HY_5Y",
+          "prediction_text": "In a good-news regime, high-yield spreads will compress back toward long-term averages.",
+          "condition": "good-news macro regime (improving data)",
+          "expected_result": "CDX HY 5Y spreads compress toward their 100- and 200-day averages."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "One-sigma three-day move to May 16 is about ±118 points, implying ~17.3% chance SPX < 5725 and ~15.7% chance SPX > 5960 by May 16.",
+          "condition": "",
+          "expected_result": "By May 16, SPX is below 5725 in ~17% of outcomes and above 5960 in ~16% of outcomes, consistent with VIX-implied one-sigma bounds."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "By June OpEx, risk-neutral odds imply ~18.5% chance SPX < 5495 and ~8.3% chance SPX > 6195, but this understates physical risk; SPX is more likely to be below 5495 than options prices imply.",
+          "condition": "",
+          "expected_result": "By June OpEx, SPX falls below 5495 with materially higher realized probability than the ~18.5% risk-neutral figure (model expects underpriced downside tail)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vol-targeting and risk-parity strategies will remain de-levered until both 1m and 3m realized vol fall below their vol-target thresholds.",
+          "condition": "",
+          "expected_result": "These strategies will keep exposures reduced, producing minimal fresh buy flows into equities until both vol windows decline below targets."
+        }
+      ]
+    }
+  }
+}

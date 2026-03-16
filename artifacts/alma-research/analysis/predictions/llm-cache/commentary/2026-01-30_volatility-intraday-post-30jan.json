@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:14:04.630Z",
+  "inputHash": "a18bec5ca385303e388724fbd5a41b2da15f0461",
+  "payload": {
+    "responseId": "resp_0c4a638632ef444e0069b767688aec8193a1c9c3e42ab6170b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "gold",
+          "prediction_text": "Price will rebound from the 5280 pivot after a spot down/vol down move toward the target.",
+          "condition": "price reaches 5280 pivot",
+          "expected_result": "After touching 5280, gold will reverse direction and move higher (measurable uptick in spot price within next few sessions)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Yields will start to fall, signalling the cycle has turned.",
+          "condition": "yields start to fall",
+          "expected_result": "Benchmark yields decline (sustained downward move over multiple sessions) and correlate with risk-on/market regime change indicators"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES breaks below 6940/50, buyers are not there and the market will head toward 6900, a trend-shifting level.",
+          "condition": "ES breaks below 6940/50",
+          "expected_result": "ES continues downward to reach ~6900 within the subsequent sessions, confirming a trend shift"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "6975/80 remains a main pivotal zone that must hold for current levels to be maintained.",
+          "condition": "ES holds 6975/80 during sessions",
+          "expected_result": "ES holds above 6975/80 and does not initiate a decisive decline, indicating buyers remain in control"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:14:12.566Z",
+  "inputHash": "fdc585c3fb38ac302ab680e97dc4cef6e1f8f232",
+  "payload": {
+    "responseId": "resp_0557a585727779300069b7676cce648196be4ab563f269be57",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid around 6903–6911 is a sticky reversion zone; market likely pins/reverts to ~6930 from this centroid during PM session.",
+          "condition": "price near centroid 6903–6911",
+          "expected_result": "Price will gravitate back toward ~6930 within the same trading day (PM session) and show support there."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/brake zone at 6870–6940 (book thin inside) acting as primary supportive band; downside below ~6900 signals short-term structure break.",
+          "condition": "if price falls below 6900",
+          "expected_result": "Momentum will accelerate lower toward 6844 then 6814, confirming short-term bearish shift."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and reversion target: pivot ~6844 with target ~6815 and expected reversion back to 6870–6875 as intra-day bounce.",
+          "condition": "price reaches ~6844 pivot",
+          "expected_result": "Price should move toward ~6815 then rebound back toward 6870–6875 intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot around 6984 with an upside target ~7006 but described as unlikely to be broken intraday; more probable outcome is rejection and reversion back to ~6930.",
+          "condition": "price approaches 6984–7006 zone",
+          "expected_result": "Expect rejection or failure to sustain above 7006 and a reversion back toward ~6930."
+        }
+      ]
+    }
+  }
+}

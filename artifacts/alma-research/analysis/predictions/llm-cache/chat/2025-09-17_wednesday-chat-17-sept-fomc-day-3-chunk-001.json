@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:29:35.953Z",
+  "inputHash": "4c8cf6042c5b2071346d1cea9b0208ce9c903361",
+  "payload": {
+    "responseId": "resp_024c8602e5393bf10069b7872c41488190be89bf9efb7b2645",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-09-17T11:30:15.468Z",
+          "instrument": "",
+          "prediction_text": "The extra 18.84% put implied volatility is expected to materialize upward while the extra 3.1% call implied volatility underestimates upside move potential.",
+          "condition": "",
+          "expected_result": "Put IV increases by ~18.84% and call IV rises more than 3.1%, reflecting a larger upside move than currently priced."
+        },
+        {
+          "made_at": "2025-09-17T12:42:56.560Z",
+          "instrument": "",
+          "prediction_text": "Longer downside gamma will continue to produce downside exposure.",
+          "condition": "",
+          "expected_result": "Positions with longer downside gamma experience increased downside sensitivity and larger losses or hedge costs if price falls."
+        },
+        {
+          "made_at": "2025-09-17T19:28:50.744Z",
+          "instrument": "",
+          "prediction_text": "Price will rebound quickly from the downside pivot, exposing bull/bear traps.",
+          "condition": "",
+          "expected_result": "After touching the identified downside pivot, price reverses upward quickly rather than continuing lower."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:15:32.726Z",
+  "inputHash": "35327e57a9d02e356a82caed6564c21795b6ba29",
+  "payload": {
+    "responseId": "resp_0a70b6068c8319d40069b767bfb0a08197b9f3cd5d1d88b1e1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows strong positive gamma (sticky/magnet) band around 7000-7030 with a pronounced gamma peak near ~7010–7020 — price is likely to be attracted to the 7000–7030 area if upside momentum appears. Dark negative gamma below around 6880–6860 suggests support/pinning near 6880–6900 where spot is expected to be sticky. Centroid/pin noted near 6955–6967 acts as a locally sticky zone where price may hover before choosing direction.",
+          "condition": "if price trades above ~6985 with call IV support",
+          "expected_result": "Price gravitates toward and spends time in 7000–7030 (test ~7010–7020) within the session; upside attempts without call-IV bid will be rejected back toward 6950–6890; downside moves find support/pinning near 6880–6900."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower gamma trough and negative gamma gradient between ~6840–6780 indicates a brake zone and increased resistance for deeper declines; left-tail brake target area around 6820–6855 where hedging likely slows further falls.",
+          "condition": "if price declines through 6890–6860",
+          "expected_result": "Downside travel slows and stalls in the 6820–6855 band with increased chance of mean reversion back toward 6880–6950."
+        }
+      ]
+    }
+  }
+}

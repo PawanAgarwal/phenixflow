@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:03.201Z",
+  "inputHash": "a3f1d8d8c31f35975182d91500c93555a9d93e32",
+  "payload": {
+    "responseId": "resp_0e8a7533758e418a0069b76728a7b0819e99f2f82b4917acfa",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky upside pivot around 6922.8 (pivot) with immediate resistance cluster ~6940–6948; heatmap shows a magnetic/repelling band there — holds into early afternoon will bias move higher.",
+          "condition": "price holds 6940–6945 into 13:30 ET",
+          "expected_result": "If 6940–6945 holds into 13:30 ET, expect follow-through up to 6970 (magnet) within the session; trade target ~6970 and resistance zone 6969–6972."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot near 6904.4 with reversion target ~6854; gamma troughs and sticky blue mass below suggest strong mean-reversion if price breaches pivot to the downside.",
+          "condition": "break and close below 6904.36",
+          "expected_result": "After a break and close below 6904.36, expect accelerated move toward 6854.13 within 1–3 hours, with 6885 acting as an intermediate pin if move is slow."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / balance area ~6915.5 acts as range center and likely magnet if intraday action stalls; distribution slightly skewed upside so retests of centroid likely before directional conviction.",
+          "condition": "price reversion or stall near current levels",
+          "expected_result": "If price stalls, expect reversion to centroid ~6915.5 within the session and consolidation there (range trade between ~6905–6930)."
+        }
+      ]
+    }
+  }
+}

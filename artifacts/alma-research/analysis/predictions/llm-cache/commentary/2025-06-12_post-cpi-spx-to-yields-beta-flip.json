@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T01:58:30.609Z",
+  "inputHash": "113634b1c7d4ee791531813dc88693c8a7998d27",
+  "payload": {
+    "responseId": "resp_0edeadf52a01e4290069b763b9829c8193b788512a384eab3c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX closes above 5955, the pullback will not be confirmed.",
+          "condition": "SPX close above 5955",
+          "expected_result": "No further downside follow-through; previous pullback fails to extend and price stabilizes or resumes higher within next session(s)."
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "If ES=F closes above 5968.10, the pullback will not be confirmed.",
+          "condition": "ES=F close above 5968.10",
+          "expected_result": "No further downside follow-through in ES; price stabilizes or resumes higher within next session(s)."
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "If NDX stays above 21,549.18, the pullback will not be confirmed.",
+          "condition": "NDX above 21,549.18",
+          "expected_result": "NDX avoids continued decline and either consolidates or resumes upward movement in the near term."
+        },
+        {
+          "instrument": "NQ=F",
+          "prediction_text": "If NQ=F stays above 21,603.46, the pullback will not be confirmed.",
+          "condition": "NQ=F above 21,603.46",
+          "expected_result": "NQ futures avoid extended downside and stabilize or resume gains shortly."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A regime shift means soft economic prints (lower yields) will now drag equities down rather than lift them.",
+          "condition": "soft economic prints leading to lower yields",
+          "expected_result": "Equities decline when yields fall on soft data, producing downside pressure on SPX after such macro releases."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The speed profile's zero vanna line at 5994 after 1pm will act as a strong pivot (support or resistance) depending on momentum.",
+          "condition": "time after 1pm and price near 5994",
+          "expected_result": "Price will pivot around 5994, either bouncing or rejecting there, influencing intraday direction."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid is in the 5966.42–5946.51 zone and should act as the main intraday consolidation area.",
+          "condition": "price enters 5966.42–5946.51 zone",
+          "expected_result": "SPX will consolidate within that zone, with reduced volatility and mean-reversion toward the centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 5940.54: below it downside gamma should suppress price and drive further weakness.",
+          "condition": "SPX below 5940.54",
+          "expected_result": "Increased downside gamma pressure will accelerate declines and keep SPX lower until volatility or momentum reverses."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Potential support (last buying opportunity) is at the 5955/60 zone, especially into the power hour.",
+          "condition": "price into power hour reaches 5955–5960",
+          "expected_result": "Buyers will step in at 5955–5960 leading to a short-term bounce or stabilization during the power hour."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6012.47 needs vol to catch up; without vol the level will not break during the afternoon.",
+          "condition": "SPX approaches 6012.47 during the afternoon",
+          "expected_result": "SPX will fail to break above 6012.47 in the afternoon unless volatility increases; upside attempts will stall below that level."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If vol declines too fast while below the downside pivot, price can shoot back up, especially on slow moves.",
+          "condition": "rapid volatility decline while SPX is below downside pivot and momentum is slow",
+          "expected_result": "A quick rebound from lows occurs, pushing SPX back toward the centroid or above short-term resistance."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Overall intraday trend points down, so volatility spikes will produce lower highs rather than sustained rallies.",
+          "condition": "intraday environment described (speed profile net negative)",
+          "expected_result": "Any intraday volatility spikes will cap upside and result in lower intraday highs and eventual downside continuation."
+        }
+      ]
+    }
+  }
+}

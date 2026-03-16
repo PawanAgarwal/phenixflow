@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:03:58.823Z",
+  "inputHash": "c00408483c67e71a17d475f55429ceb1cfed567f",
+  "payload": {
+    "responseId": "resp_0049b032575c1a510069b765067f9481a29a000330ef9db80a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong centroid (primary pin) at 6648–6650 acting as a sticky magnet through the PM session; market likely to revert toward this level if intraday move stalls.",
+          "condition": "none",
+          "expected_result": "Price will gravitate back to 6648–6650 within the same trading day after deviations of ~10–20 points, producing multiple touches or consolidation there."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma trough and steep convexity create a robust support/brake zone at 6620–6610; breaking it requires a large vol spike (significant put skew) and is unlikely intraday.",
+          "condition": "none",
+          "expected_result": "Price will find buying/support and fail multiple attempts to close decisively below 6620–6610 during the session; any break will be accompanied by a sharp volatility increase."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If price does break and hold below 6620–6610 into the PM session, a secondary pin/support sits near 6585–6597, likely to arrest the decline.",
+          "condition": "hold below 6620–6610 into PM session",
+          "expected_result": "After a sustained move below 6620–6610 into the afternoon, price will converge toward and consolidate around 6585–6597 rather than continuing a freefall."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside magnetic zone at ~6670 with an upside pivot at 6661.50; holding above ~6653 into 1PM increases chance of pinning/continuation toward 6670.",
+          "condition": "hold above 6653 into 13:00 ET",
+          "expected_result": "If price remains above 6653 into 1:00 PM ET, it will likely be drawn up to and spend time near 6661–6670, producing resistance/rejection or pinning around that band."
+        }
+      ]
+    }
+  }
+}

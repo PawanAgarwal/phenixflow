@@ -1,0 +1,222 @@
+{
+  "cachedAt": "2026-03-16T04:27:53.409Z",
+  "inputHash": "ed7ac9822590c414033bbc674a02ada0bc3ac981",
+  "payload": {
+    "responseId": "resp_0a16859251b018ab0069b78697fa7c8190a31572fb3c10bcf0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-04T17:05:48.393Z",
+          "instrument": "SPX / ES",
+          "prediction_text": "Primal targets are 5827 for SPX and 5841 for ES.",
+          "condition": "",
+          "expected_result": "SPX reaches 5827 and ES reaches 5841."
+        },
+        {
+          "made_at": "2025-03-06T14:13:53.848Z",
+          "instrument": "SPY / SPX",
+          "prediction_text": "Likely will hit SPY ATM 0DTE at open aiming 5772/5767 range SPX.",
+          "condition": "at open",
+          "expected_result": "SPY ATM 0DTE reaches strikes consistent with SPX in the 5772–5767 range."
+        },
+        {
+          "made_at": "2025-03-07T17:22:04.342Z",
+          "instrument": "ES / SPX",
+          "prediction_text": "I go for long ES at 5680 and long SPX at 5667 into next Friday via 22 delta SPY call and 60 delta ITM risky trade.",
+          "condition": "into next Friday",
+          "expected_result": "Long ES positions entered at ~5680 and long SPX positions entered at ~5667 held into next Friday."
+        },
+        {
+          "made_at": "2025-03-07T17:38:38.082Z",
+          "instrument": "ES / SPX",
+          "prediction_text": "Above 5708, no resistance until 5790.",
+          "condition": "",
+          "expected_result": "If price moves above 5708, it will encounter no resistance before reaching 5790."
+        },
+        {
+          "made_at": "2025-03-10T09:03:34.985Z",
+          "instrument": "ES",
+          "prediction_text": "Went long ES March 5705 (scalping).",
+          "condition": "",
+          "expected_result": "A long ES position was initiated at 5705 for March contract."
+        },
+        {
+          "made_at": "2025-03-10T09:10:22.688Z",
+          "instrument": "ES (June)",
+          "prediction_text": "Also went long on ES June at 5760 (likely gonna hold this one).",
+          "condition": "",
+          "expected_result": "A long ES June position was initiated at 5760 and is expected to be held."
+        },
+        {
+          "made_at": "2025-03-10T09:34:41.802Z",
+          "instrument": "ES=F",
+          "prediction_text": "The IV based level is 5708.24 for ES, I longed at 5705, and it says 5730 is possible, upside target.",
+          "condition": "",
+          "expected_result": "ES moves up from 5705 toward 5730."
+        },
+        {
+          "made_at": "2025-03-10T15:33:55.997Z",
+          "instrument": "ES/SPX",
+          "prediction_text": "If vol can catch up vanna flip and even 5735 is coming; 5675/80 will be a pivot.",
+          "condition": "if vol can catch up",
+          "expected_result": "Volatility increases, leading to a vanna flip and price reaches 5735; 5675–5680 acts as a pivot level."
+        },
+        {
+          "made_at": "2025-03-11T17:22:10.893Z",
+          "instrument": "IWM / SPY / SPX",
+          "prediction_text": "Long monthly exposure IWM call, and gonna add new SPY leg at SPX ~5632, with 60 delta, 1DTE holding into tomorrow.",
+          "condition": "at SPX ~5632",
+          "expected_result": "Initiate IWM monthly long call and add a 60-delta SPY 1DTE leg when SPX is ~5632 and hold into the next day."
+        },
+        {
+          "made_at": "2025-03-12T14:12:00.607Z",
+          "instrument": "",
+          "prediction_text": "If I go intraday long call, I would be interested only around 5567, if vol is lazy.",
+          "condition": "if vol is lazy",
+          "expected_result": "Enter intraday long call near 5567 when volatility is low."
+        },
+        {
+          "made_at": "2025-03-12T15:17:07.314Z",
+          "instrument": "SPX / SPY",
+          "prediction_text": "Long SPX 5553, 60 delta SPY call 0DTE, small allocation; 5530/35 is another target.",
+          "condition": "",
+          "expected_result": "Long SPX at 5553 with a 60-delta SPY 0DTE call initiated; price may move to 5530–5535 as a target."
+        },
+        {
+          "made_at": "2025-03-13T11:28:18.517Z",
+          "instrument": "ES",
+          "prediction_text": "Coding 5577.47 as the key inflection for ES from momentum perspective.",
+          "condition": "",
+          "expected_result": "5577.47 acts as a key momentum inflection for ES, influencing subsequent directional moves."
+        },
+        {
+          "made_at": "2025-03-17T07:05:04.110Z",
+          "instrument": "ES (June)",
+          "prediction_text": "Long ES June 5655 strong probability for good Fed signals this week.",
+          "condition": "good Fed signals this week",
+          "expected_result": "Hold long ES June position initiated at 5655 expecting price appreciation if Fed signals are positive."
+        },
+        {
+          "made_at": "2025-04-11T18:31:52.452Z",
+          "instrument": "SPX",
+          "prediction_text": "Cautiously long SPX, 22 delta month end calls; I'll scale in because this move must be confirmed.",
+          "condition": "if confirmed",
+          "expected_result": "Scale into long SPX positions via 22-delta month-end calls if the move confirms."
+        },
+        {
+          "made_at": "2025-04-16T19:13:24.806Z",
+          "instrument": "",
+          "prediction_text": "This thing wanna go down to my downside targets after opex.",
+          "condition": "after opex",
+          "expected_result": "Price declines to the author's downside targets after options expiration (opex)."
+        },
+        {
+          "made_at": "2025-04-24T17:32:34.487Z",
+          "instrument": "VIX",
+          "prediction_text": "Primal target is 24.6s; final target is 23.5s - 23s.",
+          "condition": "",
+          "expected_result": "VIX moves down to the primal target ~24.6 and eventually to the final target range 23.5–23.0."
+        },
+        {
+          "made_at": "2025-04-24T17:34:55.726Z",
+          "instrument": "VIX",
+          "prediction_text": "31s is a big pivot.",
+          "condition": "",
+          "expected_result": "31 (VIX) acts as a major pivot level influencing directional bias."
+        },
+        {
+          "made_at": "2025-04-25T17:38:50.346Z",
+          "instrument": "SPX / VIX",
+          "prediction_text": "Starting to scale in to 22 delta puts May 16 and EOM (May) expo, setting for vol selling; VIX put spread will hedge that out.",
+          "condition": "",
+          "expected_result": "Scale into 22-delta May 16 and May EOM put exposures while selling volatility and hedging with a VIX put spread."
+        },
+        {
+          "made_at": "2025-04-25T19:10:20.060Z",
+          "instrument": "VIX / market",
+          "prediction_text": "If this closes above the market line, the squeeze will likely continue and that will pull buying flows in.",
+          "condition": "if this closes above the market line",
+          "expected_result": "A close above the market line leads to continued squeeze and increased buying flows."
+        },
+        {
+          "made_at": "2025-05-06T22:11:49.386Z",
+          "instrument": "",
+          "prediction_text": "Market is rangebounding; if so, they will need to give a dip soon.",
+          "condition": "if market is rangebounding",
+          "expected_result": "Price will give a dip soon while the market remains rangebound."
+        },
+        {
+          "made_at": "2025-05-08T16:00:45.893Z",
+          "instrument": "ES",
+          "prediction_text": "Took short ES 5730 (likely gonna hold next week).",
+          "condition": "",
+          "expected_result": "Initiated a short ES position at 5730 expected to be held into the following week."
+        },
+        {
+          "made_at": "2025-05-08T16:13:14.393Z",
+          "instrument": "ES",
+          "prediction_text": "Also scaling into 25–40 delta 1DTE puts at 5710 (5720 is secondary target).",
+          "condition": "",
+          "expected_result": "Scale into 25–40 delta 1DTE puts at 5710 with a secondary price target of 5720."
+        },
+        {
+          "made_at": "2025-05-08T16:17:35.606Z",
+          "instrument": "ES / SPX",
+          "prediction_text": "If vol doesn't decline around 5717–5720, I'm out, because then it will go up to 5740.",
+          "condition": "if vol doesn't decline around 5717–5720",
+          "expected_result": "If volatility does not decline near 5717–5720, price will rise to 5740 and the author will exit positions."
+        },
+        {
+          "made_at": "2025-05-11T22:19:32.256Z",
+          "instrument": "ES",
+          "prediction_text": "If 5740/45 shows strength, I'll be out.",
+          "condition": "if 5740/45 shows strength",
+          "expected_result": "If price shows strength at 5740–5745, the author will exit positions."
+        },
+        {
+          "made_at": "2025-05-12T12:49:39.831Z",
+          "instrument": "ES",
+          "prediction_text": "Took small alloc short ES trade at 5853 (risking only 1/3 of my premarket profit).",
+          "condition": "",
+          "expected_result": "A small short ES position was initiated at 5853."
+        },
+        {
+          "made_at": "2025-07-02T12:52:00.012Z",
+          "instrument": "ES / SPX",
+          "prediction_text": "5785–5740 zone is the primal short target from here due to recessionary repricing on longer tenors.",
+          "condition": "",
+          "expected_result": "Price declines into the 5785–5740 zone as a primal short target."
+        },
+        {
+          "made_at": "2025-07-10T13:20:23.477Z",
+          "instrument": "ES=F",
+          "prediction_text": "ES=F 6310/20 is my short target if I see weakness.",
+          "condition": "if I see weakness",
+          "expected_result": "If weakness appears, ES futures will be targeted short toward 6310–6320."
+        },
+        {
+          "made_at": "2025-08-04T14:02:15.325Z",
+          "instrument": "SPX",
+          "prediction_text": "Short SPX, 60 delta 0DTE puts at 6310, expecting 6320 as max fakeout target.",
+          "condition": "",
+          "expected_result": "Initiate short SPX 60-delta 0DTE puts at 6310 with an expectation that price may fake out up to 6320."
+        },
+        {
+          "made_at": "2025-08-04T15:08:05.311Z",
+          "instrument": "SPX",
+          "prediction_text": "If spot doesn't go back below 6305 in the next 2 hours, it will slowly grind up to 6320.",
+          "condition": "if spot doesn't go back below 6305 in the next 2 hours",
+          "expected_result": "Price grinds up to 6320 over the following hours."
+        },
+        {
+          "made_at": "2025-08-04T17:19:24.016Z",
+          "instrument": "SPX",
+          "prediction_text": "6328 is a key pivot; below it is a magnet towards 6320, above, it is towards 6338/40 to fill the gap.",
+          "condition": "",
+          "expected_result": "If SPX is below 6328 it will be pulled toward 6320; if above 6328 it will move toward 6338–6340 to fill the gap."
+        }
+      ]
+    }
+  }
+}

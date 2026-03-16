@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:52.741Z",
+  "inputHash": "ef9e1b0b3a9b817c81955c7918bcb1af4ea06d0b",
+  "payload": {
+    "responseId": "resp_0a7d9a8f8f8fe8c30069b763d76eb0819e8772ba70e4046e0f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma/pinning concentration around 5990-5996 with visible red gamma ridge at ~5990 and labelled customer short iron-condor at 5985/90 - 6060/65. This area is likely to act as a pin/magnet into the power hour and produce reversion back toward ~5990 if price approaches either side.",
+          "condition": "price approaches 5990-5996",
+          "expected_result": "Spot will gravitate back to and pin near 5990-5996 during the session; upside beyond ~6065 or downside below ~5980 will be required to break the pin."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma trough/weak support shown lower around 5951-5970 (vanna flip ~5970 and centroid ~5978.7) indicating a sticky downside pivot that is unlikely to be broken intraday without a vol/spot beta spike.",
+          "condition": "no vol/spot beta spike",
+          "expected_result": "SPX should hold above ~5950-5970; large sustained moves below this range are low probability for the day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upper gamma ridge and trough cluster near 6022-6068 with a pivot zone 6022.49-6026.41 and a coded daily max ~6068.5 indicating resistance and an expected cap on intraday upside.",
+          "condition": "price rallies toward 6022-6068 area",
+          "expected_result": "Upward moves into 6022-6068 should face resistance and are likely to reverse or stall; reaching >6068 is unlikely without rising volatility."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:30:42.556Z",
+  "inputHash": "54c83884c872065102339b520a19b0bfdfb9e0b8",
+  "payload": {
+    "responseId": "resp_074d8c8c2599c1d50069b7876dbf64819789535a98dfdae129",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-03-12T10:19:57.780Z",
+          "instrument": "",
+          "prediction_text": "If puts catch bid then downside gamma will increase and act as a 'synthetic circuit breaker' that brakes accelerating downside momentum.",
+          "condition": "puts catch bid",
+          "expected_result": "Downward price momentum will decelerate as downside gamma rises, reducing the speed and magnitude of further declines."
+        },
+        {
+          "made_at": "2026-03-12T10:27:20.179Z",
+          "instrument": "",
+          "prediction_text": "Zomma peaks on Tuesday, which is when the market will be most protected on the downside.",
+          "condition": "on Tuesday",
+          "expected_result": "Downside protection (via option dynamics) will be highest on Tuesday, reducing potential downside moves that day."
+        },
+        {
+          "made_at": "2026-03-12T10:34:43.816Z",
+          "instrument": "",
+          "prediction_text": "Implied volatility moves will be amplified, kurtosis will be higher, and smirk convexity will decline.",
+          "condition": "",
+          "expected_result": "IV changes will show larger-than-normal moves, return distributions will exhibit heavier tails, and the volatility smile's convexity will decrease."
+        }
+      ]
+    }
+  }
+}

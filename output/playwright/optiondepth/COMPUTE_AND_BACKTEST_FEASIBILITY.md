@@ -35,6 +35,12 @@ We already have:
 
 That is enough to build a practical dealer-positioning proxy framework.
 
+But Alma's archive adds an important restriction:
+
+- we should not treat naive `OI * gamma` or generic `GEX` charts as a serious reproduction
+- the useful target is a structural, tenor-aware, directional-position proxy with higher-order greek surfaces
+- the canonical planning snapshot should be `EOD`, not just "latest intraday screen state"
+
 ### Can we backtest the claims?
 
 Yes, many of the same-session claims are testable.
@@ -170,6 +176,12 @@ Current stored outputs include:
 
 Charm and vanna are not stored today, but they can be derived from the same model inputs.
 
+What Alma's archive adds:
+
+- `color` should likely be prioritized before `charm` for daily planning
+- `speed` is the key short-term feature
+- `vanna` matters more for midterm structure than for pure same-minute 0DTE interpretation
+
 ### 5. Surface Projection Through The Session
 
 Even without minute-by-minute inventory updates, we can project exposures over:
@@ -183,6 +195,80 @@ That is enough to build:
 - charm drift maps
 - vanna sensitivity maps
 - strike/expiration heatmaps
+
+To match Alma's actual workflow more closely, we should extend that to:
+
+- speed surfaces
+- color surfaces
+- centroid and local-pivot derivation
+- vanna-flip and speed-flip detection
+- projected pin / reject / accelerate zones
+
+## Alma-Specific Build Requirements
+
+The product docs alone suggested "gamma/charm/vanna surfaces plus position breakdowns." The Alma archive makes the build target more precise.
+
+### 1. Canonical snapshot should be end-of-day
+
+- Alma repeatedly says the prior `EOD` summary is the useful map for the next session.
+- That means our main research artifact should be a stable end-of-day surface, not just a rolling intraday estimate.
+
+### 2. We need higher-order structure, not just first-order exposure
+
+The minimum serious output should include:
+
+- aggregated gamma
+- `speed = dGamma / dS`
+- `color = dGamma / dt`
+- vanna
+- zomma
+- vomma
+
+Reason:
+
+- her practical workflow is built around speed, color, centroid, and flip logic
+- gamma alone is not the decision-ready object
+
+### 3. We need level extraction, not just heatmaps
+
+The model should derive:
+
+- centroid
+- upside pivot
+- downside pivot
+- primary targets
+- local pin zones
+- vanna flips
+- speed flips
+
+That is much closer to how she actually trades the data.
+
+### 4. We need an intraday validator layer
+
+Her predictive loop is not "map says X, so X happens."
+
+It is:
+
+1. build the premarket structural map
+2. watch whether realized behavior confirms it
+3. if not, treat that as repricing or liquidity migration
+
+So we should explicitly measure:
+
+- realized volatility by intraday segment
+- spot / realized-volatility beta
+- fixed-strike skew changes
+- whether IV or `VIX` catches up
+- whether PM-session pinning develops near centroid or local magnets
+
+### 5. We should support two horizon layers
+
+The archive makes the horizon split much clearer:
+
+- `speed` for short-term trading
+- `vanna` for midterm structure
+
+So our local research stack should not flatten every signal into the same horizon bucket.
 
 ## What We Cannot Reproduce Exactly
 
@@ -222,6 +308,18 @@ but we do not know:
 
 - who is long vs short with certainty
 - whether same-day prints are opening, closing, rolling, or spread adjustments
+
+### 4. OptionDepth / CBOE Directional Positioning View
+
+Alma is very clear that `OI` is not directional and that naive `GEX` shortcuts are not enough.
+
+We do not currently have a direct equivalent of:
+
+- customer-to-dealer directional position tags
+- dealer-to-dealer filtering
+- the exact directional inventory logic behind OptionDepth/CBOE positioning products
+
+That means our model must infer directionality rather than read it directly.
 
 ## Important Data Gaps
 
@@ -295,6 +393,58 @@ Practical implication:
 
 - targeted cleanup may be needed before broad multi-symbol backtests
 - not necessarily fatal for focused `SPY`/`QQQ` canary work
+
+### 6. Higher-Order Greeks Are Not Yet Materialized
+
+This is now a first-class gap, not a nice-to-have.
+
+Observed from the current local pipeline:
+
+- first-order greeks are stored
+- higher-order surface derivatives are not
+
+Practical implication:
+
+- to reproduce Alma's workflow, we need to materialize or cheaply recompute:
+  - speed
+  - color
+  - zomma
+  - vomma
+
+### 7. Intraday Validation Features Are Not Yet First-Class Outputs
+
+Alma repeatedly validates her map using:
+
+- fixed-strike straddle IV changes
+- skew change over time
+- whether `VIX` or IV catches up
+- realized-volatility behavior around pivots
+
+We likely have the raw quote inputs needed for much of this, but we do not yet have a dedicated derived layer for:
+
+- fixed-strike skew change metrics
+- intraday realized-volatility-by-zone validation
+- spot / RV beta summaries
+- explicit `vol caught up / vol swallowed` style diagnostics
+
+Practical implication:
+
+- a faithful backtest needs a second layer of diagnostics beyond the exposure surface itself
+
+### 8. Probability-Band Logic Is Still Missing
+
+Alma's daily package includes script-input probability lines derived from:
+
+- implied volatility
+- expected realized volatility
+- implied and realized vol of vol
+- a Gaussian-style probability framing
+
+We do not currently have that probability-band layer implemented.
+
+Practical implication:
+
+- we can likely approximate it, but it is still a modeling gap, not a raw-data gap
 
 ## Best Current Research Window
 
@@ -447,19 +597,41 @@ We only need:
 - an update rule for same-day net flow
 - a pricing model to recompute exposures across time and spot grids
 
+But the Alma archive refines that further:
+
+- the most valuable artifact is the prior-close structural map
+- the intraday layer should be treated primarily as a validator
+- the core derived objects should be speed/color/centroid/flip logic, not just raw gamma or raw flow panels
+
 That is feasible with the data we already have.
 
 ## Suggested First Implementation Order
 
-1. Build a contract-level signed-flow and position-proxy table.
-2. Add charm and vanna calculations from the existing calculated-greek inputs.
+1. Build a canonical `EOD` contract snapshot and position-proxy table.
+2. Add higher-order calculations:
+   - speed
+   - color
+   - vanna
+   - zomma
+   - vomma
 3. Build a spot/time surface projector for `SPY` and `QQQ`.
-4. Backtest four claims first:
+4. Derive decision levels:
+   - centroid
+   - pivots
+   - targets
+   - vanna/speed flips
+5. Add an intraday validator layer:
+   - realized-volatility segments
+   - spot / RV beta
+   - fixed-strike skew changes
+6. Backtest the first six claims:
    - gamma sign vs realized intraday volatility
-   - distance to gamma peak vs bounce/rejection
-   - opening charm sign vs open-to-close drift
-   - concentration zones vs late-day pinning
-5. Only after the canary works, widen to more symbols.
+   - speed sign vs direction of liquidity and stability
+   - distance to centroid / pivot vs rejection, reversion, and pinning
+   - vanna-flip proximity vs support/resistance behavior
+   - color sign vs later-session drift / pin strength
+   - expected-versus-realized volatility behavior at pivots
+7. Only after the canary works, widen to more symbols.
 
 ## Bottom Line
 
@@ -467,14 +639,20 @@ We can build and backtest a serious public-data proxy for OptionDepth.
 
 What is realistic now:
 
-- same-day dealer-pressure proxy research
+- next-session structural-map research from `EOD`
 - intraday support/resistance and volatility-regime tests
-- charm/drift and pinning tests
-- strike/expiration concentration studies
+- centroid / pivot / pin / false-break studies
+- speed / color / vanna / flip backtests
+- strike/expiration concentration studies with a validation layer
 
 What is not realistic now:
 
 - an exact replication of their proprietary dealer inventory model
 - direct reproduction of their `SPX/SPXW` examples without adding SPX coverage
+- exact replication of their directional customer/dealer inventory logic from proprietary positioning feeds
 
-The biggest technical takeaway is that OptionDepth does not need minute-by-minute official position data to project intraday exposure. Once you estimate the starting inventory, the exposures can change minute by minute because the option math changes minute by minute.
+The biggest updated takeaway is:
+
+- OptionDepth-style research is feasible with our data
+- but a serious reproduction should be centered on `EOD` structure, higher-order surfaces, and an intraday validation loop
+- not on naive `OI * gamma` charts or raw flow watching alone

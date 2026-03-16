@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:52:48.396Z",
+  "inputHash": "424829df9a6b06413718e78c4cdddd20e2ede607",
+  "payload": {
+    "responseId": "resp_07b550adf36761fc0069b7626b398881a2bed9d73c69410b52",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning/magnet zone around 5895–5900 (MM long iron condor strikes). Heatmap shows sticky gamma/charm concentration near 5890–5900 that will attract/hold price intraday.",
+          "condition": "Price approaches 5895–5900",
+          "expected_result": "Price is likely to stall and revert within the 5890–5905 band; expect limited conviction moves through this zone during the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/brake zone and downside zero-vanna level near 5884 indicated as a weak line that requires low intraday volatility to break. Acts as a local downside resistance to further declines.",
+          "condition": "Intraday volatility remains low",
+          "expected_result": "Price should find support near ~5884 and bounce higher; a decisive break below 5884 requires an increase in intraday momentum/volatility"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pivot centered at ~5952 identified as the main pivot within the iron condor range; green gamma-peak ridge slopes slightly downward through the 5950 area acting as an intraday mean-reversion attractor.",
+          "condition": "Price moves away from 5952",
+          "expected_result": "Expect reversion toward 5950–5955; price to gravitate back to the 5950 pivot absent strong directional catalysts"
+        }
+      ]
+    }
+  }
+}

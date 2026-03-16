@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:56:16.178Z",
+  "inputHash": "cfc4ec2b15440cc094ff89da8a2e8091ebb6d5cf",
+  "payload": {
+    "responseId": "resp_06fc3df93e9eea8b0069b7633c599c8194bafcfa7d03ecbcf1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma peak and trough cluster around 5728–5782 acting as a pinning/mean-reversion magnet — expect price to gravitate toward and stall in this band.",
+          "condition": "",
+          "expected_result": "Price will revert toward and spend increased time trading between ~5728 and ~5782 over the session, showing reduced realized volatility inside the band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Large sticky gamma/trough centered near 5560–5529 indicating a downside sticky/support zone where volatility declines and selling pressure is absorbed.",
+          "condition": "If price falls below 5619.93 (speed profile pivot)",
+          "expected_result": "On a break below 5619.93, price should slow and find support with reduced intraday volatility between ~5560 and ~5529 before any further breakdown."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Broad gamma peak around 5356–5409 (lower band) acting as a longer-term reversion target / strong support area if selling continues.",
+          "condition": "",
+          "expected_result": "If sellers push price substantially lower, expect price to find larger-scale support and increased mean-reversion buying near ~5409–5356."
+        }
+      ]
+    }
+  }
+}

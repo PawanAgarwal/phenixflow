@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:02:59.736Z",
+  "inputHash": "9f5b093147d152181254441a2c9c0e1defcc84db",
+  "payload": {
+    "responseId": "resp_0ef19ca35a181b6f0069b764cd6f90819fa385158bb759ff08",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market will range around the upper bound of the centroid intraday.",
+          "condition": "NFP day with in-line data",
+          "expected_result": "Spot price will trade within a narrow band near the upper centroid bound for the session"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "There is reversion opportunity from the downside if data is in-line.",
+          "condition": "NFP prints in-line with expectations",
+          "expected_result": "Any initial dip will reverse back toward the centroid/upper range during the trading session"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Secondary bet is a breakout of the IC range followed by pinning at the breakout level.",
+          "condition": "NFP surprise enough to break IC range",
+          "expected_result": "Price will break the IC range and then consolidate (pin) near the breakout level rather than trending away"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Lowest probability is a sell-off to the downside level then reversion back to the lower wing of the IC.",
+          "condition": "Worse-than-expected NFP (but not extreme)",
+          "expected_result": "Price will drop to a lower level then recover back toward the lower wing of the initial distribution (IC)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "In a worst-than-expected scenario, the market can pin even to 6395.",
+          "condition": "Very bad NFP surprise",
+          "expected_result": "Price will be held (pinned) near the 6395 level after the sharp move down"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Only very good or very bad news could produce downside volatility, but the market is not positioning to expect this and only hedges a small portion.",
+          "condition": "Very strong or very weak NFP print",
+          "expected_result": "Significant volatility and larger downside moves will occur if NFP is very good or very bad, though overall positioning will remain limited to small hedges"
+        }
+      ]
+    }
+  }
+}

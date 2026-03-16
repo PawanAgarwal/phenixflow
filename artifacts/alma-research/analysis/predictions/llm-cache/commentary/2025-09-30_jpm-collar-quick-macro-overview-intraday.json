@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:04:15.945Z",
+  "inputHash": "9255a471cb200121989bc01729d24511a165434a",
+  "payload": {
+    "responseId": "resp_05ff61cc6099117d0069b76515af5481969fa4143f207ed72d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price will be supported around the centroid 6604.73.",
+          "condition": "",
+          "expected_result": "Market price will repeatedly find bids near 6604.73 and fail to close significantly below it during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Heavy downside gamma will become magnetic from the downside pivot 6611.39 toward 6590/6575, with 6590 acting as a very sticky pin after 1:30PM.",
+          "condition": "after 1:30PM",
+          "expected_result": "If price falls below 6611.39 after 1:30PM, it will gravitate to 6590–6575 and frequently stall or reverse at 6590."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot at 6656.02 targets 6678/6680 and becomes unbreakable after 1:30PM.",
+          "condition": "after 1:30PM",
+          "expected_result": "If price reaches 6656.02 and remains supported into/after 1:30PM, it will move to 6678–6680 and fail to break decisively above that band."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility realizes down while call skew stays bid, price can be magnetized to 6690 and potentially 6708.",
+          "condition": "volatility realizes down while call skew remains bid",
+          "expected_result": "Under those volatility/skew conditions, price will extend beyond 6678 to reach 6690 and may continue to 6708."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Primary expected range for the session is 6624–6678 with a magnetic level at 6653.",
+          "condition": "",
+          "expected_result": "Price will oscillate within 6624–6678 for the session and repeatedly gravitate toward 6653."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Secondary scenario: an upward stick with end-of-day reversion.",
+          "condition": "",
+          "expected_result": "Price will spike upward and remain elevated for a period (stick) but then revert back toward the prior range by session end."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Tertiary scenario: downside vol burning.",
+          "condition": "",
+          "expected_result": "A rapid downside move will be followed by compressed realized volatility and fewer follow-through sellers, causing price to stabilize rather than continue sharply lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Quaternary scenario: upward pinning (upward pin).",
+          "condition": "",
+          "expected_result": "Price will be held (pinned) at an elevated level by concentrated bid interest, showing limited intraday retracements from that higher level."
+        }
+      ]
+    }
+  }
+}

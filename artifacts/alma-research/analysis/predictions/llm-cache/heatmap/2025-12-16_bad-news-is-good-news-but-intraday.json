@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:54.705Z",
+  "inputHash": "ecca960a7d567fe04e48bf1692d035145475a487",
+  "payload": {
+    "responseId": "resp_03b071dfedb06c0b0069b766e4d28481a3bf2ad30e94f660cd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky centroid and magnetic zone around 6839. SPX is likely to gravitate toward and stall around 6839 if it remains within the current range.",
+          "condition": "price within 6830-6850",
+          "expected_result": "Price moves into 6830-6850 and shows consolidation or rejection attempts around ~6839 within the next few trading hours"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong downside support/brake zone clustered 6785-6790 (primal target) with secondary support 6740-6750; heatmap shows concentrated gamma support near the lower band.",
+          "condition": "gap fill fails or selling pressure continues",
+          "expected_result": "If selling continues, price should find initial support and bounce or pause in 6785-6790; on breach, next support and likely reversion area is 6740-6750"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance corridor at ~6847 (upside pivot) and a stabilization zone toward 6895-6900 if upside volatility is bought through the pivot.",
+          "condition": "price breaks and holds above 6846.98 with increased volatility",
+          "expected_result": "After a sustained break above 6846.98, expect price to travel toward 6895-6900 and show slowing or resistance there"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Deep gamma sink / strong magnet near 6698-6703 (low-band 99.73% region) indicating a sticky lower boundary if a large sell-off occurs.",
+          "condition": "",
+          "expected_result": "If price reaches the low extreme, it should encounter heavy pinning pressure and likely stall or mean-revert from ~6700"
+        }
+      ]
+    }
+  }
+}

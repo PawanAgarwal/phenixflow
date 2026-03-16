@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:56:06.304Z",
+  "inputHash": "2e73e53331307a0d58368b1938d374a2a4b9e465",
+  "payload": {
+    "responseId": "resp_021bae94ac6796e60069b7632eb1288195ba9a6de6c3272993",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Centroid of intraday positioning will act around 5547.03 today.",
+          "condition": "",
+          "expected_result": "ES price will trade near 5547.03 during the session."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Downside pivot at 5473.65 will be a key intraday support pivot.",
+          "condition": "",
+          "expected_result": "If ES falls intraday, it will find support and pause or bounce around 5473.65."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Upside pivot/range 5557.95–5610.36 will indicate intraday upside trend if calls catch a bid.",
+          "condition": "calls catch a bid",
+          "expected_result": "If call buying occurs, ES will trend upward and reach or traverse the 5557.95–5610.36 zone."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "5570 will reject if intraday volume is relatively lower.",
+          "condition": "volume is relatively lower",
+          "expected_result": "ES will fail to break above 5570 and reverse downward on low volume."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the Fed cuts rates in June, markets will likely see a modest bull run similar to last October, provided GDP and NFP align.",
+          "condition": "Fed cuts rates in June and GDP and NFP data align",
+          "expected_result": "Broad equity markets will rally modestly, resembling the October bull run."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If no June rate cut, markets will reprice and could be supported by slowing growth depending on stock/bond correlation leading to an eventual June cut or emergency QE.",
+          "condition": "no June rate cut",
+          "expected_result": "Markets will reprice lower initially but may be supported by slowing growth dynamics, increasing odds of a later June cut or emergency QE."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If data are orchestrated to look worse and trigger Fed cuts, inflationary pressures will reemerge by mid-summer.",
+          "condition": "data engineered to look worse and trigger Fed cuts",
+          "expected_result": "Inflation will pick up again by mid-summer."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "This week is 'bulltrapish' meaning prices may briefly rally before reversing over the next week.",
+          "condition": "",
+          "expected_result": "Market prices will show a short-lived rally that fails to sustain and reverses within about a week."
+        }
+      ]
+    }
+  }
+}

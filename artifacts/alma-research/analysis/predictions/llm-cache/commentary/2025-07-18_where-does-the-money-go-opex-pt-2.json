@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:00:42.953Z",
+  "inputHash": "ba406428d61802eca3ac3a447615102077186602",
+  "payload": {
+    "responseId": "resp_0b848ec5a8b48c070069b76441722c81a2af9261ebe7740ac3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "BTC",
+          "prediction_text": "BTC will go down with equities when equities start to fall.",
+          "condition": "",
+          "expected_result": "BTC price declines concurrent with an equity market drop (correlation positive during equity sell-off)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "BTC has support in the 115k - 95k range while whales are slowly distributing.",
+          "condition": "",
+          "expected_result": "BTC price finds buying interest and pauses or bounces within 95k–115k rather than breaking decisively below 95k."
+        },
+        {
+          "instrument": "GOLD",
+          "prediction_text": "GOLD has support in the 3240 - 2950 range but will go up as the dollar weakens and we head toward a new digital economy.",
+          "condition": "",
+          "expected_result": "Gold price rises from current levels and moves higher, remaining above or recovering to above 3240 after any pullbacks."
+        },
+        {
+          "instrument": "Yields",
+          "prediction_text": "Yields are expected to go up to 4.6% - 4.7% and even 5% later.",
+          "condition": "",
+          "expected_result": "Benchmark Treasury yields increase to at least 4.6%–4.7%, potentially reaching 5% over the forecast horizon."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "OpEx will juice up volume briefly, but after hedge unwinds into Monday volume will return to low and vol-of-vol supply will provide support for markets.",
+          "condition": "after the OpEx hedge unwinds into Monday",
+          "expected_result": "Intraday trading volume falls from OpEx levels to lower baseline and realized volatility declines due to vol-of-vol supply providing dampening."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Momentum will remain bullish across the index until the FOMC and the trend should hold until then.",
+          "condition": "until the FOMC",
+          "expected_result": "Major equity indices continue to exhibit upward momentum (higher highs or sustained positive intraday returns) up to the FOMC meeting date."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the Fed does not cut, there will be no yield relief, no cash out of MMFs, and the liquidity-driven equity rally will significantly unwind.",
+          "condition": "if no Fed cut",
+          "expected_result": "Equity indices experience a significant decline linked to reduced MMF outflows and rising yields following a no-cut Fed decision."
+        },
+        {
+          "instrument": "Treasury market (yields)",
+          "prediction_text": "As Treasury issuance outstrips MMF absorption capacity, yields will spike and liquidity will decline, causing the liquidity-driven rally to unravel.",
+          "condition": "",
+          "expected_result": "Rising net Treasury supply coincides with a sharp increase in yields and a measurable drop in equity liquidity, followed by equity price declines."
+        }
+      ]
+    }
+  }
+}

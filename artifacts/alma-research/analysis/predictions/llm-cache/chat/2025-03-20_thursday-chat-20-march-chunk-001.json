@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:28:13.900Z",
+  "inputHash": "7f3df46284e721458f3796e03b655a9e6a86ff1a",
+  "payload": {
+    "responseId": "resp_001fcc341fa69f6a0069b786d6fb7c81918d400c3591d072f1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-20T09:48:38.968Z",
+          "instrument": "NVDA",
+          "prediction_text": "NVDA alpha will keep a positive trend into OpEx.",
+          "condition": "",
+          "expected_result": "NVDA price shows a sustained upward trend across sessions leading up to options expiration (OpEx), with higher highs or a net positive return from now until OpEx."
+        },
+        {
+          "made_at": "2025-03-20T09:48:38.968Z",
+          "instrument": "AMD",
+          "prediction_text": "AMD alpha will keep a positive trend into OpEx.",
+          "condition": "",
+          "expected_result": "AMD price shows a sustained upward trend across sessions leading up to options expiration (OpEx), with higher highs or a net positive return from now until OpEx."
+        },
+        {
+          "made_at": "2025-03-20T09:48:38.968Z",
+          "instrument": "",
+          "prediction_text": "The current move is a temporal positive correction that may or may not hold into Friday or month end.",
+          "condition": "",
+          "expected_result": "The recent market uptick reverses before Friday or by month end, resulting in a net decline from the correction’s peak; alternatively, if it holds, prices remain at or above the correction level through Friday/month end."
+        },
+        {
+          "made_at": "2025-03-20T14:17:30.368Z",
+          "instrument": "",
+          "prediction_text": "A further decline is likely and, if it occurs, will be a vol-up spot-down kind of decline.",
+          "condition": "before or after the collar expires EOM",
+          "expected_result": "Market spot prices drop while implied or realized volatility increases (measurable via VIX rise or realized intraday volatility) coinciding with the price decline either before or after end-of-month collar expiry."
+        },
+        {
+          "made_at": "2025-03-20T14:17:30.368Z",
+          "instrument": "China equities",
+          "prediction_text": "Wall Street will likely buy China out of their positions, leading to more down (further declines) coming.",
+          "condition": "",
+          "expected_result": "Net selling pressure on China equities persists or increases, resulting in further price declines in major China equity indices or ADRs."
+        }
+      ]
+    }
+  }
+}

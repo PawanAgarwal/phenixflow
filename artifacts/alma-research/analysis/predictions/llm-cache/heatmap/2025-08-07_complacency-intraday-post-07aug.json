@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:01:43.370Z",
+  "inputHash": "812d5ee3971c4fe5ef7053d4d65a9a9b6fb9cf5b",
+  "payload": {
+    "responseId": "resp_0b0685d3f29c548e0069b76480a3b48190865c5351bd090350",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning magnet at ~6350 (centroid zone 6360.44–6366.16 anchors downside toward 6350); market likely to revert to and pin near 6350 during session.",
+          "condition": "price below 6388",
+          "expected_result": "SPX trades back toward 6350 and holds/pins in 6350–6366 zone within the trading day (observe price touch or consolidation there)"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Unbreakable pivot at 6388 acting as key rejection level; if above it, price tends to stay above or flip to 6400 area; if below, reversion toward centroid/6350.",
+          "condition": "price around 6388",
+          "expected_result": "Price rejects or bounces at 6388 within short timeframes (visible reversal within 30–90 minutes)"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside liquidity interest at 6412.51 but low conviction — higher-level magnet at 6427 only likely if 6400 ranges before 13:50 and put skew is being sold; otherwise 6405 serves as vanna flip that will push spot back down after 13:50.",
+          "condition": "spot ranges near 6400 before 13:50 and put skew is sold",
+          "expected_result": "SPX moves up toward 6427 (double-top) when 6400 range + put-skew selling occurs; otherwise price fails above 6405 and reverses downward"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Weak support at 6372; below 6388 favors pin back to centroid and 6350; downside pivot at 6325.84 with a downside max near 6293 if larger downside occurs.",
+          "condition": "sustained break below 6372 with headline-driven downside",
+          "expected_result": "SPX drops toward 6326 and potentially to ~6293 if momentum/news accelerates (observe sustained trading below 6326)"
+        }
+      ]
+    }
+  }
+}

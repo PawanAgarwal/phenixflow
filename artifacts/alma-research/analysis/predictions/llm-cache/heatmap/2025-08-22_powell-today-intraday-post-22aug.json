@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:25.945Z",
+  "inputHash": "1eb34a2720878b586213f2f6263b04bd861b608f",
+  "payload": {
+    "responseId": "resp_0082d42b34bed7b70069b764abecbc81a3b19fa1c1c228c859",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Pinning magnet / rejection zone at ~6371: market likely to be pinned to this line intra-day unless high volatility from Powell drives a breakout. Heatmap shows concentrated gamma and short-speed cap around 6370-6375.",
+          "condition": "Powell commentary is benign",
+          "expected_result": "SPX holds above 6371 and drifts toward upside pivot ~6394–6410 (test of daily centroid to upside wing within session)"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky support / lower wing of the iron condor (IC) around 6305–6310 serving as a downside cap; heavy illiquidity below ~6333.7 implies downside momentum confirmation if broken.",
+          "condition": "If Powell introduces new hawkish narrative or spot cannot reclaim 6340",
+          "expected_result": "SPX reverts toward and pins to the lower IC wing ~6305–6310; break below 6333.7 accelerates downside momentum intraday"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / short-speed cap near 6394 with a margin to ~6410; this level is the primary upside resistance from the options positioning and gamma structure.",
+          "condition": "Powell commentary benign and sufficient upside flow",
+          "expected_result": "SPX breaks above 6394 and tests 6410 and the upper wing of the IC (potential extension toward 6430–6435 if momentum continues)"
+        }
+      ]
+    }
+  }
+}

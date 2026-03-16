@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:59:21.339Z",
+  "inputHash": "431a4df1fc688ee129498ba98bd9f7e5dc3bb990",
+  "payload": {
+    "responseId": "resp_0424d3ef30b9803c0069b763f2785c819ca320f1c7d98d0f47",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma/dealer pinning centered around 6140–6154 (centroid ~6153.95) creating a sticky zone that should attract/hold price intraday. Expect the market to gravitate back toward this band if it moves away.",
+          "condition": "none",
+          "expected_result": "Price will revert toward 6140–6154 within the trading day; intraday moves away from this zone will see significant reversion pressure back into it."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance cluster / rejection zone around 6170–6178 (local upside pivot 6170.15; 6174 marked as strong resistance; 6178 effectively unbreakable after 1:43 PM) where speed/profile turns negative producing likely rejection on rallies.",
+          "condition": "time >= 13:43 ET",
+          "expected_result": "Rallies up into 6170–6178 will stall or reverse; attempts to close above 6178 after 1:43 PM will fail intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside protective gamma and longer tail support in the 6200/6210 region that makes a deep break below the fly center unlikely; major downside extension capped unless volatility surges.",
+          "condition": "none",
+          "expected_result": "Sustained break below the 6140 fly center is unlikely without a notable vol spike; price should find structural support from 6200–6210 gamma positioning preventing runaway downside."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If downside vol accelerates, a lower reversion target exists near 6076 as intraday worst-case support coded on the heatmap.",
+          "condition": "volatility increases materially to push momentum downward",
+          "expected_result": "If vol spikes and momentum turns down, price may extend to ~6076 as the intraday low target before reversion or stabilization."
+        }
+      ]
+    }
+  }
+}

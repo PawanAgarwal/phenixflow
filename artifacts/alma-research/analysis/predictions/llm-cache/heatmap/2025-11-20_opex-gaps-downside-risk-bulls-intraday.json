@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:10:25.699Z",
+  "inputHash": "a4d061be93ce7046e9428d8e62d0620d7b4407d2",
+  "payload": {
+    "responseId": "resp_03c4ec8c3837ba1e0069b7668a94a48193bc0b50fed23ad281",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / key pivot around 6710–6714 acting as primary magnet/support; market expected to gravitate toward this zone.",
+          "condition": "price near current levels (~6642)",
+          "expected_result": "Price will revert toward 6710–6714 within the session (measurable move of ~65–75 pts from 6642) unless a breach of downside pivot occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/structural break level at 6596 (downside pivot). A clear break below 6596 would indicate structure failure and likely push toward week-of-range lows.",
+          "condition": "price closes/breaks below 6596.19",
+          "expected_result": "Follow-through selling toward WoR lows (target lower gamma concentrations near ~6535–6500 area) within next trading sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / bullish breakout threshold around 6836–6840; market views 6780–6800 as a strong rejection/ceiling today so sustained move above ~6745 shifts sentiment bullish toward the upside pivot.",
+          "condition": "close above 6745",
+          "expected_result": "Volatility to calm and price to trend toward 6780–6840 area; reduced downside risk and higher probability of reaching upside pivot ~6836."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Protective/hedge interest (sticky zone) around 6650–6655 and short-gamma clustering near 6620–6622 which market expects to hold intraday (floor protection).",
+          "condition": "intraday dip toward 6620–6650",
+          "expected_result": "Price likely to find buying/reversion in the 6620–6650 band and bounce back toward centroid ~6710 rather than breach lower levels."
+        }
+      ]
+    }
+  }
+}

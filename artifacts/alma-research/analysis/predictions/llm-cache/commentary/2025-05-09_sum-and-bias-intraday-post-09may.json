@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:56:41.090Z",
+  "inputHash": "431708e755758c68ff0a799caf8eb62509f8148f",
+  "payload": {
+    "responseId": "resp_0cc602f463035a250069b7634ef3cc8191beb9204f3e377bf1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "VIX",
+          "prediction_text": "Volatility will be capped in the near future due to institutional deals (e.g., Abu Dhabi IHC with BlackRock) providing a tailwind to US markets.",
+          "condition": "",
+          "expected_result": "VIX declines or remains subdued relative to recent levels over the coming weeks (e.g., falls from ~27.7% realized toward lower levels or fails to spike above April highs)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A near-term rebalancing movement will stabilize support and allow the index to continue grinding higher with more confidence and less FOMO.",
+          "condition": "",
+          "expected_result": "SPX trades in a range-bound pattern then resumes a gradual upward trend over the coming weeks, forming higher lows and modestly higher highs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX makes it below 5624.22 and rejects it from below, we will see a healthy pullback to the 5539–5517 zone.",
+          "condition": "SPX drops below 5624.22 and is rejected from below",
+          "expected_result": "SPX declines into the 5539–5517 price zone within the next few sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "May 13–14 is a risky window before supportive OpEx flows, after which post-OpEx hedge unwind is uncertain but rebalancing is expected before a stable grind up into summer.",
+          "condition": "",
+          "expected_result": "Around May 13–14 intraday volatility increases and directional risk rises; after OpEx, positions rebalance and SPX transitions into steadier upward drift into summer."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid of the gamma landscape is at 5679.26 and below this point the move should slightly slow down.",
+          "condition": "SPX trades below 5679.26",
+          "expected_result": "Price movement becomes less volatile/slower (reduced intraday range) while beneath 5679.26."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5643.91 is the main pivot and if price breaks below it and volatility catches up, the downside move gains momentum.",
+          "condition": "SPX breaks below 5643.91 with rising volatility",
+          "expected_result": "SPX experiences an accelerated downside move (larger intraday declines and continuation lower) following the break."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "To the upside 5706.96 is the main level and there is potential upside to 5741.97; if volatility does not calm, 5800 is coming with catalysts like headlines.",
+          "condition": "SPX moves above 5706.96; for 5800 outcome, volatility must remain elevated and headlines act as catalysts",
+          "expected_result": "SPX rallies first toward ~5741.97 and, given sustained volatility plus catalysts, extends toward ~5800."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5710 is a potential pin level (less probable due to net positive charm).",
+          "condition": "SPX is trading near option expiries (pinning conditions)",
+          "expected_result": "SPX price gravitates toward and spends time around 5710 during the relevant expiry period (pinning behavior)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Zero vanna is coded at 5626 and with positive convexity, locally lower volatility is needed to break through this line.",
+          "condition": "SPX approaches 5626 with low local volatility",
+          "expected_result": "If local volatility is low, SPX is more likely to break through 5626; if volatility is not low, the level will hold as support/resistance."
+        }
+      ]
+    }
+  }
+}

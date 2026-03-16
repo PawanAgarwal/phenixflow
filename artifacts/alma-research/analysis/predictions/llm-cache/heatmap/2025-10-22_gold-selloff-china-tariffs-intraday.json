@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:05:47.718Z",
+  "inputHash": "a3cced38af8f0aafd0f85f1be3d6e864a808c28c",
+  "payload": {
+    "responseId": "resp_095cd61010e926ba0069b765746ad481979f8a39aeed64b5de",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside pin at ~6782 with clear gamma peak; if spot moves above 6775.37 expect inertia toward 6782.49 and a probable EOD pin around 6782 (possible extension to 6815 if realized vol ramps).",
+          "condition": "spot > 6775.37",
+          "expected_result": "Price moves to 6782 area (target 6782.49) and pins there into EOD; if vol increases, transient move to ~6815 then reversion back to 6782/6803."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Key intra-day line in the sand at 6762.46 — very-low probability to decisively break once spot opens above/below it; acts as a sticking reference for direction today.",
+          "condition": "n/a",
+          "expected_result": "If spot stays above 6762.46, upside structure (6782 pin) holds; if below, downside pivots become more likely to control price."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/magnet cluster around 6732.36 supported to 6672.44; 6705–6710 functions as a local pin during PM if 6695 is broken before 14:30, otherwise 6670–6685 is the local pin.",
+          "condition": "spot breaks 6695 before 14:30",
+          "expected_result": "Price will gravitate to 6705–6710 (local pin) in the PM; if 6695 not broken, expect support to hold in 6670–6685 band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If 6672.44 is broken with increased downside volatility, market can travel down to ~6600 as a minimum today.",
+          "condition": "break of 6672.44 on downside with rising downside vol",
+          "expected_result": "Sustained move toward 6600 intraday (testing that level)."
+        }
+      ]
+    }
+  }
+}

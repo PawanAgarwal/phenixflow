@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:53:20.573Z",
+  "inputHash": "ef0e6d3e63504b85310d5142c9e751a0cf96db1a",
+  "payload": {
+    "responseId": "resp_00724af76b6f31b60069b7628822d08193b6dae6bbebaab99f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support at 5585 and 5655 will hold due to local longer gamma effect.",
+          "condition": "",
+          "expected_result": "SPX will not close below 5655 (and intraday lows will respect 5655 and 5585) during the described short-term horizon."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5679 is a resistance (zero vanna level) that requires relatively higher local volatility to break through.",
+          "condition": "higher local volatility",
+          "expected_result": "If local volatility rises, SPX will break and close above 5679; otherwise SPX will fail to close above 5679."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is a 54.51% chance of an intraday mean reversion to pivot 5673.46 from current levels.",
+          "condition": "",
+          "expected_result": "SPX will move toward and test 5673.46 intraday (reach within ~9 points) on the stated day with probability roughly 54.51%."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma profile (negative net gamma and declining charm convexity) favors increased volatility.",
+          "condition": "",
+          "expected_result": "Implied and realized volatility for SPX will increase over the short term rather than decrease, producing larger intraday price swings."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX in the 26–27 zone will be sticky from a positioning perspective and force market makers to sell futures into the expo.",
+          "condition": "",
+          "expected_result": "VIX will remain around 26–27 and correlated selling of SPX futures by market makers will occur ahead of the expiration event."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5550/5555 is a key support line the index should hold to decay put-hedge pressure during the week.",
+          "condition": "",
+          "expected_result": "SPX will remain at or above the 5550–5555 range during the week, reducing pressure on put hedges bought for event vol."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday trend is becoming more sustained and mean reversion edge is decreasing, implying fewer quick mean-revert moves.",
+          "condition": "",
+          "expected_result": "Intraday SPX moves will show longer trending phases with reduced frequency of sharp intraday reversions compared with the prior week."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A lower inflation print could trigger a squeeze up that flushes downside hedges and attracts fresh selling volume.",
+          "condition": "lower inflation print",
+          "expected_result": "If a lower-than-expected inflation print is reported, SPX will spike higher (a squeeze) sufficiently to force hedge unwind before renewed selling pressure returns."
+        }
+      ]
+    }
+  }
+}

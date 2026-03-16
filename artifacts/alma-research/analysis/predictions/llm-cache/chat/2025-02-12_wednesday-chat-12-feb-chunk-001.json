@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:27:24.747Z",
+  "inputHash": "8d8f34dc982020b1b68e32fa954fe62175cf5cf8",
+  "payload": {
+    "responseId": "resp_03bb424b83e8509f0069b786a7a5a4819c9b518602af1d7fc6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-12T12:19:33.276Z",
+          "instrument": "",
+          "prediction_text": "Core CPI (ex-food and energy) will grow a bit faster than the 0.3% consensus this month, producing a YoY rate of about 3.19% and longer-term YoY core CPI around 2.8%.",
+          "condition": "",
+          "expected_result": "Reported core CPI month-over-month >0.3% and YoY core CPI ≈3.19%; subsequent revisions/forecasts align to ~2.8% YoY over coming months."
+        },
+        {
+          "made_at": "2025-02-12T17:47:28.802Z",
+          "instrument": "SPX",
+          "prediction_text": "A left-tail event after February options expiration is likely and the SPX looks topish on a wider timeframe.",
+          "condition": "after February options expiration",
+          "expected_result": "SPX posts a significant downside move (sharp drop or tail event) following February OpEx compared with pre-OpEx levels."
+        },
+        {
+          "made_at": "2025-02-12T17:52:02.878Z",
+          "instrument": "",
+          "prediction_text": "6060 is likely a pin.",
+          "condition": "",
+          "expected_result": "Price action will revisit and repeatedly touch 6060, showing pinning behavior (multiple rejections/wicks around 6060)."
+        },
+        {
+          "made_at": "2025-02-13T00:09:13.964Z",
+          "instrument": "Gold",
+          "prediction_text": "If supportive flows fade after OpEx, momentum will be exposed to tail risk and the recent fast rebound in gold is vulnerable.",
+          "condition": "supportive flows pass away along with OpEx",
+          "expected_result": "Gold will reverse downward with elevated downside volatility and a material pullback from the post-CPI rebound levels after OpEx when flows fade."
+        }
+      ]
+    }
+  }
+}

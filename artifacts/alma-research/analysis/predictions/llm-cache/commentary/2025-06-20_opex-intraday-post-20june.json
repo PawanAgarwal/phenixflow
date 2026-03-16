@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T01:58:52.713Z",
+  "inputHash": "06525ae0ab5da891323438797049d53799abf7bc",
+  "payload": {
+    "responseId": "resp_0d1137e898c660390069b763ce1e68819e9fa5894542d3e6fa",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Centroid will be in the 5965.07–5968.85 zone, with net negative speed below it and net positive speed above it.",
+          "condition": "",
+          "expected_result": "Price trades and spends most time within 5965.07–5968.85, and measured short-term speed (second derivative of price) is predominantly negative below that zone and predominantly positive above it."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot is 5953.11 and upside pivot is 5973.27, guiding intraday directional bias around those levels.",
+          "condition": "",
+          "expected_result": "Price repeatedly reacts at 5953.11 and 5973.27 (bounce/rejection or breakout attempts) and intraday directional moves align with pivots as support/resistance."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6000s strike will act as a local pivot after 14:20 if price stays above the 5970/80 range and volatility is sold.",
+          "condition": "price stays above 5970–5980 into/after 14:20 and implied volatility declines",
+          "expected_result": "Price gravitates toward and stalls around the 6000 area after 14:20 rather than moving decisively away, with reduced realized and implied volatility."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside is capped at the 6007–6018 range (very max 6025).",
+          "condition": "",
+          "expected_result": "Attempts to rally above 6007–6018 fail and intraday highs do not exceed 6025; upward moves reverse from that band."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If vol catches up before the market falls, the primal target is the 5896–5902 zone (especially in the last 1.5 hours).",
+          "condition": "implied volatility increases before the market begins to fall",
+          "expected_result": "Price drops into 5896–5902, particularly during the final 1.5 hours of the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Below 5896/5902, volatility will calm and spot will pin towards 5850.",
+          "condition": "price falls below the 5896–5902 zone",
+          "expected_result": "After breach of 5896–5902, realized and implied volatility decline and price moves toward and finds support near 5850 (pinning)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Charm flip is very close to the downside pivot and will exert strong afternoon downward pressure on spot, making dealers get longer delta and pushing price lower below the pivot.",
+          "condition": "",
+          "expected_result": "If price approaches the downside pivot (around 5953.11), increased charm dynamics cause sustained selling pressure and a measurable increase in dealer delta buying that coincides with further spot weakness below the pivot."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Significant trend-changing swings can happen during the first three hours after open, after which price will be trapped toward 6000, the centroid range, or down towards 5850 depending on early action.",
+          "condition": "first three hours after market open",
+          "expected_result": "A large intraday directional move (trend change) occurs within three hours of open; thereafter price range narrows and trades toward one of: ~6000, centroid (~5965–5969), or ~5850."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "AM expiration is heavily negative speed with a local charm pivot around 5955–5958 and the biggest notional at 6000 likely to pin price there if spot holds the pivot into 08:50 and goes/holds above 5975.",
+          "condition": "spot holds >~5955–5958 into 08:50 and goes/holds above 5975",
+          "expected_result": "After AM expiration, spot remains near 6000 (pinning) with limited unclench, and delta decay on 6000 strike is observed rather than a downside unclench."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If spot fails to hold above the AM pivot it is likely to fall and pin towards 5920, unclech further to the downside with first braking at 5902–5910.",
+          "condition": "spot fails to hold above AM pivot (~5955–5958)",
+          "expected_result": "Price declines toward 5920; after AM expiration further downside continuation occurs but finds interim support/braking in 5902–5910."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Odds favor local stabilization above the pivot and an unclech post-OpEx with a subsequent grind lower next week.",
+          "condition": "",
+          "expected_result": "After OpEx, price stabilizes above the downside pivot (mid-5950s) and over the following week exhibits net negative drift (gradual lower closes) rather than large reversals."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Vol of vol supply remains into July.",
+          "condition": "",
+          "expected_result": "Implied volatility of short-dated options shows continued compression/supply characteristics and reduced spikes (lower vol-of-vol metrics) persisting through July."
+        }
+      ]
+    }
+  }
+}

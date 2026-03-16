@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:05:56.094Z",
+  "inputHash": "e0561aa8d7a352f0ba042ea7dda05e0292de29c5",
+  "payload": {
+    "responseId": "resp_0fdda499bed9ebe40069b7657bcf00819f85a3698f9e58a8d0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price will pin to the lower wing of the IC around 6835 (most supportive zone).",
+          "condition": "",
+          "expected_result": "Spot trades down to and holds near 6835 within the session, showing price congestion/pinning there for at least 30–60 minutes."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Price will range around the centroid between 6887.67 and 6894.28 and this range will be sticky.",
+          "condition": "",
+          "expected_result": "Spot remains within 6887.67–6894.28 for an extended period (at least 30–120 minutes) with multiple touches and limited decisive breakout."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If spot is below 6895 during the PM session, price will pin toward ~6887 (pin to 87s).",
+          "condition": "spot below 6895 during the PM session",
+          "expected_result": "After the PM session opens with spot <6895, price moves toward and trades near 6887, showing pinning behavior (congestion/touches) there."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "During the AM session price can retest 6834.96, then revert upward and pin to 6850.",
+          "condition": "AM session",
+          "expected_result": "In the AM session spot trades down to ~6834.96, then reverses higher and spends time around ~6850 (pinning/congestion) afterwards."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot is at 6854.89 functioning as a pivot support level.",
+          "condition": "",
+          "expected_result": "Spot reacts to the 6854.89 level (bounce, consolidation, or increased buying interest) when approached intraday."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot at 6940.55 can lead to a squeeze up to 6985 before reverting to 6960 (low probability).",
+          "condition": "",
+          "expected_result": "If spot reaches 6940.55, price briefly accelerates toward ~6985 then pulls back to around 6960 within the same move."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside realized volatility remains sold intraday, implying muted intraday upside moves. ",
+          "condition": "",
+          "expected_result": "Intraday realized volatility stays lower than recent baseline, with smaller high-to-low ranges and fewer large spikes in price."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Net gamma exposure is negative with downside convexity, so the left-tail will be aggressively sold.",
+          "condition": "",
+          "expected_result": "Downside moves are met with accelerated selling and larger intraday drops (increased downside momentum) rather than stabilizing bounces."
+        }
+      ]
+    }
+  }
+}

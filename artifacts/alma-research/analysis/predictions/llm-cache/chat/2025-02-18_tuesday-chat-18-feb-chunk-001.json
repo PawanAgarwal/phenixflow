@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:27:31.148Z",
+  "inputHash": "1deecfe9a2f31cf59ea8f12b733328b3d32cca81",
+  "payload": {
+    "responseId": "resp_036a34beeaf3bfe60069b786ace158819ebf77520e2e53bea0",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-18T19:41:56.274Z",
+          "instrument": "SPX? (6100 level implies S&P 500 index)",
+          "prediction_text": "Price will pin to 6100 after the marked zone failed.",
+          "condition": "",
+          "expected_result": "SPX trades into and holds around the 6100 level (pin) within the current move"
+        },
+        {
+          "made_at": "2025-02-18T19:52:32.834Z",
+          "instrument": "SPY",
+          "prediction_text": "I am bullish on SPY.",
+          "condition": "",
+          "expected_result": "SPY price will rise over the relevant short-term horizon (next few sessions) compared to its price at 2025-02-18T19:52:32.834Z"
+        },
+        {
+          "made_at": "2025-02-18T19:55:11.757Z",
+          "instrument": "",
+          "prediction_text": "If volatility catches up, there will be no upside.",
+          "condition": "vol catches up",
+          "expected_result": "Upside in the underlying (market) will stall or fail while realized/implied volatility increases"
+        },
+        {
+          "made_at": "2025-02-18T22:53:56.099Z",
+          "instrument": "NVDA",
+          "prediction_text": "NVDA 150 is quite likely.",
+          "condition": "",
+          "expected_result": "NVIDIA (NVDA) will reach a price of $150 in the near term"
+        }
+      ]
+    }
+  }
+}

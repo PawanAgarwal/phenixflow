@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:45.505Z",
+  "inputHash": "59d26efe91c699b761a44194901cc1c869069d5b",
+  "payload": {
+    "responseId": "resp_08527841662dbc0d0069b764c1f1bc819c9c411d9db1da545b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market will exhibit expanding ranging with increasing tailedness on the left-tail into FOMC.",
+          "condition": "into FOMC",
+          "expected_result": "Intraday price ranges will widen and distribution of returns will show heavier left-tail (more frequent/large negative moves) before FOMC"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Any agreements intermediated by Russians with Xi will bloom after FOMC to support the market.",
+          "condition": "after FOMC",
+          "expected_result": "Equity prices will rise following FOMC if such agreements are announced or perceived to be progressing"
+        },
+        {
+          "instrument": "NASDAQ",
+          "prediction_text": "NASDAQ will show extra weakness related to China’s chip efforts versus US suppliers.",
+          "condition": "",
+          "expected_result": "NASDAQ index will underperform broader US equities and record larger downside moves tied to negative China chip-related news"
+        }
+      ]
+    }
+  }
+}

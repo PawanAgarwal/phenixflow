@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:14:53.827Z",
+  "inputHash": "bf962b63883fca9f69021b4109a6f23d70f9ed19",
+  "payload": {
+    "responseId": "resp_0a3eea275980b8d10069b7679b224c819dbee5531fd01e5113",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Volatility will compress around the 'volatility-apex' day, making the market very sensitive to news and prone to sharp moves.",
+          "condition": "'volatility-apex' day",
+          "expected_result": "Intraday realized volatility will be lower than the preceding and following trading days, with sudden large intraday moves when significant news occurs."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Optimism about inflation could trigger a market melt-up later in the day.",
+          "condition": "Optimism about inflation",
+          "expected_result": "Equity indices will rally strongly, closing substantially higher than open (e.g., >1% intraday gain) following inflation-positive news."
+        }
+      ]
+    }
+  }
+}

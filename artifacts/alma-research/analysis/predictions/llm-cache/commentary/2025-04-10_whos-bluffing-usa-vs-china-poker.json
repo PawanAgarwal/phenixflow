@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:55:05.008Z",
+  "inputHash": "6a12036efb01c4532ddf59e3b267496c77d89633",
+  "payload": {
+    "responseId": "resp_0a5b695043a8dc930069b762f0ea9481919f7f1c05ecefba93",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "S&P 500 (implied by levels)",
+          "prediction_text": "If the S&P 500 stabilizes, it should break above 5450.73.",
+          "condition": "",
+          "expected_result": "S&P 500 price moves above 5450.73 and remains above for at least one trading session."
+        },
+        {
+          "instrument": "S&P 500 (implied by levels)",
+          "prediction_text": "Downside longer gamma should come into effect below 5160.68.",
+          "condition": "",
+          "expected_result": "S&P 500 price falls below 5160.68 and exhibits increased downside convexity (accelerating declines / larger intraday down moves)."
+        },
+        {
+          "instrument": "S&P 500 (implied by levels)",
+          "prediction_text": "A downside move can catch a bid around 5196.77.",
+          "condition": "",
+          "expected_result": "S&P 500 price declines to ~5196.77 and then shows price stabilization or a rebound of at least 0.5% within the same or next trading session."
+        },
+        {
+          "instrument": "S&P 500 (implied by levels)",
+          "prediction_text": "If upside momentum continues, upside gamma flips and starts to become longer above 5560.16.",
+          "condition": "",
+          "expected_result": "S&P 500 rises above 5560.16 and implied skew/positioning shows a net increase in long-gamma exposure (call-dominant positioning) within two trading days."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX downside pivot is at 26.72.",
+          "condition": "",
+          "expected_result": "VIX falls to or below 26.72 and finds support or trades sideways rather than continuing a sustained decline."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX upside pivot is at 53.45 with VVIX reacting around VIX of 42.39.",
+          "condition": "",
+          "expected_result": "If VIX rises toward 42.39, VVIX increases materially; if VIX reaches or exceeds 53.45, realized volatility spikes and VVIX remains elevated, indicating sustained volatility expansion."
+        },
+        {
+          "instrument": "CPI (US)",
+          "prediction_text": "March headline CPI will show a modest monthly increase around 0.08% and headline annual inflation near 2.5%.",
+          "condition": "",
+          "expected_result": "Bureau of Labor Statistics March headline CPI prints ~0.08% month-over-month and ~2.5% year-over-year."
+        },
+        {
+          "instrument": "Core CPI (US)",
+          "prediction_text": "Core CPI in March is expected to rise about 0.24% monthly, implying an annual core rate near 3.0%.",
+          "condition": "",
+          "expected_result": "BLS March core CPI prints ~0.24% month-over-month and the annual core CPI calculates to approximately 3.0%."
+        }
+      ]
+    }
+  }
+}

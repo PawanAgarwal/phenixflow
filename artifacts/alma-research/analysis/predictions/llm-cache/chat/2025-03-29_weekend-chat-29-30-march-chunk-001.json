@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:28:17.302Z",
+  "inputHash": "28f919035776695e625f4a48cf790f3655012944",
+  "payload": {
+    "responseId": "resp_0ae578180d7c03a30069b786dd9bec81939b476c21df6bf3b4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-30T15:49:48.963Z",
+          "instrument": "",
+          "prediction_text": "We will see more downside into April OpEx.",
+          "condition": "",
+          "expected_result": "Price declines further before or into April options expiration (net down move measurable from current levels)."
+        },
+        {
+          "made_at": "2025-03-31T09:40:02.593Z",
+          "instrument": "",
+          "prediction_text": "If market holds this zone and volatility goes down with spreads narrowing and market-maker long-gamma trades materializing, then a bulltrap (fake upward move) can occur during this week.",
+          "condition": "market holds this zone and volatility decreases and spreads narrow and MM long-gamma trade materializes (visible in realized metrics)",
+          "expected_result": "A temporary upward price move (bulltrap) occurs during the week, followed by continuation of the prior down move or loss of the gains from the fake rally."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:00:14.107Z",
+  "inputHash": "f42a4e7966bde4c1bd96a4114c92ae7cdd969677",
+  "payload": {
+    "responseId": "resp_0603a89b17cdd0ce0069b764248fa4819eac2d886ba08d61f4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid range around 6245–6253 will act as a reversion zone/pinning area; price is likely to be pulled back into this range if it drifts away during the day.",
+          "condition": "",
+          "expected_result": "If SPX moves >10–20 points away from 6245–6253, expect mean-reversion back toward 6245–6253 within the session (observe re-entry into that range within a few hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong resistance / upside pivot at 6281.42 (becomes especially strong after 13:30–13:45); can cap rallies with targets at 6300 and secondary target 6319 if vol increases.",
+          "condition": "SPX reaches or tests 6281.42 after 13:30",
+          "expected_result": "Expect rejection or stall near 6281.42; failure to breach convincingly leads to a pullback toward 6260–6250. If 6281.42 is cleared with rising volatility, expect run to ~6300 and possibly 6319."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vanna flip / strong support at 6223 (very unlikely to break intraday).",
+          "condition": "",
+          "expected_result": "Downside attempts toward 6223 should find firm support and result in rebounds; a clear break below 6223 would be notable and likely lead to accelerated downside."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6202.14 is a slower-grind target with many checkpoints; power-hour support at 6175 and deeper gravitational gamma at 6146 if 6175 breaks.",
+          "condition": "SPX trades below 6202.14 and momentum persists into late session",
+          "expected_result": "If SPX grinds below 6202.14, expect a path toward 6175 in the power hour; a decisive break of 6175 likely accelerates to ~6146."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Customer short-spread range / sticky resistance around 6260–6270 (6268 specifically strengthens over the day) and will pin price toward ~6260 when within that band after ~10:40.",
+          "condition": "SPX is within 6260–6270 after 10:40",
+          "expected_result": "Price will tend to be pinned toward 6260 while inside 6260–6270; expect limited net movement away from ~6260 unless volatility spikes."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:55:35.008Z",
+  "inputHash": "5ee4df54437295a24fde14bef537846512e89f51",
+  "payload": {
+    "responseId": "resp_081e789f8cfb09bf0069b7630f43a0819d9ca5387e21eb15b8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma peak and trough cluster around ~5300-5310 acting as a sticky zone / pinning magnet — market likely to gravitate back toward this area intraday.",
+          "condition": "price deviates > ~15-25 pts from 5305",
+          "expected_result": "Price will revert and trade back into the 5290–5320 range within the next 1–4 trading hours"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Large positive convexity (gamma) region centered near ~5000–5040 producing downside support and a likely reversion band if tested.",
+          "condition": "price falls below 5050",
+          "expected_result": "Downside move will slow and see buying interest, producing a bounce back toward 5065–5100 within several hours"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Charm flip / negative convexity area just above ~5245 indicates fragile upside — limited follow-through above this level unless volatility compresses further.",
+          "condition": "price rises above 5245",
+          "expected_result": "Up moves above 5245 will quickly decay and be capped near 5245–5345; expect reversion back below ~5345 rather than sustained breakout"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma troughs and peaks around ~5380–5400 and again near ~5480 create short-range rejection zones — these act as intraday ceilings if tested from below.",
+          "condition": "price approaches 5380–5400 or 5480",
+          "expected_result": "Likely rejection or choppy trading at those levels with pullback of ~10–30 points within 1–3 hours"
+        }
+      ]
+    }
+  }
+}

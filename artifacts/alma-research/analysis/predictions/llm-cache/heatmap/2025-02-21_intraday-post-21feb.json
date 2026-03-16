@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:52:11.068Z",
+  "inputHash": "297b2b18f8eb8f7afe00e769ecc7560b3cd4f8db",
+  "payload": {
+    "responseId": "resp_0ecd3cb269a645600069b76245a864819eaae30fbcb7dcf51b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning / sticky zone at ~6190 (horizontal dark trough and green centroid line) — options flow is supportive of price gravitating to this level intraday.",
+          "condition": "none",
+          "expected_result": "Price will gravitate toward and spend significant time near 6190 during the trading day, showing consolidation/pinning behavior."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / reversion corridor between ~6000 and ~6055 (dark band and green trough around 6000 with noted speed positive between 6190 and 6055) — the heatmap signals a constructive support floor in this range.",
+          "condition": "none",
+          "expected_result": "If price falls, expect a high-probability reversion or slowdown of selling inside 6000–6055, with short-term bounces likely from that corridor."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / rejection cluster around ~6260–6270 (bright peak on the right edge with yellow/green contours) — this area is a brake where upside travel is likely to slow or be resisted.",
+          "condition": "none",
+          "expected_result": "If price approaches 6260–6270, expect rejection or stalling there and increased probability of pullback from that level."
+        }
+      ]
+    }
+  }
+}

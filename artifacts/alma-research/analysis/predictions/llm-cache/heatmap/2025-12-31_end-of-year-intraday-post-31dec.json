@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:12:41.836Z",
+  "inputHash": "b5ef03e15faddeef20e0c955e4d7e64099c93968",
+  "payload": {
+    "responseId": "resp_0e9f5f899e6ba8450069b767109ca8819d8bc4006b6f37f337",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid acting as strong intra-day resistance/support around 6907 — price likely to respect this line in the sand today and gravitate back toward it after excursions.",
+          "condition": "price moves away from 6907 by >10 pts",
+          "expected_result": "SPX will revert toward 6907 within the session (reach within ±10 pts) within a few hours of the move."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky support cluster around 6860–6850 (gamma trough/green lines) that can absorb downside momentum and halt declines; downside pivot and support aligned there.",
+          "condition": "SPX sells off toward 6860–6850",
+          "expected_result": "Downside momentum will slow or reverse at 6860–6850; expect a bounce of at least 10–20 pts from that zone."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Rejection/short-term cap area in the 6930–6950 region (red hotspot and upside targets) — heatmap shows high negative gamma/pinning pressure that can reject rallies.",
+          "condition": "price rallies into 6930–6950",
+          "expected_result": "Rallies into 6930–6950 will likely stall and reverse; expect rejection of at least 10–25 pts away from that zone within the session."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:57:35.793Z",
+  "inputHash": "12baa3ce0e169f8d5613767e80f23b30af8192e1",
+  "payload": {
+    "responseId": "resp_0a4406ddab9939800069b7638a493881a2b745022dc35a5b7c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows strong gamma/peak cluster and sticky zone centered around ~5885-5890 acting as an upside pin/rejection zone; elevated gamma trough near ~5906-5938 creates resistance corridor above 5890.",
+          "condition": "price approaches 5885-5906 with no major vol spike",
+          "expected_result": "Price likely stalls or reverses lower from 5885-5906; expect limited sustained breakout above 5906 without increased intraday volatility."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Prominent gamma trough/centroid support band between ~5813 and ~5838 (centroid ~5849.86 noted in post) creating a support/rangebound floor; local positive speed at 5813 suggests short-term bounce attempts even as overall speed is negative.",
+          "condition": "price falls to 5837.48-5813.10 and intraday vol decreases",
+          "expected_result": "Price should find support and trade rangebound above ~5813, with probable stair-stepping lower rather than a sharp break below 5813 unless volatility picks up."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Deeper sticky support and major gamma concentration around 5743-5778 (99.73%/95.4% risk levels) forming a strong downside magnet and likely reversal zone if price breaches intraday support levels.",
+          "condition": "price breaks below 5800 and approaches 5778-5743",
+          "expected_result": "High probability of slowdown and reversal or pinning around 5778-5743; sustained trading below 5743 unlikely without a large volatility/flow event."
+        }
+      ]
+    }
+  }
+}

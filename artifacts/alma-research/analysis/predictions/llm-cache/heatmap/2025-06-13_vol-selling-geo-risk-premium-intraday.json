@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:58:34.361Z",
+  "inputHash": "f6c36a9596c007004e9379e6f2e955882f0a129e",
+  "payload": {
+    "responseId": "resp_0d4d50f52ca417190069b763c35284819fb77ebe7c5b5ecba4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong supportive centroid/pinning zone between 5974.75 and 5961.44 — heatmap shows gamma peak/trough clustering there indicating a sticky, mean-reversion magnet through the session.",
+          "condition": "price inside 5974.75-5961.44",
+          "expected_result": "Price should gravitate back toward and hold within 5974.75-5961.44; use mean-reversion trades with stops outside the band (target reversion to midpoint ~5970)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma concentration around 5951.27 and a local pin at 5910 — the heatmap shows a gamma trough near 5910 implying a likely intraday downside target if momentum breaks the near-support.",
+          "condition": "break below 5951.27",
+          "expected_result": "Price likely travel to 5910 area; momentum continuation trade toward 5910 with stop back above 5951.27."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot area near 6011.71 with short-term targets 6020-6025 and extended resistance around 6047 — gamma contours cluster above 6010 suggesting easier AM break but potential rejection if vol picks up.",
+          "condition": "break above 6011.71",
+          "expected_result": "Initial run to 6020-6025; if volatility rises after the break, expect rejection near 6047 (use trailing stop or scale exits into 6047)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vanna flip / stickiness around 5995.98 — heatmap contours indicate a change in options flow there that can act as a local resistance/support pivot during the morning.",
+          "condition": "price interaction at 5995.98 (especially during AM)",
+          "expected_result": "Expect chop and short-term reversal behavior at ~5996; use range trades fading moves away from 5995.98 until a clear breakout occurs."
+        }
+      ]
+    }
+  }
+}

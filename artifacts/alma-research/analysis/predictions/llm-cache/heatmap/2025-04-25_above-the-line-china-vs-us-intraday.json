@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:56:05.151Z",
+  "inputHash": "d57a811a1ad87cfe08c5d8cbbe5338418bf1f8e3",
+  "payload": {
+    "responseId": "resp_05ad0da83cccc57f0069b7632f35bc81928fb4db38d4f69f2c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma / pinning cluster centered around ~5550-5560 indicating a sticky zone and likely intraday magnet; heatmap shows concentrated gamma peak and trough lines converging here.",
+          "condition": "price near 5550-5560",
+          "expected_result": "Price will gravitate toward and spend time around 5550-5560 within the trading day (visible reversion or consolidation around this range)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary rejection/gamma trough zone near ~5410-5420 acting as intraday support; pronounced gamma contour and peak just above creates a resistance-to-support flip potential.",
+          "condition": "downward move into 5410-5420",
+          "expected_result": "Price is likely to find support and reverse or stall in the 5410-5420 area (bounce or limited penetration during the session)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower sticky/gamma peak around ~5250-5260 suggesting a deeper support corridor and possible strong reversion if price drops to that area.",
+          "condition": "price falls to 5250-5260",
+          "expected_result": "Expect a pronounced reversion or consolidation around 5250-5260 rather than a clean break lower on first touch."
+        }
+      ]
+    }
+  }
+}

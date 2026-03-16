@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T01:56:30.815Z",
+  "inputHash": "2b5cc9b9442a53136fef74e1ddf59bb70c7cab35",
+  "payload": {
+    "responseId": "resp_070f1cc408e94e460069b76348eda481a29cdb64c7f74d177a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows strong downside gamma trough and pickup around ~5549.7–5554.8 (pivot region) acting as a support/brake zone; nearby gamma peak band around ~5525–5537 can pin or reject further declines if vol is suppressed.",
+          "condition": "Price moves down toward 5550 area",
+          "expected_result": "Price should find support and slow/stop declines in the 5549.7–5554.8 zone; if vol stays low expect pinning around 5525–5537; if vol rises through the pivot, expect a break below this liquidity band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside gamma pivot at ~5622 with resistance capped toward ~5669.98–5677 (zero vanna), indicating rejection/sticky zone and range-bound cap on rallies unless vol falls sufficiently to allow break above.",
+          "condition": "Price rallies toward 5620–5677",
+          "expected_result": "Expect rejection or slowing of upside momentum between 5622 and ~5670–5677; only a sustained low-volatility environment should produce a breakout above 5677 toward higher gamma peaks (~5793)."
+        }
+      ]
+    }
+  }
+}

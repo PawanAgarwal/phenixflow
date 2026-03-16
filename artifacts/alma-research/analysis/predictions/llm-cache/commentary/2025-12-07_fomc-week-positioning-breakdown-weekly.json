@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:15.461Z",
+  "inputHash": "8516f9d6e963164797a0ca6c89120e556dca964d",
+  "payload": {
+    "responseId": "resp_0d49bd1488fc337b0069b766bdf0708192970b5ea72b530419",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Realized volatility will be taken out (move down through the stable target) in the following week.",
+          "condition": "",
+          "expected_result": "Weekly realized volatility falls below 14.22% (and into the 13.60–14.22% range) within one week."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market expects short-lived risk into the FOMC with 'bad news is good news' driving demand for risk ahead of the meeting.",
+          "condition": "Ahead of FOMC on Dec 10",
+          "expected_result": "Equity prices display a temporary rally into Dec 10 despite weak macro prints, then reverse within days (a short-lived risk-on move followed by retracement)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Any weak incoming data will be welcomed by markets and provide more room for longer-term dovishness, supporting further upside toward all-time highs.",
+          "condition": "",
+          "expected_result": "Weak macro releases (e.g., JOLTS, PPI) coincide with upward pressure on SPX, contributing to a move toward or within 50 points of the all-time high."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Supreme Court tariff ruling and a potential government shutdown represent left-tail risks not currently priced in and could materially impact longer-term market positioning.",
+          "condition": "",
+          "expected_result": "If either event occurs, market positioning and asset prices show a pronounced adverse move (e.g., significant gap down or volatility spike) inconsistent with current consensus pricing."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:53:49.514Z",
+  "inputHash": "b44b5151dba820b3695c934eb36ee9a4d291ab4f",
+  "payload": {
+    "responseId": "resp_0f3f6958b640101c0069b762a6be54819c8307e5154b81e791",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Spot will remain within the 5685–5680 and 5580–5575 range with declining volatility.",
+          "condition": "",
+          "expected_result": "Price stays between ~5685–5680 and ~5580–5575 and realized volatility decreases compared with the prior session's intraday volatility."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Puts begin to gain profit below 5598.99.",
+          "condition": "price falls below 5598.99",
+          "expected_result": "Put option positions show net profit once underlying price is below 5598.99 (ignoring transaction costs)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Net pivot at 5658.21 will act as a momentum/positioning pivot.",
+          "condition": "",
+          "expected_result": "If price approaches 5658.21, intra-session flows should pivot around that level, producing observable changes in order flow direction or short-term returns (e.g., bounce or reversal within a few tens of minutes)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside zero-vanna at 5678.45 will be a local neutral-vanna reference.",
+          "condition": "",
+          "expected_result": "Crossing above or below 5678.45 changes vanna-driven option flow dynamics, with diminished vanna sensitivity above that level."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Momentum must break 5726.99 to stabilize upside.",
+          "condition": "price rises above 5726.99",
+          "expected_result": "Sustained trading above 5726.99 leads to reduced intraday downside volatility and a stabilization or continuation of upward price trend over the next several hours."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:47:33.787Z",
+  "inputHash": "fcf66b08877c6c5388d4249d9bb59399e43abdb0",
+  "payload": {
+    "responseId": "resp_0d653f1c1b58898b0069b7611fabe481a0abf0a8d5ff108f20",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a sticky supportive gamma concentration centered at the downside pivot (6594.81 target 6588.49) — this area functions as a strong intraday support / pinning zone.",
+          "condition": "SPX trades down to 6588–6595",
+          "expected_result": "Price should stall and stabilize on touch and rebound within the session, moving back toward 6635–6675 within ~1–3 hours."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma contours indicate a slowdown band around 6635–6640 (local short-put spread region) where momentum is expected to decelerate.",
+          "condition": "SPX approaches 6635–6640",
+          "expected_result": "The move should lose speed and pause or bounce; expect at least a 30–90 minute consolidation and a likely short-term bounce toward 6650–6675."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is a visible gamma peak that can act as a pin at ~6650 provided lower support holds — 6650 is a likely intraday pin if downside does not break.",
+          "condition": "6610 holds as intraday support",
+          "expected_result": "SPX is likely to gravitate to and trade around ~6650 (±~8 pts) for an extended intraday period (≥1–2 hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6772.38 with a sticky target ~6782.60 (expandable to ~6795–6800) appears as a high-probability reversion/resistance zone on rallies.",
+          "condition": "SPX rallies into 6770–6800",
+          "expected_result": "Price should stall and likely reverse lower from that zone, initially toward 6720–6750 and with increased probability of returning toward the centroid (~6670) during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Low-probability deep downside exists if volatility catches up at the 6635–6640 band — heatmap shows potential for an extended move if vol spikes.",
+          "condition": "Intraday volatility spikes near 6635–6640 (IV jump)",
+          "expected_result": "SPX may extend lower toward ~6560 within the same session (low probability scenario)."
+        }
+      ]
+    }
+  }
+}

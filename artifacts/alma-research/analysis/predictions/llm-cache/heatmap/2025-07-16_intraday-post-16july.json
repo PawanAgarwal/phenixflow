@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:00:41.671Z",
+  "inputHash": "bc6b3b15efc9987f1e5df01f995b1a2144f26c4c",
+  "payload": {
+    "responseId": "resp_0d26af4ed77a8db00069b76443bbe48192943feb67b72a9972",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong daily centroid/pivot around 6242 acts as central magnet/support; price is likely to gravitate back toward ~6240-6265 after intraday excursions.",
+          "condition": "",
+          "expected_result": "If SPX moves away from 6242, expect a reversion back into the 6240–6265 band within the trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Clear upside gamma peak cluster around 6263–6283 with a secondary sticky zone near 6300–6310; these levels will act as resistance/pinning on intraday rallies.",
+          "condition": "",
+          "expected_result": "On intraday upside attempts, expect rejection or pinning between 6263–6283; a sustained break above 6300–6310 is required for continuation higher."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside support corridor visible at ~6205 with stronger support/suction near 6180 and 6148; market should find buying interest at these levels and slow further declines.",
+          "condition": "",
+          "expected_result": "If SPX sells off toward 6205 expect increased bid and potential bounce; a break below 6205 should target 6180 then 6148 as next support zones."
+        }
+      ]
+    }
+  }
+}

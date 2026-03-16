@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:27:20.397Z",
+  "inputHash": "bfff2b9cce925dbc1c22f0f34b640ca83a365102",
+  "payload": {
+    "responseId": "resp_0fd8c745f4c47d180069b786a36de881a388fb28ccf8ca4078",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-08T23:12:43.143Z",
+          "instrument": "",
+          "prediction_text": "If volatility gets bid on a certain tenor, your option's convexity will change and the option will react differently to underlying movements, so hedges may not work as expected.",
+          "condition": "vol gets bid on a certain tenor",
+          "expected_result": "Option hedges that previously matched underlying exposures will diverge; delta and convexity behavior will change causing hedging P&L deviations versus prior expectations."
+        },
+        {
+          "made_at": "2025-02-09T00:37:25.272Z",
+          "instrument": "",
+          "prediction_text": "In a positive vanna regime, vol rising will be associated with delta rising (vol up/delta up), dealers will be net long delta and will sell futures, which will increase volatility further.",
+          "condition": "market is in a positive vanna regime",
+          "expected_result": "Dealers sell futures, futures selling pushes realized/implied volatility higher, reinforcing higher vol and higher delta dynamics."
+        },
+        {
+          "made_at": "2025-02-09T00:39:59.763Z",
+          "instrument": "",
+          "prediction_text": "If volatility is dumped when vanna crosses zero into negative territory, market makers will remain long delta and will sell, amplifying directional selling pressure.",
+          "condition": "volatility dumped at the zero vanna crossing into negative vanna territory",
+          "expected_result": "Market makers' net long delta leads to selling of underlying (or futures), producing additional downside pressure in the underlying asset and higher realized volatility."
+        }
+      ]
+    }
+  }
+}

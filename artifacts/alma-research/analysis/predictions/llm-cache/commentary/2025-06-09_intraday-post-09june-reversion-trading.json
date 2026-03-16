@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:58:14.992Z",
+  "inputHash": "b6925b09b6955293e10b2a4d33dc6bcb42892f82",
+  "payload": {
+    "responseId": "resp_0f58566f882514640069b763af179c819586eed52b46c5fb9d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Momentum has a chance to break through 6022 before 11:20am.",
+          "condition": "before 11:20am",
+          "expected_result": "Price will exceed 6022 prior to 11:20am"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "After 11:20am, 6022 will act as resistance and push price back toward 5997 first.",
+          "condition": "after 11:20am",
+          "expected_result": "Price will decline from near 6022 to around 5997"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5971.50 is the main target for long (also downside pivot).",
+          "condition": "",
+          "expected_result": "Long trades should reach a price near 5971.50"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price breaks below 5971.50 (vol catching up), 5946 is the absolute low based on vol profile.",
+          "condition": "price breaks below 5971.50",
+          "expected_result": "Price will continue down to about 5946"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Any vol selling today would push price toward the 6022 vanna flip.",
+          "condition": "",
+          "expected_result": "An increase in selling volatility will drive price up to approximately 6022"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot is 6046.00 and pretty high vol would be needed to break through this line.",
+          "condition": "",
+          "expected_result": "Price will fail to break above 6046 unless there is a large rise in volatility"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Local high positive gamma will swallow any vol upstick around 6046, preventing a break.",
+          "condition": "",
+          "expected_result": "Short-term volatility spikes upward near 6046 will be absorbed and will not result in a sustained breakout above 6046"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Today is a good setup for reversion trading; expect mean reversion at the defined levels.",
+          "condition": "",
+          "expected_result": "Price will revert toward nearby pivots/supports after touches of the identified resistance or pivot levels, enabling one or two intraday reversion trades"
+        }
+      ]
+    }
+  }
+}

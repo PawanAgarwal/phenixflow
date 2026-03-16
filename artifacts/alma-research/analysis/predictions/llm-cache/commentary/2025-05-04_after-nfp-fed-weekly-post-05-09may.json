@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T01:56:25.577Z",
+  "inputHash": "ce5bd3166946138cf8398e4f463b199ffd9a0b6e",
+  "payload": {
+    "responseId": "resp_0681735334363cdf0069b7633ac7c481949063abc43f171ebd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will trade range-bound between 5587.54 and 5785.79 for the week.",
+          "condition": "",
+          "expected_result": "SPX daily closes will remain within 5587.54–5785.79 throughout the specified week."
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "ES futures will trade range-bound between 5605.10 and 5815.89 for the week.",
+          "condition": "",
+          "expected_result": "ES=F daily closes will remain within 5605.10–5815.89 throughout the specified week."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX will trade between 20.48 and 24.87 for the week.",
+          "condition": "",
+          "expected_result": "VIX daily closes will remain within 20.48–24.87 throughout the specified week."
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "NDX will trade range-bound between 19677.32 and 20527.89 for the week.",
+          "condition": "",
+          "expected_result": "NDX daily closes will remain within 19677.32–20527.89 throughout the specified week."
+        },
+        {
+          "instrument": "NQ=F",
+          "prediction_text": "NQ futures will trade range-bound between 19758.06 and 20650.93 for the week.",
+          "condition": "",
+          "expected_result": "NQ=F daily closes will remain within 19758.06–20650.93 throughout the specified week."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX breaks below its critical lines, the near-term rangebound view would be disproved and volatility would spike.",
+          "condition": "SPX breaks below 5498.35",
+          "expected_result": "SPX will close below 5498.35 and be followed by an increase in intraday realized volatility (e.g., daily VIX up >20% from prior day) within three trading sessions."
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "If ES futures break below their critical line, the near-term rangebound view would be disproved and volatility would spike.",
+          "condition": "ES=F breaks below 5518.41",
+          "expected_result": "ES=F will close below 5518.41 and be followed by an increase in intraday realized volatility (e.g., daily VIX up >20% from prior day) within three trading sessions."
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "If NDX breaks below its critical line, the near-term rangebound view would be disproved and volatility would spike.",
+          "condition": "NDX breaks below 19323.48",
+          "expected_result": "NDX will close below 19323.48 and be followed by an increase in intraday realized volatility (e.g., daily VIX up >20% from prior day) within three trading sessions."
+        },
+        {
+          "instrument": "NQ=F",
+          "prediction_text": "If NQ futures break below their critical line, the near-term rangebound view would be disproved and volatility would spike.",
+          "condition": "NQ=F breaks below 19408.62",
+          "expected_result": "NQ=F will close below 19408.62 and be followed by an increase in intraday realized volatility (e.g., daily VIX up >20% from prior day) within three trading sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX will exhibit a gradual grind higher into summer with rangebound trade and positive drift until tariff-driven shocks in July–August.",
+          "condition": "",
+          "expected_result": "Over the next ~8–12 weeks, SPX will show net positive returns (higher close at end of period vs start) with most daily moves remaining within the defined short-term range and no major trend reversal before July."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Volatility will remain elevated overall and distress-trade payoffs are most likely around the July–August tariff cliff rather than immediately.",
+          "condition": "",
+          "expected_result": "VIX will stay above pre-rally lows (e.g., remain >15) on average until July, with a notable spike during July–August (VIX rising >30 during that period) corresponding to tariff developments."
+        }
+      ]
+    }
+  }
+}

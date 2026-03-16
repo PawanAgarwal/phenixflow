@@ -1,0 +1,75 @@
+{
+  "cachedAt": "2026-03-16T04:27:57.921Z",
+  "inputHash": "d61b12e7c26ae4a0fecece4ad7cc2870d1dd785c",
+  "payload": {
+    "responseId": "resp_0108fe716b2d9e7d0069b786c5945c819dbcd18dc4898d1b20",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-04T07:45:20.222Z",
+          "instrument": "NVDA",
+          "prediction_text": "Reversion is expected for NVDA.",
+          "condition": "",
+          "expected_result": "Price will reverse direction from recent short-term trend within the near term (next few sessions)."
+        },
+        {
+          "made_at": "2025-03-04T07:45:20.222Z",
+          "instrument": "QQQ",
+          "prediction_text": "Reversion is expected for QQQ.",
+          "condition": "",
+          "expected_result": "Price will reverse direction from recent short-term trend within the near term (next few sessions)."
+        },
+        {
+          "made_at": "2025-03-04T07:45:20.222Z",
+          "instrument": "NDX",
+          "prediction_text": "Reversion is expected for NDX.",
+          "condition": "",
+          "expected_result": "Index will reverse direction from recent short-term trend within the near term (next few sessions)."
+        },
+        {
+          "made_at": "2025-03-04T07:45:20.222Z",
+          "instrument": "ES=F",
+          "prediction_text": "Reversion is expected for ES=F.",
+          "condition": "",
+          "expected_result": "Futures will reverse direction from recent short-term trend within the near term (next few sessions)."
+        },
+        {
+          "made_at": "2025-03-04T07:46:19.764Z",
+          "instrument": "NVDA",
+          "prediction_text": "Short-term reversion is expected for NVDA.",
+          "condition": "",
+          "expected_result": "Price will reverse direction in the short term (within upcoming session(s))."
+        },
+        {
+          "made_at": "2025-03-04T07:46:19.764Z",
+          "instrument": "QQQ",
+          "prediction_text": "Short-term reversion is expected for QQQ.",
+          "condition": "",
+          "expected_result": "Price will reverse direction in the short term (within upcoming session(s))."
+        },
+        {
+          "made_at": "2025-03-04T07:46:19.764Z",
+          "instrument": "NDX",
+          "prediction_text": "Short-term reversion is expected for NDX.",
+          "condition": "",
+          "expected_result": "Index will reverse direction in the short term (within upcoming session(s))."
+        },
+        {
+          "made_at": "2025-03-04T07:46:19.764Z",
+          "instrument": "ES=F",
+          "prediction_text": "Short-term reversion is expected for ES=F.",
+          "condition": "",
+          "expected_result": "Futures will reverse direction in the short term (within upcoming session(s))."
+        },
+        {
+          "made_at": "2025-03-04T15:52:01.812Z",
+          "instrument": "",
+          "prediction_text": "Net short gamma (slightly) from a put spread will create serious resistance.",
+          "condition": "position is a net short gamma put spread",
+          "expected_result": "Underlying price will encounter increased resistance near the spread's strike region, reducing upside continuation and increasing likelihood of price stalling or reversing when approaching that area."
+        }
+      ]
+    }
+  }
+}

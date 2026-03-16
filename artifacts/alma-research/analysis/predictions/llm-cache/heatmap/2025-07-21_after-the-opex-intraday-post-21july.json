@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:01:00.307Z",
+  "inputHash": "7ba5eced945c25acece3a06e3bf272745dec1a84",
+  "payload": {
+    "responseId": "resp_0582b80c52b63ee50069b76454dafc81958b75640c35aabf3c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pin / magnetic zone around 6300–6325 (centroid 6310.63 with upside pivot 6321.19). Heatmap shows concentrated gamma and red ridge at ~6320 that will attract price and resist extended moves away.",
+          "condition": "none",
+          "expected_result": "Price will gravitate toward and spend time between 6300 and 6325; expect multiple re-tests of ~6320 during the session and difficulty sustaining moves far above 6338 without strong volatility."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Immediate resistance cluster at 6325–6338 (max upside target ~6338/6340). Heatmap gamma peaks and troughs form a band here that should cap upside intraday.",
+          "condition": "price approaches above 6321",
+          "expected_result": "If price reaches 6325–6338, expect rejection or slowed advance; likely pullback or consolidation below 6338 unless high-volume breakout occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Key support/brake around 6298–6285 (pivot 6298.43; mild support 6280–6285, stronger late-session). Heatmap shows gamma structure and a blue-to-red transition indicating support and a tougher lift if broken.",
+          "condition": "drop below 6298",
+          "expected_result": "Below 6298 expect increased downside momentum toward 6280–6285; breaking 6280 with high vol opens route toward the lower target near 6231."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower strong downside target / max intraday downside at ~6231 with intermediate vol pivot at 6265–6268. Heatmap shows a deep blue sticky zone below 6265 and concentrated contours near 6230 acting as the session floor.",
+          "condition": "sustained selling through 6268–6265",
+          "expected_result": "If sellers push through 6268–6265, price is likely to accelerate toward 6231 and may pin or bounce near 6230–6235."
+        }
+      ]
+    }
+  }
+}

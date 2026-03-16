@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:06:09.604Z",
+  "inputHash": "7006e08f7e8a855630c4b407bb161fa8d80a827d",
+  "payload": {
+    "responseId": "resp_03475be131a94e150069b7658b86e0819fba640eb6d010c410",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The market is betting on an upside gamma magnet towards 6850 once the centroid is broken at 6841.85.",
+          "condition": "centroid broken at 6841.85",
+          "expected_result": "Price will trend up to around 6850 after crossing 6841.85."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The magnetic force that attracts price toward the centroid starts to kick in at 6835.91.",
+          "condition": "price reaches 6835.91",
+          "expected_result": "Upward pull toward the centroid area will strengthen, increasing probability of movement toward 6841.85–6850."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Due to heavy realized vol selling, the pattern looks like a rejection at the centroid.",
+          "condition": "price trades near centroid (around 6841.85)",
+          "expected_result": "Price will be rejected at the centroid and fail to sustain moves above it, producing downward pressure."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If 6757 holds into the PM (around 2PM), 6780 can pin locally.",
+          "condition": "6757 holds into ~2PM",
+          "expected_result": "Price will gravitate toward and remain near 6780 (local pin) into the afternoon session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Customers expect a slow grind up if volatility is crushed and time passes.",
+          "condition": "volatility is crushed as time passes",
+          "expected_result": "Price will exhibit a steady, slow upward drift (gradual appreciation) over the intraday period."
+        }
+      ]
+    }
+  }
+}

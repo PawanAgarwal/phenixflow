@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:05:22.246Z",
+  "inputHash": "cc74de8394fdbf1dcdb3287d9ea1d83dcbaf386c",
+  "payload": {
+    "responseId": "resp_05a005c4645df4350069b76557b3348190af084ea627a5190b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid zone ~6706–6715 is a neutral/flow-free area — price is likely to gravitate through this band; it will set intraday tone.",
+          "condition": "",
+          "expected_result": "Price will trade through and spend significant time in the 6706–6715 range during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6677.96 is a short-term support/rejection pivot; breaking below it can accelerate downside toward the primal target cluster around 6622–6615 (with 6600 as extended target).",
+          "condition": "Price breaks and holds below 6677.96",
+          "expected_result": "If 6677.96 is broken, price will move toward 6622–6615 and may reach 6600 as an extended move."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local sticky gamma around 6645 — expect price to be sticky/slow and potentially pin in the 6645 area after 14:00–14:00-16:00 if put selling is present.",
+          "condition": "Put selling shows up near 6645 after 14:00",
+          "expected_result": "Price will slow and exhibit pinning or consolidation around 6645 for a sustained period post-14:00."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6725.97 is a sticky resistance area (0DTE) — rallies toward ~6752.5 (±10) are likely to find reversion pressure back to the pivot.",
+          "condition": "Price rallies toward 6752.49",
+          "expected_result": "Price will stall or reverse near 6752 (around 6742–6762) and revert back toward 6726."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Speed profile asymmetric: downside speed positive (greater move risk downward) while upside speed ~flat — market has higher probability of a downside grind even if upward moves can be steady.",
+          "condition": "",
+          "expected_result": "Intraday action will more likely produce a gradual downward drift rather than sharp upside moves; downside targets (6622–6600) are more probable than large upside breaks."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma peaks / sticky corridors visible around ~6560–6570 and ~6730–6740 — these zones can act as local magnets or slow price passage near the edges of the heatmap.",
+          "condition": "",
+          "expected_result": "Price approaching 6560–6570 or 6730–6740 will slow, may pause or revert locally, and show reduced velocity through those bands."
+        }
+      ]
+    }
+  }
+}

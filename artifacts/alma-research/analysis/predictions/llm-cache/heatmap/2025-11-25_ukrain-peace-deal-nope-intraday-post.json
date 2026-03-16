@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:10:47.937Z",
+  "inputHash": "3cdc12ea406d39591f499e5462d2b2d3be325cfb",
+  "payload": {
+    "responseId": "resp_054bb8f016f5ea8f0069b766a076e481a39fe9466b6b28a2e5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid around 6716.8–6738.4 is a neutral/indecision zone; market hedged here so expect choppy price action while inside this band. A break above the centroid gives a green light higher.",
+          "condition": "close above 6738.35",
+          "expected_result": "SPX climbs toward 6754.98 and stabilizes above 6755; monitor for continuation to pin target ~6773 if momentum persists."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6722.62 with immediate upside target at 6754.98; above that the market can stabilize and become sticky to the upside (pin at ~6773).",
+          "condition": "trade above 6722.62",
+          "expected_result": "Price moves to 6754.98 within intraday session and has a high probability to test 6773 as a local pin."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6689.64 with downside target at 6614.94; downside flows are hedged and downside vol is sold into ~6573, so any drop into 6573–6615 should see reversion bid.",
+          "condition": "trade below 6689.64",
+          "expected_result": "SPX falls toward 6614.94 and is likely to revert back toward 6689–6716 area; a sustained close below 6573 is required to break consolidation."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong rejection/binding zones at ~6573 (seller of downside vol) and at ~6773 (local pin target) — these act as sticky magnets where flow is likely to pin or reject price intraday.",
+          "condition": "price reaches 6573 or 6773",
+          "expected_result": "At 6573 expect prompt reversion back toward 6614.94/6689; at 6773 expect price to stall or pin and consolidate rather than accelerate through."
+        }
+      ]
+    }
+  }
+}

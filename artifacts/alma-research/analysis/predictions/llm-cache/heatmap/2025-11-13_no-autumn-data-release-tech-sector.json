@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:09:58.342Z",
+  "inputHash": "39e68174c3394e943ca38b4519265260a1e75476",
+  "payload": {
+    "responseId": "resp_0997129d92dd70210069b76670f7a0819e9f13580905acf2e6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky centroid cluster between 6848–6863 acting as a defensible support/brake zone; market showing stickiness there and protecting prior lows.",
+          "condition": "price at or above 6848",
+          "expected_result": "Price will gravitate toward and spend time in 6848–6863; expect limited conviction break below before 14:30 and bounce/reversion back toward 6878–6888 if defended."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside pivot at ~6879 that is hard to breach intraday — acts as a pivot magnet/resistance until structural break.",
+          "condition": "attempt to trade above 6879",
+          "expected_result": "If price approaches 6879, expect rejection or slow, low-probability break; successful breach required sustained flow to reach 6887–6895; otherwise reversion back into 6848–6863."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside open target zone around 6772 with a downside pivot near 6803 becoming sticky after 14:30 — path for larger intraday decline if 6848–6863 fails.",
+          "condition": "price breaks and closes below 6848",
+          "expected_result": "Price likely to travel toward 6803 then 6772 intraday, with 6803 acting as temporary support/pinning level after 14:30."
+        }
+      ]
+    }
+  }
+}

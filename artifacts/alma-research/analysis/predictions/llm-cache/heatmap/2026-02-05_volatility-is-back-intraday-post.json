@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:14:31.397Z",
+  "inputHash": "54bbec44b13b4cb0c0792d696499f0f9de3692f3",
+  "payload": {
+    "responseId": "resp_062a14882d8cca8d0069b7677ef3c4819e9a027c97a804d9cb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky/centroid zone near 6770–6800 due to a significant put spread sold overnight creating stickiness toward ~6800 after 14:00. Expect price to gravitate back to this band if breached intraday for short periods.",
+          "condition": "none",
+          "expected_result": "Price will revert toward 6770–6800 within the trading day, exhibiting support and slowing further downside moves when approaching this band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/support cluster around 6726 with a nearby target at 6711–6712 marking the most supportive range; provides a reversion opportunity on a slow grind lower.",
+          "condition": "none",
+          "expected_result": "If price falls toward 6726, expect a bounce or consolidation and a reversion attempt back above 6726; 6711–6712 should act as a strong support floor intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside magnetic zone / pivot at ~6905–6910 with target 6934 (magnetic) and margin of error up to 6948. A vanna flip at 6880–6890 after 14:00 slices the map and can provide a reversion trigger back toward the pivot.",
+          "condition": "none",
+          "expected_result": "If price moves above the 6880–6890 vanna flip, expect resistance near 6905–6910 and a pull toward 6934–6948 as an upside magnet; failing the flip keeps upside limited below ~6905."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "ES trend-shift band at 6850–6860 (margin of error ~6820); this band is a key pivot for trend confirmation with upside confirmation at 6905–6910.",
+          "condition": "none",
+          "expected_result": "If ES holds above 6850–6860, upside trend continuation toward 6905–6910 is likely; if it breaks and stays below ~6820, expect downside follow-through."
+        }
+      ]
+    }
+  }
+}

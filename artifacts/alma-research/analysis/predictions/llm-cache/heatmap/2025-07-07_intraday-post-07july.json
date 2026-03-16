@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T01:59:56.908Z",
+  "inputHash": "4a127787d0f53abe93a9fb9b6217020ea7d943c5",
+  "payload": {
+    "responseId": "resp_09afb9bc05d1bdfe0069b7640ff948819e9cc94c98b958b689",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/support zone and magnet around 6230–6235 (red hotspot and gamma peak) that will attract price and cause pinning/reversion toward this area.",
+          "condition": "none",
+          "expected_result": "Price will gravitate back to 6230–6235 within the session and show intraday pinning/rejection behavior there (bounce or chop)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot / resistance cluster around 6280–6285 (gamma trough/peak lines) that should act as a rejection zone if tested, with a sharp reject back toward ~6270–6250.",
+          "condition": "price tests 6280–6285",
+          "expected_result": "On a test of 6280–6285, expect rejection with price reversing toward 6270–6250 within a short time window (minutes to an hour)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / balance zone near 6225.7 indicated as intraday mean where upside/downside gamma take effect; staying below it favors continuation lower to the downside min.",
+          "condition": "price opens or moves below 6225.7",
+          "expected_result": "If price is below 6225.7, expect oscillation lower with a higher probability of travel toward the downside magnet zone near 6182–6215 by late session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong support / magnetic level cluster in the 6180–6215 area (gamma peaks and 99.73% risk level) serving as the session lower bound and likely pin in final 1.5 hours.",
+          "condition": "price moves toward session lows into last 1.5 hours",
+          "expected_result": "Price will pin or find support in the 6180–6215 band into the close, producing a sustained pause or bounce there."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside cap around 6300 with a sharp, tradeable rejection expected if price reaches that max area.",
+          "condition": "price reaches ~6300",
+          "expected_result": "On a move up to ~6300, expect a sharp rejection back to ~6280–6275 shortly after touching 6300."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "metrics": {
+    "best_model": "dealer_short_all_options|strike=le_300|dte=gt_365",
+    "correlation": 0.5596058159858236,
+    "rmse": 197.27885571447155,
+    "nrmse": 0.828758909885642,
+    "peak_mae": 64.3956043956044,
+    "trough_mae": 130.85164835164835,
+    "zero_mae": 44.445610640206844,
+    "theta_vs_optiondepth_ohlc": {
+      "open": {
+        "mae": 0.2633503836317049,
+        "max_abs_diff": 23.090000000000146
+      },
+      "high": {
+        "mae": 0.11751918158565403,
+        "max_abs_diff": 23.090000000000146
+      },
+      "low": {
+        "mae": 0.037468030690524526,
+        "max_abs_diff": 2.869999999999891
+      },
+      "close": {
+        "mae": 0.004859335038366893,
+        "max_abs_diff": 0.5600000000004002
+      },
+      "matched_bars": 391
+    },
+    "contract_count": 14609,
+    "skipped": {
+      "oi_missing_or_zero": 6314,
+      "sigma_invalid": 1280,
+      "gamma_invalid": 3743,
+      "tte_invalid": 0,
+      "mu_invalid": 0
+    },
+    "runtime_seconds": 25.90613612497691
+  },
+  "top_models": [
+    {
+      "label": "dealer_short_all_options|strike=le_300|dte=gt_365",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "le_300",
+      "dte_scope": "gt_365",
+      "correlation": 0.5596058159858236,
+      "slope": 0.0006183412259043526,
+      "intercept": 851.45878358444,
+      "rmse": 197.27885571447155,
+      "nrmse": 0.828758909885642,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 130.85164835164835,
+      "zero_mae": 44.445610640206844
+    },
+    {
+      "label": "dealer_short_all_options|strike=le_300|dte=181_365",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "le_300",
+      "dte_scope": "181_365",
+      "correlation": 0.5594630699310407,
+      "slope": 0.0006165765140461731,
+      "intercept": 835.8203612330469,
+      "rmse": 197.30179552408566,
+      "nrmse": 0.8288552789138378,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 130.85164835164835,
+      "zero_mae": 44.44327363103148
+    },
+    {
+      "label": "dealer_short_all_options|strike=le_300|dte=61_180",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "le_300",
+      "dte_scope": "61_180",
+      "correlation": 0.5583511475115137,
+      "slope": 0.000609845759491072,
+      "intercept": 774.9500203506545,
+      "rmse": 197.48019412493778,
+      "nrmse": 0.8296047227882555,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 130.87912087912088,
+      "zero_mae": 44.440465657641795
+    },
+    {
+      "label": "dealer_short_all_options|strike=le_300|dte=31_60",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "le_300",
+      "dte_scope": "31_60",
+      "correlation": 0.5515410877126441,
+      "slope": 0.0006066912527729,
+      "intercept": 656.8785589933677,
+      "rmse": 198.5616165237544,
+      "nrmse": 0.8341477258644002,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 130.87912087912088,
+      "zero_mae": 44.471407394994515
+    },
+    {
+      "label": "dealer_short_all_options|strike=le_300|dte=le_30",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "le_300",
+      "dte_scope": "le_30",
+      "correlation": 0.5401440557449213,
+      "slope": 0.0006315029181079115,
+      "intercept": 590.6995713454348,
+      "rmse": 200.32903733801592,
+      "nrmse": 0.8415725750304791,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 130.87912087912088,
+      "zero_mae": 44.432645118129294
+    },
+    {
+      "label": "dealer_short_all_options|strike=301_500|dte=gt_365",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "301_500",
+      "dte_scope": "gt_365",
+      "correlation": 0.5323724394360855,
+      "slope": 0.0006119571884565762,
+      "intercept": 968.6120193287836,
+      "rmse": 201.50440547266805,
+      "nrmse": 0.8465102395889073,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 131.04395604395606,
+      "zero_mae": 45.3190273477071
+    },
+    {
+      "label": "dealer_short_all_options|strike=301_500|dte=181_365",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "301_500",
+      "dte_scope": "181_365",
+      "correlation": 0.5322819606481373,
+      "slope": 0.0006099141166187298,
+      "intercept": 950.0884221459203,
+      "rmse": 201.51794897388453,
+      "nrmse": 0.8465671351810048,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 131.04395604395606,
+      "zero_mae": 45.31174300009679
+    },
+    {
+      "label": "dealer_short_all_options|strike=301_500|dte=61_180",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "301_500",
+      "dte_scope": "61_180",
+      "correlation": 0.5310057116719148,
+      "slope": 0.0006016412569661305,
+      "intercept": 868.9630387225579,
+      "rmse": 201.70864501516624,
+      "nrmse": 0.8473682400065563,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 131.07142857142858,
+      "zero_mae": 45.28355678431209
+    },
+    {
+      "label": "dealer_short_all_options|strike=301_500|dte=31_60",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "301_500",
+      "dte_scope": "31_60",
+      "correlation": 0.5224684179194906,
+      "slope": 0.0005983369271164225,
+      "intercept": 720.6460482059724,
+      "rmse": 202.96797818357751,
+      "nrmse": 0.8526586376016535,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 131.1813186813187,
+      "zero_mae": 45.23208820430227
+    },
+    {
+      "label": "dealer_short_all_options|strike=gt_500|dte=gt_365",
+      "sign_model": "dealer_short_all_options",
+      "strike_scope": "gt_500",
+      "dte_scope": "gt_365",
+      "correlation": 0.5167577770699645,
+      "slope": 0.0006880644771665985,
+      "intercept": 1321.1750030998237,
+      "rmse": 203.7946982819683,
+      "nrmse": 0.8561316486602463,
+      "peak_mae": 64.3956043956044,
+      "trough_mae": 130.87912087912088,
+      "zero_mae": 45.91030502783621
+    }
+  ]
+}

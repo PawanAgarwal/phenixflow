@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:01:40.351Z",
+  "inputHash": "c99c18c3fc68a6c9ab509d31fda289ad5e65fdc6",
+  "payload": {
+    "responseId": "resp_04341e37303d97930069b7647bd4f4819ebaa1fbc3f8902392",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma support cluster around 6350–6355 acting as a pin/center — market likely to revert to ~6355 if it moves away intraday. 6370–6375 is a nearby gamma wall providing upside resistance in the last 1.5 hours; breaking it requires a steep call bid (vol pickup).",
+          "condition": "none",
+          "expected_result": "If SPX drifts ± up to ~20 points from current, expect reversion back to 6350–6355; if SPX approaches 6370–6375 in final 1.5 hours without a large increase in call IV, expect rejection and return to ~6355."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma trough / strong rejection zone at ~6323 that is unlikely to be broken intraday; a break would require realized put skew and strong selling, but longer-dated gamma will brake the fall near 6300–6290.",
+          "condition": "none",
+          "expected_result": "If SPX tests 6323, expect a bounce back toward ~6355; if 6323 is decisively broken with heavy put realization, price should find additional support and likely stall around 6300–6290."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower sticky gamma concentration and magnet around 6220–6245 acts as a deeper support band only in a significant vol spike / bad-news scenario — otherwise unlikely to be reached intraday.",
+          "condition": "none",
+          "expected_result": "Absent major negative news and vol surge, SPX should not trade down to 6245–6220 during the session; if it does, expect volatility to catch up and a meaningful mean-reversion bounce afterward."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intraday ‘line in the sand’ at ~6361: if spot is magnetized by the 6370 calls or the 6350 gamma, 6361 will act as the intra-session pivot determining short-term direction. Holding above 6382 with strong call bids could enable a move toward 6395.",
+          "condition": "none",
+          "expected_result": "If SPX holds above 6361 and call IV/flow increases, expect push toward 6370–6395; if SPX fails / is below 6361, expect reversion toward 6350 and potential test of 6323."
+        }
+      ]
+    }
+  }
+}

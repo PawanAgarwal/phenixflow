@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T01:56:17.756Z",
+  "inputHash": "d890f7b1bf236bf555baa6d717665d1fa537b7e4",
+  "payload": {
+    "responseId": "resp_0335dcd55d4af9270069b7633675e481a3b37b357ef4dee160",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Soft NFP print will cause a ~90–100 point sell-off in ES intraday.",
+          "condition": "soft NFP print",
+          "expected_result": "ES declines by approximately 90 to 100 points from pre-release levels during the trading session"
+        },
+        {
+          "instrument": "SOFR futures (May ’25)",
+          "prediction_text": "Longer-dated SOFR futures (Sep ’25–Dec ’26) will rally, signalling back-loaded Fed easing.",
+          "condition": "",
+          "expected_result": "SOFR futures for Sep ’25 through Dec ’26 increase in price (implied rates fall) versus current levels over the coming weeks"
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "Gold is a buy-the-dip setup into the summer.",
+          "condition": "",
+          "expected_result": "After pullbacks, spot gold rises over the following weeks into the summer from the dip low reached shortly after this commentary"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Market will hunt liquidity and revert following repricing after stronger-than-expected jobs gains, making reversion very likely.",
+          "condition": "stronger-than-expected jobs gains and stable unemployment diminishing near-term rate-cut bets",
+          "expected_result": "Following initial directional move after the jobs print, ES reverses at least partially back toward pre-move levels within the same trading day or next session (liquidity hunt and reversion)"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Market positioning is rangebound with centroid at 5616.65 and suppression toward the downside.",
+          "condition": "",
+          "expected_result": "ES trades predominantly within a range centered near 5616.65, showing limited trend extension and bias toward lower half of the range during the session"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Downside pivot at 5551.79 will see longer gamma take effect.",
+          "condition": "ES approaches 5551.79",
+          "expected_result": "When ES reaches 5551.79, option gamma dynamics provide support, reducing intraday downside momentum and increasing two-way intraday activity"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Upside pivot at 5684.56 will see longer gamma take effect.",
+          "condition": "ES approaches 5684.56",
+          "expected_result": "When ES reaches 5684.56, option gamma dynamics provide resistance to further upside and promote mean reversion back toward the range"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Above 5660 upside longer‑dated gamma should materialize and be magnetic toward 5720–5723.",
+          "condition": "ES trades above 5660",
+          "expected_result": "If ES trades above 5660, price is likely to be drawn toward 5720–5723 within the session due to concentrated long-gamma exposure"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Zero vanna at 5608.47 with positive convexity requires relatively low vol to break through down toward 5533 and -100 pts more.",
+          "condition": "",
+          "expected_result": "With volatility remaining low, ES could break below 5608.47 and move toward 5533 and an additional ~100-point decline; higher vol would prevent this move"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Slightly more flows are pointing down than up, setting up more suppression to the downside.",
+          "condition": "",
+          "expected_result": "Net order/flow imbalance results in greater downside pressure on ES, increasing probability of lower-range trading or breakdown versus upward breakout during the session"
+        }
+      ]
+    }
+  }
+}

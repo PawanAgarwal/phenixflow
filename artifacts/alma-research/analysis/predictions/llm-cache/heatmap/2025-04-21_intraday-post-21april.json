@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:55:36.618Z",
+  "inputHash": "7e282e61c1befecdeabe03325a1f699d13972308",
+  "payload": {
+    "responseId": "resp_03eb4e447b044d440069b76312c43c81909f2116b9dccbb207",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky gamma / pinning magnet around 5330–5346 (centroid 5329.7 with volatility calming to the upside; volatility must decrease above 5346.42 for stability). Expect price to gravitate toward and spend time between ~5325–5346.",
+          "condition": "none",
+          "expected_result": "Price will be attracted to and trade in the 5325–5346 range for extended periods (intra‑day) with reduced realized volatility while near that band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / gamma dampening zone centered near 5271–5200 (dealers long puts; longer gamma dampening below 5271 toward 5200). This area should slow downside moves and increase mean reversion back up toward the centroid.",
+          "condition": "if price falls below 5271.00",
+          "expected_result": "Downside momentum should be damped and price likely to revert back toward 5271–5330, with intra‑day lows finding support above ~5200."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower sticky / structural support cluster around 5020–5050 and additional minor support ~4980–5000 (visible gamma peaks/troughs). These levels act as further downside magnets if sellers push through the 5200 area.",
+          "condition": "if price breaches 5200 with conviction",
+          "expected_result": "Price is likely to travel toward and consolidate around 4980–5050 before significant further downside, producing reversion bounces from that cluster."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upper rejection / resistance corridor near 5480–5550 (gamma trough/peaks at the top right). Moves above ~5346 without volatility compression are unlikely to sustain and may face rejection in the 5480–5550 band.",
+          "condition": "if price rises above 5346.42 without reduced volatility",
+          "expected_result": "Price will likely fail to sustain above 5480–5550 on intraday horizon and pull back toward 5346–5330 region."
+        }
+      ]
+    }
+  }
+}

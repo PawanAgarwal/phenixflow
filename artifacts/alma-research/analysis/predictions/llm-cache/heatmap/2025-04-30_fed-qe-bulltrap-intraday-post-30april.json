@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:56:13.522Z",
+  "inputHash": "f522047bc895e045ea16e55831428602a6174cb0",
+  "payload": {
+    "responseId": "resp_00ed1dd87e48dae90069b76336a6f48196b0a4feb5c948a4dd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma pinch / sticky zone around ~5550-5610 (upside pivot zone). Heatmap shows gamma peak/trough converging there suggesting resistance if vol remains low; could flip to support if calls catch a bid.",
+          "condition": "if intraday vol remains relatively lower",
+          "expected_result": "Price likely to reject near 5570-5610 and fail higher; expect intraday reversal back toward centroid (~5547) within the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot / support corridor near 5470-5480 (downside pivot 5473.65). Gamma structure shows trough concentration forming a braking zone below centroid.",
+          "condition": "on downside probe below centroid",
+          "expected_result": "Price likely to find support and stall around 5470-5480, producing a bounce back toward 5530-5560 within hours"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid magnet at ~5547 (positioning centroid). Heatmap gamma bands cluster around this level indicating pinning pressure.",
+          "condition": "",
+          "expected_result": "Price expected to gravitate toward ~5547 over the trading day absent a strong directional catalyst"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary sticky / rejection clusters visible around 5680-5710 and 5330-5350. Narrow gamma peaks at those levels can act as short-term magnets or reversion anchors.",
+          "condition": "",
+          "expected_result": "If price reaches 5680-5710 or 5330-5350, expect slowed travel, possible short-term reversal or pinning for several hours"
+        }
+      ]
+    }
+  }
+}

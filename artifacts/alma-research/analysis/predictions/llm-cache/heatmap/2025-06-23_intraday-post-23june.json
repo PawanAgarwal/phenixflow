@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:57.415Z",
+  "inputHash": "f39ca356d9f808eac1c6da45ab0ce21e6c32b58f",
+  "payload": {
+    "responseId": "resp_048d7f2b22a6cd1b0069b763da2904819f9b04c7b5bac78ea8",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky / pinning zone around 5995–6008 (upside pivot range). Heatmap shows concentrated gamma peak and trough lines compressing into this band late session — likely to hold as a magnet unless high volatility push breaks it.",
+          "condition": "price holds near 5995 into 15:20–15:40 (power hour)",
+          "expected_result": "Price will remain trapped between ~5995 and ~6009 for remainder of session; expect rejections outside this band and low realized move unless a high-volatility breakout occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/reversion cluster near 5930–5939 (downside pivot / local pin). Gamma trough/peak structure indicates this area will act as a strong support in the power hour and can pin price if touched.",
+          "condition": "price breaks down toward 5930–5939 during first 20 minutes of the move",
+          "expected_result": "Price will stall and likely revert back toward 5950–5995; failure to break above 5950 with higher upside vol keeps 5935–5939 as a local pin."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower-level sticky region and strong support around 5842–5884 area (local min / vanna flip zone). Heatmap shows concentrated gamma activity and high density coloring at ~5850 area indicating absorption and reversion potential.",
+          "condition": "price reaches 5842–5884 during session",
+          "expected_result": "High probability of bounce/reversion back toward 5900–5950; expect reduced downside follow-through and increased buying interest in this band."
+        }
+      ]
+    }
+  }
+}

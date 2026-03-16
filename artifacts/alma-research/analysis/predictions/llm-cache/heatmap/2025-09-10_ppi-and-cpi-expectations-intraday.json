@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:03:17.583Z",
+  "inputHash": "1c20b038d27a8009e60160953828b0546cb55772",
+  "payload": {
+    "responseId": "resp_098fb467059c24c40069b764e0622481a29fccfc0caa2c8831",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary intraday magnet around 6545 (local pin). Market expects slight right-tail push above 6530 into afternoon, then pinning to ~6545 while upside vol is dampened.",
+          "condition": "spot > 6530 premarket/into afternoon",
+          "expected_result": "Price moves up above 6530 toward 6545 and then stalls/pins near 6545 through the afternoon; upside realized volatility remains muted."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Supportive local magnet / reversion zone at ~6510. If upside fails at the 6538 area, expect a rejection back to 6500–6510 with pinning to 6510 after ~14:00.",
+          "condition": "rejection from ~6538 area",
+          "expected_result": "Price reverts to the 6500–6510 area and pins around 6510 after 14:00 local time."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Low-probability downside tail to ~6475 (with possible brief retest to ~6445) if put skew and realized vol spike; centroid lower bound provides support around 6487.",
+          "condition": "put skew increases and realized volatility rises materially",
+          "expected_result": "Price gaps or trades down toward 6487 and, in the extreme scenario, retests ~6445 before reverting and pinning near ~6475."
+        }
+      ]
+    }
+  }
+}

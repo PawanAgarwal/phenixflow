@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T04:32:02.783Z",
+  "inputHash": "14772d5e6d23da85fc5ea92aef52e34d76283e69",
+  "payload": {
+    "responseId": "resp_0c44007f75be978f0069b78778d2cc819d8648b18d072fcaaf",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the SPX price does not go above 6694.47 this week, then the channel will continue to form.",
+          "condition": "SPX stays ≤ 6694.47 this week",
+          "expected_result": "Price remains within the downchannel (no breakout) through the week"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES does not go above 6702.20 this week, then the channel will continue to form.",
+          "condition": "ES stays ≤ 6702.20 this week",
+          "expected_result": "ES stays in the existing channel (no breakout) through the week"
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "If NDX does not go above 24,603.89 this week, then the channel will continue to form.",
+          "condition": "NDX stays ≤ 24,603.89 this week",
+          "expected_result": "NDX remains inside the downchannel (no breakout) through the week"
+        },
+        {
+          "instrument": "NQ",
+          "prediction_text": "If NQ does not go above 24,626.94 this week, then the channel will continue to form.",
+          "condition": "NQ stays ≤ 24,626.94 this week",
+          "expected_result": "NQ remains within the channel (no breakout) through the week"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "A positive correction could occur if ES manages to break out of the channel and close above the 21-day VWMA.",
+          "condition": "ES breaks out of channel and closes > 21-day VWMA",
+          "expected_result": "ES posts a positive corrective move (short-term rally) following breakout and close above 21-day VWMA"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "As long as the price stays below 6879.95, any upside is only a correction and not a rally.",
+          "condition": "SPX stays < 6879.95",
+          "expected_result": "Upward moves fail to transition into a sustained rally; gains remain corrective and reverse lower"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "As long as ES stays below 6898.68, any upside is only a correction and not a rally.",
+          "condition": "ES stays < 6898.68",
+          "expected_result": "ES upside remains corrective and does not convert into a sustained rally"
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "Gold may retest the October–December levels due to dollar strength and cash-outs, and should be bought heavily there.",
+          "condition": "Gold stays below its monthly VWMA / experiences dollar-driven weakness",
+          "expected_result": "Gold declines to October–December price range, presenting a buy-entry opportunity at those levels"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If Kharg Island's loading terminals were bombed, oil would shoot above $150/barrel.",
+          "condition": "Kharg Island loading terminals bombed",
+          "expected_result": "Brent and related crude futures rise to > $150/barrel"
+        },
+        {
+          "instrument": "LNG (Dutch TTF)",
+          "prediction_text": "QatarEnergy force majeure has wiped out ~19% of near-term global LNG supply, causing European gas prices to spike and tightening diesel, jet fuel, LPG and other products.",
+          "condition": "QatarEnergy force majeure remains in effect / LNG supply gap persists",
+          "expected_result": "TTF and regional gas prices remain elevated or spike further; downstream fuel product markets tighten and price upward pressure increases"
+        }
+      ]
+    }
+  }
+}

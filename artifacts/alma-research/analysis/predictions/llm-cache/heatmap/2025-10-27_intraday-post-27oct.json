@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:05:54.337Z",
+  "inputHash": "5bfd1ed34830aeac0a48b143736501f43b7c6206",
+  "payload": {
+    "responseId": "resp_03b969857fad29820069b7657a0148819186ef93393128c99a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong call wall / rejection around 6882.49 acting as upside magnet and rejection level; market likely to struggle to rally above this intraday and may be pushed back toward the centroid.",
+          "condition": "price approaches 6882.49",
+          "expected_result": "Spot fails to sustain above 6882.49 and reverts toward 6851–6865 area within the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary intraday centroid (sticky zone) between 6851.04 and 6865.03 where option flows concentrate and spot is likely to range and be magnetized toward during PM.",
+          "condition": "none",
+          "expected_result": "Price trades and consolidates inside 6851.04–6865.03 for the remainder of the day, with limited sustained excursions outside this band"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum line in the sand at 6837.33 — local zero-vanna; acts as a strong support/magnet. Breaks below increase downside risk.",
+          "condition": "price holds above 6837.33",
+          "expected_result": "If 6837.33 holds, spot will revert up toward centroid (6851–6865) or the upside pivot at 6877.99; intraday bounces expected"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pin/support at 6825 (if 6811 is held earlier) and downside pivot at 6810.30; heavy support cluster with pinning behavior toward 6789.97 as the strongest passive support.",
+          "condition": "price breaks below 6810.30",
+          "expected_result": "Spot can retest and pin at 6789.97; if downside vol spikes, extension to ~6755 is possible before a reversion trade back to ~6800"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6877.99 but requires volatility suppression to push through; likely a risky failing move that will be reversed back toward 6837.33 and the centroid.",
+          "condition": "price rallies to 6877.99 without volatility contraction",
+          "expected_result": "Rally stalls near 6877.99 and reverses back to ~6837.33 and then toward 6851–6865 centroid"
+        }
+      ]
+    }
+  }
+}

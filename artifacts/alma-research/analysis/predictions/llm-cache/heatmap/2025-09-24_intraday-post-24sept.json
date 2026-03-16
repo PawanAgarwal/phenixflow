@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:03:59.690Z",
+  "inputHash": "22255141572c9f84186e422b34e79722fa31be65",
+  "payload": {
+    "responseId": "resp_06079c22b66173250069b76509d4b48190a73d4e0b41ac129e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid pin around ~6652.9–6658.5 (market likely to revert and pin near this centroid). Heatmap shows strong gamma peak around 6650–6665 acting as sticky zone.",
+          "condition": "none",
+          "expected_result": "Price will gravitate back to and trade within 6650–6665 for the majority of the session (pinning/reversion to centroid)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside short-term vacuum/resistance relief up to ~6695 with diminishing gamma resistance above ~6676; if 6676 holds into power hour, 6685 can pin.",
+          "condition": "hold 6676 into power hour",
+          "expected_result": "If spot holds >=6676 into the power hour, price will push to and test ~6685 (possible pin). Otherwise upside reversion likely only to ~6695 intraday then back to centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/support around ~6647 (unlikely to be broken today); vanna flip near ~6650 supports rejection below.",
+          "condition": "none",
+          "expected_result": "Any intraday sell-off will likely find support and be rejected around 6647–6650, sending price back toward the centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Low-probability extended grind to ~6705 early in session (first hour) if momentum aligns; otherwise upside is capped by gamma structure.",
+          "condition": "sustained early session buying within first hour",
+          "expected_result": "Price will reach up to ~6705 within the first hour if sustained buying occurs; absent that, price should revert to centroid levels."
+        }
+      ]
+    }
+  }
+}

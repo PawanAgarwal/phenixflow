@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:12.232Z",
+  "inputHash": "3e5b0d25d0ec745f6b442242f6487486dc8cb317",
+  "payload": {
+    "responseId": "resp_0d74766061f9a0600069b76730ed1c8191b1688db37ee276e5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma sticky zone / pinning magnet around 6925–6935 (centroid ~6949 but heatmap shows concentrated gamma trough/peaks near 6925–6935). High chance of price pinning to 6925/30 with reversion back toward 6925–6930 or up to 6940/50 if held.",
+          "condition": "price approaches 6925–6935",
+          "expected_result": "SPX will stall and pin in 6925–6935 for an extended period; expect a reversion bounce to 6925–6930 or up toward 6940–6950 within a few trading hours."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Locally sticky downside support near 6866–6900 with a hard-to-break level at 6900; downside pivot target identified at ~6866.9 appears as a sticky rejection zone in the heatmap lower gamma cluster.",
+          "condition": "price drops below 6900 toward 6867",
+          "expected_result": "SPX should find support and see buying interest between 6866 and 6900, leading to a bounce/reversion back toward 6900–6925 rather than sustained continuation lower."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside magnetic zone / resistance around 6970–6985 (upside pivot ~6962.8 with target ~6974 appears as narrow momentum zone); if spot holds above 6940/50 centroid, market is magnetized toward 6970–6985.",
+          "condition": "SPX holds above the 6940–6950 centroid zone",
+          "expected_result": "Price is likely to gravitate toward 6970–6985 and may stall or be rejected there, producing a narrow range/range-bound behavior rather than strong trending extension."
+        }
+      ]
+    }
+  }
+}

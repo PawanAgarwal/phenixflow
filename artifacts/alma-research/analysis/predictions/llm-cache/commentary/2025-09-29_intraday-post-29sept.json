@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:04:06.240Z",
+  "inputHash": "ca4f19b7887c59365db5c19f9192c1429af67c1a",
+  "payload": {
+    "responseId": "resp_0e19de36b417682c0069b76513ec7481908e31120fe8db1147",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price should stabilize around the weekly pivot area this week.",
+          "condition": "",
+          "expected_result": "Price remains within a narrow range around the weekly pivot for at least three consecutive trading sessions."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A rejection of downside is expected unless downside confirmation appears.",
+          "condition": "downside confirmation",
+          "expected_result": "If no downside confirmation occurs, price bounces upward within 1-3 trading days instead of breaking lower."
+        }
+      ]
+    }
+  }
+}

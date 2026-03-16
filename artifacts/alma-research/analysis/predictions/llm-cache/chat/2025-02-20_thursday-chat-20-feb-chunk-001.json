@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:27:36.662Z",
+  "inputHash": "aff977eb27ba2c8fb5ead5a32ab8a5c9457128be",
+  "payload": {
+    "responseId": "resp_004063ffcba53ea20069b786b0f8408197970c41e3826b1bc6",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-20T14:19:51.781Z",
+          "instrument": "",
+          "prediction_text": "Volatility will go down.",
+          "condition": "",
+          "expected_result": "Implied and/or realized volatility declines from current levels over the next trading sessions."
+        },
+        {
+          "made_at": "2025-02-20T16:20:18.801Z",
+          "instrument": "",
+          "prediction_text": "The market should close above 6080.42 or a downside magnet will kick in into opex.",
+          "condition": "close below 6080.42",
+          "expected_result": "If the market closes below 6080.42, price will accelerate downward into options expiration (Opex)."
+        },
+        {
+          "made_at": "2025-02-20T16:54:04.509Z",
+          "instrument": "",
+          "prediction_text": "Below this point the market would accelerate to the downside very fast, and closing below it would reduce supportive OpEx flows tomorrow.",
+          "condition": "close below this point",
+          "expected_result": "A close below the specified level triggers rapid downside price acceleration and diminished supportive OpEx flows the following trading day."
+        },
+        {
+          "made_at": "2025-02-20T16:57:39.382Z",
+          "instrument": "",
+          "prediction_text": "These pivot points can pin the price towards 6100.",
+          "condition": "",
+          "expected_result": "Price will be pinned or gravitate toward the 6100 level in the near term."
+        },
+        {
+          "made_at": "2025-02-20T22:06:18.435Z",
+          "instrument": "",
+          "prediction_text": "There is a magnet from the 6100 bar and a local effect at 6130/35 that suppresses price, similar to a vanna flip.",
+          "condition": "",
+          "expected_result": "Price will be suppressed around 6100 and 6130–6135, exhibiting magnet-like behavior and limited upside in that zone."
+        }
+      ]
+    }
+  }
+}

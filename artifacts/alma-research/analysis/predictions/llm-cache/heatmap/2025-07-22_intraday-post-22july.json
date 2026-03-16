@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:01:06.523Z",
+  "inputHash": "a59249866a264bf0bfc7fc9fef58c0d4216471ba",
+  "payload": {
+    "responseId": "resp_0e085f9215947a7b0069b7645b3bd0819086d3c26b5648c1fd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma peak / sticky zone around 6310 acts as a magnetic pin — price likely to gravitate to and stall near 6310 if above the upside pivot. 6310 produces significant resistance/gravity that contains upside unless volatility and supportive flow push through ~6323.",
+          "condition": "SPX trades above upside pivot 6301.83",
+          "expected_result": "Price moves toward 6310 and stalls or reverts there; failure to break 6323 leads to rejection and intra-day reversal back toward centroid (~6289.95) or 6280 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Noticeable gamma trough / sticky support cluster centered 6250–6260 (with 6252 named support) — a magnet on the downside and a probable reversion zone after intraday sell moves.",
+          "condition": "Price moves below 6280.09 with decreasing realized vol",
+          "expected_result": "Price is attracted to 6260–6252 area and bounces or consolidates there rather than accelerating lower."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Deep gamma accumulation and rejection band around 6180–6215 — pronounced support band that will absorb downside and likely prevent sustained breaks below this band intraday.",
+          "condition": "None",
+          "expected_result": "If price falls toward 6200–6180, expect strong bids, fading momentum, and a high probability of reversal or stuck price within 6180–6215 rather than a clean breakdown."
+        }
+      ]
+    }
+  }
+}

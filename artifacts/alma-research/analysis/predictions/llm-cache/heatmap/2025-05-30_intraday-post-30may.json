@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:57:49.004Z",
+  "inputHash": "42e86150b8106cee799f129422dbbdb88ec4c0e4",
+  "payload": {
+    "responseId": "resp_0109b27ecb6b6cfc0069b76397ffe481a1b6e4e473b5ec4226",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pin / dealer magnet at ~5850 (significant put gamma bar). Expect price to gravitate toward and struggle to break below 5850 if puts decay.",
+          "condition": "price above 5870.86 and puts decay",
+          "expected_result": "SPX to pin near 5850 and fail to sustain a move below 5850 within the session; upside capped into mid-5900s"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid sticky corridor around 5919–5937 (gamma centroid). Price likely to spend time and revert inside this range.",
+          "condition": "none",
+          "expected_result": "SPX to oscillate inside 5919–5937 with reversion toward the midpoint before trending away"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vol decline / resistance begins around 5949.7 with rejection near 5975 — upside should be resisted above ~5950–5975.",
+          "condition": "market moves higher into the zone",
+          "expected_result": "SPX attempts above ~5949.7 will see vol decline and face rejection by ~5975, limiting sustained moves above 5975"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside break path: if downside vol increases and 5840 is breached, next magnet/support sits near 5810 with a hard stop at 5735.",
+          "condition": "downside vol picks up and 5840 breaks",
+          "expected_result": "SPX to travel toward 5810 after 5840 break, with 5735 acting as a low hard stop level if selling continues"
+        }
+      ]
+    }
+  }
+}

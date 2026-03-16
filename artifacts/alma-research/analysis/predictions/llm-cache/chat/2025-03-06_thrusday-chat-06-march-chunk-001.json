@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:27:59.684Z",
+  "inputHash": "6b30fd7b89195534e514b19941ace09cf14b2c78",
+  "payload": {
+    "responseId": "resp_0e5e3b23455b66370069b786c989ec819c8fba8cd16b410e45",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-06T23:05:03.290Z",
+          "instrument": "",
+          "prediction_text": "Downside volatility will be lower due to a 'brake' effect to the downside.",
+          "condition": "",
+          "expected_result": "Intraday and short-term realized downside volatility decreases relative to recent baseline (e.g., lower 1–5 day realized vol and narrower downside returns distribution)."
+        },
+        {
+          "made_at": "2025-03-06T23:09:05.007Z",
+          "instrument": "",
+          "prediction_text": "Tails will remain calm and intraday dips will be sold, pulling a brake on downside volatility.",
+          "condition": "",
+          "expected_result": "Price rebounds on intraday dips with fewer large negative tail events; intraday negative return frequency and magnitude decline versus prior period."
+        },
+        {
+          "made_at": "2025-03-06T23:09:44.174Z",
+          "instrument": "",
+          "prediction_text": "Current spot decline is 'spot decay' rather than a bearish trend.",
+          "condition": "",
+          "expected_result": "Price action shows mean-reverting or rangebound behavior without sustained downward trend over the next several days (no lower lows on daily closes beyond short-lived dips)."
+        },
+        {
+          "made_at": "2025-03-06T23:30:59.395Z",
+          "instrument": "",
+          "prediction_text": "Call options are underpriced while puts are crowded, leading to constant squeezes of longs on the call side as the market moves down.",
+          "condition": "",
+          "expected_result": "Relative option skew shifts: implied volatility for calls falls or remains low while put IV remains elevated and put open interest stays higher; call option bid/ask shows cheaper pricing compared with symmetric puts, and short-term squeezes into call positions occur during down moves."
+        }
+      ]
+    }
+  }
+}

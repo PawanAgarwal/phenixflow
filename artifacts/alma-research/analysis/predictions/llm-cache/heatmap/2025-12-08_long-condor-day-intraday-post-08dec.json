@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:21.305Z",
+  "inputHash": "692f079907b9edc5cde7c1365554a12a69d0ff59",
+  "payload": {
+    "responseId": "resp_0edf66fc411e354c0069b766c1e0a481a0a5b28fcc46d2c7a7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a pinning magnet and reversion pressure around 6917-6905 with strong gamma concentration just above spot; likely reversion back toward ~6905 and pin near 6917 if tested.",
+          "condition": "price moves up toward 6905-6917 area",
+          "expected_result": "Spot will stall/reverse and be pinned between 6905 and 6917 for a period (rangebound action, failed breakout upward)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/brake zone visible ~6827-6817 with strong supportive gamma; moves down to 6817.47 should see reversion back up toward 6840-6850 and likely pin around those levels.",
+          "condition": "price drops to ~6817-6828",
+          "expected_result": "Downside will be defended and price will rebound to 6840-6850 within the session (bounce and stabilization)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower supportive corridor around 6800-6790 and further support into 6753-6782 area (heavier gamma/support lower); sustained sell-through unlikely without large vol push.",
+          "condition": "sustained selling pressure without volatility expansion",
+          "expected_result": "Price will find support in 6800-6790 or 6753-6782 and fail to sustain a breakdown, resulting in stabilization or bounce back toward mid-condor (~6870-6890)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside breakout probability is limited (~35%); if spot escapes the condor range to the upside during AM with a volatility push, the heatmap shows pathways to 6958-6987 as priced targets.",
+          "condition": "AM session breakout with a volatility spike",
+          "expected_result": "Spot will accelerate upward toward the 6958-6987 zone following the breakout (sustained move rather than immediate reversion)."
+        }
+      ]
+    }
+  }
+}

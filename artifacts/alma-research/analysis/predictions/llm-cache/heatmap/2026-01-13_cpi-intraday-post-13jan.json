@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:14.561Z",
+  "inputHash": "196e73c733ca7a7d67c6eacf9071baeb29726f1d",
+  "payload": {
+    "responseId": "resp_000cebcea2ccbdf60069b767349c64819397475887da03c516",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/target zone around 7022 (sticky up to ~7040). Heatmap shows concentrated gamma/pinning near ~7020–7040 indicating resistance and pinning magnet to the upside.",
+          "condition": "price approaches 7022–7040",
+          "expected_result": "Price is likely to slow and pin near 7022, with limited upside beyond ~7040; expect reversion/consolidation back toward 7000–6985 within a few sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside sticky/target zone around 6929–6900 with a downside pivot at ~6944. Heatmap gamma concentration near ~6929–6900 indicates support and liquidity sink below current levels.",
+          "condition": "price drops toward 6944–6929",
+          "expected_result": "Price is likely to find support and revert or stabilize between 6929 and 6900; failure through 6900 would increase probability of further downside."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid region / line in the sand near 6955–6968 (centroid at 6955.06–6967.78). Heatmap shows a neutral band there that acts as a balancing corridor.",
+          "condition": "price around 6955–6968",
+          "expected_result": "Price should gravitate to and respect this band as a mean: expect bounces/reversions toward this centroid when excursions occur above or below it."
+        }
+      ]
+    }
+  }
+}

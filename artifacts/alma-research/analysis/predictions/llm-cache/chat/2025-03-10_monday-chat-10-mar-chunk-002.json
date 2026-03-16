@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T01:53:18.889Z",
+  "inputHash": "4b0913adf4361d2dbf3b3ce1855284a8f7c509b5",
+  "payload": {
+    "responseId": "resp_058eb1b60dfabbcf0069b7628b97f8819e9458d38e82e412c3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-10T23:19:03.549Z",
+          "instrument": "",
+          "prediction_text": "There is a slightly higher chance of a lower inflation print causing a temporal squeeze from mild hedge unwind.",
+          "condition": "lower inflation print",
+          "expected_result": "Short-term price squeeze (downside gravitation or upside gamma squeeze) driven by hedge unwind; observe fresh levels derived from positioning to determine direction."
+        },
+        {
+          "made_at": "2025-03-10T23:26:22.381Z",
+          "instrument": "VIX",
+          "prediction_text": "If VVIX spikes while VIX is above 27, a VIX squeeze will occur.",
+          "condition": "VVIX spike while VIX > 27",
+          "expected_result": "A VIX squeeze (rapid upward move in VIX) will happen."
+        }
+      ]
+    }
+  }
+}

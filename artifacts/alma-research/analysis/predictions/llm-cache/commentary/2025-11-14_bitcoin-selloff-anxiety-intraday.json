@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:10:10.063Z",
+  "inputHash": "60e03a5825065332478bc469cc95d7f8f0dcb00f",
+  "payload": {
+    "responseId": "resp_0bc1c0dcb5fb53220069b766731a648194a4355b8395973427",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "BTC",
+          "prediction_text": "Spot can build a structure around the weekly centroid after the weekly centroid was hit.",
+          "condition": "",
+          "expected_result": "Price forms a short-term base/structure near the weekly centroid region (observable as multiple closes and lower volatility near that level within the next few sessions)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Bitcoin has started a multi-month downtrend towards the author's buying target.",
+          "condition": "",
+          "expected_result": "Price exhibits a sustained series of lower highs and lower lows over multiple months, trending toward the previously stated buying target level (measurable decline from current price to that target within the next 1–4 months)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "112-115k will be retested but won’t be held.",
+          "condition": "",
+          "expected_result": "Price rallies to the 112,000–115,000 range then reverses and fails to sustain above that band, producing a rejection candle and subsequent downside movement within days of the retest."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "There is a short fly fly pattern centering at 6657.43 with centroid at 6686.08 - 6718.25.",
+          "condition": "",
+          "expected_result": "Price oscillates around the centroid range 6686.08–6718.25, showing mean reversion behavior (multiple touches/close clustering inside that centroid range intraday)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "The pivot at 6625.94 is very sticky and very supportive; high local volatility is needed to break through it.",
+          "condition": "",
+          "expected_result": "Price tests 6625.94 multiple times intraday without closing decisively below it; when breakouts below occur only after elevated intraday volatility (measured by a significant increase in intraday ATR or range)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "If the downside pivot is broken and downside is retested, expect a rebound towards the pivot, possibly pinning to 6600 or 6570 in the worst case, with the pivot becoming magnetic towards EOD.",
+          "condition": "break below pivot 6625.94 and subsequent retest",
+          "expected_result": "After a break below 6625.94 and a retest, price rebounds back up toward 6625.94, potentially stalling or pinning near 6600 or 6570 intraday, and closes nearer the pivot by end of day."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Upside pivot is 6718.25 with target of 6744.96 (margin of error to 6770); low chance to break through this.",
+          "condition": "",
+          "expected_result": "Price may retest 6718.25 and move up toward 6744.96 (but is unlikely to exceed ~6770); if it approaches this zone it will likely reverse rather than produce a sustained breakout."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "The likeliest outcome is a retest of the upside pivot and reversion downward, signaling further weakness into NVDA ER and OpEx.",
+          "condition": "",
+          "expected_result": "Price retests 6718.25 then reverses downward, leading to further net downside over the following sessions into NVDA earnings and options expiration."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Downside target of 6552.42 (close to the weekly downside target).",
+          "condition": "",
+          "expected_result": "Price moves down and reaches 6552.42, confirming the intraday downside target within the near term (intraday to several days)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Market expects a rebound then reversion, with downside planned to be braked today around the downside pivot (liquidity is there).",
+          "condition": "",
+          "expected_result": "Price initially rebounds from lower levels toward the pivot then reverts downward, and downside declines are arrested or slowed near the downside pivot (~6625.94) due to increased buy liquidity."
+        }
+      ]
+    }
+  }
+}

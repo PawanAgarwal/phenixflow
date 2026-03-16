@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:15:35.775Z",
+  "inputHash": "f753d8c216ccdc29c15c3ad565efd68eef3de0a3",
+  "payload": {
+    "responseId": "resp_062440648a5e34030069b767c060e88194b876e4b18b901ede",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "NVDA",
+          "prediction_text": "Nvidia's profit margin will collapse due to oversupply once TSMC's capacity expansion catches up with declining physical demand.",
+          "condition": "TSMC's capacity expansion catches up with declining physical demand",
+          "expected_result": "NVDA share price declines and reported gross margins fall materially within quarters following the capacity catch-up"
+        },
+        {
+          "instrument": "NVDA",
+          "prediction_text": "A stealth increase in supply ahead will trigger price declines, margin compression, losses, and ultimately credit defaults in the future.",
+          "condition": "",
+          "expected_result": "NVDA exhibits sustained price declines accompanied by shrinking margins, rising reported losses, and increased credit/default events among its suppliers or customers over subsequent quarters"
+        },
+        {
+          "instrument": "NVDA",
+          "prediction_text": "If demand mirages fade and delivery delays begin, Nvidia will be left with unpaid bills and obsolescing inventory that must be written off as a loss.",
+          "condition": "demand mirages fade and delivery delays begin",
+          "expected_result": "NVDA reports inventory write-downs and increased accounts payable/receivable issues leading to lower net income in upcoming filings"
+        },
+        {
+          "instrument": "TSMC",
+          "prediction_text": "Consensus is pricing in a deterioration of the Cash Conversion Cycle, anticipating the logistical bursting of the bubble with longer customer payment days and higher inventory days.",
+          "condition": "",
+          "expected_result": "TSMC's reported days sales outstanding and inventory days increase per quarter as forecasted, coinciding with weaker revenue growth and downward revisions to guidance"
+        },
+        {
+          "instrument": "NVDA",
+          "prediction_text": "Inventory is growing faster than accounts receivable, signaling an increasing inventory burden that will weigh on future results.",
+          "condition": "",
+          "expected_result": "NVDA reports continued inventory growth outpacing AR growth and subsequently posts lower inventory turnover and deteriorating margins in future quarters"
+        },
+        {
+          "instrument": "NVDA",
+          "prediction_text": "Nvidia must pre-finance operations for longer, slowing capital turnover velocity which will exacerbate cash strain given large purchase obligations coming due.",
+          "condition": "",
+          "expected_result": "NVDA's operating cash flow to sales ratio declines and short-term liquidity metrics worsen as near-term purchase obligations are paid over the next 11–12 months"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The AI/infrastructure-driven demand is more susceptible to obsolescence and regulation, increasing the risk that many developments become obsolete and demand collapses.",
+          "condition": "",
+          "expected_result": "Sectors exposed to AI infrastructure show reduced order volumes and downward revisions to capital expenditure plans, causing related equities to underperform broad markets over ensuing quarters"
+        }
+      ]
+    }
+  }
+}

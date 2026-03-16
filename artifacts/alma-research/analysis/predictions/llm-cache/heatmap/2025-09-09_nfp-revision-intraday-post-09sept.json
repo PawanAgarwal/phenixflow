@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:03:25.942Z",
+  "inputHash": "f97c9f720437f993b1c8f59f5abb47537da7b1aa",
+  "payload": {
+    "responseId": "resp_07618be6d4b01b5f0069b764e4f5b88197b11a79a6bb1b7332",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary pin at 6490 driven by strong gamma — market likely to gravitate toward and pin 6490 intraday, acting as a magnetic support/resistance level.",
+          "condition": "price trades near 6490",
+          "expected_result": "Price will revert to and spend measurable time pinned at ~6490 (±5 pts) during the session, especially into the power-hour."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Right-tail rejection line at 6513 — upside call risk line where upside bets stop; break above is low probability and likely to be capped by resistance at 6530/6550.",
+          "condition": "price breaks and holds above 6513",
+          "expected_result": "If 6513 is taken and held, price should move toward 6530 and then 6550/6555; absent hold, expect reversion back to ~6513/6520."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid lower bound cluster around 6463.7–6479.8 with a nearby magnet at 6490 — intraday support zone where vol-driven reversion is likely.",
+          "condition": "price falls into 6464–6480 area",
+          "expected_result": "Price should find support and revert back toward 6490 within the session (margin of error to ~6450 if realized vol rises)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pivot after 14:20 at ~6460 — decisive intraday pivot that determines end-of-day placement between lower channel or reversion up to 6490.",
+          "condition": "after 14:20 price near 6460",
+          "expected_result": "If 6460 holds as pivot, market will either finish in 6440–6450 zone or be pulled back up to ~6490 by close."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Low-probability deep downside cluster around 6400–6408 visible as a sticky rejection zone — hedged in small size and likely to revert if reached.",
+          "condition": "price retests 6400–6408",
+          "expected_result": "Expect a swift mean reversion back to 6425–6450 after touching 6400–6408, with limited follow-through downsize."
+        }
+      ]
+    }
+  }
+}

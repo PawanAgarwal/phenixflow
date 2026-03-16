@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:56.668Z",
+  "inputHash": "09bba9cb56821e515583635689d07245e5f50b52",
+  "payload": {
+    "responseId": "resp_08249e3d651b784b0069b7675ec61c8194a6978e3cdf63af53",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning/short-term magnet in the 6990–7008 area (local line in the sand ~6997). Heatmap shows concentrated gamma structure and sticky upside pivot around 7008 with local pin at 7000.",
+          "condition": "price trades at or near 6990–7008",
+          "expected_result": "Price is likely to revert to and pin near 7000–7008 within the session; expect bounded trading and rejection moves away from that zone rather than sustained breakouts while conditions hold."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support/brake zone and centroid support around 6930–6959 (centroid ~6958.7, downside pivot ~6933.7). Heatmap shows supportive gamma and a sticky downside pivot area that should absorb downside moves.",
+          "condition": "price declines toward 6930–6959",
+          "expected_result": "Price should find support and likely bounce back toward the centroid/pin (6958–7000); expect limited follow-through below ~6930 without a clear catalyst."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower tolerance/secondary support cluster in the 6890–6880 area (market priced tolerance and options structure visible as a trough on the heatmap).",
+          "condition": "price falls below 6930 and continues downward",
+          "expected_result": "If price reaches 6890–6880, anticipate an additional reversion bounce toward the 6920–6960 range rather than continuation through the zone."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:03:02.816Z",
+  "inputHash": "874e470f54d15312eb68984181cbd9a2037c6e07",
+  "payload": {
+    "responseId": "resp_0c1506bfbd6e489a0069b764d125b0819da4a425cc831f7191",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong option-interest cluster (IC) between 6370–6450 creates a magnet and trading band; centroid and lower wing around 6382–6403 act as reversion magnets. Upside wing near 6436–6445 provides rejection pressure. Downside wing around 6375–6390 is sticky support that will pull price back after touches.",
+          "condition": "price inside 6370–6450 IC",
+          "expected_result": "Price will remain rangebound within 6370–6450, revert toward 6382–6403 on intraday moves, with rejection attempts above 6436–6445 likely to fail and bounces from 6375–6390 holding as support."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Opening line-in-the-sand at 6413 functions as decisive intraday S/R; breaks below early favor extension toward 6349.96–6330 before reverting to lower IC wing around 6375. A sustained hold above 6413 keeps bias toward the IC centroid and potential upside to 6490–6500 (but likely rejected).",
+          "condition": "opening price relative to 6413",
+          "expected_result": "If spot opens/breaks and trades below 6413, expect a move toward 6349.96–6330 intra-hour then a reversion back to ~6375; if spot holds above 6413, expect attempts up toward 6490–6500 that will likely be rejected back into the 6370–6450 band."
+        }
+      ]
+    }
+  }
+}

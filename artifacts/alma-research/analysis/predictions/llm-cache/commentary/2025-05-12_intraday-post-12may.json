@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:56:45.429Z",
+  "inputHash": "9c64a1dbc6bc733b5f574973b2eb122eb1147f5c",
+  "payload": {
+    "responseId": "resp_0393ea7ba834d1f70069b7635453088192b06869295b49515d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX is bullish while above 5760 and remains bullish until 5580.",
+          "condition": "price above 5760",
+          "expected_result": "SPX will exhibit bullish momentum and higher prices, staying above 5580 until momentum shifts"
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "ES=F is bullish while above 5783 and remains bullish until 5590.",
+          "condition": "price above 5783",
+          "expected_result": "ES=F will continue upward momentum and avoid falling below 5590 during the bullish regime"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid of positioning is at 5802.47 and 5821.80 is magnetic to the upside; if volatility catches up, expect a squeeze up towards 5870.58.",
+          "condition": "volatility increases locally",
+          "expected_result": "Price will spike toward ~5870.58 (squeeze) from around 5821.80/5802.47"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If 5870 sees declining volatility, that will be a hard stop and a good spot to fade the move back to 5821 or lower.",
+          "condition": "volatility declines at 5870",
+          "expected_result": "Price will reverse down from ~5870 back toward 5821 (or below) after the failed continuation"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5787.87 is the downside pivot where locally volatility is expected to be crushed and positioning supportive.",
+          "condition": "price falls to 5787.87",
+          "expected_result": "Price will find support and compress volatility near 5787.87 rather than accelerating lower"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If volatility catches up from below 5787.87, the structure will mean-revert toward 5732.44 as first target.",
+          "condition": "volatility increases when price is below 5787.87",
+          "expected_result": "Price will decline to ~5732.44 as the initial mean-reversion target"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Vanna flip at 5717 implies positive convexity, so the market should rangebound and reject moves below ~5820 if momentum is healthy.",
+          "condition": "momentum remains healthy",
+          "expected_result": "Price will remain rangebound and bounce off near 5820, rejecting sustained breaks below that level"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "After the up-move, a retracement can wash out weaker hands and test key support without invalidating the uptrend.",
+          "condition": "post up-move retracement",
+          "expected_result": "Price will pull back to test support levels (higher lows) and then resume the uptrend rather than reversing it entirely"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Once a pullback establishes a higher-low above critical support, buyers will regain confidence for the next push.",
+          "condition": "pullback establishes a higher-low above critical support",
+          "expected_result": "Price will resume upward movement as buyers re-enter, continuing the broader uptrend"
+        }
+      ]
+    }
+  }
+}

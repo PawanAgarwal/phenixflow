@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:57:13.399Z",
+  "inputHash": "acbfb8cd65eefd19b560ff04462484a8dc842a5b",
+  "payload": {
+    "responseId": "resp_06206b634ac752b90069b7637387e881a3a22b64973dd9f4f1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma peak and heat concentrated at ~6000 — forms a sticky pinning magnet; price likely to gravitate toward and consolidate near 6000 if approached.",
+          "condition": "price trades into 5990-6010",
+          "expected_result": "SPX will stall or revert toward 6000 within the session and show reduced realized move (consolidation) around 6000 for at least 30-90 minutes"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / sticky gamma band around 5890-5925 (visible gamma troughs/peaks and script risk levels) — expected to provide rejection on down moves.",
+          "condition": "price declines into 5890-5925",
+          "expected_result": "Downside attempts will find support and rebound from the 5890-5925 zone within the same trading day (bounce of several points back toward 5930+)"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary sticky corridor centered near 5800-5810 (strong gamma trough/peak contours) — acts as longer gamma catch area where downside gamma will slow further declines.",
+          "condition": "price falls below ~5860 and moves toward 5805-5795 as noted",
+          "expected_result": "If price reaches 5805-5810, expect meaningful gamma-induced deceleration and a reversal or multi-hour consolidation in the 5795-5820 area"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / rejection structure visible near 6020-6055 (upper gamma ridge and high-confidence script levels) — upside is comparatively illiquid and likely to be resisted.",
+          "condition": "price attempts above 5991 toward 6020-6055",
+          "expected_result": "Upside attempts into 6020-6055 will struggle and likely reverse or stall, producing a pullback toward 5990-6005"
+        }
+      ]
+    }
+  }
+}

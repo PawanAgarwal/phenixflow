@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T02:00:49.022Z",
+  "inputHash": "4a53696d35f61c63ca2e1c220eeb4fefb4f5d024",
+  "payload": {
+    "responseId": "resp_0a3f042a38d99afa0069b76444da308195a093ff48aa6f5288",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The bullish momentum will hold until the FOMC, so do not rush to short the market yet.",
+          "condition": "until FOMC",
+          "expected_result": "SPX will maintain or rise from current levels through the FOMC date (no sustained downtrend before FOMC)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the Fed does not cut rates, yields will spike and the liquidity-driven rally will significantly unwind.",
+          "condition": "no Fed cut",
+          "expected_result": "SPX will experience a significant decline accompanied by rising Treasury yields and reduced liquidity metrics (e.g., MMF balances)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "When equities start to fall, BTC will decline with them.",
+          "condition": "equities start to fall",
+          "expected_result": "Bitcoin price will move downward concurrently with a sustained decline in major equity indices (e.g., SPX)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Volatility will mean-revert upward toward a target level near 14.36% which would correspond to SPX around 6385–6427.",
+          "condition": "",
+          "expected_result": "Implied volatility (relevant SPX IV metric) will increase toward ~14.36%, and SPX will trade in the 6385–6427 range during that vol increase period."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "SPX should average 6296.43 over the next 5 days to sustain the current imbalance or accumulation.",
+          "condition": "over the next 5 days",
+          "expected_result": "The 5-day average price of SPX will be approximately 6296.43 (± small deviation), supporting the stated positioning imbalance."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A move to 6197.13 would be the first sign of beginning downside momentum.",
+          "condition": "",
+          "expected_result": "If SPX touches or falls to ~6197.13, it will mark the start of a sustained downside momentum phase."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX cannot rise above 6289.56 within the next 30 days, that will indicate downside momentum.",
+          "condition": "cannot go above 6289.56 in the next 30 days",
+          "expected_result": "Failure of SPX to exceed 6289.56 during the next 30 calendar days will precede or coincide with a downward trend in SPX."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market expects liquidity below 6281.89 toward 6000 (downside target).",
+          "condition": "",
+          "expected_result": "SPX will trade below 6281.89 and potentially move toward 6000 over the relevant horizon."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Weekly centroid is 6298.37; a drop below 6194.78 would prove downside momentum; upside pivot is 6323.53 and target is 6378.22.",
+          "condition": "",
+          "expected_result": "SPX behavior will be: staying near centroid ~6298.37 while above it; if SPX drops below 6194.78 a clear downside trend will be confirmed; if it rises above 6323.53 it may advance toward 6378.22."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Volatility can grind up if price goes below the 6298.37–6270 range.",
+          "condition": "price goes below 6298.37–6270 range",
+          "expected_result": "Implied volatility for SPX will increase (grind up) following a drop of SPX below the 6298.37–6270 range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market is betting on a right-tail, upside convexity blow-off top with moderated ranging and occasional spot up/vol up spikes toward FOMC.",
+          "condition": "toward FOMC",
+          "expected_result": "SPX will exhibit range-bound behavior with intermittent sharp upside moves accompanied by rising volatility (spot up/vol up spikes) before the FOMC."
+        }
+      ]
+    }
+  }
+}

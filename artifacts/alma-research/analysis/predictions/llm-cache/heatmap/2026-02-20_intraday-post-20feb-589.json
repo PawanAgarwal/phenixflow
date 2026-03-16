@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:10.879Z",
+  "inputHash": "beabdb564788c9a9cf508441a152d09b58a4dc33",
+  "payload": {
+    "responseId": "resp_0d8402bfff949bd10069b767a91dec819fa0b8e295b52c5cff",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid at ~6802.7 with MOE ~6790 acts as a high-probability reversion (pin) — price likely to gravitate back toward ~6800 if it strays.",
+          "condition": "none",
+          "expected_result": "If SPX moves away from 6800 by >10-15 pts intraday, expect a mean reversion back to the 6790–6805 area within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot around 6842.5 is sticky — contains upside moves; breakout required to sustain rally toward ~6910.4.",
+          "condition": "price trades and holds above 6842.5",
+          "expected_result": "On a sustained trade above 6842.5, expect follow-through toward 6910.4; failure to hold suggests rejection and return to centroid (~6800)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Immediate rejection/braking zone at ~6875–6880 — upward moves are likely to be tested/failed here unless momentum is strong.",
+          "condition": "approach to 6875–6880",
+          "expected_result": "If SPX reaches 6875–6880, expect rejection pressure and a reversal back toward 6840–6800 unless price quickly breaks above that range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at ~6817 with downside target ~6717; downside supply persists until ~6740–6750 where downside vol selling should diminish.",
+          "condition": "price breaks and stays below 6817",
+          "expected_result": "If SPX breaks and holds below 6817, expect pressure toward 6740–6717; below 6740–6750 expect reduced selling and higher probability of a bounce."
+        }
+      ]
+    }
+  }
+}

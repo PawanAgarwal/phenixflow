@@ -1,0 +1,75 @@
+{
+  "cachedAt": "2026-03-16T04:30:13.237Z",
+  "inputHash": "b2d3fcb677e03185c0787ad8b970ca84e7897028",
+  "payload": {
+    "responseId": "resp_0da2dd14edee4ef60069b7874b901881a1a5ac031e440c5488",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-12-16T17:12:58.483Z",
+          "instrument": "",
+          "prediction_text": "Volatility selling is occurring and will be supportive, leading to reduced volatility and negative speed profile.",
+          "condition": "",
+          "expected_result": "Implied volatility decreases and realized price moves narrow, reflected in lower IV indices and a more negative speed profile over the next trading session(s)."
+        },
+        {
+          "made_at": "2025-12-16T18:01:40.342Z",
+          "instrument": "",
+          "prediction_text": "6760 is the local magnet and should hold as the downside target.",
+          "condition": "",
+          "expected_result": "Price gravitates toward 6760 and does not close decisively below it during the next move; any breach below 6740 should find support and snap back soon after."
+        },
+        {
+          "made_at": "2025-12-16T18:11:39.921Z",
+          "instrument": "",
+          "prediction_text": "Close positions if the market hits key downside pivots.",
+          "condition": "market hits key downside pivots",
+          "expected_result": "Traders close predefined positions when price touches the specified downside pivot levels."
+        },
+        {
+          "made_at": "2025-12-16T22:05:22.920Z",
+          "instrument": "",
+          "prediction_text": "Wait patiently for trade opportunities at supply/demand and support/resistance zones.",
+          "condition": "",
+          "expected_result": "New trades are only entered when price reaches identified supply/demand or support/resistance zones; otherwise remain flat."
+        },
+        {
+          "made_at": "2025-12-16T22:28:49.019Z",
+          "instrument": "",
+          "prediction_text": "Use the low where MACD divergence started as the pivot and place a limit sell there.",
+          "condition": "",
+          "expected_result": "A limit sell order placed at the MACD-divergence low is executed when price returns to that pivot level."
+        },
+        {
+          "made_at": "2025-12-16T23:14:41.864Z",
+          "instrument": "",
+          "prediction_text": "Wait for a lower support level before taking trader actions.",
+          "condition": "",
+          "expected_result": "No new long entries are taken until price reaches and tests the identified lower support level."
+        },
+        {
+          "made_at": "2025-12-16T23:16:48.131Z",
+          "instrument": "",
+          "prediction_text": "Most likely the monthly support will be tested again.",
+          "condition": "",
+          "expected_result": "Price moves down to and tests the monthly support level within the next trading period."
+        },
+        {
+          "made_at": "2025-12-16T23:22:15.282Z",
+          "instrument": "",
+          "prediction_text": "Weekly support line has been successfully tested and options traders are bidding puts there, increasing local realized/relative volatility (RV).",
+          "condition": "",
+          "expected_result": "Increased put buying near the weekly support leads to higher local option implied volatilities and elevated RV measures around that support zone."
+        },
+        {
+          "made_at": "2025-12-16T23:27:28.853Z",
+          "instrument": "",
+          "prediction_text": "If prior volatility sellers reverse and put buying increases, the market is more likely to break the level.",
+          "condition": "",
+          "expected_result": "A shift from vol selling to increased put buying coincides with a higher probability of the support level breaking, observed as a decisive close below the level with rising put open interest and IV."
+        }
+      ]
+    }
+  }
+}

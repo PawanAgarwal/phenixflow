@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:30:41.086Z",
+  "inputHash": "0294c8e5477efc7c1ad320a5d4ae1e2c7362ba7a",
+  "payload": {
+    "responseId": "resp_0d12355c0af2b9140069b7876d1fdc8196bdca31c7991c4f06",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-03-08T22:06:17.753Z",
+          "instrument": "",
+          "prediction_text": "Spot is expected to remain above the centroid.",
+          "condition": "",
+          "expected_result": "Price stays above the centroid level over the near term."
+        },
+        {
+          "made_at": "2026-03-09T22:17:50.646Z",
+          "instrument": "oil",
+          "prediction_text": "If long-end vega goes up that implies oil prices will be 'higher for longer'.",
+          "condition": "long-end vega goes up",
+          "expected_result": "Oil prices trend higher and sustain elevated levels."
+        },
+        {
+          "made_at": "2026-03-09T22:17:50.646Z",
+          "instrument": "oil",
+          "prediction_text": "If short-end vega goes down that implies oil prices will rangebound or the threat diminishes.",
+          "condition": "short-end vega goes down",
+          "expected_result": "Oil prices trade within a defined range with reduced volatility."
+        }
+      ]
+    }
+  }
+}

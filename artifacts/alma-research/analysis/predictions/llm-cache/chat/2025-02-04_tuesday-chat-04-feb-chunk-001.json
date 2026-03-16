@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T04:27:13.524Z",
+  "inputHash": "17b5a8d8540d271851074d1e5dd055b731dd1946",
+  "payload": {
+    "responseId": "resp_0b209c8fc37717dc0069b78697fb088192a084cda51d3dce96",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-04T10:21:00.588Z",
+          "instrument": "AMD",
+          "prediction_text": "AMD earnings will likely generate FOMO and create big volatility.",
+          "condition": "AMD ER",
+          "expected_result": "Implied and realized volatility for AMD will rise around the earnings release, producing larger intraday price swings."
+        },
+        {
+          "made_at": "2025-02-04T14:26:19.021Z",
+          "instrument": "",
+          "prediction_text": "If market shows strength around the marked pivot level, consider a small allocation to at-the-money 0DTE calls.",
+          "condition": "market shows strength around the marked pivot lvl",
+          "expected_result": "Initiate a small position in ATM 0DTE call options when price tests and holds the marked pivot level."
+        },
+        {
+          "made_at": "2025-02-04T15:01:12.624Z",
+          "instrument": "QQQ",
+          "prediction_text": "QQQ is bullish.",
+          "condition": "",
+          "expected_result": "Price of QQQ will trend higher over the near term from the time of the message."
+        },
+        {
+          "made_at": "2025-02-04T15:02:28.435Z",
+          "instrument": "",
+          "prediction_text": "There is no put-side edge today; if playing puts use 1–2 DTE OTM, small size, for high gamma convexity.",
+          "condition": "",
+          "expected_result": "Short-dated (1–2 DTE) OTM put positions sized small will be preferred if taking bearish exposure that day."
+        },
+        {
+          "made_at": "2025-02-04T16:47:26.013Z",
+          "instrument": "",
+          "prediction_text": "Expect stickiness here driven by 0DTE charm flows; charm flows will be supportive.",
+          "condition": "",
+          "expected_result": "Price will remain sticky near the current level (limited movement away) while 0DTE charm flows are active, providing support."
+        },
+        {
+          "made_at": "2025-02-04T19:40:18.058Z",
+          "instrument": "",
+          "prediction_text": "6037 is a pivot into 3:30pm and it will pin to either 6030 or 6055 based on charm flows; momentum is net bullish.",
+          "condition": "into 3.30pm",
+          "expected_result": "By 15:30, the underlying will trade and potentially settle near either 6030 or 6055, with bias toward upward momentum."
+        }
+      ]
+    }
+  }
+}

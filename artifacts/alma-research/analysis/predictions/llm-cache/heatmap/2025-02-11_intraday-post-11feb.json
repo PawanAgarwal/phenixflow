@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:51:24.400Z",
+  "inputHash": "29fc31da7715ddc35677eadcbe44e89e3881629d",
+  "payload": {
+    "responseId": "resp_060e6fc0e298f3830069b76215c55c81a387af9391af807ddc",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma support / pin visible around 6000 (5998-6005) — heatmap shows a concentrated positive gamma peak and a warm (orange) cluster at ~6000, indicating dealers will hedge there and likely pin or provide support.",
+          "condition": "price approaches 5998-6005",
+          "expected_result": "Price will find support/revert near 5998–6005; expect limited downside and a bounce back toward 6050–6130 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky support corridor from ~6026 to ~6077 (positive charm convexity zone) — long-charm convexity in this range suggests additional intraday support and mean-reversion into this band.",
+          "condition": "price inside or moving toward 6026-6077",
+          "expected_result": "Price will tend to gravitate into and hold within 6026–6077, with mean-reversion trades likely to succeed targeting the mid of the band (~6050)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma peak / potential resistance / pin near ~6137–6140 (zero speed line and strong gamma trough/peak alignment) — a persistent horizontal gamma peak is visible near 6137.6, implying a magnet/resistance above current levels.",
+          "condition": "price rises toward 6130–6145",
+          "expected_result": "Upward moves will slow or stall around 6130–6145; expect rejection or consolidation there and increased probability of retreat back toward 6070–6100."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher-timeframe resistance cluster near ~6210–6225 — a concentrated warm spot and gamma contours at later times indicate a sticky zone/resistance above 6200.",
+          "condition": "price continues strong rally toward 6200+",
+          "expected_result": "If price reaches 6210–6225 it will likely encounter resistance and stall or reverse; use that band for profit-taking or fade attempts."
+        }
+      ]
+    }
+  }
+}

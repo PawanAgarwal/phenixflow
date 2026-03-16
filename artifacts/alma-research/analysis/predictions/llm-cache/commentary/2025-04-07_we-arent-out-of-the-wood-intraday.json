@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T01:54:58.576Z",
+  "inputHash": "9888597a6df3539e13d28d677fdbfb0e9d8c0747",
+  "payload": {
+    "responseId": "resp_0634c01d8bfb05330069b762ead894819c8145ca016cfd3f1d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "If China and Japan start selling US Treasuries, it will be catastrophic for the US market.",
+          "condition": "China and Japan start selling US Treasuries",
+          "expected_result": "US equity indices decline sharply and Treasury yields spike (large drop in price) within days to weeks"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Any bounce or grind up will be used to build a lifeboat (i.e., rallies will be sold or used to reduce risk exposure).",
+          "condition": "",
+          "expected_result": "Near-term rallies in SPX will be capped by selling pressure, producing lower highs and limited follow-through (failed breakouts) over subsequent trading sessions"
+        },
+        {
+          "instrument": "SPX 4900",
+          "prediction_text": "Below 4900 there will be long vanna (supportive volatility dynamics) and above 4900 there will be short vanna (higher vol required to break through).",
+          "condition": "",
+          "expected_result": "If SPX remains below 4900, realized volatility will compress and downside moves will be less convective; if SPX moves above 4900, realized volatility will expand and larger moves will occur, especially on upside attempts"
+        },
+        {
+          "instrument": "SPX 4950",
+          "prediction_text": "4950 is a gamma level that can provide short-term stabilization if vol can be suppressed.",
+          "condition": "volatility is suppressed",
+          "expected_result": "SPX will find short-term price support/mean-revert around 4950 with reduced intraday range while vol stays low"
+        },
+        {
+          "instrument": "SPX 4850",
+          "prediction_text": "4850 is a gamma level that can provide short-term stabilization if vol can be suppressed.",
+          "condition": "volatility is suppressed",
+          "expected_result": "SPX will find short-term price support/mean-revert around 4850 with reduced intraday range while vol stays low"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If upside volatility is realized above the zero vanna line, the max coded upside level is 5087.",
+          "condition": "upside volatility is realized above the zero vanna line (~4900)",
+          "expected_result": "SPX will rally toward 5087 as the likely intraday/near-term upside cap during the vol-up move"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "To the downside, a move could exceed a 200-point drop as mentioned in the weekly chat.",
+          "condition": "",
+          "expected_result": "SPX may experience a >200-point decline from current levels during a sustained downside episode (multi-session)"
+        }
+      ]
+    }
+  }
+}

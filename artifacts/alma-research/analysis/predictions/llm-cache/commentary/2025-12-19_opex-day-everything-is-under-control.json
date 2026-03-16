@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:12:03.741Z",
+  "inputHash": "39332fdc1abaee66afab78b72c46cb0f421a5912",
+  "payload": {
+    "responseId": "resp_08b83e013fe169b90069b766ee5bb481a2a5d83b3d794719eb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The centroid at 6793.06-6792.28 will act as an important pivot keeping spot range-bound and causing clustering that suppresses realized volatility.",
+          "condition": "",
+          "expected_result": "Price remains range-bound around 6792–6793 and realized volatility stays muted while orderflow clusters at that level."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot at 6815.89 will act as a sticky resistance and its upside target of 6833.95 will likely cause a reversion back to the pivot.",
+          "condition": "",
+          "expected_result": "If price reaches ~6833.95, it will reverse back toward ~6815.89 rather than continue higher within the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot at 6767.97 with downside target of 6715.68 is sticky and breaking it has lower probability than reversion up toward the centroid.",
+          "condition": "",
+          "expected_result": "If price approaches ~6715.68 it is more likely to reverse upward toward ~6792 than to continue breaking lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "To break above the upside target and push toward 6870, the AM session must catch a convex vol bid.",
+          "condition": "AM session catches a convex vol bid",
+          "expected_result": "Price will breach above ~6833.95 and extend toward ~6870 during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The spot is set to range further with an expected positive drift and favors further vol-selling (vol compression).",
+          "condition": "",
+          "expected_result": "Price drifts modestly higher within the range while implied volatility declines as market participants sell volatility."
+        }
+      ]
+    }
+  }
+}

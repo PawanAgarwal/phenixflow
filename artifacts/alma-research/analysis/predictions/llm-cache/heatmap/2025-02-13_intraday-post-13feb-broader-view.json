@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:51:36.621Z",
+  "inputHash": "e0657d8036c25d31a289ed4b04130b4dcb63b421",
+  "payload": {
+    "responseId": "resp_08953f524050d67f0069b76223d4788194ae77f94330eded7f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong gamma peak / sticky zone around 6130–6140 (green horizontal ridge) that is acting as a magnet/pinning level for the day.",
+          "condition": "none",
+          "expected_result": "Price will gravitate toward and spend significant time near 6130–6140 during the trading day; expect mean-reversion bounces back to this area if price moves away intraday."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Daily pivot / potential pin at ~6047 (yellow line) — a locally important level that will indicate market bias; heavy charm support noted above ~6012.",
+          "condition": "none",
+          "expected_result": "If price sustains above 6047, upward bias likely with reversion toward 6130–6140; if price fails and trades below 6047, increased probability of declines toward the 5990–6000 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Notable gamma trough / rejection cluster centered near 5990–5998 (black/blue contour on right) creating a short-term support/brake zone; coding zero vanna at 5997.47 implies vol regime change below this level.",
+          "condition": "price below 5997.47",
+          "expected_result": "If SPX breaks and closes below ~5997, expect volatility to cool and price to accelerate lower away from 5990–5998 support, increasing likelihood of a move toward the next lower sticky cluster (~5920–5930)."
+        }
+      ]
+    }
+  }
+}

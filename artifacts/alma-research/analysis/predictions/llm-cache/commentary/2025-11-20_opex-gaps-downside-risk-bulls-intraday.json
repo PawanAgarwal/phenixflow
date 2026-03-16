@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:10:18.232Z",
+  "inputHash": "15f20f662e7e13465eef6c283210e9677b99ee78",
+  "payload": {
+    "responseId": "resp_09a80632d1edb50e0069b766865fa88196ad80558172318d55",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX doesn’t show strength in the 6791.68 - 6845.46 area, pressure will remain to the downside and SPX will reach the downside target of my Window of Risk.",
+          "condition": "SPX fails to show strength in the 6791.68 - 6845.46 area",
+          "expected_result": "SPX will decline to the stated WoR downside target (testable by comparing SPX price to the author's WoR downside target level)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "BTC will give a rebound along with the market.",
+          "condition": "",
+          "expected_result": "BTC price will rise from current levels in the near term, producing a measurable rebound (higher low or higher high vs recent prices)."
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "There may be a liquidity grab to the 30k–40k area before any sustainable BTC upside after the rebound.",
+          "condition": "",
+          "expected_result": "BTC will briefly drop into the 30,000–40,000 USD range (liquidity grab) before resuming upward movement."
+        }
+      ]
+    }
+  }
+}

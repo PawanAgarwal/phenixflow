@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:28:46.188Z",
+  "inputHash": "665aa3d5f154e0f8068f70b71f90614c0f052401",
+  "payload": {
+    "responseId": "resp_0d075493a1ae22980069b786f9dcc881a29d7c5b7bdec1c761",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-05-15T13:14:10.662Z",
+          "instrument": "",
+          "prediction_text": "If volatility declines today, market makers will get longer delta and sell into strength, producing a stabilization slightly lower but above 5800 and capping upside.",
+          "condition": "volatility declines",
+          "expected_result": "Index stabilizes below current level but remains >5800 and upside becomes capped as participants sell into rallies."
+        },
+        {
+          "made_at": "2025-05-15T13:14:10.662Z",
+          "instrument": "",
+          "prediction_text": "Thursday AM positioning (vol crush and flat-to-positive speed with negative charm) favors a stabilization a bit lower but above 5800 and caps upside.",
+          "condition": "",
+          "expected_result": "Index stabilizes slightly lower than current levels but stays above 5800; upside is limited."
+        },
+        {
+          "made_at": "2025-05-15T13:30:52.099Z",
+          "instrument": "soybeans",
+          "prediction_text": "If another trade-war escalation from China occurs, investors will exit risk, making the soybean chart important as a barometer.",
+          "condition": "trade-war escalation from China",
+          "expected_result": "Soybean prices decline as investors reduce risk exposure."
+        }
+      ]
+    }
+  }
+}

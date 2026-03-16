@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:56:30.840Z",
+  "inputHash": "d18878d20be29654ef796cf7c0ef0a572c5e4f80",
+  "payload": {
+    "responseId": "resp_071fe30b7ee091880069b763467f78819390942338d1334a53",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "The centroid of the positioning is at the 5658.43 line.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward and spend significant time around ES 5658.43 during the session (measurable as multiple touches or close prints within a narrow range around 5658.43)."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "To the upside, we should see 5691.72 - 5702.12 zone to be cleared out.",
+          "condition": "if vol cools off",
+          "expected_result": "ES will break through and trade above 5702.12, with sustained trades above the zone rather than immediate rejection, within the same trading session if volatility declines."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "In order to break above this line, we should see vol cooling off.",
+          "condition": "",
+          "expected_result": "A move above ES 5702.12 will be accompanied by a measurable decrease in intraday volatility (e.g., lower realized/IV compared with the prior short-term window) prior to or during the breakout."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "To the downside I code 5582.23 lvl where downside shorter gamma should be realized in the vol curve.",
+          "condition": "",
+          "expected_result": "If ES reaches 5582.23, implied volatility/vol term structure will show a short-gamma signature (e.g., higher front-end vega or rapid realized moves consistent with short-gamma exposures being hit) and price may exhibit accelerated moves."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If 5582.23 is not realized, then 5620 can pin.",
+          "condition": "if 5582.23 level is not hit",
+          "expected_result": "ES will trade and remain near 5620 (multiple touches/close prints around 5620) rather than moving down to 5582.23 during the session."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "We see a clear short fly pattern at 5540/5620/5700.",
+          "condition": "",
+          "expected_result": "Market structure will reflect a short butterfly around ES 5540/5620/5700, observed as constrained price action with rejection around the wings (near 5540 and 5700) and concentration of activity around 5620."
+        }
+      ]
+    }
+  }
+}

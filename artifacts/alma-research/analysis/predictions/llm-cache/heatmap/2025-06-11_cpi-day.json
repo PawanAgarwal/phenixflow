@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:21.962Z",
+  "inputHash": "e01a3599d0b3baff7f0d77dee2b9094f23d3baee",
+  "payload": {
+    "responseId": "resp_0c0495e047b99afe0069b763b92ffc81a298bab466e050c053",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong resistance/pinning magnet in the 6075–6085 area (dense gamma peak and red hotspot) that is likely to cap upside after 1pm unless volatility collapses sharply.",
+          "condition": "price approaches 6075–6085 after 13:00",
+          "expected_result": "SPX fails to sustain moves above 6075–6085 and reverts lower within 30–120 minutes, targeting back toward the centroid zone ~6039.94–6053.06"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/speed profile coded zone at 6039.94–6053.06 is a sticky center of gravity and a short-term mean reversion hinge (steep negative speed profile implies quick reversion into this zone).",
+          "condition": "SPX moves away from 6039.94–6053.06 by >15 points",
+          "expected_result": "Price reverts back to 6039.94–6053.06 within the session (intraday mean reversion) with ~80% probability per model"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma pivot and rejection area near 5993.93 with further downside target/manifest zone around 5968 if downside gamma activates in the PM.",
+          "condition": "SPX breaks below 5993.93 during the afternoon",
+          "expected_result": "SPX continues lower toward ~5968 within the same PM trading session, with increased downside gamma and higher probability of sustained intraday weakness"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:15:46.546Z",
+  "inputHash": "05b8815a127afb24ed2e04520ab502b29d939b9b",
+  "payload": {
+    "responseId": "resp_0d885c893123cff70069b767ca1dd0819096cc2043014c3f33",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky support band ~6710-6748 (centroid 6747.9 and downside pivot/targets ~6684.66/6680.73) — market likely to slow downside momentum and magnet price into this range.",
+          "condition": "price moves below 6820/6830 toward downside pivot",
+          "expected_result": "Price should decelerate and often reverse or pin between 6710 and 6750 within the session; increased buying/support expected near 6680-6748 levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong reversion / line-in-the-sand at 6820-6830 — expect volatile reaction and likely mean-reversion away from this band.",
+          "condition": "price approaches 6820-6830 from either side",
+          "expected_result": "Price will likely see a sharp rejection or reversal when touching 6820-6830, leading to a move back toward the centroid (~6748) or the upside pivot (~6863) depending on direction."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and pin zone around 6863 with target ~6888 — market expects momentum to be broken and price to pin to the pivot near this area.",
+          "condition": "price rises toward 6860-6890",
+          "expected_result": "Price is likely to stall and cluster around 6860-6890, with frequent rejections and limited sustained upside unless it clears above ~6900."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside stabilization unlikely below ~6900; meaningful upside bias only if price clears and holds above 6900.",
+          "condition": "price remains below 6900",
+          "expected_result": "Downside pressure remains dominant and rallies below 6900 will likely fail; sustained move above 6900 is required to shift to bullish stabilization."
+        }
+      ]
+    }
+  }
+}

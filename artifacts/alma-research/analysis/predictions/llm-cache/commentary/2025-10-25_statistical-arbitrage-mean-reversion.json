@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:05:56.161Z",
+  "inputHash": "4db0ef28a9e24d59ca7a77570e87e36da2802842",
+  "payload": {
+    "responseId": "resp_092197dacea1358e0069b76575065881908f317cc39b9849b7",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The SPX deviation relative to its monthly average will exhibit mean-reversion behavior (reverting toward its monthly average).",
+          "condition": "",
+          "expected_result": "SPX deviations from the monthly average will decline over subsequent periods, reducing the distance to the monthly average (observable as negative autocorrelation and a drop in deviation magnitude)."
+        },
+        {
+          "instrument": "AAPL vs MSFT",
+          "prediction_text": "For the example hedge ratio, the constructed spread between AAPL and MSFT will revert to its mean after reaching sigma thresholds (mean-reverting spread trade).",
+          "condition": "spread breaks through 1‑sigma (add size at 2‑sigma)",
+          "expected_result": "Trades initiated when the spread crosses 1‑sigma (and sized up at 2‑sigma) will be closed profitably when the spread returns to its mean, producing positive P&L on those legs under simulated conditions (measurable by realized return from entry to exit)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "When index correlation is suppressed by funds running short‑vol/short‑gamma mean‑reversion trades, a breach toward distribution tails will cause algos to tilt to momentum, increasing index correlation.",
+          "condition": "index crosses a threshold towards one of the distribution tails",
+          "expected_result": "Index pairwise correlations will rise following the tail breach, coincident with a shift in trading flows from mean‑reversion to momentum strategies (observable as a sustained increase in correlation metrics post‑threshold)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Rolling Cornish–Fisher–adjusted Bollinger bands at a 99.9% probability level can be used to set stop‑losses such that there is only a ≈0.1% chance of further momentum beyond that band under the current realised distribution.",
+          "condition": "stop set at CF 99.9% rolling band",
+          "expected_result": "Instances where the spread breaches the CF 99.9% rolling band will occur at an empirical frequency near 0.1% under similar realised-skew/kurtosis conditions, reducing extreme-run continuations relative to unadjusted bands (testable by frequency of breaches and subsequent continuation)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A half‑life estimate gives the expected time for a mean‑reverting spread’s deviation to fall by half, so half‑life‑adjusted time stops (e.g., ~2–3× median) will reduce exposure when mean reversion fails.",
+          "condition": "deviation duration exceeds ~2–3× median half‑life",
+          "expected_result": "Trades held longer than ~2–3× the median half‑life will show a higher probability of regime shift or failure to revert, and closing positions at that time will reduce drawdown frequency and severity (testable via comparing drawdowns with and without the time‑stop rule)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "When cointegration breaks and volatility increases (volatility breakout), a mean‑reversion pairs strategy will give back a large portion of prior gains and experience reduced Sharpe.",
+          "condition": "cointegration breakdown coinciding with ~10% volatility increase (volatility breakout)",
+          "expected_result": "Following such a breakout, the strategy’s cumulative P&L will decline significantly (e.g., >50% drawback in simulated example) and Sharpe will drop materially (quantifiable pre‑ and post‑break Sharpe)."
+        },
+        {
+          "instrument": "AUDUSD vs CADUSD",
+          "prediction_text": "AUDUSD vs CADUSD is a natural currency pair candidate that can exhibit cointegration suitable for pairs trading because of similar economic fundamentals.",
+          "condition": "",
+          "expected_result": "Testing CADF/Johansen on AUDUSD and CADUSD price levels will frequently identify cointegrating relations suitable for constructing stationary spreads (measured by significant cointegration test statistics and stationary residuals)."
+        },
+        {
+          "instrument": "USO/NORW",
+          "prediction_text": "USO and a Norway‑exposure ETF (NORW) can form cointegrated ETF pairs because Norway’s economy is largely driven by oil, producing a durable cointegrating relation with longer half‑life.",
+          "condition": "",
+          "expected_result": "Cointegration tests on USO and NORW continuous price series will more often show a stationary spread with longer half‑life than many single‑stock pairs, enabling mean‑reversion trades with measurable reversion but longer expected holding periods."
+        }
+      ]
+    }
+  }
+}

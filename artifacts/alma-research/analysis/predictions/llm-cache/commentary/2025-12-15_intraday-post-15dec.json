@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:11:48.234Z",
+  "inputHash": "7431d8620f94b8009a7783c9bfeadc85976b436f",
+  "payload": {
+    "responseId": "resp_031453e311dd94b90069b766d78ce48190ba2e890abe3a8f7f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The centroid of the profile will act as a sticky zone at 6835.44–6844.43 with potential pinning at 6850.",
+          "condition": "",
+          "expected_result": "Price will remain near 6835.44–6844.43 and frequently revert to ~6850 during the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "An upside pivot at 6887.78 will lead toward a short-term target of 6900 (local magnet).",
+          "condition": "",
+          "expected_result": "If price rises through 6887.78, it will continue to reach ~6900."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the upside zone is tested before 1:30 PM, there is a chance to break higher; otherwise a pin to 6850 is likely.",
+          "condition": "before 1:30 PM",
+          "expected_result": "A test of the upside zone prior to 13:30 will more likely result in a breakout above the upside pivot; absent that, price will pin near 6850."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A secondary upside reference at 6870 may act as resistance/marker during the breakout attempt.",
+          "condition": "",
+          "expected_result": "Price approaching 6870 will tend to stall or act as a decision point for continuation to 6900 or rejection back toward the centroid."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A downside pivot at 6810.29 will drive a downside target of 6795.",
+          "condition": "",
+          "expected_result": "If price breaks below 6810.29, it will continue down to ~6795."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If a downside move is fast, price will revert back to 6850 after reaching lower levels.",
+          "condition": "fast downside move",
+          "expected_result": "After a rapid decline below pivot/target, price will bounce up to about 6850."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If downside movement stalls around 6828–6830, reversion will stop near 6815 rather than 6850.",
+          "condition": "move stuck at 6828/30",
+          "expected_result": "When price becomes stuck near 6828–6830, subsequent mean-reversion will bring it to ~6815."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Given net positive speed profile and more upside vol bought, there is greater room and chance for upward stabilization than for sustained downside.",
+          "condition": "",
+          "expected_result": "Price is more likely to stabilize or trend upward than to sustain a prolonged decline; upward moves will show less immediate reversion compared with downside moves."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A left-tail scenario could produce local oscillation around 6800 with skew bid, followed by a gap-fill down to 6750 with 6770 acting as a local line in the sand.",
+          "condition": "",
+          "expected_result": "If a left-tail downside occurs, price will oscillate near 6800, then continue to gap-fill down to ~6750, with 6770 acting as a temporary support/resistance level."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The main expected outcome for the session is a pin at the centroid/center (around 6850).",
+          "condition": "",
+          "expected_result": "Price will spend a significant portion of the session pinned near ~6850."
+        }
+      ]
+    }
+  }
+}

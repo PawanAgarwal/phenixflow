@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:10:17.130Z",
+  "inputHash": "23471746502fcc4c16f78bb8372c943949a44def",
+  "payload": {
+    "responseId": "resp_0340422fb0c0a0130069b76682528c8193bdc71d63a8677a8a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/braking zone (gamma peak) centered around ~6630-6640 acting as magnetic pivot for intraday price — options positioning concentrates liquidity here so downside should slow and reverse toward pivots.",
+          "condition": "price approaches 6625-6645",
+          "expected_result": "Price will find support and pause/rebound within 6625-6645; expect a reversal move back toward 6680-6720 within the session if hold occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance around ~6718 with nearby upside target near ~6745 (harder to break) — heatmap shows gamma trough/zero structure limiting upside; a retest is likely to revert downward.",
+          "condition": "price rallies to 6715-6750",
+          "expected_result": "Price will be rejected or stall between 6715-6750 and revert lower toward the 6625-6686 area within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary brake/resistance cluster near ~6530-6555 (deep downside gamma concentration) that would act as strong rejection if reached — large gamma exposure suggests sharp mean reversion if probed.",
+          "condition": "price falls below 6600 toward 6555-6530",
+          "expected_result": "If price reaches 6530-6555 expect sharp bounce/reversion back toward 6600-6650; intraday selling should be absorbed there."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:44.412Z",
+  "inputHash": "c8e7e763763bbb79d2b08a6e16036bab37bc24c8",
+  "payload": {
+    "responseId": "resp_072520c8e35158ad0069b7678df43881a2932355e12b84ebaa",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong supportive sticky zone around 6895–6882 (downside pivot/target). Heatmap gamma concentration and text note indicate this area will act as support during PM and resist downside moves.",
+          "condition": "price tests 6895–6882",
+          "expected_result": "Price is likely to find support and rebound from 6895–6882 within the same session (bounce of at least 10–20 pts)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid band around 6946.7–6951.1 acting as structural pivot with reversion opportunities at its lower band and mild stickiness at the upper band. Heatmap shows concentrated gamma near the centroid.",
+          "condition": "price remains above centroid (6946.7–6951.1)",
+          "expected_result": "Upward magnetic forces make higher-range probing likely; price to gravitate higher toward 6995–7012 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Rejection band / pin near 6995 with upside pivot at 7011.7 and target 7021.7. Heatmap contours and text indicate resistance in the 7001–7022 area and local pinning near ~6995.",
+          "condition": "price approaches 6990–7022",
+          "expected_result": "Expect rejection or heavy resistance around 6995–7022, producing stalls or reversal back toward centroid (6947–6951) or the 6895 support band."
+        }
+      ]
+    }
+  }
+}

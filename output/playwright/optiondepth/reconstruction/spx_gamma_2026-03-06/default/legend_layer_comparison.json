@@ -1,0 +1,138 @@
+{
+  "legend_items": [
+    "Gamma<br>(\u2206 / 2.5 pts)",
+    "Gamma Peak",
+    "Gamma Trough",
+    "Gamma Zero",
+    "OHLC"
+  ],
+  "line_comparisons": {
+    "Gamma Peak": {
+      "od": {
+        "segment_count": 16,
+        "point_count": 650,
+        "longest_segments": [
+          361,
+          113,
+          93,
+          41,
+          17,
+          9,
+          2,
+          2,
+          2,
+          2
+        ],
+        "y_min": 6598.927432015093,
+        "y_max": 6920.658397259245
+      },
+      "model": {
+        "segment_count": 2,
+        "point_count": 182,
+        "longest_segments": [
+          91,
+          91
+        ],
+        "y_min": 6592.0,
+        "y_max": 6922.0
+      },
+      "distance": {
+        "times_with_both": 91,
+        "times_od_only": 0,
+        "times_model_only": 0,
+        "times_none": 0,
+        "od_point_count": 179,
+        "model_point_count": 182,
+        "od_to_model_mae": 57.92357255849895,
+        "od_to_model_p90": 122.8202694648828,
+        "model_to_od_mae": 124.31767998514869,
+        "model_to_od_p90": 305.8027466004439
+      }
+    },
+    "Gamma Trough": {
+      "od": {
+        "segment_count": 16,
+        "point_count": 680,
+        "longest_segments": [
+          361,
+          113,
+          93,
+          41,
+          33,
+          13,
+          13,
+          2,
+          2,
+          2
+        ],
+        "y_min": 6596.268712801525,
+        "y_max": 6910.205512624365
+      },
+      "model": {
+        "segment_count": 1,
+        "point_count": 91,
+        "longest_segments": [
+          91
+        ],
+        "y_min": 6893.371761104047,
+        "y_max": 6901.880365722957
+      },
+      "distance": {
+        "times_with_both": 91,
+        "times_od_only": 0,
+        "times_model_only": 0,
+        "times_none": 0,
+        "od_point_count": 185,
+        "model_point_count": 91,
+        "od_to_model_mae": 109.79725203463467,
+        "od_to_model_p90": 193.64121408990138,
+        "model_to_od_mae": 79.81822208483975,
+        "model_to_od_p90": 113.06015146263962
+      }
+    },
+    "Gamma Zero": {
+      "od": {
+        "segment_count": 5,
+        "point_count": 392,
+        "longest_segments": [
+          151,
+          151,
+          58,
+          25,
+          7
+        ],
+        "y_min": 6608.2097158548595,
+        "y_max": 6918.907679299213
+      },
+      "model": {
+        "segment_count": 1,
+        "point_count": 91,
+        "longest_segments": [
+          91
+        ],
+        "y_min": 6691.810210153115,
+        "y_max": 6703.858659574663
+      },
+      "distance": {
+        "times_with_both": 91,
+        "times_od_only": 0,
+        "times_model_only": 0,
+        "times_none": 0,
+        "od_point_count": 198,
+        "model_point_count": 91,
+        "od_to_model_mae": 116.3783308284912,
+        "od_to_model_p90": 218.14239056579845,
+        "model_to_od_mae": 20.481770412629235,
+        "model_to_od_p90": 20.220045126787227
+      }
+    }
+  },
+  "region_metrics": {
+    "cell_count": 12103,
+    "sign_agreement": 0.8863091795422623,
+    "band_agreement": 0.7497314715359829,
+    "positive_region_iou": 0.703767491926803,
+    "negative_region_iou": 0.8442381707040978,
+    "neutral_region_iou": 0.863009171279848
+  }
+}

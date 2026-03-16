@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:58:11.405Z",
+  "inputHash": "dbd06a0883bb0d237f24b1dde86e4d7f2ccdae77",
+  "payload": {
+    "responseId": "resp_0e0859f734918bc80069b763aaff74819fb4d4fbbe75eca373",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If NFP shows job gains < 125k, SPX will undergo a controlled pullback up to -20% in a recession scenario.",
+          "condition": "NFP < 125k",
+          "expected_result": "SPX declines up to 20% from current levels within the following weeks (recession scenario) leading to sustained downside momentum"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Slower-than-expected NFP and signals of slower growth will push bond yields down and stocks up, reinforcing a negative SPX/LTY beta with a moderate stock rally.",
+          "condition": "slower-than-expected NFP / slower growth",
+          "expected_result": "U.S. Treasury yields fall and SPX posts a moderate rally (measurable positive return over next few sessions) while SPX/LTY correlation becomes negative"
+        },
+        {
+          "instrument": "TSLA",
+          "prediction_text": "If 25–50% tariffs on China/EU imports starting July 9, 2025 pass, TSLA will sell off and drag broader indices down, re-amplifying volatility.",
+          "condition": "tariffs 25–50% pass starting July 9, 2025",
+          "expected_result": "TSLA price drops materially and contributes to a decline in major indices (NDX/SPX) accompanied by increased VIX and realized volatility"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Positioning shows rejection of 6000 as the bet, with vol increase expected to push prices lower toward the centroid at 5976.50 and downside pivot 5924.44.",
+          "condition": "positioning remains as coded (net speed negative, long fly)",
+          "expected_result": "SPX falls toward 5976.50 and can test 5924.44 as volatility rises"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If local slowdown confirms and 5924.44 breaks, expect further weakness toward 5912 and, if volatility catches up, 5889.",
+          "condition": "break of 5924.44",
+          "expected_result": "SPX declines to 5912 then potentially to 5889 if volatility increases"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If data comes as awaited and volatility catches up, upside pivot 6008.39 can lead to a squeeze toward 6045–6050.",
+          "condition": "data as expected AND volatility increases",
+          "expected_result": "SPX rallies to the 6045–6050 area from current levels (a measurable squeeze higher)"
+        }
+      ]
+    }
+  }
+}

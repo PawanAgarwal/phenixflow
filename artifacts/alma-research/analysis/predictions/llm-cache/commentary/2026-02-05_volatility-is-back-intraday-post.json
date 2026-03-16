@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:22.690Z",
+  "inputHash": "be52b54507b01017a8b5035ef575991ada8463cf",
+  "payload": {
+    "responseId": "resp_04fe034ad546f41f0069b7677ad8a08193802b593e76a63424",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Consolidation pattern will be tested around the 6880/90 ES band.",
+          "condition": "price approaches 6880/6890 ES band",
+          "expected_result": "Price will test the consolidation band near 6880–6890; expect a measurable interaction such as bounce, rejection, or break through that band"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Thursday is expected to be choppy with hedging activity.",
+          "condition": "Thursday trading session",
+          "expected_result": "Intraday price action will exhibit increased volatility and sideways chop as participants hedge, producing multiple intraday reversals and larger-than-normal range"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Headline risk from the Iran situation will keep upward pressure on market stress during the period until clarity is provided.",
+          "condition": "until Iran releases (clarifying information)",
+          "expected_result": "Elevated volatility and risk-premia across markets will persist, increasing probability of downside moves or wider intraday ranges until the situation is resolved"
+        }
+      ]
+    }
+  }
+}

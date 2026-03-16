@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:12:15.405Z",
+  "inputHash": "864edb2957b44ba60b97490d193a237fe48e41f9",
+  "payload": {
+    "responseId": "resp_05291294eeef14250069b766fa61e0819cbdfa96342e731ac2",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/rejection zone and gamma peak around 6870–6888 (red hotspot) acting as an upper pin; expect upward moves to be capped here with pinning back toward the center.",
+          "condition": "price approaches 6870–6888",
+          "expected_result": "Price will struggle above 6888, likely revert back to 6850–6860 within a few hours; failed breakout above 6908 likely reverts to ~6883."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma pocket and IC lower wing support cluster around 6795–6805 (red/deep orange), aligning with the stated iron-condor lower strike; serves as a pinning magnet and short-term support.",
+          "condition": "price moves down into 6795–6805",
+          "expected_result": "Price is likely to get pinned or bounce from 6795–6805, reverting back toward 6820–6850 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / mean of positioning concentrated near 6857–6860 (profile center), acting as a magnet for intraday mean reversion.",
+          "condition": "price is away from 6857–6860",
+          "expected_result": "Price will tend to drift back toward 6857–6860 during intraday trade if no strong breakout occurs."
+        }
+      ]
+    }
+  }
+}

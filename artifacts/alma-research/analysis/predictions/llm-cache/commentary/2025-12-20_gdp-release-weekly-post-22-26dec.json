@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:12:16.860Z",
+  "inputHash": "2ceccfc1cc41958ba52c40e1651dd21135bb710d",
+  "payload": {
+    "responseId": "resp_0e6f7b80a3b0771f0069b766f8b1188197a5abb83b31a3c232",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The market expects either a move up above 6900 or a move down to retest past weeks' lows to build a base.",
+          "condition": "",
+          "expected_result": "Either an upside breakout above 6900 or a downside retest of recent lows forming a consolidation/base will occur."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Weak GDP data will lead the market to price in more Fed easing and be supportive of risk assets.",
+          "condition": "GDP print is weak",
+          "expected_result": "Markets will rally or stabilize as Fed easing expectations increase."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Strong GDP data will erase concerns about future easing and reduce liquidity support, leading to a less supportive market reaction.",
+          "condition": "GDP print is strong",
+          "expected_result": "Markets will fall or lose upward momentum as Fed easing odds are reduced."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A positive supply-side GDP print (GDP up, prices down) will produce a risk-on market reaction.",
+          "condition": "GDP up and prices down",
+          "expected_result": "Risk assets will rally."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A negative demand-side GDP print (GDP down, prices down) will be benign overall but produce an initially pessimistic market reaction.",
+          "condition": "GDP down and prices down",
+          "expected_result": "Immediate market weakness followed by stabilization or muted gains."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A positive demand-side GDP print (GDP up, prices up) will trigger an initial pessimistic re-pricing of Fed cut odds.",
+          "condition": "GDP up and prices up",
+          "expected_result": "Initial market decline as Fed cut expectations are repriced lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A negative supply-side GDP print (GDP down, prices up) will be stagflationary and cause a clearly negative market reaction.",
+          "condition": "GDP down and prices up",
+          "expected_result": "Markets will sell off materially."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The most likely outcome is modestly-above-consensus GDP with inflation in-line to slightly softer, which will produce a slow or delayed positive market digestion.",
+          "condition": "",
+          "expected_result": "Markets will take time to move higher or stabilize as the data is digested under a 'data not fully collected' narrative."
+        }
+      ]
+    }
+  }
+}

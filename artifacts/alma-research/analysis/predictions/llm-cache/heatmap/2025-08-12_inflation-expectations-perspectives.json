@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:01:58.440Z",
+  "inputHash": "fa348896f78da1bd4b9a6282af939c6c1f802ca3",
+  "payload": {
+    "responseId": "resp_01d04bc8028f2ce20069b7648f0a288193ab957accb376352c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid at ~6351–6360 acting as strong intraday pivot; price likely to gravitate back toward this area if not forced to reprice immediately.",
+          "condition": "none",
+          "expected_result": "If SPX moves away from 6351–6360 without a strong news shock, expect a mean reversion back to 6351–6360 within the trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6324.74 with 6300 as a strong support (hard stop ~6215 less likely); selling flow should find initial support near 6300.",
+          "condition": "if selling flow after inflation print",
+          "expected_result": "On selling flow, expect SPX to stall/hold near 6300; failure to hold may target lower levels around 6215."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6406.19 with resistance cluster at 6413.74–6425; above that, upside target/pin to ~6463 with potential pin at 6450 into the power hour if print is good.",
+          "condition": "if upside momentum or positive print",
+          "expected_result": "If SPX breaks and holds above 6406.19, expect rejection/resistance in 6413.7–6425 and possible extension to 6463 with a 6450 pin during the late session."
+        }
+      ]
+    }
+  }
+}

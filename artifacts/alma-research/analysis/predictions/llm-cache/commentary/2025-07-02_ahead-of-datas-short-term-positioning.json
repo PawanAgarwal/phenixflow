@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T01:59:31.939Z",
+  "inputHash": "30e34fc26dfaac06adf9ad0d9ed1ed5bf906a4a9",
+  "payload": {
+    "responseId": "resp_0bc4765e7fdeced80069b763f60f8c81a08a59d8a371537a28",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The gamma convexity centroid will be around 6192.46-6193.12.",
+          "condition": "",
+          "expected_result": "Price action will cluster and exhibit heightened gamma-related flows in the 6192.46–6193.12 range."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6207.46 will act as a pivot level.",
+          "condition": "",
+          "expected_result": "If price approaches 6207.46 it will stall or rotate around that level rather than immediately continue a strong trend."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6176.83 will act as strong support.",
+          "condition": "",
+          "expected_result": "If price declines to ~6176.8 it will be supported and likely bounce rather than break decisively lower."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A reversion upside target is at 6234.5 with a fakeout margin at 6243.",
+          "condition": "",
+          "expected_result": "If price reverts higher, expect a move up to ~6234.5 and potential short-lived push to ~6243 that fails to sustain (fakeout)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside minimum target is 6150.",
+          "condition": "",
+          "expected_result": "In a downside move, price will reach ~6150 as the lower bound within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pivot at 6217 after 2PM will become strong support or resistance in the last 20 minutes.",
+          "condition": "",
+          "expected_result": "If price is near 6217 in the final 20 minutes, it will act as a magnet causing pinning or rejection (support if above, resistance if below)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "This is an algo tick‑hunting environment that will produce rangebounding and potential pinning to 6225.",
+          "condition": "",
+          "expected_result": "Price will exhibit narrow range behavior with algorithms attempting to pin price near 6225 during the session."
+        },
+        {
+          "instrument": "SPX 1DTE 55-60 delta options",
+          "prediction_text": "If market makers get forced longer vol, fast 55+ delta 1DTE contracts can provide large payoffs on a rapid move.",
+          "condition": "MMs forced to become longer vol",
+          "expected_result": "A rapid directional move will cause 1DTE 55–60 delta options to spike in value, yielding outsized short-term payoffs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Too-high dealer theta and veta exposure makes intraday environment favorable for fast reversion catch-and-run trades.",
+          "condition": "",
+          "expected_result": "Short, quick reversion trades (e.g., futures scalps) will be more profitable than longer-duration directional trades due to dealer decay dynamics."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The vol decay flow will floor volatility and support a 'grind up' from next week with vomma supply limiting upside.",
+          "condition": "",
+          "expected_result": "Over the coming week volatility will remain suppressed and price will exhibit a gradual upward drift rather than a sharp rally, with upside momentum capped."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX will fight near the 16.5 pivot.",
+          "condition": "",
+          "expected_result": "VIX will oscillate around ~16.5, failing to decisively break away from that pivot in the short term."
+        }
+      ]
+    }
+  }
+}

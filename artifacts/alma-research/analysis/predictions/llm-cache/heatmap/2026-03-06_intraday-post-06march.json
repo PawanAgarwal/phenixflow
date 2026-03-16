@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:16:04.343Z",
+  "inputHash": "b777eea3c8588ea455479ef8752175cf466dd878",
+  "payload": {
+    "responseId": "resp_07227b7aa2641e460069b767db1cf081a0b9abc7b9853cc0a4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong magnetic/pinning zone around 6612.6 (downside pivot) — heatmap shows concentrated gamma trough/zero area there, likely to pin price or attract reversion if touched.",
+          "condition": "price trades to 6612.64",
+          "expected_result": "Price will pause and exhibit pinning/reversion behavior near 6612.64; expect suppressed volatility and bounce or slow consolidation within +/- ~5-15 points for several sessions."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky rejection corridor between ~6720–6730 area (centroid and gamma structure suggest momentum slowdown and sticky behavior back toward ~6750 if below 6780/70).",
+          "condition": "price drops below 6780",
+          "expected_result": "After breaching 6780, price is likely to slow and gravitate toward 6720–6730, with frequent rejections and difficulty clearing back above 6750 in the short term."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside resistance and low-probability break zone at 6780–6790 (line in the sand) — heatmap shows convex gamma peaks resisting upside travel toward 6810–6850.",
+          "condition": "price attempts to rally above 6780–6790",
+          "expected_result": "Expect rejection or quick failure above 6780–6790; any clean break is low probability and likely to revert toward 6720–6750; if momentum is sufficient, short-lived travel to 6810–6850 may occur but with high reversion risk."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Reversion target band around 6799–6848 (upside pivot and target) — the pivot behaves as a reversion point toward ~6810 if volatility is sold locally.",
+          "condition": "price rallies toward upside pivot at 6799.04",
+          "expected_result": "Price is likely to revert toward ~6810 after touching 6799–6848, with limited continuation beyond that band unless strong supportive flow appears."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma concentration and risk cluster near ~6689–6724 (lower probability support cluster shown in script outputs), indicating an area of downside magnet and suppressed volatility below centroid.",
+          "condition": "price moves below centroid (~6675) toward 6688–6724",
+          "expected_result": "Price will be magnetized to 6688–6724 and trade with lower volatility there, showing tendency to pin and mean-revert rather than trend strongly lower."
+        }
+      ]
+    }
+  }
+}

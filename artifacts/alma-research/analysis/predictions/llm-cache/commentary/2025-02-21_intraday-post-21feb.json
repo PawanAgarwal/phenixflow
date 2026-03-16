@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:52:05.195Z",
+  "inputHash": "7ed6f6f4c797d8e895543afb09e84a5c431e917f",
+  "payload": {
+    "responseId": "resp_0b56d8117979df360069b7623b942881918351c3f77d5febb2",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX trades below the centroid 6105, the distribution will shift toward retesting the lows.",
+          "condition": "SPX < 6105",
+          "expected_result": "Price moves lower and tests recent lows (measurable decline from 6105 toward prior low levels)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the main pivot 6085.58 breaks, 6045 will be magnetic to the downside with spot down and vol down.",
+          "condition": "SPX < 6085.58 (break)",
+          "expected_result": "SPX moves down toward ~6045 accompanied by declining implied volatility (IV falls)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The zero vanna at 6071 can be broken only if volatility cools down; otherwise it acts as support.",
+          "condition": "volatility decreases sufficiently",
+          "expected_result": "SPX breaks below 6071 when IV falls; if IV does not fall, SPX holds above 6071."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX is above 6160.93, an upside magnet at 6186.4 will come into effect.",
+          "condition": "SPX > 6160.93",
+          "expected_result": "SPX gravitates toward and trades up to ~6186.4."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The local zero vanna flip at 6121 can be broken only if vol goes down; it will be stronger into the PM when color comes into effect.",
+          "condition": "IV decreases, particularly in AM vs PM dynamics",
+          "expected_result": "SPX drops below 6121 only when IV falls; otherwise 6121 holds as support into PM."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If 6121 and 6130.39 are broken, there is a better chance to vacuum up towards 6160 and 6186 and pin there.",
+          "condition": "SPX < 6121 and SPX < 6130.39 (breaks)",
+          "expected_result": "After those breaks, SPX reverses or rallies up toward 6160 and then 6186 and may consolidate/pin near those levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX falls below the 6121 vanna flip in the AM, it will not go back above that line.",
+          "condition": "SPX falls below 6121 during AM",
+          "expected_result": "SPX remains below 6121 for the rest of the day (no reclaim above 6121 intraday)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There may be sell into the close depending on how the roll goes after AM exposure and where settlement comes out.",
+          "condition": "AM expo roll and settlement dynamics (unfixed)",
+          "expected_result": "In the session close period, SPX experiences selling pressure leading to a lower close versus earlier intraday levels."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "If volatility catches up, it creates a vol squeeze with 18.5 acting as a VIX pivot.",
+          "condition": "volatility increases (VIX rises toward pivot)",
+          "expected_result": "VIX moves toward or through 18.5, producing a volatility squeeze effect that could compress underlying directional moves."
+        }
+      ]
+    }
+  }
+}

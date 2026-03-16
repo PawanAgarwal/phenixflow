@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:28:30.022Z",
+  "inputHash": "d4cbb8c036d4a3e3d20c2925aa855b487f3a7bd5",
+  "payload": {
+    "responseId": "resp_080bd673054726350069b786e6f4e0819cbba0252a8e5c1a6f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-04-17T10:45:41.831Z",
+          "instrument": "",
+          "prediction_text": "Post OpEx we can get some buyback flows, but after vol is coming back.",
+          "condition": "Post OpEx",
+          "expected_result": "Buyback flows increase shortly after OpEx, followed by rising volatility"
+        },
+        {
+          "made_at": "2025-04-17T10:45:41.831Z",
+          "instrument": "",
+          "prediction_text": "If puts are decaying, dealers will become longer delta, which is supportive and reduces the chance of a black swan.",
+          "condition": "puts are decaying",
+          "expected_result": "Dealer net delta increases (becomes longer) and market tail-risk probability declines"
+        },
+        {
+          "made_at": "2025-04-17T10:45:41.831Z",
+          "instrument": "",
+          "prediction_text": "If puts start to print, dealers will become shorter delta.",
+          "condition": "puts start to print",
+          "expected_result": "Dealer net delta decreases (becomes shorter) as put selling increases"
+        },
+        {
+          "made_at": "2025-04-17T19:11:34.712Z",
+          "instrument": "",
+          "prediction_text": "Price will continue to hover and range-bound around the centroid (mean reversion expected).",
+          "condition": "",
+          "expected_result": "Price remains in a narrow range around the centroid and reverts to the centroid on intraday moves"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:27:54.270Z",
+  "inputHash": "2c0860d1e3fc44f53a6f8c31338eb6b9e4474bea",
+  "payload": {
+    "responseId": "resp_009e27e4c8d6215b0069b786c49d508193a5285a39eb5249e3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-03T22:11:00.417Z",
+          "instrument": "",
+          "prediction_text": "The 5838.80 line will be held into March OpEx.",
+          "condition": "",
+          "expected_result": "Price will not close below 5838.80 through March options expiration (OpEx)."
+        },
+        {
+          "made_at": "2025-03-03T22:30:07.197Z",
+          "instrument": "",
+          "prediction_text": "5881.34 is the pivot from a momentum perspective.",
+          "condition": "",
+          "expected_result": "Price will rotate around 5881.34 with momentum-driven moves reversing or accelerating when crossing that level during subsequent trading sessions."
+        },
+        {
+          "made_at": "2025-03-03T22:41:00.486Z",
+          "instrument": "",
+          "prediction_text": "The market keeps expecting downside pressures without tail-event fear over the coming week, indicated by strong put-side bid and moving tail calls.",
+          "condition": "for the week",
+          "expected_result": "During the referenced week, downside intraday moves or drift will be more probable than large tail-event spikes, evidenced by sustained put buying and modest call tail activity."
+        },
+        {
+          "made_at": "2025-03-03T22:08:37.500Z",
+          "instrument": "",
+          "prediction_text": "Buying puts on bounces at market resistances yields a high probability of winning, with faster alpha on 0DTEs by staying short duration.",
+          "condition": "",
+          "expected_result": "Short-duration (0DTE) put purchases executed on resistance bounces will produce a positive return more often than not and outperform longer-dated put strategies over the same bounce events."
+        }
+      ]
+    }
+  }
+}

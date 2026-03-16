@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:27:26.974Z",
+  "inputHash": "f1fc6608bed0f29d89f11508c3453b00847bfceb",
+  "payload": {
+    "responseId": "resp_0393171be2e1cd5a0069b786aaf084819da670f86215154b8a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-16T15:42:15.374Z",
+          "instrument": "SPY",
+          "prediction_text": "SPY will pin between the $412-$413 strikes.",
+          "condition": "",
+          "expected_result": "SPY price trades and remains between $412 and $413 for a sustained period (e.g., several hours) after the timestamp."
+        },
+        {
+          "made_at": "2025-02-16T17:48:10.956Z",
+          "instrument": "VIX",
+          "prediction_text": "VIX implied volatility will dump (decline).",
+          "condition": "",
+          "expected_result": "VIX implied volatility decreases noticeably (e.g., a drop of 10% or more) within the next trading session."
+        },
+        {
+          "made_at": "2025-02-16T17:48:10.956Z",
+          "instrument": "SPX",
+          "prediction_text": "SPX vomma will dump (decline).",
+          "condition": "",
+          "expected_result": "SPX vomma metric declines noticeably within the next trading session (e.g., a measurable drop relative to its value at the timestamp)."
+        }
+      ]
+    }
+  }
+}

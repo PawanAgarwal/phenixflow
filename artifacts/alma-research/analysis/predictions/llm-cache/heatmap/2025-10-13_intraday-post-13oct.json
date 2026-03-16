@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:05:00.551Z",
+  "inputHash": "3ece0bb24ca31bed8971a14c37c76421899b906a",
+  "payload": {
+    "responseId": "resp_0a286b0215d02ba30069b76546b7e8819694d333e70b81ab09",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / center of the fly around 6640 acts as a sticky pivot — opening relative to 6640 will determine flows; if price holds above 6640 momentum favors upside and puts below centroid are likely to be sold into weakness.",
+          "condition": "price opens and remains above 6640 (centroid)",
+          "expected_result": "Price tends to climb from centroid; target reversion/pinning toward 6686 and then 6712 area; downside moves under 6640 are more likely to be bought/absorbed and reverse back above centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky pivot at 6686 is a sticky zone/pinning magnet into the power hour; a bid in upside vol can push toward 6712, which can also become sticky after 1:30pm.",
+          "condition": "upside volatility is bid (and profile leaves room)",
+          "expected_result": "Price moves up to 6712 after initial push, may pin/revert around 6686–6712; possible spike to ~6750 but likely to revert back to the 6712/6686 area."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot around 6552–6556 is a supportive sticky zone with strong downside gamma supply; 6500 shows rejection (sticky rejection/absorption below 6552).",
+          "condition": "price moves toward 6552 area",
+          "expected_result": "Downside momentum will be absorbed near 6552–6556 and is likely to stall or reverse before reaching 6500; expect rejection/squeeze higher from this band."
+        }
+      ]
+    }
+  }
+}

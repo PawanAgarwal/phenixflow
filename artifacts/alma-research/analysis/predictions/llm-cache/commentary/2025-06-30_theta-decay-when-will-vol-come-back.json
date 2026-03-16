@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:59:22.153Z",
+  "inputHash": "97822f4f37b7c338f486308d50757cd16c434f8e",
+  "payload": {
+    "responseId": "resp_0deaebe2fd5ad2390069b763ef4b58819da281d491fe44607b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Vol is expected to come back next week, not this week.",
+          "condition": "",
+          "expected_result": "Implied volatility for traded instruments increases during the calendar week starting 2025-07-07 compared with the current week (week of 2025-06-30)."
+        },
+        {
+          "instrument": "(unspecified equity index with centroid 6193.14)",
+          "prediction_text": "Price will mostly range intraday around the centroid 6193.14 with low odds of sustained upside.",
+          "condition": "",
+          "expected_result": "Underlying price trades largely within a narrow range around 6193.14 during the trading day, with no sustained breakout above 6212.94/6205 that holds for multiple consecutive intraday bars."
+        },
+        {
+          "instrument": "(unspecified equity index with pivot 6212.94)",
+          "prediction_text": "If intraday volatility is offered, upside gravity will take effect and a fakeout risk exists until 6212.94 margin of error is cleared.",
+          "condition": "intraday volatility is offered",
+          "expected_result": "After a period of decreasing intraday implied volatility, the index moves higher toward or above 6212.94 but reverses within the session (a fakeout), rather than sustaining the move higher."
+        },
+        {
+          "instrument": "(unspecified equity index with resistance 6205)",
+          "prediction_text": "The 6205 strike is acting as a major resistance and could be broken only if volatility calms down; odds are low for a break.",
+          "condition": "volatility calms down",
+          "expected_result": "If implied volatility declines materially, the index breaks and holds above 6205 for the remainder of the trading day; otherwise attempts to exceed 6205 fail and reverse."
+        },
+        {
+          "instrument": "(unspecified equity index with support 6173.95)",
+          "prediction_text": "Downside support is at 6173.95 and if vol catches up this level will hold as a pivot.",
+          "condition": "volatility catches up",
+          "expected_result": "During increased intraday volatility, the index finds support at or near 6173.95 and rebounds toward the centroid rather than continuing a sustained decline."
+        },
+        {
+          "instrument": "(unspecified equity index with support range 6143/6153)",
+          "prediction_text": "If 6173.95 breaks, the 6143/6153 range will act as very strong support and push momentum back toward 6173.95.",
+          "condition": "6173.95 breaks and is confirmed by retest and structure beyond the line",
+          "expected_result": "Following a confirmed break below 6173.95 and a retest, the index declines to the 6143–6153 range and then rebounds back up toward 6173.95 within subsequent intraday sessions."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Theta decay is expected to be high today and 0DTE options should not be used this week.",
+          "condition": "",
+          "expected_result": "Time decay (theta) causes accelerated erosion of short-dated option premium on the trading day, making 0DTE option strategies more likely to lose value; traders reduce or avoid 0DTE positions this week."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "There is a one fast reversion trade edge intraday with a strategy to buy calls near support and buy puts near resistance as market hits reversion thresholds.",
+          "condition": "",
+          "expected_result": "When price reaches identified intraday support or resistance/reversion thresholds, short-term directional trades (buy calls at support, buy puts at resistance) achieve quick profits consistent with 20–30% target on executed option positions before reversal."
+        }
+      ]
+    }
+  }
+}

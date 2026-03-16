@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T01:55:03.291Z",
+  "inputHash": "490184575aafccc427c870b969ad64cf3eacabb2",
+  "payload": {
+    "responseId": "resp_084c6f43861b778b0069b762ec9dcc8194b3c641d30547f109",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "The market will see vol selling consolidation this week and potential stabilization into April OpEx.",
+          "condition": "",
+          "expected_result": "Volatility measures (e.g., VIX, realized vol) decline or flatten over the coming week and remain lower through April options expiration compared with immediate prior spikes."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Yield curve will continue bull-steepening as investors expect central banks to ease monetary policy.",
+          "condition": "",
+          "expected_result": "Short-term yields fall relative to long-term yields, producing a steeper 2s10s (or similar) curve over coming days."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Carry trade unwinding will increase as short-term yields decline and volatility spikes, reducing attractiveness of risky carry positions.",
+          "condition": "",
+          "expected_result": "Positions sensitive to carry (e.g., high-yield ETFs, risk-on FX carry trades) show net outflows and price declines concurrent with rising short-term volatility and falling short yields."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market is hedging for a potential retest of the lows heading into the data release and FOMC Minutes.",
+          "condition": "",
+          "expected_result": "Put option open interest and implied volatilities rise ahead of the data release/FOMC minutes; underlying indices approach or retest recent lows."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market likely to become complacent expecting a dovish Fed and liquidity returning soon.",
+          "condition": "",
+          "expected_result": "Equity implied volatilities fall and risk-on assets rally absent dovish surprises from the Fed."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Fed will not be overly dovish this month unless inflation trend and its volatility stabilize.",
+          "condition": "",
+          "expected_result": "Fed communications and policy decisions remain neutral to slightly hawkish; market-implied easing expectations are not materially priced in."
+        },
+        {
+          "instrument": "(index unspecified - centroid 5199.70)",
+          "prediction_text": "Centroid of the intraday speed profile is at 5199.70.",
+          "condition": "",
+          "expected_result": "Price action clusters around 5199.70 intraday, with observed gamma/speed dynamics changing character across that level."
+        },
+        {
+          "instrument": "(index unspecified - pivot 5147.33)",
+          "prediction_text": "Downside pivot is 5147.33; if vol realizes upwards below this level, puts will start to print and price may head back toward 5040/5000.",
+          "condition": "price < 5147.33 and vol rises",
+          "expected_result": "Put option volume and open interest increase and the underlying trades down toward 5040–5000."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX breaking above 42.5 will lead to a move up to around 52.5.",
+          "condition": "VIX > 42.5",
+          "expected_result": "VIX rises further and reaches approximately 52.5 following the breakout above 42.5."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX downside support at 37.14 with a target in the 30s if it breaks lower.",
+          "condition": "VIX < 37.14",
+          "expected_result": "VIX declines into the 30s after breaching 37.14."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Negative color (charm convexity) implies elevated sticky volatility.",
+          "condition": "",
+          "expected_result": "Implied volatilities remain elevated and decline slowly (sticky) rather than reverting quickly after spikes."
+        }
+      ]
+    }
+  }
+}

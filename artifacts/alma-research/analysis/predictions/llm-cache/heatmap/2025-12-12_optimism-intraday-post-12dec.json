@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:11:40.006Z",
+  "inputHash": "57bf2f64fdf9dfe78d63c5693c30313b95c60333",
+  "payload": {
+    "responseId": "resp_0cb680a4b2df9c6d0069b766d565048194817197d2ac7590ae",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/centroid zone around 6913–6929 (centroid 6912.86–6929.58) acting as magnet; market likely to revert to this band after intraday moves. Upper bound of profile stays sticky in last 2 hours, making ~6927–6937 an upside pin/target area.",
+          "condition": "none",
+          "expected_result": "If SPX moves away intraday, expect reversion back into 6913–6929 within the session; if centroid holds and momentum persists, price can pin/target 6927.6 with extension to ~6937.49 before reverting to ~6895–6900."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Line in the sand / support near 6894.98; failure to hold signals weaker structure and increases chance of move to downside pivot.",
+          "condition": "SPX closes below 6894.98",
+          "expected_result": "Price should gravitate toward downside pivot ~6881.49 and then target 6829.95 (with intermediate support 6840–6850) within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and sticky rejection zone around 6881–6840/6850; gamma trough and bid for downside vol clustered near 6829.95/6800 create a reversion opportunity off these levels.",
+          "condition": "price reaches 6840–6850 or 6829.95",
+          "expected_result": "Expect buying/reversion pressure back up toward the line in the sand ~6895–6900 (initial) or into the centroid band 6913–6929 (secondary)."
+        }
+      ]
+    }
+  }
+}

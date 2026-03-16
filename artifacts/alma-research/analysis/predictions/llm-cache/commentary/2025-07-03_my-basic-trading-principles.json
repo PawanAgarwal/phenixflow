@@ -1,0 +1,114 @@
+{
+  "cachedAt": "2026-03-16T01:59:44.182Z",
+  "inputHash": "dc1489e283e426d7dd01dd63a2c83742a8687426",
+  "payload": {
+    "responseId": "resp_0471452b3f9919f90069b763fba20481a3ae646b7c5b408b25",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "When momentum has been confirmed, I will size up on the bet (expect continued directional move).",
+          "condition": "momentum has been confirmed",
+          "expected_result": "Price will continue in the confirmed direction producing a tradable momentum move that can be scaled into for profit"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If a breakout occurs, price will retest the pivot, calm down, and build structure beyond that pivot (true breakout behavior).",
+          "condition": "breakout candle with volume ≥28% above 5-period mean and body ≥68% larger than rolling mean",
+          "expected_result": "After the breakout candle, price will pull back to the pivot and then resume beyond the pivot establishing the new trend level"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If a fakeout occurs, price will return to the old environment (failed breakout).",
+          "condition": "price move that does not satisfy breakout confirmation criteria",
+          "expected_result": "Price will reverse back into the prior range or structure instead of sustaining the new move"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "In mean-reversion setups with well-defined support/resistance within a tight IV-projected zone and low gamma, price will bounce from the clear target and revert toward the mean.",
+          "condition": "well-defined support/resistance in a relatively tight IV-projected zone and low gamma",
+          "expected_result": "Price will reverse at the defined support/resistance and move back toward the calculated mean/reversion threshold"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If gamma is low and net color is negative and key support/resistance lie outside the risk level or 68.2% range, I will switch to momentum trading because mean reversion is unlikely to occur.",
+          "condition": "gamma low and net color negative and support/resistance outside risk level or 68.2% range",
+          "expected_result": "Momentum-directional moves will be more likely than tight mean-reversions, favoring trend-following trades over mean-reversion entries"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "In short-term mean-reversion trades with steep short fly patterns, expect strong theta decay accelerated by IV crush from central long gamma; avoid 0DTE.",
+          "condition": "steep short fly pattern with central long gamma generating IV crush",
+          "expected_result": "Option positions with 0DTE will experience rapid time-value decay and IV reduction, making them unsuitable; faster exits or 1–2DTE 55/60-delta options are preferable"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "When a long fly pattern occurs, volatility is likely to be elevated for at least the first few hours.",
+          "condition": "pattern is a long fly",
+          "expected_result": "IV will remain elevated for several hours after market open, increasing option premiums and gamma exposure during that period"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If a fakeout occurs at my entry target when sizing up, I will switch from ITM to ATM strikes to maximize gamma and accelerate profits.",
+          "condition": "fakeout occurs at my entry target level when sizing up",
+          "expected_result": "Switching to ATM strikes will increase gamma so that further favorable moves generate larger option delta gains"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "For longer-term bets anticipating a larger vol event on the downside, I will use quarterly and EOY expirations because demand increases and premiums rise.",
+          "condition": "anticipating a larger vol event on the downside",
+          "expected_result": "OTM put premiums for quarterly/EOY expirations will rise due to increased demand, improving payoff for downside option strategies"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If I expect a strong vol-crush rally, I may open a 2×1 or 3.5×1 short call spread with at least a monthly expiry.",
+          "condition": "expectation of a strong vol-crush rally",
+          "expected_result": "Selling a call spread will profit as spot rises and volatility compresses, reducing short-call spread cost and yielding premium capture"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Under a high-conviction vanna-driven rally (strong put decay), I might sell a 22-delta put against the call (risk reversal).",
+          "condition": "high-conviction vanna-driven rally expectation",
+          "expected_result": "Selling the 22-delta put will collect premium and benefit from put decay as spot rallies, improving net position payoff"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If I expect no vanna-squeeze, I can sell a 30/20-delta OTM put and a 30/20-delta OTM call against an ATM call.",
+          "condition": "expectation of no vanna-squeeze",
+          "expected_result": "Constructed spread will collect premium and profit if spot remains within expected range and vol behavior is neutral"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If I expect a spot-up/vol-up short-vanna rally, I might go long a call-ratio spread.",
+          "condition": "expectation of spot-up/vol-up short-vanna rally",
+          "expected_result": "Long call-ratio spread will gain value as spot rises and volatility increases, producing favorable asymmetric upside payoffs"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If I expect a spot-down/vol-down move, I will consider a short-put ratio spread to capture declining vol.",
+          "condition": "expectation of spot-down/vol-down move",
+          "expected_result": "Short-put ratio spread will profit from decreasing volatility and downward spot move within spread limits"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If I foresee heightened vol on the downside due to a trend change, I will sell OTM calls against my ATM put.",
+          "condition": "foreseen heightened downside vol from trend change",
+          "expected_result": "Selling OTM calls will collect premium to offset downside put costs, benefiting if volatility rises with downward spot pressure"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "In intraday trading there are generally at most one or two tradable momentum moves per day; missing them means you should not chase.",
+          "condition": "intraday session",
+          "expected_result": "Most days will present zero to two high-probability momentum moves; chasing beyond those reduces performance and increases losses"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "I will set stop-losses at pivotal areas using 21-day ATR×0.674 offset to avoid algos kicking me out too early.",
+          "condition": "placing stop-loss at pivotal area",
+          "expected_result": "Stops placed using the ATR adjustment will reduce the likelihood of being stopped out by short-term algo-driven fakeouts while keeping risk defined"
+        }
+      ]
+    }
+  }
+}

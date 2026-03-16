@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:04:54.516Z",
+  "inputHash": "5350e33b4ca4e4a48003acd54809dca08097960b",
+  "payload": {
+    "responseId": "resp_01764c26e72c1a740069b76542316c819e968b4c622bb64f8d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Monday-Tuesday will show stability and a grind-up market action.",
+          "condition": "start of the trading week (Monday-Tuesday) following the post",
+          "expected_result": "prices will drift higher gradually with low volatility during those two days"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility will rise into the second half of the week, driving downside toward 6514.36.",
+          "condition": "second half of the same week (Wednesday-Friday)",
+          "expected_result": "market moves will increase in magnitude and push the referenced index down to 6514.36"
+        },
+        {
+          "instrument": "UST (US Treasury bonds)",
+          "prediction_text": "China is quietly selling US Treasuries, causing yield spikes in after-hours or Asian sessions.",
+          "condition": "continued selling by Chinese institutions/offshore custodians",
+          "expected_result": "US Treasury yields will spike during after-hours or Asian trading sessions when selling occurs"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "I don’t expect serious geopolitical escalation between the US and China until next spring.",
+          "condition": "near-term period before next spring",
+          "expected_result": "no major escalatory events that would trigger large, sustained market shocks between now and next spring"
+        }
+      ]
+    }
+  }
+}

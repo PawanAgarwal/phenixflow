@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T01:58:47.252Z",
+  "inputHash": "c2a379fbcfc5103bcd23afdeba7e603c69247a6e",
+  "payload": {
+    "responseId": "resp_048f28ea621ece9c0069b763cc678481a38cf365b8c2d56f81",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX will trade in the 18.74 - 21.74 range today with a pin around the 20s.",
+          "condition": "",
+          "expected_result": "VIX remains between 18.74 and 21.74 for the trading day and closes near 20 (within ±0.5 points)."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "If VIX moves above 21.74, call printing will occur and the expiry will be suppressive for the index during the day with potential gamma squeeze up to the low 23s.",
+          "condition": "VIX > 21.74",
+          "expected_result": "VIX spikes toward ~23 intraday and option open interest shifts to calls, with intraday impact that suppresses index volatility at expiration."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If VIX stays in the 18.74 - 21.74 range (high odds, pin to 20s), this will cap the SPX downside and be suppressive tomorrow.",
+          "condition": "VIX within 18.74–21.74",
+          "expected_result": "SPX does not break significant downside levels intraday and remains range-bound or higher the next trading day."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Daily intraday pivot is 6022.49 - 6026.41 and can only be broken if vol catches up; daily max is 6068.5 (especially after 1:10 PM).",
+          "condition": "",
+          "expected_result": "SPX trades within the pivot band 6022.49–6026.41 for much of the day and fails to exceed 6068.5 before 13:10 local time (or if it does, it follows a clear vol expansion)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local pivot at 6035 will decide if spot gets pinned to 6020 or to 6060.",
+          "condition": "",
+          "expected_result": "If SPX trades and closes below 6035 intraday, price gravitates toward ~6020; if it trades and closes above 6035, price gravitates toward ~6060 by session end."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 5958.82 - 5951.20 can be broken only if spot/vol beta spikes (unlikely today).",
+          "condition": "spot/vol beta spikes",
+          "expected_result": "If spot/vol beta rises sharply, SPX breaks below the 5958.82–5951.20 band intraday; otherwise it holds above this band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Daily min coded at 5970 (vanna flip level) will be in full effect after 11:00 AM and is close to the centroid of 5978.71.",
+          "condition": "time >= 11:00 AM",
+          "expected_result": "SPX tests or bounces near 5970–5978 range after 11:00 AM, showing vanna-flip related price behavior (reversion or pinning)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5996 is a strong pivot into the power hour with pin potential to 5990.",
+          "condition": "",
+          "expected_result": "During the power hour, SPX trades around 5996 and is pinned near 5990 (closing within ±6 points of 5990)."
+        },
+        {
+          "instrument": "BRNT",
+          "prediction_text": "A full blockade of the Strait of Hormuz could send Brent to $120–$130.",
+          "condition": "full blockade of the Strait of Hormuz",
+          "expected_result": "Brent crude rallies to between $120 and $130 per barrel if the Strait of Hormuz is fully blocked."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility will be capped during this month and next month until tariffs hit in August.",
+          "condition": "until tariffs take effect in August",
+          "expected_result": "Implied volatility levels across major asset classes remain relatively muted (no sustained vol-expansion) through the next ~6–8 weeks until tariffs implementation."
+        }
+      ]
+    }
+  }
+}

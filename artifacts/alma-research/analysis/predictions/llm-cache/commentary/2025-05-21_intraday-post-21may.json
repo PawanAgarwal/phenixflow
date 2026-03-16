@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:57:18.037Z",
+  "inputHash": "e59428cb0a031f3229bc8582564eefe88ad3e21c",
+  "payload": {
+    "responseId": "resp_007e6b09d9ab2c280069b763758f5c819582ec328f9e56457f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "If volatility decreases sharply (shorts don’t get squeezed, puts don’t get unwound) the price will be rejected at the upside zero vanna level.",
+          "condition": "volatility decreases sharply",
+          "expected_result": "ES will reverse downward upon reaching ~5940, failing to break higher and showing a rejection signature"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If the price stays below the upside pivot until 2PM, the move will suppress volatility and downside targets become reachable.",
+          "condition": "price stays below upside pivot until 2PM",
+          "expected_result": "Volatility (VIX/VX futures) will decrease and ES will break 5875 with primary target 5852 and secondary targets 5800/5796"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If the squeeze occurs, the hard-stop (upside breakout) is at 5993/6000.",
+          "condition": "squeeze happens",
+          "expected_result": "ES will rally and break above 5993–6000 (upside breakout)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The centroid of the positioning is 5903.22 and positioning favors rangebound action with local negative color reducing gamma during the day.",
+          "condition": "",
+          "expected_result": "Market will trade largely between the defined pivots (5892.07 downside pivot and 5919.22 upside pivot) with reduced intraday gamma—i.e., lower intraday volatility and limited trend continuation"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Breaking 5894.03 will shift sentiment toward more optimism below that line and lead to increased call selling and downside momentum into Friday.",
+          "condition": "5894.03 is broken",
+          "expected_result": "Instruments (ES/SPY) will exhibit increased downside momentum over subsequent sessions with elevated call selling and further declines into Friday"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "As VIX puts get unwound, you will see hedge unwind: VX futures buyback and ES sell.",
+          "condition": "VIX puts get unwound",
+          "expected_result": "VX futures net buying will occur while ES experiences selling pressure (price declines)"
+        }
+      ]
+    }
+  }
+}

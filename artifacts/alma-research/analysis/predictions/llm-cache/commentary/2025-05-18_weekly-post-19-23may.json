@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:57:09.483Z",
+  "inputHash": "cd4a742363f6cca86775dbd7a8aeae0028123b96",
+  "payload": {
+    "responseId": "resp_06bd8664fb07eb980069b7636be384819da956c7c751455bb3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "A reversal toward 5518.31 is 77.94% likely now and should be considered once the model exceeds 80% for confirmation.",
+          "condition": "reversion model goes above 80%",
+          "expected_result": "SPX declines to around 5518.31 within the model's forecast horizon"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The current market rally is topish and likely to roll over (bear-market rally), with Q3 looking very bearish.",
+          "condition": "",
+          "expected_result": "SPX will decline materially in Q3 compared with current levels, consistent with a bear-market continuation"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Violent volatility spike is likely due to heavy short-vol positioning, zomma and vomma risk, and rising SPX/VIX beta.",
+          "condition": "",
+          "expected_result": "VIX will rise sharply (sustained move higher) during a risk-off episode, producing losses for short-front-end vol positions"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market positioning around 5850/5800 strikes foreshadows a bet on price decline and higher volatility after OpEx.",
+          "condition": "",
+          "expected_result": "SPX will move lower toward or below the 5850–5800 area while implied volatility increases"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Primal volatility range implies ES should trade between 5885.67 and 6011.32 (with lower bound 5855.28 as extension).",
+          "condition": "",
+          "expected_result": "ES will remain within or revert to the 5885.67–6011.32 range in the near term, failing a breakout"
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "Primal volatility range implies NDX should trade between 21149.57 and 21706.29 (with lower bound 21014.94 as extension).",
+          "condition": "",
+          "expected_result": "NDX will remain within or revert to the 21149.57–21706.29 range in the near term"
+        },
+        {
+          "instrument": "NQ",
+          "prediction_text": "Primal volatility range implies NQ should trade between 21111.12 and 21689.37 (with lower bound 20971.28 as extension).",
+          "condition": "",
+          "expected_result": "NQ will remain within or revert to the 21111.12–21689.37 range in the near term"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If volatility decreases and momentum drifts lower, the increased long-gamma at 5850 can have a local effect but overall positioning creates a steep short-speed environment ready to grab falling momentum.",
+          "condition": "volatility decreases and price drifts toward lower strikes",
+          "expected_result": "A temporary stabilization or pinning around the 5850 area may occur before further downside as positioning amplifies short-speed effects"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Skew has steepened indicating the market expects a healthy pullback rather than an uncontrolled black swan.",
+          "condition": "",
+          "expected_result": "SPX will experience a moderate decline (healthy pullback) rather than an extreme crash in the near term"
+        }
+      ]
+    }
+  }
+}

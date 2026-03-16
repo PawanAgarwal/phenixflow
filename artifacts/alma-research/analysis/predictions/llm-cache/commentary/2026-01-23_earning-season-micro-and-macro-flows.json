@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T02:13:45.857Z",
+  "inputHash": "e76591f45fe9254e9831a4d748680ab52847ea9f",
+  "payload": {
+    "responseId": "resp_0a2c4a3475930be60069b7674e65b8819da5edf9d34788825a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "JPY/USD",
+          "prediction_text": "Yen weakness may persist through the first half of 2026.",
+          "condition": "",
+          "expected_result": "USD/JPY remains higher (weaker yen) through H1 2026, trading above levels prevailing at January 2026 for most of that period."
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "Later in 2026 the yen could strengthen back toward ~140 against the dollar.",
+          "condition": "if the US–EU diplomatic dispute is resolved",
+          "expected_result": "USD/JPY moves toward and trades near 140 following resolution of the US–EU dispute."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If BoJ communication leads investors to price earlier tightening, US momentum stock selling can be expected.",
+          "condition": "BoJ communication pushes investors to price earlier tightening",
+          "expected_result": "US momentum-heavy equities (e.g., mega-cap tech) decline materially versus broader market, showing notable selling pressure."
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "Retail-driven option flows and new single-stock expirations will further lift retail volumes and support heavily shorted stocks, compressing downside volatility.",
+          "condition": "",
+          "expected_result": "NDX shows reduced intraday downside volatility and relative outperformance of previously heavily shorted stocks during months after January 2026."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Corporate repurchases should re-accelerate from February 2026, providing an additional demand backstop and further compressing the kurtosis of returns.",
+          "condition": "end of blackout periods in late January/early February 2026",
+          "expected_result": "In February 2026, buyback activity increases and SPX experiences lower left-tail returns (fewer large intraday drops) compared with January 2026."
+        },
+        {
+          "instrument": "US 2s-10s yield spread",
+          "prediction_text": "A normalization process is starting to take shape with yield-curve steepening continuing as managers buy longer-dated bonds.",
+          "condition": "",
+          "expected_result": "2s-10s spread widens further from January 2026 levels over subsequent weeks/months."
+        },
+        {
+          "instrument": "GLD",
+          "prediction_text": "Gold will continue to be bid by central banks and ETFs and remains on a path to significantly higher levels this year.",
+          "condition": "",
+          "expected_result": "GLD (or spot gold) rises further from January 2026 levels, maintaining or accelerating the year‑to‑date uptrend toward multi-year highs."
+        },
+        {
+          "instrument": "Copper (and copper-related ETFs)",
+          "prediction_text": "CTAs have built long positions in copper and industrial-metals inflows will sustain copper strength in early 2026.",
+          "condition": "",
+          "expected_result": "Copper prices outperform many other commodities and remain elevated or rise further in the weeks following January 2026."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Into February OpEx there is a meaningful probability of managed sell-offs designed to damp volatility, producing high-volume intraday buy‑the‑dip moves rather than a freefall.",
+          "condition": "into February OpEx amid US–EU conflict",
+          "expected_result": "Market episodes in February 2026 show high intraday volume with sharp selloffs quickly met by heavy buying, limiting multi-day declines in SPX to managed pullbacks."
+        },
+        {
+          "instrument": "CTA equity positioning (generic)",
+          "prediction_text": "The major US equity indices are only ~1–2% away from levels where CTAs would begin to turn into net sellers, generating asymmetric downside selling if indices fall.",
+          "condition": "indices decline ~1–2% from January 2026 levels",
+          "expected_result": "CTA flows flip to net selling and accelerate downside pressure, amplifying market declines beyond the initial 1–2% move."
+        }
+      ]
+    }
+  }
+}

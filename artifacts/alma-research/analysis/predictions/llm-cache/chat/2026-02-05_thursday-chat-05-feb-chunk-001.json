@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:30:30.517Z",
+  "inputHash": "0d461ff403fd8fa3e9f4430a4f72b1ddafbf06c2",
+  "payload": {
+    "responseId": "resp_034a51bd4479a97a0069b78762737881968d4fe8042ea0eb19",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-02-05T21:58:12.725Z",
+          "instrument": "",
+          "prediction_text": "Downside was protected and the centroid held, implying prices will stabilize around the centroid.",
+          "condition": "",
+          "expected_result": "Price will remain near the centroid level for a sustained period (e.g., little net change over the next N sessions) indicating stabilization."
+        },
+        {
+          "made_at": "2026-02-05T22:55:05.677Z",
+          "instrument": "",
+          "prediction_text": "Set a buy order at the support with a 10‑point stop-loss and scale in if the market reverses and momentum confirms.",
+          "condition": "market reverses and momentum confirms",
+          "expected_result": "A buy order executed at identified support; if price reverses and momentum indicators confirm, additional buy sizes are added while initial position uses a 10‑point stop-loss."
+        }
+      ]
+    }
+  }
+}

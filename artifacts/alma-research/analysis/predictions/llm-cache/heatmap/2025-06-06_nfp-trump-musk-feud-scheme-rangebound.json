@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:58:17.409Z",
+  "inputHash": "08776ae356a2ff8adbae90a7effcd2ea8659df81",
+  "payload": {
+    "responseId": "resp_0a4b549fa23489c40069b763b38b80819298f25346ec848797",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma sink / sticky zone around 5975–5985 (centroid ~5976.5) acting as a pin/rejection area to upside if vol remains low; price likely to gravitate back toward this band after intraday excursions.",
+          "condition": "none",
+          "expected_result": "If SPX moves away intraday, expect reversion back to 5975–5985 within same session absent a volatility surge."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside sticky / support cluster between 5900–5925 with local slowdown toward ~5912 and deeper support ~5889 if volatility picks up.",
+          "condition": "none",
+          "expected_result": "On weakness, SPX should find initial support 5925–5900 and stall around 5912; if vol increases, expect further travel to ~5889."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside resistance / pin at 6000 with a valid upside pivot at ~6008; a volatility-driven squeeze can extend toward 6045–6055 but 6000 will act as a magnet/resistance if vol does not ramp.",
+          "condition": "none",
+          "expected_result": "If upside data/volative move occurs, SPX may breach 6008 and run to 6045–6055; otherwise expect rejection or pinning near 6000–6008."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Major longer-range resistance cluster above ~6050 (around 6055–6058) indicated by concentrated gamma peak—unlikely to be cleared intraday without a pronounced vol surge.",
+          "condition": "none",
+          "expected_result": "Expect strong rejection or stalled advance on attempts to push SPX into the 6050–6060 area during the trading day unless volatility materially increases."
+        }
+      ]
+    }
+  }
+}

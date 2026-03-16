@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:14:26.330Z",
+  "inputHash": "ed6394b93641e852dbb64c874cc81249738dc992",
+  "payload": {
+    "responseId": "resp_029b5477087726f40069b7677b3a78819f9d461578a371b320",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local sticky support cluster around 6850-6840 visible as a supportive gamma trough and noted in text; low probability to hit downside pivot (6837.54) so expect intraday support and limited downside below ~6840.",
+          "condition": "Price approaches 6850-6840 zone",
+          "expected_result": "Spot should find support and bounce within the session, reversing intraday declines back toward centroid (~6860-6885) or higher; failure to hold would be notable downside break below 6837.54."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky target/pinning area near 6958-6982 shown by an upside pivot (6958.24) with a sticky target at 6982.04 and concentrated gamma/pinch on the heatmap around ~6980-7000; likely magnet for price if momentum and pivot hold.",
+          "condition": "Pivot at 6958.24 is held (price stays above pivot into late PM)",
+          "expected_result": "Price should gravitate toward and test the 6980-7000 area (target 6982.04), with increased chance of pinning or consolidation there rather than strong continuation away."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local reversion / vanna flip zone at ~6906 (6906/00) indicated as a line-in-the-sand that can provide reversion opportunities; heatmap shows gamma neutral corridor around ~6910 acting as a short-term mean.",
+          "condition": "Price crosses and then retests ~6906 after 11:30am",
+          "expected_result": "Expect short-term reversion back toward the centroid band (~6860-6885) or back above 6906 depending on trade direction; use retest confirmation before taking position."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside concentrated gamma/support around 6820-6838 (downside pivot target 6820.89 and pivot 6837.54) visible as a gamma concentration on the heatmap near 6820-6838; this is the most supportive range described.",
+          "condition": "Price moves down toward 6838-6821",
+          "expected_result": "High likelihood of support and limited travel below 6820-6821 intraday; expect bounce or consolidation if touched rather than free-fall through this zone."
+        }
+      ]
+    }
+  }
+}

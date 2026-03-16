@@ -1,0 +1,96 @@
+{
+  "cachedAt": "2026-03-16T01:55:16.466Z",
+  "inputHash": "0fcea98afa8df866c7b2f8da4ae86fd64e76d3b2",
+  "payload": {
+    "responseId": "resp_04ea0f7ba1adb1ba0069b762f56608819fb707bf99c8f93227",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Safe-haven assets will continue to surge, including gold, cash, and safe currencies, amid violent sell-offs in risk assets and record volatility.",
+          "condition": "",
+          "expected_result": "Gold prices will remain elevated and safe currencies (CHF, JPY) will appreciate against USD, while risk assets decline, measurable by gold price > current level and CHF/JPY strengthening vs USD over the next days/weeks."
+        },
+        {
+          "instrument": "GC (gold)",
+          "prediction_text": "Gold prices have rocketed above $3,200/oz and are expected to remain bid as investors seek shelter amid a weaker U.S. dollar and recession fears.",
+          "condition": "",
+          "expected_result": "Gold futures (GC) will trade at or above $3,200/oz in the near term and show net inflows into gold ETFs over the following week."
+        },
+        {
+          "instrument": "USD/CHF",
+          "prediction_text": "The Swiss franc will continue to hit multi-year highs versus the USD as investors flock to safe-haven currencies.",
+          "condition": "",
+          "expected_result": "USD/CHF will decline (CHF strengthens) to new multi-month/ten-year highs for CHF versus USD within days/weeks."
+        },
+        {
+          "instrument": "USD/JPY",
+          "prediction_text": "The yen will strengthen to multi-month highs and remain supported in the current risk-off environment.",
+          "condition": "",
+          "expected_result": "USD/JPY will fall to recent multi-month lows, indicating yen appreciation, during the ongoing volatility period."
+        },
+        {
+          "instrument": "US10Y",
+          "prediction_text": "Long-term U.S. Treasury yields could spike paradoxically during dash-for-cash episodes even as rate-cut expectations grow.",
+          "condition": "",
+          "expected_result": "10-year Treasury yield (US10Y) will experience sharp intraday or weekly increases (e.g., +30-50 bps) during episodes of market stress despite Fed easing bets."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Short-term Treasuries and cash will be in high demand, attracting record inflows into Treasury funds.",
+          "condition": "",
+          "expected_result": "Money market and short-term Treasury fund flows will show large positive inflows (comparable to ~$18.8bn/week) and yields on short-term Treasuries will compress."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "Stocks are heavily hedged and remain negatively biased; upside moves can only stabilize above 5360.27.",
+          "condition": "",
+          "expected_result": "S&P 500 index will remain under selling pressure and any sustained recovery will fail unless SPX closes and holds above 5360.27, otherwise further downside likely."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "The centroid of the net speed profile is at 5269.83, acting as the main pivot of the intraday profile.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward or oscillate around 5269.83 intraday, with that level functioning as a short-term focal point for mean reversion/trading activity."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "Locally above 5198.17, until volatility catches a bid, puts will expire worthless providing some tailwind to the market.",
+          "condition": "",
+          "expected_result": "If SPX remains above 5198.17 while implied volatility stays muted, put option open interest will decay and put premium will decline, reducing downside option pressure."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "If price is below 5198.17 and volatility declines, buying interest likely favors the call side.",
+          "condition": "price below 5198.17",
+          "expected_result": "When SPX trades below 5198.17 and IV falls, call volumes/open interest will relatively increase as buyers find calls favorable, observable in options flow and OI changes."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "Above 5252.33 we should see the calls catching bid and possible upside volatility since the net speed profile is negative.",
+          "condition": "price above 5252.33",
+          "expected_result": "If SPX trades above 5252.33, call option buying will increase and implied volatility on upside fills will rise, measurable by rising call volumes and IV skew."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "Any upside move can stabilize only above 5360.27.",
+          "condition": "",
+          "expected_result": "SPX will not establish a sustained stabilization/rally unless it closes and holds above 5360.27; failure to do so will result in continued instability and possible renewed selling."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "Zero vanna at 5180.96 with positive convexity implies relatively lower volatility could let momentum grind below this line.",
+          "condition": "",
+          "expected_result": "If implied volatility falls, SPX momentum may trend lower through 5180.96, resulting in price drifting below that level over ensuing sessions."
+        },
+        {
+          "instrument": "SPX (S&P 500)",
+          "prediction_text": "Charm flip at 5107.81 with negative convexity indicates above that level market is flat-to-supportive but favors further gamma decay; risk is high so better to wait.",
+          "condition": "",
+          "expected_result": "If SPX remains above 5107.81, price action will be relatively stable but option gamma will decay, reducing short-term directional responsiveness; trading risk remains elevated."
+        }
+      ]
+    }
+  }
+}

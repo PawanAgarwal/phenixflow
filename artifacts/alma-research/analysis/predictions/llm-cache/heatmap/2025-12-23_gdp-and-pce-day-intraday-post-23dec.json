@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:12:28.967Z",
+  "inputHash": "0433a35f38a99710a9298d1310010b661b15968c",
+  "payload": {
+    "responseId": "resp_05c15e682ba1ed020069b7670561a481a082e6f99b97c08c94",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Options heatmap shows a strong sticky/supportive gamma cluster and centroid around 6853–6861 with heavy positive gamma (red zone just above 6850). Large iron-condor wings centered on 6850/55–6900/05 imply the market is being held between ~6850 and ~6905. Inside that IC, 6880 (±5) is the line in the sand that will indicate which wing pulls spot.",
+          "condition": "price inside 6850–6905 and trades near 6880 for confirmation",
+          "expected_result": "SPX should gravitate back toward the nearer wing; if price holds above ~6880 then move toward the upside wing (~6900–6905). If price falls below ~6880, expect reversion toward the downside sticky/support zone (~6850–6860)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Clear rejection/resistance band visible just above 6900 (6900–6909) where heavy negative gamma and pinning magnets appear (heatmap peak around 6901–6909). This aligns with the stated upside pivot/target at ~6892.5–6902.5 and the upper wing of the IC.",
+          "condition": "price approaches 6900–6909 from below",
+          "expected_result": "Expect rejection or pinning near 6900–6909; limited follow-through higher without a confirmed break above ~6909 (break and hold above ~6910 would signal upside extension)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and target cluster around 6823 and 6814 with gamma troughs and a supportive band extending down toward ~6809–6786 (noted 68.2%/99.73% risk levels). The heatmap shows a blue negative-gamma trough below ~6785 forming a magnet lower bound.",
+          "condition": "price breaks and holds below the IC lower wing (~6850–6855)",
+          "expected_result": "Expect accelerated travel toward 6823 then 6814; if momentum continues, price may be attracted further into the 6786–6809 area where additional support/gamma troughs exist."
+        }
+      ]
+    }
+  }
+}

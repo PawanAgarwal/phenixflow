@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:09:55.000Z",
+  "inputHash": "8355db2f557301e8c1ba481e71017417997bbb17",
+  "payload": {
+    "responseId": "resp_08c34cf9ca9a7e2a0069b7666c528c8197a7598dfe4fdbc496",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / upside gamma magnet near 6841.85–6858 area is attracting price; if SPX breaks above the centroid (6841.85) expect price to gravitate toward ~6858 where upside gamma concentration is high.",
+          "condition": "SPX breaks and holds above 6841.85",
+          "expected_result": "SPX moves up into the 6840–6860 range within the session, with a likely pause or pin near ~6858."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Magnetic force begins around 6835.91 producing upward pull but the positioning suggests a rejection at the centroid — watch for failure to sustain above centroid as a rejection signal back down.",
+          "condition": "SPX tests 6835.91–6841.85 but fails to hold",
+          "expected_result": "Price reverses lower from the 6836–6842 zone, moving back toward 6780–6795."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6784.85 with local pin potential at ~6780 if 6757 holds into the afternoon; small reversion target near 6758 if volatility calms.",
+          "condition": "SPX holds ~6757 into ~14:00 (PM)",
+          "expected_result": "SPX pins near 6780 locally; if vol is crushed price grinds up to ~6780 from ~6758."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If downside momentum picks up and volatility increases, the next structured downside targets are 6719.96 then 6680 and potentially 6600 per heatmap risk levels and script inputs.",
+          "condition": "SPX breaks and trades below 6757 with increased volatility",
+          "expected_result": "SPX moves down to test 6719.96, with further exposure to 6680 and 6600 if selling continues."
+        }
+      ]
+    }
+  }
+}

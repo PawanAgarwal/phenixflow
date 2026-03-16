@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:04:34.470Z",
+  "inputHash": "33b8b60f2ebba96d50426259433758e560e7b26e",
+  "payload": {
+    "responseId": "resp_08f021fbf28f3d7a0069b7652b700481a189442a3761ef3f83",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid cluster around 6726.7–6733.6 acts as a strong sticky/pinning zone; market is likely to gravitate back toward this area if price moves away intraday.",
+          "condition": "none",
+          "expected_result": "If SPX moves ±15–30 points intraday, price will revert back to 6726–6734 within the same trading day (probable within 1–3 hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6744.24 identified as an upside pivot / resistance where negative charm flows are concentrated; breaking above requires notable vol/skew signal and is difficult.",
+          "condition": "Call skew rises ≥115% and local intraday realized vol increases",
+          "expected_result": "If those vol/skew conditions occur, a confirmed break and sustained trade above 6744.24 will follow; otherwise expect rejection from 6744–6755 and a pullback toward the centroid (6726–6734)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6736 becomes sticky after 13:40 (after 1:40 PM); 6745–6755 is a rejecting band in the afternoon session.",
+          "condition": "time >= 13:40 ET",
+          "expected_result": "From 13:40 onward, price touching 6736 will tend to slow or pin there; tests of 6745–6755 will likely be rejected and lead to reversals back toward 6730–6736."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6702.31 marks where upside magnetic field fades; failure to hold above centroid can lead to a retest of 6655–6660 before reversing back to 6708–6714 or pinning to 6680 after 13:00.",
+          "condition": "Open confirmed below centroid or strong put vol at downside pivot",
+          "expected_result": "If price trades below 6702.31 with strengthened put vol, expect a quick move toward 6655–6660 (intra-day) then a bounce back to 6708–6714 or pinning near 6680 after 13:00."
+        }
+      ]
+    }
+  }
+}

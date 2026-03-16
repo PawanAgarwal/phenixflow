@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:15:52.421Z",
+  "inputHash": "162083be19306e95c25740aa48153f1b6916be80",
+  "payload": {
+    "responseId": "resp_0cdc20b8eca0e8c50069b767d2933881a0b0b3038deea94d68",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong supportive (sticky) gamma cluster around 6750-6760 acting as intraday pivot/support; expect compression of realized vol below centroid (6708) with defense of this zone.",
+          "condition": "SPX trades above 6750",
+          "expected_result": "SPX should find support in 6750-6760 and rebound toward 6790-6855 within the session (reversion to 6790/95 then 6850-6855)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside sticky/gamma trough cluster and downside pivot near 6650-6655 representing strong support/target if downside confirmation triggers.",
+          "condition": "SPX breaks and confirms below 6715-6720",
+          "expected_result": "Price should travel toward 6650-6660 (weekly/CTA target) with compressed realized volatility as it approaches that cluster."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky pivot/cluster around 6790-6915 with resistance area and reversion line near 6850-6915; upside confirmation above 6790/95 signals momentum toward 6850-6880+.",
+          "condition": "SPX closes/holds above 6790-6795",
+          "expected_result": "Expect continuation to 6850-6880 (and potentially up toward ~6915) as gamma positioning provides upside travel corridor."
+        }
+      ]
+    }
+  }
+}

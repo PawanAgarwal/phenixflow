@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:58:00.685Z",
+  "inputHash": "8e43cc261b1c2ebe2d6c9d8e95a58977b0fce332",
+  "payload": {
+    "responseId": "resp_0655287b6704915b0069b763a2c59881938a7a047ea3dac6b5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum will push SPX to the 5935/5940 zone (primal target) over the next two sessions.",
+          "condition": "",
+          "expected_result": "SPX trades at or above 5935 and up to 5940 within two trading sessions"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A short target for SPX is 5911.48 into the next two sessions.",
+          "condition": "",
+          "expected_result": "SPX trades at or below 5911.48 within two trading sessions"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "ES will reach 5945/5955 with a target of 5932.55.",
+          "condition": "",
+          "expected_result": "ES trades up to the 5945–5955 zone and then down to 5932.55"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "If VIX does not rise to 18.35 and break 18.92, short positions should be avoided/closed.",
+          "condition": "VIX fails to reach 18.35 and break above 18.92",
+          "expected_result": "No sustained short trade opportunities; short exposures are closed or avoided while VIX remains below 18.92"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If VIX falls below the 17.2s, ES will break through the 6000 line.",
+          "condition": "VIX falls below ~17.2",
+          "expected_result": "ES trades above the 6000 level after VIX drops below ~17.2"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If the market closes below these levels today, next week will be weak before stabilizing into OpEx.",
+          "condition": "Market closes below the stated levels",
+          "expected_result": "Next week's SPX action is broadly weaker for several sessions, then stabilizes into options expiration week (OpEx)"
+        }
+      ]
+    }
+  }
+}

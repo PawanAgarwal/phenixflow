@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T01:55:26.726Z",
+  "inputHash": "bb257e149d2cd00b66776aa374f43f7778b93eec",
+  "payload": {
+    "responseId": "resp_0d2780acfcb0864c0069b763048c80819798d0644caa42db46",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price will stabilize around the centroid at 5305.18.",
+          "condition": "",
+          "expected_result": "Price trades and closes repeatedly near 5305.18 over subsequent intraday sessions (multiple touches within a narrow band ±~10 points) indicating stabilization."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility will start to compress below the downside pivot at 5245.81.",
+          "condition": "price falls below 5245.81",
+          "expected_result": "Realized intraday volatility (e.g., 5- or 15-min ATR or std.dev of log returns) declines significantly after price moves below 5245.81 compared with prior session, and option implied vols for near-dated expiries fall."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside longer gamma will begin to stabilize price action at 5355.83.",
+          "condition": "price approaches 5355.83",
+          "expected_result": "Price stalls or shows reduced intraday range and lower momentum upon reaching 5355.83, producing multiple rejections or short-lived breakouts rather than sustained moves above it."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility declines too sharply, the pivots (5305.18, 5245.81, 5355.83) will repel prices causing rangebound behavior.",
+          "condition": "sharp decline in implied and realized volatility",
+          "expected_result": "Price remains confined within the range defined by the pivots (~5245–5355) for multiple sessions, with failed attempts to trend beyond those levels (whipsaws and quick reversals)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Dealers’ short-delta exposure will force buying if price moves toward downside puts, supporting mean reversion.",
+          "condition": "price moves toward downside puts (toward 5184.89 region or below local negative slope zone)",
+          "expected_result": "When price declines toward the downside put strike region, dealer buying results in intraday reversals or reduced downside continuation, producing mean reversion rallies."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "As vol declines and hedges unwind into next week, expect a slow bounce followed by a renewed move down.",
+          "condition": "volatility declines and hedges unwind into next week",
+          "expected_result": "An initial multi-session slow upward retracement occurs (small rallies), then price resumes a downward move, making new short-term lows after the bounce."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Low volatility is needed to break through zero vanna level at 5303.33 due to positive convexity.",
+          "condition": "price near 5303.33",
+          "expected_result": "A sustained breakout above 5303.33 only occurs when implied and realized volatility fall; otherwise attempts to breach 5303.33 fail and reverse."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Slight gamma decay should occur between ~5245.11 and 5345, producing muted price movement.",
+          "condition": "price remains between 5245.11 and 5345",
+          "expected_result": "Gamma-related metrics (e.g., changes in option gamma exposure) show net decay and price exhibits muted intraday moves and reduced responsiveness to shocks while in this band."
+        }
+      ]
+    }
+  }
+}

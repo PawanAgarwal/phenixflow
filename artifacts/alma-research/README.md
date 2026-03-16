@@ -19,6 +19,12 @@ Refresh command:
 node artifacts/alma-research/tools/export-alma-substack-archive.js
 ```
 
+Incremental refresh from the latest archived post/chat timestamps, with a recent overlap window for reply or asset changes:
+
+```bash
+node artifacts/alma-research/tools/export-alma-substack-archive.js --incremental 1 --overlap-hours 120
+```
+
 Force refetch of already archived items:
 
 ```bash
@@ -36,3 +42,4 @@ Notes:
 - Paid publication posts are archived from the logged-in `stochvoltrader.substack.com` session.
 - Alma chat replies are paginated and archived when the current session exposes them.
 - Inaccessible Google Drive links are skipped if they match the approved skip list in `approved-skips.json`.
+- Incremental mode uses the last synced post/chat timestamps from `manifest.json` and refetches only the recent overlap frontier instead of walking the whole history again.

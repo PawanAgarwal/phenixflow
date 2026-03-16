@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:00:04.023Z",
+  "inputHash": "3e709e417627fe02e756297848c020974981e09c",
+  "payload": {
+    "responseId": "resp_056e26394960b3520069b7641a8328819d9e5477929fb23463",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Centroid at 6231.54 will decide which side will affect the spot: if downside magnetic gamma gravity dominates, the spot will move lower; if upside gamma vacuum wins, the spot will move higher.",
+          "condition": "price relative to 6231.54",
+          "expected_result": "Price trajectory will trend predominantly downwards if below 6231.54, or predominantly upwards if above 6231.54"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If upside, we should see volatility up dynamics and acceleration in the 6242–6261.88 zone.",
+          "condition": "centroid indicates upside",
+          "expected_result": "Realized volatility will increase and price will accelerate into the 6242–6261.88 range"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Take some profit at ‘61 (around 6261).",
+          "condition": "price reaches ~6261",
+          "expected_result": "Short-term traders should close part of long positions when price hits ~6261"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "There is a very strong vanna flip at 6273 which will act as a decisive upside level.",
+          "condition": "price approaches 6273",
+          "expected_result": "Price will encounter a strong change in option-driven directional flow at 6273, causing either accelerated upside continuation or prompt reversal"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6198 is coded as very strong support.",
+          "condition": "price approaches 6198",
+          "expected_result": "Downside moves are likely to be contained and buyers to step in near 6198, producing a rebound or pause in declines"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price can hold below 6210/13 into the power hour, the downside can pin.",
+          "condition": "price remains below 6210–6213 into the power hour",
+          "expected_result": "Spot will be pinned (anchored) near the downside and exhibit limited upside movement during the power hour"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price is above 6218/20 in the last hour, we can see a quick spike towards 6245 and then back to 6230.",
+          "condition": "price > 6218–6220 in the last hour",
+          "expected_result": "A rapid intraday spike to ~6245 followed by a retracement to ~6230 will occur"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the spot is above the centroid and even 6246 after 2:40pm, the price action will pretty much be trapped in the 6243–6255 range (not pinned) with possible quick charm-to-gamma squeeze.",
+          "condition": "price > centroid and ≥6246 after 14:40",
+          "expected_result": "Price will remain confined to the 6243–6255 range and may produce short squeezes (quick spikes) driven by gamma dynamics"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "This is a nice setup for reversion trades during the AM.",
+          "condition": "intraday AM regime with described conditions present",
+          "expected_result": "Mean-reversion trades taken in the morning will have a favorable risk/reward and are likely to profit as price reverts toward the centroid/daily averages"
+        }
+      ]
+    }
+  }
+}

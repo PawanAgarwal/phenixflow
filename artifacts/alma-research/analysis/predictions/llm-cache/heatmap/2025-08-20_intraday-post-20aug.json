@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:02:25.049Z",
+  "inputHash": "75ec61b82eb8bf0b39319acdd90c1c632c08f75a",
+  "payload": {
+    "responseId": "resp_0ae7444ff792f5c60069b764aaed00819c8365e2e541c66bec",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong gamma peak and heavy liquidity cluster around 6399-6408 acting as a pin/centroid — price likely to gravitate back toward ~6399-6408 after intraday moves (center of the fly).",
+          "condition": "none",
+          "expected_result": "If price moves away intraday, expect reversion back to 6398–6408 within the trading day (AM/early PM)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky support/brake zone visible at ~6370-6375 (gamma trough/green contour hugging this level); heavy skew bid here could produce a grind lower to 6355 then pin back to 6370.",
+          "condition": "sustained consolidation and skew bid at 6375-6370",
+          "expected_result": "If 6375–6370 holds with persistent skew bid, expect a short-lived grind to ~6355 then reversal back to ~6370."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance cluster around 6412-6440 with a potential pin to 6440 and extensions to 6450 if price opens above centroid and heavy skew is sold above the upside pivot.",
+          "condition": "price opens above the centroid (~6399) and heavy skew selling >6412",
+          "expected_result": "If triggered, expect move toward 6430–6440 (possible pin at 6440) with potential upstikes to ~6450 during the PM."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower liquidity below ~6388 suggests faster travel corridor down to ~6370/6355 if liquidity to hold at 6388 fails, enabling a quicker grind down.",
+          "condition": "break and close below 6388",
+          "expected_result": "On break below 6388, expect a faster move down toward 6370 and potentially 6355."
+        }
+      ]
+    }
+  }
+}

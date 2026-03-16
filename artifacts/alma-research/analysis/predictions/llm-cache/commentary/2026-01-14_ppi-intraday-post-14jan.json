@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:13.973Z",
+  "inputHash": "7b8f64a129e899b1ed08addd2bd5f9234fb3a492",
+  "payload": {
+    "responseId": "resp_0c9828ae7e900e330069b76734ebdc8192afceb330ff6ec923",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Yields",
+          "prediction_text": "If yields fall and Nasdaq leads, the market is weighting core m/m (near-term momentum) and equities will likely rally led by growth/tech names.",
+          "condition": "yields fall and Nasdaq leads",
+          "expected_result": "Equities rally with Nasdaq outperforming peers (growth/tech leadership)."
+        },
+        {
+          "instrument": "Yields",
+          "prediction_text": "If yields rise and Dow/value holds better, the market is rotating toward the 12‑month inflation stickiness framing and value/benchmarks will outperform growth.",
+          "condition": "yields rise and Dow/value holds better",
+          "expected_result": "Relative outperformance of value/Dow components versus Nasdaq/growth names."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Choppiness and more rotational behavior (versus a smooth trend) is expected to continue in markets.",
+          "condition": "",
+          "expected_result": "Increased short-term sector rotation and lack of sustained directional trends, producing frequent reversals and range-bound price action."
+        }
+      ]
+    }
+  }
+}

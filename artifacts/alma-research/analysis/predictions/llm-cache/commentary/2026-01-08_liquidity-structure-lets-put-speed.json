@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:12:55.350Z",
+  "inputHash": "795dbb0f9dd1b091fa94385b42ccddb7d3fd2e0a",
+  "payload": {
+    "responseId": "resp_0fc49a31da3749bc0069b7671f357481968b4ddb32335bb27c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "In approximately 70–80% of cases, price gravitates toward the previous period’s value area (VA).",
+          "condition": "",
+          "expected_result": "Price will move back to and spend time in the prior period’s VA within subsequent trading periods in about 70–80% of instances."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If price breaks the initial balance (IB) range upward (with confirming volume), a long entry is indicated; if it breaks downward (with confirming volume), a short entry is indicated.",
+          "condition": "break of the IB range with volume confirmation",
+          "expected_result": "After an IB break confirmed by volume, price will continue in the breakout direction long enough to execute a momentum trade (sufficient move to reach a predefined profit target or trend continuation)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Where there is liquidity, price will slow and volatility will compress; where the order book is gappy, price will pass through zones quickly and volatility will expand.",
+          "condition": "",
+          "expected_result": "Price speed and realized volatility will be lower in high‑liquidity zones (staying longer near those levels) and higher (faster moves) when passing through low‑liquidity/gappy zones."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "High volume at a long-term key resistance signals distribution (selling pressure) and at a long-term key support signals accumulation (buying interest).",
+          "condition": "",
+          "expected_result": "Sustained high volume at a key resistance will precede further downside or inability to break higher, while sustained high volume at a key support will precede further upside or price holding and rising from that support."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The speed profile (net gamma/speed) reveals where liquidity is expected to move and predicts whether price will stabilize or lean into reversion based on local options positioning.",
+          "condition": "",
+          "expected_result": "Areas with speed‑profile signals indicating net sold gamma will exhibit lower realized volatility and price stabilisation (mean reversion), while areas indicating net bought gamma will show higher realized volatility and tendency to lean away from those levels."
+        }
+      ]
+    }
+  }
+}

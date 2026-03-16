@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:57:38.858Z",
+  "inputHash": "f77065bda2474deb252a1d2e5149dda3cd5ef062",
+  "payload": {
+    "responseId": "resp_07bbf8cf59ce09d20069b7638b2bd08196a0930bb495aa0885",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES=F",
+          "prediction_text": "There is over a 79% probability of a reversion (buy-the-dip) for ES=F during the overnight session.",
+          "condition": "",
+          "expected_result": "ES=F will reverse higher from recent lows during the overnight session, producing a measurable intraday rally (price up from session open to intraday high)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX remains above 5885–5791 and yesterday’s daily highs, technical momentum will favor further gains (risk-on posture).",
+          "condition": "SPX stays above the 5885–5791 range and yesterday's daily highs",
+          "expected_result": "SPX will trend higher over subsequent sessions, making higher highs or closing above yesterday's high within the next 1–5 trading days."
+        },
+        {
+          "instrument": "SPY",
+          "prediction_text": "SPY pivot range 586.79–577.65 defines sentiment; staying above it supports bullish momentum.",
+          "condition": "SPY stays above 586.79–577.65",
+          "expected_result": "SPY will advance or hold gains, closing above its recent highs or establishing higher intraday highs within the next 1–5 trading days."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Centroid (momentum) sits at 5928.75–5947.46 and must hold for sustained momentum; the upside break level is 5965.13.",
+          "condition": "ES holds the centroid zone 5928.75–5947.46",
+          "expected_result": "If centroid holds, ES will continue upward momentum and, if strong, will break above 5965.13 within the trading session or next session."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If volatility spikes from an outside impact, price targets are in the 5800–5750 range.",
+          "condition": "An outside volatility shock causes vol to 'catch up'",
+          "expected_result": "ES will decline into the 5800–5750 area following the volatility spike."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX main pivot range is 20.37–22.94, which defines sentiment for the indices.",
+          "condition": "VIX moves relative to 20.37–22.94 pivots",
+          "expected_result": "If VIX stays below or around 20.37–22.94, equities will remain supported; if VIX rises above this range, expect equity weakness and down moves in the indices."
+        }
+      ]
+    }
+  }
+}

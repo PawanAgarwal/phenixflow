@@ -1,0 +1,19 @@
+{
+  "cachedAt": "2026-03-16T04:28:28.648Z",
+  "inputHash": "4074cb1e5d3675357c1fa9784c2cde2ea68d998e",
+  "payload": {
+    "responseId": "resp_072761d56b6763de0069b786ea073081a1b80e51ef3167bf8d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-04-21T15:01:28.479Z",
+          "instrument": "SPX",
+          "prediction_text": "Intraday reversion to 5153/5150, then price will pin to 5200.",
+          "condition": "unless volatility is relatively low at 5153/5150",
+          "expected_result": "Price trades down to 5153–5150 intraday, then moves back up and consolidates around 5200 (pins to 5200)."
+        }
+      ]
+    }
+  }
+}

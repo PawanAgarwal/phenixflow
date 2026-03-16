@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:31.900Z",
+  "inputHash": "ac677582130dbb77234ea7cc5c7bdde08ffeaaac",
+  "payload": {
+    "responseId": "resp_0e281630ad5cfb5f0069b76746a438819f8e5cd5210690572d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky downside zone / support cluster around 6768–6790 (gamma trough/peak concentration). Market likely to find support and revert up from this area if 6790 holds into PM.",
+          "condition": "if 6790 can be held",
+          "expected_result": "Price will stall or bounce within 6768–6790 and start moving higher toward the centroid (~6812) within the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / pinning magnet zone near 6865–6875 with strong reversion potential back toward the centroid. If broken early, 6875 can pin and allow further travel to the upside target near 6890–6905.",
+          "condition": "if price breaks 6865 during the first two hours (AM)",
+          "expected_result": "Price will either reverse near 6865–6875 back toward ~6812, or, upon an early AM break above 6865, pin at ~6875 and then travel up to 6890–6905"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside target / sticky resistance band around 6890–6905 (gamma concentration and option targets); requires breakout to continue higher.",
+          "condition": "if spot is above 6890",
+          "expected_result": "Price will remain capped within 6890–6905 unless breakout occurs, in which case it will extend above 6905 toward ~6940+"
+        }
+      ]
+    }
+  }
+}

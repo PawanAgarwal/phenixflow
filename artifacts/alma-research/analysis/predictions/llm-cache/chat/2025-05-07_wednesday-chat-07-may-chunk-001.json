@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:28:34.783Z",
+  "inputHash": "e0fdaee6ff79ee79a65725a333343e74d5062782",
+  "payload": {
+    "responseId": "resp_084a44f334263c9e0069b786f006e481a28ffed14afce66642",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-05-07T11:12:50.903Z",
+          "instrument": "",
+          "prediction_text": "If you miss a move in a rangebound market, it’s smarter to sit out rather than chase it.",
+          "condition": "miss a move",
+          "expected_result": "Trader remains in cash and does not enter new positions when momentum move has already started"
+        },
+        {
+          "made_at": "2025-05-07T17:40:11.331Z",
+          "instrument": "",
+          "prediction_text": "Heavy put selling with static calls suggests the market was rangebounding and may continue to be unreactive to downsticks.",
+          "condition": "",
+          "expected_result": "Price will continue to trade in a range and show muted downside reaction despite selling pressure"
+        }
+      ]
+    }
+  }
+}

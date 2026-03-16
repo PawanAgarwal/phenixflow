@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:10:12.135Z",
+  "inputHash": "d419f5cbf7489bfcb747a7ecc4ca32576039dab5",
+  "payload": {
+    "responseId": "resp_026a79a9c4aa92fe0069b7667caf7c8194875f98cb0a9ab99f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market centroid will be in the 6772.01 - 6796.86 area.",
+          "condition": "",
+          "expected_result": "Price will trade with a central tendency around 6772.01–6796.86 over the intraday period specified."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The upside pivot is at 6785.91 and will act as very strong resistance with an upside target of 6797.48 (margin of error 6800).",
+          "condition": "",
+          "expected_result": "Price will encounter strong resistance near 6785.91 and any upside move will be capped near 6797.48 (≈6800)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot is at 6733.45 with a primal target of 6695 and a main target of 6654.95, though the 6654.95 level is not expected to be reached.",
+          "condition": "",
+          "expected_result": "If downside momentum occurs, price will first target 6695 and could extend toward 6654.95, but reaching 6654.95 is considered unlikely."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market is most expected to hover around 6745 within the range of the upside target and primal downside target.",
+          "condition": "",
+          "expected_result": "Price will trade and consolidate near 6745 rather than exhibiting a strong directional breakout during the intraday window."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX exposure will be supportive into Wednesday, followed by a volatility buyback afterward with a relatively bigger impact.",
+          "condition": "",
+          "expected_result": "Implied volatility (VIX) will remain elevated/supportive through Wednesday, then experience a pronounced buyback (increase in volatility) after Wednesday."
+        }
+      ]
+    }
+  }
+}

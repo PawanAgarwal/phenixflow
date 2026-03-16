@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T01:48:44.148Z",
+  "inputHash": "18c164d48f1c8e3f54feb602d5c089908b8f0789",
+  "payload": {
+    "responseId": "resp_00e8a2810bb64c2c0069b76166cef8819ca15224a4d67350e9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "When momentum reaches an extreme as measured by the script’s 20-period mean and 1.5/2.5 standard deviation bands, the probability of mean reversion increases.",
+          "condition": "price moves outside the 1.5 or 2.5 standard deviation bands (outside the Margin of Error)",
+          "expected_result": "Price will reverse direction and trade back toward the 20-period rolling mean, re-entering the plotted Margin of Error band within subsequent candles."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Whenever the price breaks out of the Margin of Error area, that breakout reinforces the existing momentum.",
+          "condition": "price breaks out of the Margin of Error area",
+          "expected_result": "Price will continue moving in the breakout direction and remain outside the Margin of Error for multiple consecutive candles, indicating momentum continuation."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "When both volatility-adjusted bands start moving up after a prior downtrend, a buy signal is generated indicating increasing bullish momentum.",
+          "condition": "both volatility-adjusted bands turn upward following a downtrend",
+          "expected_result": "Price will initiate an observable uptrend (series of higher highs and higher lows) while the bands continue to move up, consistent with a tradable buy signal."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "When both volatility-adjusted bands start declining after a prior uptrend, a sell signal is produced indicating increasing bearish momentum.",
+          "condition": "both volatility-adjusted bands turn downward following an uptrend",
+          "expected_result": "Price will initiate an observable downtrend (series of lower highs and lower lows) while the bands continue to move down, consistent with a tradable sell signal."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:39.880Z",
+  "inputHash": "d5b9e22b12b2eadb97b8a6f7398f1ea9468e1625",
+  "payload": {
+    "responseId": "resp_04f8f3d73cbbc1410069b766d6dbf081a2bf557c19291aab6e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "Bitcoin",
+          "prediction_text": "The gap below at 6765.89-6783.87 should be retested to provide more stability and confidence for an end-of-month rally.",
+          "condition": "gap holds on the daily",
+          "expected_result": "Price revisits 6765.89-6783.87 then rallies toward 7000 within the end-of-month period"
+        },
+        {
+          "instrument": "Bitcoin",
+          "prediction_text": "As long as the gap holds on the daily, the path of least resistance remains to the upside towards 7000 and beyond.",
+          "condition": "gap holds on the daily",
+          "expected_result": "Price trends upward from current levels and reaches 7000 (and potentially higher) before the gap is broken"
+        },
+        {
+          "instrument": "Bitcoin",
+          "prediction_text": "Any weekly close above 6622.49 makes the market remain at equilibrium (supporting upside bias).",
+          "condition": "weekly close above 6622.49",
+          "expected_result": "Following a weekly close >6622.49, price will stay within an equilibrium regime with continued vol-selling support and a bias toward upside continuation"
+        },
+        {
+          "instrument": "Bitcoin",
+          "prediction_text": "A BoJ rate decision more hawkish than expected can cause some trouble for risk sentiment after OpEx week.",
+          "condition": "BoJ tone more hawkish than expected",
+          "expected_result": "Risk assets including Bitcoin decline in the days following the OpEx week due to worsened risk sentiment (measurable drop vs pre-decision levels)"
+        }
+      ]
+    }
+  }
+}

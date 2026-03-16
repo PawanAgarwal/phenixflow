@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:28:57.200Z",
+  "inputHash": "c25f475a75af3805562dff1a945e3d34560301a4",
+  "payload": {
+    "responseId": "resp_07216f011cbdcd310069b7870484d481a29282daca7ba23d82",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-16T14:34:21.543Z",
+          "instrument": "",
+          "prediction_text": "If vol held after 10am, price will revert to the reversion level.",
+          "condition": "vol held after 10am",
+          "expected_result": "Price moves back toward the identified reversion level within the next trading session."
+        },
+        {
+          "made_at": "2025-06-16T14:34:21.543Z",
+          "instrument": "",
+          "prediction_text": "Otherwise, 6080 will act as a magnetic level pulling price toward it.",
+          "condition": "vol did not hold after 10am",
+          "expected_result": "Price gravitates toward 6080 (tests or reaches 6080) within the next trading session."
+        },
+        {
+          "made_at": "2025-06-16T14:34:21.543Z",
+          "instrument": "",
+          "prediction_text": "The current level is a hard resistance and is likely to prevent a sustained breakout.",
+          "condition": "",
+          "expected_result": "Price fails to sustain moves above the current level and reverses or consolidates below it."
+        }
+      ]
+    }
+  }
+}

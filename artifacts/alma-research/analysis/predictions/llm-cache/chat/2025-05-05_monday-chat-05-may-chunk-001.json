@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:28:34.763Z",
+  "inputHash": "e1f7ee8765a5445f3677cbbbb7d718191f19bacc",
+  "payload": {
+    "responseId": "resp_0ec7ccf6ca2ce3a60069b786ef242081a2b386d7b7ec1158c9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-05-05T09:04:12.753Z",
+          "instrument": "ES",
+          "prediction_text": "ES VWAP at 5745 will act as hard resistance.",
+          "condition": "",
+          "expected_result": "Price will fail to sustain moves above 5745 and reverse or stall near that level."
+        },
+        {
+          "made_at": "2025-05-05T09:04:12.753Z",
+          "instrument": "ES",
+          "prediction_text": "There will be strong buying liquidity at ES VWAP 5745.",
+          "condition": "",
+          "expected_result": "Buy orders and liquidity will accumulate around 5745, supporting price and causing repeated bounces from that level."
+        },
+        {
+          "made_at": "2025-05-05T09:04:12.753Z",
+          "instrument": "",
+          "prediction_text": "The market will be rangebound, making short-delta positions in non-linear derivatives have better reward-to-risk.",
+          "condition": "",
+          "expected_result": "Price will oscillate within a range rather than trend, so short-delta option exposures will produce higher risk-adjusted returns than long-delta exposures."
+        }
+      ]
+    }
+  }
+}

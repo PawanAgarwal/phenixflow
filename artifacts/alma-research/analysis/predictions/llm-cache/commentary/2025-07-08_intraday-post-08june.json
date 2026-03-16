@@ -1,0 +1,18 @@
+{
+  "cachedAt": "2026-03-16T01:59:46.542Z",
+  "inputHash": "0ce10351df1d707f09d39010439038d8cc120a84",
+  "payload": {
+    "responseId": "resp_06ce19cc92d1343a0069b7641047a881a380207dd754953f56",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "As long as SPX can hold a weekly average of ~6232, positive imbalance will continue to be accumulated.",
+          "condition": "SPX weekly average ≥ 6232",
+          "expected_result": "Net buying pressure persists and prices trend higher or maintain elevated levels until the weekly average falls below 6232."
+        }
+      ]
+    }
+  }
+}

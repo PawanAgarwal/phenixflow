@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:58:45.593Z",
+  "inputHash": "d31f23c64a51088a2058bebbb9afb9c304be0b93",
+  "payload": {
+    "responseId": "resp_001495c34ffb20c80069b763d09c9c81a09d97642a9f78afc4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong pinning / sticky zone around 5890–5915 (gamma peak/trough cluster) signaling a likely magnet and short-term reversion area; heatmap shows concentrated gamma peaks there into close.",
+          "condition": "price approaches 5890–5915",
+          "expected_result": "Expect price to gravitate toward 5890–5915 and stall/reverse there within the session (bounce or rangebound action around that band)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / heavy vanna flip cluster near 6045–6065 acting as a rejection zone if reached; gamma ridge and warm heat suggest dealer hedging will limit upside.",
+          "condition": "price moves above 6025/6030 and attempts extension",
+          "expected_result": "If price breaks 6025/6030, expect upside to be capped near 6045–6065 with rejection or momentum fade back toward 6000–6015."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid / near-term mean around 5979–5985 indicated by mid-level trough/peak alignment; market likely to rangebound back toward 5975–5990.",
+          "condition": "no volatility spike (VIX remains supportive)",
+          "expected_result": "Price should revert toward and oscillate around 5979–5985 over the next sessions rather than trending strongly away."
+        }
+      ]
+    }
+  }
+}

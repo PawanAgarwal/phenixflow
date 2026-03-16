@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:10:35.056Z",
+  "inputHash": "380305561686062e0b147c83895a7e074c42b5a9",
+  "payload": {
+    "responseId": "resp_0dbf33c90754785d0069b7669494f4819db9e54561332a391d",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky support cluster around 6461-6470 (downside pivot at 6461.37). Heatmap shows concentrated blue gamma sink there indicating market intends to pin/support this range intraday.",
+          "condition": "price approaches or tests 6461-6470",
+          "expected_result": "Price should find support and likely rebound within that range; failure to hold requires high volatility and would lead to move toward 6425 target."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primary centroid/pinning magnet at ~6500.3 (centroid 6500.28) acting as tone-setter and likely intraday anchor.",
+          "condition": "price near 6500",
+          "expected_result": "Price will gravitate toward and trade around 6500; expect limited sustained moves away without fresh directional flow."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance / upside pivot zone 6590-6605 (upside pivot 6594.28 and cluster ~6580.5/6605/6575 described) forms a line-in-the-sand — upside is fragile and faces rejection pressure there.",
+          "condition": "price rallies into 6575-6605",
+          "expected_result": "Expect rejection or sticky selling in that band; a clean break above toward 6690 required for further upside, with local magnet at 6630-6640 if breakout begins."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower strong target/potential downside limit near 6420-6425 (WoR downside target / 99.73% level ~6420.2 and downside target 6425).",
+          "condition": "sustained breach below 6461 pivot with rising local volatility",
+          "expected_result": "If 6461 fails, price should travel down to 6420-6425 where stronger pinning/support is expected."
+        }
+      ]
+    }
+  }
+}

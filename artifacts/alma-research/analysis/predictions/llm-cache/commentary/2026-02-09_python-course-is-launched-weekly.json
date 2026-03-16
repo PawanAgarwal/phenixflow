@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:43.424Z",
+  "inputHash": "0d67dec7aeb091c4cf0ab31cad15662e49192b03",
+  "payload": {
+    "responseId": "resp_045f9a177ebd202c0069b7678ee3988190ba928ab990aae6cb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES keeps being rejected at 7000/7005, speculative buying should occur at the 6910/6920 zone.",
+          "condition": "rejected at 7000/7005",
+          "expected_result": "Price will decline from ~7000/7005 to reach 6910–6920 where a buy entry can be taken"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The 7005 and 6960/6970 zones act as a major pivot that will confirm or disprove directional moves.",
+          "condition": "price action at 7005 or 6960/6970",
+          "expected_result": "Price interaction with these zones will determine subsequent direction: a decisive break through a zone will lead to continuation in that direction; a rejection will reverse or stall the move"
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "Watch NDX around the identified key levels for signals (implied potential rejections or confirmations).",
+          "condition": "price action at the author's specified NDX levels",
+          "expected_result": "Price behavior at those levels will produce either a confirmed breakout continuation or a rejection/reversal (testable by breakouts or rejections at the levels)"
+        }
+      ]
+    }
+  }
+}

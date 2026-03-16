@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:07.754Z",
+  "inputHash": "f56fd7189850ed79e040d182010086b4eba4ca24",
+  "payload": {
+    "responseId": "resp_039ef1283bde86ef0069b7676956c481928ed7297741f09b45",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky support zone around 6960-6945 (centroid 6960.76 with confirmed support at 6945.14). Heatmap shows gamma trough/peaks compressing around this area indicating liquidity buildup and a downside braking effect on moves below the centroid.",
+          "condition": "Price trades down toward 6960-6945",
+          "expected_result": "Price is likely to slow/reverse near 6945-6960; expect a reversion back to the centroid (~6960.7) or a slow rejection up to 6975-7000 within the next session if no large vol spike occurs."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Magnet and deeper support region near 6900 with tolerance to ~6888 if puts are accepted (gamma inflow increases downside magnetism). The heatmap shows concentrated gamma and a contracting distribution focusing flows toward 6900.",
+          "condition": "Price breaks below 6945 with continuation momentum",
+          "expected_result": "Price likely drifts to ~6900 and may find strong pinning there; in a fast unwind scenario market can test down to ~6888 but should find support and attempt a bounce back toward 6930-6960."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance zone at 7014 with a sticky target at ~7028. Heatmap and surrounding lines indicate limited upside speed and likely rejection back toward 6975/6960 if 6985/6990 does not hold.",
+          "condition": "Price rallies toward 7010-7030",
+          "expected_result": "Expect rejection or pinning at 7014-7028, with likely pullback to 6975-7000 (primary 6975/6960, secondary pin at 7000) rather than a clean sustained breakout."
+        }
+      ]
+    }
+  }
+}

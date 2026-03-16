@@ -1,0 +1,68 @@
+{
+  "cachedAt": "2026-03-16T04:30:13.800Z",
+  "inputHash": "8e11d800aba0bc27cff0d2e682f16c1e95eaedab",
+  "payload": {
+    "responseId": "resp_0c89a125952057710069b787496b54819dbccd7ca09ed1fb57",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-12-12T16:04:40.985Z",
+          "instrument": "SPX",
+          "prediction_text": "SPX will revert (bounce) from the primal downside target if volatility falls and call skew bids.",
+          "condition": "volatility down and call skew bid",
+          "expected_result": "SPX price will move higher from the primal downside target within the next few sessions, measurable as a multi-session upward price change versus close at time of prediction"
+        },
+        {
+          "made_at": "2025-12-13T00:38:44.598Z",
+          "instrument": "",
+          "prediction_text": "If the spot is out of the value area, the odds favor a retest of that value area.",
+          "condition": "spot is out of the value area",
+          "expected_result": "Price will return to and trade within the prior value area (retest) within the following trading session(s)"
+        },
+        {
+          "made_at": "2025-12-13T00:39:26.042Z",
+          "instrument": "",
+          "prediction_text": "If the market accepts the area and intraday realized volatility calms with ~30–60 minutes of dwell, the move is likely to continue.",
+          "condition": "market accepts the area and intraday RV calms with 30–60 minutes dwell",
+          "expected_result": "Price will continue in the direction of the current move (extension) for subsequent trading periods after the dwell"
+        },
+        {
+          "made_at": "2025-12-13T01:07:26.465Z",
+          "instrument": "ES mini",
+          "prediction_text": "If the market breaks the centroid with a negative speed profile and upward heading, buy ES mini with stop-loss at the centroid (vol- or ATR-adjusted) aiming for the upside pivot.",
+          "condition": "break of centroid with negative speed profile and upward heading",
+          "expected_result": "ES mini price will rally to the upside pivot level; trade can be added if pivot is accepted and volatility increases"
+        },
+        {
+          "made_at": "2025-12-13T01:20:14.533Z",
+          "instrument": "SPX",
+          "prediction_text": "If the market fights through the critical local pivot (zero speed-gamma) and pins to 6950 with vol calming, theta decay will dominate.",
+          "condition": "market pins to 6950 with vol calming after breaking critical local pivot",
+          "expected_result": "SPX will trade and remain near 6950 while implied/realized volatility decreases, leading to option theta decay dominance"
+        },
+        {
+          "made_at": "2025-12-13T01:22:32.112Z",
+          "instrument": "SPX",
+          "prediction_text": "The market will eventually gravitate back down from pinned liquidity at 6950 if the profile persists and the market is not betting on sustained liquidity there.",
+          "condition": "profile persists and market not betting on sustained liquidity at 6950",
+          "expected_result": "SPX will move lower from 6950 over subsequent sessions, gravitating back toward lower liquidity zones"
+        },
+        {
+          "made_at": "2025-12-13T01:33:41.329Z",
+          "instrument": "",
+          "prediction_text": "A gap below will act as a vacuum with a magnet downward when speed is negative and downside vol is sold.",
+          "condition": "speed is negative and downside vol sold",
+          "expected_result": "Price will be drawn down into the gap below (downward retest) over coming trading periods"
+        },
+        {
+          "made_at": "2025-12-13T01:34:46.104Z",
+          "instrument": "SPX",
+          "prediction_text": "Although the gap below is illiquid and can be retested, the stability/ liquidity magnet is at 6950 rather than 6850.",
+          "condition": "market positioning still expects liquidity upward",
+          "expected_result": "SPX will be more likely to stabilize or pin near 6950 than to find stable liquidity at 6850; retests of the lower gap may be transient"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T01:58:15.898Z",
+  "inputHash": "1bf9419b40f7b92de68c74d88aded799d6eb3022",
+  "payload": {
+    "responseId": "resp_0520d8f2998d08940069b763b0db64819eb27079d47822f0e1",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "There is a 79.45% probability that price will revert to the mean.",
+          "condition": "",
+          "expected_result": "SPX price moves back toward its recent mean/average range within the model's time horizon (reversion occurs)."
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "Momentum remains non-bearish as long as ES=F holds above 5949.05.",
+          "condition": "ES=F above 5949.05",
+          "expected_result": "ES=F will not make a sustained downside breakout; price stays above 5949.05 and avoids a clear downtrend over the short term."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum remains non-bearish as long as SPX holds above 5931.39.",
+          "condition": "SPX above 5931.39",
+          "expected_result": "SPX will avoid a sustained decline and remain at or above 5931.39 rather than breaking lower in the near term."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Momentum remains non-bearish as long as VIX stays below the 18.58s.",
+          "condition": "VIX below 18.58s",
+          "expected_result": "VIX will remain under ~18.58 and not spike above that level, supporting continued non-bearish momentum in equities."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Any upside surprise in CPI would trigger a stairstep selloff into midsummer tariff shock.",
+          "condition": "CPI prints above expectations (upside surprise)",
+          "expected_result": "SPX will experience a multi-step downward move (series of declines) into midsummer associated with selloffs tied to tariff shock concerns."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Persistent CPI readings above 0.3% m/m could force the Fed to delay cuts further.",
+          "condition": "CPI monthly readings > 0.3%",
+          "expected_result": "Markets price in delayed Fed rate cuts, leading to higher Treasury yields and weaker risk assets compared with baseline expectations."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If CPI stays sticky while growth slows, the Fed faces persistent stagflation and a bearish Q3 for equities.",
+          "condition": "CPI remains elevated ('sticky') while growth slows",
+          "expected_result": "SPX will decline over Q3, producing a bearish quarter for equities."
+        }
+      ]
+    }
+  }
+}

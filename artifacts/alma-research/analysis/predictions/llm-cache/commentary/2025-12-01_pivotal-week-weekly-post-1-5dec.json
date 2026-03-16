@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:10:55.298Z",
+  "inputHash": "ffbbe88003eb08ee77927bb05ce3842c351b35d8",
+  "payload": {
+    "responseId": "resp_067c04a094c1873a0069b766a808d4819ea5338efc86138a59",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Expect a pivot and rejection around the prior highs leading to a short-term reversal lower.",
+          "condition": "price reaches prior highs",
+          "expected_result": "SPX will fail to sustain above prior highs and decline at least 1-3% over the following week"
+        },
+        {
+          "instrument": "US 10Y Treasury Note",
+          "prediction_text": "Anticipate vol-compression in the near term before a breakout driven by fresh macro data.",
+          "condition": "absence of new inflation or employment surprises",
+          "expected_result": "10Y yield intraday realized volatility will fall below recent 14-day average, then stay rangebound until a macro surprise triggers a >10 basis point directional move"
+        },
+        {
+          "instrument": "EURUSD",
+          "prediction_text": "Look for pinning to round-number support followed by stabilization and potential reversion higher.",
+          "condition": "price tests the round-number support (e.g., 1.05)",
+          "expected_result": "EURUSD will hold above the round-number support and rebound at least 0.5% within 5 trading days"
+        },
+        {
+          "instrument": "BTC",
+          "prediction_text": "Expect a breakout to the upside if volume expands through the consolidation band.",
+          "condition": "spot price breaks above consolidation band with increased volume",
+          "expected_result": "BTC will rally at least 8-15% within two weeks following a volume-confirmed breakout"
+        },
+        {
+          "instrument": "Gold (XAUUSD)",
+          "prediction_text": "Anticipate rejection at resistance near recent highs leading to a short-term pullback.",
+          "condition": "price tests recent highs/resistance levels",
+          "expected_result": "XAUUSD will reverse from resistance and decline at least 1-2% over the next 3-7 trading days"
+        }
+      ]
+    }
+  }
+}

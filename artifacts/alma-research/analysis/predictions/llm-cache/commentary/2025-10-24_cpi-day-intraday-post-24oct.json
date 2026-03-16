@@ -1,0 +1,60 @@
+{
+  "cachedAt": "2026-03-16T02:05:33.745Z",
+  "inputHash": "6efb116b994bfa3af82cd353df6fc500328e6efb",
+  "payload": {
+    "responseId": "resp_0316f442f6488f950069b76564c04c81a2b4e3acfe7ef2e0da",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Short front-month index premium against kept tails (e.g., calendars / put flies) into/after the CPI print.",
+          "condition": "CPI print (day)",
+          "expected_result": "Front-month implied volatility and option premiums decline relative to longer-dated tails, making calendar and put-fly structures profitable (sell near-term premium, keep longer tails)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Slight upward grind favored intraday into EOD as net gamma slightly positive and vol exposure slightly negative that will decay into EOD.",
+          "condition": "",
+          "expected_result": "SPX spot drifts modestly higher through the trading day, finishing above the opening price by a small margin (e.g., within the top third of intraday range)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6777/80 will act as a crucial local pivot at the open and will be hard to break from whichever side.",
+          "condition": "",
+          "expected_result": "If SPX opens above 6777–6780, price remains above that band in the opening period; if it opens below, price remains below that band until a clear breakout occurs. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If SPX opens below 6777/80, the spot will likely grind down to the downside pivot near 6682.43 and may pin there.",
+          "condition": "SPX opens below 6777–6780",
+          "expected_result": "SPX trends lower intraday toward ~6682.43 and spends extended time near that level (pinning behavior)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside is hedged/sold toward 6682.43 (most supportive level).",
+          "condition": "",
+          "expected_result": "Downside buying/flow increasingly supports SPX around 6682.43, preventing sustained moves significantly below that level during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside is sold toward 6810 with an upside pivot at 6800.78.",
+          "condition": "",
+          "expected_result": "Upward moves in SPX face selling pressure approaching 6800–6810, causing rallies to stall or reverse near that band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid of intraday positioning is between 6770.36 and 6787.91.",
+          "condition": "",
+          "expected_result": "SPX gravitates toward and spends meaningful time within the 6770.36–6787.91 range during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Left-tail risk is priced fat despite a setup that favors a grind up, so be careful (implying potential for downside snapbacks/whipsaw).",
+          "condition": "",
+          "expected_result": "Occasional sharp intraday downside spikes occur (whipsaws) even as the overall intraday drift is upward, creating short-lived breaches below support levels before recoveries."
+        }
+      ]
+    }
+  }
+}

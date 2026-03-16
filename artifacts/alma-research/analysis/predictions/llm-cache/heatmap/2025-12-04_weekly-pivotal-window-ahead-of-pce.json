@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:15.456Z",
+  "inputHash": "773d38d3322c7a2ee5651748e3291bb31e2d8552",
+  "payload": {
+    "responseId": "resp_034fe3eb5c6a34080069b766bcde188193a84921c0693b427e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/ sticky zone around 6799–6822 acts as a magnet and support — market to range and revert to this area intraday.",
+          "condition": "none",
+          "expected_result": "Price will gravitate back to and spend time inside 6799–6822 within the trading day (multiple touches or consolidation there)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot providing near-term support around 6808 with a local target down to ~6792; deeper break is unlikely absent a strong inflation shock.",
+          "condition": "PCE prints materially weaker than expectations",
+          "expected_result": "If triggered, price may move through 6808 and test 6792; without trigger, price should hold above 6808 and return toward centroid 6799–6822."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside rejection zone / resistance at ~6870 (±5 pts) — line in the sand after 1pm; options positioning creates a rejection magnet there.",
+          "condition": "spot fails to clear 6871 after overnight push",
+          "expected_result": "Price will struggle to break and will be rejected near 6865–6875, leading to a reversion back toward the upside pivot (~6857) or centroid band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot ~6856 with an upside target ~6890, but less likely — secondary path is a mild upside grind if overnight prints push spot above 6871.",
+          "condition": "overnight session pushes spot above 6871",
+          "expected_result": "If triggered, price may grind from ~6856 toward 6889–6890; otherwise upside attempts should stall near 6870 and reverse."
+        }
+      ]
+    }
+  }
+}

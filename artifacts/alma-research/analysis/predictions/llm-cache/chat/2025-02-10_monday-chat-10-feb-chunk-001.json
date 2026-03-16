@@ -1,0 +1,26 @@
+{
+  "cachedAt": "2026-03-16T04:27:19.505Z",
+  "inputHash": "d0f145a8662717788a3c5b252b1e753159461886",
+  "payload": {
+    "responseId": "resp_0ef80f1bfa75d0660069b786a3ba148192a5d32c1c7991cc46",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-10T11:37:58.219Z",
+          "instrument": "",
+          "prediction_text": "The market will not develop a steep skew and wide trading ranges that would signal buildup of crash conditions.",
+          "condition": "",
+          "expected_result": "Implied volatility skew remains flat-to-normal and realized trading ranges do not expand significantly over the coming days/weeks (no large increase in intraday range or VIX spike)."
+        },
+        {
+          "made_at": "2025-02-10T11:40:03.219Z",
+          "instrument": "",
+          "prediction_text": "Vega supply from dealers combined with retail support will lead to net volatility selling.",
+          "condition": "",
+          "expected_result": "Options market shows net vega supply (increased dealer short vega positions) and implied volatilities decline or remain suppressed while underlying price moves are muted."
+        }
+      ]
+    }
+  }
+}

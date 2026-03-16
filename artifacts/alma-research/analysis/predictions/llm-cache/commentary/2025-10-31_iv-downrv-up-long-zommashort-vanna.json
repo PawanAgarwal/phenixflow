@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:06:08.154Z",
+  "inputHash": "1395f4de52bcabf885088ba243c888745b3b8999",
+  "payload": {
+    "responseId": "resp_0a938bd9059ce3050069b76584f2bc819f876b27f0dbd3972f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market will be rangebound in the 6808–6894 area with gravity near 6864.98.",
+          "condition": "",
+          "expected_result": "Price will trade predominantly within 6808–6894 for the session, oscillating around 6864.98 rather than trending decisively higher or lower."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Centroid is at 6877.72–6891.56, and below this area flows are supportive but weak.",
+          "condition": "",
+          "expected_result": "If price falls below 6877.72–6891.56, buying pressure will be present but insufficient to produce a strong, sustained rebound; moves lower will be possible."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot at 6849.59 with net target 6797.46 and strong intraday support at 6808 that holds unless intraday RV is sold and skew is bid.",
+          "condition": "intraday RV is sold and skew is bid",
+          "expected_result": "If intraday realized volatility is sold while skew increases, price will break below 6808 and move toward 6797.46."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot at 6892.11 is heavy resistance and has very low probability to break; if it does, upside target is 6914.98.",
+          "condition": "",
+          "expected_result": "Price will fail to break above 6892.11 in most cases; if price decisively breaks and holds above 6892.11, it will advance to ~6914.98."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Intraday distribution likely to show a squeeze up then reversion down and retest the downside.",
+          "condition": "",
+          "expected_result": "After an initial intraday rally (squeeze up), price will reverse and retest lower levels within the session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "There is a credible chance of an upside breakout from the intraday distribution.",
+          "condition": "",
+          "expected_result": "Price will break above the marked upper range (near 6894) and continue higher toward the upside target (6914.98) when breakout occurs."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Left-tail downside risk is fatter than intraday prices imply, so long vol is preferable to vol selling but with limited size and readiness to cover at pivots.",
+          "condition": "",
+          "expected_result": "Volatility will spike to the downside more than implied vols suggest in a left-tail move, making long-volatility positions profitable when sized conservatively and managed at pivots."
+        }
+      ]
+    }
+  }
+}

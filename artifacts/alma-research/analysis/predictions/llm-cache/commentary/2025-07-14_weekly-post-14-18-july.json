@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:00:13.472Z",
+  "inputHash": "2138053f5f46d5507ae0e7a60c6f11cf43ba08bf",
+  "payload": {
+    "responseId": "resp_007362df50b2960b0069b76428fc5081a1a07832ef876ee654",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The SPX should perform 6255.89 on average to maintain the positive disbalance.",
+          "condition": "",
+          "expected_result": "SPX closes the week with an average value at or near 6255.89 (weekly mean price ≈ 6255.89)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The SPX should remain above 6135.67 to avoid shifting into the negative path.",
+          "condition": "",
+          "expected_result": "SPX does not trade below 6135.67 during the week (no intraday print < 6135.67)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside odds are 84.44%.",
+          "condition": "",
+          "expected_result": "There is an 84.44% probability the SPX will move lower (measurable by downside scenario occurrence vs. upside) during the specified period."
+        }
+      ]
+    }
+  }
+}

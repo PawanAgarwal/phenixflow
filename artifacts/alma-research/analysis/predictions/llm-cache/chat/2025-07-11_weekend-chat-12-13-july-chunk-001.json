@@ -1,0 +1,19 @@
+{
+  "cachedAt": "2026-03-16T04:29:12.189Z",
+  "inputHash": "3e797cb3924bdda0e8e7f88aa6dabb62967b07ce",
+  "payload": {
+    "responseId": "resp_0afcbfcaafc4cdfb0069b787155728819782667fffadd48a4b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-14T10:09:21.883Z",
+          "instrument": "",
+          "prediction_text": "Centroid estimation requires volatility models and historical data, and realized volatility (RV) will be more useful than implied volatility (IV) for volatility modeling.",
+          "condition": "",
+          "expected_result": "Use RV-based models on historical data to produce centroid estimates that outperform IV-based centroid estimates in backtests (e.g., lower error vs. realized outcomes)."
+        }
+      ]
+    }
+  }
+}

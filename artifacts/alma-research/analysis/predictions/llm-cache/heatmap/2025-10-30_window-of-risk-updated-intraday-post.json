@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:09:53.631Z",
+  "inputHash": "62dc0978304bc9588ce10f8d0473efcc7d644076",
+  "payload": {
+    "responseId": "resp_0c31e30ef77f76370069b7666bf4748191a291704a9976bb0b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Weak intraday sticky zone around 6892–6901 (centroid ~6894–6900) that will likely cap quick moves after 14:00 and act as a short-term resistance/brake.",
+          "condition": "price approaches 6892–6901 after 14:00",
+          "expected_result": "Price will struggle to clear 6892–6901 and show reversion or chop within that band within the session (move back toward 6860–6875 or remain rangebound)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot/resistance at 6905 with a short-term maximum/reversion target around 6935; breach requires significant flow (sold RV/fix strike skew) and otherwise will act as a magnet/rejection area near 6950–6980.",
+          "condition": "price rallies to 6905–6935",
+          "expected_result": "Expect rejection/reversion from 6905–6935 back toward the sticky centroid (~6890) or the supportive zone around 6870; if momentum breaks through, next pin area near 6980 may be reached. "
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot/support cluster at 6870 with a deeper supportive target around 6822; stronger bad-news moves could extend to 6750 then 6680 as lower intraday targets.",
+          "condition": "price breaks below 6870",
+          "expected_result": "Initial support hold near 6822; if headlines are negative and selling continues, expect travel to 6750 and, in extreme left-tail, 6680 before a reversion back toward 6750."
+        }
+      ]
+    }
+  }
+}

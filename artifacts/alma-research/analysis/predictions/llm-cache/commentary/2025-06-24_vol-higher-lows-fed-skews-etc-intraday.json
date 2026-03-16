@@ -1,0 +1,72 @@
+{
+  "cachedAt": "2026-03-16T01:59:04.962Z",
+  "inputHash": "41cbc9df8f52fcf265de1fc9511457e16465826e",
+  "payload": {
+    "responseId": "resp_0a37f894447ad80d0069b763dce0c8819cb7888e01fa654a0f",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "If spot goes below centroid 6039.02, downside gamma will be magnetic and intraday vol will be trapped into a feedback loop down.",
+          "condition": "spot < 6039.02",
+          "expected_result": "Price will accelerate downward with rising intraday volatility and persistent downside momentum"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6014.70 is the pivot/last return point and if vol is sold sharply it will reject at that level.",
+          "condition": "vol sold sharply near 6014.70",
+          "expected_result": "Price will fail to sustain moves through 6014.70 and reverse away from that level"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6088.73 is the main upside pivot and if vol catches up it will be broken.",
+          "condition": "vol catches up",
+          "expected_result": "Price will break above 6088.73 and continue higher toward 6133"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6133 is the coding max and is especially strong into the power hour as an upside target.",
+          "condition": "power hour and vol supportive break above 6088.73",
+          "expected_result": "Price will reach or test 6133 during the power hour"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Primal downside target is 5995 if downside flows persist.",
+          "condition": "downside vol catches up/continued downside flows",
+          "expected_result": "Price will decline to test 5995"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If spot can hold 6036 and remain above 5950.64 (and above 5975 in the last 30 mins) those levels will act as pins stabilizing the market.",
+          "condition": "spot >= 6036 and spot > 5950.64 (and > 5975 in last 30 mins)",
+          "expected_result": "Price will stabilize and be supported by pinning; large downside moves will be muted"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If downside vol catches up due to a geo/Trump event, 5945 becomes the primal target and 5930 a pivotal line.",
+          "condition": "geo/Trump event causing downside vol catch-up",
+          "expected_result": "Price will fall to 5945 and potentially probe 5930"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "5845 is a pin level on a deeper downside move.",
+          "condition": "continuation of downside vol and breach of prior pivots",
+          "expected_result": "Price will find support or pin near 5845 during an extended selloff"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Over the next month the market is supported by vol-of-vol supply (short vanna flows) which will mechanically cap downside and support spot until an oil crisis occurs.",
+          "condition": "no oil crisis during the next month",
+          "expected_result": "Downside will be capped and the market will grind with limited large left-tail moves due to short vanna/vol-of-vol supply"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Reversion model predicts an 81.65% probability of reversion indicating profit taking and vol selling in the short term.",
+          "condition": "model holds",
+          "expected_result": "Volatility will be sold and prices will revert toward recent means via profit taking and reduced vol"
+        }
+      ]
+    }
+  }
+}

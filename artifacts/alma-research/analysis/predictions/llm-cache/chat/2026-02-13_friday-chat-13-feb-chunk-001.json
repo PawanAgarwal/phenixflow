@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:30:32.799Z",
+  "inputHash": "e2432003dd7d0f213c3c510545673c408d564551",
+  "payload": {
+    "responseId": "resp_000f7c8a930c636c0069b787654a4481968133c09c3e22ade9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-02-17T14:19:06.729Z",
+          "instrument": "",
+          "prediction_text": "If the market sells ATM IV, realized returns will widen and RV will increase.",
+          "condition": "If the market sells ATM IV",
+          "expected_result": "Realized volatility (RV) increases; realized returns become wider"
+        },
+        {
+          "made_at": "2026-02-17T14:20:22.089Z",
+          "instrument": "",
+          "prediction_text": "When those positions unwind, IV will rise, downside gamma will increase, and momentum will brake causing local RV to compress.",
+          "condition": "When those positions unwind",
+          "expected_result": "Implied volatility rises, downside gamma increases, momentum decreases, and local realized volatility compresses"
+        },
+        {
+          "made_at": "2026-02-17T14:20:47.898Z",
+          "instrument": "",
+          "prediction_text": "Downside IV selling is a rational strategy in the current environment.",
+          "condition": "",
+          "expected_result": "Market participants selling downside IV will be acting advantageously given current dynamics"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:13:42.108Z",
+  "inputHash": "0b00bc5f976fc08041d07b3678df9543011f560f",
+  "payload": {
+    "responseId": "resp_0428fd9b69c03b2d0069b7674e8a4881929cce92cd94f82339",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid ~6852.6 acts as local line-in-the-sand; heatmap shows concentrated gamma support around 6850–6865 suggesting a sticky zone and likely pin if price reverts from downside. Strong reversion expected back toward centroid if downside pivot (~6828.7) is hit.",
+          "condition": "Price hits downside pivot ~6828.72",
+          "expected_result": "Price should revert from ~6828–6830 back up to ~6850–6865 and show pinning/mean-reversion there."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at ~6907 with gamma concentration above it; heatmap shows a rejection/sticky corridor around 6940–6965 indicating upside target and potential pin. Low-probability squeeze could push to ~6985–6990 then pin near ~6980.",
+          "condition": "Price trades above upside pivot ~6907 and AM session volatility remains compressed/not elevated",
+          "expected_result": "Price likely moves toward ~6944 then into the 6940–6965 sticky corridor; in a gamma-squeeze scenario it may reach ~6985–6990 and then pin near ~6980."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Left-tail downside corridor visible with gamma troughs and deep blue support around 6760–6780; if vol spikes downside, the market expects a bounce back toward 6780–6800 (pin zone).",
+          "condition": "Volatility spikes and price breaks well below centroid/targets toward left-tail levels",
+          "expected_result": "Price may fall toward ~6760–6780 then revert and pin back near ~6780–6800."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows strong gamma density/peak near ~7010–7030 (higher strikes) acting as a distant magnet/resistance; price is unlikely to traverse past this zone intraday without significant squeeze.",
+          "condition": "",
+          "expected_result": "Price should show resistance and slowed advance as it approaches ~7010–7030 unless a large volatility-driven breakout occurs."
+        }
+      ]
+    }
+  }
+}

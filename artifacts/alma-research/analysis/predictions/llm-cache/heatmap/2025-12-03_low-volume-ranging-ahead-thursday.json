@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:05.048Z",
+  "inputHash": "09a1185393ae3d799e658eb254250ff01608b373",
+  "payload": {
+    "responseId": "resp_06cf95b4f9655bcc0069b766b36c88819188c08267e78c46ad",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid sticky zone ~6805.8–6822.7 acts as primary range where market will mostly trade and revert to (local fly spread supply).",
+          "condition": "",
+          "expected_result": "Price will spend majority of intraday time within 6806–6823 and repeatedly gravitate back to this band when leaving it."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6796.75 with a downside target at 6784.96 is present but low probability to be hit (downside volatility is heavily sold).",
+          "condition": "",
+          "expected_result": "If price moves below 6796.75, expect limited follow-through and likely rejection before or around 6785; downside breakouts are unlikely."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6865.60 with upside pin/target at 6884.99 is visible but unlikely to be reached except under lower realized volatility and persistent call skew demand before 13:30 ET.",
+          "condition": "RV falls and call skew remains bid before 13:30 ET",
+          "expected_result": "If RV declines and call skew stays bid before 13:30 ET, price may push toward 6866 and potentially pin near 6885; otherwise expect failure and reversion back to the centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Slight upside drift from the centroid with market expectation to finish around ~6840 given current positioning (net negative gamma but slight upside skew).",
+          "condition": "",
+          "expected_result": "End-of-day settlement is more likely near 6840 than at current close if intraday action remains range-bound."
+        }
+      ]
+    }
+  }
+}

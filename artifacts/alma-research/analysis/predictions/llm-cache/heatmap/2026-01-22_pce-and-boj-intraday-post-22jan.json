@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:13:44.512Z",
+  "inputHash": "87f0d3d187c25ef4a6a4c67a8bb502980a190996",
+  "payload": {
+    "responseId": "resp_01f60f09fdfec3ed0069b767505d04819486e5271bcd700a85",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/centroid zone around 6927–6930 (centroid 6926.98) acting as magnet after 14:00 — price likely to revert toward this area on intraday moves.",
+          "condition": "none",
+          "expected_result": "If SPX moves away intraday, expect reversion back to 6925–6935 within the session (hours) and price to pause/hold there."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pinning and support cluster at ~6840–6850 (noted sticky target and gamma trough) — market expects compression of volatility below downside pivot and pinning at 6840/6850.",
+          "condition": "SPX trades below downside pivot 6871.22",
+          "expected_result": "If SPX falls under 6871, expect price to compress and pin in 6840–6855 zone and show rebound attempts back toward centroid (≈6927) within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Deeper support corridor around 6700–6750 shown as left-tail supportive zone on the heatmap — last defensive support if a sustained sell-off occurs.",
+          "condition": "Significant left-tail volatility / uncontrolled downside",
+          "expected_result": "If large downside volatility occurs, expect SPX to find support and slowing of selling in 6700–6750 and likely see mean reversion attempts back above 6800 afterward."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside short-term rejection/mean-reversion zone near 6963–6967 (upside pivot and compressed vvol) — market expects rejection back toward centroid from this level.",
+          "condition": "SPX reaches 6963.48–6966.61",
+          "expected_result": "If SPX trades into 6960–6970, expect rejection pressure and reversal back toward 6920–6935 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Psychological/structural line-in-the-sand at 6900 — acts as an intraday watch level and defensive threshold.",
+          "condition": "price approaches 6900",
+          "expected_result": "When SPX nears 6900, expect heightened defensive activity; holds below 6900 increase probability of pressure toward downside pivot (≈6871) while holding above supports continuation toward centroid/upper bands."
+        }
+      ]
+    }
+  }
+}

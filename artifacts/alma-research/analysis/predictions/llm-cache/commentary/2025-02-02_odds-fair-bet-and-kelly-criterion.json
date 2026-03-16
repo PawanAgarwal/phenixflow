@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:49:13.916Z",
+  "inputHash": "44be3876351f6f89ca9fe9a1c4c36ab89ea6adea",
+  "payload": {
+    "responseId": "resp_0b085a3d724a01370069b761696680819d8e6cce2ab8480968",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "If the market offers $0.6 reward for each $1 wagered on a bet with an estimated 60% probability of winning, the bettor will lose $4 over 100 bets.",
+          "condition": "market reward = $0.6 per $1 with win probability = 60%",
+          "expected_result": "Net loss of $4 for the bettor after 100 identical bets."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If the market offers $1.5 for every $1 wagered on a bet priced at 3:4 in favor, the bettor will gain $0.5 over 100 bets.",
+          "condition": "market reward = $1.5 per $1 on a 3:4 in favor bet",
+          "expected_result": "Net profit of $0.5 for the bettor after 100 identical bets."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Applying the Kelly fraction derived from estimated odds can produce a net positive return over 100 trades even when the win rate is 45% and the loss rate is 55%.",
+          "condition": "win rate = 45% and loss rate = 55% with Kelly sizing applied",
+          "expected_result": "Portfolio shows a positive net return after 100 bets when sized using the Kelly fraction."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Using a fraction larger or smaller than the calculated Kelly fraction will decrease projected geometric growth over 100 trades.",
+          "condition": "position size ≠ calculated Kelly fraction",
+          "expected_result": "Lower projected geometric growth over 100 trades compared with using the exact Kelly fraction."
+        },
+        {
+          "instrument": "crypto quant funds",
+          "prediction_text": "Crypto quant funds scale up allocations closer to a fraction of the Kelly value when their model’s forecasted Sharpe ratio is high and scale down when signals are weaker.",
+          "condition": "forecasted Sharpe ratio high (scale up) or weak (scale down)",
+          "expected_result": "Crypto quant funds increase position sizing toward the fraction of Kelly when forecasted Sharpe is high, and decrease sizing when forecasted Sharpe is low."
+        },
+        {
+          "instrument": "options market",
+          "prediction_text": "Analyzing historical pricing trends can reveal a volatility risk premium where implied volatility exceeds realized volatility, creating an opportunity to sell overpriced options.",
+          "condition": "historical pricing shows implied volatility > realized volatility",
+          "expected_result": "Option sellers who act capture positive expected premium relative to realized volatility over the analyzed period."
+        }
+      ]
+    }
+  }
+}

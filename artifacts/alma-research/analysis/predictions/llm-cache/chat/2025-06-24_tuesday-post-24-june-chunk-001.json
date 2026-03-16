@@ -1,0 +1,61 @@
+{
+  "cachedAt": "2026-03-16T04:29:02.917Z",
+  "inputHash": "03d97120bd2f5a005c31ae5d206a914ae56f1f57",
+  "payload": {
+    "responseId": "resp_05a85612c82418770069b78706e3788192b02c02c2a0c41944",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-06-24T21:33:48.990Z",
+          "instrument": "",
+          "prediction_text": "This is not a market to short; after market broke out of the weekly projected range, the downside grind was disproved.",
+          "condition": "",
+          "expected_result": "Price will not sustain a downward trend; attempted short trades are more likely to fail or be stopped out over the coming sessions."
+        },
+        {
+          "made_at": "2025-06-24T21:35:05.984Z",
+          "instrument": "",
+          "prediction_text": "Above the short call strike, it is short vanna until some point.",
+          "condition": "price above the short call strike",
+          "expected_result": "Options vanna exposure will behave like a short-vanna regime while price remains above the short call strike, increasing sensitivity to volatility decreases for long-delta moves."
+        },
+        {
+          "made_at": "2025-06-24T21:46:14.885Z",
+          "instrument": "",
+          "prediction_text": "6034 was the vol projected range and below 6024 downside gravity was in effect; both levels were broken, retested, and became support.",
+          "condition": "",
+          "expected_result": "Levels ~6034 and ~6024 will act as support going forward; price is likely to hold or bounce from these levels rather than break down through them."
+        },
+        {
+          "made_at": "2025-06-24T21:53:28.022Z",
+          "instrument": "",
+          "prediction_text": "The easing of short vanna pressure has moved exposure toward neutral, but it will be rechecked tomorrow.",
+          "condition": "",
+          "expected_result": "Vanna-related directional pressure will remain neutral in the short term, reducing immediate volatility-driven directional moves until reassessment."
+        },
+        {
+          "made_at": "2025-06-24T21:54:08.255Z",
+          "instrument": "",
+          "prediction_text": "There is no downside gravity above the market weekly levels.",
+          "condition": "",
+          "expected_result": "While price stays above the weekly levels, downward pull (gravity) is unlikely; downside breakouts through those weekly levels are unlikely."
+        },
+        {
+          "made_at": "2025-06-24T22:08:50.181Z",
+          "instrument": "",
+          "prediction_text": "Until then, market is net supported.",
+          "condition": "",
+          "expected_result": "Net support will keep price from falling significantly in the near term; major declines are unlikely while support holds."
+        },
+        {
+          "made_at": "2025-06-24T22:09:31.627Z",
+          "instrument": "",
+          "prediction_text": "Positive vanna regime stabilizes spot at higher levels.",
+          "condition": "",
+          "expected_result": "With positive vanna in effect, spot price will tend to stabilize or be supported at higher levels rather than fall sharply."
+        }
+      ]
+    }
+  }
+}

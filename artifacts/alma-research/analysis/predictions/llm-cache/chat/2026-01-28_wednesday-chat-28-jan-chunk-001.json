@@ -1,0 +1,61 @@
+{
+  "cachedAt": "2026-03-16T04:30:29.065Z",
+  "inputHash": "6f8c5afdc3ce5075ce687591a05d6a5dc776ce29",
+  "payload": {
+    "responseId": "resp_02ba9b1541adb7ee0069b7875a2abc81a3bfeffa76479b06f2",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2026-01-28T23:57:03.377Z",
+          "instrument": "",
+          "prediction_text": "If the daily centroid line is lost, the market will reach the daily downside target shared in the daily post.",
+          "condition": "daily centroid line is lost",
+          "expected_result": "Price moves down to the daily downside target referenced in the daily post."
+        },
+        {
+          "made_at": "2026-01-29T00:01:21.155Z",
+          "instrument": "",
+          "prediction_text": "Path of least resistance is up despite net negative speed and more focus on protecting the downside.",
+          "condition": "",
+          "expected_result": "Price is more likely to trend upward than downward in the near term."
+        },
+        {
+          "made_at": "2026-01-29T00:02:56.206Z",
+          "instrument": "",
+          "prediction_text": "A short position could be placed with reduced size expecting the reversion upside pivot to be touched.",
+          "condition": "",
+          "expected_result": "Price moves up to touch the reversion upside pivot, allowing a small short to be entered anticipating that touch."
+        },
+        {
+          "made_at": "2026-01-29T00:03:28.169Z",
+          "instrument": "",
+          "prediction_text": "Close the short if volume improves and spot trends above the pivot.",
+          "condition": "volume improves and spot trends above the pivot",
+          "expected_result": "Short position is closed when volume increases and spot price trades above the pivot level."
+        },
+        {
+          "made_at": "2026-01-29T00:04:13.898Z",
+          "instrument": "",
+          "prediction_text": "If volume and volatility increase while price moves down through the magnetic local range, increase short size targeting the centroid.",
+          "condition": "volume is up and volatility is up on a move down through the magnetic local range",
+          "expected_result": "Increase short position sizing and target the centroid as the price declines through the local range."
+        },
+        {
+          "made_at": "2026-01-29T00:04:42.532Z",
+          "instrument": "",
+          "prediction_text": "Start to scale out when 30-40% profit is accumulated, set a limit sell to lock gains, and wait for the centroid to be touched.",
+          "condition": "",
+          "expected_result": "Begin scaling out of the position after achieving 30-40% profit via a limit sell and monitor for centroid touch before further action."
+        },
+        {
+          "made_at": "2026-01-29T00:58:50.946Z",
+          "instrument": "",
+          "prediction_text": "Negative speed effect will suppress volatility below the centroid.",
+          "condition": "",
+          "expected_result": "Volatility measures decrease beneath the centroid level as negative speed effect dominates."
+        }
+      ]
+    }
+  }
+}

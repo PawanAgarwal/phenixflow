@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:02:22.817Z",
+  "inputHash": "6cedcd33218d5f36490c63755bcb7d2f74af5348",
+  "payload": {
+    "responseId": "resp_0b51fb203aecefdc0069b764a8ca0c8195b0c80be507d9c3cc",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong support / pinning magnet visible ~6349-6354 with centroid at 6365.7 — market likely to stabilize here and revert higher first before making new directional move.",
+          "condition": "price approaches 6349-6366 intraday",
+          "expected_result": "Price holds in the 6349–6366 range and shows intraday reversal or consolidation within 1–3 trading hours, rejecting a sustained break below 6318."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky zone / pin to ~6400 (with margin to ~6411). Heatmap shows gamma concentration and call-side liquidity encouraging a squeeze/pin near 6400 into the last 1.5 hours.",
+          "condition": "call skew gets sold or intraday realized vol falls (RV lowers)",
+          "expected_result": "Price moves up toward and pins near 6400 (±11 pts) during the final 1–1.5 hours of the session, with limited follow-through above 6411."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower-probability reversion extremes indicated at ~6318 downside and ~6435 upside. These are tail scenarios on the heatmap (less likely than stabilization at ~6350 or pin at 6400).",
+          "condition": "large skew/flow event materializes (heavy put buying to push below or heavy call buying to squeeze above)",
+          "expected_result": "Price briefly trades to ~6318 before reversing back above 6350, or alternatively spikes toward ~6435 then retreats; occurrences should be intraday spikes rather than sustained trends."
+        }
+      ]
+    }
+  }
+}

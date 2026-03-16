@@ -1,0 +1,96 @@
+{
+  "cachedAt": "2026-03-16T01:57:06.765Z",
+  "inputHash": "72fbb3fb85e38193ab99deaeab94eadbae6c8852",
+  "payload": {
+    "responseId": "resp_0316d463af035ae90069b76364c1508195a844267384c7ae49",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "The centroid is 5905.86.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward 5905.86 over the short term (price trades nearer to 5905.86 than to nearby pivots)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot is 5939.50 requiring heightened volatility to break.",
+          "condition": "",
+          "expected_result": "Price will fail to sustain a break above 5939.50 unless there is a clear increase in realized volatility; attempted breaks without vol expansion will reverse below 5939.50 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot is the 5883.50 - 5894.72 zone and is very strongly expected to swallow any vol up.",
+          "condition": "",
+          "expected_result": "Downside moves into 5883.50–5894.72 will absorb selling pressure and cause price to stabilize or reverse upward within that zone."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The highest long gamma bar is 5935 and the gamma cluster below 5935 is strong enough to hold up momentum unless there is a large vol spike.",
+          "condition": "",
+          "expected_result": "Price approaching ~5935 will encounter resistance that prevents sustained upside continuation unless realized volatility spikes; without spike, price will stall or retreat from ~5935."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside vanna flip at 5972 (and another at 6010-6005) will act as resistance if volatility declines because zomma/Z-right dynamics strengthen.",
+          "condition": "",
+          "expected_result": "If volatility declines, rallies that reach 5972 (or 6010–6005) will be resisted and likely reverse rather than break through."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside vanna flip at 5842 needs low vol to break through.",
+          "condition": "",
+          "expected_result": "A low-vol environment will allow price to move below 5842; if vol is not low, attempts to breach 5842 will fail and reverse."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Charm flows are net suppressive above ~5885, creating mild downward pressure and slight gamma decay.",
+          "condition": "",
+          "expected_result": "If price remains above ~5885, upward momentum will be muted and modest mean-reversion selling will push price back toward the centroid or lower pivots."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Local negative speed and vol dampening cap the upside and trigger sells back towards the centroid when price grinds higher.",
+          "condition": "",
+          "expected_result": "Sustained grind higher will result in intermittent sell-backs toward 5905.86 rather than a steady uninterrupted rally."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A nice vol spike would be necessary to break through the gamma cluster and allow continued upside momentum, but current dealer hedging does not indicate such a spike.",
+          "condition": "",
+          "expected_result": "Absent a realized volatility spike, attempts to break above the gamma cluster (~5935–5976 area) will fail and price will revert downward."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Model estimates the reversion probability at 70.63%, implying a high chance of mean reversion.",
+          "condition": "",
+          "expected_result": "There will be a pullback or reversal from recent price extremes with ~70% likelihood (price moves opposite the most recent directional leg within the next short-term period)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Holding above 5920/5925 after the opening bell makes a 5972 touch likely.",
+          "condition": "SPX holds above 5920/5925 after the open",
+          "expected_result": "Price will reach or test 5972 within the same trading day or short intraday period."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "When OpEx calls unwind, the market is likely to pull back down.",
+          "condition": "OpEx call positions unwind",
+          "expected_result": "Price will decline materially following significant call unwind around OpEx (measurable drop from pre-unwind levels)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If a pullback starts and the market believes in the deals (supportive narrative), the market will create a supportive structure, fill gaps and grind back up.",
+          "condition": "Pullback begins and market participants believe in the deals' deflationary effect",
+          "expected_result": "After the initial pullback, price will stabilize, fill recent gaps, and resume a grinding upward trend."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If a pullback starts and the market does not believe in the deals, it will grind lower with suppressed vol and then accelerate after June OpEx.",
+          "condition": "Pullback begins and market participants do not believe in the deals",
+          "expected_result": "Price will continue a low-vol grind downward and then experience a faster acceleration lower after June OpEx."
+        }
+      ]
+    }
+  }
+}

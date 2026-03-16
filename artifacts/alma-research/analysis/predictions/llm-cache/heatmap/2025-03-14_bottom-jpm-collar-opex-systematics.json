@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T01:53:49.552Z",
+  "inputHash": "514aee0d81b6f58e0cf7675080fa543a0311a53e",
+  "payload": {
+    "responseId": "resp_02743eefeb41d79d0069b762a83d1481938a1b3503f72460d3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Options gamma structure shows a sticky gamma trough and peak cluster around ~5490–5460 with a strong gamma intensity (dark contour) near 5400–5390; this area is acting as a magnet/reversion zone into OpEx.",
+          "condition": "None",
+          "expected_result": "If SPX trades down toward 5460–5490 it is likely to slow and revert back upward; a stronger bounce expected if price touches 5400–5390 within the same session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Higher up, aggregated shorter-dated upside gamma starts to influence trend from ~5606 (author-coded 5605.67) and there is a gamma peak cluster around 5630–5660 acting as a resistance/brake to further upside.",
+          "condition": "Price rallies above 5606",
+          "expected_result": "Expect deceleration/rejection or consolidation in SPX around 5630–5660; moves above 5660 will be needed to sustain continued upside."
+        }
+      ]
+    }
+  }
+}

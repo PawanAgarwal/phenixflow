@@ -1,0 +1,96 @@
+{
+  "cachedAt": "2026-03-16T01:49:21.586Z",
+  "inputHash": "3f41a7c148786251fd5e790ed87cbb12e912ae66",
+  "payload": {
+    "responseId": "resp_06a979cbe1b485240069b7616655c48192ae0510cbac47fee4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Within a trend, as prices approach the edges of the range, price movements will exhibit negative autocorrelation and are more likely to reverse.",
+          "condition": "price approaches edge of range",
+          "expected_result": "A counter-movement toward the trend center will occur shortly, measurable as a negative autocorrelation and a price move back inside the trend bounds."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Stocks with high past returns will continue to generate high returns in the near future (momentum effect).",
+          "condition": "high past returns",
+          "expected_result": "These stocks will outperform the broader market/index over the subsequent short-term period (higher cumulative and annualized returns vs benchmark)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Past stock returns are positively correlated with future returns over short horizons.",
+          "condition": "short-term horizon",
+          "expected_result": "Positive correlation will be observed such that periods with strong recent returns produce above-average subsequent short-term returns."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Past stock returns are negatively correlated with future returns over long horizons.",
+          "condition": "long-term horizon",
+          "expected_result": "Long-horizon reversals will occur where past winners underperform and past losers outperform over multi-year periods."
+        },
+        {
+          "instrument": "New York Stock Exchange",
+          "prediction_text": "Stocks with the worst long-term past returns tend to outperform over the next 36 months while the best past performers underperform.",
+          "condition": "prior 36-month ranking",
+          "expected_result": "A portfolio of prior 36-month “loser” stocks will outperform a portfolio of prior 36-month “winner” stocks over the following 36 months (e.g., ~19.6% relative outperformance as historically observed)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "As price approaches the 1-sigma or 2-sigma rolling standard-deviation levels around a moving average, the probability of mean reversion increases.",
+          "condition": "price approaches 1-sigma or 2-sigma level",
+          "expected_result": "Price will revert toward the moving average and move back inside the 1-sigma (≈68.2%) or 2-sigma (≈95.45%) range within the measured timeframe."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Converting implied volatility to the chosen timeframe defines a price range around the previous close where the price is expected to remain with ~68.2% (1-sigma) or ~95.45% (2-sigma) probability.",
+          "condition": "implied volatility converted to timeframe",
+          "expected_result": "Over the specified period, the traded price will stay within the calculated 1-sigma or 2-sigma band at rates consistent with the stated probabilities."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility cycles produce periods where over- or under-priced volatility attracts one-sided positioning that later reverts, hurting the overcrowded side.",
+          "condition": "volatility becomes over- or underpriced",
+          "expected_result": "Crowded one-sided positions will be followed by sharp reversals and increased realized volatility that inflict losses on the previously dominant side."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Leveraged portfolios of low-beta stocks can produce higher risk-adjusted returns than unleveraged high-beta portfolios (beta anomaly).",
+          "condition": "leveraging low-beta portfolio vs unleveraged high-beta portfolio",
+          "expected_result": "A leveraged low-beta portfolio will achieve higher risk-adjusted returns (e.g., higher Sharpe ratio) than the unleveraged high-beta portfolio over the evaluation period."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Stocks with lower market capitalization tend to generate higher future returns than larger-cap stocks (size anomaly).",
+          "condition": "lower market capitalization",
+          "expected_result": "Small-cap stocks will outperform large-cap stocks on an annualized return basis over the tested horizon."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Value-based cheap stocks will outperform expensive stocks in future returns (value anomaly).",
+          "condition": "low P/B or low P/E (value metrics)",
+          "expected_result": "Value-screened stocks will deliver higher subsequent returns than expensive peers over the measurement period."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Companies with higher asset growth tend to underperform in future returns compared to companies with lower asset growth (asset growth anomaly).",
+          "condition": "high asset growth",
+          "expected_result": "High asset-growth companies will exhibit lower future returns than low asset-growth companies over the tested horizon."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A trend is likely to persist only if growth accelerates relative to prior data and momentum is strong enough to overcome distribution effects and dealer flows; otherwise momentum will fade.",
+          "condition": "both: growth acceleration relative to prior data AND sufficient momentum to overcome distribution/dealer flows",
+          "expected_result": "If both conditions hold the price will continue in the trend direction and break resistance levels; if either condition fails the trend will lose strength or reverse."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Larger deviations from a central location will induce a stronger reversion pull toward the center (Ornstein–Uhlenbeck–type mean reversion).",
+          "condition": "greater deviation from central location",
+          "expected_result": "Assets farther from their central mean will revert with greater speed or magnitude toward that mean than assets with smaller deviations."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:29:08.778Z",
+  "inputHash": "1ae6b2969d4fc26a8aa133b6a2d6ccc6381cc0ce",
+  "payload": {
+    "responseId": "resp_0d402b4b70a4e85a0069b7870e6160819585e4a9c7abcc349a",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-03T12:32:19.194Z",
+          "instrument": "",
+          "prediction_text": "Volatility will begin an upward grind starting next week.",
+          "condition": "",
+          "expected_result": "Market volatility (e.g., realized or implied volatility indices) trends upward over the following week compared with the prior week."
+        },
+        {
+          "made_at": "2025-07-03T14:31:52.252Z",
+          "instrument": "VIX",
+          "prediction_text": "Upside gamma magnet will act while VIX is below the 16.5s, causing a vol crush.",
+          "condition": "VIX below 16.5",
+          "expected_result": "Implied volatility (VIX) remains below ~16.5 and exhibits downward pressure (decrease) while price action is attracted toward the upside gamma magnet level."
+        },
+        {
+          "made_at": "2025-07-03T14:33:58.192Z",
+          "instrument": "",
+          "prediction_text": "I wouldn't fade it now because pin risk is present.",
+          "condition": "",
+          "expected_result": "Price action is likely to pin near a key strike/level rather than immediately reverse, increasing the chance of price clustering around that level."
+        },
+        {
+          "made_at": "2025-07-03T14:38:02.665Z",
+          "instrument": "",
+          "prediction_text": "Constant vol selling will push the price into the marked gamma pivot.",
+          "condition": "",
+          "expected_result": "Continued option volatility selling causes underlying price to move toward the previously marked pivot level."
+        },
+        {
+          "made_at": "2025-07-03T14:40:52.863Z",
+          "instrument": "SPX",
+          "prediction_text": "Potential gamma/charm magnet to 6300 if market is above the pivot.",
+          "condition": "market is above the pivot",
+          "expected_result": "SPX drifts or is pulled toward 6300 (price moves to ~6300) while remaining above the pivot."
+        }
+      ]
+    }
+  }
+}

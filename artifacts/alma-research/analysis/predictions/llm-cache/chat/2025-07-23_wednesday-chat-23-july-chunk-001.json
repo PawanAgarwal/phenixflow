@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:29:25.668Z",
+  "inputHash": "934db5aa0e64efb499aaeca01f66104480e0339f",
+  "payload": {
+    "responseId": "resp_0ff63a8f7bfac1a60069b78720d898819e9ba62f8d8abc07cb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-23T19:34:51.365Z",
+          "instrument": "",
+          "prediction_text": "Market is trading near my blowoff top target of 6359.",
+          "condition": "",
+          "expected_result": "Price will reach or approach 6359 (blowoff top level)."
+        },
+        {
+          "made_at": "2025-07-23T20:07:53.080Z",
+          "instrument": "",
+          "prediction_text": "Blowoff top target is hit today.",
+          "condition": "",
+          "expected_result": "Price will reach the previously stated blowoff top target (≈6359) within the trading day."
+        },
+        {
+          "made_at": "2025-07-23T17:24:29.777Z",
+          "instrument": "",
+          "prediction_text": "Tail skew is elevated, implying shorter downside vega/gamma risk.",
+          "condition": "",
+          "expected_result": "Options downside vega/gamma exposure will be concentrated at shorter-dated expiries, increasing sensitivity to downside moves in the near term."
+        },
+        {
+          "made_at": "2025-07-23T20:11:02.313Z",
+          "instrument": "",
+          "prediction_text": "Market is heavily long upside vol.",
+          "condition": "",
+          "expected_result": "Upside implied volatility will remain elevated and upside options will show higher demand/flows, raising the cost of upside protection."
+        }
+      ]
+    }
+  }
+}

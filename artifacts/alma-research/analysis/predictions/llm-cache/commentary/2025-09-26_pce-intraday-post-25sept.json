@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:04:08.501Z",
+  "inputHash": "4812f49ba9f9ddedf17e201120f46998d67d335e",
+  "payload": {
+    "responseId": "resp_02f0b1912ddc3f200069b7650edd448193a41feb78c092bcda",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market will pin around the centroid near 6598.23–6604.97 (centered ~6600).",
+          "condition": "",
+          "expected_result": "SPX trades and closes intraday within a tight range around 6598–6605 (minimal deviations) indicating pinning to the centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "There will be a bit of an upside spike from the centroid before reverting back.",
+          "condition": "",
+          "expected_result": "SPX spikes above the centroid by multiple points (e.g., to ~6620–6655) intraday then reverses back toward ~6590–6600 within the same session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary scenario: an upside grind above the centroid toward 6655/60 and pin at 6645 if the upside pivot is held over the PM session. ",
+          "condition": "if upside pivot at 6621.77 is held over the PM session",
+          "expected_result": "SPX trades above 6621.77 during the PM and grinds to 6655–6660, then pins around 6645."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6583.93 can be broken only by very bad data with a vol spike, leading to a drop toward 6475/80 before a sharp rebound. ",
+          "condition": "if data is very bad and volatility spikes",
+          "expected_result": "SPX breaks below 6583.93 and trades down to ~6475–6480 intraday, then rebounds sharply back upward afterward."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside target in normal negative move is 6570/60 but spot is expected to reverse back up to 6590/6600 in any case.",
+          "condition": "",
+          "expected_result": "SPX moves down to ~6560–6570 intraday and then reverses back up to ~6590–6600 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6621.77 is a very strong pivot acting as top/floor after 1:30 PM. ",
+          "condition": "after 1:30 PM",
+          "expected_result": "If SPX reaches 6621.77 after 13:30, that level will act as resistance or support (price stalls or reverses) rather than allowing momentum continuation."
+        }
+      ]
+    }
+  }
+}

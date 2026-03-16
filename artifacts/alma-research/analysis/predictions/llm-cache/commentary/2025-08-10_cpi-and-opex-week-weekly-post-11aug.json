@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:01:53.673Z",
+  "inputHash": "36e37efc2ba4c47e4382038a00d994f68050ea49",
+  "payload": {
+    "responseId": "resp_0545726f732defa90069b76484f4c081a29e7f69cb887326a9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market will experience a move up during the week accompanied by heavy volatility selling.",
+          "condition": "",
+          "expected_result": "SPX closes the week higher than it opened while implied volatility (VIX or ATM IV on SPX options) falls by at least 5% from the week's open to close."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Post-OpEx there will be strength and stabilization into the mid-September window.",
+          "condition": "after OpEx",
+          "expected_result": "Over the two weeks following OpEx, SPX exhibits a net gain and intraday realized volatility declines, with fewer daily moves greater than 1.5% compared with the two weeks before OpEx."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Until SPX can perform 6412 in a weekly average, the market is heading towards equilibrium (i.e., mean/reversion rather than trending away).",
+          "condition": "SPX weekly average remains below 6412",
+          "expected_result": "While the 7-day (weekly) average of SPX stays below 6412, price action will remain range-bound with no sustained breakout beyond the week's high or low by more than 2%."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Market’s centroid area (magnet) is 6395.48 - 6384.88 and price will gravitate to that zone.",
+          "condition": "",
+          "expected_result": "Within the next five trading days, SPX will trade into the 6384.88–6395.48 range at least once."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "6435.37 is likely to act as a reversion level back toward the centroid unless CPI is very disinflationary and geo hopes are strong.",
+          "condition": "unless CPI prints very disinflationary and geopolitical developments boost risk-on",
+          "expected_result": "If CPI is not markedly disinflationary, SPX touching 6435.37 will subsequently move back toward the centroid range (6384.88–6395.48) within three trading days."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A break above 6435.37 would confirm further upward momentum toward ~6483.50 (benign CPI bet).",
+          "condition": "SPX breaks above 6435.37",
+          "expected_result": "If SPX closes above 6435.37, it will continue higher and reach or test 6483.50 within five trading days."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6269.55 serves as the borderline where spot can escape the centroid magnet and move lower toward 6230, though the market places little probability on this.",
+          "condition": "SPX breaks below 6269.55",
+          "expected_result": "If SPX closes below 6269.55, it will decline further and test 6230 within three trading days."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Volatility needs to be sold for the market to stabilize at higher levels; VIX will compress around OpEx.",
+          "condition": "around OpEx",
+          "expected_result": "VIX will decline or remain subdued around OpEx, with VIX spot or ATM IV on indices falling relative to the prior week by at least 10%."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "After OpEx there will be mechanical buyback flow, especially if spot is above the centroid, reinforcing stabilization higher.",
+          "condition": "after OpEx and SPX spot is above centroid (6384.88–6395.48)",
+          "expected_result": "If post-OpEx SPX is trading above 6395.48, net buying pressure will push SPX further higher within two trading days, producing a positive daily return on majority of those days."
+        }
+      ]
+    }
+  }
+}

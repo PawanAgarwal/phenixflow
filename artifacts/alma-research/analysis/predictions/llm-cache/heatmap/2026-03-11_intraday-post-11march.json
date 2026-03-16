@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:16:22.043Z",
+  "inputHash": "8f6cd985d7977fb624c02fa9d4ae26d821e00c2e",
+  "payload": {
+    "responseId": "resp_0beaea70bd421f850069b767ee7b4481919a45c838fde0413c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky resistance / pin cluster around 6880-6900 (heatmap red/blue concentration and script shows 6859/6898/6938 levels). Expect price to be slowed and potentially pinned under ~6900 on upside attempts.",
+          "condition": "price approaches 6880-6900",
+          "expected_result": "Failing breakout — price stalling or reversing lower within the band; short-term reversion back toward centroid ~6723 or the upside pivot 6797 then lower to 6700-6660 if momentum weakens."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "High-probability sticky support / brake zone around 6620-6665 (heatmap strong blue/green lower gamma and script risk levels at 6664/6625). This band is expected to slow downside and attract pinning if tested.",
+          "condition": "price falls into 6620-6665",
+          "expected_result": "Price should find support and show stickiness, leading to a reversion bounce back toward 6700-6725; if broken, left-tail extension to ~6550 is likely."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intermediate rejection / reversion pivot near 6677-6703 (script downside pivot 6677.70 and targets 6646/6703; heatmap shows gamma trough/zero activity in this area). This level acts as a likely short-term reversion point back to centroid.",
+          "condition": "price trades through 6660-6705 region",
+          "expected_result": "Likely bounce or pin around ~6675-6705, with reversion toward centroid (~6723) or higher pivot 6797 if momentum supports upside."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot and sticky target cluster at 6797-6860 (script upside pivot 6797.22 target 6858.63; heatmap shows elevated gamma density through this corridor). If momentum can clear ~6770-6780, the market may gravitate to this sticky upside band.",
+          "condition": "momentum sustains above 6770-6780",
+          "expected_result": "Price travel toward 6850-6860 with increased stickiness and potential pinning; if momentum fails near 6770-6780, expect rejection back to centroid/6660-6700 range."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:53:35.142Z",
+  "inputHash": "18c00124c587e58a2d4dc0ad9985271a1b14803b",
+  "payload": {
+    "responseId": "resp_07554bc7e3651d4b0069b7629326848190915053026d1205fd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Price will break through the 5607 zero vanna level today with lower volatility.",
+          "condition": "5607 zero vanna level",
+          "expected_result": "Spot moves decisively beyond 5607 accompanied by a decline in implied volatility compared with prior intraday levels"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Resistances lie at 5531 and 5652, and momentum resistance at 5689.49 will stabilize price if broken and vol calms.",
+          "condition": "price breaks 5689.49",
+          "expected_result": "Upon a move above 5689.49, implied volatility falls and price exhibits stabilization (reduced intraday range and fewer large reversals)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5600 is the center of a long fly-like structure with short gamma everywhere, implying continued pressure on volatility to remain elevated unless external buying takes vol down.",
+          "condition": "",
+          "expected_result": "Implied volatility remains elevated intraday and short-gamma dynamics persist unless substantial outside buying reduces vol, in which case IV declines and gamma exposure lessens"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5615 is the net charm flip, above which charm convexity is shorter and below which it is longer, leading to decreasing gamma over time that does not favor vol cooling mechanically.",
+          "condition": "",
+          "expected_result": "If price is above 5615, charm convexity shortens and measured gamma decreases over the trading session, correlating with limited intraday IV compression"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Intraday stoch vol models detect mean reversion and favor further volatility suppression.",
+          "condition": "",
+          "expected_result": "Implied volatility shows intraday mean reversion toward recent lows, producing lower IV readings by the end of the session compared with local peaks earlier in the day"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Fixed strike skew will be lower into March OpEx and into the April expo, indicating underperformance of vol relative to hinted fear.",
+          "condition": "",
+          "expected_result": "Skew measures for March and April expiries decline from current levels, while VIX and related short-dated implied vol do not spike commensurately with macro fear indicators"
+        },
+        {
+          "instrument": "JPM collar (spot between 5565 and 6165)",
+          "prediction_text": "The 5565/6165 collar will act as a supportive zone rather than a pin; attempts to move through the short strike will see dealers buy back deltas, providing support.",
+          "condition": "spot attempts to move through the short call strike (6165) or long put region (5565)",
+          "expected_result": "On moves toward 6165 or 5565, dealer flows reduce selling pressure (delta buybacks), producing intraday bounce or support and preventing sustained breakouts through those levels"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If volatility can decouple from elevated levels and starts to fall, market-makers will buy back deltas slowly, adding support to spot.",
+          "condition": "volatility decreases from elevated levels",
+          "expected_result": "Decreasing implied volatility triggers gradual dealer delta buybacks, resulting in upward pressure or stabilization in spot price"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Low liquidity will cause erratic, small-cap-like spot moves and require liquidity provision to sustain stronger momentum moves.",
+          "condition": "",
+          "expected_result": "In periods of low liquidity, intraday spot displays higher bid/ask swings and larger intraday gaps; sustained directional moves only occur after identifiable liquidity provision by large funds or banks"
+        }
+      ]
+    }
+  }
+}

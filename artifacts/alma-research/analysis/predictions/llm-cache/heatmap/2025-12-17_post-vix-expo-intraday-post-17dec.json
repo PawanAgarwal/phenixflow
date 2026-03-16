@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:01.189Z",
+  "inputHash": "e963b83839778ca9233c241b1ba41d123100a57d",
+  "payload": {
+    "responseId": "resp_0ebf4f165604c5d60069b766e990b0819caf26eac08d08a1ae",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky downside cluster around 6743–6755 (downside pivot 6755.69 with target 6742.46) — heatmap gamma trough and vol-selling cluster indicate this will act as a support/sticky zone; price likely to pause or pin here on downside tests.",
+          "condition": "breakdown attempt toward 6755–6742",
+          "expected_result": "If SPX trades into 6755–6742, expect slow price action with pinning/limited follow-through for multiple sessions; bounces back toward centroid (~6782–6793) within 1–3 trading sessions in >60% of occurrences."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside sticky/ pin zone near 6857–6842 (upside pivot 6842.64 with upside target 6857.49) — heatmap shows gamma peak and stabilization there, making it a likely magnet/rejection zone on rallies.",
+          "condition": "rally into 6842–6858",
+          "expected_result": "If SPX reaches 6842–6858, expect price to either pin and consolidate there or be rejected back toward centroid (~6782–6793) within the same trading day or next session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid area at ~6782–6793 acts as 'line in the sand' and likely reversion target — heatmap neutral gamma around this band supports mean-reversion to centroid after moves.",
+          "condition": "any sustained move away from 6782–6793 (>20 pts)",
+          "expected_result": "After moves beyond ~20 points, expect reversion back to 6782–6793 within 1–3 sessions, serving as primary magnet."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower left-tail pocket / secondary pin possibility around 6700 if vol dynamics change — heatmap shows a deeper gamma trough cluster near ~6700–6730 representing a low-probability pin if vol catches up and market shows strength at ~6730.",
+          "condition": "volatility pickup with market strength at ~6730",
+          "expected_result": "If volatility rises and SPX holds ~6730, price can grind lower and pin near 6700 over subsequent sessions (low probability scenario)."
+        }
+      ]
+    }
+  }
+}

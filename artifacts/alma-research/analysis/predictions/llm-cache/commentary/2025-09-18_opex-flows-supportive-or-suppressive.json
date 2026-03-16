@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T02:03:37.227Z",
+  "inputHash": "af098d07d56d544f7134d8bca2a72f5844544962",
+  "payload": {
+    "responseId": "resp_0c8b1c96d366bbb10069b764ee2b8481a0bcd507c5c62c9b39",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Centroid of positioning will be between 6667.51 and 6688.14 where flows start to shift.",
+          "condition": "",
+          "expected_result": "Price will gravitate around 6667.51–6688.14 and show flow regime changes when crossing this range."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Downside pivot at 6639.35 will shift toward 6623.55 after 1PM.",
+          "condition": "after 1PM",
+          "expected_result": "6639.35 level will move to ~6623.55 and act as the new downside pivot for intraday flow dynamics."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If price breaks below the downside pivot (6639.35 → 6623.55), 6590 will act as a magnetic support and indicate the market wants lower if breached.",
+          "condition": "price breaks below the downside pivot",
+          "expected_result": "Price will move toward 6590 and may find strong support there; a break of 6590 signals further downside intent."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The most supportive cluster is at 6557.40 and is very hard to break by flows.",
+          "condition": "",
+          "expected_result": "Flows will provide strong support near 6557.40 and price will have difficulty closing below this level intraday."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Upside pivot at 6675.12 opens the door for a pin to 6685 with potential test of 6698/6700 then reverting back, only after 12:30PM.",
+          "condition": "above 6675.12 and after 12:30PM",
+          "expected_result": "Price can pin to 6685 and test 6698–6700, then revert lower after 12:30PM."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "During the AM, 6714.97 is the most magnetic upside zone.",
+          "condition": "during the AM",
+          "expected_result": "Price will be attracted to 6714.97 and may stall or pin near that level in the morning session."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Positioning is net short vol and vomma negative, so vol declines will force dealers to short more vol, creating a vol-suppressing feedback loop.",
+          "condition": "",
+          "expected_result": "Implied volatility will compress further as dealers sell vol, producing measurable IV decline and reduced realized intraday vol."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Positive zomma at the tails means that if volatility is crushed, the gamma effect mitigates and dependence of spot on dealer hedging lessens.",
+          "condition": "if volatility is crushed",
+          "expected_result": "Gamma-driven hedging flows will weaken as IV falls, reducing spot sensitivity to dealer hedging and increasing chance of consolidation rather than runaway moves."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Overall OpEx positioning is strongly supportive, biasing markets toward stabilization rather than sustained downside moves.",
+          "condition": "",
+          "expected_result": "Market will exhibit stabilizing behavior with limited sustained downside, showing reversion toward the centroid levels rather than persistent trending lower."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:54:43.227Z",
+  "inputHash": "8b15e71c4a69f531de836e5e57876ee58e343552",
+  "payload": {
+    "responseId": "resp_045eebc35bfe6b780069b762dd830081a0ac19c3baf6990a36",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "5500/5510",
+          "prediction_text": "The 5500/5510 is a potential pin that will stabilize the downward move if volatility decreases.",
+          "condition": "vol can decrease there",
+          "expected_result": "Price will hold around 5500–5510 and downward momentum will slow or pause"
+        },
+        {
+          "instrument": "5575/77",
+          "prediction_text": "5575/77 is a potential resistance if a gamma squeeze occurs and volatility decreases.",
+          "condition": "a gamma squeeze happens and vol can decrease",
+          "expected_result": "Price will be capped near 5575–5577 and fail to sustain higher levels"
+        },
+        {
+          "instrument": "5680.96",
+          "prediction_text": "Breaking through 5680.96 requires low volatility because vanna convexity is positive and the zone codes zero vanna.",
+          "condition": "low volatility",
+          "expected_result": "If volatility remains low, price will break above 5680.96; if not, price will fail to breach that level"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market is complacent about left-tail risk and has a very high chance of underpricing downside risk because the FOMC is likely to wait.",
+          "condition": "",
+          "expected_result": "Downside tail events are more likely than market pricing implies, increasing probability of a significant negative move not currently hedged by tails"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Left-tail risks from tariffs’ consequences are more dangerous than the tariff moves themselves and can produce significant downside market impact.",
+          "condition": "",
+          "expected_result": "Markets will experience larger-than-expected downside moves driven by secondary effects of tariffs rather than the tariff announcements alone"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Tails are unusually muted despite rising geo and tariff uncertainty, implying potential for future vol-expansion on the left-tail.",
+          "condition": "",
+          "expected_result": "Implied volatility (especially downside/skew) will increase sharply if left-tail developments materialize, causing vol-expansion and larger downside option moves"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T02:05:38.484Z",
+  "inputHash": "afef9b8bf346a93679a7b57395eadabd8678b695",
+  "payload": {
+    "responseId": "resp_0ab5595b038a21720069b7656320288196ad33aab24ab7a5da",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market can take us down to 6610.39 - 6607.05 into Friday if volatility fully mean reverts to 14.15% from the recent 12.76%.",
+          "condition": "volatility fully mean reverts to 14.15% from 12.76%",
+          "expected_result": "Index/spot price falls into the 6610.39–6607.05 range by Friday"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market can fall as low as 6598.90 given recent vol of vol.",
+          "condition": "realized vol of vol increases as referenced",
+          "expected_result": "Index/spot price reaches ~6598.90"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Market is supported around the short-put gamma area today but this support shifts lower into Friday making the environment fragile through delta-hedge adjustments.",
+          "condition": "into Friday (post-shift)",
+          "expected_result": "Support at current short-put levels weakens and spot drifts lower due to delta-hedging"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Long fly pattern centers around 6697.47 with expected ranging around the centroid range of 6705.64 - 6716.06 today.",
+          "condition": "",
+          "expected_result": "Spot trades mostly between 6705.64 and 6716.06 during the trading session"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Net gamma exposure is negative and will decay downward into end of session, leaving volatility room to catch up.",
+          "condition": "",
+          "expected_result": "Gamma becomes more negative during the session and realized volatility increases"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Downside pivot at 6686.66 with a downside target of 6624.95 where skew is tested most.",
+          "condition": "",
+          "expected_result": "If spot breaks below 6686.66, it moves toward 6624.95 where put skew shows significant stress"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Maximum downside is 6571 if volatility catches up.",
+          "condition": "volatility increases/catches up",
+          "expected_result": "Spot declines to as low as 6571"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A local zero vanna around 6670/75 makes it hard to break lower and will cause reversion back up towards 6700 or even 6735/40 unless realized volatility is sold and put skew is bid.",
+          "condition": "realized volatility is not sold and put skew is not relatively bid",
+          "expected_result": "Spot reverts upward toward 6700–6735/6740 instead of breaking below 6670/75"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Upside pivot at 6714.23 with a primary upside target of 6752.48, a strong resistance into the PM session.",
+          "condition": "",
+          "expected_result": "If spot rises above 6714.23, it advances toward 6752.48 where upside faces strong resistance in the PM session"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Very low probability to squeeze up towards 6800 during the AM; if that occurs expect a reversion to 6760 then pin to 6780.",
+          "condition": "AM squeeze toward 6800 occurs",
+          "expected_result": "Following an AM squeeze to ~6800, spot quickly reverts to ~6760 and then pins near 6780"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Primal bet is ranging around the centroid with an upside retest and reversion back down; secondary bet is a downward grind; tertiary is upward stabilization with downside ~4.49% more likely than upside.",
+          "condition": "",
+          "expected_result": "Most likely intraday path is range-bound with an upside retest then reversion; alternatively a downward grind is slightly more likely than sustained upside stabilization"
+        }
+      ]
+    }
+  }
+}

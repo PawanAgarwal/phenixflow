@@ -1,0 +1,42 @@
+{
+  "cachedAt": "2026-03-16T02:03:17.282Z",
+  "inputHash": "5a5c12f8fb2240ffcbc24d1ddb3fb6b92238f744",
+  "payload": {
+    "responseId": "resp_04e57f8783569e230069b764e0e0448196926510b26f7c19fd",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "We can expect some ranging into the FOMC at these elevated rates.",
+          "condition": "leading up to the FOMC",
+          "expected_result": "SPX will trade in a sideways/ranging pattern until the FOMC announcement"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The market primarily bets on the right-tail scenario of reaching 6607.49.",
+          "condition": "",
+          "expected_result": "SPX will rise to 6607.49"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A secondary outcome is a sideway within the centroid range.",
+          "condition": "",
+          "expected_result": "SPX will remain trading within the model's centroid range (i.e., no decisive trend to either tail) for the short term"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "A left-tail scenario of reaching 6532.47 (or even 6508) is possible.",
+          "condition": "",
+          "expected_result": "SPX will decline to 6532.47, with a lower-probability extension to 6508"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "The sudden fast spike produced a 92.13% reversion signal in the model.",
+          "condition": "",
+          "expected_result": "Price will mean-revert materially from the spike, reducing the recent upward deviation toward the model mean"
+        }
+      ]
+    }
+  }
+}

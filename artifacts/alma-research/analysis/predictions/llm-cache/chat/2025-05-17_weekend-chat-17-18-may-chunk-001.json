@@ -1,0 +1,40 @@
+{
+  "cachedAt": "2026-03-16T04:28:48.201Z",
+  "inputHash": "b41c4d732fb4e52273bff812638e25a43fbaa2da",
+  "payload": {
+    "responseId": "resp_066cea64affaa78f0069b786fb00d8819fa0ae59603019a990",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-05-17T21:27:07.954Z",
+          "instrument": "",
+          "prediction_text": "If skew shifts and IV rises along with spot and realized vol, the long-gamma bar will fail to contain moves.",
+          "condition": "skew shifts and IV rises along with spot and realized vol",
+          "expected_result": "Large directional moves occur despite long-gamma positions; volatility increases and the prior stabilizing effect of long-gamma is undone"
+        },
+        {
+          "made_at": "2025-05-17T22:37:09.034Z",
+          "instrument": "",
+          "prediction_text": "If the market goes up, traders will sell many calls and buy tail-hedge protection, steepening skew.",
+          "condition": "market goes up",
+          "expected_result": "Call selling increases and demand for tail hedges rises, producing a steeper option skew (higher implied vol on tails)"
+        },
+        {
+          "made_at": "2025-05-17T22:40:31.633Z",
+          "instrument": "",
+          "prediction_text": "If the market goes down a bit, heavy long-gamma positions will force dealers to buy into the dip, holding the market up and compressing volatility further.",
+          "condition": "market goes down a bit",
+          "expected_result": "Dealer buying into declines supports price (limited downside) and implied/realized volatility compresses"
+        },
+        {
+          "made_at": "2025-05-17T22:56:01.702Z",
+          "instrument": "",
+          "prediction_text": "If the VIX decline slows sharply, downside risk is larger than commonly assumed.",
+          "condition": "VIX decline slows sharply",
+          "expected_result": "Perceived downside tail risk increases, implying greater probability of larger downward moves than currently priced"
+        }
+      ]
+    }
+  }
+}

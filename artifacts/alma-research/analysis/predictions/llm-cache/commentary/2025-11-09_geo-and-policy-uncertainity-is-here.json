@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:06:05.937Z",
+  "inputHash": "5d98f5390f31a1193af1a20fafb6d547ef1f8460",
+  "payload": {
+    "responseId": "resp_04f80edbeb770d430069b76586baa4819fbff1d2ede27fb92b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "US equities",
+          "prediction_text": "US equities are expected to face increased volatility and downside risk if Trump continues to fail to bring certainty to the economy and markets.",
+          "condition": "",
+          "expected_result": "Increased intraday and larger-than-normal weekly drawdowns in broad US equity indices (e.g., S&P 500 declines >3% within a week) following further political uncertainty from Trump."
+        },
+        {
+          "instrument": "US equities (tech-heavy)",
+          "prediction_text": "US tech stocks will disproportionately benefit from AI themes and be preferred for long-term (yearly) outperformance.",
+          "condition": "",
+          "expected_result": "Relative outperformance of tech-heavy indices (e.g., QQQ vs. S&P 500) over a 12-month horizon, with QQQ total return exceeding S&P 500 total return."
+        },
+        {
+          "instrument": "US front-end bonds",
+          "prediction_text": "Short-term yields will remain pressured downward after the Fed's hawkish cut flattened the curve and tempered December expectations, keeping front-end yields lower.",
+          "condition": "",
+          "expected_result": "1-3 month Treasury yields stay below pre-cut levels or decline further over the next month."
+        },
+        {
+          "instrument": "quality bonds",
+          "prediction_text": "Quality bonds should be favored as hedges despite short-term yield pops.",
+          "condition": "",
+          "expected_result": "Outperformance of high-quality fixed income (e.g., investment-grade government or corporate bond ETFs) versus equities during episodes of market stress over the next quarter."
+        },
+        {
+          "instrument": "tariff-related equities or sectors",
+          "prediction_text": "Equities have not priced in the risk of large tariff refunds if Trump loses the IEEPA case, implying downside risk once the market recognizes potential fiscal impact.",
+          "condition": "SCOTUS rules that Trump unlawfully used IEEPA to impose tariffs",
+          "expected_result": "Repricing that leads to a drop in affected sectors (import-exposed companies) and overall market decline, e.g., sector indexes down >5% within days of the ruling."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Ad-hoc bilateral trade deals inject uncertainty and may cause market volatility despite temporary positive headlines.",
+          "condition": "",
+          "expected_result": "Spikes in realized volatility measures (e.g., VIX increases >20% from baseline) following announcements of ad-hoc trade deals or reversals."
+        }
+      ]
+    }
+  }
+}

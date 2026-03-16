@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:12:31.926Z",
+  "inputHash": "bcc088af840acbac7d5275a5cd5d6c0aff838892",
+  "payload": {
+    "responseId": "resp_026358c797d7a9540069b767082d008197aa3522f367888bbc",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky zone / centroid cluster around 6930.8–6936.2 (heavy to break) — acts as magnet and support/resistance; expect price to revert to this band if pushed away intraday.",
+          "condition": "any intraday move away from 6930.8–6936.2",
+          "expected_result": "Price will gravitate back to 6930.8–6936.2 within the trading day (reversion within several hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6951.6 with a short-term upside target at 6960.3 — a likely rejection zone above the centroid where upside gamma/resistance accumulates.",
+          "condition": "upside break above 6951.6",
+          "expected_result": "Price should test 6960.3; expect increased resistance and potential rejection / stall at or just below 6960.3 within the same session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6904.77 with downside target at 6884.32 — provides a magnet/reversion opportunity toward the pivot and potential support near 6884–6905.",
+          "condition": "break below the centroid toward downside",
+          "expected_result": "Price should move toward 6884.32, finding support or slowing near 6904.77 on the way, with likely bounce/reversion back toward the centroid band."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Notable concentrated gamma ridge / sticky zone near ~6843–6866 (strong negative gamma red hotspot) — likely a rejection or sticky support area if price drops that far.",
+          "condition": "sustained move below 6884",
+          "expected_result": "Price will encounter strong gamma crowding around 6843–6866, causing price to slow, stick, or rebound in that range."
+        }
+      ]
+    }
+  }
+}

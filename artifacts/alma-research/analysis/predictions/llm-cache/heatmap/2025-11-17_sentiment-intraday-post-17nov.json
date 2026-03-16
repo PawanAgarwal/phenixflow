@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:10:19.437Z",
+  "inputHash": "c8a6c182d1855878515a7368e324021819b9b2e6",
+  "payload": {
+    "responseId": "resp_009cbc80a6d799080069b7668441ec819081f46f616d8d7d15",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside resistance / sticky zone around 6786–6800 (upside pivot 6785.91, upside target 6797.48). Heatmap shows concentrated gamma/positioning there acting as a brake to rallies.",
+          "condition": "price approaches 6786–6800",
+          "expected_result": "Price likely stalls or reverses on approach; expect rejection or limited upside beyond ~6800 within the session (bounce back toward mid-6740s)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Support / magnet cluster centered in the 6733–6745 area (downside pivot 6733.45; market expected to hover ~6745). Heatmap gamma troughs/zeros align here indicating pinning potential.",
+          "condition": "price drifts toward 6730–6745",
+          "expected_result": "Price likely pins or consolidates in 6730–6745; increased probability of reversion back toward the 6750–6780 range rather than immediate breakdown."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary downside sticky / support corridor near 6690–6665 (primal downside target 6695 with main target 6654.95; gamma concentrations and risk levels at ~6691 and 6670).",
+          "condition": "price breaks below 6730 decisively",
+          "expected_result": "Price likely travel toward 6690–6665 and may find support/pinning there; expect slowed selling and potential bounce attempts from this corridor."
+        }
+      ]
+    }
+  }
+}

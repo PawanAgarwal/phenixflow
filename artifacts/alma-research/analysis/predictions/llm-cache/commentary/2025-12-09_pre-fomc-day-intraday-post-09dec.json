@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:11:17.920Z",
+  "inputHash": "5cc918100d1819d9402f9fc95da361a3a1433f75",
+  "payload": {
+    "responseId": "resp_022ffef0151dc3860069b766c38f5c81a28950f504da81e378",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES futures",
+          "prediction_text": "The rebound continues while 6769.17 is held firmly and the market doesn't break it on a daily close.",
+          "condition": "6769.17 not broken on a daily close",
+          "expected_result": "ES futures will trend higher from current levels (continued rebound) until a daily close below 6769.17 occurs"
+        },
+        {
+          "instrument": "ES futures",
+          "prediction_text": "6755 acts as CTA support for ES futures.",
+          "condition": "price approaches 6755",
+          "expected_result": "ES futures will find buying interest and bounce near 6755 rather than break sharply lower"
+        }
+      ]
+    }
+  }
+}

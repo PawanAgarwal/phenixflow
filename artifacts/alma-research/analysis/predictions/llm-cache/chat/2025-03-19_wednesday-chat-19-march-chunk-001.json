@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:28:09.128Z",
+  "inputHash": "e19d669bb0561b39f14b11641c8c35ba5aca288b",
+  "payload": {
+    "responseId": "resp_05041add80a8f3de0069b786d42e788195846b780176dc2a14",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-19T09:27:21.169Z",
+          "instrument": "index (ES) / 0DTE options",
+          "prediction_text": "If the index dips after open, it will be a good opportunity for 0DTE call-side play.",
+          "condition": "index dips after open",
+          "expected_result": "Enter 0DTE call-side option positions when the index dips after market open; expect short-volatility exposure with slight upside bias to be profitable."
+        },
+        {
+          "made_at": "2025-03-19T09:27:21.169Z",
+          "instrument": "short volatility trades",
+          "prediction_text": "Short volatility trades will continue to print.",
+          "condition": "",
+          "expected_result": "Maintain or initiate short-volatility positions expecting them to show positive performance (profit) in the near term."
+        },
+        {
+          "made_at": "2025-03-19T09:27:21.169Z",
+          "instrument": "ES/VIX relationship",
+          "prediction_text": "The ES beta trade coming from VIX expo increased hedging and pin at 21s is gone now.",
+          "condition": "",
+          "expected_result": "Do not expect continued hedging or pinning around the 21 strike tied to the prior VIX-exposure ES beta trade; adjust positions that relied on that pin."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:15:46.337Z",
+  "inputHash": "bc134eda05e17d903881517b99f0e6b90c946768",
+  "payload": {
+    "responseId": "resp_0cc4ed2f60ac41780069b767c9519c8190abe76803f5bcde94",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Below centroid 6707.73, realized volatility should start to be compressed.",
+          "condition": "price < 6707.73",
+          "expected_result": "Measured realized volatility over the next session(s) decreases compared with the prior session(s) (e.g., lower 1-day/5-day realized vol)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot at 6653.68 with target 6645.52 as the most supportive cluster; if a left-tail event occurs, CTA trigger and weekly levels are targets.",
+          "condition": "price <= 6653.68",
+          "expected_result": "Price moves toward 6645.52 (and tests CTA trigger/weekly levels if a left-tail event occurs)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside pivot at 6807.90 with target 6855 as a reversion line; pivot is sticky but fragile.",
+          "condition": "price >= 6807.90",
+          "expected_result": "Price advances toward 6855 (reversion) rather than breaking higher immediately."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Momentum expected to start to slow at the 6760/6750 band, with 6730/20 capable of being reversionary if it holds above.",
+          "condition": "price in 6760-6750 band or holds above 6730-6720",
+          "expected_result": "Price shows deceleration in advance (reduced slope/short-term momentum) in the 6760-6750 band; if 6730-6720 holds, price reverses higher from that zone."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "6750 is a pivot for ES with 6790/95 being upside confirmation toward 6850-6880.",
+          "condition": "price >= 6790 and price <= 6795",
+          "expected_result": "If ES trades through 6790-6795, it continues up to test 6850-6880."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "6715/20 is downside confirmation for ES toward 6650/60.",
+          "condition": "price <= 6715-6720",
+          "expected_result": "If ES trades at or below 6715-6720, it continues down to test 6650-6660."
+        },
+        {
+          "instrument": "Brent",
+          "prediction_text": "Brent has broken above $80 but is being constrained and may not climb higher due to trapped crude and reduced local demand unless strategic reserves are released.",
+          "condition": "no explicit trigger",
+          "expected_result": "Brent price remains near $80 (limited upside) unless a confirmed release of strategic reserves occurs, in which case prices decline."
+        }
+      ]
+    }
+  }
+}

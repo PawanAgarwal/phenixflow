@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:05:10.414Z",
+  "inputHash": "fa892d5eff2d5a5c002318189c292bc42a668086",
+  "payload": {
+    "responseId": "resp_0c7e6547360ba7f00069b765500adc81939519e256f6665d45",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "VIX",
+          "prediction_text": "VIX will pin to the low 20s through Wednesday then rebound with volatility buyback and increased headline sensitivity.",
+          "condition": "through Wednesday",
+          "expected_result": "VIX trades around 21s initially, then rises noticeably after Wednesday as volatility buyback occurs"
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "Post-OpEx volatility can start to move more freely and could be synthetically sold into the next FOMC if there is a QE announcement.",
+          "condition": "post-OpEx and if a QE announcement occurs into the next FOMC",
+          "expected_result": "VIX shows increased directional movement after OpEx and then falls following a QE-linked synthetic volatility sell (measurable decline in VIX) following the FOMC announcement"
+        },
+        {
+          "instrument": "GLD",
+          "prediction_text": "Persistent policy and geopolitical risk and central-bank demand will push gold even higher.",
+          "condition": "",
+          "expected_result": "Spot gold and GLD rise materially over coming quarters"
+        },
+        {
+          "instrument": "GLD",
+          "prediction_text": "Gold will average $3,675 in Q4 2025.",
+          "condition": "",
+          "expected_result": "Average spot gold price during Q4 2025 equals approximately $3,675 per ounce"
+        },
+        {
+          "instrument": "GLD",
+          "prediction_text": "Gold will rise toward $4,600 by mid-2026.",
+          "condition": "",
+          "expected_result": "Spot gold reaches approximately $4,600 per ounce by mid-2026"
+        },
+        {
+          "instrument": "GLD",
+          "prediction_text": "Gold could reach $5,000 by end of 2026.",
+          "condition": "",
+          "expected_result": "Spot gold reaches approximately $5,000 per ounce by end of 2026"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "CTAs at max-allocation will start to unwind and carry trades will unwind, allowing volatility and price movement to change post-Opex.",
+          "condition": "post-OpEx",
+          "expected_result": "Observable CTA position reductions and carry trade unwind leading to increased market movement and changes in volatility metrics after OpEx"
+        }
+      ]
+    }
+  }
+}

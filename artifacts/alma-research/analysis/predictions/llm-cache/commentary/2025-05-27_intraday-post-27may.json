@@ -1,0 +1,84 @@
+{
+  "cachedAt": "2026-03-16T01:57:31.879Z",
+  "inputHash": "daf3f4544df53a83fc37f668d6eabe390b9957e7",
+  "payload": {
+    "responseId": "resp_0ea910240fd6caa20069b7638380d88197be5aca5142e24ed9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Momentum will break through only if volatility calms down locally towards 5853.",
+          "condition": "volatility calms down locally towards 5853",
+          "expected_result": "Price momentum advances (upward break) beyond current range"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility will catch up to the downside at 5826.83 and below.",
+          "condition": "price falls to 5826.83 or below",
+          "expected_result": "Volatility increases on downside moves (measured by a rise in implied vol) and downside buying interest appears"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If customers don’t buy the downside at 5826.83, the market will reject that price.",
+          "condition": "customers do not buy the downside at 5826.83",
+          "expected_result": "Price bounces higher from ~5826.83 (rejection) instead of continuing lower"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5800 is expected to hold as the zero vanna level.",
+          "condition": "price reaches 5800",
+          "expected_result": "Price finds support at 5800 and does not close materially below it (holds as support)"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If 5800 breaks and momentum titter-totters in the 5826–5800 range, then 5756 is the braking point.",
+          "condition": "5800 breaks and momentum becomes choppy in 5826–5800 range",
+          "expected_result": "Price continues lower toward 5756 and shows braking (slowing of downward speed) around that level"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "We should feel some braking effect ~10 points above 5756.",
+          "condition": "price approaches 10 points above 5756 (~5766)",
+          "expected_result": "Downward momentum slows noticeably around ~5766 before reaching 5756"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5900 is a big gamma bar that will be rejected if volatility doesn’t calm down.",
+          "condition": "volatility does not calm down near 5900",
+          "expected_result": "Upward move stalls and price is rejected at or below 5900"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5923.63 is a line where volatility can be expected to catch up to the upside due to local negative speed.",
+          "condition": "price reaches 5923.63",
+          "expected_result": "Volatility increases on upside moves, enabling a sustained push higher from 5923.63"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5940 is a local maximum and vanna-flip level; low volatility would need to break through it.",
+          "condition": "volatility is low",
+          "expected_result": "Price will struggle to break above 5940 unless volatility increases; break above 5940 requires rising volatility"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5872 is an important local pivot into 1:30 PM.",
+          "condition": "time reaches 1:30 PM (local reference)",
+          "expected_result": "Price action pivots around 5872 at or near 1:30 PM, defining directional bias into the afternoon"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility selling is expected and ranging, causing volatility to drift lower.",
+          "condition": "ongoing vol-selling environment",
+          "expected_result": "Implied volatility trends lower over the near term (volatility drift down) and ranges tighten"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "A volatility spike is expected to catch up into Thursday.",
+          "condition": "approach of Thursday",
+          "expected_result": "Implied volatility increases (spikes) by Thursday"
+        }
+      ]
+    }
+  }
+}

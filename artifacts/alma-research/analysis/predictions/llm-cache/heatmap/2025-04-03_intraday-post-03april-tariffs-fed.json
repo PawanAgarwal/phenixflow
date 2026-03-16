@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T01:54:50.731Z",
+  "inputHash": "d3a4cafc129c84fe3da80a9e066450c06d3cf7ad",
+  "payload": {
+    "responseId": "resp_0440720437a4042b0069b762e3914881a19248fb3cd76111b3",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Sticky gamma/pinning zone around 5500–5510 acting as downside magnet and stabilizer (downside gamma starts there). Expect price to find support and slow declines near this band.",
+          "condition": "price approaches 5500–5510",
+          "expected_result": "Price will decelerate or reverse intraday within 5500–5510; hold above this band for at least 30–60 minutes or bounce higher by ≥10–20 points."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Resistance/quick-reversion zone at 5575–5577 (gamma squeeze resistance; charm flip area around 5680 is above). Expect rejection or pause if vol falls.",
+          "condition": "upside move into 5575–5577 with low realized vol",
+          "expected_result": "Price will stall or reverse at 5575–5577 within the same trading day, failing to sustain a break above by more than ~10 points."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Intermediate sticky troughs/peaks visible near 5680 area (coding zero vanna at 5680.96; requires low vol to break through). This level is a higher friction point — a potential rejection if vol remains low.",
+          "condition": "attempted push toward ~5681 with low volatility",
+          "expected_result": "Price will struggle to clear ~5681; expect a rejection or short-lived probe that retreats at least 10–20 points within hours."
+        }
+      ]
+    }
+  }
+}

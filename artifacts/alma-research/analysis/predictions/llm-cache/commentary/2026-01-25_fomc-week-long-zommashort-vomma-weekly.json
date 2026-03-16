@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:13:42.476Z",
+  "inputHash": "7c5abdd885baa17a43577a1a1daa460adab3437d",
+  "payload": {
+    "responseId": "resp_093d028af7131f620069b76751ee9881a2a814e9de35a7239c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "",
+          "prediction_text": "Market expects liquidity at the Dec22 and Oct24 gaps, especially on Friday, providing supportive stabilization.",
+          "condition": "on Friday",
+          "expected_result": "Price will find support and stabilize near the Dec22 and Oct24 gap areas (reduced downside and smaller intraday ranges) on Friday"
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Until the market stabilizes above 6957.92, sentiment pressure will remain regarding the November bottom rebound.",
+          "condition": "",
+          "expected_result": "If price stays at or below 6957.92 during the week, market sentiment will remain negative and the November-bottom-rebound narrative will persist (no confident upside continuation) "
+        },
+        {
+          "instrument": "",
+          "prediction_text": "6947.76 must be broken within the next 5 days to hold the current positive imbalance; otherwise price will march towards equilibrium.",
+          "condition": "within the next 5 days",
+          "expected_result": "If price breaks above 6947.76 within five days, the positive imbalance will be maintained; if it does not, price will move toward equilibrium (decline or range contraction away from current imbalance)"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "cachedAt": "2026-03-16T01:57:43.833Z",
+  "inputHash": "2174272a8632025fd35e7d8733319efc89f88f24",
+  "payload": {
+    "responseId": "resp_045df36d58196db30069b7638fe13c8195bf5f2da86b118c21",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "5850 put gamma bar / S&P?",
+          "prediction_text": "5850 is a potential pin.",
+          "condition": "",
+          "expected_result": "Price will gravitate toward and trade around 5850 (pinning) for a sustained period intraday."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If puts decay, dealers will sell and upside will be capped.",
+          "condition": "puts decay",
+          "expected_result": "Upward price movement will be limited as dealer selling pressure increases, preventing breakout above short-call related resistance."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Puts start to print below 5870.86, producing local short speed effect with vol down and longer downside gamma.",
+          "condition": "price < 5870.86",
+          "expected_result": "Downside gamma dominance and declining local volatility, leading to faster intraday downside moves but reduced vol levels."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Vol is expected to start to decline at 5949.70.",
+          "condition": "price ≥ 5949.70",
+          "expected_result": "Implied volatility will decrease from current levels once price reaches 5949.70."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5975 would reject the price.",
+          "condition": "price ≥ 5975",
+          "expected_result": "Price will be rejected and reverse lower after touching or briefly exceeding 5975 (resistance)."
+        },
+        {
+          "instrument": "centroid 5919.12-5937.12",
+          "prediction_text": "The centroid is the 5919.12 - 5937.12 range.",
+          "condition": "",
+          "expected_result": "Price will spend significant time trading within 5919.12–5937.12, acting as the intraday mean/center."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If downside vol catches up through outside influence, 5840 can be broken then 5810 is next.",
+          "condition": "downside vol increases via outside influence",
+          "expected_result": "Price will break below 5840 and subsequently reach 5810."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "If market stabilizes at 5810, the 2 sigma move is the target.",
+          "condition": "price stabilizes at 5810",
+          "expected_result": "A 2-sigma move from that stabilization point will occur, reaching the specified statistical target (two standard deviations from mean)."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "5735 is a hard stop.",
+          "condition": "",
+          "expected_result": "If price continues adverse movement, it will reach 5735, which should be treated as the hard stop/maximum tolerated loss level."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T02:14:01.193Z",
+  "inputHash": "edfe33395b01e08aae0fc275daa4b8ed754e8c19",
+  "payload": {
+    "responseId": "resp_0c92658b04bc0e980069b7676282cc819581fcc93f1af89e1b",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES futures",
+          "prediction_text": "If ES breaks below 6975/6980, expect a leg down toward 6950/6955 and then 6900.",
+          "condition": "breaks below 6975/6980",
+          "expected_result": "Price will decline to 6950–6955 and potentially reach 6900."
+        },
+        {
+          "instrument": "ES futures",
+          "prediction_text": "If ES holds below main pivot 6990/6995, expect downside bias toward 6950/6955 and 6900.",
+          "condition": "holds below 6990/6995",
+          "expected_result": "Market will trend down to 6950–6955 and potentially 6900."
+        },
+        {
+          "instrument": "ES futures",
+          "prediction_text": "If ES moves above 7030, expect upside continuation into the upside vacuum.",
+          "condition": "moves above 7030",
+          "expected_result": "Price will continue upward into the identified upside vacuum (sustained rally above 7030)."
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "Gold’s rally is not trusted for the long term, so expect gradual profit-taking over time despite current inflows.",
+          "condition": "",
+          "expected_result": "Gold price will slowly decline from recent highs as positions are gradually sold (net outflows or reduced upward momentum)."
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "5280 is the main pivot for Gold and 5595 is the upside pivot, so a move above 5595 would confirm further upside while failure at 5280 implies weakness.",
+          "condition": "moves above 5595",
+          "expected_result": "Gold will confirm further upside and continue higher above 5595."
+        },
+        {
+          "instrument": "Gold",
+          "prediction_text": "5280 acting as main pivot: failure to hold above 5280 implies weakness.",
+          "condition": "fails to hold above 5280",
+          "expected_result": "Gold will exhibit downside pressure following loss of 5280 pivot."
+        }
+      ]
+    }
+  }
+}

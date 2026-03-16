@@ -1,0 +1,54 @@
+{
+  "cachedAt": "2026-03-16T02:44:08.893Z",
+  "inputHash": "090d3d95d269b3db8f45da52c26e65f949559685",
+  "payload": {
+    "responseId": "resp_02a79e4be0b7adae0069b76e744dd881968b7e48f7b8d09528",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-07-08T14:54:17.214Z",
+          "instrument": "",
+          "prediction_text": "I will add closer expiry legs only if market makes a lower weekly avg price than 6132.",
+          "condition": "market makes a lower weekly avg price than 6132",
+          "expected_result": "Enter additional shorter-expiry option legs after the weekly average price falls below 6132."
+        },
+        {
+          "made_at": "2025-07-08T14:54:17.214Z",
+          "instrument": "",
+          "prediction_text": "I will revise sizing if price closes below the 6160s into Thursday.",
+          "condition": "closes below the 6160s into Thursday",
+          "expected_result": "Reduce or change position sizing following a close below the 6160s on Thursday."
+        },
+        {
+          "made_at": "2025-07-10T13:20:23.477Z",
+          "instrument": "ES=F",
+          "prediction_text": "6310/20 is my short target if I see weakness.",
+          "condition": "if I see weakness",
+          "expected_result": "Initiate or increase short exposure aiming for price to reach 6310–6320 when market weakness appears."
+        },
+        {
+          "made_at": "2025-08-04T14:02:15.325Z",
+          "instrument": "SPX",
+          "prediction_text": "Short SPX 60-delta 0DTE puts at 6310, expecting 6320 as max fakeout target.",
+          "condition": "",
+          "expected_result": "Sell 60-delta same-day expiring SPX puts at strike 6310; anticipate price may spike to 6320 as a fakeout but position remains as a short put."
+        },
+        {
+          "made_at": "2025-08-04T15:08:05.311Z",
+          "instrument": "",
+          "prediction_text": "If spot doesn't go back below 6305 in the next 2 hours, it will slowly grind up to 6320.",
+          "condition": "spot does not go back below 6305 in the next 2 hours",
+          "expected_result": "Price will gradually rise toward 6320 within the specified timeframe if spot stays above 6305 for two hours."
+        },
+        {
+          "made_at": "2025-08-04T17:19:24.016Z",
+          "instrument": "",
+          "prediction_text": "6328 is a key pivot; below it is a magnet towards 6320, above it toward 6338/40 to fill the gap.",
+          "condition": "",
+          "expected_result": "If price is below 6328 expect it to move toward 6320; if above 6328 expect it to move toward 6338–6340."
+        }
+      ]
+    }
+  }
+}

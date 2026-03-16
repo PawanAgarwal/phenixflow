@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:03:58.783Z",
+  "inputHash": "d3ecaa4543330b0abaaed11ff2f4e233757bfe28",
+  "payload": {
+    "responseId": "resp_090e8af1008d86450069b7650688308196a47b68cca681cbf9",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong sticky/support zone around 6700-6713 (most-likely pin/floor); heatmap gamma peak and the post text indicate a floor forming after first 40 minutes with reversion potential from ~6713 back to 6690/6700.",
+          "condition": "price approaches 6713-6700 after first 40 minutes",
+          "expected_result": "SPX will find support near 6700-6713 and revert downward toward 6690-6700 within the session"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside pivot and rejection zone near 6673.8 — described as unbreakable during the power hour and shown as a gamma trough/peak clustering, offering reversion opportunity if tested.",
+          "condition": "SPX drops to ~6673.8 during power hour",
+          "expected_result": "Price will be rejected at or close to 6673.8 and revert higher toward the central fly (≈6690-6700) during the power hour"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Secondary downside targets / sticky zones below pivot at 6650-6660 (primal downside test) and 6614.5 with potential pin to ~6635 if downside momentum continues; heatmap shows gamma structure supporting layered support in these areas.",
+          "condition": "sustained selling breaks 6673.8 pivot",
+          "expected_result": "If 6673.8 breaks, SPX will test 6650-6660; a further move may reach ~6614.5 with possible pinning around 6635"
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Upside corridor resistance near 6740-6750 (gamma ridge near the top of the heatmap) implying less resistance to upside but a likely cap if momentum stalls.",
+          "condition": "SPX rallies from 6700 toward highs",
+          "expected_result": "Rally toward 6740-6750 will slow or reverse near that corridor, producing a rejection or consolidation there"
+        }
+      ]
+    }
+  }
+}

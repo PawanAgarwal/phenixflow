@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:11:28.580Z",
+  "inputHash": "f5021affe5af1bd53542663a321f8c2335643ec3",
+  "payload": {
+    "responseId": "resp_0fdc46c085a9b1510069b766c91d34819fb143c10ed0ac481c",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong upside sticky zone / pin around 6890-6900 indicated by concentrated positive gamma (red hotspot) acting as an upside pivot and hard stop; market likely pins or reverts back from ~6900 after initial move higher.",
+          "condition": "price reaches 6900 area",
+          "expected_result": "If SPX trades up into 6890-6900, expect limited continuation above and a reversion or pin back toward 6855-6875 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Centroid/range support area between 6872.29 and 6890.50 where positioning centers; expect intraday mean reversion and range trade within this centroid.",
+          "condition": "price inside 6872-6890",
+          "expected_result": "While inside 6872-6890, expect price to oscillate around the centroid and fail to sustain strong directional moves; favor range-bound entries targeting edges of centroid."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma support band and serious support target near 6789.96 (with visible gamma troughs ~6795-6797 area) creating a buy-the-dip zone and likely rejection of deeper selling.",
+          "condition": "price declines toward 6790-6797",
+          "expected_result": "If SPX falls into 6789-6797, expect durable support and buyers to step in, producing a rebound back toward the centroid (≈6855-6885) during the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower sticky gamma mass below ~6735-6766 (deep blue/green band) likely limits extended downside beyond ~6735; strong structural support if market gaps lower.",
+          "condition": "price drops below 6766 toward 6736",
+          "expected_result": "A move into 6736-6766 should encounter heavy support and likely stop further declines, prompting a mean reversion back toward 6780-6840."
+        }
+      ]
+    }
+  }
+}

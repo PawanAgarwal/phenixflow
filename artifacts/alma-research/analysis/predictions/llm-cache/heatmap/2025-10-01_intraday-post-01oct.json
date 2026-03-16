@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:04:22.580Z",
+  "inputHash": "c916cc0c976fd4ddaced827b89ad6809024ef7ac",
+  "payload": {
+    "responseId": "resp_0f8475c04027f3140069b765206ed4819db952926a65ecda57",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong intraday pin / rejection zone centered at the centroid ~6658.7 (visible as a pronounced gamma peak/sticky band). Expect spot to be resisted at this level during power hour if below, or to pin here if returning from downside.",
+          "condition": "price approaches 6658-6668",
+          "expected_result": "Price will reject or pin into the 6658-6668 area during the power hour, failing to produce a sustained breakout beyond ~6690 and snapping back toward 6637-6610 levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside gamma support corridor around 6620-6600 (gamma trough/peak cluster visible just below the centroid). This area acts as local support and a probable bounce zone driven by dealer buybacks on short-dated put activity.",
+          "condition": "intraday decline through 6640 toward 6620-6600",
+          "expected_result": "Price should find buying pressure and produce a bounce or pin between 6620 and 6600 rather than trending straight through to lower targets; short-term reversal likely."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower tail / left-tail target around 6585 if put skew materializes (secondary sticky magnet visible farther down). This is the next meaningful rejection/pinning level if momentum carries through initial support.",
+          "condition": "sustained momentum and heavy put flow breaks 6600",
+          "expected_result": "Price can travel down to ~6585 and pause/pin there with elevated probability (~23% priced), before a potential reversion back toward 6610-6637."
+        }
+      ]
+    }
+  }
+}

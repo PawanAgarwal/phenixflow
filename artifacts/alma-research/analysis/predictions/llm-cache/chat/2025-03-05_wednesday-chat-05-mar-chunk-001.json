@@ -1,0 +1,33 @@
+{
+  "cachedAt": "2026-03-16T04:27:56.999Z",
+  "inputHash": "a6e07d20c19d9a141d736de5a2555bbeb4479fdd",
+  "payload": {
+    "responseId": "resp_05ca2098fd5ef5ec0069b786c8138c81a19a3b19c9b2b2a006",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-03-05T14:08:51.083Z",
+          "instrument": "",
+          "prediction_text": "Market maker exposure will lead to shorter upside volatility.",
+          "condition": "",
+          "expected_result": "Observed option-implied volatility on the upside will compress into shorter-dated maturities or show reduced upside vega sensitivity over subsequent sessions."
+        },
+        {
+          "made_at": "2025-03-05T14:09:13.417Z",
+          "instrument": "",
+          "prediction_text": "If market makers need to hedge to the upside they will buy long volatility trades, causing volatility to rise.",
+          "condition": "market makers need to hedge to the upside",
+          "expected_result": "Option-implied volatility (especially for upside/OTM calls) will increase following such hedging activity."
+        },
+        {
+          "made_at": "2025-03-05T14:12:15.753Z",
+          "instrument": "",
+          "prediction_text": "Market makers will shorten upside gamma and vega exposure.",
+          "condition": "",
+          "expected_result": "Market makers' net gamma and vega for upside strikes will decrease, reflected in reduced dealer-provided liquidity and altered option skew dynamics."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:15:30.805Z",
+  "inputHash": "78f64338d8a5a35bbab80abbf27fd28596ed0e2a",
+  "payload": {
+    "responseId": "resp_083a611bbeaaf1a40069b767bd6d408196abfb3d51fcba92fb",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma/long option support cluster around 6933–6954 acting as an upper sticky/brake zone (pinning magnet near 6940). Upside travel into ~6960s faces heavy resistance and volatility suppression above the centroid (~6931–6910).",
+          "condition": "price approaches 6940–6965",
+          "expected_result": "SPX should struggle to break and hold above 6950–6965; expect price to be pinned near 6940 and revert lower toward 6850–6900 within the session."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Supportive gamma trough and customer hedging concentrated in the 6838–6850 area (downside pivot), functioning as a local support and likely rejection zone.",
+          "condition": "price declines to 6838–6850",
+          "expected_result": "Expect a reject and short-term reversion back toward 6850–6900; left-tail extension to 6770–6780 possible but likely to revert to ~6800."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower sticky/negative-gamma band visible near 6760–6794 acting as strong lower magnet at extreme downside percentiles (99.7% levels).",
+          "condition": "large sell-off toward 6760–6795",
+          "expected_result": "Price likely to find strong pinning and absorb flow around 6760–6795, limiting further immediate downside and encouraging mean-reversion back toward 6800+."
+        }
+      ]
+    }
+  }
+}

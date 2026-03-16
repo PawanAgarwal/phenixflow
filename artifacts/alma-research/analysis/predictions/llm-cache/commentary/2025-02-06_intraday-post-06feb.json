@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:51:02.686Z",
+  "inputHash": "300a9f604cc1e9ad99821e3842c82122a65e9a0b",
+  "payload": {
+    "responseId": "resp_01ab86bc6ba987c20069b7620195b08192802d490ccc587b54",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "ES will hold above 6082.14 intraday.",
+          "condition": "",
+          "expected_result": "ES futures will not trade below 6082.14 during the trading session."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Volatility must cool for price to break below the downside net zero vanna level at 6064.9.",
+          "condition": "volatility cools",
+          "expected_result": "If volatility decreases, price will break below 6064.9."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Elevated volatility is required to flip the upside net vanna at 6123.5 and allow a move above it.",
+          "condition": "volatility increases",
+          "expected_result": "If volatility rises, price will trade above 6123.5."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The market maker long-fly/short-skew positioning will favor reversion trades toward the center from both directions.",
+          "condition": "",
+          "expected_result": "Price moves away from the center will reverse back toward the pattern’s center rather than continue trending."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "The setup will prevent volatility from increasing enough to the downside to break through the zero speed line at 6029.63.",
+          "condition": "",
+          "expected_result": "Downside moves will fail to breach 6029.63; downside volatility will remain suppressed."
+        },
+        {
+          "instrument": "",
+          "prediction_text": "Customer flow selling skew and unwinding tail hedges will produce a continued bull bias into OpEx.",
+          "condition": "",
+          "expected_result": "Market prices will trend higher (bullish bias) into options expiration rather than show a sustained left-tail sell-off."
+        }
+      ]
+    }
+  }
+}

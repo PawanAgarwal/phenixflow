@@ -1,0 +1,78 @@
+{
+  "cachedAt": "2026-03-16T01:56:42.597Z",
+  "inputHash": "ab199fd0a3e95243b7aa317a83377ed1fb6b7ea1",
+  "payload": {
+    "responseId": "resp_058c02c5de68012e0069b7634fadfc8194a66687425bb64cc5",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES (S&P 500 futures)",
+          "prediction_text": "I wouldn’t be bullish on ES until it stabilizes in the 5715-5725 zone.",
+          "condition": "",
+          "expected_result": "ES will remain non-bullish (price failing to sustain an uptrend) unless it trades and holds within 5715-5725; a sustained hold there will precede a bullish shift."
+        },
+        {
+          "instrument": "ES (S&P 500 futures)",
+          "prediction_text": "Expecting a nice dip to buy at 5640/50 (holding below 5700 reinforcing this narrative).",
+          "condition": "",
+          "expected_result": "ES will decline to the 5640–5650 zone, presenting a buyable dip; staying below 5700 during the move will reinforce that the dip-buy narrative is intact."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "I code weekly ranges where any move gains actual momentum and trend changes; go long only if market shows strength above the levels after the comma.",
+          "condition": "",
+          "expected_result": "If SPX breaks and trades above 5742.16, the breakout will confirm momentum and a trend change, justifying long exposure; failure to exceed that level will not confirm a bullish trend."
+        },
+        {
+          "instrument": "ES=F",
+          "prediction_text": "Go long only if market shows strength above the levels after the comma.",
+          "condition": "",
+          "expected_result": "If ES=F breaks and trades above 5768.29, the breakout will confirm momentum and a trend change enabling long positions; failure to clear that level will keep trend unconfirmed."
+        },
+        {
+          "instrument": "NDX",
+          "prediction_text": "Go long only if market shows strength above the levels after the comma.",
+          "condition": "",
+          "expected_result": "If NDX breaks and trades above 20422.16, momentum will be confirmed and a bullish trend change is expected, validating long trades; otherwise no confirmed trend."
+        },
+        {
+          "instrument": "NQ=F",
+          "prediction_text": "Go long only if market shows strength above the levels after the comma.",
+          "condition": "",
+          "expected_result": "If NQ=F breaks and trades above 20512.61, the move will confirm momentum and a bullish trend change, justifying longs; failure to break keeps trend unconfirmed."
+        },
+        {
+          "instrument": "VIX",
+          "prediction_text": "I code weekly ranges where any move gains actual momentum and trend changes.",
+          "condition": "",
+          "expected_result": "If VIX trades above 23.50, expect momentum to confirm a volatility expansion (trend change higher); if it trades below 20.29, expect momentum to confirm volatility compression (trend change lower)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "For AM expo, the main pivot is at 5579.82; if 5635.88 can be held into OpEx, we can get some squeeze up if vol catches up.",
+          "condition": "5635.88 is held into OpEx",
+          "expected_result": "If SPX holds 5635.88 into OpEx and volatility increases, expect an upside squeeze with prices rising above recent levels."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "If vol declines, we can expect 5524.32 to be magnetic and stabilizing.",
+          "condition": "volatility declines into OpEx window",
+          "expected_result": "If volatility falls during OpEx, SPX will gravitate toward and stabilize around 5524.32."
+        },
+        {
+          "instrument": "ES (S&P 500 futures)",
+          "prediction_text": "I mark Tuesday - Wednesday window as the potential weakness window, where we can get a nice dip to buy.",
+          "condition": "Tuesday–Wednesday OpEx window",
+          "expected_result": "During the Tuesday–Wednesday window, ES will experience weakness and dip low enough to create a buy opportunity (e.g., toward the 5640–5650 area cited)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Dealers are net long puts and short calls which magnetizes market downwards into OpEx.",
+          "condition": "dealer positioning into OpEx (net long puts/short calls)",
+          "expected_result": "Put-heavy dealer positioning will exert downward pressure on SPX into OpEx, increasing likelihood of downside drift or pinning."
+        }
+      ]
+    }
+  }
+}

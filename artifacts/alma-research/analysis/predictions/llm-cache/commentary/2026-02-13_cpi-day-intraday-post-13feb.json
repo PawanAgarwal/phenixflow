@@ -1,0 +1,30 @@
+{
+  "cachedAt": "2026-03-16T02:14:49.146Z",
+  "inputHash": "c46e7b991f368333e5076ed0df9906c3a42c7a63",
+  "payload": {
+    "responseId": "resp_07b2d2ccc7efb9080069b767955318819e9dccb30942ce7fe4",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Market mostly expects stabilization into the next week with potential upside drift.",
+          "condition": "",
+          "expected_result": "ES price will trade in a relatively narrow range week-over-week with a net upward bias (close higher at end of next week than start)."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "6875/80 is the most important ES pivot.",
+          "condition": "",
+          "expected_result": "A break and hold above or below 6875–6880 will determine the next directional move in ES (price continuation in the direction of the break within subsequent sessions)."
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Watch 6900/10 zone for ES to see if any upside momentum gets confirmed by bull volume; this will decide what's next.",
+          "condition": "ES reaches 6900–6910",
+          "expected_result": "If ES reaches 6900–6910 and bull volume confirms, upside momentum will continue and ES will rally further; if reached without bull volume, the move will fail and ES will reverse or stall."
+        }
+      ]
+    }
+  }
+}

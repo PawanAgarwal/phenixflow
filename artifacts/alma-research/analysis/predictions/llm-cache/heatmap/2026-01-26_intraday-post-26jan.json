@@ -1,0 +1,36 @@
+{
+  "cachedAt": "2026-03-16T02:13:52.549Z",
+  "inputHash": "6a69d133de87d690c0b39a3146039cdd01a291bc",
+  "payload": {
+    "responseId": "resp_03d9d6fa848c90460069b76758e01881918050b22588232085",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Strong gamma bleed / sticky zone near 6850-6865 (red hotspot) acting as a short-term pin/resistance with likely pin to ~6860 if price approaches from above or below.",
+          "condition": "price approaches 6850-6865",
+          "expected_result": "Price will slow or reverse near 6850-6865 and may pin around 6860 within the session (measurable by price stalling or turning within ±5 pts of 6860 within 1-3 hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Gamma support band and reversion zone around 6925-6935 (yellow/green lines indicating peak/trough) that can cap upside and magnet spot back toward the upside pivot ~6955 if breached, otherwise expect reversion to ~6900-6920.",
+          "condition": "price is below 6925-6935",
+          "expected_result": "If spot stays below 6925-6935, expect a reversion back toward 6900-6920 within the session (observable as a move of ≥10 pts toward that range within 1-3 hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "High-concentration long-gamma / sticky cap cluster near 6990-7015 (top red ridge) acting as a strong upside rejection zone and magnet if price reaches that area.",
+          "condition": "price reaches 6990-7015",
+          "expected_result": "Price will face strong resistance and likely stall or reverse within 6990-7015 (measurable as failure to close above that range or reversal of ≥10 pts within 1-3 hours)."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Lower support corridor around 6730-6765 (blue long-duration gamma trough) providing downside cushion and likely limiting fast drops below ~6730.",
+          "condition": "price trends downward toward 6730-6765",
+          "expected_result": "Downside momentum should slow near 6730-6765 with higher probability of bounce or consolidation (price to stop falling and reverse or consolidate within ±10 pts of this range within the session)."
+        }
+      ]
+    }
+  }
+}

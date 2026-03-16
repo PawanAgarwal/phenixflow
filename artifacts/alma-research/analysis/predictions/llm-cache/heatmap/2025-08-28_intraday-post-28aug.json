@@ -1,0 +1,24 @@
+{
+  "cachedAt": "2026-03-16T02:02:38.830Z",
+  "inputHash": "2e25bf28b6067927b07f593ab37002cae685015d",
+  "payload": {
+    "responseId": "resp_0497a1c4f0f150590069b764b9c8bc819e9ec7f61094b52842",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "SPX",
+          "prediction_text": "Heatmap shows a strong gamma magnet at 6493 acting as a sticky/pinning zone during the session; market likely to range between the centroid (~6466–6472) and 6493. If spot holds near 6511 into the power hour with call skew remaining bid, 6493 can pin and push toward 6523.",
+          "condition": "call skew (30/22 delta calls) > +20.83% relative bid",
+          "expected_result": "Price pins at 6493 and grinds up to ~6522.98 (target) — observe price holding above 6493 into power hour and reaching ~6523."
+        },
+        {
+          "instrument": "SPX",
+          "prediction_text": "Downside is protected by a heavy gamma trough/line at 6462.61; breaking below requires a large put skew bid. Until that break, 6462.61 should act as strong support/rejection for downside moves.",
+          "condition": "put skew (30/20 delta puts) increases >= +82.30%",
+          "expected_result": "If condition met, price breaks below 6462.61 and travels toward ~6412.44 (with margin of error ~6405). If not met, price rejects below 6462.61 and stays above centroid (~6466–6472)."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "cachedAt": "2026-03-16T04:27:11.609Z",
+  "inputHash": "b3817c96270458d29d1da71349b1003494a325df",
+  "payload": {
+    "responseId": "resp_06feecdd8182fe960069b78697fb208190bf0d0181d58f1550",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "made_at": "2025-02-03T11:59:08.576Z",
+          "instrument": "",
+          "prediction_text": "The PS level coinciding with the pivot (~5934.99) will act as the zero speed level.",
+          "condition": "",
+          "expected_result": "Price/market speed will behave as if at zero speed around 5934.99, altering MM gamma/vanna dynamics (no sustained directional acceleration away from the pivot)."
+        },
+        {
+          "made_at": "2025-02-03T16:08:58.067Z",
+          "instrument": "",
+          "prediction_text": "6107.55 is the main market pivot and the market will test/give it in coming weeks.",
+          "condition": "",
+          "expected_result": "Price will move toward and interact with 6107.55 (test, breach, or rejection) over subsequent weeks, providing directional signal week by week."
+        },
+        {
+          "made_at": "2025-02-03T20:20:46.055Z",
+          "instrument": "SPX",
+          "prediction_text": "If SPX can hold the 6010 line, expect a charm squeeze toward the upwards zero vanna of 6042 by end of day.",
+          "condition": "SPX holds 6010 support",
+          "expected_result": "SPX will rise toward approximately 6042 by market close (EOD)."
+        },
+        {
+          "made_at": "2025-02-03T20:26:44.966Z",
+          "instrument": "SPX",
+          "prediction_text": "Dealers' imbalance can cause selling that breaks the 6010 support.",
+          "condition": "",
+          "expected_result": "The 6010 support level will be broken by selling pressure from dealer imbalances."
+        },
+        {
+          "made_at": "2025-02-03T20:31:24.621Z",
+          "instrument": "SPX",
+          "prediction_text": "6010 is a strong support line but dealers' orderbook imbalances will lead them to sell.",
+          "condition": "",
+          "expected_result": "Despite 6010 being support, selling from dealers will pressure price downward and may cause a break or test of 6010."
+        }
+      ]
+    }
+  }
+}

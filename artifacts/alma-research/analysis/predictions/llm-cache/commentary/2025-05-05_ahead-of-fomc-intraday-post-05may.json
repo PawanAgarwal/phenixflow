@@ -1,0 +1,48 @@
+{
+  "cachedAt": "2026-03-16T01:56:25.078Z",
+  "inputHash": "9ebaaa3d6daeda0224b64bd26d756cdefd053bf8",
+  "payload": {
+    "responseId": "resp_0968ef7c5e1671670069b7633fbedc8190ba822a6649010d9e",
+    "model": "gpt-5-mini-2025-08-07",
+    "parsed": {
+      "predictions": [
+        {
+          "instrument": "ES",
+          "prediction_text": "Below 5603.85, if downside move gains momentum, volatility should realize to the upside.",
+          "condition": "price falls below 5603.85",
+          "expected_result": "Realized volatility of ES increases (measurable rise in intraday IV/realized vol) after the break below 5603.85"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "5569.96 would reinforce the momentum (downside).",
+          "condition": "price falls to 5569.96",
+          "expected_result": "Downside momentum in ES accelerates (larger negative returns and increased selling volume) after touching 5569.96"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The speed profile is pretty negative above 5634.94; this point can be magnetic from the downside, if downside pivot holds.",
+          "condition": "price is above 5634.94 while downside pivot holds",
+          "expected_result": "ES gravitates back toward 5634.94 (price reversion toward that level) rather than continuing higher"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "The main upside pivot is 5639.93, but here short speed dynamics (longer spot/vol correlation) should be expected if the positioning truly materializes.",
+          "condition": "price approaches 5639.93",
+          "expected_result": "Upward moves into 5639.93 exhibit short-speed dynamics (spot rallies accompanied by rising short-term volatility and constrained further upside) leading to limited continuation above that pivot"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "Upside vol can only be decreased at 5675 that also can pin the price.",
+          "condition": "ES reaches 5675",
+          "expected_result": "Volatility decreases and price pins near 5675 (reduced intraday IV and price consolidates around 5675)"
+        },
+        {
+          "instrument": "ES",
+          "prediction_text": "If ES cannot close above 5715/20 zone, weakness is coming.",
+          "condition": "ES fails to close above 5715–5720",
+          "expected_result": "ES weakens in subsequent sessions (increased probability of pullback or lower closes following the failure to close above 5715/20)"
+        }
+      ]
+    }
+  }
+}
