@@ -119,6 +119,30 @@ CLICKHOUSE_DELETE_MUTATION_SYNC=1 \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 ```
 
+Index-only 1m remediation for no-option roots:
+
+```bash
+START_DATE=2026-03-01 \
+END_DATE=2026-03-13 \
+SYMBOL_FILE=config/index-spot-only-universe.json \
+SYMBOL_LIMIT=100 \
+THETADATA_BASE_URL=http://127.0.0.1:25503 \
+node scripts/backfill/generate-symbol-days-topn-range.js
+
+THETADATA_BASE_URL=http://127.0.0.1:25503 \
+BACKFILL_MODE=download \
+BACKFILL_FORCE=1 \
+BACKFILL_SYMBOL_DAY_LIST_PATH=artifacts/reports/symbol-days-top100-20260301-20260313-<ts>.tsv \
+BACKFILL_WORKER_TOTAL=1 \
+BACKFILL_WORKER_INDEX=0 \
+node scripts/backfill/backfill-clickhouse-historical-days.js
+```
+
+Notes:
+- `config/index-spot-only-universe.json` is for symbols with `hasOptions=false`; these jobs only hydrate `stock_ohlc_minute_raw`.
+- The backfill worker will mark them as `index_spot_only` / no-options and skip option quote, greeks, OI, and enrich work.
+- Mixed symbol-day lists are supported; `scripts/backfill/analyze-1m-coverage.js` ignores `index_spot_only` rows.
+
 ### 4) Date-range setup + pipeline run (example: Nov 1-30, 2025)
 
 ```bash
@@ -202,7 +226,10 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
     - `expectedPaddedSlots` / `missingStockSlots` (stock vs padded session)
     - `expectedCoreSlots` / `missingQuoteCoreSlots` / `missingTradeCoreSlots` (quote/trade vs core session)
     - `missingEnrichVsTradeSlots` (enrich parity with trade stream)
-- `BACKFILL_SYMBOL_DAY_LIST_PATH`: TSV (`YYYY-MM-DD<TAB>SYMBOL`) for targeted jobs.
+- `BACKFILL_SYMBOL_DAY_LIST_PATH`: TSV (`YYYY-MM-DD<TAB>SYMBOL[<TAB>instrument_type]`) for targeted jobs.
+- `EXTRA_SYMBOL_FILE`: optional second universe file appended by `generate-symbol-days-topn-range.js`.
+  - Use `config/index-spot-only-universe.json` when you want no-option index spot jobs included in the same generated list.
+- `EXTRA_SYMBOL_LIMIT`: optional cap for `EXTRA_SYMBOL_FILE` entries (`0` = all rows).
 - `BACKFILL_WORKERS`: parallel worker count (if unset and `BACKFILL_MODE=download`, defaults to `THETADATA_DOWNLOAD_CONCURRENCY`).
 - `BACKFILL_SHARD_STRATEGY`: worker shard strategy (`balanced` default, `hash` for legacy modulo hash sharding).
 - `THETADATA_MAX_CONCURRENT_CONNECTIONS`: hard cap for Theta concurrent download workers (default `4`).
@@ -216,6 +243,7 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - Coverage analyzer:
   - `--attempted-only`: `1` (default) excludes unattempted days from missing counts.
   - `--attempted-only 0`: legacy behavior (treat all expected days as in-scope).
+  - `index_spot_only` rows in symbol-day TSVs are ignored because they have no trade/quote/enrich expectations.
 
 ### Memory and worker sizing
 

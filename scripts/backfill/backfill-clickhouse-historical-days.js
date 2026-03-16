@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 const fs = require('node:fs');
 const path = require('node:path');
+const {
+  DEFAULT_INSTRUMENT_TYPE,
+  hasOptionsForInstrumentType,
+  normalizeInstrumentType,
+} = require('../../src/config/instrument-universe');
 
 const { resolveFlowWriteBackend, buildArtifactPath } = require('../../src/storage/clickhouse');
 const {
@@ -63,17 +68,20 @@ function parseJobs(filePath) {
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line) => {
-      const [dayIso, symbol] = line.split(/\t+/);
+      const [dayIso, symbol, rawInstrumentType] = line.split(/\t+/);
+      const instrumentType = normalizeInstrumentType(rawInstrumentType, DEFAULT_INSTRUMENT_TYPE);
       return {
         dayIso: String(dayIso || '').trim(),
         symbol: String(symbol || '').trim().toUpperCase(),
+        instrumentType,
+        hasOptions: hasOptionsForInstrumentType(instrumentType),
       };
     })
-    .filter((row) => /^\d{4}-\d{2}-\d{2}$/.test(row.dayIso) && /^[A-Z.\-]+$/.test(row.symbol));
+    .filter((row) => /^\d{4}-\d{2}-\d{2}$/.test(row.dayIso) && /^[A-Z0-9.\-]+$/.test(row.symbol));
 }
 
-function hashJobKey(symbol, dayIso) {
-  const input = `${symbol}|${dayIso}`;
+function hashJobKey(symbol, dayIso, instrumentType = DEFAULT_INSTRUMENT_TYPE) {
+  const input = `${symbol}|${dayIso}|${instrumentType}`;
   let hash = 2166136261;
   for (let i = 0; i < input.length; i += 1) {
     hash ^= input.charCodeAt(i);
@@ -83,11 +91,18 @@ function hashJobKey(symbol, dayIso) {
 }
 
 const HEAVY_SYMBOL_WEIGHTS = new Map([
+  ['SPXW', 64],
+  ['SPX', 60],
   ['SPY', 40],
   ['QQQ', 36],
+  ['RUTW', 34],
+  ['RUT', 30],
   ['TSLA', 28],
+  ['VIXW', 26],
+  ['VIX', 24],
   ['NVDA', 24],
   ['AAPL', 22],
+  ['XSP', 20],
   ['META', 20],
   ['AMD', 18],
   ['AMZN', 16],
@@ -142,10 +157,14 @@ function balancedShardJobs(rows, workerTotal, workerIndex) {
 function filterJobsForWorker(rows, workerTotal, workerIndex) {
   if (workerTotal <= 1) return rows;
   if (SHARD_STRATEGY === 'hash') {
-    return rows.filter(({ symbol, dayIso }) => (hashJobKey(symbol, dayIso) % workerTotal) === workerIndex);
+    return rows.filter(({ symbol, dayIso, instrumentType }) => (
+      hashJobKey(symbol, dayIso, instrumentType) % workerTotal
+    ) === workerIndex);
   }
   if (SHARD_STRATEGY !== 'balanced') {
-    return rows.filter(({ symbol, dayIso }) => (hashJobKey(symbol, dayIso) % workerTotal) === workerIndex);
+    return rows.filter(({ symbol, dayIso, instrumentType }) => (
+      hashJobKey(symbol, dayIso, instrumentType) % workerTotal
+    ) === workerIndex);
   }
   return balancedShardJobs(rows, workerTotal, workerIndex);
 }
@@ -190,6 +209,8 @@ function appendJobDetail(report, payload) {
 async function processJob({
   symbol,
   dayIso,
+  instrumentType,
+  hasOptions,
   mode,
   thresholds,
   report,
@@ -200,11 +221,13 @@ async function processJob({
   const dayCache = getClickHouseDayCache({ symbol, dayIso, env: process.env });
   const metricCacheMap = getClickHouseMetricCacheMap({ symbol, dayIso, env: process.env });
 
-  if (mode === 'enrich' && dayCache?.cacheStatus !== DAY_CACHE_STATUS_FULL) {
+  if (mode === 'enrich' && hasOptions && dayCache?.cacheStatus !== DAY_CACHE_STATUS_FULL) {
     report.pendingJobs += 1;
     appendJobDetail(report, {
       symbol,
       dayIso,
+      instrumentType,
+      hasOptions,
       status: 'pending_raw',
       cacheStatus: dayCache?.cacheStatus || null,
       rowCount: Number(dayCache?.rowCount || 0),
@@ -218,6 +241,8 @@ async function processJob({
     appendJobDetail(report, {
       symbol,
       dayIso,
+      instrumentType,
+      hasOptions,
       status: 'skipped',
       cacheStatus: dayCache?.cacheStatus || null,
       rowCount: Number(dayCache?.rowCount || 0),
@@ -233,6 +258,7 @@ async function processJob({
       result = await materializeHistoricalDayInClickHouse({
         symbol,
         dayIso,
+        instrumentType,
         thresholds,
         env: process.env,
         mode,
@@ -272,6 +298,8 @@ async function processJob({
     appendJobDetail(report, {
       symbol,
       dayIso,
+      instrumentType,
+      hasOptions,
       status: 'pending_raw',
       attemptsUsed,
       sync,
@@ -300,6 +328,8 @@ async function processJob({
   appendJobDetail(report, {
     symbol,
     dayIso,
+    instrumentType,
+    hasOptions,
     status: isNoData ? 'no_data' : 'completed',
     attemptsUsed,
     sync,
@@ -342,7 +372,8 @@ async function processJob({
 
   console.log(
     `${prefix} OK mode:${mode} status:${isNoData ? 'no_data' : 'completed'} `
-    + `fetched:${Number(sync.fetchedRows || 0)} enriched:${Number(enrichment.rowCount || 0)} `
+    + `fetched:${Number(sync.fetchedRows || 0)} stock:${Number(rawHydration.stockRows || 0)} `
+    + `enriched:${Number(enrichment.rowCount || 0)} `
     + `quotes:${Number(rawHydration.quoteRows || 0)} retries:${attemptsUsed}${coverageSummary}`,
   );
   return { pending: false };
@@ -401,6 +432,11 @@ async function run() {
     workerTotal: WORKER_TOTAL,
     jobLimit: JOB_LIMIT,
     totalJobs: jobs.length,
+    instrumentSummary: jobs.reduce((acc, job) => {
+      const instrumentType = job.instrumentType || DEFAULT_INSTRUMENT_TYPE;
+      acc[instrumentType] = (acc[instrumentType] || 0) + 1;
+      return acc;
+    }, {}),
     loopUntilReady: LOOP_UNTIL_READY,
     loopSleepMs: LOOP_SLEEP_MS,
     loopMaxPasses: LOOP_MAX_PASSES,
@@ -435,11 +471,18 @@ async function run() {
     let progressed = false;
 
     for (let i = 0; i < pendingSet.length; i += 1) {
-      const { symbol, dayIso } = pendingSet[i];
+      const {
+        symbol,
+        dayIso,
+        instrumentType,
+        hasOptions,
+      } = pendingSet[i];
       try {
         const result = await processJob({
           symbol,
           dayIso,
+          instrumentType,
+          hasOptions,
           mode: MODE,
           thresholds,
           report,
@@ -447,16 +490,24 @@ async function run() {
           jobCount: pendingSet.length,
         });
         if (result.pending) {
-          nextPending.push({ symbol, dayIso });
+          nextPending.push({ symbol, dayIso, instrumentType, hasOptions });
         } else {
           progressed = true;
         }
       } catch (error) {
         report.failedJobs += 1;
-        report.failures.push({ symbol, dayIso, error: error.message });
+        report.failures.push({
+          symbol,
+          dayIso,
+          instrumentType,
+          hasOptions,
+          error: error.message,
+        });
         appendJobDetail(report, {
           symbol,
           dayIso,
+          instrumentType,
+          hasOptions,
           status: 'failed',
           error: error.message,
         });
@@ -493,6 +544,8 @@ async function run() {
       appendJobDetail(report, {
         symbol: job.symbol,
         dayIso: job.dayIso,
+        instrumentType: job.instrumentType,
+        hasOptions: job.hasOptions,
         status: 'pending_raw',
         error: 'not_ready_before_exit',
       });

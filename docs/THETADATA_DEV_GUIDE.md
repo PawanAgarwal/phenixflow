@@ -63,7 +63,7 @@ If `THETADATA_DOWNLOAD_PATH` is relative and `THETADATA_BASE_URL` is missing, pr
 curl -i "$THETADATA_BASE_URL/"
 
 # B) Options universe/metadata style check (should return JSON, not HTML/login error)
-curl -sS "$THETADATA_BASE_URL/v3/option/list/roots?format=json" | head -c 400 && echo
+curl -sS "$THETADATA_BASE_URL/v3/option/list/symbols?format=json" | head -c 400 && echo
 
 # C) Stocks universe/metadata style check
 curl -sS "$THETADATA_BASE_URL/v3/stock/list/symbols?format=json" | head -c 400 && echo
@@ -85,10 +85,22 @@ curl -sS "$THETADATA_BASE_URL/v3/stock/list/symbols?format=json" | head -c 500 &
 curl -sS "$THETADATA_BASE_URL/v3/stock/snapshot/quote?symbol=AAPL&format=json" | head -c 500 && echo
 
 # Option roots metadata
-curl -sS "$THETADATA_BASE_URL/v3/option/list/roots?format=json" | head -c 500 && echo
+curl -sS "$THETADATA_BASE_URL/v3/option/list/symbols?format=json" | head -c 500 && echo
 ```
 
 **Expected outcome:** Valid JSON with rows/data arrays (or explicit "no data" for date/symbol issues).
+
+### 3b) Index symbol note (validated on March 16, 2026)
+
+- Local ThetaTerminal v3 index symbol list (`/v3/index/list/symbols?format=json`) includes non-zero 1m history for `SPX`, `VIX`, `VIX1D`, `VIX3M`, `VIX9D`, `VIX1Y`, `VVIX`, `RVX`, `VXN`, `RUT`, `XSP`, and `OEX`.
+- Local ThetaTerminal v3 currently advertises some index symbols but serves them as all-zero minute series.
+  - Verified zero-filled 1m responses on March 13, 2026: `VIX01W`, `VIX12W`, `NDX`, and `NDXP`.
+  - PhenixFlow now drops all-zero index OHLC series instead of inserting garbage into ClickHouse.
+  - `VIX01W` and `VIX12W` were removed from the configured index-only backfill universe for that reason.
+- Local ThetaTerminal v3 does **not** provide usable Nasdaq-100 cash index minute history today.
+  - `NDX` and `NDXP` option roots are present in `/v3/option/list/symbols?format=json`.
+  - But `GET /v3/index/history/ohlc?symbol=NDX&start_date=...&end_date=...&interval=1m&format=json` returns an all-zero minute series on the local terminal.
+  - PhenixFlow should not treat Nasdaq-100 index roots as index-spot-backed until Theta exposes non-zero `NDX` history.
 
 ---
 
@@ -166,7 +178,7 @@ echo "[1/5] Reachability"
 curl -fsS "$THETADATA_BASE_URL/" >/dev/null && echo "OK"
 
 echo "[2/5] Options roots"
-curl -fsS "$THETADATA_BASE_URL/v3/option/list/roots?format=json" | head -c 200 && echo
+curl -fsS "$THETADATA_BASE_URL/v3/option/list/symbols?format=json" | head -c 200 && echo
 
 echo "[3/5] Stock roots"
 curl -fsS "$THETADATA_BASE_URL/v3/stock/list/symbols?format=json" | head -c 200 && echo

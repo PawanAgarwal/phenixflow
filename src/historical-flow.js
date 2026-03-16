@@ -22,6 +22,12 @@ const {
   CHIP_DEFINITIONS,
   getThresholds,
 } = require('./historical-filter-definitions');
+const {
+  DEFAULT_INSTRUMENT_TYPE,
+  hasOptionsForInstrumentType,
+  normalizeInstrumentType,
+} = require('./config/instrument-universe');
+const THETADATA_INDEX_CONFIG = require('../config/thetadata-index-config.json');
 const { resolveActiveRuleConfig } = require('./scoring/rule-config');
 const {
   parseHistoricalFilters,
@@ -67,6 +73,7 @@ const DEFAULT_HISTORICAL_OPTION_PATH = '/v3/option/history/trade_quote';
 const DEFAULT_OPTION_QUOTE_PATH = '/v3/option/history/quote';
 const DEFAULT_THETADATA_CALENDAR_PATH = '/v3/calendar/on_date';
 const DEFAULT_SPOT_PATH = '/v3/stock/history/ohlc';
+const DEFAULT_INDEX_SPOT_PATH = '/v3/index/history/ohlc';
 const DEFAULT_OI_PATH = '/v3/option/history/open_interest';
 const DEFAULT_GREEKS_PATH = '/v3/option/history/greeks/first_order';
 const DEFAULT_HISTORICAL_OPTION_FORMAT = 'ndjson';
@@ -77,7 +84,22 @@ const DEFAULT_THETADATA_STREAM_IDLE_TIMEOUT_MS = 1800000;
 const DEFAULT_THETADATA_STREAM_HEARTBEAT_EVERY_ROWS = 250000;
 const DEFAULT_THETADATA_MAX_CONNECTIONS_PER_PROCESS = 1;
 const DEFAULT_THETADATA_MAX_PIPELINING_PER_CONNECTION = 1;
-const DEFAULT_THETADATA_LARGE_SYMBOLS = ['SPY', 'QQQ'];
+const DEFAULT_THETADATA_INDEX_SYMBOLS = Object.freeze(
+  Array.isArray(THETADATA_INDEX_CONFIG?.spotSymbols)
+    ? THETADATA_INDEX_CONFIG.spotSymbols
+      .map((symbol) => normalizeSymbol(symbol))
+      .filter(Boolean)
+    : [],
+);
+const DEFAULT_THETADATA_INDEX_SYMBOL_SET = new Set(DEFAULT_THETADATA_INDEX_SYMBOLS);
+const DEFAULT_THETADATA_INDEX_OPTION_ROOT_ALIASES = Object.freeze(
+  Object.fromEntries(
+    Object.entries(THETADATA_INDEX_CONFIG?.optionRootSpotAliases || {})
+      .map(([symbol, underlying]) => [normalizeSymbol(symbol), normalizeSymbol(underlying)])
+      .filter(([symbol, underlying]) => symbol && underlying),
+  ),
+);
+const DEFAULT_THETADATA_LARGE_SYMBOLS = ['SPY', 'QQQ', 'SPX', 'SPXW', 'VIX', 'VIXW', 'RUT', 'RUTW', 'XSP'];
 const DEFAULT_THETADATA_LARGE_SYMBOL_WINDOW_MINUTES = 60;
 const DEFAULT_THETADATA_CALENDAR_CLOSE_PAD_MINUTES = 15;
 const DEFAULT_BACKFILL_QUOTE_GAP_MAX_WINDOWS = 48;
@@ -858,22 +880,40 @@ function resolveThetaEndpoint(symbol, yyyymmdd, env = process.env, options = {})
 function resolveThetaSpotEndpoint(symbol, dayIso, env = process.env, options = {}) {
   const { startTime = null, endTime = null } = options || {};
   const baseUrl = (env.THETADATA_BASE_URL || '').trim();
-  const configuredPath = (env.THETADATA_SPOT_PATH || DEFAULT_SPOT_PATH).trim();
-  if (!baseUrl || !configuredPath) return null;
+  const normalizedSymbol = normalizeSymbol(symbol);
+  const requestSymbol = DEFAULT_THETADATA_INDEX_OPTION_ROOT_ALIASES[normalizedSymbol] || normalizedSymbol;
+  const isIndexSpot = Boolean(requestSymbol && DEFAULT_THETADATA_INDEX_SYMBOL_SET.has(requestSymbol));
+  const configuredPath = (isIndexSpot
+    ? (env.THETADATA_INDEX_SPOT_PATH || DEFAULT_INDEX_SPOT_PATH)
+    : (env.THETADATA_SPOT_PATH || DEFAULT_SPOT_PATH)).trim();
+  if (!baseUrl || !configuredPath || !requestSymbol) return null;
 
   const normalizedBase = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   const normalizedPath = configuredPath.startsWith('/') ? configuredPath : `/${configuredPath}`;
   const url = new URL(`${normalizedBase}${normalizedPath}`);
+  const dayYyyymmdd = toYyyymmdd(`${dayIso}T00:00:00.000Z`);
 
-  url.searchParams.set('symbol', symbol);
-  url.searchParams.set('date', toYyyymmdd(`${dayIso}T00:00:00.000Z`));
-  if (normalizedPath.includes('/history/ohlc')) {
+  url.searchParams.set('symbol', requestSymbol);
+  if (isIndexSpot) {
+    url.searchParams.set('start_date', dayYyyymmdd);
+    url.searchParams.set('end_date', dayYyyymmdd);
     url.searchParams.set('interval', '1m');
     if (startTime) {
       url.searchParams.set('start_time', startTime);
     }
     if (endTime) {
       url.searchParams.set('end_time', endTime);
+    }
+  } else {
+    url.searchParams.set('date', dayYyyymmdd);
+    if (normalizedPath.includes('/history/ohlc')) {
+      url.searchParams.set('interval', '1m');
+      if (startTime) {
+        url.searchParams.set('start_time', startTime);
+      }
+      if (endTime) {
+        url.searchParams.set('end_time', endTime);
+      }
     }
   }
   url.searchParams.set('format', 'json');
@@ -3532,6 +3572,27 @@ function normalizeStockOhlcRows(rows, dayIso) {
       volume,
     };
   }).filter((row) => row && row.minuteBucketUtc);
+}
+
+function isAllZeroOhlcSeries(rows = []) {
+  if (!Array.isArray(rows) || rows.length === 0) return false;
+  return rows.every((row) => {
+    const open = toFiniteNumber(row?.open) || 0;
+    const high = toFiniteNumber(row?.high) || 0;
+    const low = toFiniteNumber(row?.low) || 0;
+    const close = toFiniteNumber(row?.close) || 0;
+    const volume = toFiniteNumber(row?.volume) || 0;
+    return open === 0 && high === 0 && low === 0 && close === 0 && volume === 0;
+  });
+}
+
+function sanitizeSpotValue(value) {
+  const spot = toFiniteNumber(value);
+  return spot !== null && spot > 0 ? spot : null;
+}
+
+function filterUsableOhlcSeries(rows = []) {
+  return isAllZeroOhlcSeries(rows) ? [] : rows;
 }
 
 function buildStockFeaturesByMinute(normalizedBars = []) {
@@ -6587,7 +6648,7 @@ async function buildGreeksLookup({ db, symbol, dayIso, rawRows, env = process.en
 }
 
 function loadStockFeaturesFromRaw(db, symbol, dayIso) {
-  const rawRows = loadStockOhlcMinuteRaw(db, { symbol, dayIso });
+  const rawRows = filterUsableOhlcSeries(loadStockOhlcMinuteRaw(db, { symbol, dayIso }));
   if (rawRows.length === 0) {
     return {
       latestSpot: null,
@@ -6595,7 +6656,7 @@ function loadStockFeaturesFromRaw(db, symbol, dayIso) {
     };
   }
   const stockByMinute = buildStockFeaturesByMinute(rawRows);
-  const latestSpot = rawRows.length > 0 ? (toFiniteNumber(rawRows[rawRows.length - 1].close) ?? null) : null;
+  const latestSpot = rawRows.length > 0 ? sanitizeSpotValue(rawRows[rawRows.length - 1].close) : null;
   return { latestSpot, stockByMinute };
 }
 
@@ -6622,7 +6683,7 @@ async function ensureStockRawForDay(db, symbol, dayIso, env = process.env, cache
     if (Array.isArray(stockRows) && stockRows.length > 0) {
       upsertSupplementalCache(db, 'stock_ohlc_symbol_day', spotCacheKey, stockRows, env, dayIso);
     } else if (sourceEndpoint) {
-      fallbackSpot = await fetchThetaMetricNumber(sourceEndpoint, [
+      fallbackSpot = sanitizeSpotValue(await fetchThetaMetricNumber(sourceEndpoint, [
         'spot',
         'underlying_price',
         'underlyingPrice',
@@ -6634,18 +6695,21 @@ async function ensureStockRawForDay(db, symbol, dayIso, env = process.env, cache
         'low',
         'mark',
         'mid',
-      ]);
+      ]));
       if (fallbackSpot !== null) {
         upsertSupplementalCache(db, 'spot_symbol_day', spotCacheKey, fallbackSpot, env, dayIso);
       }
     }
   }
 
-  const normalizedBars = normalizeStockOhlcRows(Array.isArray(stockRows) ? stockRows : [], dayIso)
+  const normalizedBars = filterUsableOhlcSeries(normalizeStockOhlcRows(Array.isArray(stockRows) ? stockRows : [], dayIso)
     .map((row, index) => ({
       ...row,
       rawPayload: Array.isArray(stockRows) ? stockRows[index] : row,
-    }));
+    })));
+  if (Array.isArray(stockRows) && stockRows.length > 0 && normalizedBars.length === 0 && sourceEndpoint) {
+    console.warn('[THETADATA_SPOT_ZERO_SERIES]', JSON.stringify({ symbol, dayIso, sourceEndpoint }));
+  }
   if (normalizedBars.length > 0) {
     upsertStockOhlcMinuteRaw(db, symbol, dayIso, normalizedBars, sourceEndpoint);
   }
@@ -6668,8 +6732,9 @@ async function ensureStockRawForDay(db, symbol, dayIso, env = process.env, cache
       'mark',
       'mid',
     ]);
-    if (fallbackSpot !== null) {
-      reloaded.latestSpot = fallbackSpot;
+    const responseSpot = sanitizeSpotValue(fallbackSpot);
+    if (responseSpot !== null) {
+      reloaded.latestSpot = responseSpot;
     }
   }
   if (cacheStats) {
@@ -8964,7 +9029,7 @@ function buildGreeksLookupFromRawRows(symbol, greeksRows = []) {
 }
 
 function loadClickHouseStockFeatures(symbol, dayIso, env = process.env) {
-  const rows = loadClickHouseStockRawRowsForDay({ symbol, dayIso, env })
+  const rows = filterUsableOhlcSeries(loadClickHouseStockRawRowsForDay({ symbol, dayIso, env })
     .map((row) => ({
       minuteBucketUtc: row.minuteBucketUtc,
       open: toFiniteNumber(row.open),
@@ -8973,7 +9038,7 @@ function loadClickHouseStockFeatures(symbol, dayIso, env = process.env) {
       close: toFiniteNumber(row.close),
       volume: toFiniteNumber(row.volume),
     }))
-    .filter((row) => row.minuteBucketUtc && row.close !== null);
+    .filter((row) => row.minuteBucketUtc && row.close !== null));
 
   if (rows.length === 0) {
     return {
@@ -8983,7 +9048,7 @@ function loadClickHouseStockFeatures(symbol, dayIso, env = process.env) {
   }
 
   const stockByMinute = buildStockFeaturesByMinute(rows);
-  const latestSpot = rows[rows.length - 1].close;
+  const latestSpot = sanitizeSpotValue(rows[rows.length - 1].close);
   return { latestSpot, stockByMinute };
 }
 
@@ -9543,11 +9608,14 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
   const fetchStartedAtMs = Date.now();
   const stockRows = await fetchThetaRows(endpoint, { env });
   const fetchDurationMs = Math.max(0, Date.now() - fetchStartedAtMs);
-  const normalizedBars = normalizeStockOhlcRows(Array.isArray(stockRows) ? stockRows : [], dayIso)
+  const normalizedBars = filterUsableOhlcSeries(normalizeStockOhlcRows(Array.isArray(stockRows) ? stockRows : [], dayIso)
     .map((row, index) => ({
       ...row,
       rawPayload: Array.isArray(stockRows) ? stockRows[index] : row,
-    }));
+    })));
+  if (Array.isArray(stockRows) && stockRows.length > 0 && normalizedBars.length === 0 && endpoint) {
+    console.warn('[THETADATA_SPOT_ZERO_SERIES]', JSON.stringify({ symbol, dayIso, sourceEndpoint: endpoint }));
+  }
 
   const insertOnlyUpsert = shouldUseInsertOnlyStockQuoteUpserts(env);
   let insertDurationMs = 0;
@@ -9581,7 +9649,7 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
   const reloaded = loadClickHouseStockFeatures(symbol, dayIso, env);
   const reloadDurationMs = Math.max(0, Date.now() - reloadStartedAtMs);
   if (reloaded.latestSpot === null && Array.isArray(stockRows) && stockRows.length > 0) {
-    reloaded.latestSpot = extractMetricFromResponse(JSON.stringify(stockRows), [
+    reloaded.latestSpot = sanitizeSpotValue(extractMetricFromResponse(JSON.stringify(stockRows), [
       'spot',
       'underlying_price',
       'underlyingPrice',
@@ -9593,7 +9661,7 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
       'low',
       'mark',
       'mid',
-    ]);
+    ]));
   }
   console.log('[STOCK_SYNC_STATS]', JSON.stringify({
     symbol,
@@ -11423,6 +11491,7 @@ async function ensureEnrichedForDayInClickHouse({
 async function materializeHistoricalDayInClickHouse({
   symbol,
   dayIso,
+  instrumentType = DEFAULT_INSTRUMENT_TYPE,
   thresholds,
   env = process.env,
   requiredMetrics = [],
@@ -11433,6 +11502,8 @@ async function materializeHistoricalDayInClickHouse({
   const normalizedMode = String(mode || 'full').trim().toLowerCase();
   const modeDownloadOnly = normalizedMode === 'download';
   const modeEnrichOnly = normalizedMode === 'enrich';
+  const normalizedInstrumentType = normalizeInstrumentType(instrumentType, DEFAULT_INSTRUMENT_TYPE);
+  const hasAssociatedOptions = hasOptionsForInstrumentType(normalizedInstrumentType);
   if (!['full', 'download', 'enrich'].includes(normalizedMode)) {
     throw new Error(`invalid_materialize_mode:${mode}`);
   }
@@ -11458,6 +11529,56 @@ async function materializeHistoricalDayInClickHouse({
     existingDayCache,
     cachedRows,
   });
+
+  if (!hasAssociatedOptions) {
+    const rawHydration = modeEnrichOnly
+      ? {
+        tradeRows: 0,
+        stockRows: countClickHouseStockRawRowsForDay({ symbol, dayIso, env }),
+        oiRows: 0,
+        quoteRows: 0,
+        greeksRows: 0,
+        supplementalCache: null,
+      }
+      : await ensureRawHydratedForDayInClickHouse({
+        symbol,
+        dayIso,
+        env,
+        includeStock: true,
+        includeOi: false,
+        includeQuote: false,
+        includeGreeks: false,
+        tradeRowsHint: 0,
+      });
+
+    return {
+      db: null,
+      sync: {
+        synced: false,
+        reason: 'no_options_instrument',
+        fetchedRows: 0,
+        upsertedRows: 0,
+        cachedRows: 0,
+        cacheStatus: null,
+      },
+      enrichment: {
+        synced: false,
+        reason: 'not_applicable_no_options',
+        rowCount: 0,
+        ruleVersion: null,
+        scoringModel: null,
+        targetHorizon: null,
+        supplementalCache: rawHydration?.supplementalCache || null,
+        metricCacheMap: getClickHouseMetricCacheMap({ symbol, dayIso, env }),
+      },
+      rawHydration: {
+        ...rawHydration,
+        instrumentType: normalizedInstrumentType,
+        hasOptions: false,
+      },
+    };
+  }
+
   const tradeSyncPolicy = resolveBackfillTradeSyncMode({
     rawHydrationTargets: rawHydrationPlan,
     env,

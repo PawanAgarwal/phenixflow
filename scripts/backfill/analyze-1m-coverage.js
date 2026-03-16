@@ -2,6 +2,11 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const {
+  DEFAULT_INSTRUMENT_TYPE,
+  hasOptionsForInstrumentType,
+  normalizeInstrumentType,
+} = require('../../src/config/instrument-universe');
 
 const {
   queryRowsSync,
@@ -186,7 +191,9 @@ function readExpectedSymbolDays(symbolDaysPath, calendarMap, fromIso, toIso) {
     if (cols.length < 2) return;
     const dayIso = normalizeDate(cols[0]);
     const symbol = String(cols[1] || '').trim().toUpperCase();
+    const instrumentType = normalizeInstrumentType(cols[2], DEFAULT_INSTRUMENT_TYPE);
     if (!dayIso || !symbol) return;
+    if (!hasOptionsForInstrumentType(instrumentType)) return;
     if (!dayInRange(dayIso, fromIso, toIso)) return;
     const calendar = calendarMap.get(dayIso);
     if (!calendar) return;

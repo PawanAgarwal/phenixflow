@@ -1,11 +1,19 @@
 #!/usr/bin/env node
 const fs = require('node:fs');
 const path = require('node:path');
+const {
+  DEFAULT_INSTRUMENT_TYPE,
+  readUniverseEntries,
+} = require('../../src/config/instrument-universe');
 
 const THETA_BASE_URL = (process.env.THETADATA_BASE_URL || 'http://127.0.0.1:25503').replace(/\/$/, '');
 const THETADATA_CALENDAR_PATH = (process.env.THETADATA_CALENDAR_PATH || '/v3/calendar/on_date').trim();
 const SYMBOL_FILE = path.resolve(process.env.SYMBOL_FILE || path.join(process.cwd(), 'config', 'top200-universe.json'));
+const EXTRA_SYMBOL_FILE = String(process.env.EXTRA_SYMBOL_FILE || '').trim()
+  ? path.resolve(process.env.EXTRA_SYMBOL_FILE)
+  : null;
 const SYMBOL_LIMIT = Math.max(1, Number(process.env.SYMBOL_LIMIT || 100));
+const EXTRA_SYMBOL_LIMIT = Math.max(0, Number(process.env.EXTRA_SYMBOL_LIMIT || 0));
 const START_DATE = String(process.env.START_DATE || '').trim();
 const END_DATE = String(process.env.END_DATE || '').trim();
 const SKIP_CALENDAR_CHECK = String(process.env.SKIP_CALENDAR_CHECK || '0') === '1';
@@ -129,20 +137,23 @@ async function filterOpenDays(days) {
   return open.sort();
 }
 
-function loadTopSymbols(symbolFilePath, limit) {
-  const parsed = JSON.parse(fs.readFileSync(symbolFilePath, 'utf8'));
-  if (!Array.isArray(parsed)) {
-    throw new Error(`invalid_symbol_file:${symbolFilePath}`);
+function loadUniverseSymbols(symbolFilePath, limit, options = {}) {
+  const entries = readUniverseEntries(symbolFilePath, options);
+  if (entries.length === 0) {
+    return [];
   }
-  const symbols = [];
+  return limit > 0 ? entries.slice(0, limit) : entries;
+}
+
+function combineUniverseSymbols(primaryEntries, extraEntries = []) {
+  const combined = [];
   const seen = new Set();
-  parsed.forEach((raw) => {
-    const symbol = String(raw || '').trim().toUpperCase();
-    if (!symbol || seen.has(symbol)) return;
-    seen.add(symbol);
-    symbols.push(symbol);
+  primaryEntries.concat(extraEntries).forEach((entry) => {
+    if (!entry?.symbol || seen.has(entry.symbol)) return;
+    seen.add(entry.symbol);
+    combined.push(entry);
   });
-  return symbols.slice(0, limit);
+  return combined;
 }
 
 async function run() {
@@ -155,7 +166,13 @@ async function run() {
     throw new Error(`START_DATE must be <= END_DATE (got ${startIso} > ${endIso})`);
   }
 
-  const symbols = loadTopSymbols(SYMBOL_FILE, SYMBOL_LIMIT);
+  const primarySymbols = loadUniverseSymbols(SYMBOL_FILE, SYMBOL_LIMIT);
+  const extraSymbols = EXTRA_SYMBOL_FILE
+    ? loadUniverseSymbols(EXTRA_SYMBOL_FILE, EXTRA_SYMBOL_LIMIT, {
+      defaultInstrumentType: DEFAULT_INSTRUMENT_TYPE,
+    })
+    : [];
+  const symbols = combineUniverseSymbols(primarySymbols, extraSymbols);
   if (symbols.length === 0) {
     throw new Error(`no_symbols_loaded:${SYMBOL_FILE}`);
   }
@@ -171,8 +188,13 @@ async function run() {
 
   const symbolDayLines = [];
   openDays.forEach((dayIso) => {
-    symbols.forEach((symbol) => {
-      symbolDayLines.push(`${dayIso}\t${symbol}`);
+    symbols.forEach((entry) => {
+      const instrumentType = entry.instrumentType || DEFAULT_INSTRUMENT_TYPE;
+      symbolDayLines.push(
+        instrumentType === DEFAULT_INSTRUMENT_TYPE
+          ? `${dayIso}\t${entry.symbol}`
+          : `${dayIso}\t${entry.symbol}\t${instrumentType}`,
+      );
     });
   });
 
@@ -184,8 +206,15 @@ async function run() {
   console.log(JSON.stringify({
     thetaBaseUrl: THETA_BASE_URL,
     symbolFile: SYMBOL_FILE,
+    extraSymbolFile: EXTRA_SYMBOL_FILE,
     symbolLimit: SYMBOL_LIMIT,
+    extraSymbolLimit: EXTRA_SYMBOL_LIMIT,
     symbolCount: symbols.length,
+    instrumentCounts: symbols.reduce((acc, entry) => {
+      const instrumentType = entry.instrumentType || DEFAULT_INSTRUMENT_TYPE;
+      acc[instrumentType] = (acc[instrumentType] || 0) + 1;
+      return acc;
+    }, {}),
     startDate: startIso,
     endDate: endIso,
     weekdays: weekdays.length,
