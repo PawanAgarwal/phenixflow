@@ -2297,7 +2297,11 @@ async function fetchThetaMetricNumber(url, candidateKeys) {
   }
 }
 
-async function fetchThetaRows(url, { env = process.env, timeoutMs = null } = {}) {
+async function fetchThetaRows(url, {
+  env = process.env,
+  timeoutMs = null,
+  throwOnError = true,
+} = {}) {
   if (!url) return [];
 
   try {
@@ -2305,30 +2309,54 @@ async function fetchThetaRows(url, { env = process.env, timeoutMs = null } = {})
       env,
       timeoutMs: timeoutMs ?? parseTimeoutMs(env),
     });
-    const rows = response.ok ? parseJsonRows(body) : [];
+    const isThetaNoData = response.status === 472;
+    if (!response.ok) {
+      logThetaDownload({
+        env,
+        url,
+        durationMs,
+        status: response.status,
+        ok: isThetaNoData,
+        rows: 0,
+        bytesDownloaded,
+        error: isThetaNoData ? 'no_data' : `http_${response.status}`,
+      });
+      if (isThetaNoData || !throwOnError) {
+        return [];
+      }
+      throw new Error(`thetadata_request_failed:${response.status}`);
+    }
+
+    const rows = parseJsonRows(body);
     logThetaDownload({
       env,
       url,
       durationMs,
       status: response.status,
-      ok: response.ok,
+      ok: true,
       rows: rows.length,
       bytesDownloaded,
-      error: response.ok ? null : `http_${response.status}`,
+      error: null,
     });
     return rows;
   } catch (error) {
-    logThetaDownload({
-      env,
-      url,
-      durationMs: null,
-      status: 0,
-      ok: false,
-      rows: 0,
-      bytesDownloaded: 0,
-      error: error.message || 'request_failed',
-    });
-    return [];
+    if (!throwOnError) {
+      logThetaDownload({
+        env,
+        url,
+        durationMs: null,
+        status: 0,
+        ok: false,
+        rows: 0,
+        bytesDownloaded: 0,
+        error: error.message || 'request_failed',
+      });
+      return [];
+    }
+    if (String(error?.message || '').startsWith('thetadata_request_failed:')) {
+      throw error;
+    }
+    throw error;
   }
 }
 
