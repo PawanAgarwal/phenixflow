@@ -323,7 +323,9 @@ function queryDownloadAttemptMap({
       symbol,
       max(stream_name = 'stock_price_1m') AS stock_attempted,
       max(stream_name = 'option_quote_1m') AS quote_attempted,
-      max(stream_name = 'option_trade_quote_1m') AS trade_attempted
+      max(stream_name = 'option_trade_quote_1m') AS trade_attempted,
+      max((stream_name = 'option_quote_1m') AND (coalesce(last_error, '') = 'no_data')) AS quote_no_data,
+      max((stream_name = 'option_trade_quote_1m') AND (coalesce(last_error, '') = 'no_data')) AS trade_no_data
     FROM options.option_download_chunk_status FINAL
     WHERE trade_date_utc BETWEEN toDate({fromIso:String}) AND toDate({toIso:String})
       AND symbol IN (${symbolInClause})
@@ -342,6 +344,8 @@ function queryDownloadAttemptMap({
       stockAttempted: Number(row.stock_attempted || 0) > 0,
       quoteAttempted: Number(row.quote_attempted || 0) > 0,
       tradeAttempted: Number(row.trade_attempted || 0) > 0,
+      quoteNoData: Number(row.quote_no_data || 0) > 0,
+      tradeNoData: Number(row.trade_no_data || 0) > 0,
     });
   });
   return out;
@@ -548,6 +552,8 @@ function main() {
     const stockAttempted = Boolean(attempts.stockAttempted);
     const quoteAttempted = Boolean(attempts.quoteAttempted);
     const tradeAttempted = Boolean(attempts.tradeAttempted);
+    const explicitQuoteNoData = Boolean(attempts.quoteNoData);
+    const explicitTradeNoData = Boolean(attempts.tradeNoData);
     const enrichAttempted = Boolean(enrichAttemptMap.get(key));
     const stockSlots = Number(stockMap.get(key)?.slots || 0);
     const quoteSlots = Number(quoteMap.get(key)?.slots || 0);
@@ -557,14 +563,22 @@ function main() {
       ? Math.max(0, row.expectedPaddedSlots - stockSlots)
       : 0;
     const quoteMissingSlots = (!attemptedOnly || quoteAttempted)
-      ? Math.max(0, row.expectedCoreSlots - quoteSlots)
+      ? (
+        explicitQuoteNoData && quoteSlots === 0
+          ? 0
+          : Math.max(0, row.expectedCoreSlots - quoteSlots)
+      )
       : 0;
     const tradeMissingSlots = (!attemptedOnly || tradeAttempted)
       ? Math.max(0, row.expectedCoreSlots - tradeSlots)
       : 0;
     const observedQuoteCoreSlots = Math.min(row.expectedCoreSlots, Math.max(0, quoteSlots));
     const tradeNoDataSlots = (!attemptedOnly || tradeAttempted)
-      ? Math.max(0, observedQuoteCoreSlots - tradeSlots)
+      ? (
+        ((explicitTradeNoData || explicitQuoteNoData) && tradeSlots === 0)
+          ? tradeMissingSlots
+          : Math.max(0, observedQuoteCoreSlots - tradeSlots)
+      )
       : 0;
     const tradeIncompleteSlots = Math.max(0, tradeMissingSlots - tradeNoDataSlots);
     const enrichVsTradeMissingSlots = (!attemptedOnly || enrichAttempted)
