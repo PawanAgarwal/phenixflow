@@ -1,4 +1,7 @@
-const { execFileSync, spawn } = require('node:child_process');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { execFileSync, spawn, spawnSync } = require('node:child_process');
 
 const READ_BACKENDS = new Set(['auto', 'clickhouse']);
 const WRITE_BACKENDS = new Set(['auto', 'clickhouse']);
@@ -145,16 +148,40 @@ function buildJsonInsertChunks(rows = [], options = {}, env = process.env) {
 }
 
 function execInsertChunkSync(insertQuery, chunk, env = process.env) {
-  execFileSync('clickhouse', buildClientArgs(`${insertQuery}
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'clickhouse-insert-'));
+  const tempPath = path.join(tempDir, 'chunk.jsonl');
+  fs.writeFileSync(tempPath, chunk, 'utf8');
+
+  let inputFd = null;
+  try {
+    inputFd = fs.openSync(tempPath, 'r');
+    const result = spawnSync(
+      'clickhouse',
+      buildClientArgs(`${insertQuery}
 SETTINGS
   date_time_input_format='best_effort',
   input_format_parallel_parsing=1,
   async_insert=0,
-  wait_for_async_insert=1`, {}, env, 'JSONEachRow'), {
-    encoding: 'utf8',
-    input: chunk,
-    maxBuffer: resolveQueryMaxBufferBytes(env),
-  });
+  wait_for_async_insert=1`, {}, env, 'JSONEachRow'),
+      {
+        encoding: 'utf8',
+        stdio: [inputFd, 'pipe', 'pipe'],
+        maxBuffer: resolveQueryMaxBufferBytes(env),
+      },
+    );
+    if (result.error) {
+      throw result.error;
+    }
+    if (result.status !== 0) {
+      const message = (result.stderr || `clickhouse_insert_failed_exit_${result.status}`).trim();
+      throw new Error(message);
+    }
+  } finally {
+    if (inputFd !== null) {
+      fs.closeSync(inputFd);
+    }
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 }
 
 function execInsertChunkAsync(insertQuery, chunk, env = process.env) {
