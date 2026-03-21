@@ -89,6 +89,24 @@ CLICKHOUSE_DELETE_MUTATION_SYNC="${CLICKHOUSE_DELETE_MUTATION_SYNC:-0}"
 TS="$(date +%Y%m%dT%H%M%S)"
 RUN_DIR="$REPORT_ROOT/clickhouse-last-week-backfill-$TS"
 
+theta_health_check() {
+  local url="$1"
+  curl -fsS --max-time 5 "$url" >/dev/null 2>&1
+}
+
+theta_preflight() {
+  local base_url="$1"
+  local check_url="${base_url%/}/v3/calendar/on_date?date=$(date +%Y%m%d)&format=json"
+  if theta_health_check "$check_url"; then
+    echo "Theta preflight: healthy ($check_url)"
+    return 0
+  fi
+
+  echo "Theta preflight failed: unable to reach $check_url"
+  echo "Refusing to start download workers because ThetaData is unavailable."
+  exit 1
+}
+
 detect_total_memory_mb() {
   local bytes=""
   local kb=""
@@ -246,6 +264,10 @@ echo "ClickHouse delete mutation sync: ${CLICKHOUSE_DELETE_MUTATION_SYNC}"
 echo "Reports: $RUN_DIR"
 if [[ -n "$INPUT_PATH" ]]; then
   echo "Input: $INPUT_PATH"
+fi
+
+if [[ "$BACKFILL_MODE" != "enrich" ]]; then
+  theta_preflight "$THETA_BASE_URL"
 fi
 
 pids=()
