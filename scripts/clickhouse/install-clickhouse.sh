@@ -15,6 +15,12 @@ fi
 
 ACTION="${1:-status}"
 case "$ACTION" in
+  bootstrap)
+    bash "$(cd "$(dirname "$0")" && pwd)/bootstrap-clickhouse-host.sh"
+    ;;
+  prepare-volume)
+    bash "$(cd "$(dirname "$0")" && pwd)/prepare-external-volume.sh"
+    ;;
   status)
     clickhouse --version || true
     ;;
@@ -29,7 +35,7 @@ case "$ACTION" in
     bash "$(cd "$(dirname "$0")" && pwd)/start-clickhouse.sh"
     ;;
   *)
-    echo "Usage: $0 [start|stop|restart|status]"
+    echo "Usage: $0 [bootstrap|prepare-volume|start|stop|restart|status]"
     exit 1
     ;;
 esac

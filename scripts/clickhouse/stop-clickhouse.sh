@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CH_ROOT="${CH_ROOT:-/Volumes/Phenix4TB/clickhouse}"
-PID_FILE="${PID_FILE:-$CH_ROOT/run/clickhouse-server.pid}"
+source "$(cd "$(dirname "$0")" && pwd)/clickhouse-env.sh"
 
 if [[ -f "$PID_FILE" ]]; then
   pid="$(cat "$PID_FILE" 2>/dev/null || true)"

@@ -1,30 +1,73 @@
-# ClickHouse On External 4TB (Phenix4TB)
+# ClickHouse On External Volume
 
 This project can run ClickHouse with data + logs stored on:
 
-- `/Volumes/Phenix4TB/clickhouse/lib`
-- `/Volumes/Phenix4TB/clickhouse/log`
+- `$CH_VOLUME/clickhouse/lib`
+- `$CH_VOLUME/clickhouse/log`
 
-## 1) Install and start ClickHouse
+By default the scripts expect:
+
+- `CH_VOLUME_NAME=Phenix4TB`
+- `CH_VOLUME=/Volumes/$CH_VOLUME_NAME`
+
+You can override either env var when moving to another machine or using a differently named external drive.
+
+## 1) Bootstrap a new machine
+
+```bash
+bash scripts/clickhouse/bootstrap-clickhouse-host.sh
+```
+
+This will:
+
+- ensure ClickHouse is installed,
+- prepare the external volume layout,
+- generate a runtime config with dynamic memory/cache sizing,
+- start ClickHouse,
+- print server status.
+
+Set `INIT_SCHEMA=1` if you want schema initialization included:
+
+```bash
+INIT_SCHEMA=1 bash scripts/clickhouse/bootstrap-clickhouse-host.sh
+```
+
+## 2) Prepare the external drive layout only
+
+```bash
+bash scripts/clickhouse/prepare-external-volume.sh
+```
+
+This creates a portable ClickHouse layout on the mounted volume so you can plug the drive into another machine and reuse the same structure.
+
+## 3) Install and start manually
 
 ```bash
 bash scripts/clickhouse/install-clickhouse.sh
 bash scripts/clickhouse/start-clickhouse.sh
 ```
 
-## 2) Check server status
+The runtime config is generated at `$CH_ROOT/run/generated-config.xml`. By default memory settings are computed from host RAM:
+
+- `CH_MEMORY_LIMIT_PERCENT=70`
+- `CH_MARK_CACHE_PERCENT_OF_LIMIT=18`
+- `CH_UNCOMPRESSED_CACHE_PERCENT_OF_LIMIT=9`
+
+You can override them per host if needed.
+
+## 4) Check server status
 
 ```bash
 bash scripts/clickhouse/status-clickhouse.sh
 ```
 
-## 3) Initialize schema
+## 5) Initialize schema
 
 ```bash
 bash scripts/clickhouse/init-options-schema.sh
 ```
 
-## 4) Import from SQLite
+## 6) Import from SQLite
 
 Full import:
 

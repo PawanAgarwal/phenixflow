@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+source "$(cd "$(dirname "$0")" && pwd)/clickhouse-env.sh"
+
 BREW_PREFIX="$(brew --prefix)"
 CH_LIB_SRC="${CH_LIB_SRC:-$BREW_PREFIX/var/lib/clickhouse}"
 CH_LOG_SRC="${CH_LOG_SRC:-$BREW_PREFIX/var/log/clickhouse-server}"
-CH_VOLUME="${CH_VOLUME:-/Volumes/Phenix4TB}"
-CH_ROOT="${CH_ROOT:-$CH_VOLUME/clickhouse}"
-CH_LIB_DST="${CH_LIB_DST:-$CH_ROOT/lib}"
-CH_LOG_DST="${CH_LOG_DST:-$CH_ROOT/log}"
+CH_LIB_DST="${CH_LIB_DST:-$CH_LIB_DIR}"
+CH_LOG_DST="${CH_LOG_DST:-$CH_LOG_DIR}"
 START_AFTER_MOVE="${START_AFTER_MOVE:-1}"
 
 timestamp() {
@@ -24,7 +24,7 @@ if ! command -v clickhouse >/dev/null 2>&1; then
   exit 1
 fi
 
-mkdir -p "$CH_ROOT" "$CH_LIB_DST" "$CH_LOG_DST"
+bash "$(cd "$(dirname "$0")" && pwd)/prepare-external-volume.sh" >/dev/null
 
 echo "Stopping clickhouse service..."
 brew services stop clickhouse >/dev/null 2>&1 || true
