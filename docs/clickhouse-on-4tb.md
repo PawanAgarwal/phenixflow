@@ -61,13 +61,58 @@ You can override them per host if needed.
 bash scripts/clickhouse/status-clickhouse.sh
 ```
 
-## 5) Initialize schema
+## 5) Install a macOS LaunchDaemon (starts before login)
+
+Use this if the machine should bring ClickHouse up on boot, before any user logs in.
+
+```bash
+bash scripts/clickhouse/install-launchdaemon.sh
+```
+
+What it does:
+
+- installs a LaunchDaemon at `/Library/LaunchDaemons/com.phenixflow.clickhouse.plist`,
+- installs a self-contained launcher under `/Library/Application Support/PhenixFlow/clickhouse/`,
+- copies `config/clickhouse/users.xml` into that system directory,
+- disables any older per-user `LaunchAgent` with the same label,
+- bootstraps the new system daemon immediately.
+
+Defaults:
+
+- Launch label: `com.phenixflow.clickhouse`
+- Run user: the current console user
+- Run group: `staff`
+- System install dir: `/Library/Application Support/PhenixFlow/clickhouse`
+
+Useful overrides:
+
+- `CLICKHOUSE_DAEMON_USER`
+- `CLICKHOUSE_DAEMON_GROUP`
+- `CLICKHOUSE_SYSTEM_DIR`
+- `CLICKHOUSE_DAEMON_LABEL`
+
+Verify the daemon:
+
+```bash
+launchctl print system/com.phenixflow.clickhouse | sed -n '1,40p'
+clickhouse client --host 127.0.0.1 --port 9000 --query "SELECT version()"
+```
+
+Back up the installed system files:
+
+```bash
+bash scripts/clickhouse/export-launchdaemon-backup.sh
+```
+
+The backup script writes a timestamped copy under `$HOME/.config/phenixflow-clickhouse/backups/`.
+
+## 6) Initialize schema
 
 ```bash
 bash scripts/clickhouse/init-options-schema.sh
 ```
 
-## 6) Import from SQLite
+## 7) Import from SQLite
 
 Full import:
 

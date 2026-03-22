@@ -34,8 +34,14 @@ case "$ACTION" in
     bash "$(cd "$(dirname "$0")" && pwd)/stop-clickhouse.sh" || true
     bash "$(cd "$(dirname "$0")" && pwd)/start-clickhouse.sh"
     ;;
+  install-launchdaemon)
+    bash "$(cd "$(dirname "$0")" && pwd)/install-launchdaemon.sh"
+    ;;
+  backup-launchdaemon)
+    bash "$(cd "$(dirname "$0")" && pwd)/export-launchdaemon-backup.sh"
+    ;;
   *)
-    echo "Usage: $0 [bootstrap|prepare-volume|start|stop|restart|status]"
+    echo "Usage: $0 [bootstrap|prepare-volume|start|stop|restart|status|install-launchdaemon|backup-launchdaemon]"
     exit 1
     ;;
 esac
