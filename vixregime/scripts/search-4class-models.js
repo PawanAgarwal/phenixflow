@@ -233,6 +233,20 @@ function buildDataset(features = [], labelConfig, featureMode = 'base') {
       current.ts1d9dDelta1,
       current.vixRiskPremium10,
       current.vixRiskPremium20,
+      current.isFomcDay ? 1 : 0,
+      current.isMonthlyOpex ? 1 : 0,
+      current.isQuarterlyOpex ? 1 : 0,
+      current.isCpiDay ? 1 : 0,
+      current.isPpiDay ? 1 : 0,
+      current.isNfpDay ? 1 : 0,
+      current.isJoltsDay ? 1 : 0,
+      current.isMacroEventDay ? 1 : 0,
+      current.isPreFomcDay ? 1 : 0,
+      current.isPostFomcDay ? 1 : 0,
+      current.isPreMonthlyOpexDay ? 1 : 0,
+      current.isPostMonthlyOpexDay ? 1 : 0,
+      current.eventScore,
+      current.avoidSuggested ? 1 : 0,
     ];
     const usableBase = baseVector.map((value) => toNumber(value) ?? 0);
     let vector = usableBase;
@@ -256,6 +270,9 @@ function buildDataset(features = [], labelConfig, featureMode = 'base') {
         usableBase[21] ** 2,
         usableBase[24] ** 2,
         usableBase[35] ** 2,
+        usableBase[38] * usableBase[51],
+        usableBase[42] * usableBase[51],
+        usableBase[50] * usableBase[51],
       ]);
     }
     rows.push({

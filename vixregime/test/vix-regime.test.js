@@ -9,6 +9,10 @@ const {
   buildDailyFirstMinuteCloses,
   computeDailyNextOpenToClosePath,
 } = require('../src/vix-regime');
+const {
+  thirdFriday,
+  annotateDailyEventFeatures,
+} = require('../src/event-days');
 
 const thresholdConfig = {
   exposures: {
@@ -65,6 +69,25 @@ function makeRow(symbol, tradeDateUtc, minuteUtc, close, extras = {}) {
 describe('vix regime helpers', () => {
   it('computes percentile rank on a finite window', () => {
     expect(percentileRank([10, 12, 15, 18], 15)).toBe(0.75);
+  });
+
+  it('flags deterministic event days like opex and fomc', () => {
+    expect(thirdFriday(2025, 9)).toBe('2025-09-19');
+    const annotated = annotateDailyEventFeatures(
+      [{ tradeDateUtc: '2025-09-17' }, { tradeDateUtc: '2025-09-19' }],
+      {
+        fomcDates: new Set(['2025-09-17']),
+        earningsDates: new Set(),
+        monthlyOpex: new Set(['2025-09-19']),
+        quarterlyOpex: new Set(['2025-09-19']),
+        macroByType: new Map([['CPI', new Set(['2025-09-17'])]]),
+      },
+    );
+    expect(annotated[0].isFomcDay).toBe(true);
+    expect(annotated[0].isCpiDay).toBe(true);
+    expect(annotated[0].eventScore).toBeGreaterThan(0);
+    expect(annotated[1].isMonthlyOpex).toBe(true);
+    expect(annotated[1].isQuarterlyOpex).toBe(true);
   });
 
   it('reports missing symbol coverage relative to SPY', () => {
