@@ -100,10 +100,10 @@ Primary tables:
 Provide deterministic, resumable symbol-day hydration and enrichment in ClickHouse with explicit attempt tracking and gap verification.
 
 ### 11.2 Orchestration Components
-1. Symbol-day list generator (`scripts/backfill/generate-symbol-days-topn-range.js`) with Theta calendar checks.
-2. Worker orchestrator (`scripts/backfill/backfill-clickhouse-historical-days-parallel.sh`) for bounded concurrency and memory budgets.
-3. Worker runtime (`scripts/backfill/backfill-clickhouse-historical-days.js`) for per-symbol/day execution, retries, and job-level reporting.
-4. Core materialization engine (`materializeHistoricalDayInClickHouse` in `src/historical-flow.js`) with download/enrich modes.
+1. Symbol-day list generator (`apps/flow-api/scripts/backfill/generate-symbol-days-topn-range.js`) with Theta calendar checks.
+2. Worker orchestrator (`apps/flow-api/scripts/backfill/backfill-clickhouse-historical-days-parallel.sh`) for bounded concurrency and memory budgets.
+3. Worker runtime (`apps/flow-api/scripts/backfill/backfill-clickhouse-historical-days.js`) for per-symbol/day execution, retries, and job-level reporting.
+4. Core materialization engine (`materializeHistoricalDayInClickHouse` in `apps/flow-api/historical-flow.js`) with download/enrich modes.
 
 ### 11.3 Canonical Backfill Data Planes
 1. Raw planes:

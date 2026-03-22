@@ -4,6 +4,14 @@
 *.log
 .playwright-cli/
 node_modules/
+apps/*/node_modules/
+apps/artifacts/
+apps/*/artifacts/**
+!apps/*/artifacts/.gitkeep
+apps/*/data/**
+!apps/*/data/.gitkeep
+apps/*/output/**
+!apps/*/output/.gitkeep
 dist/
 build/
 .pytest_cache/
@@ -44,7 +52,8 @@ data/archive/
 data/options_storage/
 data/factset_eps_study/
 data/macro_transformer/
-vixregime/artifacts/
+projects/vixregime/artifacts/
+projects/podcast-prediction/runtime/
 artifacts/alma-research/tools/__pycache__/
 
 # Local browser session state for OptionDepth exploration

@@ -1,47 +1,27 @@
 # phenixflow
 
-Primary backend repository for Project phoenixflow.
+Monorepo for Project phenixflow.
 
-## Scaffold
+## Layout
 
-This repository currently includes a minimal Express-based service scaffold with:
-- `GET /health` endpoint
-- unit tests with Vitest + Supertest
-- linting with ESLint
+- `apps/flow-api`: the main options-flow backend app and its operational scripts.
+- `packages/clickhouse-core`: shared ClickHouse client helpers for repo projects.
+- `packages/theta-client`: shared ThetaData client and response parsing helpers.
+- `infra/clickhouse`: ClickHouse config and machine-level administration scripts.
+- `projects/vixregime`: SPX/VIX regime research project.
+- `projects/podcast-prediction`: podcast extraction and prediction workflows.
+- `projects/yieldmax`: YieldMax-related screening and analysis outputs.
+- `docs`: shared architecture and operational documentation.
+- `artifacts`, `data`, `output`: repo-level runtime assets and generated outputs.
 
-## Autonomous Agent Workflow
-
-- Queue of record: `PM_QUEUE.md`
-- Coordination contract: `AGENT_PROTOCOL.md`
-- OpenClaw role agents claim/execute/handoff tasks using git-backed queue updates.
-
-## Getting Started
-
-### Prerequisites
-- Node.js 20+
-
-### Install
-
-```bash
-npm install
-```
-
-### Run
+## Common Commands
 
 ```bash
 npm start
-```
-
-Default port: `3000` (override with `PORT`).
-
-### Test
-
-```bash
 npm test
-```
-
-### Lint
-
-```bash
 npm run lint
+npm run clickhouse:start
+npm run vixregime:check
 ```
+
+The root `package.json` keeps the repo-level entry points stable while the app and project code live under their own folders.

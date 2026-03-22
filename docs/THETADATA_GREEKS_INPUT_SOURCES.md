@@ -36,7 +36,7 @@ For Black-Scholes-style first-order Greeks we need:
 
 ## Prepared Data Sources (Implemented)
 
-`src/historical-flow.js` now passes optional Greek model inputs to Theta Greeks history endpoints:
+`apps/flow-api/historical-flow.js` now passes optional Greek model inputs to Theta Greeks history endpoints:
 - `THETADATA_GREEKS_RATE_TYPE` (default `sofr`)
 - `THETADATA_GREEKS_RATE_VALUE`
 - `THETADATA_GREEKS_ANNUAL_DIVIDEND`
@@ -70,10 +70,10 @@ Manual controls:
 
 ```bash
 # Explicit range
-node scripts/clickhouse/sync-sofr-daily.js --from 2023-01-01 --to 2026-03-12
+node infra/clickhouse/scripts/sync-sofr-daily.js --from 2023-01-01 --to 2026-03-12
 
 # Dry run
-node scripts/clickhouse/sync-sofr-daily.js --dry-run 1
+node infra/clickhouse/scripts/sync-sofr-daily.js --dry-run 1
 ```
 
 Daily refresh (example `cron`):

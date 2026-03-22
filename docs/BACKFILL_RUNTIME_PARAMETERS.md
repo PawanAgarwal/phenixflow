@@ -297,7 +297,7 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `CLICKHOUSE_TRACK_DELETES=1` (default): emit one audit event for every `ALTER ... DELETE` scope used by the pipeline.
 - `CLICKHOUSE_TRACK_DELETE_COUNTS=0` (default): include scoped row counts before/after each delete in audit events when set to `1`.
 - `CLICKHOUSE_TRACK_DELETE_RECHECK_MS=0` (default): optional delayed second count check; use when testing async mutation behavior (`CLICKHOUSE_DELETE_MUTATION_SYNC=0`).
-- `CLICKHOUSE_DELETE_AUDIT_PATH`: optional path for delete audit JSONL log (default `artifacts/reports/clickhouse-delete-audit.jsonl`).
+- `CLICKHOUSE_DELETE_AUDIT_PATH`: optional path for delete audit JSONL log (default `apps/flow-api/artifacts/reports/clickhouse-delete-audit.jsonl`).
 - `CLICKHOUSE_DELETE_BUDGET_PROTECTION=1` (default): runtime mutation-budget guard for delete-heavy backfills.
 - `CLICKHOUSE_DELETE_BUDGET_SPIKE_MS=5000` (default): a delete taking longer than this is counted as a spike.
 - `CLICKHOUSE_DELETE_BUDGET_SPIKE_COUNT=2` (default): number of spikes before table-level auto-downgrade.
@@ -333,19 +333,19 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - Use projection-backed minute rollups for coverage queries (avoids wide `uniqExact` scans on raw quote rows):
 
 ```bash
-node scripts/clickhouse/optimize-clickhouse-query-paths.js --materialize 1 --partitions 202511,202512,202601,202602,202603
+node infra/clickhouse/scripts/optimize-clickhouse-query-paths.js --materialize 1 --partitions 202511,202512,202601,202602,202603
 ```
 
 - Check projection materialization progress:
 
 ```bash
-node scripts/clickhouse/optimize-clickhouse-query-paths.js --status-only 1
+node infra/clickhouse/scripts/optimize-clickhouse-query-paths.js --status-only 1
 ```
 
 - For immediate sync materialization of a small partition, add `--wait 1`:
 
 ```bash
-node scripts/clickhouse/optimize-clickhouse-query-paths.js --materialize 1 --partitions 202603 --wait 1
+node infra/clickhouse/scripts/optimize-clickhouse-query-paths.js --materialize 1 --partitions 202603 --wait 1
 ```
 
 - `scripts/backfill/analyze-1m-coverage.js --source raw` uses a projection-friendly grouped minute subquery path (instead of direct `uniqExact` on the raw quote table).
