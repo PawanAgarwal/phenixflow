@@ -19,6 +19,10 @@ const {
   computePortfolioPath,
   computeDailyNextOpenToClosePath,
 } = require('../src/vix-regime');
+const {
+  loadEventCalendar,
+  annotateDailyEventFeatures,
+} = require('../src/event-days');
 
 const START_DATE = String(process.env.START_DATE || '2025-01-02').trim();
 const END_DATE = String(process.env.END_DATE || new Date().toISOString().slice(0, 10)).trim();
@@ -32,6 +36,15 @@ const OUTPUT_PATH = path.resolve(
 );
 const THRESHOLD_PATH = path.resolve(
   process.env.THRESHOLD_PATH || path.join(__dirname, '..', 'config', 'vix-regime-thresholds.json'),
+);
+const BLS_CALENDAR_PATH = path.resolve(
+  process.env.BLS_CALENDAR_PATH || path.join(__dirname, '..', 'config', 'bls-major-release-calendar.json'),
+);
+const FOMC_CALENDAR_PATH = path.resolve(
+  process.env.FOMC_CALENDAR_PATH || path.join(__dirname, '..', 'config', 'fomc-dates.json'),
+);
+const EARNINGS_CALENDAR_PATH = path.resolve(
+  process.env.EARNINGS_CALENDAR_PATH || path.join(__dirname, '..', 'config', 'major-earnings-days.json'),
 );
 
 function buildDatasetQuery(symbols = []) {
@@ -78,7 +91,15 @@ function run() {
   const alignedDailyFirstMinuteRows = buildDailyFirstMinuteCloses(rawRows)
     .filter((row) => REQUIRED_SYMBOLS.every((symbol) => row.closeBySymbol[symbol] !== undefined && row.closeBySymbol[symbol] !== null));
 
-  const dailyFeatures = buildDailyFeatures(alignedDailyRows, thresholdConfig);
+  const eventCalendar = loadEventCalendar({
+    startDate: START_DATE,
+    endDate: END_DATE,
+    blsPath: BLS_CALENDAR_PATH,
+    fomcPath: FOMC_CALENDAR_PATH,
+    earningsPath: EARNINGS_CALENDAR_PATH,
+  });
+
+  const dailyFeatures = annotateDailyEventFeatures(buildDailyFeatures(alignedDailyRows, thresholdConfig), eventCalendar);
   const minuteFeatures = buildMinuteFeatures(alignedMinuteRows, thresholdConfig, dailyFeatures);
   const dailyBacktest = computePortfolioPath(dailyFeatures, {
     transactionCostBps: thresholdConfig.execution.dailyTransactionCostBps,
@@ -99,6 +120,11 @@ function run() {
     startDate: START_DATE,
     endDate: END_DATE,
     thresholdPath: THRESHOLD_PATH,
+    eventCalendarPaths: {
+      bls: BLS_CALENDAR_PATH,
+      fomc: FOMC_CALENDAR_PATH,
+      earnings: EARNINGS_CALENDAR_PATH,
+    },
     rowCount: rawRows.length,
     coverage,
     summaries: {
