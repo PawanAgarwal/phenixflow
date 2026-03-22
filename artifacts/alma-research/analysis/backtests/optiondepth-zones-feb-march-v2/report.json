@@ -1,0 +1,6429 @@
+{
+  "generatedAt": "2026-03-16T13:47:41.652331+00:00",
+  "daysConsidered": 29,
+  "usableDays": 28,
+  "overall": {
+    "trades": 44,
+    "wins": 14,
+    "losses": 30,
+    "winRate": 0.3182,
+    "grossProfit": 320.24,
+    "grossLoss": -424.59,
+    "netProfit": -104.35,
+    "avgTrade": -2.37,
+    "stopsTriggered": 29,
+    "profitFactor": 0.75,
+    "maxDrawdown": 183.14
+  },
+  "byStrategy": {
+    "peak_rejection": {
+      "trades": 27,
+      "wins": 9,
+      "losses": 18,
+      "winRate": 0.3333,
+      "grossProfit": 148.98,
+      "grossLoss": -208.37,
+      "netProfit": -59.39,
+      "avgTrade": -2.2,
+      "stopsTriggered": 18,
+      "profitFactor": 0.71,
+      "maxDrawdown": 92.52
+    },
+    "zero_to_peak_continuation": {
+      "trades": 17,
+      "wins": 5,
+      "losses": 12,
+      "winRate": 0.2941,
+      "grossProfit": 171.26,
+      "grossLoss": -216.22,
+      "netProfit": -44.96,
+      "avgTrade": -2.64,
+      "stopsTriggered": 11,
+      "profitFactor": 0.79,
+      "maxDrawdown": 123.04
+    }
+  },
+  "byMonth": {
+    "2026-02": {
+      "trades": 30,
+      "wins": 8,
+      "losses": 22,
+      "winRate": 0.2667,
+      "grossProfit": 173.59,
+      "grossLoss": -313.25,
+      "netProfit": -139.66,
+      "avgTrade": -4.66,
+      "stopsTriggered": 21,
+      "profitFactor": 0.55,
+      "maxDrawdown": 172.29
+    },
+    "2026-03": {
+      "trades": 14,
+      "wins": 6,
+      "losses": 8,
+      "winRate": 0.4286,
+      "grossProfit": 146.65,
+      "grossLoss": -111.34,
+      "netProfit": 35.31,
+      "avgTrade": 2.52,
+      "stopsTriggered": 8,
+      "profitFactor": 1.32,
+      "maxDrawdown": 68.94
+    }
+  },
+  "candidateV1": {
+    "rules": {
+      "minCalibrationScore": 11,
+      "earliestEntryEt": "10:00",
+      "firstTradePerDay": true
+    },
+    "summary": {
+      "trades": 10,
+      "wins": 6,
+      "losses": 4,
+      "winRate": 0.6,
+      "grossProfit": 179.99,
+      "grossLoss": -39.02,
+      "netProfit": 140.97,
+      "avgTrade": 14.1,
+      "stopsTriggered": 3,
+      "profitFactor": 4.61,
+      "maxDrawdown": 20.04
+    },
+    "trades": [
+      {
+        "strategy": "peak_rejection",
+        "side": "long",
+        "rationale": "SPX touched lower OD gamma peak 6946.72-6946.72 and reclaimed it, consistent with peak support.",
+        "entryTs": "2026-02-03T15:02:00Z",
+        "entryEt": "10:02",
+        "entryPrice": 6952.19,
+        "targetPrice": 6984.86,
+        "stopPrice": 6940.72,
+        "zoneLow": 6946.72,
+        "zoneHigh": 6946.72,
+        "exitTs": "2026-02-03T15:12:00Z",
+        "exitEt": "10:12",
+        "exitPrice": 6940.72,
+        "exitReason": "stop",
+        "stopTriggered": true,
+        "pnlPoints": -11.47,
+        "pnlR": -1.0,
+        "mfePoints": 3.22,
+        "maePoints": 13.88,
+        "targetDate": "2026-02-03",
+        "month": "2026-02",
+        "sourceDir": "2026-02-03_warsh-is-not-a-hawk-intraday-post",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-03_warsh-is-not-a-hawk-intraday-post/content.txt",
+        "dataInterval": "2m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "long",
+        "rationale": "SPX touched lower OD gamma peak 6814.44-6814.44 and reclaimed it, consistent with peak support.",
+        "entryTs": "2026-02-17T16:05:00Z",
+        "entryEt": "11:05",
+        "entryPrice": 6821.36,
+        "targetPrice": 6840.51,
+        "stopPrice": 6808.44,
+        "zoneLow": 6814.44,
+        "zoneHigh": 6814.44,
+        "exitTs": "2026-02-17T16:13:00Z",
+        "exitEt": "11:13",
+        "exitPrice": 6840.51,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 19.15,
+        "pnlR": 1.482,
+        "mfePoints": 21.96,
+        "maePoints": 2.44,
+        "targetDate": "2026-02-17",
+        "month": "2026-02",
+        "sourceDir": "2026-02-17_intraday-post-17feb",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-17_intraday-post-17feb/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "zero_to_peak_continuation",
+        "side": "short",
+        "rationale": "Two consecutive closes below OD zero line 6856.95 with room to the next OD peak at 6809.90.",
+        "entryTs": "2026-02-19T16:45:00Z",
+        "entryEt": "11:45",
+        "entryPrice": 6854.39,
+        "targetPrice": 6809.9,
+        "stopPrice": 6870.95,
+        "breakoutLine": 6856.95,
+        "laneTrough": null,
+        "exitTs": "2026-02-19T21:00:00Z",
+        "exitEt": "16:00",
+        "exitPrice": 6861.9,
+        "exitReason": "close",
+        "stopTriggered": false,
+        "pnlPoints": -7.51,
+        "pnlR": -0.454,
+        "mfePoints": 21.33,
+        "maePoints": 9.66,
+        "targetDate": "2026-02-19",
+        "month": "2026-02",
+        "sourceDir": "2026-02-19_intraday-post-19feb-a5e",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-19_intraday-post-19feb-a5e/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "zero_to_peak_continuation",
+        "side": "long",
+        "rationale": "Two consecutive closes above OD zero line 6861.02 with room to the next OD peak at 6969.52.",
+        "entryTs": "2026-02-20T15:00:00Z",
+        "entryEt": "10:00",
+        "entryPrice": 6871.94,
+        "targetPrice": 6969.52,
+        "stopPrice": 6847.02,
+        "breakoutLine": 6861.02,
+        "laneTrough": 6876.78,
+        "exitTs": "2026-02-20T21:00:00Z",
+        "exitEt": "16:00",
+        "exitPrice": 6909.5,
+        "exitReason": "close",
+        "stopTriggered": false,
+        "pnlPoints": 37.56,
+        "pnlR": 1.507,
+        "mfePoints": 43.92,
+        "maePoints": 13.43,
+        "targetDate": "2026-02-20",
+        "month": "2026-02",
+        "sourceDir": "2026-02-20_intraday-post-20feb-589",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-20_intraday-post-20feb-589/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "long",
+        "rationale": "SPX touched lower OD gamma peak 6879.09-6879.09 and reclaimed it, consistent with peak support.",
+        "entryTs": "2026-02-23T15:02:00Z",
+        "entryEt": "10:02",
+        "entryPrice": 6882.28,
+        "targetPrice": 6889.13,
+        "stopPrice": 6873.09,
+        "zoneLow": 6879.09,
+        "zoneHigh": 6879.09,
+        "exitTs": "2026-02-23T15:04:00Z",
+        "exitEt": "10:04",
+        "exitPrice": 6873.09,
+        "exitReason": "stop",
+        "stopTriggered": true,
+        "pnlPoints": -9.19,
+        "pnlR": -1.0,
+        "mfePoints": 2.27,
+        "maePoints": 13.47,
+        "targetDate": "2026-02-23",
+        "month": "2026-02",
+        "sourceDir": "2026-02-23_intraday-post-23feb",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-23_intraday-post-23feb/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "short",
+        "rationale": "SPX touched upper OD gamma peak 6860.12-6860.12 and rejected it, consistent with peak resistance.",
+        "entryTs": "2026-03-02T15:21:00Z",
+        "entryEt": "10:21",
+        "entryPrice": 6855.27,
+        "targetPrice": 6797.95,
+        "stopPrice": 6866.12,
+        "zoneLow": 6860.12,
+        "zoneHigh": 6860.12,
+        "exitTs": "2026-03-02T16:07:00Z",
+        "exitEt": "11:07",
+        "exitPrice": 6866.12,
+        "exitReason": "stop",
+        "stopTriggered": true,
+        "pnlPoints": -10.85,
+        "pnlR": -1.0,
+        "mfePoints": 15.12,
+        "maePoints": 11.02,
+        "targetDate": "2026-03-02",
+        "month": "2026-03",
+        "sourceDir": "2026-03-02_intraday-post-02march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-02_intraday-post-02march/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "long",
+        "rationale": "SPX touched lower OD gamma peak 6829.23-6829.23 and reclaimed it, consistent with peak support.",
+        "entryTs": "2026-03-04T15:00:00Z",
+        "entryEt": "10:00",
+        "entryPrice": 6837.98,
+        "targetPrice": 6863.55,
+        "stopPrice": 6823.23,
+        "zoneLow": 6829.23,
+        "zoneHigh": 6829.23,
+        "exitTs": "2026-03-04T15:21:00Z",
+        "exitEt": "10:21",
+        "exitPrice": 6863.55,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 25.57,
+        "pnlR": 1.734,
+        "mfePoints": 28.0,
+        "maePoints": 13.29,
+        "targetDate": "2026-03-04",
+        "month": "2026-03",
+        "sourceDir": "2026-03-04_nothing-new-in-the-middle-east-intraday",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-04_nothing-new-in-the-middle-east-intraday/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "zero_to_peak_continuation",
+        "side": "short",
+        "rationale": "Two consecutive closes below OD zero line 6850.57 with room to the next OD peak at 6770.81.",
+        "entryTs": "2026-03-05T15:19:00Z",
+        "entryEt": "10:19",
+        "entryPrice": 6844.34,
+        "targetPrice": 6770.81,
+        "stopPrice": 6864.57,
+        "breakoutLine": 6850.57,
+        "laneTrough": 6831.04,
+        "exitTs": "2026-03-05T19:32:00Z",
+        "exitEt": "14:32",
+        "exitPrice": 6770.81,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 73.53,
+        "pnlR": 3.635,
+        "mfePoints": 73.56,
+        "maePoints": 0.0,
+        "targetDate": "2026-03-05",
+        "month": "2026-03",
+        "sourceDir": "2026-03-05_intraday-post-05march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-05_intraday-post-05march/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "long",
+        "rationale": "SPX touched lower OD gamma peak 6750.22-6750.22 and reclaimed it, consistent with peak support.",
+        "entryTs": "2026-03-06T15:23:00Z",
+        "entryEt": "10:23",
+        "entryPrice": 6752.57,
+        "targetPrice": 6767.99,
+        "stopPrice": 6744.22,
+        "zoneLow": 6750.22,
+        "zoneHigh": 6750.22,
+        "exitTs": "2026-03-06T15:36:00Z",
+        "exitEt": "10:36",
+        "exitPrice": 6767.99,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 15.42,
+        "pnlR": 1.847,
+        "mfePoints": 16.62,
+        "maePoints": 3.12,
+        "targetDate": "2026-03-06",
+        "month": "2026-03",
+        "sourceDir": "2026-03-06_intraday-post-06march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-06_intraday-post-06march/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "short",
+        "rationale": "SPX touched upper OD gamma peak 6701.84-6701.84 and rejected it, consistent with peak resistance.",
+        "entryTs": "2026-03-13T14:10:00Z",
+        "entryEt": "10:10",
+        "entryPrice": 6700.33,
+        "targetPrice": 6691.57,
+        "stopPrice": 6707.84,
+        "zoneLow": 6701.84,
+        "zoneHigh": 6701.84,
+        "exitTs": "2026-03-13T14:17:00Z",
+        "exitEt": "10:17",
+        "exitPrice": 6691.57,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 8.76,
+        "pnlR": 1.166,
+        "mfePoints": 11.02,
+        "maePoints": 2.72,
+        "targetDate": "2026-03-13",
+        "month": "2026-03",
+        "sourceDir": "2026-03-13_pce-breakdown-intraday-post-13march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-13_pce-breakdown-intraday-post-13march/content.txt",
+        "dataInterval": "1m"
+      }
+    ]
+  },
+  "candidateV1Strict": {
+    "rules": {
+      "minCalibrationScore": 12,
+      "earliestEntryEt": "10:00",
+      "firstTradePerDay": true
+    },
+    "summary": {
+      "trades": 7,
+      "wins": 5,
+      "losses": 2,
+      "winRate": 0.7143,
+      "grossProfit": 160.84,
+      "grossLoss": -18.36,
+      "netProfit": 142.48,
+      "avgTrade": 20.35,
+      "stopsTriggered": 1,
+      "profitFactor": 8.76,
+      "maxDrawdown": 10.85
+    },
+    "trades": [
+      {
+        "strategy": "zero_to_peak_continuation",
+        "side": "short",
+        "rationale": "Two consecutive closes below OD zero line 6856.95 with room to the next OD peak at 6809.90.",
+        "entryTs": "2026-02-19T16:45:00Z",
+        "entryEt": "11:45",
+        "entryPrice": 6854.39,
+        "targetPrice": 6809.9,
+        "stopPrice": 6870.95,
+        "breakoutLine": 6856.95,
+        "laneTrough": null,
+        "exitTs": "2026-02-19T21:00:00Z",
+        "exitEt": "16:00",
+        "exitPrice": 6861.9,
+        "exitReason": "close",
+        "stopTriggered": false,
+        "pnlPoints": -7.51,
+        "pnlR": -0.454,
+        "mfePoints": 21.33,
+        "maePoints": 9.66,
+        "targetDate": "2026-02-19",
+        "month": "2026-02",
+        "sourceDir": "2026-02-19_intraday-post-19feb-a5e",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-19_intraday-post-19feb-a5e/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "zero_to_peak_continuation",
+        "side": "long",
+        "rationale": "Two consecutive closes above OD zero line 6861.02 with room to the next OD peak at 6969.52.",
+        "entryTs": "2026-02-20T15:00:00Z",
+        "entryEt": "10:00",
+        "entryPrice": 6871.94,
+        "targetPrice": 6969.52,
+        "stopPrice": 6847.02,
+        "breakoutLine": 6861.02,
+        "laneTrough": 6876.78,
+        "exitTs": "2026-02-20T21:00:00Z",
+        "exitEt": "16:00",
+        "exitPrice": 6909.5,
+        "exitReason": "close",
+        "stopTriggered": false,
+        "pnlPoints": 37.56,
+        "pnlR": 1.507,
+        "mfePoints": 43.92,
+        "maePoints": 13.43,
+        "targetDate": "2026-02-20",
+        "month": "2026-02",
+        "sourceDir": "2026-02-20_intraday-post-20feb-589",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-20_intraday-post-20feb-589/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "short",
+        "rationale": "SPX touched upper OD gamma peak 6860.12-6860.12 and rejected it, consistent with peak resistance.",
+        "entryTs": "2026-03-02T15:21:00Z",
+        "entryEt": "10:21",
+        "entryPrice": 6855.27,
+        "targetPrice": 6797.95,
+        "stopPrice": 6866.12,
+        "zoneLow": 6860.12,
+        "zoneHigh": 6860.12,
+        "exitTs": "2026-03-02T16:07:00Z",
+        "exitEt": "11:07",
+        "exitPrice": 6866.12,
+        "exitReason": "stop",
+        "stopTriggered": true,
+        "pnlPoints": -10.85,
+        "pnlR": -1.0,
+        "mfePoints": 15.12,
+        "maePoints": 11.02,
+        "targetDate": "2026-03-02",
+        "month": "2026-03",
+        "sourceDir": "2026-03-02_intraday-post-02march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-02_intraday-post-02march/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "long",
+        "rationale": "SPX touched lower OD gamma peak 6829.23-6829.23 and reclaimed it, consistent with peak support.",
+        "entryTs": "2026-03-04T15:00:00Z",
+        "entryEt": "10:00",
+        "entryPrice": 6837.98,
+        "targetPrice": 6863.55,
+        "stopPrice": 6823.23,
+        "zoneLow": 6829.23,
+        "zoneHigh": 6829.23,
+        "exitTs": "2026-03-04T15:21:00Z",
+        "exitEt": "10:21",
+        "exitPrice": 6863.55,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 25.57,
+        "pnlR": 1.734,
+        "mfePoints": 28.0,
+        "maePoints": 13.29,
+        "targetDate": "2026-03-04",
+        "month": "2026-03",
+        "sourceDir": "2026-03-04_nothing-new-in-the-middle-east-intraday",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-04_nothing-new-in-the-middle-east-intraday/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "zero_to_peak_continuation",
+        "side": "short",
+        "rationale": "Two consecutive closes below OD zero line 6850.57 with room to the next OD peak at 6770.81.",
+        "entryTs": "2026-03-05T15:19:00Z",
+        "entryEt": "10:19",
+        "entryPrice": 6844.34,
+        "targetPrice": 6770.81,
+        "stopPrice": 6864.57,
+        "breakoutLine": 6850.57,
+        "laneTrough": 6831.04,
+        "exitTs": "2026-03-05T19:32:00Z",
+        "exitEt": "14:32",
+        "exitPrice": 6770.81,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 73.53,
+        "pnlR": 3.635,
+        "mfePoints": 73.56,
+        "maePoints": 0.0,
+        "targetDate": "2026-03-05",
+        "month": "2026-03",
+        "sourceDir": "2026-03-05_intraday-post-05march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-05_intraday-post-05march/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "long",
+        "rationale": "SPX touched lower OD gamma peak 6750.22-6750.22 and reclaimed it, consistent with peak support.",
+        "entryTs": "2026-03-06T15:23:00Z",
+        "entryEt": "10:23",
+        "entryPrice": 6752.57,
+        "targetPrice": 6767.99,
+        "stopPrice": 6744.22,
+        "zoneLow": 6750.22,
+        "zoneHigh": 6750.22,
+        "exitTs": "2026-03-06T15:36:00Z",
+        "exitEt": "10:36",
+        "exitPrice": 6767.99,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 15.42,
+        "pnlR": 1.847,
+        "mfePoints": 16.62,
+        "maePoints": 3.12,
+        "targetDate": "2026-03-06",
+        "month": "2026-03",
+        "sourceDir": "2026-03-06_intraday-post-06march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-06_intraday-post-06march/content.txt",
+        "dataInterval": "1m"
+      },
+      {
+        "strategy": "peak_rejection",
+        "side": "short",
+        "rationale": "SPX touched upper OD gamma peak 6701.84-6701.84 and rejected it, consistent with peak resistance.",
+        "entryTs": "2026-03-13T14:10:00Z",
+        "entryEt": "10:10",
+        "entryPrice": 6700.33,
+        "targetPrice": 6691.57,
+        "stopPrice": 6707.84,
+        "zoneLow": 6701.84,
+        "zoneHigh": 6701.84,
+        "exitTs": "2026-03-13T14:17:00Z",
+        "exitEt": "10:17",
+        "exitPrice": 6691.57,
+        "exitReason": "target",
+        "stopTriggered": false,
+        "pnlPoints": 8.76,
+        "pnlR": 1.166,
+        "mfePoints": 11.02,
+        "maePoints": 2.72,
+        "targetDate": "2026-03-13",
+        "month": "2026-03",
+        "sourceDir": "2026-03-13_pce-breakdown-intraday-post-13march",
+        "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-13_pce-breakdown-intraday-post-13march/content.txt",
+        "dataInterval": "1m"
+      }
+    ]
+  },
+  "trades": [
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6986.33-6986.33 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-02-03T14:38:00Z",
+      "entryEt": "09:38",
+      "entryPrice": 6978.98,
+      "targetPrice": 6946.35,
+      "stopPrice": 6992.33,
+      "zoneLow": 6986.33,
+      "zoneHigh": 6986.33,
+      "exitTs": "2026-02-03T15:02:00Z",
+      "exitEt": "10:02",
+      "exitPrice": 6946.35,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 32.63,
+      "pnlR": 2.444,
+      "mfePoints": 35.95,
+      "maePoints": 5.49,
+      "targetDate": "2026-02-03",
+      "month": "2026-02",
+      "sourceDir": "2026-02-03_warsh-is-not-a-hawk-intraday-post",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-03_warsh-is-not-a-hawk-intraday-post/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6946.72-6946.72 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-03T15:02:00Z",
+      "entryEt": "10:02",
+      "entryPrice": 6952.19,
+      "targetPrice": 6984.86,
+      "stopPrice": 6940.72,
+      "zoneLow": 6946.72,
+      "zoneHigh": 6946.72,
+      "exitTs": "2026-02-03T15:12:00Z",
+      "exitEt": "10:12",
+      "exitPrice": 6940.72,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -11.47,
+      "pnlR": -1.0,
+      "mfePoints": 3.22,
+      "maePoints": 13.88,
+      "targetDate": "2026-02-03",
+      "month": "2026-02",
+      "sourceDir": "2026-02-03_warsh-is-not-a-hawk-intraday-post",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-03_warsh-is-not-a-hawk-intraday-post/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6877.99-6877.99 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-04T16:56:00Z",
+      "entryEt": "11:56",
+      "entryPrice": 6885.34,
+      "targetPrice": 6927.1,
+      "stopPrice": 6871.99,
+      "zoneLow": 6877.99,
+      "zoneHigh": 6877.99,
+      "exitTs": "2026-02-04T17:26:00Z",
+      "exitEt": "12:26",
+      "exitPrice": 6871.99,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -13.35,
+      "pnlR": -1.0,
+      "mfePoints": 6.64,
+      "maePoints": 27.8,
+      "targetDate": "2026-02-04",
+      "month": "2026-02",
+      "sourceDir": "2026-02-04_intraday-post-04feb-038",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-04_intraday-post-04feb-038/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6834.48-6834.48 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-05T14:38:00Z",
+      "entryEt": "09:38",
+      "entryPrice": 6845.68,
+      "targetPrice": 6904.46,
+      "stopPrice": 6828.48,
+      "zoneLow": 6834.48,
+      "zoneHigh": 6834.48,
+      "exitTs": "2026-02-05T14:56:00Z",
+      "exitEt": "09:56",
+      "exitPrice": 6828.48,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -17.2,
+      "pnlR": -1.0,
+      "mfePoints": 12.17,
+      "maePoints": 18.32,
+      "targetDate": "2026-02-05",
+      "month": "2026-02",
+      "sourceDir": "2026-02-05_volatility-is-back-intraday-post",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-05_volatility-is-back-intraday-post/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6834.56 with room to the next OD peak at 6771.67.",
+      "entryTs": "2026-02-05T14:58:00Z",
+      "entryEt": "09:58",
+      "entryPrice": 6827.33,
+      "targetPrice": 6771.67,
+      "stopPrice": 6848.56,
+      "breakoutLine": 6834.56,
+      "laneTrough": null,
+      "exitTs": "2026-02-05T21:00:00Z",
+      "exitEt": "16:00",
+      "exitPrice": 6798.18,
+      "exitReason": "close",
+      "stopTriggered": false,
+      "pnlPoints": 29.15,
+      "pnlR": 1.373,
+      "mfePoints": 47.2,
+      "maePoints": 20.24,
+      "targetDate": "2026-02-05",
+      "month": "2026-02",
+      "sourceDir": "2026-02-05_volatility-is-back-intraday-post",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-05_volatility-is-back-intraday-post/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6834.56 with room to the next OD peak at 6904.46.",
+      "entryTs": "2026-02-05T17:26:00Z",
+      "entryEt": "12:26",
+      "entryPrice": 6838.38,
+      "targetPrice": 6904.46,
+      "stopPrice": 6820.56,
+      "breakoutLine": 6834.56,
+      "laneTrough": null,
+      "exitTs": "2026-02-05T18:10:00Z",
+      "exitEt": "13:10",
+      "exitPrice": 6820.56,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -17.82,
+      "pnlR": -1.0,
+      "mfePoints": 9.19,
+      "maePoints": 18.44,
+      "targetDate": "2026-02-05",
+      "month": "2026-02",
+      "sourceDir": "2026-02-05_volatility-is-back-intraday-post",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-05_volatility-is-back-intraday-post/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6936.74 with room to the next OD peak at 6919.30.",
+      "entryTs": "2026-02-09T14:52:00Z",
+      "entryEt": "09:52",
+      "entryPrice": 6923.78,
+      "targetPrice": 6919.3,
+      "stopPrice": 6944.74,
+      "breakoutLine": 6936.74,
+      "laneTrough": null,
+      "exitTs": "2026-02-09T15:16:00Z",
+      "exitEt": "10:16",
+      "exitPrice": 6944.74,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -20.96,
+      "pnlR": -1.0,
+      "mfePoints": 3.41,
+      "maePoints": 21.94,
+      "targetDate": "2026-02-09",
+      "month": "2026-02",
+      "sourceDir": "2026-02-09_intraday-post-09feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-09_intraday-post-09feb/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6966.10-6966.10 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-10T14:50:00Z",
+      "entryEt": "09:50",
+      "entryPrice": 6968.03,
+      "targetPrice": 6992.02,
+      "stopPrice": 6960.1,
+      "zoneLow": 6966.1,
+      "zoneHigh": 6966.1,
+      "exitTs": "2026-02-10T18:20:00Z",
+      "exitEt": "13:20",
+      "exitPrice": 6960.1,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -7.93,
+      "pnlR": -1.0,
+      "mfePoints": 18.8,
+      "maePoints": 10.1,
+      "targetDate": "2026-02-10",
+      "month": "2026-02",
+      "sourceDir": "2026-02-10_retail-sales-are-stagnant-intraday",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-10_retail-sales-are-stagnant-intraday/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6965.93 with room to the next OD peak at 6992.02.",
+      "entryTs": "2026-02-10T14:52:00Z",
+      "entryEt": "09:52",
+      "entryPrice": 6971.71,
+      "targetPrice": 6992.02,
+      "stopPrice": 6956.8,
+      "breakoutLine": 6965.93,
+      "laneTrough": null,
+      "exitTs": "2026-02-10T18:26:00Z",
+      "exitEt": "13:26",
+      "exitPrice": 6956.8,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -14.91,
+      "pnlR": -1.0,
+      "mfePoints": 15.12,
+      "maePoints": 15.31,
+      "targetDate": "2026-02-10",
+      "month": "2026-02",
+      "sourceDir": "2026-02-10_retail-sales-are-stagnant-intraday",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-10_retail-sales-are-stagnant-intraday/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6841.60-6841.60 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-02-13T14:48:00Z",
+      "entryEt": "09:48",
+      "entryPrice": 6833.25,
+      "targetPrice": 6811.02,
+      "stopPrice": 6847.6,
+      "zoneLow": 6841.6,
+      "zoneHigh": 6841.6,
+      "exitTs": "2026-02-13T15:28:00Z",
+      "exitEt": "10:28",
+      "exitPrice": 6847.6,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -14.35,
+      "pnlR": -1.0,
+      "mfePoints": 18.21,
+      "maePoints": 18.4,
+      "targetDate": "2026-02-13",
+      "month": "2026-02",
+      "sourceDir": "2026-02-13_cpi-day-intraday-post-13feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-13_cpi-day-intraday-post-13feb/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6836.06 with room to the next OD peak at 6786.76.",
+      "entryTs": "2026-02-13T14:50:00Z",
+      "entryEt": "09:50",
+      "entryPrice": 6826.81,
+      "targetPrice": 6786.76,
+      "stopPrice": 6850.06,
+      "breakoutLine": 6836.06,
+      "laneTrough": 6811.02,
+      "exitTs": "2026-02-13T15:28:00Z",
+      "exitEt": "10:28",
+      "exitPrice": 6850.06,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -23.25,
+      "pnlR": -1.0,
+      "mfePoints": 11.77,
+      "maePoints": 24.84,
+      "targetDate": "2026-02-13",
+      "month": "2026-02",
+      "sourceDir": "2026-02-13_cpi-day-intraday-post-13feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-13_cpi-day-intraday-post-13feb/content.txt",
+      "dataInterval": "2m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6840.51-6840.51 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-02-17T14:38:00Z",
+      "entryEt": "09:38",
+      "entryPrice": 6837.09,
+      "targetPrice": 6824.75,
+      "stopPrice": 6846.51,
+      "zoneLow": 6840.51,
+      "zoneHigh": 6840.51,
+      "exitTs": "2026-02-17T14:44:00Z",
+      "exitEt": "09:44",
+      "exitPrice": 6824.75,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 12.34,
+      "pnlR": 1.31,
+      "mfePoints": 15.27,
+      "maePoints": 8.15,
+      "targetDate": "2026-02-17",
+      "month": "2026-02",
+      "sourceDir": "2026-02-17_intraday-post-17feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-17_intraday-post-17feb/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6814.24 with room to the next OD peak at 6840.51.",
+      "entryTs": "2026-02-17T14:49:00Z",
+      "entryEt": "09:49",
+      "entryPrice": 6819.76,
+      "targetPrice": 6840.51,
+      "stopPrice": 6805.05,
+      "breakoutLine": 6814.24,
+      "laneTrough": 6824.75,
+      "exitTs": "2026-02-17T14:50:00Z",
+      "exitEt": "09:50",
+      "exitPrice": 6805.05,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -14.71,
+      "pnlR": -1.0,
+      "mfePoints": 2.58,
+      "maePoints": 18.42,
+      "targetDate": "2026-02-17",
+      "month": "2026-02",
+      "sourceDir": "2026-02-17_intraday-post-17feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-17_intraday-post-17feb/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6814.24 with room to the next OD peak at 6787.88.",
+      "entryTs": "2026-02-17T14:51:00Z",
+      "entryEt": "09:51",
+      "entryPrice": 6803.08,
+      "targetPrice": 6787.88,
+      "stopPrice": 6823.47,
+      "breakoutLine": 6814.24,
+      "laneTrough": null,
+      "exitTs": "2026-02-17T14:58:00Z",
+      "exitEt": "09:58",
+      "exitPrice": 6787.88,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 15.2,
+      "pnlR": 0.745,
+      "mfePoints": 16.06,
+      "maePoints": 2.28,
+      "targetDate": "2026-02-17",
+      "month": "2026-02",
+      "sourceDir": "2026-02-17_intraday-post-17feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-17_intraday-post-17feb/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6814.44-6814.44 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-17T16:05:00Z",
+      "entryEt": "11:05",
+      "entryPrice": 6821.36,
+      "targetPrice": 6840.51,
+      "stopPrice": 6808.44,
+      "zoneLow": 6814.44,
+      "zoneHigh": 6814.44,
+      "exitTs": "2026-02-17T16:13:00Z",
+      "exitEt": "11:13",
+      "exitPrice": 6840.51,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 19.15,
+      "pnlR": 1.482,
+      "mfePoints": 21.96,
+      "maePoints": 2.44,
+      "targetDate": "2026-02-17",
+      "month": "2026-02",
+      "sourceDir": "2026-02-17_intraday-post-17feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-17_intraday-post-17feb/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6860.44 with room to the next OD peak at 6786.16.",
+      "entryTs": "2026-02-18T14:50:00Z",
+      "entryEt": "09:50",
+      "entryPrice": 6855.79,
+      "targetPrice": 6786.16,
+      "stopPrice": 6874.44,
+      "breakoutLine": 6860.44,
+      "laneTrough": 6823.72,
+      "exitTs": "2026-02-18T14:55:00Z",
+      "exitEt": "09:55",
+      "exitPrice": 6874.44,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -18.65,
+      "pnlR": -1.0,
+      "mfePoints": 0.75,
+      "maePoints": 18.95,
+      "targetDate": "2026-02-18",
+      "month": "2026-02",
+      "sourceDir": "2026-02-18_intraday-post-18feb-f49",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-18_intraday-post-18feb-f49/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6860.44 with room to the next OD peak at 6880.26.",
+      "entryTs": "2026-02-18T14:53:00Z",
+      "entryEt": "09:53",
+      "entryPrice": 6864.44,
+      "targetPrice": 6880.26,
+      "stopPrice": 6852.44,
+      "breakoutLine": 6860.44,
+      "laneTrough": null,
+      "exitTs": "2026-02-18T14:58:00Z",
+      "exitEt": "09:58",
+      "exitPrice": 6880.26,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 15.82,
+      "pnlR": 1.318,
+      "mfePoints": 17.76,
+      "maePoints": 0.61,
+      "targetDate": "2026-02-18",
+      "month": "2026-02",
+      "sourceDir": "2026-02-18_intraday-post-18feb-f49",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-18_intraday-post-18feb-f49/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6880.26-6880.26 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-02-18T19:31:00Z",
+      "entryEt": "14:31",
+      "entryPrice": 6876.98,
+      "targetPrice": 6823.72,
+      "stopPrice": 6886.26,
+      "zoneLow": 6880.26,
+      "zoneHigh": 6880.26,
+      "exitTs": "2026-02-18T20:53:00Z",
+      "exitEt": "15:53",
+      "exitPrice": 6886.26,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -9.28,
+      "pnlR": -1.0,
+      "mfePoints": 19.53,
+      "maePoints": 10.72,
+      "targetDate": "2026-02-18",
+      "month": "2026-02",
+      "sourceDir": "2026-02-18_intraday-post-18feb-f49",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-18_intraday-post-18feb-f49/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6856.07-6856.07 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-19T14:44:00Z",
+      "entryEt": "09:44",
+      "entryPrice": 6864.33,
+      "targetPrice": 6873.11,
+      "stopPrice": 6850.07,
+      "zoneLow": 6856.07,
+      "zoneHigh": 6856.07,
+      "exitTs": "2026-02-19T14:45:00Z",
+      "exitEt": "09:45",
+      "exitPrice": 6850.07,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -14.26,
+      "pnlR": -1.0,
+      "mfePoints": 0.73,
+      "maePoints": 14.35,
+      "targetDate": "2026-02-19",
+      "month": "2026-02",
+      "sourceDir": "2026-02-19_intraday-post-19feb-a5e",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-19_intraday-post-19feb-a5e/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6856.95 with room to the next OD peak at 6908.01.",
+      "entryTs": "2026-02-19T14:51:00Z",
+      "entryEt": "09:51",
+      "entryPrice": 6860.61,
+      "targetPrice": 6908.01,
+      "stopPrice": 6842.95,
+      "breakoutLine": 6856.95,
+      "laneTrough": 6873.11,
+      "exitTs": "2026-02-19T17:48:00Z",
+      "exitEt": "12:48",
+      "exitPrice": 6842.95,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -17.66,
+      "pnlR": -1.0,
+      "mfePoints": 18.51,
+      "maePoints": 19.24,
+      "targetDate": "2026-02-19",
+      "month": "2026-02",
+      "sourceDir": "2026-02-19_intraday-post-19feb-a5e",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-19_intraday-post-19feb-a5e/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6856.95 with room to the next OD peak at 6809.90.",
+      "entryTs": "2026-02-19T16:45:00Z",
+      "entryEt": "11:45",
+      "entryPrice": 6854.39,
+      "targetPrice": 6809.9,
+      "stopPrice": 6870.95,
+      "breakoutLine": 6856.95,
+      "laneTrough": null,
+      "exitTs": "2026-02-19T21:00:00Z",
+      "exitEt": "16:00",
+      "exitPrice": 6861.9,
+      "exitReason": "close",
+      "stopTriggered": false,
+      "pnlPoints": -7.51,
+      "pnlR": -0.454,
+      "mfePoints": 21.33,
+      "maePoints": 9.66,
+      "targetDate": "2026-02-19",
+      "month": "2026-02",
+      "sourceDir": "2026-02-19_intraday-post-19feb-a5e",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-19_intraday-post-19feb-a5e/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6862.50-6862.50 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-02-20T14:48:00Z",
+      "entryEt": "09:48",
+      "entryPrice": 6859.8,
+      "targetPrice": 6842.06,
+      "stopPrice": 6868.5,
+      "zoneLow": 6862.5,
+      "zoneHigh": 6862.5,
+      "exitTs": "2026-02-20T15:00:00Z",
+      "exitEt": "10:00",
+      "exitPrice": 6868.5,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -8.7,
+      "pnlR": -1.0,
+      "mfePoints": 8.04,
+      "maePoints": 12.14,
+      "targetDate": "2026-02-20",
+      "month": "2026-02",
+      "sourceDir": "2026-02-20_intraday-post-20feb-589",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-20_intraday-post-20feb-589/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6861.02 with room to the next OD peak at 6779.70.",
+      "entryTs": "2026-02-20T14:50:00Z",
+      "entryEt": "09:50",
+      "entryPrice": 6856.43,
+      "targetPrice": 6779.7,
+      "stopPrice": 6875.02,
+      "breakoutLine": 6861.02,
+      "laneTrough": 6842.06,
+      "exitTs": "2026-02-20T15:01:00Z",
+      "exitEt": "10:01",
+      "exitPrice": 6875.02,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -18.59,
+      "pnlR": -1.0,
+      "mfePoints": 4.67,
+      "maePoints": 51.84,
+      "targetDate": "2026-02-20",
+      "month": "2026-02",
+      "sourceDir": "2026-02-20_intraday-post-20feb-589",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-20_intraday-post-20feb-589/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6861.02 with room to the next OD peak at 6969.52.",
+      "entryTs": "2026-02-20T15:00:00Z",
+      "entryEt": "10:00",
+      "entryPrice": 6871.94,
+      "targetPrice": 6969.52,
+      "stopPrice": 6847.02,
+      "breakoutLine": 6861.02,
+      "laneTrough": 6876.78,
+      "exitTs": "2026-02-20T21:00:00Z",
+      "exitEt": "16:00",
+      "exitPrice": 6909.5,
+      "exitReason": "close",
+      "stopTriggered": false,
+      "pnlPoints": 37.56,
+      "pnlR": 1.507,
+      "mfePoints": 43.92,
+      "maePoints": 13.43,
+      "targetDate": "2026-02-20",
+      "month": "2026-02",
+      "sourceDir": "2026-02-20_intraday-post-20feb-589",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-20_intraday-post-20feb-589/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6904.80-6908.72 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-02-23T14:40:00Z",
+      "entryEt": "09:40",
+      "entryPrice": 6900.87,
+      "targetPrice": 6889.13,
+      "stopPrice": 6914.72,
+      "zoneLow": 6904.8,
+      "zoneHigh": 6908.72,
+      "exitTs": "2026-02-23T14:46:00Z",
+      "exitEt": "09:46",
+      "exitPrice": 6889.13,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 11.74,
+      "pnlR": 0.848,
+      "mfePoints": 13.15,
+      "maePoints": 1.64,
+      "targetDate": "2026-02-23",
+      "month": "2026-02",
+      "sourceDir": "2026-02-23_intraday-post-23feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-23_intraday-post-23feb/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6879.09-6879.09 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-23T15:02:00Z",
+      "entryEt": "10:02",
+      "entryPrice": 6882.28,
+      "targetPrice": 6889.13,
+      "stopPrice": 6873.09,
+      "zoneLow": 6879.09,
+      "zoneHigh": 6879.09,
+      "exitTs": "2026-02-23T15:04:00Z",
+      "exitEt": "10:04",
+      "exitPrice": 6873.09,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -9.19,
+      "pnlR": -1.0,
+      "mfePoints": 2.27,
+      "maePoints": 13.47,
+      "targetDate": "2026-02-23",
+      "month": "2026-02",
+      "sourceDir": "2026-02-23_intraday-post-23feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-23_intraday-post-23feb/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6859.27 with room to the next OD peak at 6884.53.",
+      "entryTs": "2026-02-24T14:47:00Z",
+      "entryEt": "09:47",
+      "entryPrice": 6864.88,
+      "targetPrice": 6884.53,
+      "stopPrice": 6850.43,
+      "breakoutLine": 6859.27,
+      "laneTrough": null,
+      "exitTs": "2026-02-24T14:56:00Z",
+      "exitEt": "09:56",
+      "exitPrice": 6850.43,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -14.45,
+      "pnlR": -1.0,
+      "mfePoints": 5.41,
+      "maePoints": 18.08,
+      "targetDate": "2026-02-24",
+      "month": "2026-02",
+      "sourceDir": "2026-02-24_intraday-post-24feb-2cc",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-24_intraday-post-24feb-2cc/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6859.27 with room to the next OD peak at 6813.46.",
+      "entryTs": "2026-02-24T14:55:00Z",
+      "entryEt": "09:55",
+      "entryPrice": 6852.36,
+      "targetPrice": 6813.46,
+      "stopPrice": 6873.27,
+      "breakoutLine": 6859.27,
+      "laneTrough": 6824.19,
+      "exitTs": "2026-02-24T15:26:00Z",
+      "exitEt": "10:26",
+      "exitPrice": 6873.27,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -20.91,
+      "pnlR": -1.0,
+      "mfePoints": 14.87,
+      "maePoints": 21.69,
+      "targetDate": "2026-02-24",
+      "month": "2026-02",
+      "sourceDir": "2026-02-24_intraday-post-24feb-2cc",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-24_intraday-post-24feb-2cc/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6884.53-6884.53 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-02-24T16:14:00Z",
+      "entryEt": "11:14",
+      "entryPrice": 6882.55,
+      "targetPrice": 6824.19,
+      "stopPrice": 6890.53,
+      "zoneLow": 6884.53,
+      "zoneHigh": 6884.53,
+      "exitTs": "2026-02-24T17:11:00Z",
+      "exitEt": "12:11",
+      "exitPrice": 6890.53,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -7.98,
+      "pnlR": -1.0,
+      "mfePoints": 14.83,
+      "maePoints": 8.81,
+      "targetDate": "2026-02-24",
+      "month": "2026-02",
+      "sourceDir": "2026-02-24_intraday-post-24feb-2cc",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-24_intraday-post-24feb-2cc/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6921.93-6921.93 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-02-26T14:49:00Z",
+      "entryEt": "09:49",
+      "entryPrice": 6926.05,
+      "targetPrice": 7010.48,
+      "stopPrice": 6915.93,
+      "zoneLow": 6921.93,
+      "zoneHigh": 6921.93,
+      "exitTs": "2026-02-26T15:01:00Z",
+      "exitEt": "10:01",
+      "exitPrice": 6915.93,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -10.12,
+      "pnlR": -1.0,
+      "mfePoints": 4.38,
+      "maePoints": 13.8,
+      "targetDate": "2026-02-26",
+      "month": "2026-02",
+      "sourceDir": "2026-02-26_nvda-er-intraday-post-26feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-26_nvda-er-intraday-post-26feb/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6860.12-6860.12 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-03-02T15:21:00Z",
+      "entryEt": "10:21",
+      "entryPrice": 6855.27,
+      "targetPrice": 6797.95,
+      "stopPrice": 6866.12,
+      "zoneLow": 6860.12,
+      "zoneHigh": 6860.12,
+      "exitTs": "2026-03-02T16:07:00Z",
+      "exitEt": "11:07",
+      "exitPrice": 6866.12,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -10.85,
+      "pnlR": -1.0,
+      "mfePoints": 15.12,
+      "maePoints": 11.02,
+      "targetDate": "2026-03-02",
+      "month": "2026-03",
+      "sourceDir": "2026-03-02_intraday-post-02march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-02_intraday-post-02march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6829.23-6829.23 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-03-04T15:00:00Z",
+      "entryEt": "10:00",
+      "entryPrice": 6837.98,
+      "targetPrice": 6863.55,
+      "stopPrice": 6823.23,
+      "zoneLow": 6829.23,
+      "zoneHigh": 6829.23,
+      "exitTs": "2026-03-04T15:21:00Z",
+      "exitEt": "10:21",
+      "exitPrice": 6863.55,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 25.57,
+      "pnlR": 1.734,
+      "mfePoints": 28.0,
+      "maePoints": 13.29,
+      "targetDate": "2026-03-04",
+      "month": "2026-03",
+      "sourceDir": "2026-03-04_nothing-new-in-the-middle-east-intraday",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-04_nothing-new-in-the-middle-east-intraday/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6855.25-6859.65 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-03-05T14:39:00Z",
+      "entryEt": "09:39",
+      "entryPrice": 6851.79,
+      "targetPrice": 6831.04,
+      "stopPrice": 6865.65,
+      "zoneLow": 6855.25,
+      "zoneHigh": 6859.65,
+      "exitTs": "2026-03-05T14:59:00Z",
+      "exitEt": "09:59",
+      "exitPrice": 6865.65,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -13.86,
+      "pnlR": -1.0,
+      "mfePoints": 14.22,
+      "maePoints": 14.14,
+      "targetDate": "2026-03-05",
+      "month": "2026-03",
+      "sourceDir": "2026-03-05_intraday-post-05march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-05_intraday-post-05march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "short",
+      "rationale": "Two consecutive closes below OD zero line 6850.57 with room to the next OD peak at 6770.81.",
+      "entryTs": "2026-03-05T15:19:00Z",
+      "entryEt": "10:19",
+      "entryPrice": 6844.34,
+      "targetPrice": 6770.81,
+      "stopPrice": 6864.57,
+      "breakoutLine": 6850.57,
+      "laneTrough": 6831.04,
+      "exitTs": "2026-03-05T19:32:00Z",
+      "exitEt": "14:32",
+      "exitPrice": 6770.81,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 73.53,
+      "pnlR": 3.635,
+      "mfePoints": 73.56,
+      "maePoints": 0.0,
+      "targetDate": "2026-03-05",
+      "month": "2026-03",
+      "sourceDir": "2026-03-05_intraday-post-05march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-05_intraday-post-05march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6750.22-6750.22 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-03-06T15:23:00Z",
+      "entryEt": "10:23",
+      "entryPrice": 6752.57,
+      "targetPrice": 6767.99,
+      "stopPrice": 6744.22,
+      "zoneLow": 6750.22,
+      "zoneHigh": 6750.22,
+      "exitTs": "2026-03-06T15:36:00Z",
+      "exitEt": "10:36",
+      "exitPrice": 6767.99,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 15.42,
+      "pnlR": 1.847,
+      "mfePoints": 16.62,
+      "maePoints": 3.12,
+      "targetDate": "2026-03-06",
+      "month": "2026-03",
+      "sourceDir": "2026-03-06_intraday-post-06march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-06_intraday-post-06march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6639.89-6647.41 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-03-09T13:43:00Z",
+      "entryEt": "09:43",
+      "entryPrice": 6655.05,
+      "targetPrice": 6668.99,
+      "stopPrice": 6633.12,
+      "zoneLow": 6639.89,
+      "zoneHigh": 6647.41,
+      "exitTs": "2026-03-09T14:04:00Z",
+      "exitEt": "10:04",
+      "exitPrice": 6668.99,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 13.94,
+      "pnlR": 0.636,
+      "mfePoints": 14.85,
+      "maePoints": 16.46,
+      "targetDate": "2026-03-09",
+      "month": "2026-03",
+      "sourceDir": "2026-03-09_intraday-post-09march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-09_intraday-post-09march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6701.12-6701.12 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-03-09T15:35:00Z",
+      "entryEt": "11:35",
+      "entryPrice": 6699.5,
+      "targetPrice": 6672.87,
+      "stopPrice": 6707.12,
+      "zoneLow": 6701.12,
+      "zoneHigh": 6701.12,
+      "exitTs": "2026-03-09T15:53:00Z",
+      "exitEt": "11:53",
+      "exitPrice": 6707.12,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -7.62,
+      "pnlR": -1.0,
+      "mfePoints": 2.68,
+      "maePoints": 9.03,
+      "targetDate": "2026-03-09",
+      "month": "2026-03",
+      "sourceDir": "2026-03-09_intraday-post-09march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-09_intraday-post-09march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6792.29-6792.29 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-03-10T14:32:00Z",
+      "entryEt": "10:32",
+      "entryPrice": 6796.7,
+      "targetPrice": 6854.57,
+      "stopPrice": 6786.29,
+      "zoneLow": 6792.29,
+      "zoneHigh": 6792.29,
+      "exitTs": "2026-03-10T19:29:00Z",
+      "exitEt": "15:29",
+      "exitPrice": 6786.29,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -10.41,
+      "pnlR": -1.0,
+      "mfePoints": 48.38,
+      "maePoints": 10.71,
+      "targetDate": "2026-03-10",
+      "month": "2026-03",
+      "sourceDir": "2026-03-10_intraday-post-10march-a1a",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-10_intraday-post-10march-a1a/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6829.28-6832.86 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-03-10T15:44:00Z",
+      "entryEt": "11:44",
+      "entryPrice": 6826.81,
+      "targetPrice": 6799.71,
+      "stopPrice": 6838.86,
+      "zoneLow": 6829.28,
+      "zoneHigh": 6832.86,
+      "exitTs": "2026-03-10T17:24:00Z",
+      "exitEt": "13:24",
+      "exitPrice": 6838.86,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -12.05,
+      "pnlR": -1.0,
+      "mfePoints": 17.59,
+      "maePoints": 12.53,
+      "targetDate": "2026-03-10",
+      "month": "2026-03",
+      "sourceDir": "2026-03-10_intraday-post-10march-a1a",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-10_intraday-post-10march-a1a/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6780.00-6790.20 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-03-11T13:37:00Z",
+      "entryEt": "09:37",
+      "entryPrice": 6793.76,
+      "targetPrice": 6803.19,
+      "stopPrice": 6770.82,
+      "zoneLow": 6780.0,
+      "zoneHigh": 6790.2,
+      "exitTs": "2026-03-11T14:00:00Z",
+      "exitEt": "10:00",
+      "exitPrice": 6803.19,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 9.43,
+      "pnlR": 0.411,
+      "mfePoints": 14.44,
+      "maePoints": 20.12,
+      "targetDate": "2026-03-11",
+      "month": "2026-03",
+      "sourceDir": "2026-03-11_intraday-post-11march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-11_intraday-post-11march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6780.00-6790.20 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-03-11T13:48:00Z",
+      "entryEt": "09:48",
+      "entryPrice": 6777.89,
+      "targetPrice": 6757.97,
+      "stopPrice": 6799.38,
+      "zoneLow": 6780.0,
+      "zoneHigh": 6790.2,
+      "exitTs": "2026-03-11T14:00:00Z",
+      "exitEt": "10:00",
+      "exitPrice": 6799.38,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -21.49,
+      "pnlR": -1.0,
+      "mfePoints": 4.25,
+      "maePoints": 30.31,
+      "targetDate": "2026-03-11",
+      "month": "2026-03",
+      "sourceDir": "2026-03-11_intraday-post-11march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-11_intraday-post-11march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "zero_to_peak_continuation",
+      "side": "long",
+      "rationale": "Two consecutive closes above OD zero line 6789.74 with room to the next OD peak at 6822.90.",
+      "entryTs": "2026-03-11T14:01:00Z",
+      "entryEt": "10:01",
+      "entryPrice": 6804.93,
+      "targetPrice": 6822.9,
+      "stopPrice": 6778.13,
+      "breakoutLine": 6789.74,
+      "laneTrough": 6803.19,
+      "exitTs": "2026-03-11T14:23:00Z",
+      "exitEt": "10:23",
+      "exitPrice": 6778.13,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -26.8,
+      "pnlR": -1.0,
+      "mfePoints": 0.56,
+      "maePoints": 29.69,
+      "targetDate": "2026-03-11",
+      "month": "2026-03",
+      "sourceDir": "2026-03-11_intraday-post-11march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-11_intraday-post-11march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "short",
+      "rationale": "SPX touched upper OD gamma peak 6701.84-6701.84 and rejected it, consistent with peak resistance.",
+      "entryTs": "2026-03-13T14:10:00Z",
+      "entryEt": "10:10",
+      "entryPrice": 6700.33,
+      "targetPrice": 6691.57,
+      "stopPrice": 6707.84,
+      "zoneLow": 6701.84,
+      "zoneHigh": 6701.84,
+      "exitTs": "2026-03-13T14:17:00Z",
+      "exitEt": "10:17",
+      "exitPrice": 6691.57,
+      "exitReason": "target",
+      "stopTriggered": false,
+      "pnlPoints": 8.76,
+      "pnlR": 1.166,
+      "mfePoints": 11.02,
+      "maePoints": 2.72,
+      "targetDate": "2026-03-13",
+      "month": "2026-03",
+      "sourceDir": "2026-03-13_pce-breakdown-intraday-post-13march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-13_pce-breakdown-intraday-post-13march/content.txt",
+      "dataInterval": "1m"
+    },
+    {
+      "strategy": "peak_rejection",
+      "side": "long",
+      "rationale": "SPX touched lower OD gamma peak 6636.06-6636.06 and reclaimed it, consistent with peak support.",
+      "entryTs": "2026-03-13T17:55:00Z",
+      "entryEt": "13:55",
+      "entryPrice": 6638.32,
+      "targetPrice": 6676.16,
+      "stopPrice": 6630.06,
+      "zoneLow": 6636.06,
+      "zoneHigh": 6636.06,
+      "exitTs": "2026-03-13T19:38:00Z",
+      "exitEt": "15:38",
+      "exitPrice": 6630.06,
+      "exitReason": "stop",
+      "stopTriggered": true,
+      "pnlPoints": -8.26,
+      "pnlR": -1.0,
+      "mfePoints": 19.04,
+      "maePoints": 8.57,
+      "targetDate": "2026-03-13",
+      "month": "2026-03",
+      "sourceDir": "2026-03-13_pce-breakdown-intraday-post-13march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-13_pce-breakdown-intraday-post-13march/content.txt",
+      "dataInterval": "1m"
+    }
+  ],
+  "diagnostics": [
+    {
+      "date": "2026-02-02",
+      "sourceDir": "2026-02-02_intraday-post-02feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-02_intraday-post-02feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-02_intraday-post-02feb/images/bd142039-65de-48bb-a066-0dffe1f00a3e_1886x799.jpg",
+      "title": "Intraday post (02/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6916.64,
+      "closePrice": 6976.5,
+      "calibrationScore": 8,
+      "coverageRatio": 0.8889,
+      "avgError": 2.25,
+      "topPrice": 7070.0,
+      "bottomPrice": 6840.0,
+      "commentaryNumbers": [
+        6700.0,
+        6831.0,
+        6860.0,
+        6865.0,
+        6894.0,
+        6914.3,
+        6920.0,
+        6950.0,
+        6964.0
+      ],
+      "peakSupportZone": {
+        "low": 6889.77,
+        "high": 6889.77,
+        "mid": 6889.77,
+        "width": 0.0,
+        "members": [
+          6889.77
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6925.33,
+        "high": 6925.33,
+        "mid": 6925.33,
+        "width": 0.0,
+        "members": [
+          6925.33
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6840.0,
+        "high": 6840.0,
+        "mid": 6840.0,
+        "width": 0.0,
+        "members": [
+          6840.0
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6935.99,
+        "high": 6935.99,
+        "mid": 6935.99,
+        "width": 0.0,
+        "members": [
+          6935.99
+        ]
+      },
+      "breakoutLine": 6923.41,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 9,
+        "bottom": 580,
+        "left": 20,
+        "right": 1401,
+        "height": 571,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7063.98
+          ],
+          "0.35": [
+            7064.8,
+            6866.25
+          ],
+          "0.50": [
+            7065.62,
+            6989.6,
+            6868.99
+          ],
+          "0.65": [
+            7066.99,
+            6987.68,
+            6867.9
+          ],
+          "0.80": [
+            7068.36,
+            7058.51,
+            7050.04,
+            7006.28,
+            6864.61
+          ],
+          "0.92": [
+            7070.0,
+            7051.68,
+            7007.65,
+            6986.59,
+            6947.75,
+            6925.33,
+            6889.77,
+            6861.88
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [
+            7058.51
+          ],
+          "0.92": [
+            6935.99,
+            6840.0
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6928.34,
+            6857.23
+          ],
+          "0.35": [
+            6928.34,
+            6866.53,
+            6848.2
+          ],
+          "0.50": [
+            6989.6,
+            6928.34,
+            6871.72,
+            6838.63
+          ],
+          "0.65": [
+            6927.24,
+            6878.01,
+            6867.62,
+            6859.42
+          ],
+          "0.80": [
+            7050.31,
+            7006.0,
+            6986.86,
+            6923.41,
+            6878.01,
+            6864.89,
+            6855.32
+          ],
+          "0.92": [
+            7051.95,
+            7007.65,
+            6966.08,
+            6948.03,
+            6938.73,
+            6933.26,
+            6919.58,
+            6862.15,
+            6827.69
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-03",
+      "sourceDir": "2026-02-03_warsh-is-not-a-hawk-intraday-post",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-03_warsh-is-not-a-hawk-intraday-post/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-03_warsh-is-not-a-hawk-intraday-post/images/e554ca11-0f9d-4f00-b210-3852f926d8af_1879x802.jpg",
+      "title": "Warsh is not a hawk | Intraday post (03/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6985.45,
+      "closePrice": 6917.79,
+      "calibrationScore": 11,
+      "coverageRatio": 1.0,
+      "avgError": 1.94,
+      "topPrice": 7040.0,
+      "bottomPrice": 6860.0,
+      "commentaryNumbers": [
+        6900.0,
+        6905.0,
+        6920.0,
+        6932.0,
+        6945.0,
+        6953.42,
+        6968.13,
+        6980.0,
+        7005.0,
+        7025.0,
+        7030.0
+      ],
+      "peakSupportZone": {
+        "low": 6946.72,
+        "high": 6946.72,
+        "mid": 6946.72,
+        "width": 0.0,
+        "members": [
+          6946.72
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6986.33,
+        "high": 6986.33,
+        "mid": 6986.33,
+        "width": 0.0,
+        "members": [
+          6986.33
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": null,
+      "breakoutLine": 6984.86,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 9,
+        "bottom": 584,
+        "left": 20,
+        "right": 1401,
+        "height": 575,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7034.34,
+            6985.78,
+            6861.46
+          ],
+          "0.35": [
+            7034.71,
+            6985.05,
+            6861.46
+          ],
+          "0.50": [
+            7035.25,
+            6984.69,
+            6944.89
+          ],
+          "0.65": [
+            7015.72,
+            6984.69,
+            6946.35,
+            6899.25
+          ],
+          "0.80": [
+            7037.99,
+            7014.99,
+            6985.42,
+            6946.35
+          ],
+          "0.92": [
+            7040.0,
+            7030.69,
+            7014.26,
+            6987.24,
+            6947.08,
+            6906.19,
+            6860.0
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": []
+        },
+        "zero": {
+          "0.22": [
+            6985.96
+          ],
+          "0.35": [],
+          "0.50": [
+            6984.5,
+            6944.89
+          ],
+          "0.65": [
+            6984.5,
+            6899.25
+          ],
+          "0.80": [
+            7014.81,
+            6985.23,
+            6946.53,
+            6936.49,
+            6924.62,
+            6904.54
+          ],
+          "0.92": [
+            7048.76,
+            7030.51,
+            7014.44,
+            6987.06,
+            6963.69,
+            6938.5,
+            6920.24,
+            6906.0,
+            6860.0
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-04",
+      "sourceDir": "2026-02-04_intraday-post-04feb-038",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-04_intraday-post-04feb-038/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-04_intraday-post-04feb-038/images/ef7daf0f-e10d-4feb-8c59-f5138f428415_1880x802.jpg",
+      "title": "Intraday post (04/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6924.5,
+      "closePrice": 6882.73,
+      "calibrationScore": 10,
+      "coverageRatio": 1.0,
+      "avgError": 1.33,
+      "topPrice": 7030.0,
+      "bottomPrice": 6810.0,
+      "commentaryNumbers": [
+        6820.0,
+        6837.0,
+        6840.0,
+        6850.0,
+        6860.17,
+        6885.12,
+        6900.0,
+        6906.0,
+        6958.0,
+        6982.0
+      ],
+      "peakSupportZone": {
+        "low": 6877.99,
+        "high": 6877.99,
+        "mid": 6877.99,
+        "width": 0.0,
+        "members": [
+          6877.99
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6942.12,
+        "high": 6942.12,
+        "mid": 6942.12,
+        "width": 0.0,
+        "members": [
+          6942.12
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6861.35,
+        "high": 6861.35,
+        "mid": 6861.35,
+        "width": 0.0,
+        "members": [
+          6861.35
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6927.1,
+      "pinZone": {
+        "low": 6957.75,
+        "high": 6970.54,
+        "mid": 6963.54,
+        "count": 3,
+        "spread": 12.79,
+        "members": [
+          6957.75,
+          6962.32,
+          6970.54
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 584,
+        "left": 20,
+        "right": 1401,
+        "height": 575,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7028.99,
+            6953.69,
+            6836.79
+          ],
+          "0.35": [
+            7030.0
+          ],
+          "0.50": [],
+          "0.65": [
+            6953.69,
+            6838.41
+          ],
+          "0.80": [
+            7026.96,
+            7009.3,
+            7002.2,
+            6957.75,
+            6878.8,
+            6841.66,
+            6810.0
+          ],
+          "0.92": [
+            7023.51,
+            6999.56,
+            6962.21,
+            6942.12,
+            6877.18,
+            6842.88
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": [
+            6861.35
+          ]
+        },
+        "zero": {
+          "0.22": [
+            7028.58,
+            6953.49,
+            6836.59
+          ],
+          "0.35": [
+            7030.0,
+            6952.68,
+            6836.18
+          ],
+          "0.50": [
+            6952.68,
+            6905.59,
+            6836.59
+          ],
+          "0.65": [
+            6924.67,
+            6902.75,
+            6838.62
+          ],
+          "0.80": [
+            7001.99,
+            6982.31,
+            6972.16,
+            6957.95,
+            6927.1,
+            6901.94,
+            6878.8,
+            6841.46,
+            6810.0
+          ],
+          "0.92": [
+            6999.35,
+            6985.35,
+            6970.54,
+            6962.42,
+            6942.12,
+            6928.73,
+            6901.94,
+            6876.97,
+            6861.35,
+            6860.13,
+            6843.08
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-05",
+      "sourceDir": "2026-02-05_volatility-is-back-intraday-post",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-05_volatility-is-back-intraday-post/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-05_volatility-is-back-intraday-post/images/b3518f0e-e470-4e7d-8fd9-b6d89c78f7b0_1881x802.jpg",
+      "title": "Volatility is back | Intraday post (05/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6837.39,
+      "closePrice": 6798.18,
+      "calibrationScore": 10,
+      "coverageRatio": 0.7692,
+      "avgError": 3.96,
+      "topPrice": 6950.0,
+      "bottomPrice": 6770.0,
+      "commentaryNumbers": [
+        6711.0,
+        6726.0,
+        6770.52,
+        6800.0,
+        6820.0,
+        6850.0,
+        6860.0,
+        6880.0,
+        6890.0,
+        6905.0,
+        6910.0,
+        6934.0,
+        6948.0
+      ],
+      "peakSupportZone": {
+        "low": 6834.48,
+        "high": 6834.48,
+        "mid": 6834.48,
+        "width": 0.0,
+        "members": [
+          6834.48
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6904.46,
+        "high": 6904.46,
+        "mid": 6904.46,
+        "width": 0.0,
+        "members": [
+          6904.46
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": null,
+      "breakoutLine": 6834.56,
+      "pinZone": {
+        "low": 6922.56,
+        "high": 6931.65,
+        "mid": 6927.1,
+        "count": 2,
+        "spread": 9.09,
+        "members": [
+          6922.56,
+          6931.65
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 584,
+        "left": 20,
+        "right": 1401,
+        "height": 575,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6950.0,
+            6929.81,
+            6774.34
+          ],
+          "0.35": [
+            6929.81,
+            6773.34
+          ],
+          "0.50": [
+            6929.81,
+            6771.67
+          ],
+          "0.65": [
+            6930.48,
+            6833.73,
+            6770.0
+          ],
+          "0.80": [
+            6931.65,
+            6905.46,
+            6834.56
+          ],
+          "0.92": [
+            6922.47,
+            6903.46,
+            6834.39
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": []
+        },
+        "zero": {
+          "0.22": [
+            6940.32,
+            6774.5
+          ],
+          "0.35": [
+            6940.66
+          ],
+          "0.50": [
+            6941.16,
+            6771.84
+          ],
+          "0.65": [
+            6770.17
+          ],
+          "0.80": [
+            6905.29,
+            6873.93,
+            6864.92,
+            6834.56
+          ],
+          "0.92": [
+            6922.64,
+            6876.27,
+            6834.23
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-06",
+      "sourceDir": "2026-02-06_high-volume-intraday-post-06feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-06_high-volume-intraday-post-06feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-06_high-volume-intraday-post-06feb/images/4ec2522d-a11b-4c51-93ab-43baefc5055a_1879x800.jpg",
+      "title": "High volume | Intraday post (06/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6816.74,
+      "closePrice": 6932.27,
+      "calibrationScore": 12,
+      "coverageRatio": 0.8571,
+      "avgError": 3.21,
+      "topPrice": 6970.0,
+      "bottomPrice": 6730.0,
+      "commentaryNumbers": [
+        6620.0,
+        6670.0,
+        6731.87,
+        6750.0,
+        6760.0,
+        6773.55,
+        6800.0,
+        6814.0,
+        6880.0,
+        6890.0,
+        6895.0,
+        6900.0,
+        6910.0,
+        6914.0
+      ],
+      "peakSupportZone": {
+        "low": 6806.16,
+        "high": 6806.16,
+        "mid": 6806.16,
+        "width": 0.0,
+        "members": [
+          6806.16
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6843.91,
+        "high": 6843.91,
+        "mid": 6843.91,
+        "width": 0.0,
+        "members": [
+          6843.91
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": null,
+      "breakoutLine": 6844.91,
+      "pinZone": {
+        "low": 6767.64,
+        "high": 6773.06,
+        "mid": 6770.35,
+        "count": 2,
+        "spread": 5.42,
+        "members": [
+          6767.64,
+          6773.06
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 583,
+        "left": 20,
+        "right": 1401,
+        "height": 574,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6742.84
+          ],
+          "0.35": [
+            6968.67,
+            6740.18
+          ],
+          "0.50": [
+            6970.0,
+            6735.76
+          ],
+          "0.65": [
+            6850.0,
+            6730.0
+          ],
+          "0.80": [
+            6897.38,
+            6845.13,
+            6767.64
+          ],
+          "0.92": [
+            6897.16,
+            6842.69,
+            6806.16,
+            6772.95
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": []
+        },
+        "zero": {
+          "0.22": [
+            6968.01,
+            6743.06
+          ],
+          "0.35": [
+            6968.89,
+            6740.41
+          ],
+          "0.50": [
+            6970.22,
+            6735.98
+          ],
+          "0.65": [
+            6849.78,
+            6730.22
+          ],
+          "0.80": [
+            6844.91,
+            6767.42
+          ],
+          "0.92": [
+            6897.16,
+            6842.69,
+            6826.09,
+            6813.03,
+            6806.38,
+            6796.2,
+            6773.17
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-09",
+      "sourceDir": "2026-02-09_intraday-post-09feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-09_intraday-post-09feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-09_intraday-post-09feb/images/3a558cee-2aa9-4265-aa4b-585042f409cd_1882x800.jpg",
+      "title": "Intraday post (09/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6917.26,
+      "closePrice": 6964.8,
+      "calibrationScore": 10,
+      "coverageRatio": 1.0,
+      "avgError": 0.98,
+      "topPrice": 7000.0,
+      "bottomPrice": 6820.0,
+      "commentaryNumbers": [
+        6841.0,
+        6880.0,
+        6896.0,
+        6920.0,
+        6930.0,
+        6935.0,
+        6965.4,
+        6975.0,
+        6984.0,
+        6991.0
+      ],
+      "peakSupportZone": {
+        "low": 6893.23,
+        "high": 6893.23,
+        "mid": 6893.23,
+        "width": 0.0,
+        "members": [
+          6893.23
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6919.3,
+        "high": 6919.3,
+        "mid": 6919.3,
+        "width": 0.0,
+        "members": [
+          6919.3
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": {
+        "low": 6983.51,
+        "high": 6990.03,
+        "mid": 6986.77,
+        "width": 6.52,
+        "members": [
+          6983.51,
+          6990.03
+        ]
+      },
+      "breakoutLine": 6936.74,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 9,
+        "bottom": 582,
+        "left": 20,
+        "right": 1401,
+        "height": 573,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6975.46,
+            6944.41,
+            6893.61
+          ],
+          "0.35": [
+            6945.56,
+            6893.04
+          ],
+          "0.50": [
+            6864.47
+          ],
+          "0.65": [
+            6975.46,
+            6947.86,
+            6861.79
+          ],
+          "0.80": [
+            6949.39,
+            6936.55,
+            6892.84,
+            6861.79,
+            6823.45
+          ],
+          "0.92": [
+            6973.74,
+            6950.54,
+            6936.36,
+            6919.3,
+            6893.61,
+            6863.32,
+            6836.1,
+            6820.0
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6833.23
+          ],
+          "0.35": [
+            6983.13
+          ],
+          "0.50": [
+            6982.75
+          ],
+          "0.65": [
+            6982.75
+          ],
+          "0.80": [
+            6996.74,
+            6983.13
+          ],
+          "0.92": [
+            7000.0,
+            6990.03,
+            6983.9
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6994.82,
+            6980.83,
+            6960.51,
+            6893.8,
+            6868.88
+          ],
+          "0.35": [
+            6999.04,
+            6990.61,
+            6980.45,
+            6960.89,
+            6893.04,
+            6870.8
+          ],
+          "0.50": [
+            6999.23,
+            6990.22,
+            6980.45,
+            6961.47,
+            6892.65,
+            6873.48,
+            6864.47
+          ],
+          "0.65": [
+            6994.63,
+            6980.83,
+            6961.66,
+            6892.65,
+            6877.32,
+            6861.98,
+            6797.96
+          ],
+          "0.80": [
+            6994.82,
+            6981.21,
+            6962.24,
+            6936.74,
+            6880.0,
+            6866.58,
+            6823.64,
+            6799.68
+          ],
+          "0.92": [
+            6994.82,
+            6982.36,
+            6961.85,
+            6935.97,
+            6919.49,
+            6909.52,
+            6880.77,
+            6863.13,
+            6835.91,
+            6819.81,
+            6802.17
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-10",
+      "sourceDir": "2026-02-10_retail-sales-are-stagnant-intraday",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-10_retail-sales-are-stagnant-intraday/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-10_retail-sales-are-stagnant-intraday/images/931f70f8-882b-4293-806e-268f28aadf4f_1882x804.jpg",
+      "title": "Retail sales are stagnant | Intraday post (10/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6974.49,
+      "closePrice": 6941.8,
+      "calibrationScore": 8,
+      "coverageRatio": 1.0,
+      "avgError": 4.14,
+      "topPrice": 7030.0,
+      "bottomPrice": 6850.0,
+      "commentaryNumbers": [
+        6860.0,
+        6870.0,
+        6894.0,
+        6927.0,
+        6967.15,
+        6978.25,
+        6995.0,
+        7009.0
+      ],
+      "peakSupportZone": {
+        "low": 6966.1,
+        "high": 6966.1,
+        "mid": 6966.1,
+        "width": 0.0,
+        "members": [
+          6966.1
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6992.02,
+        "high": 6992.02,
+        "mid": 6992.02,
+        "width": 0.0,
+        "members": [
+          6992.02
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6876.6,
+        "high": 6876.6,
+        "mid": 6876.6,
+        "width": 0.0,
+        "members": [
+          6876.6
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6965.93,
+      "pinZone": {
+        "low": 6876.6,
+        "high": 6887.97,
+        "mid": 6882.82,
+        "count": 3,
+        "spread": 11.37,
+        "members": [
+          6876.6,
+          6883.88,
+          6887.97
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 585,
+        "left": 20,
+        "right": 1401,
+        "height": 576,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7030.0,
+            7004.74
+          ],
+          "0.35": [
+            7029.83,
+            7005.41
+          ],
+          "0.50": [
+            7029.83,
+            7005.91,
+            6966.1,
+            6850.67
+          ],
+          "0.65": [
+            7029.16,
+            7007.08,
+            6993.87,
+            6965.76,
+            6850.84
+          ],
+          "0.80": [
+            7008.42,
+            6992.53,
+            6966.1,
+            6935.99,
+            6851.0
+          ],
+          "0.92": [
+            7026.15,
+            7009.42,
+            6991.52,
+            6883.79,
+            6850.0
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": [
+            6876.6
+          ]
+        },
+        "zero": {
+          "0.22": [
+            7017.62,
+            6916.75,
+            6893.33
+          ],
+          "0.35": [
+            7017.79,
+            6890.65
+          ],
+          "0.50": [
+            7017.96,
+            6965.93,
+            6888.31,
+            6850.84
+          ],
+          "0.65": [
+            7018.12,
+            6993.7,
+            6937.83,
+            6920.09,
+            6885.97,
+            6850.84
+          ],
+          "0.80": [
+            7018.12,
+            6936.15,
+            6921.1,
+            6884.63,
+            6851.17
+          ],
+          "0.92": [
+            7017.79,
+            6991.36,
+            6966.6,
+            6935.82,
+            6923.77,
+            6887.97,
+            6883.96,
+            6850.0
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-11",
+      "sourceDir": "2026-02-11_nfp-intraday-post-11feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-11_nfp-intraday-post-11feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-11_nfp-intraday-post-11feb/images/ea0189ef-a57e-46fa-89f5-5daaff8ae1a6_1884x803.jpg",
+      "title": "NFP | Intraday post (11/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6976.48,
+      "closePrice": 6941.45,
+      "calibrationScore": 11,
+      "coverageRatio": 1.0,
+      "avgError": 1.06,
+      "topPrice": 7040.0,
+      "bottomPrice": 6850.0,
+      "commentaryNumbers": [
+        6882.0,
+        6895.0,
+        6946.74,
+        6951.08,
+        6960.0,
+        6970.0,
+        6995.0,
+        7005.0,
+        7010.0,
+        7011.0,
+        7021.0
+      ],
+      "peakSupportZone": {
+        "low": 6958.06,
+        "high": 6958.06,
+        "mid": 6958.06,
+        "width": 0.0,
+        "members": [
+          6958.06
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 7006.41,
+        "high": 7014.77,
+        "mid": 7010.59,
+        "width": 8.36,
+        "members": [
+          7006.41,
+          7014.77
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6881.46,
+        "high": 6881.46,
+        "mid": 6881.46,
+        "width": 0.0,
+        "members": [
+          6881.46
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6948.29,
+      "pinZone": {
+        "low": 6876.84,
+        "high": 6887.86,
+        "mid": 6882.05,
+        "count": 3,
+        "spread": 11.02,
+        "members": [
+          6876.84,
+          6881.46,
+          6887.86
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 584,
+        "left": 20,
+        "right": 1401,
+        "height": 575,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7040.0,
+            7009.07,
+            6851.96,
+            6850.18
+          ],
+          "0.35": [
+            7009.61,
+            6851.07
+          ],
+          "0.50": [
+            7011.03,
+            6850.18
+          ],
+          "0.65": [
+            7012.98,
+            6913.99,
+            6850.0
+          ],
+          "0.80": [
+            7016.01,
+            6919.32,
+            6859.24
+          ],
+          "0.92": [
+            7019.2,
+            7013.52,
+            7006.41,
+            6958.06,
+            6922.69,
+            6898.34
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": [
+            6881.46
+          ]
+        },
+        "zero": {
+          "0.22": [
+            7025.43,
+            6851.96
+          ],
+          "0.35": [
+            7026.31
+          ],
+          "0.50": [
+            6850.18
+          ],
+          "0.65": [
+            6913.81,
+            6849.47
+          ],
+          "0.80": [
+            6948.29,
+            6934.78,
+            6919.14
+          ],
+          "0.92": [
+            7006.41,
+            6958.24,
+            6950.07,
+            6934.07,
+            6922.69,
+            6898.52,
+            6887.86,
+            6876.84
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-12",
+      "sourceDir": "2026-02-12_intraday-post-12feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-12_intraday-post-12feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-12_intraday-post-12feb/images/41db366a-7481-4148-a4ef-61208851cab8_1883x800.jpg",
+      "title": "Intraday post (12/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6957.54,
+      "closePrice": 6832.76,
+      "calibrationScore": 17,
+      "coverageRatio": 1.0,
+      "avgError": 0.37,
+      "topPrice": 7100.0,
+      "bottomPrice": 6850.0,
+      "commentaryNumbers": [
+        6870.0,
+        6880.0,
+        6890.0,
+        6892.0,
+        6916.0,
+        6927.1,
+        6941.19,
+        6950.0,
+        6955.0,
+        6965.0,
+        6970.0,
+        6980.0,
+        7000.0,
+        7009.0,
+        7010.0,
+        7015.0,
+        7020.0
+      ],
+      "peakSupportZone": {
+        "low": 6954.34,
+        "high": 6954.34,
+        "mid": 6954.34,
+        "width": 0.0,
+        "members": [
+          6954.34
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6987.44,
+        "high": 6987.44,
+        "mid": 6987.44,
+        "width": 0.0,
+        "members": [
+          6987.44
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6890.14,
+        "high": 6890.14,
+        "mid": 6890.14,
+        "width": 0.0,
+        "members": [
+          6890.14
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6953.29,
+      "pinZone": {
+        "low": 7045.89,
+        "high": 7054.34,
+        "mid": 7050.08,
+        "count": 3,
+        "spread": 8.45,
+        "members": [
+          7045.89,
+          7050.0,
+          7054.34
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 582,
+        "left": 20,
+        "right": 1401,
+        "height": 573,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7094.37,
+            7062.68,
+            6852.11
+          ],
+          "0.35": [
+            7096.48,
+            7062.91,
+            6934.98,
+            6851.64
+          ],
+          "0.50": [
+            7097.65,
+            7064.08,
+            6937.79,
+            6850.47
+          ],
+          "0.65": [
+            7099.53,
+            7065.96,
+            6928.87,
+            6850.0
+          ],
+          "0.80": [
+            7100.0,
+            7069.01,
+            7054.93,
+            7053.52,
+            7050.0,
+            6988.5,
+            6953.29,
+            6922.77,
+            6850.94
+          ],
+          "0.92": [
+            7098.59,
+            7073.24,
+            7054.46,
+            7045.77,
+            7019.48,
+            7009.62,
+            6986.38,
+            6955.4,
+            6921.36,
+            6856.81
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": [
+            6890.14
+          ]
+        },
+        "zero": {
+          "0.22": [
+            7079.58
+          ],
+          "0.35": [
+            7080.52,
+            6935.21
+          ],
+          "0.50": [
+            7081.69,
+            6938.03,
+            6850.23
+          ],
+          "0.65": [
+            7083.33,
+            6928.64,
+            6850.0
+          ],
+          "0.80": [
+            7084.74,
+            7049.77,
+            7015.49,
+            6988.26,
+            6953.29,
+            6923.0,
+            6907.51,
+            6850.7
+          ],
+          "0.92": [
+            7085.92,
+            7046.01,
+            7019.72,
+            7009.39,
+            6986.38,
+            6975.82,
+            6965.73,
+            6955.4,
+            6908.92,
+            6879.81,
+            6856.57
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-13",
+      "sourceDir": "2026-02-13_cpi-day-intraday-post-13feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-13_cpi-day-intraday-post-13feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-13_cpi-day-intraday-post-13feb/images/029d0cee-94bb-4392-82bb-f7a2a1707d6f_1880x801.jpg",
+      "title": "CPI day | Intraday post (13/Feb)",
+      "usable": true,
+      "dataInterval": "2m",
+      "openPrice": 6834.27,
+      "closePrice": 6836.16,
+      "calibrationScore": 10,
+      "coverageRatio": 1.0,
+      "avgError": 1.69,
+      "topPrice": 6970.0,
+      "bottomPrice": 6690.0,
+      "commentaryNumbers": [
+        6680.0,
+        6700.0,
+        6714.28,
+        6719.0,
+        6750.0,
+        6763.0,
+        6798.95,
+        6830.0,
+        6916.0,
+        6930.0
+      ],
+      "peakSupportZone": {
+        "low": 6786.76,
+        "high": 6786.76,
+        "mid": 6786.76,
+        "width": 0.0,
+        "members": [
+          6786.76
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6841.6,
+        "high": 6841.6,
+        "mid": 6841.6,
+        "width": 0.0,
+        "members": [
+          6841.6
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6811.02,
+        "high": 6811.02,
+        "mid": 6811.02,
+        "width": 0.0,
+        "members": [
+          6811.02
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6836.06,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 9,
+        "bottom": 583,
+        "left": 20,
+        "right": 1401,
+        "height": 574,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [],
+          "0.35": [
+            6749.32
+          ],
+          "0.50": [
+            6970.0,
+            6895.39,
+            6747.74
+          ],
+          "0.65": [
+            6964.99,
+            6892.22,
+            6746.69
+          ],
+          "0.80": [
+            6964.2,
+            6891.17,
+            6841.6,
+            6751.17,
+            6744.05
+          ],
+          "0.92": [
+            6966.84,
+            6954.18,
+            6947.85,
+            6916.48,
+            6891.17,
+            6878.51,
+            6786.76,
+            6757.76,
+            6737.98
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [
+            6695.27
+          ],
+          "0.92": [
+            6811.02,
+            6701.86,
+            6690.0
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6750.64,
+            6708.46
+          ],
+          "0.35": [
+            6830.79,
+            6819.98,
+            6749.59,
+            6708.98
+          ],
+          "0.50": [
+            6895.12,
+            6836.06,
+            6748.0
+          ],
+          "0.65": [
+            6892.49,
+            6836.59,
+            6746.69,
+            6711.62
+          ],
+          "0.80": [
+            6909.62,
+            6841.6,
+            6831.85,
+            6795.99,
+            6746.69,
+            6711.62
+          ],
+          "0.92": [
+            6947.85,
+            6930.19,
+            6923.6,
+            6910.41,
+            6898.81,
+            6891.43,
+            6859.27,
+            6847.66,
+            6837.65,
+            6828.68,
+            6797.04,
+            6786.76,
+            6748.0
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-17",
+      "sourceDir": "2026-02-17_intraday-post-17feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-17_intraday-post-17feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-17_intraday-post-17feb/images/e3f3c959-9e7b-4670-9545-30853fcbf7ef_1879x799.jpg",
+      "title": "Intraday post (17/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6819.86,
+      "closePrice": 6843.24,
+      "calibrationScore": 11,
+      "coverageRatio": 1.0,
+      "avgError": 1.49,
+      "topPrice": 6910.0,
+      "bottomPrice": 6730.0,
+      "commentaryNumbers": [
+        6715.0,
+        6757.0,
+        6775.0,
+        6805.78,
+        6822.0,
+        6825.0,
+        6830.0,
+        6840.0,
+        6845.0,
+        6850.0,
+        6886.0
+      ],
+      "peakSupportZone": {
+        "low": 6814.44,
+        "high": 6814.44,
+        "mid": 6814.44,
+        "width": 0.0,
+        "members": [
+          6814.44
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6840.51,
+        "high": 6840.51,
+        "mid": 6840.51,
+        "width": 0.0,
+        "members": [
+          6840.51
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": {
+        "low": 6824.75,
+        "high": 6824.75,
+        "mid": 6824.75,
+        "width": 0.0,
+        "members": [
+          6824.75
+        ]
+      },
+      "breakoutLine": 6814.24,
+      "pinZone": {
+        "low": 6783.13,
+        "high": 6790.0,
+        "mid": 6786.66,
+        "count": 3,
+        "spread": 6.87,
+        "members": [
+          6783.13,
+          6786.86,
+          6790.0
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 582,
+        "left": 20,
+        "right": 1401,
+        "height": 573,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6906.97,
+            6787.17,
+            6751.01
+          ],
+          "0.35": [
+            6906.97,
+            6904.95
+          ],
+          "0.50": [
+            6910.0,
+            6906.97,
+            6903.74,
+            6874.24,
+            6788.38,
+            6751.62
+          ],
+          "0.65": [
+            6907.98,
+            6906.77,
+            6901.31,
+            6844.34,
+            6788.18,
+            6751.01
+          ],
+          "0.80": [
+            6901.11,
+            6873.03,
+            6841.52,
+            6814.04,
+            6787.37
+          ],
+          "0.92": [
+            6903.33,
+            6898.08,
+            6871.41,
+            6839.49,
+            6814.85,
+            6755.05
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [
+            6730.0
+          ],
+          "0.80": [],
+          "0.92": [
+            6824.75
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6906.97,
+            6830.4,
+            6787.17,
+            6750.81,
+            6723.74
+          ],
+          "0.35": [
+            6906.97,
+            6787.98,
+            6752.02,
+            6721.72
+          ],
+          "0.50": [
+            6906.97,
+            6874.44,
+            6830.81,
+            6788.38,
+            6751.62,
+            6719.29
+          ],
+          "0.65": [
+            6907.17,
+            6873.23,
+            6844.55,
+            6831.62,
+            6788.38,
+            6717.68
+          ],
+          "0.80": [
+            6908.18,
+            6872.83,
+            6814.24,
+            6787.58,
+            6750.81,
+            6715.66
+          ],
+          "0.92": [
+            6907.78,
+            6898.48,
+            6839.29,
+            6832.02,
+            6790.0,
+            6786.36,
+            6783.13,
+            6755.05,
+            6714.85
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-18",
+      "sourceDir": "2026-02-18_intraday-post-18feb-f49",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-18_intraday-post-18feb-f49/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-18_intraday-post-18feb-f49/images/6b12e265-cd23-4a74-9a09-0894dd2d4519_1883x799.jpg",
+      "title": "Intraday post (18/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6855.48,
+      "closePrice": 6881.32,
+      "calibrationScore": 7,
+      "coverageRatio": 1.0,
+      "avgError": 3.98,
+      "topPrice": 6920.0,
+      "bottomPrice": 6710.0,
+      "commentaryNumbers": [
+        6708.0,
+        6759.0,
+        6785.39,
+        6806.44,
+        6825.4,
+        6884.0,
+        6916.0
+      ],
+      "peakSupportZone": {
+        "low": 6778.89,
+        "high": 6786.16,
+        "mid": 6782.52,
+        "width": 7.27,
+        "members": [
+          6778.89,
+          6786.16
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6880.26,
+        "high": 6880.26,
+        "mid": 6880.26,
+        "width": 0.0,
+        "members": [
+          6880.26
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6823.72,
+        "high": 6823.72,
+        "mid": 6823.72,
+        "width": 0.0,
+        "members": [
+          6823.72
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6860.44,
+      "pinZone": {
+        "low": 6770.18,
+        "high": 6786.16,
+        "mid": 6778.41,
+        "count": 3,
+        "spread": 15.98,
+        "members": [
+          6770.18,
+          6778.89,
+          6786.16
+        ]
+      },
+      "cropMeta": {
+        "top": 9,
+        "bottom": 581,
+        "left": 20,
+        "right": 1401,
+        "height": 572,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6908.79
+          ],
+          "0.35": [
+            6909.21
+          ],
+          "0.50": [
+            6909.62
+          ],
+          "0.65": [
+            6910.66,
+            6778.89
+          ],
+          "0.80": [
+            6912.94,
+            6879.95,
+            6778.89,
+            6710.0
+          ],
+          "0.92": [
+            6920.0,
+            6917.09,
+            6910.04,
+            6880.57,
+            6786.16,
+            6770.18,
+            6713.32
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6823.72
+          ],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [
+            6823.72
+          ],
+          "0.92": []
+        },
+        "zero": {
+          "0.22": [
+            6855.88,
+            6764.99
+          ],
+          "0.35": [
+            6856.71,
+            6760.84
+          ],
+          "0.50": [
+            6754.82
+          ],
+          "0.65": [
+            6778.69,
+            6747.56
+          ],
+          "0.80": [
+            6879.95,
+            6860.44,
+            6779.1,
+            6709.79
+          ],
+          "0.92": [
+            6917.72,
+            6910.04,
+            6880.37,
+            6786.16,
+            6770.18,
+            6733.45,
+            6713.53
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-19",
+      "sourceDir": "2026-02-19_intraday-post-19feb-a5e",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-19_intraday-post-19feb-a5e/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-19_intraday-post-19feb-a5e/images/353d2348-3054-467b-89ec-abebb168565f_1882x801.jpg",
+      "title": "Intraday post (19/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6861.34,
+      "closePrice": 6861.9,
+      "calibrationScore": 15,
+      "coverageRatio": 0.8824,
+      "avgError": 1.18,
+      "topPrice": 6950.0,
+      "bottomPrice": 6760.0,
+      "commentaryNumbers": [
+        6677.0,
+        6687.0,
+        6745.0,
+        6750.0,
+        6810.0,
+        6815.0,
+        6840.77,
+        6860.0,
+        6872.0,
+        6872.77,
+        6880.0,
+        6900.0,
+        6905.0,
+        6930.0,
+        6940.0,
+        6964.0,
+        6967.0
+      ],
+      "peakSupportZone": {
+        "low": 6856.07,
+        "high": 6856.07,
+        "mid": 6856.07,
+        "width": 0.0,
+        "members": [
+          6856.07
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6908.01,
+        "high": 6908.01,
+        "mid": 6908.01,
+        "width": 0.0,
+        "members": [
+          6908.01
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": {
+        "low": 6873.11,
+        "high": 6873.11,
+        "mid": 6873.11,
+        "width": 0.0,
+        "members": [
+          6873.11
+        ]
+      },
+      "breakoutLine": 6856.95,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 9,
+        "bottom": 583,
+        "left": 20,
+        "right": 1401,
+        "height": 574,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6945.74,
+            6930.82
+          ],
+          "0.35": [
+            6947.16,
+            6929.58
+          ],
+          "0.50": [
+            6948.58,
+            6929.22
+          ],
+          "0.65": [
+            6949.64,
+            6929.4,
+            6859.62
+          ],
+          "0.80": [
+            6950.0,
+            6930.29,
+            6908.63,
+            6857.13,
+            6760.0
+          ],
+          "0.92": [
+            6948.93,
+            6931.89,
+            6907.38,
+            6855.0,
+            6809.9,
+            6760.71
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": [
+            6873.11
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6938.46,
+            6884.65,
+            6801.55
+          ],
+          "0.35": [
+            6938.81,
+            6885.72,
+            6800.13
+          ],
+          "0.50": [
+            6938.99,
+            6887.14
+          ],
+          "0.65": [
+            6939.7,
+            6888.56,
+            6859.44,
+            6794.45
+          ],
+          "0.80": [
+            6940.23,
+            6908.45,
+            6889.98,
+            6856.95,
+            6789.83,
+            6760.0
+          ],
+          "0.92": [
+            6940.59,
+            6907.38,
+            6854.82,
+            6810.07,
+            6785.93,
+            6761.07
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-20",
+      "sourceDir": "2026-02-20_intraday-post-20feb-589",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-20_intraday-post-20feb-589/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-20_intraday-post-20feb-589/images/82a9e001-e26d-4da0-88d8-75f17f7fd1d4_1449x783.png",
+      "title": "Intraday post (20/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6843.26,
+      "closePrice": 6909.5,
+      "calibrationScore": 15,
+      "coverageRatio": 1.0,
+      "avgError": 0.72,
+      "topPrice": 7020.0,
+      "bottomPrice": 6750.0,
+      "commentaryNumbers": [
+        6717.0,
+        6740.0,
+        6748.8,
+        6750.0,
+        6790.0,
+        6802.0,
+        6817.0,
+        6842.5,
+        6855.0,
+        6860.0,
+        6875.0,
+        6880.0,
+        6900.0,
+        6905.0,
+        6910.0
+      ],
+      "peakSupportZone": {
+        "low": 6771.7,
+        "high": 6779.7,
+        "mid": 6775.7,
+        "width": 8.0,
+        "members": [
+          6771.7,
+          6779.7
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6862.5,
+        "high": 6862.5,
+        "mid": 6862.5,
+        "width": 0.0,
+        "members": [
+          6862.5
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6817.84,
+        "high": 6826.29,
+        "mid": 6822.07,
+        "width": 8.45,
+        "members": [
+          6817.84,
+          6826.29
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6876.78,
+        "high": 6884.31,
+        "mid": 6880.55,
+        "width": 7.53,
+        "members": [
+          6876.78,
+          6884.31
+        ]
+      },
+      "breakoutLine": 6861.02,
+      "pinZone": {
+        "low": 6986.88,
+        "high": 6999.9,
+        "mid": 6993.73,
+        "count": 3,
+        "spread": 13.02,
+        "members": [
+          6986.88,
+          6994.42,
+          6999.9
+        ]
+      },
+      "cropMeta": {
+        "top": 11,
+        "bottom": 736,
+        "left": 20,
+        "right": 1394,
+        "height": 725,
+        "width": 1374
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7014.97,
+            6984.82
+          ],
+          "0.35": [
+            7016.35,
+            6985.28
+          ],
+          "0.50": [
+            7017.72,
+            6986.88
+          ],
+          "0.65": [
+            7019.09,
+            6990.08
+          ],
+          "0.80": [
+            6994.42,
+            6861.02,
+            6771.7
+          ],
+          "0.92": [
+            7020.0,
+            6999.9,
+            6969.52,
+            6863.98,
+            6779.7
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6845.03
+          ],
+          "0.35": [
+            6844.8
+          ],
+          "0.50": [
+            6842.06
+          ],
+          "0.65": [
+            6833.38
+          ],
+          "0.80": [
+            6876.78,
+            6826.29,
+            6753.43
+          ],
+          "0.92": [
+            6986.88,
+            6884.31,
+            6817.84,
+            6750.0
+          ]
+        },
+        "zero": {
+          "0.22": [
+            7012.69,
+            6910.81,
+            6761.88
+          ],
+          "0.35": [
+            6911.73,
+            6758.68
+          ],
+          "0.50": [
+            6912.64,
+            6753.65
+          ],
+          "0.65": [
+            6912.64,
+            6744.97
+          ],
+          "0.80": [
+            6910.36,
+            6861.02,
+            6771.7,
+            6732.87
+          ],
+          "0.92": [
+            6969.29,
+            6904.87,
+            6863.98,
+            6779.7,
+            6721.45
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-23",
+      "sourceDir": "2026-02-23_intraday-post-23feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-23_intraday-post-23feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-23_intraday-post-23feb/images/14e970bf-2a95-4cae-8768-3ed75b0a9021_1894x762.jpg",
+      "title": "Intraday post (23/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6901.25,
+      "closePrice": 6837.79,
+      "calibrationScore": 11,
+      "coverageRatio": 1.0,
+      "avgError": 2.01,
+      "topPrice": 7050.0,
+      "bottomPrice": 6800.0,
+      "commentaryNumbers": [
+        6791.0,
+        6830.0,
+        6835.0,
+        6840.3,
+        6856.0,
+        6882.0,
+        6890.0,
+        6898.0,
+        6905.0,
+        6910.0,
+        6938.0
+      ],
+      "peakSupportZone": {
+        "low": 6879.09,
+        "high": 6879.09,
+        "mid": 6879.09,
+        "width": 0.0,
+        "members": [
+          6879.09
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6904.8,
+        "high": 6908.72,
+        "mid": 6906.76,
+        "width": 3.92,
+        "members": [
+          6904.8,
+          6908.72
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6889.13,
+        "high": 6889.13,
+        "mid": 6889.13,
+        "width": 0.0,
+        "members": [
+          6889.13
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6908.47,
+      "pinZone": {
+        "low": 7031.15,
+        "high": 7035.31,
+        "mid": 7033.23,
+        "count": 2,
+        "spread": 4.16,
+        "members": [
+          7031.15,
+          7035.31
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 551,
+        "left": 20,
+        "right": 1401,
+        "height": 543,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7015.23,
+            6829.38
+          ],
+          "0.35": [
+            7016.21,
+            6826.44
+          ],
+          "0.50": [
+            7016.94,
+            6822.53
+          ],
+          "0.65": [
+            7017.19,
+            6912.14,
+            6817.14
+          ],
+          "0.80": [
+            7018.9,
+            6962.1,
+            6908.72,
+            6807.84
+          ],
+          "0.92": [
+            7050.0,
+            7031.15,
+            7007.15,
+            6962.83,
+            6944.96,
+            6904.8,
+            6879.09,
+            6826.93,
+            6800.0
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [
+            6866.6
+          ],
+          "0.50": [],
+          "0.65": [],
+          "0.80": [],
+          "0.92": [
+            6889.13,
+            6817.87
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6934.92,
+            6829.63
+          ],
+          "0.35": [
+            6935.41
+          ],
+          "0.50": [
+            6936.39,
+            6822.77
+          ],
+          "0.65": [
+            6962.34,
+            6912.39,
+            6817.38
+          ],
+          "0.80": [
+            7035.55,
+            6937.86,
+            6908.47,
+            6807.59
+          ],
+          "0.92": [
+            7035.31,
+            7007.15,
+            6962.83,
+            6945.2,
+            6905.04,
+            6903.09,
+            6879.09,
+            6827.18,
+            6800.24
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-24",
+      "sourceDir": "2026-02-24_intraday-post-24feb-2cc",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-24_intraday-post-24feb-2cc/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-24_intraday-post-24feb-2cc/images/a6717c2c-0e99-4974-abba-604e9611cab1_1886x766.jpg",
+      "title": "Intraday post (24/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6837.37,
+      "closePrice": 6890.11,
+      "calibrationScore": 10,
+      "coverageRatio": 1.0,
+      "avgError": 1.6,
+      "topPrice": 6910.0,
+      "bottomPrice": 6710.0,
+      "commentaryNumbers": [
+        6710.0,
+        6730.0,
+        6768.0,
+        6813.0,
+        6829.0,
+        6842.18,
+        6858.0,
+        6903.0,
+        6910.0,
+        6925.0
+      ],
+      "peakSupportZone": {
+        "low": 6813.46,
+        "high": 6813.46,
+        "mid": 6813.46,
+        "width": 0.0,
+        "members": [
+          6813.46
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6884.53,
+        "high": 6884.53,
+        "mid": 6884.53,
+        "width": 0.0,
+        "members": [
+          6884.53
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6824.19,
+        "high": 6824.19,
+        "mid": 6824.19,
+        "width": 0.0,
+        "members": [
+          6824.19
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6859.27,
+      "pinZone": {
+        "low": 6808.99,
+        "high": 6813.57,
+        "mid": 6811.28,
+        "count": 2,
+        "spread": 4.58,
+        "members": [
+          6808.99,
+          6813.57
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 556,
+        "left": 20,
+        "right": 1401,
+        "height": 548,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6909.78
+          ],
+          "0.35": [
+            6909.11
+          ],
+          "0.50": [
+            6908.88
+          ],
+          "0.65": [
+            6908.44
+          ],
+          "0.80": [
+            6908.66,
+            6783.07,
+            6759.83
+          ],
+          "0.92": [
+            6910.0,
+            6884.53,
+            6813.46,
+            6787.99,
+            6758.04,
+            6710.0
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6813.46
+          ],
+          "0.35": [
+            6814.36
+          ],
+          "0.50": [],
+          "0.65": [
+            6817.04
+          ],
+          "0.80": [],
+          "0.92": [
+            6824.19,
+            6808.99,
+            6772.35
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6924.08,
+            6858.16,
+            6749.78
+          ],
+          "0.35": [
+            6747.09
+          ],
+          "0.50": [
+            6859.27,
+            6743.3
+          ],
+          "0.65": [
+            6860.17,
+            6738.6
+          ],
+          "0.80": [
+            6782.85,
+            6759.61,
+            6732.12
+          ],
+          "0.92": [
+            6884.3,
+            6813.69,
+            6788.21,
+            6757.82,
+            6725.64
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-25",
+      "sourceDir": "2026-02-25_intraday-post-25feb-8ed",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-25_intraday-post-25feb-8ed/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-25_intraday-post-25feb-8ed/images/5ca46b6f-fd8c-452f-a339-309b1e218ad7_1884x770.jpg",
+      "title": "Intraday post (25/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6915.15,
+      "closePrice": 6946.2,
+      "calibrationScore": 15,
+      "coverageRatio": 1.0,
+      "avgError": 0.65,
+      "topPrice": 6960.0,
+      "bottomPrice": 6770.0,
+      "commentaryNumbers": [
+        6770.0,
+        6780.0,
+        6800.0,
+        6827.0,
+        6838.0,
+        6850.0,
+        6900.0,
+        6905.0,
+        6910.66,
+        6931.72,
+        6935.0,
+        6940.0,
+        6962.14,
+        6964.0,
+        6965.0
+      ],
+      "peakSupportZone": {
+        "low": 6883.96,
+        "high": 6883.96,
+        "mid": 6883.96,
+        "width": 0.0,
+        "members": [
+          6883.96
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6917.37,
+        "high": 6917.37,
+        "mid": 6917.37,
+        "width": 0.0,
+        "members": [
+          6917.37
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6818.68,
+        "high": 6818.68,
+        "mid": 6818.68,
+        "width": 0.0,
+        "members": [
+          6818.68
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6900.15,
+      "pinZone": {
+        "low": 6880.47,
+        "high": 6889.08,
+        "mid": 6884.47,
+        "count": 3,
+        "spread": 8.61,
+        "members": [
+          6880.47,
+          6883.85,
+          6889.08
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 559,
+        "left": 20,
+        "right": 1401,
+        "height": 551,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6956.72,
+            6938.68
+          ],
+          "0.35": [
+            6957.95,
+            6937.04
+          ],
+          "0.50": [
+            6959.39,
+            6936.02,
+            6835.18
+          ],
+          "0.65": [
+            6960.0,
+            6935.2,
+            6834.77
+          ],
+          "0.80": [
+            6959.39,
+            6935.4,
+            6837.02,
+            6799.51
+          ],
+          "0.92": [
+            6958.36,
+            6936.22,
+            6917.37,
+            6883.96,
+            6837.23,
+            6794.6
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [
+            6842.15
+          ],
+          "0.65": [
+            6851.17
+          ],
+          "0.80": [
+            6817.35,
+            6770.0
+          ],
+          "0.92": [
+            6820.01,
+            6770.0
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6947.91,
+            6894.0,
+            6759.14
+          ],
+          "0.35": [
+            6947.5,
+            6894.82
+          ],
+          "0.50": [
+            6947.5,
+            6895.23,
+            6835.18
+          ],
+          "0.65": [
+            6947.5,
+            6834.97
+          ],
+          "0.80": [
+            6947.09,
+            6900.15,
+            6837.02,
+            6799.72
+          ],
+          "0.92": [
+            6946.88,
+            6917.37,
+            6906.3,
+            6889.08,
+            6883.75,
+            6880.47,
+            6837.02,
+            6794.6
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-26",
+      "sourceDir": "2026-02-26_nvda-er-intraday-post-26feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-26_nvda-er-intraday-post-26feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-26_nvda-er-intraday-post-26feb/images/983d393f-5118-43ee-bf31-1de5453de0c2_1887x764.jpg",
+      "title": "NVDA ER - Intraday post (26/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6944.74,
+      "closePrice": 6908.89,
+      "calibrationScore": 10,
+      "coverageRatio": 1.0,
+      "avgError": 1.73,
+      "topPrice": 7040.0,
+      "bottomPrice": 6860.0,
+      "commentaryNumbers": [
+        6821.5,
+        6866.31,
+        6880.0,
+        6890.0,
+        6900.0,
+        6927.0,
+        6955.0,
+        6967.35,
+        6985.0,
+        7003.0
+      ],
+      "peakSupportZone": {
+        "low": 6921.93,
+        "high": 6921.93,
+        "mid": 6921.93,
+        "width": 0.0,
+        "members": [
+          6921.93
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6958.57,
+        "high": 6966.2,
+        "mid": 6962.39,
+        "width": 7.63,
+        "members": [
+          6958.57,
+          6966.2
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": {
+        "low": 7010.48,
+        "high": 7010.48,
+        "mid": 7010.48,
+        "width": 0.0,
+        "members": [
+          7010.48
+        ]
+      },
+      "breakoutLine": 6982.55,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 8,
+        "bottom": 554,
+        "left": 20,
+        "right": 1401,
+        "height": 546,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6998.62,
+            6959.62
+          ],
+          "0.35": [
+            6999.41,
+            6960.94
+          ],
+          "0.50": [
+            6999.94,
+            6961.99
+          ],
+          "0.65": [
+            6999.94,
+            6963.84,
+            6924.3
+          ],
+          "0.80": [
+            6966.47,
+            6921.14,
+            6869.22
+          ],
+          "0.92": [
+            6999.68,
+            6970.95,
+            6965.94,
+            6958.57,
+            6922.72,
+            6860.0
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            7027.35,
+            7013.12
+          ],
+          "0.35": [
+            7026.3,
+            7011.54
+          ],
+          "0.50": [
+            7025.24,
+            7010.48
+          ],
+          "0.65": [
+            7024.19,
+            7009.43
+          ],
+          "0.80": [
+            7040.0
+          ],
+          "0.92": [
+            7023.66,
+            7010.48
+          ]
+        },
+        "zero": {
+          "0.22": [
+            7027.88,
+            7026.3,
+            7007.85,
+            6979.91,
+            6823.63
+          ],
+          "0.35": [
+            7025.77,
+            7007.32,
+            6980.44,
+            6877.66,
+            6819.68
+          ],
+          "0.50": [
+            7024.98,
+            7006.27,
+            6981.23,
+            6879.77,
+            6814.93
+          ],
+          "0.65": [
+            7024.45,
+            6982.28,
+            6924.57,
+            6882.93
+          ],
+          "0.80": [
+            7029.72,
+            7017.86,
+            7006.79,
+            6983.87,
+            6887.67,
+            6869.22,
+            6804.92
+          ],
+          "0.92": [
+            7029.46,
+            7018.13,
+            6985.18,
+            6958.57,
+            6922.46,
+            6892.94,
+            6860.0,
+            6801.76
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-02-27",
+      "sourceDir": "2026-02-27_ppi-intraday-post-27feb",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-27_ppi-intraday-post-27feb/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-02-27_ppi-intraday-post-27feb/images/2e6daeff-0704-4de0-957a-e2179103a038_1884x770.jpg",
+      "title": "PPI - Intraday post (27/Feb)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6856.54,
+      "closePrice": 6878.88,
+      "calibrationScore": 9,
+      "coverageRatio": 0.9,
+      "avgError": 3.0,
+      "topPrice": 7030.0,
+      "bottomPrice": 6780.0,
+      "commentaryNumbers": [
+        6753.0,
+        6771.0,
+        6793.0,
+        6854.0,
+        6870.0,
+        6890.0,
+        6900.0,
+        6911.0,
+        6920.0,
+        6925.0
+      ],
+      "peakSupportZone": {
+        "low": 6783.48,
+        "high": 6783.48,
+        "mid": 6783.48,
+        "width": 0.0,
+        "members": [
+          6783.48
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6904.47,
+        "high": 6904.47,
+        "mid": 6904.47,
+        "width": 0.0,
+        "members": [
+          6904.47
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": {
+        "low": 6844.51,
+        "high": 6844.51,
+        "mid": 6844.51,
+        "width": 0.0,
+        "members": [
+          6844.51
+        ]
+      },
+      "breakoutLine": 6818.01,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 8,
+        "bottom": 559,
+        "left": 20,
+        "right": 1401,
+        "height": 551,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7028.39,
+            6910.35
+          ],
+          "0.35": [
+            7027.32,
+            6910.62
+          ],
+          "0.50": [
+            7028.13,
+            6910.35,
+            6780.0
+          ],
+          "0.65": [
+            7028.13,
+            6909.28,
+            6780.8
+          ],
+          "0.80": [
+            7028.93,
+            7016.08,
+            7014.48,
+            7005.64,
+            6905.54
+          ],
+          "0.92": [
+            7030.0,
+            7004.57,
+            6934.44,
+            6903.39,
+            6783.48
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6950.24
+          ],
+          "0.35": [],
+          "0.50": [
+            6852.0
+          ],
+          "0.65": [],
+          "0.80": [
+            6958.0,
+            6845.58
+          ],
+          "0.92": [
+            6958.0,
+            6843.44
+          ]
+        },
+        "zero": {
+          "0.22": [
+            7043.92,
+            6970.04,
+            6910.62,
+            6817.47,
+            6784.82
+          ],
+          "0.35": [
+            7044.72,
+            6972.18,
+            6917.04,
+            6910.62,
+            6818.01
+          ],
+          "0.50": [
+            7045.79,
+            6973.79,
+            6922.4,
+            6910.09,
+            6898.31,
+            6818.01,
+            6780.0
+          ],
+          "0.65": [
+            6975.4,
+            6926.15,
+            6894.29,
+            6818.01
+          ],
+          "0.80": [
+            7005.91,
+            6976.47,
+            6929.89,
+            6905.8,
+            6818.01,
+            6782.68
+          ],
+          "0.92": [
+            7004.3,
+            6974.86,
+            6940.6,
+            6934.71,
+            6925.34,
+            6918.38,
+            6903.13,
+            6890.81,
+            6819.08,
+            6783.75
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-02",
+      "sourceDir": "2026-03-02_intraday-post-02march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-02_intraday-post-02march/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-02_intraday-post-02march/images/09981d32-53da-46ec-baea-058bbc65f065_1889x764.jpg",
+      "title": "Intraday post (02/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6824.36,
+      "closePrice": 6881.59,
+      "calibrationScore": 15,
+      "coverageRatio": 1.0,
+      "avgError": 1.59,
+      "topPrice": 7010.0,
+      "bottomPrice": 6750.0,
+      "commentaryNumbers": [
+        6680.0,
+        6684.0,
+        6710.0,
+        6745.0,
+        6747.9,
+        6785.0,
+        6790.0,
+        6800.0,
+        6820.0,
+        6830.0,
+        6863.0,
+        6888.47,
+        6900.0,
+        6943.91,
+        6962.48
+      ],
+      "peakSupportZone": {
+        "low": 6798.34,
+        "high": 6798.34,
+        "mid": 6798.34,
+        "width": 0.0,
+        "members": [
+          6798.34
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6860.12,
+        "high": 6860.12,
+        "mid": 6860.12,
+        "width": 0.0,
+        "members": [
+          6860.12
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": null,
+      "breakoutLine": 6797.95,
+      "pinZone": {
+        "low": 7004.35,
+        "high": 7010.0,
+        "mid": 7007.18,
+        "count": 2,
+        "spread": 5.65,
+        "members": [
+          7004.35,
+          7010.0
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 554,
+        "left": 20,
+        "right": 1401,
+        "height": 546,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6996.36
+          ],
+          "0.35": [
+            6998.31
+          ],
+          "0.50": [
+            6999.48
+          ],
+          "0.65": [
+            7002.2,
+            6792.1,
+            6750.0
+          ],
+          "0.80": [
+            7004.93,
+            6962.05,
+            6860.7,
+            6798.34
+          ],
+          "0.92": [
+            7010.0,
+            7003.76,
+            6960.49,
+            6905.14,
+            6859.54,
+            6753.9
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [],
+          "0.50": [],
+          "0.65": [
+            6820.16
+          ],
+          "0.80": [],
+          "0.92": []
+        },
+        "zero": {
+          "0.22": [
+            6897.74,
+            6699.72,
+            6653.72
+          ],
+          "0.35": [
+            6898.52,
+            6698.16
+          ],
+          "0.50": [
+            6899.3,
+            6695.82
+          ],
+          "0.65": [
+            6898.52,
+            6792.49,
+            6693.48
+          ],
+          "0.80": [
+            6962.44,
+            6896.18,
+            6797.95,
+            6751.95,
+            6691.14
+          ],
+          "0.92": [
+            7003.76,
+            6960.88,
+            6859.54,
+            6798.73,
+            6754.29,
+            6688.02
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-03",
+      "sourceDir": "2026-03-03_brent-above-80-eu-gas-spikes-intraday",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-03_brent-above-80-eu-gas-spikes-intraday/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-03_brent-above-80-eu-gas-spikes-intraday/images/bdafbff3-1d5f-4334-ab5a-feb3fad80061_1886x759.jpg",
+      "title": "Brent above $80, EU gas spikes | Intraday post (03/March)",
+      "usable": false,
+      "reason": "missing_script_or_image"
+    },
+    {
+      "date": "2026-03-04",
+      "sourceDir": "2026-03-04_nothing-new-in-the-middle-east-intraday",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-04_nothing-new-in-the-middle-east-intraday/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-04_nothing-new-in-the-middle-east-intraday/images/66e3ff21-e046-4d01-bb6d-1033c53c4ec8_1885x770.jpg",
+      "title": "\"Nothing new in the Middle-East\" | Intraday post (04/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6831.69,
+      "closePrice": 6869.48,
+      "calibrationScore": 19,
+      "coverageRatio": 0.9048,
+      "avgError": 0.44,
+      "topPrice": 6900.0,
+      "bottomPrice": 6710.0,
+      "commentaryNumbers": [
+        6610.0,
+        6620.0,
+        6700.0,
+        6740.0,
+        6745.0,
+        6760.0,
+        6765.0,
+        6770.0,
+        6786.0,
+        6810.0,
+        6810.63,
+        6820.0,
+        6830.0,
+        6840.0,
+        6856.0,
+        6860.0,
+        6893.0,
+        6895.0,
+        6901.0,
+        6905.0,
+        6911.0
+      ],
+      "peakSupportZone": {
+        "low": 6829.23,
+        "high": 6829.23,
+        "mid": 6829.23,
+        "width": 0.0,
+        "members": [
+          6829.23
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6855.99,
+        "high": 6855.99,
+        "mid": 6855.99,
+        "width": 0.0,
+        "members": [
+          6855.99
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6749.94,
+        "high": 6749.94,
+        "mid": 6749.94,
+        "width": 0.0,
+        "members": [
+          6749.94
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6807.33,
+        "high": 6807.33,
+        "mid": 6807.33,
+        "width": 0.0,
+        "members": [
+          6807.33
+        ]
+      },
+      "breakoutLine": 6779.8,
+      "pinZone": {
+        "low": 6855.99,
+        "high": 6871.31,
+        "mid": 6863.62,
+        "count": 3,
+        "spread": 15.32,
+        "members": [
+          6855.99,
+          6863.55,
+          6871.31
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 559,
+        "left": 20,
+        "right": 1401,
+        "height": 551,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6893.6
+          ],
+          "0.35": [
+            6893.99,
+            6710.0
+          ],
+          "0.50": [
+            6895.15,
+            6774.76
+          ],
+          "0.65": [
+            6900.0,
+            6895.35,
+            6889.53,
+            6777.66,
+            6710.78
+          ],
+          "0.80": [
+            6887.4,
+            6779.8
+          ],
+          "0.92": [
+            6895.35,
+            6887.59,
+            6871.31,
+            6855.99,
+            6829.23,
+            6784.26
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6810.62
+          ],
+          "0.35": [
+            6811.2
+          ],
+          "0.50": [
+            6811.01,
+            6756.92
+          ],
+          "0.65": [
+            6809.85,
+            6752.46
+          ],
+          "0.80": [
+            6808.3,
+            6749.94
+          ],
+          "0.92": [
+            6863.55,
+            6838.93,
+            6806.36,
+            6749.94
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6893.6,
+            6860.84
+          ],
+          "0.35": [
+            6894.18,
+            6862.39,
+            6710.0
+          ],
+          "0.50": [
+            6894.77,
+            6774.76,
+            6710.78
+          ],
+          "0.65": [
+            6895.15,
+            6777.86,
+            6710.78
+          ],
+          "0.80": [
+            6895.15,
+            6779.8,
+            6709.61
+          ],
+          "0.92": [
+            6895.15,
+            6871.31,
+            6706.12
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-05",
+      "sourceDir": "2026-03-05_intraday-post-05march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-05_intraday-post-05march/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-05_intraday-post-05march/images/9c9dabe8-4d14-4db2-8e8a-222c7294f55b_1885x773.jpg",
+      "title": "Intraday post (05/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6851.08,
+      "closePrice": 6830.53,
+      "calibrationScore": 15,
+      "coverageRatio": 0.9375,
+      "avgError": 0.56,
+      "topPrice": 7020.0,
+      "bottomPrice": 6740.0,
+      "commentaryNumbers": [
+        6670.0,
+        6746.0,
+        6764.0,
+        6778.0,
+        6810.0,
+        6815.0,
+        6822.0,
+        6850.0,
+        6853.0,
+        6860.0,
+        6885.0,
+        6901.0,
+        6905.0,
+        6910.0,
+        6930.0,
+        6950.0
+      ],
+      "peakSupportZone": {
+        "low": 6756.5,
+        "high": 6756.5,
+        "mid": 6756.5,
+        "width": 0.0,
+        "members": [
+          6756.5
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6855.25,
+        "high": 6859.65,
+        "mid": 6857.45,
+        "width": 4.4,
+        "members": [
+          6855.25,
+          6859.65
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6811.24,
+        "high": 6816.74,
+        "mid": 6813.99,
+        "width": 5.5,
+        "members": [
+          6811.24,
+          6816.74
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6902.0,
+        "high": 6902.0,
+        "mid": 6902.0,
+        "width": 0.0,
+        "members": [
+          6902.0
+        ]
+      },
+      "breakoutLine": 6850.57,
+      "pinZone": {
+        "low": 6912.18,
+        "high": 6925.38,
+        "mid": 6918.32,
+        "count": 3,
+        "spread": 13.2,
+        "members": [
+          6912.18,
+          6917.41,
+          6925.38
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 561,
+        "left": 20,
+        "right": 1401,
+        "height": 553,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            7018.35,
+            6998.55,
+            6773.01
+          ],
+          "0.35": [
+            7018.9,
+            6998.82,
+            6771.91
+          ],
+          "0.50": [
+            7019.45,
+            6999.65,
+            6850.29,
+            6770.81
+          ],
+          "0.65": [
+            7001.02,
+            6856.07
+          ],
+          "0.80": [
+            7002.95,
+            6966.64,
+            6859.65
+          ],
+          "0.92": [
+            7020.0,
+            7005.15,
+            6987.27,
+            6950.41,
+            6912.18,
+            6855.25,
+            6756.5
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6912.18,
+            6740.55
+          ],
+          "0.35": [
+            6913.28,
+            6740.0
+          ],
+          "0.50": [
+            6914.38,
+            6831.04
+          ],
+          "0.65": [
+            6915.48,
+            6822.24
+          ],
+          "0.80": [
+            6917.41,
+            6816.74
+          ],
+          "0.92": [
+            6996.07,
+            6954.26,
+            6925.38,
+            6902.0,
+            6811.24
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6962.24,
+            6773.01,
+            6746.05
+          ],
+          "0.35": [
+            6962.79
+          ],
+          "0.50": [
+            6850.57,
+            6770.26
+          ],
+          "0.65": [
+            6965.27,
+            6856.07,
+            6768.06
+          ],
+          "0.80": [
+            6966.64,
+            6859.37,
+            6763.1
+          ],
+          "0.92": [
+            6987.54,
+            6967.74,
+            6950.41,
+            6912.18,
+            6854.97,
+            6756.5
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-06",
+      "sourceDir": "2026-03-06_intraday-post-06march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-06_intraday-post-06march/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-06_intraday-post-06march/images/7d98d235-4ddf-47b4-898c-255213f7aa2d_1883x765.jpg",
+      "title": "Intraday post (06/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6769.03,
+      "closePrice": 6739.96,
+      "calibrationScore": 13,
+      "coverageRatio": 0.8667,
+      "avgError": 2.07,
+      "topPrice": 6910.0,
+      "bottomPrice": 6680.0,
+      "commentaryNumbers": [
+        6611.24,
+        6612.0,
+        6675.0,
+        6700.0,
+        6710.0,
+        6715.0,
+        6720.0,
+        6730.0,
+        6750.0,
+        6755.0,
+        6770.0,
+        6780.0,
+        6799.04,
+        6810.0,
+        6848.0
+      ],
+      "peakSupportZone": {
+        "low": 6750.22,
+        "high": 6750.22,
+        "mid": 6750.22,
+        "width": 0.0,
+        "members": [
+          6750.22
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6788.7,
+        "high": 6788.7,
+        "mid": 6788.7,
+        "width": 0.0,
+        "members": [
+          6788.7
+        ]
+      },
+      "troughSupportZone": null,
+      "troughResistanceZone": {
+        "low": 6738.74,
+        "high": 6738.74,
+        "mid": 6738.74,
+        "width": 0.0,
+        "members": [
+          6738.74
+        ]
+      },
+      "breakoutLine": 6716.91,
+      "pinZone": {
+        "low": 6830.56,
+        "high": 6836.52,
+        "mid": 6833.54,
+        "count": 2,
+        "spread": 5.96,
+        "members": [
+          6830.56,
+          6836.52
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 556,
+        "left": 20,
+        "right": 1401,
+        "height": 548,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6905.72
+          ],
+          "0.35": [
+            6907.07
+          ],
+          "0.50": [
+            6910.0,
+            6908.65,
+            6902.12
+          ],
+          "0.65": [
+            6900.1
+          ],
+          "0.80": [
+            6900.77,
+            6837.31
+          ],
+          "0.92": [
+            6902.8,
+            6884.12,
+            6788.7,
+            6750.22,
+            6680.0
+          ]
+        },
+        "yellow": {
+          "0.22": [],
+          "0.35": [
+            6781.05
+          ],
+          "0.50": [
+            6779.25
+          ],
+          "0.65": [
+            6770.24
+          ],
+          "0.80": [
+            6803.55,
+            6767.54
+          ],
+          "0.92": [
+            6768.44,
+            6738.74
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6905.72,
+            6718.26
+          ],
+          "0.35": [
+            6907.07,
+            6717.81
+          ],
+          "0.50": [
+            6909.55,
+            6716.91
+          ],
+          "0.65": [
+            6715.56
+          ],
+          "0.80": [
+            6857.79,
+            6837.08,
+            6713.76
+          ],
+          "0.92": [
+            6883.89,
+            6859.14,
+            6835.73,
+            6830.56,
+            6750.22,
+            6680.23
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-09",
+      "sourceDir": "2026-03-09_intraday-post-09march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-09_intraday-post-09march/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-09_intraday-post-09march/images/ccfe3efc-a01a-47b4-aaa2-4e1437d6979b_1886x764.jpg",
+      "title": "Intraday post (09/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6699.8,
+      "closePrice": 6795.9,
+      "calibrationScore": 10,
+      "coverageRatio": 0.7692,
+      "avgError": 1.77,
+      "topPrice": 6830.0,
+      "bottomPrice": 6580.0,
+      "commentaryNumbers": [
+        6490.0,
+        6500.0,
+        6537.0,
+        6562.0,
+        6580.0,
+        6600.8,
+        6615.0,
+        6640.0,
+        6645.0,
+        6674.0,
+        6690.0,
+        6741.0,
+        6760.0
+      ],
+      "peakSupportZone": {
+        "low": 6639.89,
+        "high": 6647.41,
+        "mid": 6643.65,
+        "width": 7.52,
+        "members": [
+          6639.89,
+          6647.41
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6701.12,
+        "high": 6701.12,
+        "mid": 6701.12,
+        "width": 0.0,
+        "members": [
+          6701.12
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6622.68,
+        "high": 6622.68,
+        "mid": 6622.68,
+        "width": 0.0,
+        "members": [
+          6622.68
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6668.99,
+        "high": 6672.87,
+        "mid": 6670.93,
+        "width": 3.88,
+        "members": [
+          6668.99,
+          6672.87
+        ]
+      },
+      "breakoutLine": 6624.13,
+      "pinZone": null,
+      "cropMeta": {
+        "top": 8,
+        "bottom": 555,
+        "left": 20,
+        "right": 1401,
+        "height": 547,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6813.03
+          ],
+          "0.35": [
+            6807.45
+          ],
+          "0.50": [
+            6805.99
+          ],
+          "0.65": [
+            6805.99,
+            6699.54,
+            6613.22
+          ],
+          "0.80": [
+            6807.45,
+            6701.97,
+            6624.13
+          ],
+          "0.92": [
+            6815.69,
+            6809.39,
+            6802.11,
+            6777.38,
+            6700.27,
+            6647.41,
+            6639.89,
+            6629.95,
+            6614.43,
+            6606.43
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6816.91,
+            6735.92
+          ],
+          "0.35": [
+            6825.15,
+            6737.86
+          ],
+          "0.50": [
+            6830.0,
+            6739.8
+          ],
+          "0.65": [
+            6741.01,
+            6678.69,
+            6595.28
+          ],
+          "0.80": [
+            6741.49,
+            6672.87,
+            6585.09
+          ],
+          "0.92": [
+            6829.03,
+            6788.29,
+            6743.19,
+            6668.99,
+            6622.68,
+            6580.0
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6813.03
+          ],
+          "0.35": [
+            6807.45
+          ],
+          "0.50": [
+            6805.99,
+            6580.48
+          ],
+          "0.65": [
+            6805.99,
+            6699.79,
+            6613.46
+          ],
+          "0.80": [
+            6807.45,
+            6624.13
+          ],
+          "0.92": [
+            6815.69,
+            6809.39,
+            6777.38,
+            6700.27,
+            6646.93,
+            6640.14,
+            6629.95,
+            6614.43,
+            6599.88
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-10",
+      "sourceDir": "2026-03-10_intraday-post-10march-a1a",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-10_intraday-post-10march-a1a/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-10_intraday-post-10march-a1a/images/f4105c29-818a-4361-9a25-4c388e59a4f6_1879x767.jpg",
+      "title": "Intraday post (10/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6796.56,
+      "closePrice": 6781.52,
+      "calibrationScore": 8,
+      "coverageRatio": 1.0,
+      "avgError": 3.68,
+      "topPrice": 6910.0,
+      "bottomPrice": 6650.0,
+      "commentaryNumbers": [
+        6662.0,
+        6685.0,
+        6700.0,
+        6725.0,
+        6798.0,
+        6842.0,
+        6854.0,
+        6870.0
+      ],
+      "peakSupportZone": {
+        "low": 6792.29,
+        "high": 6792.29,
+        "mid": 6792.29,
+        "width": 0.0,
+        "members": [
+          6792.29
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6829.28,
+        "high": 6832.86,
+        "mid": 6831.07,
+        "width": 3.58,
+        "members": [
+          6829.28,
+          6832.86
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6854.57,
+        "high": 6858.29,
+        "mid": 6856.43,
+        "width": 3.72,
+        "members": [
+          6854.57,
+          6858.29
+        ]
+      },
+      "troughResistanceZone": null,
+      "breakoutLine": 6868.29,
+      "pinZone": {
+        "low": 6868.57,
+        "high": 6872.0,
+        "mid": 6870.28,
+        "count": 2,
+        "spread": 3.43,
+        "members": [
+          6868.57,
+          6872.0
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 558,
+        "left": 20,
+        "right": 1401,
+        "height": 550,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6907.71
+          ],
+          "0.35": [
+            6908.86,
+            6852.0
+          ],
+          "0.50": [
+            6909.43,
+            6856.57
+          ],
+          "0.65": [
+            6910.0,
+            6829.43
+          ],
+          "0.80": [
+            6908.29,
+            6868.57,
+            6830.0,
+            6722.57
+          ],
+          "0.92": [
+            6903.71,
+            6832.86,
+            6828.57,
+            6792.29,
+            6723.14,
+            6650.0
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6734.29
+          ],
+          "0.35": [
+            6735.43
+          ],
+          "0.50": [
+            6738.57
+          ],
+          "0.65": [
+            6845.14,
+            6746.0
+          ],
+          "0.80": [
+            6854.57,
+            6754.57,
+            6698.57
+          ],
+          "0.92": [
+            6858.29,
+            6799.71,
+            6760.29,
+            6692.29
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6908.0,
+            6848.57
+          ],
+          "0.35": [
+            6908.57,
+            6852.0
+          ],
+          "0.50": [
+            6909.71
+          ],
+          "0.65": [
+            6910.0,
+            6862.29,
+            6829.14
+          ],
+          "0.80": [
+            6908.29,
+            6868.29,
+            6722.86
+          ],
+          "0.92": [
+            6904.57,
+            6872.0,
+            6828.29,
+            6792.0,
+            6649.71
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-11",
+      "sourceDir": "2026-03-11_intraday-post-11march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-11_intraday-post-11march/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-11_intraday-post-11march/images/bc44e69f-8bd3-4ca3-9b59-3092770945f4_1884x770.jpg",
+      "title": "Intraday post (11/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6790.09,
+      "closePrice": 6775.78,
+      "calibrationScore": 10,
+      "coverageRatio": 0.9091,
+      "avgError": 0.53,
+      "topPrice": 6860.0,
+      "bottomPrice": 6620.0,
+      "commentaryNumbers": [
+        6550.0,
+        6620.0,
+        6646.0,
+        6660.0,
+        6677.0,
+        6700.0,
+        6723.43,
+        6770.0,
+        6780.0,
+        6797.0,
+        6858.0
+      ],
+      "peakSupportZone": {
+        "low": 6780.0,
+        "high": 6790.2,
+        "mid": 6785.1,
+        "width": 10.2,
+        "members": [
+          6780.0,
+          6790.2
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6780.0,
+        "high": 6790.2,
+        "mid": 6785.1,
+        "width": 10.2,
+        "members": [
+          6780.0,
+          6790.2
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6754.72,
+        "high": 6757.97,
+        "mid": 6756.35,
+        "width": 3.25,
+        "members": [
+          6754.72,
+          6757.97
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6807.6,
+        "high": 6807.6,
+        "mid": 6807.6,
+        "width": 0.0,
+        "members": [
+          6807.6
+        ]
+      },
+      "breakoutLine": 6789.74,
+      "pinZone": {
+        "low": 6845.62,
+        "high": 6860.0,
+        "mid": 6852.77,
+        "count": 3,
+        "spread": 14.38,
+        "members": [
+          6845.62,
+          6852.69,
+          6860.0
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 559,
+        "left": 20,
+        "right": 1401,
+        "height": 551,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6851.19
+          ],
+          "0.35": [
+            6851.65,
+            6677.28
+          ],
+          "0.50": [
+            6852.12,
+            6789.97,
+            6680.52
+          ],
+          "0.65": [
+            6852.58,
+            6792.99,
+            6788.58,
+            6681.91
+          ],
+          "0.80": [
+            6852.81,
+            6789.04,
+            6780.0,
+            6683.07
+          ],
+          "0.92": [
+            6860.0,
+            6845.62,
+            6822.9,
+            6791.36,
+            6700.0,
+            6678.67,
+            6645.28
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6740.12,
+            6620.46
+          ],
+          "0.35": [
+            6742.43,
+            6652.23,
+            6620.0
+          ],
+          "0.50": [
+            6803.19,
+            6745.91,
+            6642.49
+          ],
+          "0.65": [
+            6807.36,
+            6749.62,
+            6632.29
+          ],
+          "0.80": [
+            6808.06,
+            6754.72,
+            6621.62
+          ],
+          "0.92": [
+            6831.71,
+            6807.13,
+            6757.97,
+            6695.13,
+            6661.04
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6804.58,
+            6624.87
+          ],
+          "0.35": [
+            6851.42
+          ],
+          "0.50": [
+            6851.88,
+            6812.93,
+            6789.74
+          ],
+          "0.65": [
+            6852.58,
+            6818.03,
+            6792.75,
+            6784.17
+          ],
+          "0.80": [
+            6853.04,
+            6819.88,
+            6797.16,
+            6780.0,
+            6683.07
+          ],
+          "0.92": [
+            6852.58,
+            6823.13,
+            6791.59,
+            6780.93,
+            6700.0
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-12",
+      "sourceDir": "2026-03-12_intraday-post-12march-fa0",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-12_intraday-post-12march-fa0/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-12_intraday-post-12march-fa0/images/9dc0fe78-2d2d-432c-9158-e6ecc813ce74_1883x770.jpg",
+      "title": "Intraday post (12/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6740.88,
+      "closePrice": 6672.58,
+      "calibrationScore": 14,
+      "coverageRatio": 1.0,
+      "avgError": 0.71,
+      "topPrice": 6860.0,
+      "bottomPrice": 6620.0,
+      "commentaryNumbers": [
+        6610.0,
+        6626.0,
+        6650.0,
+        6660.0,
+        6719.0,
+        6740.0,
+        6750.0,
+        6760.0,
+        6770.0,
+        6783.0,
+        6800.0,
+        6810.0,
+        6821.0,
+        6840.0
+      ],
+      "peakSupportZone": {
+        "low": 6735.57,
+        "high": 6738.77,
+        "mid": 6737.17,
+        "width": 3.2,
+        "members": [
+          6735.57,
+          6738.77
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6785.74,
+        "high": 6785.74,
+        "mid": 6785.74,
+        "width": 0.0,
+        "members": [
+          6785.74
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6721.31,
+        "high": 6721.31,
+        "mid": 6721.31,
+        "width": 0.0,
+        "members": [
+          6721.31
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6754.75,
+        "high": 6761.15,
+        "mid": 6757.95,
+        "width": 6.4,
+        "members": [
+          6754.75,
+          6761.15
+        ]
+      },
+      "breakoutLine": 6735.33,
+      "pinZone": {
+        "low": 6645.82,
+        "high": 6663.03,
+        "mid": 6654.59,
+        "count": 3,
+        "spread": 17.21,
+        "members": [
+          6645.82,
+          6654.91,
+          6663.03
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 559,
+        "left": 20,
+        "right": 1401,
+        "height": 551,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [
+            6853.11
+          ],
+          "0.35": [
+            6854.59,
+            6654.92
+          ],
+          "0.50": [
+            6856.56,
+            6658.11
+          ],
+          "0.65": [
+            6860.0,
+            6730.41,
+            6657.62
+          ],
+          "0.80": [
+            6852.38,
+            6735.57,
+            6655.9
+          ],
+          "0.92": [
+            6852.62,
+            6841.8,
+            6838.11,
+            6815.25,
+            6785.74,
+            6738.77,
+            6706.07,
+            6653.93,
+            6645.82
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6724.26
+          ],
+          "0.35": [
+            6725.74,
+            6634.75
+          ],
+          "0.50": [
+            6725.25,
+            6626.15
+          ],
+          "0.65": [
+            6744.43,
+            6709.02,
+            6621.23
+          ],
+          "0.80": [
+            6754.75,
+            6694.26,
+            6620.0
+          ],
+          "0.92": [
+            6841.8,
+            6821.15,
+            6798.28,
+            6761.15,
+            6721.31,
+            6685.9,
+            6623.44
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6853.11,
+            6783.52,
+            6609.43
+          ],
+          "0.35": [
+            6854.59,
+            6655.16
+          ],
+          "0.50": [
+            6856.56,
+            6784.51,
+            6658.11
+          ],
+          "0.65": [
+            6859.26,
+            6784.02,
+            6730.41,
+            6657.62
+          ],
+          "0.80": [
+            6780.57,
+            6735.33,
+            6656.15
+          ],
+          "0.92": [
+            6838.36,
+            6815.0,
+            6800.25,
+            6796.31,
+            6738.77,
+            6705.82,
+            6663.03,
+            6645.82
+          ]
+        }
+      }
+    },
+    {
+      "date": "2026-03-13",
+      "sourceDir": "2026-03-13_pce-breakdown-intraday-post-13march",
+      "sourcePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-13_pce-breakdown-intraday-post-13march/content.txt",
+      "imagePath": "/Users/pawanagarwal/github/phenixflow/artifacts/alma-research/posts/2026-03-13_pce-breakdown-intraday-post-13march/images/4da2f5fc-21e1-4d05-a0d9-9e3bd6221230_1881x770.jpg",
+      "title": "PCE breakdown | Intraday post (13/March)",
+      "usable": true,
+      "dataInterval": "1m",
+      "openPrice": 6673.49,
+      "closePrice": 6632.25,
+      "calibrationScore": 13,
+      "coverageRatio": 1.0,
+      "avgError": 0.49,
+      "topPrice": 6820.0,
+      "bottomPrice": 6560.0,
+      "commentaryNumbers": [
+        6560.0,
+        6588.0,
+        6594.0,
+        6610.0,
+        6635.0,
+        6640.0,
+        6650.0,
+        6674.13,
+        6750.0,
+        6772.0,
+        6782.0,
+        6795.0,
+        6800.0
+      ],
+      "peakSupportZone": {
+        "low": 6636.06,
+        "high": 6636.06,
+        "mid": 6636.06,
+        "width": 0.0,
+        "members": [
+          6636.06
+        ]
+      },
+      "peakResistanceZone": {
+        "low": 6701.84,
+        "high": 6701.84,
+        "mid": 6701.84,
+        "width": 0.0,
+        "members": [
+          6701.84
+        ]
+      },
+      "troughSupportZone": {
+        "low": 6590.25,
+        "high": 6593.39,
+        "mid": 6591.82,
+        "width": 3.14,
+        "members": [
+          6590.25,
+          6593.39
+        ]
+      },
+      "troughResistanceZone": {
+        "low": 6676.16,
+        "high": 6676.16,
+        "mid": 6676.16,
+        "width": 0.0,
+        "members": [
+          6676.16
+        ]
+      },
+      "breakoutLine": 6637.91,
+      "pinZone": {
+        "low": 6590.25,
+        "high": 6593.39,
+        "mid": 6591.82,
+        "count": 2,
+        "spread": 3.14,
+        "members": [
+          6590.25,
+          6593.39
+        ]
+      },
+      "cropMeta": {
+        "top": 8,
+        "bottom": 560,
+        "left": 20,
+        "right": 1401,
+        "height": 552,
+        "width": 1381
+      },
+      "mappedSamples": {
+        "green": {
+          "0.22": [],
+          "0.35": [
+            6802.02,
+            6564.0
+          ],
+          "0.50": [
+            6638.49,
+            6560.0
+          ],
+          "0.65": [
+            6732.38,
+            6639.63
+          ],
+          "0.80": [
+            6737.23,
+            6637.34
+          ],
+          "0.92": [
+            6804.59,
+            6743.51,
+            6701.84,
+            6634.77
+          ]
+        },
+        "yellow": {
+          "0.22": [
+            6722.96
+          ],
+          "0.35": [
+            6725.53
+          ],
+          "0.50": [
+            6727.53,
+            6603.67
+          ],
+          "0.65": [
+            6742.94,
+            6710.41,
+            6593.96
+          ],
+          "0.80": [
+            6761.49,
+            6691.57,
+            6590.25
+          ],
+          "0.92": [
+            6820.0,
+            6771.48,
+            6720.97,
+            6676.16,
+            6593.39
+          ]
+        },
+        "zero": {
+          "0.22": [
+            6800.31,
+            6566.28,
+            6541.16
+          ],
+          "0.35": [
+            6801.73
+          ],
+          "0.50": [
+            6638.2
+          ],
+          "0.65": [
+            6732.38
+          ],
+          "0.80": [
+            6799.17,
+            6737.52,
+            6637.63,
+            6551.15
+          ],
+          "0.92": [
+            6794.6,
+            6702.13,
+            6645.62,
+            6634.77,
+            6625.07,
+            6544.59
+          ]
+        }
+      }
+    }
+  ]
+}

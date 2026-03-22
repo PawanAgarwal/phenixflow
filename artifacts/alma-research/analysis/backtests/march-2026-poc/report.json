@@ -1,0 +1,372 @@
+{
+  "generatedAt": "2026-03-16T05:03:07.566Z",
+  "totalMarchRows": 231,
+  "totalMarchSpxRows": 112,
+  "rawSignals": 41,
+  "consolidatedSignals": 31,
+  "families": [
+    {
+      "family": "breakout_long",
+      "rawSignals": 10,
+      "consolidatedSignals": 10,
+      "summary": {
+        "trades": 3,
+        "wins": 3,
+        "losses": 0,
+        "winRate": 1,
+        "avgPnlPoints": 26.179999999999684,
+        "totalPnlPoints": 78.53999999999905
+      }
+    },
+    {
+      "family": "breakout_short",
+      "rawSignals": 2,
+      "consolidatedSignals": 1,
+      "summary": {
+        "trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "winRate": 0,
+        "avgPnlPoints": 0,
+        "totalPnlPoints": 0
+      }
+    },
+    {
+      "family": "centroid_mean_reversion",
+      "rawSignals": 10,
+      "consolidatedSignals": 10,
+      "summary": {
+        "trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "winRate": 0,
+        "avgPnlPoints": 0,
+        "totalPnlPoints": 0
+      }
+    },
+    {
+      "family": "rejection_short",
+      "rawSignals": 7,
+      "consolidatedSignals": 5,
+      "summary": {
+        "trades": 3,
+        "wins": 2,
+        "losses": 1,
+        "winRate": 0.6666666666666666,
+        "avgPnlPoints": 6.9566666666669335,
+        "totalPnlPoints": 20.8700000000008
+      }
+    },
+    {
+      "family": "support_bounce_long",
+      "rawSignals": 12,
+      "consolidatedSignals": 5,
+      "summary": {
+        "trades": 0,
+        "wins": 0,
+        "losses": 0,
+        "winRate": 0,
+        "avgPnlPoints": 0,
+        "totalPnlPoints": 0
+      }
+    }
+  ],
+  "trades": [
+    {
+      "family": "rejection_short",
+      "targetDate": "2026-03-04",
+      "sourceTitle": "\"Nothing new in the Middle-East\" | Intraday post (04/March)",
+      "madeAt": "2026-03-04T14:06:54.042Z",
+      "entryTs": "2026-03-04T15:19:00.000Z",
+      "entryPrice": 6856.91,
+      "stop": 6938.465,
+      "target": 6802.54,
+      "zone": {
+        "low": 6856.91,
+        "high": 6911.28
+      },
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-04T21:00:00.000Z",
+        "etDate": "2026-03-04",
+        "etTime": "16:00",
+        "open": 6867.55,
+        "high": 6869.48,
+        "low": 6867.55,
+        "close": 6869.48
+      },
+      "exitPrice": 6869.48,
+      "pnlPoints": -12.569999999999709
+    },
+    {
+      "family": "breakout_long",
+      "targetDate": "2026-03-09",
+      "sourceTitle": "Forecasts are coming true | Weekly post (09-13/March)",
+      "madeAt": "2026-03-09T00:55:32.864Z",
+      "entryTs": "2026-03-09T19:21:00.000Z",
+      "entryPrice": 6758.22,
+      "stop": 6664.1,
+      "target": 6946.46,
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-09T20:00:00.000Z",
+        "etDate": "2026-03-09",
+        "etTime": "16:00",
+        "open": 6796.33,
+        "high": 6796.33,
+        "low": 6795.89,
+        "close": 6795.9
+      },
+      "exitPrice": 6795.9,
+      "pnlPoints": 37.67999999999938
+    },
+    {
+      "family": "breakout_long",
+      "targetDate": "2026-03-10",
+      "sourceTitle": "Forecasts are coming true | Weekly post (09-13/March)",
+      "madeAt": "2026-03-09T00:55:32.864Z",
+      "entryTs": "2026-03-10T13:30:00.000Z",
+      "entryPrice": 6758.22,
+      "stop": 6664.1,
+      "target": 6946.46,
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-10T20:00:00.000Z",
+        "etDate": "2026-03-10",
+        "etTime": "16:00",
+        "open": 6781.55,
+        "high": 6781.74,
+        "low": 6781.52,
+        "close": 6781.52
+      },
+      "exitPrice": 6781.52,
+      "pnlPoints": 23.300000000000182
+    },
+    {
+      "family": "rejection_short",
+      "targetDate": "2026-03-10",
+      "sourceTitle": "Intraday post (10/March)",
+      "madeAt": "2026-03-10T13:00:26.661Z",
+      "entryTs": "2026-03-10T17:27:00.000Z",
+      "entryPrice": 6842,
+      "stop": 6860,
+      "target": 6830,
+      "zone": {
+        "low": 6842,
+        "high": 6854
+      },
+      "exitReason": "target",
+      "exitBar": {
+        "ts": "2026-03-10T17:35:00.000Z",
+        "etDate": "2026-03-10",
+        "etTime": "13:35",
+        "open": 6832.68994140625,
+        "high": 6833.4599609375,
+        "low": 6828.240234375,
+        "close": 6828.240234375
+      },
+      "exitPrice": 6830,
+      "pnlPoints": 12
+    },
+    {
+      "family": "breakout_long",
+      "targetDate": "2026-03-11",
+      "sourceTitle": "Forecasts are coming true | Weekly post (09-13/March)",
+      "madeAt": "2026-03-09T00:55:32.864Z",
+      "entryTs": "2026-03-11T13:30:00.000Z",
+      "entryPrice": 6758.22,
+      "stop": 6664.1,
+      "target": 6946.46,
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-11T20:00:00.000Z",
+        "etDate": "2026-03-11",
+        "etTime": "16:00",
+        "open": 6775.55,
+        "high": 6775.78,
+        "low": 6775.51,
+        "close": 6775.78
+      },
+      "exitPrice": 6775.78,
+      "pnlPoints": 17.55999999999949
+    },
+    {
+      "family": "rejection_short",
+      "targetDate": "2026-03-11",
+      "sourceTitle": "Intraday post (11/March)",
+      "madeAt": "2026-03-11T13:12:06.961Z",
+      "entryTs": "2026-03-11T14:00:00.000Z",
+      "entryPrice": 6797.22,
+      "stop": 6889.335,
+      "target": 6735.81,
+      "zone": {
+        "low": 6797.22,
+        "high": 6858.63
+      },
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-11T20:00:00.000Z",
+        "etDate": "2026-03-11",
+        "etTime": "16:00",
+        "open": 6775.55,
+        "high": 6775.78,
+        "low": 6775.51,
+        "close": 6775.78
+      },
+      "exitPrice": 6775.78,
+      "pnlPoints": 21.44000000000051
+    }
+  ],
+  "sampleTrades": [
+    {
+      "family": "rejection_short",
+      "targetDate": "2026-03-04",
+      "sourceTitle": "\"Nothing new in the Middle-East\" | Intraday post (04/March)",
+      "madeAt": "2026-03-04T14:06:54.042Z",
+      "entryTs": "2026-03-04T15:19:00.000Z",
+      "entryPrice": 6856.91,
+      "stop": 6938.465,
+      "target": 6802.54,
+      "zone": {
+        "low": 6856.91,
+        "high": 6911.28
+      },
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-04T21:00:00.000Z",
+        "etDate": "2026-03-04",
+        "etTime": "16:00",
+        "open": 6867.55,
+        "high": 6869.48,
+        "low": 6867.55,
+        "close": 6869.48
+      },
+      "exitPrice": 6869.48,
+      "pnlPoints": -12.569999999999709,
+      "entryEt": "10:19"
+    },
+    {
+      "family": "breakout_long",
+      "targetDate": "2026-03-09",
+      "sourceTitle": "Forecasts are coming true | Weekly post (09-13/March)",
+      "madeAt": "2026-03-09T00:55:32.864Z",
+      "entryTs": "2026-03-09T19:21:00.000Z",
+      "entryPrice": 6758.22,
+      "stop": 6664.1,
+      "target": 6946.46,
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-09T20:00:00.000Z",
+        "etDate": "2026-03-09",
+        "etTime": "16:00",
+        "open": 6796.33,
+        "high": 6796.33,
+        "low": 6795.89,
+        "close": 6795.9
+      },
+      "exitPrice": 6795.9,
+      "pnlPoints": 37.67999999999938,
+      "entryEt": "15:21"
+    },
+    {
+      "family": "breakout_long",
+      "targetDate": "2026-03-10",
+      "sourceTitle": "Forecasts are coming true | Weekly post (09-13/March)",
+      "madeAt": "2026-03-09T00:55:32.864Z",
+      "entryTs": "2026-03-10T13:30:00.000Z",
+      "entryPrice": 6758.22,
+      "stop": 6664.1,
+      "target": 6946.46,
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-10T20:00:00.000Z",
+        "etDate": "2026-03-10",
+        "etTime": "16:00",
+        "open": 6781.55,
+        "high": 6781.74,
+        "low": 6781.52,
+        "close": 6781.52
+      },
+      "exitPrice": 6781.52,
+      "pnlPoints": 23.300000000000182,
+      "entryEt": "09:30"
+    },
+    {
+      "family": "rejection_short",
+      "targetDate": "2026-03-10",
+      "sourceTitle": "Intraday post (10/March)",
+      "madeAt": "2026-03-10T13:00:26.661Z",
+      "entryTs": "2026-03-10T17:27:00.000Z",
+      "entryPrice": 6842,
+      "stop": 6860,
+      "target": 6830,
+      "zone": {
+        "low": 6842,
+        "high": 6854
+      },
+      "exitReason": "target",
+      "exitBar": {
+        "ts": "2026-03-10T17:35:00.000Z",
+        "etDate": "2026-03-10",
+        "etTime": "13:35",
+        "open": 6832.68994140625,
+        "high": 6833.4599609375,
+        "low": 6828.240234375,
+        "close": 6828.240234375
+      },
+      "exitPrice": 6830,
+      "pnlPoints": 12,
+      "entryEt": "13:27"
+    },
+    {
+      "family": "breakout_long",
+      "targetDate": "2026-03-11",
+      "sourceTitle": "Forecasts are coming true | Weekly post (09-13/March)",
+      "madeAt": "2026-03-09T00:55:32.864Z",
+      "entryTs": "2026-03-11T13:30:00.000Z",
+      "entryPrice": 6758.22,
+      "stop": 6664.1,
+      "target": 6946.46,
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-11T20:00:00.000Z",
+        "etDate": "2026-03-11",
+        "etTime": "16:00",
+        "open": 6775.55,
+        "high": 6775.78,
+        "low": 6775.51,
+        "close": 6775.78
+      },
+      "exitPrice": 6775.78,
+      "pnlPoints": 17.55999999999949,
+      "entryEt": "09:30"
+    },
+    {
+      "family": "rejection_short",
+      "targetDate": "2026-03-11",
+      "sourceTitle": "Intraday post (11/March)",
+      "madeAt": "2026-03-11T13:12:06.961Z",
+      "entryTs": "2026-03-11T14:00:00.000Z",
+      "entryPrice": 6797.22,
+      "stop": 6889.335,
+      "target": 6735.81,
+      "zone": {
+        "low": 6797.22,
+        "high": 6858.63
+      },
+      "exitReason": "close",
+      "exitBar": {
+        "ts": "2026-03-11T20:00:00.000Z",
+        "etDate": "2026-03-11",
+        "etTime": "16:00",
+        "open": 6775.55,
+        "high": 6775.78,
+        "low": 6775.51,
+        "close": 6775.78
+      },
+      "exitPrice": 6775.78,
+      "pnlPoints": 21.44000000000051,
+      "entryEt": "10:00"
+    }
+  ]
+}
