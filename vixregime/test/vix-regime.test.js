@@ -6,6 +6,8 @@ const {
   buildDailyFeatures,
   buildMinuteFeatures,
   computePortfolioPath,
+  buildDailyFirstMinuteCloses,
+  computeDailyNextOpenToClosePath,
 } = require('../src/vix-regime');
 
 const thresholdConfig = {
@@ -50,12 +52,13 @@ const thresholdConfig = {
   },
 };
 
-function makeRow(symbol, tradeDateUtc, minuteUtc, close) {
+function makeRow(symbol, tradeDateUtc, minuteUtc, close, extras = {}) {
   return {
     symbol,
     tradeDateUtc,
     minuteUtc,
     close,
+    ...extras,
   };
 }
 
@@ -118,6 +121,43 @@ describe('vix regime helpers', () => {
     expect(minuteFeatures.find((row) => row.timestamp === '2025-01-03T14:31:00.000Z').regime).toBe('Crash');
   });
 
+  it('derives richer daily SPY and VIX features from daily bars', () => {
+    const rows = [];
+    for (let i = 0; i < 25; i += 1) {
+      const day = String(i + 2).padStart(2, '0');
+      const tradeDateUtc = `2025-01-${day}`;
+      rows.push(
+        makeRow('SPY', tradeDateUtc, `${tradeDateUtc}T14:30:00.000Z`, 100 + i, { open: 99 + i, high: 101 + i, low: 98 + i }),
+        makeRow('SPY', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 100.5 + i, { open: 100 + i, high: 102 + i, low: 99 + i }),
+        makeRow('SPXL', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 200 + (i * 2)),
+        makeRow('SPXS', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 50 - (i * 0.2)),
+        makeRow('SPX', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 5000 + (i * 10)),
+        makeRow('VIX', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 20 - (i * 0.1)),
+        makeRow('VIX9D', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 19 - (i * 0.1)),
+        makeRow('VIX1D', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 18 - (i * 0.1)),
+        makeRow('VIX3M', tradeDateUtc, `${tradeDateUtc}T20:59:00.000Z`, 21 - (i * 0.1)),
+      );
+    }
+
+    const dailyRows = buildDailyCloses(rows);
+    const dailyFeatures = buildDailyFeatures(dailyRows, thresholdConfig);
+    const last = dailyFeatures[dailyFeatures.length - 1];
+
+    expect(last.spyOpen).toBeCloseTo(123, 10);
+    expect(last.spyClose).toBeCloseTo(124.5, 10);
+    expect(last.spyIntradayReturn).toBeCloseTo((124.5 / 123) - 1, 10);
+    expect(last.spyRangePct).toBeGreaterThan(0);
+    expect(last.spyReturn1d).not.toBeNull();
+    expect(last.spyReturn5d).not.toBeNull();
+    expect(last.spyMa20).not.toBeNull();
+    expect(last.spyMaGap20).not.toBeNull();
+    expect(last.spyRealizedVol10).not.toBeNull();
+    expect(last.vixChange1d).not.toBeNull();
+    expect(last.vix9dChange1d).not.toBeNull();
+    expect(last.ts9d30Delta1).not.toBeNull();
+    expect(last.vixRiskPremium10).not.toBeNull();
+  });
+
   it('computes next-bar backtest stats and cash-aware weights', () => {
     const rows = [
       {
@@ -154,8 +194,50 @@ describe('vix regime helpers', () => {
 
     const result = computePortfolioPath(rows, { periodsPerYear: 252 });
     expect(result.observations).toHaveLength(2);
+    expect(result.summary.executionConvention.returnWindow).toBe('current_bar_close_to_next_bar_close');
+    expect(result.observations[0].signalTradeDateUtc).toBe('2025-01-02');
+    expect(result.observations[0].holdingPeriodEndTradeDateUtc).toBe('2025-01-03');
+    expect(result.observations[1].signalTradeDateUtc).toBe('2025-01-03');
+    expect(result.observations[1].holdingPeriodEndTradeDateUtc).toBe('2025-01-06');
     expect(result.summary.turnover).toBeGreaterThan(0);
     expect(result.summary.regimeOccupancy.Calm).toBe(1);
     expect(result.summary.regimeOccupancy.Stress).toBe(1);
+  });
+
+  it('computes daily next-open-to-close backtest from prior close signal', () => {
+    const rawRows = [
+      makeRow('SPY', '2025-01-02', '2025-01-02T20:59:00.000Z', 100),
+      makeRow('SPXL', '2025-01-02', '2025-01-02T20:59:00.000Z', 100),
+      makeRow('SPXS', '2025-01-02', '2025-01-02T20:59:00.000Z', 100),
+      makeRow('VIX', '2025-01-02', '2025-01-02T20:59:00.000Z', 14),
+      makeRow('VIX9D', '2025-01-02', '2025-01-02T20:59:00.000Z', 13),
+      makeRow('VIX1D', '2025-01-02', '2025-01-02T20:59:00.000Z', 12),
+      makeRow('VIX3M', '2025-01-02', '2025-01-02T20:59:00.000Z', 16),
+      makeRow('SPX', '2025-01-02', '2025-01-02T20:59:00.000Z', 5000),
+
+      makeRow('SPY', '2025-01-03', '2025-01-03T14:30:00.000Z', 101),
+      makeRow('SPXL', '2025-01-03', '2025-01-03T14:30:00.000Z', 102),
+      makeRow('SPXS', '2025-01-03', '2025-01-03T14:30:00.000Z', 98),
+      makeRow('SPY', '2025-01-03', '2025-01-03T20:59:00.000Z', 103),
+      makeRow('SPXL', '2025-01-03', '2025-01-03T20:59:00.000Z', 106),
+      makeRow('SPXS', '2025-01-03', '2025-01-03T20:59:00.000Z', 95),
+      makeRow('VIX', '2025-01-03', '2025-01-03T20:59:00.000Z', 15),
+      makeRow('VIX9D', '2025-01-03', '2025-01-03T20:59:00.000Z', 14),
+      makeRow('VIX1D', '2025-01-03', '2025-01-03T20:59:00.000Z', 13),
+      makeRow('VIX3M', '2025-01-03', '2025-01-03T20:59:00.000Z', 17),
+      makeRow('SPX', '2025-01-03', '2025-01-03T20:59:00.000Z', 5050),
+    ];
+
+    const dailyRows = buildDailyCloses(rawRows);
+    const firstMinuteRows = buildDailyFirstMinuteCloses(rawRows);
+    const dailyFeatures = buildDailyFeatures(dailyRows, thresholdConfig);
+    const result = computeDailyNextOpenToClosePath(dailyFeatures, firstMinuteRows, { periodsPerYear: 252 });
+
+    expect(result.observations).toHaveLength(1);
+    expect(result.summary.executionConvention.returnWindow).toBe('next_day_first_minute_to_same_day_close');
+    expect(result.observations[0].signalTradeDateUtc).toBe('2025-01-02');
+    expect(result.observations[0].holdingPeriodStartTradeDateUtc).toBe('2025-01-03');
+    expect(result.observations[0].holdingPeriodEndTradeDateUtc).toBe('2025-01-03');
+    expect(result.observations[0].benchmarkReturn).toBeCloseTo((103 / 101) - 1, 10);
   });
 });

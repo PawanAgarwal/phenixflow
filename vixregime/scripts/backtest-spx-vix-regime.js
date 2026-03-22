@@ -13,9 +13,11 @@ const {
   computeCoverageReport,
   buildMinuteAlignment,
   buildDailyCloses,
+  buildDailyFirstMinuteCloses,
   buildDailyFeatures,
   buildMinuteFeatures,
   computePortfolioPath,
+  computeDailyNextOpenToClosePath,
 } = require('../src/vix-regime');
 
 const START_DATE = String(process.env.START_DATE || '2025-01-02').trim();
@@ -26,7 +28,7 @@ const REQUIRED_SYMBOLS = (process.env.REQUIRED_SYMBOLS || DEFAULT_REQUIRED_SYMBO
   .filter(Boolean);
 const OUTPUT_PATH = path.resolve(
   process.env.OUTPUT_PATH
-    || path.join(process.cwd(), 'artifacts', 'reports', `vixregime-backtest-${START_DATE}-${END_DATE}.json`),
+    || path.join(process.cwd(), 'vixregime', 'artifacts', 'reports', `vixregime-backtest-${START_DATE}-${END_DATE}.json`),
 );
 const THRESHOLD_PATH = path.resolve(
   process.env.THRESHOLD_PATH || path.join(__dirname, '..', 'config', 'vix-regime-thresholds.json'),
@@ -73,10 +75,16 @@ function run() {
     .filter((row) => REQUIRED_SYMBOLS.every((symbol) => row.prices[symbol] !== undefined && row.prices[symbol] !== null));
   const alignedDailyRows = buildDailyCloses(rawRows)
     .filter((row) => REQUIRED_SYMBOLS.every((symbol) => row.closeBySymbol[symbol] !== undefined && row.closeBySymbol[symbol] !== null));
+  const alignedDailyFirstMinuteRows = buildDailyFirstMinuteCloses(rawRows)
+    .filter((row) => REQUIRED_SYMBOLS.every((symbol) => row.closeBySymbol[symbol] !== undefined && row.closeBySymbol[symbol] !== null));
 
   const dailyFeatures = buildDailyFeatures(alignedDailyRows, thresholdConfig);
   const minuteFeatures = buildMinuteFeatures(alignedMinuteRows, thresholdConfig, dailyFeatures);
   const dailyBacktest = computePortfolioPath(dailyFeatures, {
+    transactionCostBps: thresholdConfig.execution.dailyTransactionCostBps,
+    periodsPerYear: 252,
+  });
+  const dailyNextOpenBacktest = computeDailyNextOpenToClosePath(dailyFeatures, alignedDailyFirstMinuteRows, {
     transactionCostBps: thresholdConfig.execution.dailyTransactionCostBps,
     periodsPerYear: 252,
   });
@@ -95,11 +103,16 @@ function run() {
     coverage,
     summaries: {
       daily: dailyBacktest.summary,
+      dailyNextOpen: dailyNextOpenBacktest.summary,
       minute: minuteBacktest.summary,
     },
     daily: {
       features: dailyFeatures,
       observations: dailyBacktest.observations,
+    },
+    dailyNextOpen: {
+      features: dailyFeatures,
+      observations: dailyNextOpenBacktest.observations,
     },
     minute: {
       features: minuteFeatures,
@@ -113,6 +126,7 @@ function run() {
     outputPath: OUTPUT_PATH,
     coverageReady: coverage.datasetReady,
     dailySummary: dailyBacktest.summary,
+    dailyNextOpenSummary: dailyNextOpenBacktest.summary,
     minuteSummary: minuteBacktest.summary,
   }, null, 2));
 }
