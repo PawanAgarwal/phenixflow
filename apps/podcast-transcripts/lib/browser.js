@@ -18,7 +18,8 @@ async function launchBrowser({ headless = true } = {}) {
 
   // Abort unnecessary resource types to speed up scraping
   await context.route('**/*', (route) => {
-    const blocked = ['image', 'media', 'font', 'stylesheet'];
+    // Block heavy binary resources but keep stylesheets (some sites need them to render)
+    const blocked = ['image', 'media', 'font'];
     if (blocked.includes(route.request().resourceType())) {
       route.abort();
     } else {

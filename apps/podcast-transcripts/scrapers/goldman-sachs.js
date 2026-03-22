@@ -3,220 +3,172 @@
 /**
  * Goldman Sachs "Exchanges at Goldman Sachs" scraper
  *
- * Episode listing: Podbean API (paginated JSON)
- *   https://www.podbean.com/podcast-detail/episode-list?pid=dir216329&page=N&pageSize=20
+ * Episode listing: Megaphone RSS feed — https://feeds.megaphone.fm/GLD9218176758
+ *   Provides titles, dates, and descriptions for all 608 episodes.
  *
- * Transcript: Each Podbean episode page contains a text transcript.
- * The official GS site (goldmansachs.com) also hosts PDF transcripts but at
- * unpredictable URL slugs — Podbean text transcripts are more reliable.
+ * Transcripts: GS publishes a PDF transcript for each episode at:
+ *   https://www.goldmansachs.com/pdfs/insights/goldman-sachs-exchanges/{slug}/transcript.pdf
+ *
+ *   The PDF URL requires browser cookies from the GS website to access.
+ *   Strategy: visit the episode page, then fetch the PDF in-page (uses cookies),
+ *   then parse the PDF buffer with pdf-parse.
+ *
+ * Fallback: RSS description (~2000 chars) when PDF is unavailable.
+ *
+ * ~608 total episodes; ~209 in a 3-year window.
  */
 
-const PODBEAN_API = 'https://www.podbean.com/podcast-detail/episode-list';
-const PODCAST_ID_PODBEAN = 'dir216329';
-const PAGE_SIZE = 20;
+const { fetchRss } = require('../lib/rss');
+const pdfParse = require('pdf-parse');
+
+const RSS_URL = 'https://feeds.megaphone.fm/GLD9218176758';
+const GS_BASE = 'https://www.goldmansachs.com';
+const GS_EPISODE_BASE = `${GS_BASE}/insights/goldman-sachs-exchanges`;
+const GS_PDF_BASE = `${GS_BASE}/pdfs/insights/goldman-sachs-exchanges`;
 
 function slugify(str) {
   return str
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
-    .slice(0, 80);
+    .slice(0, 100);
 }
 
-function parseDate(raw) {
-  if (!raw) return null;
-  const d = new Date(raw.trim());
-  return isNaN(d.getTime()) ? null : d;
-}
-
-/**
- * Fetch one page of episode metadata from the Podbean API via the browser
- * (avoids CORS issues and uses the browser's session/cookies).
- */
-async function fetchEpisodePage(page, pageNum) {
-  const url = `${PODBEAN_API}?pid=${PODCAST_ID_PODBEAN}&page=${pageNum}&pageSize=${PAGE_SIZE}`;
-
-  const response = await page.evaluate(async (fetchUrl) => {
-    const res = await fetch(fetchUrl, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' },
-    });
-    return res.text();
-  }, url);
-
-  return response;
+function stripHtml(html) {
+  return html
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/p>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 /**
- * Parse episode cards from the Podbean API HTML response.
- * Returns array of { url, title, dateText }
+ * Visit the GS episode page (to get cookies) then fetch and parse the transcript PDF.
+ * Returns the transcript text or null.
  */
-function parseEpisodeCards(html) {
-  // Podbean returns HTML fragments for the episode list
-  // We extract hrefs and titles using regex (no DOM available here)
-  const episodes = [];
+async function fetchTranscriptPdf(page, episodeSlug) {
+  const epUrl = `${GS_EPISODE_BASE}/${episodeSlug}`;
+  const pdfUrl = `${GS_PDF_BASE}/${episodeSlug}/transcript.pdf`;
 
-  // Match episode links: /ew/dir-XXXXXX-YYYYYY/...
-  const linkRe = /href="(https?:\/\/www\.podbean\.com\/ew\/[^"]+)"/g;
-  const titleRe = /<a[^>]*href="https?:\/\/www\.podbean\.com\/ew\/[^"]*"[^>]*>([^<]+)<\/a>/g;
-  const dateRe = /(\w+ \d{1,2},\s*\d{4})/g;
+  // Visit episode page first (establishes session cookies)
+  await page.goto(epUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.waitForTimeout(2000);
 
-  const links = [];
-  let m;
-  while ((m = linkRe.exec(html)) !== null) {
-    if (!links.includes(m[1])) links.push(m[1]);
-  }
-
-  const titles = [];
-  while ((m = titleRe.exec(html)) !== null) {
-    const t = m[1].trim();
-    if (t && t.length > 3) titles.push(t);
-  }
-
-  const dates = [];
-  while ((m = dateRe.exec(html)) !== null) {
-    dates.push(m[1]);
-  }
-
-  for (let i = 0; i < links.length; i++) {
-    episodes.push({
-      url: links[i],
-      title: titles[i] || '',
-      dateText: dates[i] || null,
-    });
-  }
-
-  return episodes;
-}
-
-/**
- * Scrape transcript text from a Podbean episode page.
- */
-async function extractTranscript(page, url, log) {
-  await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-  const transcript = await page.evaluate(() => {
-    // Podbean episode pages include a "Transcript" section
-    const transcriptSection = document.querySelector(
-      '[class*="transcript" i], [id*="transcript" i], .episode-transcript'
-    );
-    if (transcriptSection) return transcriptSection.innerText.trim();
-
-    // Look for a heading with "Transcript"
-    const headings = Array.from(document.querySelectorAll('h2, h3, h4'));
-    for (const h of headings) {
-      if (/transcript/i.test(h.textContent)) {
-        let text = '';
-        let el = h.nextElementSibling;
-        while (el && !['H2', 'H3', 'H4'].includes(el.tagName)) {
-          text += el.innerText + '\n';
-          el = el.nextElementSibling;
-        }
-        if (text.length > 100) return text.trim();
-      }
+  // Fetch PDF in-page using browser's cookie context
+  const pdfBuffer = await page.evaluate(async (url) => {
+    const res = await fetch(url);
+    if (!res.ok || !res.headers.get('content-type')?.includes('pdf')) return null;
+    const buf = await res.arrayBuffer();
+    // Chunk the conversion to avoid exceeding the V8 call stack spread limit (~65k args)
+    const uint8 = new Uint8Array(buf);
+    let binary = '';
+    const chunkSize = 8192;
+    for (let i = 0; i < uint8.length; i += chunkSize) {
+      binary += String.fromCharCode(...uint8.subarray(i, i + chunkSize));
     }
+    return btoa(binary);
+  }, pdfUrl);
 
-    // Fallback: grab episode description / show notes which often contain the transcript
-    const desc = document.querySelector(
-      '.episode-description, .show-notes, [class*="description" i], [class*="content" i]'
-    );
-    return desc ? desc.innerText.trim() : '';
-  });
+  if (!pdfBuffer) return null;
 
-  return transcript;
+  // Decode base64 → Buffer → parse PDF
+  const buffer = Buffer.from(pdfBuffer, 'base64');
+  const parsed = await pdfParse(buffer);
+  return parsed.text ? parsed.text.trim() : null;
 }
 
-/**
- * Main scrape function.
- */
 async function scrape({ yearsBack, context, store, log }) {
   const podcastId = 'goldman-sachs';
   const cutoffDate = new Date();
   cutoffDate.setFullYear(cutoffDate.getFullYear() - yearsBack);
 
-  log(`Scraping Goldman Sachs — cutoff: ${cutoffDate.toISOString().slice(0, 10)}`);
+  log(`Fetching Megaphone RSS — cutoff: ${cutoffDate.toISOString().slice(0, 10)}`);
+
+  const allEpisodes = await fetchRss(RSS_URL);
+  const episodes = allEpisodes.filter((ep) => ep.date && ep.date >= cutoffDate);
+
+  log(`${allEpisodes.length} total episodes in feed; ${episodes.length} within ${yearsBack}-year window`);
 
   const page = await context.newPage();
 
-  // First navigate to Podbean to establish session/cookies
-  await page.goto('https://www.podbean.com', { waitUntil: 'domcontentloaded', timeout: 30000 });
-
-  // Collect episodes across pages until we pass the cutoff date
-  const allEpisodes = [];
-  let pageNum = 1;
-  let reachedCutoff = false;
-
-  log('Collecting episode listing from Podbean API...');
-
-  while (!reachedCutoff) {
-    log(`  Fetching listing page ${pageNum}...`);
-    const html = await fetchEpisodePage(page, pageNum);
-
-    if (!html || html.trim() === '' || html.includes('"episodes":[]')) {
-      log('  No more episodes returned — end of list');
-      break;
-    }
-
-    const episodes = parseEpisodeCards(html);
-    if (episodes.length === 0) {
-      log('  Could not parse episodes from response — stopping');
-      break;
-    }
-
-    for (const ep of episodes) {
-      const date = parseDate(ep.dateText);
-      if (date && date < cutoffDate) {
-        reachedCutoff = true;
-        break;
-      }
-      allEpisodes.push({ ...ep, date });
-    }
-
-    pageNum++;
-    await page.waitForTimeout(1000);
-  }
-
-  log(`Found ${allEpisodes.length} episodes within date range`);
+  // Prime the browser session by visiting the GS domain once
+  try {
+    await page.goto('https://www.goldmansachs.com', { waitUntil: 'domcontentloaded', timeout: 20000 });
+    await page.waitForTimeout(2000);
+  } catch (_) {}
 
   let downloaded = 0;
   let skipped = 0;
+  let usedRssDesc = 0;
+  let noContent = 0;
 
-  for (const ep of allEpisodes) {
-    const dateStr = ep.date ? ep.date.toISOString().slice(0, 10) : 'unknown';
-    const id = slugify(ep.title) || slugify(ep.url.split('/').pop());
+  for (const ep of episodes) {
+    const dateStr = ep.date.toISOString().slice(0, 10);
+    const id = slugify(ep.title);
 
     if (store.isDownloaded(podcastId, id)) {
       skipped++;
       continue;
     }
 
-    log(`Downloading: [${dateStr}] ${ep.title || ep.url}`);
+    log(`[${dateStr}] ${ep.title}`);
 
+    let transcript = '';
+    let source = '';
+
+    // Try PDF transcript first
     try {
-      const transcript = await extractTranscript(page, ep.url, log);
-
-      if (!transcript || transcript.length < 50) {
-        log(`  ⚠ No transcript found at ${ep.url}`);
-        continue;
+      const pdfText = await fetchTranscriptPdf(page, id);
+      if (pdfText && pdfText.length > 200) {
+        transcript = pdfText;
+        source = 'pdf-transcript';
+        log(`  ✓ PDF transcript (${transcript.length} chars)`);
       }
-
-      store.saveEpisode(podcastId, {
-        id,
-        title: ep.title,
-        date: dateStr,
-        url: ep.url,
-        transcript,
-      });
-
-      downloaded++;
-      await page.waitForTimeout(1500);
     } catch (err) {
-      log(`  ✗ Failed ${ep.url}: ${err.message}`);
+      log(`  ⚠ PDF error: ${err.message.split('\n')[0]}`);
     }
+
+    await page.waitForTimeout(1500); // polite delay
+
+    // Fallback: RSS description (detailed 2–3 paragraph summary)
+    if (!transcript && ep.description) {
+      transcript = stripHtml(ep.description);
+      if (transcript.length > 100) {
+        source = 'rss-description';
+        log(`  ↩ Using RSS description (${transcript.length} chars)`);
+        usedRssDesc++;
+      }
+    }
+
+    if (!transcript || transcript.length < 50) {
+      log(`  ⚠ No content found — skipping`);
+      noContent++;
+      continue;
+    }
+
+    store.saveEpisode(podcastId, {
+      id,
+      title: ep.title,
+      date: dateStr,
+      url: `${GS_EPISODE_BASE}/${id}`,
+      source,
+      transcript,
+    });
+
+    downloaded++;
   }
 
   await page.close();
-  log(`Goldman Sachs done — downloaded: ${downloaded}, skipped (already had): ${skipped}`);
-  return { downloaded, skipped };
+  log(`Done — downloaded: ${downloaded}, skipped: ${skipped}, used-pdf: ${downloaded - usedRssDesc}, used-rss-desc: ${usedRssDesc}, no-content: ${noContent}`);
+  return { downloaded, skipped, usedRssDesc, noContent };
 }
 
 module.exports = { scrape };

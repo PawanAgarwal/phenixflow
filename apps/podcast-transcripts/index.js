@@ -77,6 +77,8 @@ async function run() {
       }
 
       try {
+        // Pass context only if the scraper needs a browser (scrapers that don't use
+        // Playwright simply ignore it via destructuring)
         const result = await scraper.scrape({
           yearsBack: opts.years,
           context,
