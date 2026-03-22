@@ -154,4 +154,19 @@ describe('historical flow parser', () => {
 
     expect(windows).toEqual([{ startTime: '09:30:00', endTime: '16:15:00' }]);
   });
+
+  it('treats blank explicit window minutes as unset for large symbols', () => {
+    const windows = __private.resolveThetaTimeWindowsForSymbol('SPY', {
+      startTime: '13:15:00',
+      windowMinutes: '',
+      env: {
+        THETADATA_LARGE_SYMBOLS: 'SPY,QQQ',
+        THETADATA_LARGE_SYMBOL_WINDOW_MINUTES: '60',
+      },
+    });
+
+    expect(windows[0]).toEqual({ startTime: '13:15:00', endTime: '14:14:59' });
+    expect(windows[1]).toEqual({ startTime: '14:15:00', endTime: '15:14:59' });
+    expect(windows[windows.length - 1]).toEqual({ startTime: '23:15:00', endTime: '23:59:59' });
+  });
 });

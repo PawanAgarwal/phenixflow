@@ -1894,7 +1894,12 @@ function resolveThetaTimeWindowsForSymbol(symbol, {
     startSecond = Math.max(lowerBound, Math.min(startSecond, upperBound));
   }
 
-  const parsedWindowMinutes = Number(windowMinutes);
+  const hasExplicitWindowMinutes = !(
+    windowMinutes === null
+    || windowMinutes === undefined
+    || String(windowMinutes).trim() === ''
+  );
+  const parsedWindowMinutes = hasExplicitWindowMinutes ? Number(windowMinutes) : Number.NaN;
   const normalizedWindowMinutes = Number.isFinite(parsedWindowMinutes)
     ? Math.max(0, Math.min(24 * 60, Math.trunc(parsedWindowMinutes)))
     : parseLargeSymbolWindowMinutes(env);
@@ -9182,7 +9187,13 @@ async function syncThetaTradesToClickHouse({
   env = process.env,
   markPartial = false,
 }) {
-  const resumeCursor = getClickHouseTradeResumeCursor({ symbol, dayIso, env });
+  const forceRequested = (
+    String(env.BACKFILL_FORCE || '').trim().toLowerCase() === '1'
+    || String(env.BACKFILL_FORCE || '').trim().toLowerCase() === 'true'
+  );
+  const resumeCursor = forceRequested
+    ? null
+    : getClickHouseTradeResumeCursor({ symbol, dayIso, env });
   const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
   if (sessionWindow && sessionWindow.isOpen === false) {
     const cacheStatus = markPartial ? DAY_CACHE_STATUS_PARTIAL : DAY_CACHE_STATUS_FULL;
@@ -9617,10 +9628,24 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
     console.warn('[THETADATA_SPOT_ZERO_SERIES]', JSON.stringify({ symbol, dayIso, sourceEndpoint: endpoint }));
   }
 
-  const insertOnlyUpsert = shouldUseInsertOnlyStockQuoteUpserts(env);
+  const hasExistingStockRows = hasClickHouseRowsForDay({
+    tableName: 'stock_ohlc_minute_raw',
+    dayColumn: 'trade_date_utc',
+    symbol,
+    dayIso,
+    env,
+  });
   let insertDurationMs = 0;
   if (normalizedBars.length > 0) {
     const insertStartedAtMs = Date.now();
+    if (hasExistingStockRows) {
+      deleteClickHouseScope(
+        'stock_ohlc_minute_raw',
+        'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
+        { symbol, dayIso },
+        env,
+      );
+    }
     replaceClickHouseDayRows({
       tableName: 'stock_ohlc_minute_raw',
       whereSql: 'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
@@ -9640,7 +9665,8 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
         ingested_at_utc: new Date().toISOString(),
       })),
       env,
-      skipDelete: insertOnlyUpsert,
+      // Stock sync always rewrites the full day, so reruns must clear existing bars first.
+      skipDelete: true,
     });
     insertDurationMs = Math.max(0, Date.now() - insertStartedAtMs);
   }
@@ -9668,6 +9694,7 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
     dayIso,
     fetchedRows: Array.isArray(stockRows) ? stockRows.length : 0,
     insertedRows: normalizedBars.length,
+    hadExistingRows: hasExistingStockRows,
     fetchDurationMs,
     insertDurationMs,
     reloadDurationMs,
