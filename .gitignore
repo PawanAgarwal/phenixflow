@@ -2,6 +2,7 @@
 .env
 .env.*
 *.log
+.playwright-cli/
 node_modules/
 dist/
 build/
@@ -34,13 +35,19 @@ artifacts/reports/theta-concurrency-benchmark-*.json
 
 # Local generated datasets
 artifacts/thetadata/
+artifacts/podcast_claims/
 artifacts/reports/top100-30d-*
 artifacts/reports/last-week-missing-metric-symbol-days-*.tsv
 data/archive/
 data/options_storage/
 data/factset_eps_study/
 data/macro_transformer/
+vixregime/artifacts/
+artifacts/alma-research/tools/__pycache__/
 
 # Local browser session state for OptionDepth exploration
 output/playwright/optiondepth/browser-profile/
+output/playwright/optiondepth/browser-profile-*/
+output/playwright/optiondepth/.playwright-cli/
+output/playwright/optiondepth/scripts/__pycache__/
 output/playwright/optiondepth/references/.vendor/
