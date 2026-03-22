@@ -1268,6 +1268,11 @@ function shouldStreamClickHouseEnrichedReads(env = process.env) {
   return String(env.CLICKHOUSE_ENRICH_STREAM_READ || '1') === '1';
 }
 
+function shouldSkipClickHouseEnrichedDelete(env = process.env) {
+  const raw = String(env.CLICKHOUSE_ENRICH_SKIP_DELETE || '0').trim().toLowerCase();
+  return raw === '1' || raw === 'true' || raw === 'yes';
+}
+
 function shouldIncludeClickHouseGreeksInEnrichment(env = process.env) {
   return String(env.CLICKHOUSE_ENRICH_INCLUDE_GREEKS || '1') !== '0';
 }
@@ -3428,7 +3433,9 @@ function persistSqliteDayStateToClickHouse(
   }
 
   if (!skipEnrichedState) {
-    deleteClickHouseScope('option_trade_enriched', 'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})', { symbol, dayIso }, env);
+    if (!shouldSkipClickHouseEnrichedDelete(env)) {
+      deleteClickHouseScope('option_trade_enriched', 'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})', { symbol, dayIso }, env);
+    }
     insertClickHouseRows(
       'option_trade_enriched',
       ['trade_id', 'trade_ts_utc', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'value', 'dte', 'spot', 'otm_pct', 'day_volume', 'oi', 'vol_oi_ratio', 'repeat3m', 'sig_score', 'sentiment', 'execution_side', 'symbol_vol_1m', 'symbol_vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'chips_json', 'rule_version', 'score_quality', 'missing_metrics_json', 'enriched_at_utc', 'is_sweep', 'is_multileg', 'minute_of_day_et', 'delta', 'implied_vol', 'time_norm', 'delta_norm', 'iv_skew_norm', 'value_shock_norm', 'dte_swing_norm', 'flow_imbalance_norm', 'delta_pressure_norm', 'cp_oi_pressure_norm', 'iv_skew_surface_norm', 'iv_term_slope_norm', 'underlying_trend_confirm_norm', 'liquidity_quality_norm', 'multileg_penalty_norm', 'sig_score_components_json'],
@@ -11367,7 +11374,7 @@ async function ensureEnrichedForDayInClickHouse({
   let built = null;
   let minuteRollupsOverride = null;
 
-  if (streamEnrichedRows) {
+  if (streamEnrichedRows && !shouldSkipClickHouseEnrichedDelete(env)) {
     deleteClickHouseScope(
       'option_trade_enriched',
       'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
