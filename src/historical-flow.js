@@ -9635,6 +9635,7 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
     console.warn('[THETADATA_SPOT_ZERO_SERIES]', JSON.stringify({ symbol, dayIso, sourceEndpoint: endpoint }));
   }
 
+  const insertOnlyUpsert = shouldUseInsertOnlyStockQuoteUpserts(env);
   const hasExistingStockRows = hasClickHouseRowsForDay({
     tableName: 'stock_ohlc_minute_raw',
     dayColumn: 'trade_date_utc',
@@ -9645,7 +9646,7 @@ async function ensureClickHouseStockRawForDay(symbol, dayIso, env = process.env,
   let insertDurationMs = 0;
   if (normalizedBars.length > 0) {
     const insertStartedAtMs = Date.now();
-    if (hasExistingStockRows) {
+    if (hasExistingStockRows && !insertOnlyUpsert) {
       deleteClickHouseScope(
         'stock_ohlc_minute_raw',
         'symbol = {symbol:String} AND trade_date_utc = toDate({dayIso:String})',
