@@ -6,6 +6,19 @@ Last updated: 2026-03-21
 
 This file captures the current best-performing `vixregime` model and action policy so we do not lose the exact setup while iterating.
 
+## Chosen Operational Model
+
+The chosen model to use right now is the frozen fixed-window holdout model:
+
+- train once on `2025-03-19` to `2025-06-17`
+- do not retrain monthly for live use
+- score later periods using the frozen model parameters
+
+Important clarification:
+
+- this is the model that produced the stronger March 2026 result
+- the stricter monthly walk-forward retrain is useful as a robustness diagnostic, but it is **not** the chosen operational model
+
 ## Model Family
 
 - Type: ordinal logistic classifier
@@ -121,6 +134,20 @@ Using `conservativeCash`:
   - `SPY`: `-4.90%`
   - relative edge: `+10.69%`
 
+### March 2026 Detail For Chosen Operational Model
+
+For the frozen fixed-window model over completed March 2026 signals (`2026-03-02` to `2026-03-19`):
+
+- strategy return: `+5.70%`
+- `SPY`: `-5.25%`
+- exact class results: `6 right`, `8 wrong`
+- policy-vs-`SPY` daily outcome: `10 better`, `4 worse`
+
+Interpretation:
+
+- exact bucket accuracy was only moderate
+- but the `conservativeCash` action mapping still worked well because many bearish calls kept the strategy out of down `SPY` sessions
+
 ## Principal Factors
 
 Highest overall drivers in the trained model:
@@ -152,3 +179,4 @@ Interpretation:
 
 - The local ClickHouse dataset currently covers `2025-01-02` onward for this workflow.
 - A true `2024` month-by-month validation will require backfilling the required symbols for `2024` into `options.stock_ohlc_minute_raw`.
+- The stricter monthly walk-forward retrain can be used as a stress test, but the frozen fixed-window holdout model above is the currently selected model to run.
