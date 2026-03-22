@@ -13,7 +13,7 @@ const REQUIRED_SYMBOLS = (process.env.REQUIRED_SYMBOLS || DEFAULT_REQUIRED_SYMBO
   .filter(Boolean);
 const OUTPUT_PATH = path.resolve(
   process.env.OUTPUT_PATH
-    || path.join(process.cwd(), 'artifacts', 'reports', `vixregime-coverage-${START_DATE}-${END_DATE}.json`),
+    || path.join(process.cwd(), 'vixregime', 'artifacts', 'reports', `vixregime-coverage-${START_DATE}-${END_DATE}.json`),
 );
 
 function buildCoverageQuery(symbols = []) {

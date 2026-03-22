@@ -1,0 +1,47 @@
+{
+  "exposures": {
+    "calm": 2,
+    "normal": 1.05,
+    "stress": 0.1,
+    "crash": -0.25
+  },
+  "day": {
+    "vixCalmMax": 18,
+    "vixNormalMax": 26,
+    "vixStressMin": 25,
+    "vixCrashMin": 35,
+    "vixPctRankCalmMax": 0.35,
+    "vixPctRankStressMin": 0.9,
+    "vixPctRankCrashMin": 0.9,
+    "delta5NormalMax": 4,
+    "delta5CrashMin": 6,
+    "delta10CalmMax": 1,
+    "termSoft9d30": 1.05,
+    "termHard9d30": 1.2,
+    "termSoft30d90d": 1,
+    "termHard30d90d": 1.1,
+    "crashBrakeVix1dMultiple": 1.45,
+    "crashBrakeVix1d9d": 1.4
+  },
+  "minute": {
+    "vixCalmMax": 16,
+    "vixNormalMax": 25,
+    "vixStressMin": 25,
+    "vixCrashMin": 35,
+    "vixPctRankCalmMax": 0.3,
+    "vixPctRankStressMin": 0.7,
+    "vixPctRankCrashMin": 0.9,
+    "delta30NormalMax": 1.5,
+    "delta60CrashMin": 3.5,
+    "termSoft9d30": 1.03,
+    "termHard9d30": 1.1,
+    "termSoft30d90d": 1,
+    "termHard30d90d": 1.05,
+    "crashBrakeVix1dMultiple": 1.35,
+    "crashBrakeVix1d9d": 1.2
+  },
+  "execution": {
+    "dailyTransactionCostBps": 0,
+    "minuteTransactionCostBps": 0
+  }
+}
