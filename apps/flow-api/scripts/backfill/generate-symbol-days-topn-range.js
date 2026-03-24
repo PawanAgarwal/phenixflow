@@ -8,7 +8,7 @@ const {
 
 const THETA_BASE_URL = (process.env.THETADATA_BASE_URL || 'http://127.0.0.1:25503').replace(/\/$/, '');
 const THETADATA_CALENDAR_PATH = (process.env.THETADATA_CALENDAR_PATH || '/v3/calendar/on_date').trim();
-const SYMBOL_FILE = path.resolve(process.env.SYMBOL_FILE || path.join(process.cwd(), 'config', 'top200-universe.json'));
+const SYMBOL_FILE = path.resolve(process.env.SYMBOL_FILE || path.join(process.cwd(), 'config', 'top100-universe.json'));
 const EXTRA_SYMBOL_FILE = String(process.env.EXTRA_SYMBOL_FILE || '').trim()
   ? path.resolve(process.env.EXTRA_SYMBOL_FILE)
   : null;

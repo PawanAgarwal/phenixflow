@@ -60,7 +60,7 @@ function resolveIngestSymbols(env = process.env) {
   const configuredFile = (env.INGEST_UNIVERSE_FILE || '').trim();
   const universePath = configuredFile
     ? path.resolve(configuredFile)
-    : path.resolve(__dirname, 'top200-universe.json');
+    : path.resolve(__dirname, 'top100-universe.json');
   const fromFile = readUniverseFile(universePath);
   if (fromFile.length > 0) return fromFile;
 

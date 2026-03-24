@@ -21,7 +21,7 @@ const END_DATE_OVERRIDE = (process.env.OPTIONS_END_DATE || '').trim();
 const DB_BUSY_TIMEOUT_MS = Math.max(1000, Number(process.env.OPTIONS_DB_BUSY_TIMEOUT_MS || 60000));
 const RAW_ROOT = path.resolve(process.env.OPTIONS_RAW_ROOT || path.join(process.cwd(), 'data', 'options_storage', 'raw'));
 const CURATED_ROOT = path.resolve(process.env.OPTIONS_CURATED_ROOT || path.join(process.cwd(), 'data', 'options_storage', 'curated'));
-const SYMBOL_FILE = path.resolve(process.env.OPTIONS_SYMBOL_FILE || path.join(process.cwd(), 'config', 'top200-universe.json'));
+const SYMBOL_FILE = path.resolve(process.env.OPTIONS_SYMBOL_FILE || path.join(process.cwd(), 'config', 'top100-universe.json'));
 const DB_PATH = path.resolve(process.env.OPTIONS_DB_PATH || path.join(CURATED_ROOT, 'curated', 'sqlite', 'options_trade_quote.sqlite'));
 
 function parseStatusCodes(rawValue, fallbackCodes) {
