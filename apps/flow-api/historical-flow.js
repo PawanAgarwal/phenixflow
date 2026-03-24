@@ -1278,14 +1278,14 @@ function shouldIncludeClickHouseGreeksInEnrichment(env = process.env) {
 }
 
 function parseClickHouseEnrichGreeksSource(env = process.env) {
-  const raw = String(env.CLICKHOUSE_ENRICH_GREEKS_SOURCE || 'calculated_first')
+  const raw = String(env.CLICKHOUSE_ENRICH_GREEKS_SOURCE || 'index_raw')
     .trim()
     .toLowerCase();
   if (raw === 'raw') return 'raw';
   if (raw === 'calculated') return 'calculated';
   if (raw === 'index_raw' || raw === 'hybrid_index_raw') return 'index_raw';
   if (raw === 'calculated_first') return 'calculated_first';
-  return 'calculated_first';
+  return 'index_raw';
 }
 
 function parseClickHouseEnrichGreeksIndexSymbols(env = process.env) {

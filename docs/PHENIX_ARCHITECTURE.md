@@ -118,7 +118,7 @@ Provide deterministic, resumable symbol-day hydration and enrichment in ClickHou
    - `option_trade_enriched`
 4. Calculated-greeks plane:
    - `option_calculated_greeks_minute`
-   - Enrichment resolves greeks from this table first by default (`CLICKHOUSE_ENRICH_GREEKS_SOURCE=calculated_first`), with optional fallback/override modes.
+   - Enrichment defaults to hybrid greeks sourcing (`CLICKHOUSE_ENRICH_GREEKS_SOURCE=index_raw`): raw downloaded greeks for heavy symbols (`SPY, QQQ, SPX, SPXW, VIX, VIXW, RUT, RUTW, XSP`) and calculated greeks for all other symbols.
 5. Status/attempt planes:
    - `option_download_chunk_status`
    - `option_enrich_chunk_status`

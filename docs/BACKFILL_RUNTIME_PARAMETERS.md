@@ -189,7 +189,7 @@ CLICKHOUSE_ENRICH_STREAM_READ=1 \
 CLICKHOUSE_ENRICH_STREAM_WRITE=1 \
 CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE=5000 \
 CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES=10 \
-CLICKHOUSE_ENRICH_GREEKS_SOURCE=calculated_first \
+CLICKHOUSE_ENRICH_GREEKS_SOURCE=index_raw \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 ```
 
@@ -200,8 +200,11 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 - `BACKFILL_MODE`: `full | download | enrich`.
 - `BACKFILL_FORCE`: `1` to re-run even if cache says complete.
   - This now propagates end-to-end into `materializeHistoricalDayInClickHouse(..., forceRecompute=true)` so trade/day-cache sync is not silently skipped.
-- `CLICKHOUSE_ENRICH_GREEKS_SOURCE`: enrich greeks lookup mode (`calculated_first | calculated | raw`).
-  - Default: `calculated_first`.
+- `CLICKHOUSE_ENRICH_GREEKS_SOURCE`: enrich greeks lookup mode (`index_raw | calculated_first | calculated | raw`).
+  - Default: `index_raw`.
+  - `index_raw` uses raw downloaded greeks for a configured heavy-symbol set and calculated greeks for all other symbols.
+  - Default heavy-symbol set: `SPY, QQQ, SPX, SPXW, VIX, VIXW, RUT, RUTW, XSP`.
+  - Override the heavy-symbol set with `CLICKHOUSE_ENRICH_GREEKS_INDEX_SYMBOLS`.
   - `calculated_first` loads from `option_calculated_greeks_minute` first, then falls back to raw greeks if none are available.
   - `calculated` requires calculated greeks only (no fallback).
   - `raw` keeps legacy behavior.
