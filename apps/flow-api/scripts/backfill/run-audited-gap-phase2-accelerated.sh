@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 cd "$APP_ROOT"
 
 RUNTIME_ROOT="${PHENIXFLOW_RUNTIME_ROOT:-$HOME/Library/Caches/phenixflow}"
@@ -20,6 +20,11 @@ PRIORITY_CALC_QUERY_MAX_THREADS="${PRIORITY_CALC_QUERY_MAX_THREADS:-2}"
 PRIORITY_CALC_QUERY_MAX_MEMORY_BYTES="${PRIORITY_CALC_QUERY_MAX_MEMORY_BYTES:-2147483648}"
 BACKLOG_CALC_QUERY_MAX_THREADS="${BACKLOG_CALC_QUERY_MAX_THREADS:-2}"
 BACKLOG_CALC_QUERY_MAX_MEMORY_BYTES="${BACKLOG_CALC_QUERY_MAX_MEMORY_BYTES:-2147483648}"
+INDEX_GREEKS_SYMBOLS="${INDEX_GREEKS_SYMBOLS:-SPX,SPXW,SPY,QQQ,VIX,VIXW,RUT,RUTW,XSP}"
+INDEX_RAW_GREEKS_PRIORITY_WORKERS="${INDEX_RAW_GREEKS_PRIORITY_WORKERS:-12}"
+INDEX_RAW_GREEKS_BACKLOG_WORKERS="${INDEX_RAW_GREEKS_BACKLOG_WORKERS:-10}"
+INDEX_RAW_GREEKS_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES="${INDEX_RAW_GREEKS_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES:-15}"
+INDEX_RAW_GREEKS_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES="${INDEX_RAW_GREEKS_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES:-1}"
 CLICKHOUSE_MUTATION_TIMEOUT_SEC="${CLICKHOUSE_MUTATION_TIMEOUT_SEC:-7200}"
 CLICKHOUSE_MUTATION_POLL_MS="${CLICKHOUSE_MUTATION_POLL_MS:-2000}"
 RUN_BACKLOG_CALC="${RUN_BACKLOG_CALC:-1}"
@@ -49,10 +54,69 @@ count_lines() {
   awk 'NF > 0 { count += 1 } END { print count + 0 }' "$1"
 }
 
+csv_to_sql_in_list() {
+  local raw="$1"
+  local out=""
+  local part=""
+  local normalized=""
+  IFS=',' read -r -a parts <<< "$raw"
+  for part in "${parts[@]}"; do
+    normalized="$(printf '%s' "$part" | xargs | tr '[:lower:]' '[:upper:]')"
+    [[ -z "$normalized" ]] && continue
+    if [[ -n "$out" ]]; then
+      out+=","
+    fi
+    out+="'$normalized'"
+  done
+  printf '%s' "$out"
+}
+
+run_raw_greeks_backfill() {
+  local workers="$1"
+  local input_path="$2"
+  local log_path="$3"
+
+  env \
+    BACKFILL_MODE=download \
+    BACKFILL_FORCE=1 \
+    BACKFILL_RAW_COMPONENTS=greeks \
+    BACKFILL_SYMBOL_DAY_LIST_PATH="$input_path" \
+    BACKFILL_REPORT_DIR="$REPORT_ROOT" \
+    BACKFILL_WORKERS="$workers" \
+    BACKFILL_MAX_WORKERS=16 \
+    BACKFILL_CPU_TARGET_PCT=95 \
+    BACKFILL_MEMORY_RESERVE_MB=2048 \
+    BACKFILL_MEMORY_PER_WORKER_MB=1536 \
+    BACKFILL_RAM_BUDGET_MB=20480 \
+    BACKFILL_NODE_MAX_OLD_SPACE_MB=1024 \
+    BACKFILL_WORKER_OVERHEAD_MB=512 \
+    BACKFILL_DOWNLOAD_WORKER_GUARD=0 \
+    BACKFILL_SHARD_STRATEGY=balanced \
+    THETADATA_BASE_URL="${THETADATA_BASE_URL:-http://127.0.0.1:25503}" \
+    THETADATA_MAX_CONCURRENT_CONNECTIONS=12 \
+    THETADATA_DOWNLOAD_CONCURRENCY=12 \
+    THETADATA_STREAM_IDLE_TIMEOUT_MS=1800000 \
+    THETADATA_STREAM_HEARTBEAT_EVERY_ROWS=250000 \
+    THETADATA_SUPPLEMENTAL_CONCURRENCY=8 \
+    CLICKHOUSE_STREAM_INSERT_MAX_INFLIGHT=4 \
+    CLICKHOUSE_TRADE_READ_WINDOW_MINUTES="$INDEX_RAW_GREEKS_CLICKHOUSE_TRADE_READ_WINDOW_MINUTES" \
+    CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES="$INDEX_RAW_GREEKS_CLICKHOUSE_TRADE_READ_MIN_WINDOW_MINUTES" \
+    bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh \
+    > "$log_path" 2>&1
+}
+
+INDEX_GREEKS_SYMBOLS_SQL="$(csv_to_sql_in_list "$INDEX_GREEKS_SYMBOLS")"
+if [[ -z "$INDEX_GREEKS_SYMBOLS_SQL" ]]; then
+  echo "INDEX_GREEKS_SYMBOLS resolved to an empty list"
+  exit 1
+fi
+
 ENRICH_DAYS_SQL="toDate('2025-03-13'),toDate('2025-03-14'),toDate('2025-03-17'),toDate('2025-03-18'),toDate('2025-03-19'),toDate('2025-03-20'),toDate('2025-03-21'),toDate('2025-03-24'),toDate('2025-03-25'),toDate('2025-03-26'),toDate('2025-03-27'),toDate('2025-03-28'),toDate('2025-03-31'),toDate('2025-04-01'),toDate('2025-04-02'),toDate('2025-04-03'),toDate('2025-04-04'),toDate('2025-04-07'),toDate('2025-04-08'),toDate('2025-04-09'),toDate('2025-04-10'),toDate('2025-04-11'),toDate('2025-04-14'),toDate('2025-04-15'),toDate('2025-04-16'),toDate('2025-04-17'),toDate('2025-04-21'),toDate('2025-04-22'),toDate('2025-04-23'),toDate('2025-04-24'),toDate('2025-04-25'),toDate('2025-04-28'),toDate('2025-04-29'),toDate('2025-04-30'),toDate('2025-05-01'),toDate('2025-05-02'),toDate('2025-05-05'),toDate('2025-05-06'),toDate('2025-05-07'),toDate('2025-05-08'),toDate('2025-05-09'),toDate('2025-05-12'),toDate('2025-05-13'),toDate('2025-05-14'),toDate('2025-05-15'),toDate('2025-05-16'),toDate('2025-05-19'),toDate('2025-05-20'),toDate('2025-05-21'),toDate('2025-05-22'),toDate('2025-05-23'),toDate('2025-05-27'),toDate('2025-05-28'),toDate('2025-05-29'),toDate('2025-05-30'),toDate('2025-06-02'),toDate('2025-06-03'),toDate('2025-06-04'),toDate('2025-06-05'),toDate('2025-06-06'),toDate('2025-06-09'),toDate('2025-06-10'),toDate('2025-06-11'),toDate('2025-06-12'),toDate('2025-06-13'),toDate('2025-06-16'),toDate('2025-06-17'),toDate('2025-06-18'),toDate('2025-06-20'),toDate('2025-06-23'),toDate('2025-06-24'),toDate('2025-06-25'),toDate('2025-06-26'),toDate('2025-06-27'),toDate('2025-06-30'),toDate('2025-07-01'),toDate('2025-07-02'),toDate('2025-07-03'),toDate('2025-07-07'),toDate('2025-07-08'),toDate('2025-07-09'),toDate('2025-07-10'),toDate('2025-07-11'),toDate('2025-07-14'),toDate('2025-07-15'),toDate('2025-07-16'),toDate('2025-07-17'),toDate('2025-07-18'),toDate('2025-07-21'),toDate('2025-07-22'),toDate('2025-07-23'),toDate('2025-07-24'),toDate('2025-07-25'),toDate('2025-07-28'),toDate('2025-07-29'),toDate('2025-07-30'),toDate('2025-07-31'),toDate('2025-10-22'),toDate('2026-01-09'),toDate('2026-01-12'),toDate('2026-01-13'),toDate('2026-01-14'),toDate('2026-01-15'),toDate('2026-01-16'),toDate('2026-01-20'),toDate('2026-01-21'),toDate('2026-01-22'),toDate('2026-01-23'),toDate('2026-01-26'),toDate('2026-01-27'),toDate('2026-01-28'),toDate('2026-01-29'),toDate('2026-01-30'),toDate('2026-02-02'),toDate('2026-02-03'),toDate('2026-02-04'),toDate('2026-02-05'),toDate('2026-02-06'),toDate('2026-02-09'),toDate('2026-02-10'),toDate('2026-02-11'),toDate('2026-02-12'),toDate('2026-02-13'),toDate('2026-02-17'),toDate('2026-02-18'),toDate('2026-03-16'),toDate('2026-03-17'),toDate('2026-03-18'),toDate('2026-03-19'),toDate('2026-03-20')"
 
 PRIORITY_CALC_TSV="$RUN_ROOT/calc-greeks-priority.tsv"
 BACKLOG_CALC_TSV="$RUN_ROOT/calc-greeks-backlog.tsv"
+INDEX_RAW_GREEKS_PRIORITY_TSV="$RUN_ROOT/index-raw-greeks-priority.tsv"
+INDEX_RAW_GREEKS_BACKLOG_TSV="$RUN_ROOT/index-raw-greeks-backlog.tsv"
 ENRICH_TSV="$RUN_ROOT/enrich-gaps.tsv"
 
 echo "Generating audited-day priority greeks list..."
@@ -65,6 +129,7 @@ write_query "
   WHERE trade_date_utc IN (SELECT day FROM days)
     AND row_count > 0
     AND cache_status = 'full'
+    AND symbol NOT IN ($INDEX_GREEKS_SYMBOLS_SQL)
     AND (symbol, trade_date_utc) NOT IN (
       SELECT symbol, trade_date_utc
       FROM options.option_calculated_greeks_day_status FINAL
@@ -86,6 +151,7 @@ write_query "
     AND trade_date_utc NOT IN (SELECT day FROM days)
     AND row_count > 0
     AND cache_status = 'full'
+    AND symbol NOT IN ($INDEX_GREEKS_SYMBOLS_SQL)
     AND (symbol, trade_date_utc) NOT IN (
       SELECT symbol, trade_date_utc
       FROM options.option_calculated_greeks_day_status FINAL
@@ -94,6 +160,38 @@ write_query "
   ORDER BY trade_date_utc, symbol
   FORMAT TabSeparated
 " "$BACKLOG_CALC_TSV"
+
+echo "Generating index raw-greeks priority list..."
+write_query "
+  WITH days AS (SELECT arrayJoin([$ENRICH_DAYS_SQL]) AS day)
+  SELECT
+    toString(trade_date_utc),
+    symbol
+  FROM options.option_trade_day_cache
+  WHERE trade_date_utc IN (SELECT day FROM days)
+    AND row_count > 0
+    AND cache_status = 'full'
+    AND symbol IN ($INDEX_GREEKS_SYMBOLS_SQL)
+  ORDER BY trade_date_utc, symbol
+  FORMAT TabSeparated
+" "$INDEX_RAW_GREEKS_PRIORITY_TSV"
+
+echo "Generating deferred index raw-greeks backlog list..."
+write_query "
+  WITH days AS (SELECT arrayJoin([$ENRICH_DAYS_SQL]) AS day)
+  SELECT
+    toString(trade_date_utc),
+    symbol
+  FROM options.option_trade_day_cache
+  WHERE trade_date_utc >= toDate('2025-01-02')
+    AND trade_date_utc <= toDate('2026-03-20')
+    AND trade_date_utc NOT IN (SELECT day FROM days)
+    AND row_count > 0
+    AND cache_status = 'full'
+    AND symbol IN ($INDEX_GREEKS_SYMBOLS_SQL)
+  ORDER BY trade_date_utc, symbol
+  FORMAT TabSeparated
+" "$INDEX_RAW_GREEKS_BACKLOG_TSV"
 
 echo "Generating enrichment gap list..."
 write_query "
@@ -134,6 +232,7 @@ write_query "
 
 echo "Priority calc jobs: $(count_lines "$PRIORITY_CALC_TSV")"
 echo "Backlog calc jobs: $(count_lines "$BACKLOG_CALC_TSV")"
+echo "Index raw-greeks priority/backlog jobs: $(count_lines "$INDEX_RAW_GREEKS_PRIORITY_TSV")/$(count_lines "$INDEX_RAW_GREEKS_BACKLOG_TSV")"
 echo "Enrichment jobs: $(count_lines "$ENRICH_TSV")"
 
 if [[ -s "$ENRICH_TSV" ]]; then
@@ -148,6 +247,7 @@ if [[ -s "$ENRICH_TSV" ]]; then
 fi
 
 priority_calc_pid=""
+priority_index_raw_greeks_pid=""
 if [[ -s "$PRIORITY_CALC_TSV" ]]; then
   echo "Starting priority calculated-greeks backfill in background..."
   (
@@ -167,6 +267,15 @@ if [[ -s "$PRIORITY_CALC_TSV" ]]; then
   ) > "$RUN_ROOT/calc-priority.log" 2>&1 &
   priority_calc_pid="$!"
   echo "Priority calc pid: $priority_calc_pid"
+fi
+
+if [[ -s "$INDEX_RAW_GREEKS_PRIORITY_TSV" ]]; then
+  echo "Starting priority index raw-greeks backfill in background..."
+  (
+    run_raw_greeks_backfill "$INDEX_RAW_GREEKS_PRIORITY_WORKERS" "$INDEX_RAW_GREEKS_PRIORITY_TSV" "$RUN_ROOT/index-raw-greeks-priority.log"
+  ) > "$RUN_ROOT/index-raw-greeks-priority-wrapper.log" 2>&1 &
+  priority_index_raw_greeks_pid="$!"
+  echo "Priority index raw-greeks pid: $priority_index_raw_greeks_pid"
 fi
 
 if [[ -s "$ENRICH_TSV" ]]; then
@@ -193,7 +302,9 @@ if [[ -s "$ENRICH_TSV" ]]; then
     CLICKHOUSE_ENRICH_STREAM_WRITE=1 \
     CLICKHOUSE_ENRICH_STREAM_CHUNK_SIZE=5000 \
     CLICKHOUSE_ENRICH_PROGRESS_BATCH_MINUTES=10 \
-    CLICKHOUSE_ENRICH_GREEKS_SOURCE=calculated \
+    CLICKHOUSE_ENRICH_GREEKS_SOURCE=index_raw \
+    CLICKHOUSE_ENRICH_GREEKS_INDEX_SYMBOLS="$INDEX_GREEKS_SYMBOLS" \
+    CLICKHOUSE_ENRICH_REQUIRE_GREEKS_READY=1 \
     CLICKHOUSE_ENRICH_SKIP_DELETE=1 \
     bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh \
     > "$RUN_ROOT/enrich-priority.log" 2>&1
@@ -202,6 +313,11 @@ fi
 if [[ -n "$priority_calc_pid" ]]; then
   echo "Waiting for priority calculated-greeks background job..."
   wait "$priority_calc_pid"
+fi
+
+if [[ -n "$priority_index_raw_greeks_pid" ]]; then
+  echo "Waiting for priority index raw-greeks background job..."
+  wait "$priority_index_raw_greeks_pid"
 fi
 
 if [[ "$RUN_BACKLOG_CALC" != "0" ]] && [[ "$RUN_BACKLOG_CALC" != "false" ]] && [[ -s "$BACKLOG_CALC_TSV" ]]; then
@@ -219,6 +335,13 @@ if [[ "$RUN_BACKLOG_CALC" != "0" ]] && [[ "$RUN_BACKLOG_CALC" != "false" ]] && [
     CALC_GREEKS_QUERY_MAX_MEMORY_BYTES="$BACKLOG_CALC_QUERY_MAX_MEMORY_BYTES" \
     bash "$REPO_ROOT/infra/clickhouse/scripts/backfill-calculated-greeks-parallel.sh" \
     > "$RUN_ROOT/calc-backlog.log" 2>&1
+fi
+
+if [[ -s "$INDEX_RAW_GREEKS_BACKLOG_TSV" ]]; then
+  echo "Starting deferred index raw-greeks backlog..."
+  (
+    run_raw_greeks_backfill "$INDEX_RAW_GREEKS_BACKLOG_WORKERS" "$INDEX_RAW_GREEKS_BACKLOG_TSV" "$RUN_ROOT/index-raw-greeks-backlog.log"
+  ) > "$RUN_ROOT/index-raw-greeks-backlog-wrapper.log" 2>&1 &
 fi
 
 echo "Accelerated phase 2 finished."

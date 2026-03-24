@@ -24,6 +24,15 @@ function parseFloatEnv(name, fallback) {
   return raw;
 }
 
+function parseCsvEnv(name) {
+  const raw = String(process.env[name] || '').trim();
+  if (!raw) return [];
+  return raw
+    .split(',')
+    .map((value) => String(value || '').trim().toUpperCase())
+    .filter(Boolean);
+}
+
 function toSafeNumber(value, fallback = null) {
   const numeric = Number(value);
   return Number.isFinite(numeric) ? numeric : fallback;
@@ -31,6 +40,17 @@ function toSafeNumber(value, fallback = null) {
 
 function dayToInt(dayIso) {
   return Number(String(dayIso || '').replaceAll('-', ''));
+}
+
+function buildChunkKey({ symbol, dayIso, chunkStartMs, chunkEndMs }) {
+  return `${symbol}|${dayIso}|${chunkStartMs}|${chunkEndMs}`;
+}
+
+function toUtcIso(value) {
+  if (value === null || value === undefined) return null;
+  const date = value instanceof Date ? value : new Date(Number(value));
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toISOString();
 }
 
 function parseSymbolDayList(filePath) {
@@ -109,6 +129,42 @@ function ensureSchema() {
     PARTITION BY toYYYYMM(trade_date_utc)
     ORDER BY (symbol, expiration, strike, option_right, trade_date_utc, minute_bucket_utc)
     SETTINGS deduplicate_merge_projection_mode = 'rebuild'
+  `);
+
+  execQuerySync(`
+    CREATE TABLE IF NOT EXISTS options.option_calculated_greeks_chunk_status
+    (
+      symbol LowCardinality(String),
+      trade_date_utc Date,
+      chunk_start_utc DateTime64(3, 'UTC'),
+      chunk_end_utc DateTime64(3, 'UTC'),
+      chunk_index UInt16,
+      chunk_total UInt16,
+      chunk_minutes UInt16,
+      source_mode LowCardinality(String),
+      calc_run_id String,
+      calc_version LowCardinality(String),
+      status LowCardinality(String),
+      source_rate Nullable(Float64),
+      source_rate_date Nullable(Date),
+      started_at_utc DateTime64(3, 'UTC'),
+      completed_at_utc Nullable(DateTime64(3, 'UTC')),
+      elapsed_ms UInt64,
+      inserted_rows UInt64,
+      solved_rows UInt64,
+      missing_underlying_rows UInt64,
+      missing_price_rows UInt64,
+      invalid_input_rows UInt64,
+      expired_rows UInt64,
+      unsolved_rows UInt64,
+      avg_price_error Nullable(Float64),
+      p95_price_error Nullable(Float64),
+      error_message Nullable(String),
+      updated_at_utc DateTime64(3, 'UTC')
+    )
+    ENGINE = ReplacingMergeTree(updated_at_utc)
+    PARTITION BY toYYYYMM(trade_date_utc)
+    ORDER BY (symbol, trade_date_utc, chunk_start_utc, chunk_end_utc, chunk_minutes, source_mode, calc_version)
   `);
 
   execQuerySync(`
@@ -247,6 +303,40 @@ function writeStatusRow(row) {
   `, [row]);
 }
 
+function writeChunkStatusRow(row) {
+  insertJsonRowsSync(`
+    INSERT INTO options.option_calculated_greeks_chunk_status (
+      symbol,
+      trade_date_utc,
+      chunk_start_utc,
+      chunk_end_utc,
+      chunk_index,
+      chunk_total,
+      chunk_minutes,
+      source_mode,
+      calc_run_id,
+      calc_version,
+      status,
+      source_rate,
+      source_rate_date,
+      started_at_utc,
+      completed_at_utc,
+      elapsed_ms,
+      inserted_rows,
+      solved_rows,
+      missing_underlying_rows,
+      missing_price_rows,
+      invalid_input_rows,
+      expired_rows,
+      unsolved_rows,
+      avg_price_error,
+      p95_price_error,
+      error_message,
+      updated_at_utc
+    )
+  `, [row]);
+}
+
 function loadJobs({ startDay, endDay, symbolDayListPath }) {
   if (symbolDayListPath) {
     const rawJobs = parseSymbolDayList(symbolDayListPath);
@@ -288,6 +378,134 @@ function loadCompletedSet({ startDay, endDay }) {
   return new Set(rows.map((row) => `${row.symbol}|${row.dayIso}`));
 }
 
+function loadChunkCompletedDaySet({ startDay, endDay, chunkMinutes, sourceMode, calcVersion }) {
+  const rows = queryRowsSync(`
+    SELECT
+      symbol,
+      toString(trade_date_utc) AS dayIso
+    FROM options.option_calculated_greeks_chunk_status FINAL
+    WHERE trade_date_utc >= toDate({startDay:String})
+      AND trade_date_utc <= toDate({endDay:String})
+      AND chunk_minutes = {chunkMinutes:UInt16}
+      AND source_mode = {sourceMode:String}
+      AND calc_version = {calcVersion:String}
+    GROUP BY symbol, trade_date_utc
+    HAVING count() > 0
+      AND count() = max(chunk_total)
+      AND countIf(status = 'complete') = max(chunk_total)
+  `, {
+    startDay,
+    endDay,
+    chunkMinutes,
+    sourceMode,
+    calcVersion,
+  });
+  return new Set(rows.map((row) => `${row.symbol}|${row.dayIso}`));
+}
+
+function loadCompletedChunkSet({ startDay, endDay, chunkMinutes, sourceMode, calcVersion }) {
+  const rows = queryRowsSync(`
+    SELECT
+      symbol,
+      toString(trade_date_utc) AS dayIso,
+      toInt64(toUnixTimestamp64Milli(chunk_start_utc)) AS chunkStartMs,
+      toInt64(toUnixTimestamp64Milli(chunk_end_utc)) AS chunkEndMs
+    FROM options.option_calculated_greeks_chunk_status FINAL
+    WHERE trade_date_utc >= toDate({startDay:String})
+      AND trade_date_utc <= toDate({endDay:String})
+      AND chunk_minutes = {chunkMinutes:UInt16}
+      AND source_mode = {sourceMode:String}
+      AND calc_version = {calcVersion:String}
+      AND status = 'complete'
+  `, {
+    startDay,
+    endDay,
+    chunkMinutes,
+    sourceMode,
+    calcVersion,
+  });
+  return new Set(rows.map((row) => buildChunkKey({
+    symbol: String(row.symbol || '').trim().toUpperCase(),
+    dayIso: String(row.dayIso || '').trim(),
+    chunkStartMs: toSafeNumber(row.chunkStartMs, 0) || 0,
+    chunkEndMs: toSafeNumber(row.chunkEndMs, 0) || 0,
+  })));
+}
+
+function loadChunkWindowsForDay({ symbol, dayIso, sourceMode, chunkMinutes }) {
+  const safeChunkMinutes = Math.max(1, Math.trunc(chunkMinutes));
+  const rangeRow = sourceMode === 'trade_minute'
+    ? (queryRowsSync(`
+        SELECT
+          min(toUnixTimestamp64Milli(toStartOfMinute(trade_ts_utc))) AS minMs,
+          max(toUnixTimestamp64Milli(toStartOfMinute(trade_ts_utc))) AS maxMs
+        FROM options.option_trades
+        WHERE symbol = {symbol:String}
+          AND trade_date = toDate({dayIso:String})
+      `, { symbol, dayIso })[0] || {})
+    : (queryRowsSync(`
+        SELECT
+          min(toUnixTimestamp64Milli(minute_bucket_utc)) AS minMs,
+          max(toUnixTimestamp64Milli(minute_bucket_utc)) AS maxMs
+        FROM options.option_quote_minute_raw
+        WHERE symbol = {symbol:String}
+          AND trade_date_utc = toDate({dayIso:String})
+      `, { symbol, dayIso })[0] || {});
+
+  const minMs = toSafeNumber(rangeRow.minMs, null);
+  const maxMs = toSafeNumber(rangeRow.maxMs, null);
+  if (minMs === null || maxMs === null) return [];
+
+  const chunkDurationMs = safeChunkMinutes * 60 * 1000;
+  const endExclusiveMs = maxMs + (60 * 1000);
+  const windows = [];
+  for (let chunkStartMs = minMs; chunkStartMs < endExclusiveMs; chunkStartMs += chunkDurationMs) {
+    const chunkEndMs = Math.min(chunkStartMs + chunkDurationMs, endExclusiveMs);
+    windows.push({
+      chunkStartMs,
+      chunkEndMs,
+      chunkMinutes: safeChunkMinutes,
+    });
+  }
+  return windows.map((window, index) => ({
+    ...window,
+    chunkIndex: index + 1,
+    chunkTotal: windows.length,
+  }));
+}
+
+function expandJobsForChunking(jobs, { sourceMode, chunkMinutes, chunkSymbols }) {
+  const useChunking = chunkMinutes > 0;
+  if (!useChunking) return jobs;
+  const chunkSymbolSet = new Set((chunkSymbols || []).map((value) => String(value || '').trim().toUpperCase()).filter(Boolean));
+  const shouldFilterSymbols = chunkSymbolSet.size > 0;
+
+  return jobs.flatMap((job) => {
+    if (shouldFilterSymbols && !chunkSymbolSet.has(job.symbol)) {
+      return [job];
+    }
+
+    const windows = loadChunkWindowsForDay({
+      symbol: job.symbol,
+      dayIso: job.dayIso,
+      sourceMode,
+      chunkMinutes,
+    });
+    if (windows.length === 0) {
+      return [job];
+    }
+
+    return windows.map((window) => ({
+      ...job,
+      chunkStartMs: window.chunkStartMs,
+      chunkEndMs: window.chunkEndMs,
+      chunkIndex: window.chunkIndex,
+      chunkTotal: window.chunkTotal,
+      chunkMinutes: window.chunkMinutes,
+    }));
+  });
+}
+
 function resolveRateForDay(dayIso, fallbackRate) {
   const rows = queryRowsSync(`
     SELECT
@@ -311,6 +529,8 @@ function resolveRateForDay(dayIso, fallbackRate) {
 function insertCalculatedGreeksForJob({
   symbol,
   dayIso,
+  chunkStartMs = null,
+  chunkEndMs = null,
   runId,
   calcVersion,
   sourceMode,
@@ -324,6 +544,19 @@ function insertCalculatedGreeksForJob({
 }) {
   const safeMaxThreads = Math.max(1, Math.trunc(maxThreads));
   const safeMaxMemoryBytes = Math.max(512 * 1024 * 1024, Math.trunc(maxMemoryBytes));
+  const hasChunkBounds = Number.isFinite(chunkStartMs) && Number.isFinite(chunkEndMs) && chunkEndMs > chunkStartMs;
+  const tradeChunkWhereSql = hasChunkBounds
+    ? `
+                AND trade_ts_utc >= toDateTime64({chunkStartMs:Int64} / 1000.0, 3, 'UTC')
+                AND trade_ts_utc < toDateTime64({chunkEndMs:Int64} / 1000.0, 3, 'UTC')
+      `
+    : '';
+  const minuteChunkWhereSql = hasChunkBounds
+    ? `
+                AND minute_bucket_utc >= toDateTime64({chunkStartMs:Int64} / 1000.0, 3, 'UTC')
+                AND minute_bucket_utc < toDateTime64({chunkEndMs:Int64} / 1000.0, 3, 'UTC')
+      `
+    : '';
   const sourceSubquery = sourceMode === 'trade_minute'
     ? `
               SELECT
@@ -339,6 +572,7 @@ function insertCalculatedGreeksForJob({
               FROM options.option_trades
               WHERE symbol = {symbol:String}
                 AND trade_date = toDate({dayIso:String})
+${tradeChunkWhereSql}
               GROUP BY
                 symbol,
                 trade_date_utc,
@@ -361,6 +595,7 @@ function insertCalculatedGreeksForJob({
               FROM options.option_quote_minute_raw
               WHERE symbol = {symbol:String}
                 AND trade_date_utc = toDate({dayIso:String})
+${minuteChunkWhereSql}
               GROUP BY
                 symbol,
                 trade_date_utc,
@@ -565,6 +800,7 @@ ${sourceSubquery}
                 FROM options.stock_ohlc_minute_raw
                 WHERE symbol = {symbol:String}
                   AND trade_date_utc = toDate({dayIso:String})
+${minuteChunkWhereSql}
                 GROUP BY
                   symbol,
                   trade_date_utc,
@@ -585,6 +821,8 @@ ${sourceSubquery}
   `, {
     symbol,
     dayIso,
+    chunkStartMs,
+    chunkEndMs,
     runId,
     calcVersion,
     riskFree: rate,
@@ -622,6 +860,138 @@ function summarizeJobRows({ symbol, dayIso, runId }) {
     unsolvedRows: toSafeNumber(row.unsolvedRows, 0) || 0,
     avgPriceError: toSafeNumber(row.avgPriceError, null),
     p95PriceError: toSafeNumber(row.p95PriceError, null),
+  };
+}
+
+function summarizeChunkRows({ symbol, dayIso, runId, chunkStartMs, chunkEndMs }) {
+  const row = queryRowsSync(`
+    SELECT
+      count() AS insertedRows,
+      countIf(calc_status = 'ok') AS solvedRows,
+      countIf(calc_status = 'missing_underlying') AS missingUnderlyingRows,
+      countIf(calc_status = 'missing_price') AS missingPriceRows,
+      countIf(calc_status = 'invalid_input') AS invalidInputRows,
+      countIf(calc_status = 'expired') AS expiredRows,
+      countIf(calc_status = 'unsolved') AS unsolvedRows,
+      avgOrNull(price_error_abs) AS avgPriceError,
+      quantileTDigest(0.95)(price_error_abs) AS p95PriceError
+    FROM options.option_calculated_greeks_minute
+    WHERE calc_run_id = {runId:String}
+      AND symbol = {symbol:String}
+      AND trade_date_utc = toDate({dayIso:String})
+      AND minute_bucket_utc >= toDateTime64({chunkStartMs:Int64} / 1000.0, 3, 'UTC')
+      AND minute_bucket_utc < toDateTime64({chunkEndMs:Int64} / 1000.0, 3, 'UTC')
+  `, {
+    runId,
+    symbol,
+    dayIso,
+    chunkStartMs,
+    chunkEndMs,
+  })[0] || {};
+
+  return {
+    insertedRows: toSafeNumber(row.insertedRows, 0) || 0,
+    solvedRows: toSafeNumber(row.solvedRows, 0) || 0,
+    missingUnderlyingRows: toSafeNumber(row.missingUnderlyingRows, 0) || 0,
+    missingPriceRows: toSafeNumber(row.missingPriceRows, 0) || 0,
+    invalidInputRows: toSafeNumber(row.invalidInputRows, 0) || 0,
+    expiredRows: toSafeNumber(row.expiredRows, 0) || 0,
+    unsolvedRows: toSafeNumber(row.unsolvedRows, 0) || 0,
+    avgPriceError: toSafeNumber(row.avgPriceError, null),
+    p95PriceError: toSafeNumber(row.p95PriceError, null),
+  };
+}
+
+function reconcileDayStatusFromChunks({
+  symbol,
+  dayIso,
+  runId,
+  calcVersion,
+  sourceMode,
+  chunkMinutes,
+  sourceRate,
+  sourceRateDate,
+}) {
+  const row = queryRowsSync(`
+    SELECT
+      count() AS chunkRows,
+      max(chunk_total) AS expectedChunks,
+      countIf(status = 'complete') AS completeChunks,
+      countIf(status = 'running') AS runningChunks,
+      countIf(status = 'failed') AS failedChunks,
+      min(started_at_utc) AS startedAtUtc,
+      max(completed_at_utc) AS completedAtUtc,
+      sumIf(elapsed_ms, status = 'complete') AS elapsedMs,
+      sumIf(inserted_rows, status = 'complete') AS insertedRows,
+      sumIf(solved_rows, status = 'complete') AS solvedRows,
+      sumIf(missing_underlying_rows, status = 'complete') AS missingUnderlyingRows,
+      sumIf(missing_price_rows, status = 'complete') AS missingPriceRows,
+      sumIf(invalid_input_rows, status = 'complete') AS invalidInputRows,
+      sumIf(expired_rows, status = 'complete') AS expiredRows,
+      sumIf(unsolved_rows, status = 'complete') AS unsolvedRows,
+      avgIf(avg_price_error, status = 'complete') AS avgPriceError,
+      maxIf(p95_price_error, status = 'complete') AS p95PriceError,
+      argMaxIf(error_message, updated_at_utc, status = 'failed') AS errorMessage,
+      max(updated_at_utc) AS updatedAtUtc
+    FROM options.option_calculated_greeks_chunk_status FINAL
+    WHERE symbol = {symbol:String}
+      AND trade_date_utc = toDate({dayIso:String})
+      AND chunk_minutes = {chunkMinutes:UInt16}
+      AND source_mode = {sourceMode:String}
+      AND calc_version = {calcVersion:String}
+  `, {
+    symbol,
+    dayIso,
+    chunkMinutes,
+    sourceMode,
+    calcVersion,
+  })[0] || {};
+
+  const expectedChunks = toSafeNumber(row.expectedChunks, 0) || 0;
+  const completeChunks = toSafeNumber(row.completeChunks, 0) || 0;
+  const runningChunks = toSafeNumber(row.runningChunks, 0) || 0;
+  const failedChunks = toSafeNumber(row.failedChunks, 0) || 0;
+  let status = 'running';
+  if (expectedChunks > 0 && completeChunks >= expectedChunks) {
+    status = 'complete';
+  } else if (runningChunks > 0) {
+    status = 'running';
+  } else if (failedChunks > 0) {
+    status = 'failed';
+  }
+
+  writeStatusRow({
+    symbol,
+    trade_date_utc: dayIso,
+    calc_run_id: runId,
+    calc_version: calcVersion,
+    status,
+    source_rate: sourceRate,
+    source_rate_date: sourceRateDate,
+    started_at_utc: row.startedAtUtc || nowIso(),
+    completed_at_utc: status === 'complete' ? (row.completedAtUtc || nowIso()) : null,
+    elapsed_ms: toSafeNumber(row.elapsedMs, 0) || 0,
+    inserted_rows: toSafeNumber(row.insertedRows, 0) || 0,
+    solved_rows: toSafeNumber(row.solvedRows, 0) || 0,
+    missing_underlying_rows: toSafeNumber(row.missingUnderlyingRows, 0) || 0,
+    missing_price_rows: toSafeNumber(row.missingPriceRows, 0) || 0,
+    invalid_input_rows: toSafeNumber(row.invalidInputRows, 0) || 0,
+    expired_rows: toSafeNumber(row.expiredRows, 0) || 0,
+    unsolved_rows: toSafeNumber(row.unsolvedRows, 0) || 0,
+    avg_price_error: toSafeNumber(row.avgPriceError, null),
+    p95_price_error: toSafeNumber(row.p95PriceError, null),
+    error_message: status === 'failed' ? (row.errorMessage || 'chunk_failure') : null,
+    updated_at_utc: row.updatedAtUtc || nowIso(),
+  });
+
+  return {
+    status,
+    expectedChunks,
+    completeChunks,
+    runningChunks,
+    failedChunks,
+    insertedRows: toSafeNumber(row.insertedRows, 0) || 0,
+    solvedRows: toSafeNumber(row.solvedRows, 0) || 0,
   };
 }
 
@@ -690,6 +1060,8 @@ function main() {
   const ivLow = parseFloatEnv('CALC_GREEKS_IV_LOW', 0.0005);
   const ivHigh = parseFloatEnv('CALC_GREEKS_IV_HIGH', 5.0);
   const ivIterations = Math.max(1, parseIntEnv('CALC_GREEKS_IV_ITERATIONS', 30));
+  const chunkMinutes = Math.max(0, parseIntEnv('CALC_GREEKS_CHUNK_MINUTES', 0));
+  const chunkSymbols = parseCsvEnv('CALC_GREEKS_CHUNK_SYMBOLS');
   const maxThreads = Math.max(1, parseIntEnv('CALC_GREEKS_QUERY_MAX_THREADS', 4));
   const maxMemoryBytes = Math.max(512 * 1024 * 1024, parseIntEnv('CALC_GREEKS_QUERY_MAX_MEMORY_BYTES', 3 * 1024 * 1024 * 1024));
   const heartbeatEvery = Math.max(1, parseIntEnv('CALC_GREEKS_HEARTBEAT_EVERY', 10));
@@ -711,7 +1083,37 @@ function main() {
   let jobs = loadJobs({ startDay, endDay, symbolDayListPath: symbolDayListPath || null });
   if (skipCompleted) {
     const completedSet = loadCompletedSet({ startDay, endDay });
+    if (chunkMinutes > 0) {
+      const chunkCompletedDays = loadChunkCompletedDaySet({
+        startDay,
+        endDay,
+        chunkMinutes,
+        sourceMode,
+        calcVersion,
+      });
+      chunkCompletedDays.forEach((key) => completedSet.add(key));
+    }
     jobs = jobs.filter((job) => !completedSet.has(`${job.symbol}|${job.dayIso}`));
+  }
+  jobs = expandJobsForChunking(jobs, {
+    sourceMode,
+    chunkMinutes,
+    chunkSymbols,
+  });
+  if (skipCompleted && chunkMinutes > 0) {
+    const completedChunkSet = loadCompletedChunkSet({
+      startDay,
+      endDay,
+      chunkMinutes,
+      sourceMode,
+      calcVersion,
+    });
+    jobs = jobs.filter((job) => {
+      if (!Number.isFinite(job.chunkStartMs) || !Number.isFinite(job.chunkEndMs)) {
+        return true;
+      }
+      return !completedChunkSet.has(buildChunkKey(job));
+    });
   }
   const assignedJobs = jobs.filter((job, idx) => (idx % workerTotal) === workerIndex);
   timing.loadJobsMs = Date.now() - loadJobsStarted;
@@ -733,6 +1135,8 @@ function main() {
     ivLow,
     ivHigh,
     ivIterations,
+    chunkMinutes,
+    chunkSymbols,
     maxThreads,
     maxMemoryBytes,
   }));
@@ -748,6 +1152,9 @@ function main() {
   assignedJobs.forEach((job, idx) => {
     const startedAtIso = nowIso();
     const jobStart = Date.now();
+    const isChunkJob = Number.isFinite(job.chunkStartMs) && Number.isFinite(job.chunkEndMs);
+    const chunkStartIso = isChunkJob ? toUtcIso(job.chunkStartMs) : null;
+    const chunkEndIso = isChunkJob ? toUtcIso(job.chunkEndMs) : null;
     const statusBase = {
       symbol: job.symbol,
       trade_date_utc: job.dayIso,
@@ -770,21 +1177,74 @@ function main() {
       error_message: null,
       updated_at_utc: startedAtIso,
     };
+    const chunkStatusBase = isChunkJob ? {
+      symbol: job.symbol,
+      trade_date_utc: job.dayIso,
+      chunk_start_utc: chunkStartIso,
+      chunk_end_utc: chunkEndIso,
+      chunk_index: job.chunkIndex,
+      chunk_total: job.chunkTotal,
+      chunk_minutes: job.chunkMinutes,
+      source_mode: sourceMode,
+      calc_run_id: runId,
+      calc_version: calcVersion,
+      source_rate: null,
+      source_rate_date: null,
+      started_at_utc: startedAtIso,
+      completed_at_utc: null,
+      elapsed_ms: 0,
+      inserted_rows: 0,
+      solved_rows: 0,
+      missing_underlying_rows: 0,
+      missing_price_rows: 0,
+      invalid_input_rows: 0,
+      expired_rows: 0,
+      unsolved_rows: 0,
+      avg_price_error: null,
+      p95_price_error: null,
+      error_message: null,
+      updated_at_utc: startedAtIso,
+    } : null;
+    let rate = null;
+    let rateDay = null;
+    let rateSource = null;
 
     try {
-      writeStatusRow({
-        ...statusBase,
-        status: 'running',
-      });
-
       const rateResult = resolveRateForDay(job.dayIso, fallbackRate);
-      const rate = toSafeNumber(rateResult.rate, fallbackRate);
-      const rateDay = rateResult.rateDay || null;
+      rate = toSafeNumber(rateResult.rate, fallbackRate);
+      rateDay = rateResult.rateDay || null;
+      rateSource = rateResult.source;
+
+      if (isChunkJob) {
+        writeChunkStatusRow({
+          ...chunkStatusBase,
+          status: 'running',
+          source_rate: rate,
+          source_rate_date: rateDay,
+        });
+        reconcileDayStatusFromChunks({
+          symbol: job.symbol,
+          dayIso: job.dayIso,
+          runId,
+          calcVersion,
+          sourceMode,
+          chunkMinutes: job.chunkMinutes,
+          sourceRate: rate,
+          sourceRateDate: rateDay,
+        });
+      } else {
+        writeStatusRow({
+          ...statusBase,
+          status: 'running',
+        });
+      }
 
       const insertStarted = Date.now();
       insertCalculatedGreeksForJob({
         symbol: job.symbol,
         dayIso: job.dayIso,
+        chunkStartMs: isChunkJob ? job.chunkStartMs : null,
+        chunkEndMs: isChunkJob ? job.chunkEndMs : null,
         runId,
         calcVersion,
         sourceMode,
@@ -798,35 +1258,75 @@ function main() {
       });
       const insertMs = Date.now() - insertStarted;
 
-      const metrics = summarizeJobRows({
-        symbol: job.symbol,
-        dayIso: job.dayIso,
-        runId,
-      });
+      const metrics = isChunkJob
+        ? summarizeChunkRows({
+          symbol: job.symbol,
+          dayIso: job.dayIso,
+          runId,
+          chunkStartMs: job.chunkStartMs,
+          chunkEndMs: job.chunkEndMs,
+        })
+        : summarizeJobRows({
+          symbol: job.symbol,
+          dayIso: job.dayIso,
+          runId,
+        });
       const elapsedMs = Date.now() - jobStart;
 
       insertedRowsTotal += metrics.insertedRows;
       solvedRowsTotal += metrics.solvedRows;
       completed += 1;
 
-      writeStatusRow({
-        ...statusBase,
-        status: 'complete',
-        source_rate: rate,
-        source_rate_date: rateDay,
-        completed_at_utc: nowIso(),
-        elapsed_ms: elapsedMs,
-        inserted_rows: metrics.insertedRows,
-        solved_rows: metrics.solvedRows,
-        missing_underlying_rows: metrics.missingUnderlyingRows,
-        missing_price_rows: metrics.missingPriceRows,
-        invalid_input_rows: metrics.invalidInputRows,
-        expired_rows: metrics.expiredRows,
-        unsolved_rows: metrics.unsolvedRows,
-        avg_price_error: metrics.avgPriceError,
-        p95_price_error: metrics.p95PriceError,
-        updated_at_utc: nowIso(),
-      });
+      let dayAggregate = null;
+      if (isChunkJob) {
+        writeChunkStatusRow({
+          ...chunkStatusBase,
+          status: 'complete',
+          source_rate: rate,
+          source_rate_date: rateDay,
+          completed_at_utc: nowIso(),
+          elapsed_ms: elapsedMs,
+          inserted_rows: metrics.insertedRows,
+          solved_rows: metrics.solvedRows,
+          missing_underlying_rows: metrics.missingUnderlyingRows,
+          missing_price_rows: metrics.missingPriceRows,
+          invalid_input_rows: metrics.invalidInputRows,
+          expired_rows: metrics.expiredRows,
+          unsolved_rows: metrics.unsolvedRows,
+          avg_price_error: metrics.avgPriceError,
+          p95_price_error: metrics.p95PriceError,
+          updated_at_utc: nowIso(),
+        });
+        dayAggregate = reconcileDayStatusFromChunks({
+          symbol: job.symbol,
+          dayIso: job.dayIso,
+          runId,
+          calcVersion,
+          sourceMode,
+          chunkMinutes: job.chunkMinutes,
+          sourceRate: rate,
+          sourceRateDate: rateDay,
+        });
+      } else {
+        writeStatusRow({
+          ...statusBase,
+          status: 'complete',
+          source_rate: rate,
+          source_rate_date: rateDay,
+          completed_at_utc: nowIso(),
+          elapsed_ms: elapsedMs,
+          inserted_rows: metrics.insertedRows,
+          solved_rows: metrics.solvedRows,
+          missing_underlying_rows: metrics.missingUnderlyingRows,
+          missing_price_rows: metrics.missingPriceRows,
+          invalid_input_rows: metrics.invalidInputRows,
+          expired_rows: metrics.expiredRows,
+          unsolved_rows: metrics.unsolvedRows,
+          avg_price_error: metrics.avgPriceError,
+          p95_price_error: metrics.p95PriceError,
+          updated_at_utc: nowIso(),
+        });
+      }
 
       const jobReport = {
         symbol: job.symbol,
@@ -834,11 +1334,17 @@ function main() {
         status: 'complete',
         rate,
         rateDay,
-        rateSource: rateResult.source,
+        rateSource,
         sourceMode,
         elapsedMs,
         insertMs,
         rowsPerSecond: metrics.insertedRows > 0 ? (metrics.insertedRows / Math.max(1, insertMs / 1000)) : 0,
+        chunkStartIso,
+        chunkEndIso,
+        chunkIndex: isChunkJob ? job.chunkIndex : null,
+        chunkTotal: isChunkJob ? job.chunkTotal : null,
+        chunkMinutes: isChunkJob ? job.chunkMinutes : null,
+        dayStatus: dayAggregate?.status || 'complete',
         ...metrics,
       };
       jobsOut.push(jobReport);
@@ -861,19 +1367,47 @@ function main() {
       failed += 1;
       const elapsedMs = Date.now() - jobStart;
       const message = error?.message || String(error);
-      writeStatusRow({
-        ...statusBase,
-        status: 'failed',
-        completed_at_utc: nowIso(),
-        elapsed_ms: elapsedMs,
-        error_message: message,
-        updated_at_utc: nowIso(),
-      });
+      if (isChunkJob) {
+        writeChunkStatusRow({
+          ...chunkStatusBase,
+          status: 'failed',
+          source_rate: rate,
+          source_rate_date: rateDay,
+          completed_at_utc: nowIso(),
+          elapsed_ms: elapsedMs,
+          error_message: message,
+          updated_at_utc: nowIso(),
+        });
+        reconcileDayStatusFromChunks({
+          symbol: job.symbol,
+          dayIso: job.dayIso,
+          runId,
+          calcVersion,
+          sourceMode,
+          chunkMinutes: job.chunkMinutes,
+          sourceRate: rate,
+          sourceRateDate: rateDay,
+        });
+      } else {
+        writeStatusRow({
+          ...statusBase,
+          status: 'failed',
+          completed_at_utc: nowIso(),
+          elapsed_ms: elapsedMs,
+          error_message: message,
+          updated_at_utc: nowIso(),
+        });
+      }
       const jobReport = {
         symbol: job.symbol,
         dayIso: job.dayIso,
         status: 'failed',
         elapsedMs,
+        chunkStartIso,
+        chunkEndIso,
+        chunkIndex: isChunkJob ? job.chunkIndex : null,
+        chunkTotal: isChunkJob ? job.chunkTotal : null,
+        chunkMinutes: isChunkJob ? job.chunkMinutes : null,
         error: message,
       };
       jobsOut.push(jobReport);
@@ -906,6 +1440,8 @@ function main() {
       ivLow,
       ivHigh,
       ivIterations,
+      chunkMinutes,
+      chunkSymbols,
       maxThreads,
       maxMemoryBytes,
       heartbeatEvery,

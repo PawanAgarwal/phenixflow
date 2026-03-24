@@ -293,19 +293,20 @@ async function processJob({
     && Number(enrichment.rowCount || 0) === 0
     && Number(rawHydration.tradeRows || 0) === 0;
 
-  if (mode === 'enrich' && enrichment.reason === 'raw_not_ready') {
+  if (mode === 'enrich' && (enrichment.reason === 'raw_not_ready' || enrichment.reason === 'greeks_not_ready')) {
+    const pendingReason = enrichment.reason === 'greeks_not_ready' ? 'pending_greeks' : 'pending_raw';
     report.pendingJobs += 1;
     appendJobDetail(report, {
       symbol,
       dayIso,
       instrumentType,
       hasOptions,
-      status: 'pending_raw',
+      status: pendingReason,
       attemptsUsed,
       sync,
       enrichment,
     });
-    console.log(`${prefix} WAIT raw_not_ready`);
+    console.log(`${prefix} WAIT ${enrichment.reason}`);
     return { pending: true };
   }
 

@@ -1283,8 +1283,43 @@ function parseClickHouseEnrichGreeksSource(env = process.env) {
     .toLowerCase();
   if (raw === 'raw') return 'raw';
   if (raw === 'calculated') return 'calculated';
+  if (raw === 'index_raw' || raw === 'hybrid_index_raw') return 'index_raw';
   if (raw === 'calculated_first') return 'calculated_first';
   return 'calculated_first';
+}
+
+function parseClickHouseEnrichGreeksIndexSymbols(env = process.env) {
+  const raw = String(env.CLICKHOUSE_ENRICH_GREEKS_INDEX_SYMBOLS || DEFAULT_THETADATA_LARGE_SYMBOLS.join(',')).trim();
+  if (!raw) return new Set();
+  return new Set(
+    raw
+      .split(',')
+      .map((token) => normalizeSymbol(token))
+      .filter(Boolean),
+  );
+}
+
+function resolveClickHouseEnrichGreeksSourceForSymbol(symbol, env = process.env) {
+  const configured = parseClickHouseEnrichGreeksSource(env);
+  if (configured !== 'index_raw') return configured;
+  const indexSymbols = parseClickHouseEnrichGreeksIndexSymbols(env);
+  return indexSymbols.has(normalizeSymbol(symbol)) ? 'raw' : 'calculated';
+}
+
+function isClickHouseEnrichGreeksSourceReady(expectedSource, actualSource) {
+  if (expectedSource === 'disabled') return true;
+  if (expectedSource === 'calculated_first') {
+    return actualSource === 'calculated' || actualSource === 'raw';
+  }
+  return expectedSource === actualSource;
+}
+
+function shouldRequireClickHouseEnrichGreeksReady(env = process.env) {
+  const raw = String(env.CLICKHOUSE_ENRICH_REQUIRE_GREEKS_READY || '').trim().toLowerCase();
+  if (raw === '1' || raw === 'true' || raw === 'yes') return true;
+  if (raw === '0' || raw === 'false' || raw === 'no') return false;
+  const source = parseClickHouseEnrichGreeksSource(env);
+  return source === 'calculated' || source === 'raw' || source === 'index_raw';
 }
 
 function parseClickHouseEnrichStreamChunkSize(env = process.env) {
@@ -9217,11 +9252,19 @@ async function syncThetaTradesToClickHouse({
   env = process.env,
   markPartial = false,
 }) {
+  const forceRawTargets = parseClickHouseRawHydrationTargets(env);
   const forceRequested = (
     String(env.BACKFILL_FORCE || '').trim().toLowerCase() === '1'
     || String(env.BACKFILL_FORCE || '').trim().toLowerCase() === 'true'
   );
-  const resumeCursor = forceRequested
+  // Match quote/greeks behavior: backfill force does not imply a full-day rewrite
+  // unless we explicitly opt into it for trades.
+  const forceTradeFullRefresh = (
+    String(env.BACKFILL_FORCE_TRADE_FULL || '0').trim().toLowerCase() !== '0'
+    && String(env.BACKFILL_FORCE_TRADE_FULL || '0').trim().toLowerCase() !== 'false'
+  );
+  const forceTradeRefresh = forceRequested && forceRawTargets.includeTradeQuote && forceTradeFullRefresh;
+  const resumeCursor = forceTradeRefresh
     ? null
     : getClickHouseTradeResumeCursor({ symbol, dayIso, env });
   const sessionWindow = await resolveThetaCalendarSessionWindowForDay(dayIso, { env });
@@ -9526,6 +9569,7 @@ async function syncThetaTradesToClickHouse({
     insertDurationMs,
     wallDurationMs,
     chunkSize,
+    forceTradeRefresh,
     resumedFromMinuteUtc: resumeCursor?.resumeFromIso || null,
   };
   if (!sawHttpOk && sawNoData && rowCount === 0) {
@@ -10179,8 +10223,19 @@ async function ensureClickHouseOptionQuoteRawForDay(symbol, dayIso, env = proces
 
 async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = process.env, cacheStats = null) {
   const oiByContract = loadClickHouseContractOiFromRaw({ symbol, dayIso, env });
+  const forceRawTargets = parseClickHouseRawHydrationTargets(env);
+  const forceRequested = (
+    String(env.BACKFILL_FORCE || '').trim().toLowerCase() === '1'
+    || String(env.BACKFILL_FORCE || '').trim().toLowerCase() === 'true'
+  );
+  const forceOiFullRefresh = (
+    String(env.BACKFILL_FORCE_OI_FULL || '0').trim().toLowerCase() !== '0'
+    && String(env.BACKFILL_FORCE_OI_FULL || '0').trim().toLowerCase() !== 'false'
+  );
+  const forceOiRefresh = forceRequested && forceRawTargets.includeOi && forceOiFullRefresh;
+  const hadExistingOiRows = oiByContract.size > 0;
   let oiDefaultsToZero = false;
-  if (oiByContract.size > 0) {
+  if (hadExistingOiRows && !forceOiRefresh) {
     if (cacheStats) cacheStats.oiHit += oiByContract.size;
     return { oiByContract, oiDefaultsToZero };
   }
@@ -10250,6 +10305,7 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
         ingested_at_utc: new Date().toISOString(),
       })),
       env,
+      skipDelete: !hadExistingOiRows,
     });
 
     bulkRows.forEach((row) => {
@@ -10257,10 +10313,15 @@ async function ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env = proces
     });
   }
 
-  if (oiByContract.size === 0 && Array.isArray(rawRows) && rawRows.length > 0) {
+  let fallbackRawRows = Array.isArray(rawRows) ? rawRows : [];
+  if (oiByContract.size === 0 && fallbackRawRows.length === 0) {
+    fallbackRawRows = loadClickHouseRawTradesForDay({ symbol, dayIso, env });
+  }
+
+  if (oiByContract.size === 0 && fallbackRawRows.length > 0) {
     const missingContracts = [];
     const seenContracts = new Set();
-    rawRows.forEach((row) => {
+    fallbackRawRows.forEach((row) => {
       const contractKey = buildContractKey(row);
       if (seenContracts.has(contractKey)) return;
       seenContracts.add(contractKey);
@@ -10813,7 +10874,9 @@ async function ensureRawHydratedForDayInClickHouse({
     ? Math.max(0, Math.trunc(hintedTradeRows))
     : countClickHouseTradesForDay({ symbol, dayIso, env });
 
-  const needsContractLevelRawRows = includeOi || includeGreeks;
+  // OI bulk fetches usually do not need the full trade row scan. Keep that
+  // expensive load for greeks or OI fallback only.
+  const needsContractLevelRawRows = includeGreeks;
   const rawRows = needsContractLevelRawRows
     ? loadClickHouseRawTradesForDay({ symbol, dayIso, env })
     : [];
@@ -10833,7 +10896,7 @@ async function ensureRawHydratedForDayInClickHouse({
   if (includeStock) {
     hydrationTasks.push(ensureClickHouseStockRawForDay(symbol, dayIso, env, cacheStats));
   }
-  if (includeOi && rawRows.length > 0) {
+  if (includeOi) {
     hydrationTasks.push(ensureClickHouseOiRawForDay(symbol, dayIso, rawRows, env, cacheStats));
   }
   let quoteHydrationPromise = null;
@@ -10933,11 +10996,13 @@ function buildSupplementalMetricLookupFromClickHouse({
     greeksByContractMinute: new Map(),
     greeksSurfaceBySymbolMinute: new Map(),
   };
+  let greeksSourceMode = shouldIncludeClickHouseGreeksInEnrichment(env)
+    ? resolveClickHouseEnrichGreeksSourceForSymbol(symbol, env)
+    : 'disabled';
+  let greeksSourceUsed = 'none';
+  let greeksRowsLoaded = 0;
   if (shouldIncludeClickHouseGreeksInEnrichment(env)) {
     const greeksState = createGreeksLookupState();
-    const greeksSourceMode = parseClickHouseEnrichGreeksSource(env);
-    let greeksSourceUsed = 'none';
-    let greeksRowsLoaded = 0;
     const ingestRows = (chunkRows) => {
       const chunkCount = Array.isArray(chunkRows) ? chunkRows.length : 0;
       if (chunkCount <= 0) return;
@@ -10988,6 +11053,9 @@ function buildSupplementalMetricLookupFromClickHouse({
     oiDefaultsToZero: false,
     greeksByContractMinute: greeksLookup.greeksByContractMinute,
     greeksSurfaceBySymbolMinute: greeksLookup.greeksSurfaceBySymbolMinute,
+    greeksSourceMode,
+    greeksSourceUsed,
+    greeksRowsLoaded,
     featureBaselines,
     cacheStats: null,
   };
@@ -11393,19 +11461,15 @@ async function ensureEnrichedForDayInClickHouse({
   const minuteRollupState = createMinuteDerivedRollupState();
   const enrichProgressLogger = createClickHouseEnrichBatchProgressLogger({ symbol, dayIso, env });
   const enrichedInsertColumns = ['trade_id', 'trade_ts_utc', 'symbol', 'expiration', 'strike', 'option_right', 'price', 'size', 'bid', 'ask', 'condition_code', 'exchange', 'value', 'dte', 'spot', 'otm_pct', 'day_volume', 'oi', 'vol_oi_ratio', 'repeat3m', 'sig_score', 'sentiment', 'execution_side', 'symbol_vol_1m', 'symbol_vol_baseline_15m', 'open_window_baseline', 'bullish_ratio_15m', 'chips_json', 'rule_version', 'score_quality', 'missing_metrics_json', 'enriched_at_utc', 'is_sweep', 'is_multileg', 'minute_of_day_et', 'delta', 'implied_vol', 'time_norm', 'delta_norm', 'iv_skew_norm', 'value_shock_norm', 'dte_swing_norm', 'flow_imbalance_norm', 'delta_pressure_norm', 'cp_oi_pressure_norm', 'iv_skew_surface_norm', 'iv_term_slope_norm', 'underlying_trend_confirm_norm', 'liquidity_quality_norm', 'multileg_penalty_norm', 'sig_score_components_json'];
+  const requireGreeksReady = shouldIncludeClickHouseGreeksInEnrichment(env)
+    && shouldRequireClickHouseEnrichGreeksReady(env);
+  const expectedGreeksSource = shouldIncludeClickHouseGreeksInEnrichment(env)
+    ? resolveClickHouseEnrichGreeksSourceForSymbol(symbol, env)
+    : 'disabled';
   let rawRows = [];
   let supplementalMetrics = null;
   let built = null;
   let minuteRollupsOverride = null;
-
-  if (streamEnrichedRows && !shouldSkipClickHouseEnrichedDelete(env)) {
-    deleteClickHouseScope(
-      'option_trade_enriched',
-      'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
-      { symbol, dayIso },
-      env,
-    );
-  }
 
   const baseBuildConfig = {
     ...activeRuleConfig,
@@ -11446,6 +11510,28 @@ async function ensureEnrichedForDayInClickHouse({
         supplementalMetrics.oiByContract.set(key, value);
       }
     });
+
+    if (requireGreeksReady && !isClickHouseEnrichGreeksSourceReady(expectedGreeksSource, supplementalMetrics.greeksSourceUsed)) {
+      return {
+        synced: false,
+        reason: 'greeks_not_ready',
+        rowCount: 0,
+        ruleVersion: activeRuleConfig.versionId,
+        scoringModel: activeRuleConfig.scoringModel,
+        targetHorizon: activeRuleConfig.targetSpec?.horizon || null,
+        supplementalCache: supplementalMetrics.cacheStats || null,
+        metricCacheMap: getClickHouseMetricCacheMap({ symbol, dayIso, env }),
+      };
+    }
+
+    if (streamEnrichedRows && !shouldSkipClickHouseEnrichedDelete(env)) {
+      deleteClickHouseScope(
+        'option_trade_enriched',
+        'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
+        { symbol, dayIso },
+        env,
+      );
+    }
 
     const rollingState = {};
     let streamedRowCount = 0;
@@ -11500,6 +11586,29 @@ async function ensureEnrichedForDayInClickHouse({
       rawRows,
       env,
     });
+
+    if (requireGreeksReady && !isClickHouseEnrichGreeksSourceReady(expectedGreeksSource, supplementalMetrics.greeksSourceUsed)) {
+      return {
+        synced: false,
+        reason: 'greeks_not_ready',
+        rowCount: 0,
+        ruleVersion: activeRuleConfig.versionId,
+        scoringModel: activeRuleConfig.scoringModel,
+        targetHorizon: activeRuleConfig.targetSpec?.horizon || null,
+        supplementalCache: supplementalMetrics.cacheStats || null,
+        metricCacheMap: getClickHouseMetricCacheMap({ symbol, dayIso, env }),
+      };
+    }
+
+    if (streamEnrichedRows && !shouldSkipClickHouseEnrichedDelete(env)) {
+      deleteClickHouseScope(
+        'option_trade_enriched',
+        'symbol = {symbol:String} AND trade_date = toDate({dayIso:String})',
+        { symbol, dayIso },
+        env,
+      );
+    }
+
     built = buildEnrichedRows(rawRows, activeRuleConfig.thresholds, supplementalMetrics, baseBuildConfig);
     minuteRollupsOverride = streamEnrichedRows
       ? finalizeMinuteDerivedRollups(minuteRollupState)

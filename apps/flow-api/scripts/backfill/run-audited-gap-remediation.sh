@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 APP_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 cd "$APP_ROOT"
 
 export THETADATA_BASE_URL="${THETADATA_BASE_URL:-http://127.0.0.1:25503}"
@@ -157,9 +157,10 @@ write_query "
       )
     ),
     quote_actual AS (
-      SELECT symbol, trade_date_utc AS day, max(minute_bucket_utc) AS max_minute
-      FROM options.option_quote_minute_raw
-      WHERE trade_date_utc IN (SELECT day FROM days)
+      SELECT symbol, trade_date_utc AS day, sum(minute_count) AS minute_count
+      FROM options.option_download_chunk_status FINAL
+      WHERE stream_name = 'option_quote_1m'
+        AND trade_date_utc IN (SELECT day FROM days)
       GROUP BY symbol, trade_date_utc
     )
   SELECT toString(day), symbol
@@ -167,7 +168,7 @@ write_query "
   CROSS JOIN syms
   LEFT JOIN quote_actual q USING (symbol, day)
   WHERE q.symbol IS NULL
-     OR q.max_minute < toDateTime64(concat(toString(day), ' 15:59:00'), 3, 'UTC')
+     OR q.minute_count < 390
   ORDER BY day, symbol
   FORMAT TabSeparated
 " "$RAW_QUOTE_TSV"
