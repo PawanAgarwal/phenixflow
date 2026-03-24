@@ -25,6 +25,8 @@
     "clickhouse:move-to-external": "bash infra/clickhouse/scripts/move-clickhouse-to-external.sh",
     "clickhouse:init-schema": "bash infra/clickhouse/scripts/init-options-schema.sh",
     "clickhouse:import:sqlite": "bash infra/clickhouse/scripts/import-from-sqlite.sh",
+    "parquet:greeks:backfill": "node apps/flow-api/scripts/parquet/backfill-parquet-greeks.js",
+    "parquet:greeks:jan2025-week": "bash apps/flow-api/scripts/parquet/run-jan2025-week-benchmark.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
@@ -45,7 +47,8 @@
   },
   "dependencies": {
     "better-sqlite3": "^12.6.2",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "parquetjs-lite": "^0.8.7"
   },
   "devDependencies": {
     "eslint": "^9.20.1",
