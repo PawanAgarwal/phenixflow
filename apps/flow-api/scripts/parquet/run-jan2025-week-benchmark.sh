@@ -20,6 +20,20 @@ detect_default_parquet_workers() {
   printf '%s\n' "$workers"
 }
 
+derive_download_workers() {
+  local total theta_cap download
+  total="$1"
+  theta_cap="$2"
+  download=$theta_cap
+  if (( download > total - 1 )); then
+    download=$(( total > 1 ? total - 1 : 1 ))
+  fi
+  if (( download < 1 )); then
+    download=1
+  fi
+  printf '%s\n' "$download"
+}
+
 START_DATE="${START_DATE:-2025-01-02}"
 END_DATE="${END_DATE:-2025-01-08}"
 SYMBOL_FILE="${SYMBOL_FILE:-$ROOT_DIR/apps/flow-api/config/top100-universe.json}"
@@ -37,9 +51,15 @@ PARQUET_THETA_RETRY_BASE_DELAY_MS="${PARQUET_THETA_RETRY_BASE_DELAY_MS:-2000}"
 PARQUET_THETA_RETRY_MAX_DELAY_MS="${PARQUET_THETA_RETRY_MAX_DELAY_MS:-60000}"
 PARQUET_THETA_GLOBAL_COOLDOWN_MS="${PARQUET_THETA_GLOBAL_COOLDOWN_MS:-30000}"
 PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="${PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS:-4}"
+PARQUET_DOWNLOAD_WORKERS="${PARQUET_DOWNLOAD_WORKERS:-$(derive_download_workers "$PARQUET_WORKERS" "$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS")}"
+PARQUET_COMPUTE_WORKERS="${PARQUET_COMPUTE_WORKERS:-$(( PARQUET_WORKERS - PARQUET_DOWNLOAD_WORKERS ))}"
+if (( PARQUET_COMPUTE_WORKERS < 1 )); then
+  PARQUET_COMPUTE_WORKERS=1
+fi
+PARQUET_STAGE_MAX_ATTEMPTS="${PARQUET_STAGE_MAX_ATTEMPTS:-3}"
 
 export START_DATE END_DATE SYMBOL_FILE SYMBOL_LIMIT EXTRA_SYMBOLS THETADATA_BASE_URL PARQUET_RUN_ID
-export PARQUET_RESUME_EXISTING
+export PARQUET_RESUME_EXISTING PARQUET_STAGE_MAX_ATTEMPTS
 export PARQUET_HEAVY_RAW_INDEX_QUOTE_CONCURRENCY PARQUET_HEAVY_RAW_INDEX_GREEKS_CONCURRENCY PARQUET_HEAVY_RAW_INDEX_EXPIRATION_CONCURRENCY
 export PARQUET_THETA_RETRY_ATTEMPTS PARQUET_THETA_RETRY_BASE_DELAY_MS PARQUET_THETA_RETRY_MAX_DELAY_MS PARQUET_THETA_GLOBAL_COOLDOWN_MS PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS
 
@@ -56,8 +76,11 @@ fi
 RUN_ROOT="$EFFECTIVE_PARQUET_ROOT/runs/$PARQUET_RUN_ID"
 LOG_ROOT="$RUN_ROOT/logs"
 REPORT_ROOT="$RUN_ROOT/reports"
-mkdir -p "$LOG_ROOT" "$REPORT_ROOT"
+STATE_CONTROL_ROOT="$RUN_ROOT/state/control"
+STOP_PATH="$STATE_CONTROL_ROOT/stop-requested.json"
+mkdir -p "$LOG_ROOT" "$REPORT_ROOT" "$STATE_CONTROL_ROOT"
 rm -f "$REPORT_ROOT/summary.json"
+rm -f "$STOP_PATH"
 
 RUN_STARTED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
@@ -65,16 +88,50 @@ echo "Parquet benchmark run: $PARQUET_RUN_ID"
 echo "Run root: $RUN_ROOT"
 echo "Theta base URL: $THETADATA_BASE_URL"
 echo "Date range: $START_DATE -> $END_DATE"
-echo "Workers: $PARQUET_WORKERS"
+echo "Worker budget: $PARQUET_WORKERS"
+echo "Download workers: $PARQUET_DOWNLOAD_WORKERS"
+echo "Compute workers: $PARQUET_COMPUTE_WORKERS"
 echo "Theta connection cap: $PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS"
 echo "Started at: $RUN_STARTED_AT"
 
+request_stop() {
+  local reason="${1:-signal}"
+  mkdir -p "$STATE_CONTROL_ROOT"
+  cat >"$STOP_PATH" <<EOF
+{
+  "reason": "$reason",
+  "requestedAt": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "pid": $$
+}
+EOF
+}
+
 pids=()
-for (( idx=0; idx<PARQUET_WORKERS; idx++ )); do
-  log_file="$LOG_ROOT/worker-$idx.log"
-  echo "Launching worker $idx -> $log_file"
-  PARQUET_WORKER_TOTAL="$PARQUET_WORKERS" \
-  PARQUET_WORKER_INDEX="$idx" \
+
+cleanup_on_signal() {
+  echo "Stop requested; waiting for parquet workers to finish current tasks..."
+  request_stop "launcher_signal"
+}
+
+trap cleanup_on_signal INT TERM
+
+for (( idx=0; idx<PARQUET_DOWNLOAD_WORKERS; idx++ )); do
+  log_file="$LOG_ROOT/download-worker-$idx.log"
+  echo "Launching download worker $idx -> $log_file"
+  PARQUET_WORKER_ROLE="download" \
+  PARQUET_DOWNLOAD_WORKER_TOTAL="$PARQUET_DOWNLOAD_WORKERS" \
+  PARQUET_DOWNLOAD_WORKER_INDEX="$idx" \
+  node "$ROOT_DIR/apps/flow-api/scripts/parquet/backfill-parquet-greeks.js" \
+    >"$log_file" 2>&1 &
+  pids+=("$!")
+done
+
+for (( idx=0; idx<PARQUET_COMPUTE_WORKERS; idx++ )); do
+  log_file="$LOG_ROOT/compute-worker-$idx.log"
+  echo "Launching compute worker $idx -> $log_file"
+  PARQUET_WORKER_ROLE="compute" \
+  PARQUET_COMPUTE_WORKER_TOTAL="$PARQUET_COMPUTE_WORKERS" \
+  PARQUET_COMPUTE_WORKER_INDEX="$idx" \
   node "$ROOT_DIR/apps/flow-api/scripts/parquet/backfill-parquet-greeks.js" \
     >"$log_file" 2>&1 &
   pids+=("$!")
@@ -89,14 +146,17 @@ for pid in "${pids[@]}"; do
   fi
 done
 
-node - <<'NODE' "$RUN_ROOT" "$PARQUET_WORKERS" "$RUN_STARTED_AT"
+node - <<'NODE' "$RUN_ROOT" "$RUN_STARTED_AT" "$PARQUET_DOWNLOAD_WORKERS" "$PARQUET_COMPUTE_WORKERS"
 const fs = require('node:fs');
 const path = require('node:path');
 
 const runRoot = process.argv[2];
-const workerTotal = Number(process.argv[3]);
-const runStartedAt = process.argv[4];
+const runStartedAt = process.argv[3];
+const downloadWorkers = Number(process.argv[4]);
+const computeWorkers = Number(process.argv[5]);
 const reportsRoot = path.join(runRoot, 'reports');
+const jobStateRoot = path.join(runRoot, 'state', 'jobs');
+const controlRoot = path.join(runRoot, 'state', 'control');
 const generatedAt = new Date().toISOString();
 const durationMs = runStartedAt ? (Date.parse(generatedAt) - Date.parse(runStartedAt)) : null;
 const summary = {
@@ -104,57 +164,59 @@ const summary = {
   generatedAt,
   startedAt: runStartedAt || null,
   durationMs: Number.isFinite(durationMs) ? durationMs : null,
-  workerTotal,
+  downloadWorkers,
+  computeWorkers,
+  stopRequested: fs.existsSync(path.join(controlRoot, 'stop-requested.json')),
   totalJobs: 0,
   completedJobs: 0,
   failedJobs: 0,
+  runningJobs: 0,
   totalStockRows: 0,
   totalQuoteRows: 0,
   totalRawGreekRows: 0,
   totalFinalGreekRows: 0,
   stockMs: 0,
   quoteMs: 0,
-  indexGreekMs: 0,
+  rawGreekMs: 0,
   calcGreekMs: 0,
   workers: [],
 };
 
-const workerFiles = fs.existsSync(reportsRoot)
-  ? fs.readdirSync(reportsRoot).filter((name) => /^worker-\d+\.json$/.test(name)).sort()
+const jobFiles = fs.existsSync(jobStateRoot)
+  ? fs.readdirSync(jobStateRoot).filter((name) => name.endsWith('.json')).sort()
   : [];
-const jobsByKey = new Map();
 
-for (const workerFile of workerFiles) {
-  const reportPath = path.join(reportsRoot, workerFile);
-  const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
-  for (const job of Array.isArray(report.jobs) ? report.jobs : []) {
-    if (!job?.symbol || !job?.dayIso) continue;
-    const key = `${job.symbol}::${job.dayIso}`;
-    const existing = jobsByKey.get(key);
-    if (!existing || existing.status !== 'complete' || job.status === 'complete') {
-      jobsByKey.set(key, job);
-    }
-  }
-  summary.workers.push({
-    workerIndex: report.workerIndex,
-    totalJobs: report.totalJobs,
-    completedJobs: report.completedJobs,
-    failedJobs: report.failedJobs,
-  });
-}
-
-summary.totalJobs = jobsByKey.size;
-for (const job of jobsByKey.values()) {
+for (const jobFile of jobFiles) {
+  const job = JSON.parse(fs.readFileSync(path.join(jobStateRoot, jobFile), 'utf8'));
+  summary.totalJobs += 1;
   if (job.status === 'complete') summary.completedJobs += 1;
   if (job.status === 'failed') summary.failedJobs += 1;
-  summary.totalStockRows += Number(job.stockRows || 0);
-  summary.totalQuoteRows += Number(job.quoteRows || 0);
-  summary.totalRawGreekRows += Number(job.rawGreekRows || 0);
-  summary.totalFinalGreekRows += Number(job.finalGreekRows || 0);
-  summary.stockMs += Number(job.stockMs || 0);
-  summary.quoteMs += Number(job.quoteMs || 0);
-  summary.indexGreekMs += Number(job.indexGreekMs || 0);
-  summary.calcGreekMs += Number(job.calcGreekMs || 0);
+  if (job.status === 'running') summary.runningJobs += 1;
+  summary.totalStockRows += Number(job?.stages?.stock?.rowCount || 0);
+  summary.totalQuoteRows += Number(job?.stages?.quotes?.rowCount || 0);
+  summary.totalRawGreekRows += job.greekMode === 'raw' ? Number(job?.stages?.greeks?.rowCount || 0) : 0;
+  summary.totalFinalGreekRows += Number(job?.stages?.greeks?.rowCount || 0);
+  summary.stockMs += Number(job?.stages?.stock?.elapsedMs || 0);
+  summary.quoteMs += Number(job?.stages?.quotes?.elapsedMs || 0);
+  if (job.greekMode === 'raw') {
+    summary.rawGreekMs += Number(job?.stages?.greeks?.elapsedMs || 0);
+  } else {
+    summary.calcGreekMs += Number(job?.stages?.greeks?.elapsedMs || 0);
+  }
+}
+
+const workerFiles = fs.existsSync(reportsRoot)
+  ? fs.readdirSync(reportsRoot).filter((name) => /(download|compute)-worker-\d+\.json$/.test(name)).sort()
+  : [];
+for (const workerFile of workerFiles) {
+  const report = JSON.parse(fs.readFileSync(path.join(reportsRoot, workerFile), 'utf8'));
+  summary.workers.push({
+    role: report.role,
+    workerIndex: report.workerIndex,
+    tasksCompleted: Number(report?.counters?.tasksCompleted || 0),
+    tasksFailed: Number(report?.counters?.tasksFailed || 0),
+    currentTask: report.currentTask || null,
+  });
 }
 
 const summaryPath = path.join(reportsRoot, 'summary.json');

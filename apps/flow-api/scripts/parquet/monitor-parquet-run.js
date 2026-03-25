@@ -2,9 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, Math.max(0, Math.trunc(ms || 0))));
-}
+const { collectRunState, sleep } = require('./task-state');
 
 function readJson(filePath) {
   try {
@@ -50,61 +48,35 @@ function collectStatus(runRoot) {
   const summaryPath = path.join(reportsRoot, 'summary.json');
   const pidFile = path.join(runRoot, 'worker-pids.txt');
   const summary = readJson(summaryPath);
-  let configuredWorkerCount = null;
-  let configuredPids = [];
+  const aggregate = collectRunState(runRoot);
+  aggregate.hasSummary = Boolean(summary);
+  aggregate.summaryCompletedJobs = Number(summary?.completedJobs || 0);
+  aggregate.summaryFailedJobs = Number(summary?.failedJobs || 0);
+  aggregate.activePids = [];
+  aggregate.workerReports = 0;
+  aggregate.lastReportUpdatedAt = null;
+
   if (fs.existsSync(pidFile)) {
-    configuredPids = fs.readFileSync(pidFile, 'utf8')
+    aggregate.activePids = fs.readFileSync(pidFile, 'utf8')
       .split(/\s+/)
       .map((value) => Number(value))
-      .filter((value) => Number.isInteger(value) && value > 0);
-    configuredWorkerCount = configuredPids.length;
+      .filter((value) => Number.isInteger(value) && value > 0 && pidAlive(value));
   }
-  const workerFiles = fs.existsSync(reportsRoot)
-    ? fs.readdirSync(reportsRoot).filter((name) => /^worker-\d+\.json$/.test(name)).sort()
-    : [];
-  const aggregate = {
-    runRoot,
-    checkedAt: new Date().toISOString(),
-    workerReports: workerFiles.length,
-    totalJobs: 0,
-    completedJobs: 0,
-    failedJobs: 0,
-    activePids: [],
-    lastReportUpdatedAt: null,
-    hasSummary: Boolean(summary),
-    summaryCompletedJobs: Number(summary?.completedJobs || 0),
-    summaryFailedJobs: Number(summary?.failedJobs || 0),
-  };
 
-  const jobsByKey = new Map();
+  const workerFiles = fs.existsSync(reportsRoot)
+    ? fs.readdirSync(reportsRoot).filter((name) => /(download|compute)-worker-\d+\.json$/.test(name)).sort()
+    : [];
+  aggregate.workerReports = workerFiles.length;
   workerFiles.forEach((name) => {
-    const reportPath = path.join(reportsRoot, name);
-    const report = readJson(reportPath);
-    if (!report) return;
-    (Array.isArray(report.jobs) ? report.jobs : []).forEach((job) => {
-      if (!job?.symbol || !job?.dayIso) return;
-      const key = `${job.symbol}::${job.dayIso}`;
-      const existing = jobsByKey.get(key);
-      if (!existing || existing.status !== 'complete' || job.status === 'complete') {
-        jobsByKey.set(key, job);
-      }
-    });
-    const stat = fs.statSync(reportPath);
+    const stat = fs.statSync(path.join(reportsRoot, name));
     const mtime = stat.mtime.toISOString();
     if (!aggregate.lastReportUpdatedAt || mtime > aggregate.lastReportUpdatedAt) {
       aggregate.lastReportUpdatedAt = mtime;
     }
   });
-  aggregate.totalJobs = jobsByKey.size;
-  jobsByKey.forEach((job) => {
-    if (job.status === 'complete') aggregate.completedJobs += 1;
-    if (job.status === 'failed') aggregate.failedJobs += 1;
-  });
-
-  aggregate.activePids = configuredPids.filter(pidAlive);
 
   if (!aggregate.lastReportUpdatedAt && fs.existsSync(logsRoot)) {
-    const logFiles = fs.readdirSync(logsRoot).filter((name) => /^worker-\d+\.log$/.test(name)).sort();
+    const logFiles = fs.readdirSync(logsRoot).filter((name) => /worker-\d+\.log$/.test(name)).sort();
     logFiles.forEach((name) => {
       const stat = fs.statSync(path.join(logsRoot, name));
       const mtime = stat.mtime.toISOString();

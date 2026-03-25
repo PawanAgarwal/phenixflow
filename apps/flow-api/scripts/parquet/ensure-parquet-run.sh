@@ -23,6 +23,20 @@ detect_default_parquet_workers() {
   printf '%s\n' "$workers"
 }
 
+derive_download_workers() {
+  local total theta_cap download
+  total="$1"
+  theta_cap="$2"
+  download=$theta_cap
+  if (( download > total - 1 )); then
+    download=$(( total > 1 ? total - 1 : 1 ))
+  fi
+  if (( download < 1 )); then
+    download=1
+  fi
+  printf '%s\n' "$download"
+}
+
 DEFAULT_LOCAL_PARQUET_ROOT="${HOME}/Library/Caches/phenixflow/parquet"
 DEFAULT_EXTERNAL_PARQUET_ROOT="/Volumes/Phenix4TB/phenixflow/parquet"
 
@@ -39,6 +53,12 @@ RUN_ROOT="$PARQUET_ROOT/runs/$RUN_ID"
 START_DATE="${START_DATE:-2025-02-01}"
 END_DATE="${END_DATE:-2025-02-28}"
 PARQUET_WORKERS="${PARQUET_WORKERS:-$(detect_default_parquet_workers)}"
+PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="${PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS:-4}"
+PARQUET_DOWNLOAD_WORKERS="${PARQUET_DOWNLOAD_WORKERS:-$(derive_download_workers "$PARQUET_WORKERS" "$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS")}"
+PARQUET_COMPUTE_WORKERS="${PARQUET_COMPUTE_WORKERS:-$(( PARQUET_WORKERS - PARQUET_DOWNLOAD_WORKERS ))}"
+if (( PARQUET_COMPUTE_WORKERS < 1 )); then
+  PARQUET_COMPUTE_WORKERS=1
+fi
 THETADATA_BASE_URL="${THETADATA_BASE_URL:-http://127.0.0.1:25503}"
 ENSURE_LOG_DIR="$RUN_ROOT/automation"
 ENSURE_LOG="$ENSURE_LOG_DIR/ensure-parquet-run.log"
@@ -75,6 +95,11 @@ if [ "$STATE" = "running" ]; then
   exit 0
 fi
 
+if [ -f "$RUN_ROOT/state/control/stop-requested.json" ]; then
+  echo "[$(timestamp)] stop marker present; not relaunching" >>"$ENSURE_LOG"
+  exit 0
+fi
+
 if [ "$TOTAL_JOBS" -gt 0 ] && [ "$COMPLETED_JOBS" -ge "$TOTAL_JOBS" ]; then
   echo "[$(timestamp)] run complete; nothing to relaunch" >>"$ENSURE_LOG"
   exit 0
@@ -86,6 +111,9 @@ nohup env \
   END_DATE="$END_DATE" \
   PARQUET_RUN_ID="$RUN_ID" \
   PARQUET_WORKERS="$PARQUET_WORKERS" \
+  PARQUET_DOWNLOAD_WORKERS="$PARQUET_DOWNLOAD_WORKERS" \
+  PARQUET_COMPUTE_WORKERS="$PARQUET_COMPUTE_WORKERS" \
+  PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS" \
   THETADATA_BASE_URL="$THETADATA_BASE_URL" \
   PARQUET_RESUME_EXISTING=1 \
   bash "$RUN_SCRIPT" >>"$LAUNCH_LOG" 2>&1 < /dev/null &

@@ -12,11 +12,29 @@ const {
   downloadQuotesToParquet,
   downloadStockToParquet,
   ensureRunLayout,
+  getQuotePartitionDir,
+  loadStockPartition,
   parseIndexGreeksSymbols,
+  probeQuotePartition,
   resolveRunRoot,
-  shardJobsBalanced,
   writeJsonFile,
 } = require('./common');
+const {
+  COMPUTE_ROLE,
+  DOWNLOAD_ROLE,
+  claimNextTask,
+  collectRunState,
+  completeTask,
+  ensureJobStates,
+  failTask,
+  normalizeStageMaxAttempts,
+  readRunStopRequest,
+  requestRunStop,
+  roleShouldContinue,
+  sleep,
+  waitForJobStatesReady,
+  writeJobsReady,
+} = require('./task-state');
 
 function parseCsv(rawValue) {
   return String(rawValue || '')
@@ -25,103 +43,93 @@ function parseCsv(rawValue) {
     .filter(Boolean);
 }
 
-function jobKey(symbol, dayIso) {
-  return `${symbol}::${dayIso}`;
+function resolveWorkerRole() {
+  const raw = String(process.env.PARQUET_WORKER_ROLE || DOWNLOAD_ROLE).trim().toLowerCase();
+  if (raw === COMPUTE_ROLE) return COMPUTE_ROLE;
+  return DOWNLOAD_ROLE;
 }
 
-function loadExistingWorkerReports(reportsRoot) {
-  if (!fs.existsSync(reportsRoot)) return [];
-  return fs.readdirSync(reportsRoot)
-    .filter((name) => /^worker-\d+\.json$/.test(name))
-    .sort()
-    .map((name) => {
-      const reportPath = path.join(reportsRoot, name);
-      try {
-        return JSON.parse(fs.readFileSync(reportPath, 'utf8'));
-      } catch {
-        return null;
-      }
-    })
-    .filter(Boolean);
+function resolveWorkerIndex(role) {
+  const roleKey = role === COMPUTE_ROLE ? 'PARQUET_COMPUTE_WORKER_INDEX' : 'PARQUET_DOWNLOAD_WORKER_INDEX';
+  const fallback = Math.trunc(Number(process.env.PARQUET_WORKER_INDEX || 0));
+  const parsed = Math.trunc(Number(process.env[roleKey] || fallback));
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
+}
+
+function resolveWorkerTotal(role) {
+  const roleKey = role === COMPUTE_ROLE ? 'PARQUET_COMPUTE_WORKER_TOTAL' : 'PARQUET_DOWNLOAD_WORKER_TOTAL';
+  const parsed = Math.trunc(Number(process.env[roleKey] || 1));
+  return Number.isFinite(parsed) && parsed >= 1 ? parsed : 1;
+}
+
+function workerReportPath(reportsRoot, role, workerIndex) {
+  return path.join(reportsRoot, `${role}-worker-${workerIndex}.json`);
 }
 
 function buildWorkerReport({
   runId,
   runRoot,
+  role,
   workerIndex,
   workerTotal,
-  totalJobs,
   startedAt,
-  jobsByKey,
+  currentTask = null,
+  counters = {},
+  completedAt = null,
+  lastError = null,
 }) {
-  const jobs = Array.from(jobsByKey.values()).sort((left, right) => {
-    if (left.dayIso !== right.dayIso) return String(left.dayIso).localeCompare(String(right.dayIso));
-    return String(left.symbol).localeCompare(String(right.symbol));
-  });
-  const report = {
+  return {
     runId,
     runRoot,
+    role,
     workerIndex,
     workerTotal,
+    pid: process.pid,
     startedAt,
-    completedAt: null,
-    totalJobs,
-    completedJobs: 0,
-    failedJobs: 0,
-    totalStockRows: 0,
-    totalQuoteRows: 0,
-    totalRawGreekRows: 0,
-    totalFinalGreekRows: 0,
-    totalIndexGreekJobs: 0,
-    totalCalculatedGreekJobs: 0,
-    stockMs: 0,
-    quoteMs: 0,
-    indexGreekMs: 0,
-    calcGreekMs: 0,
-    jobs,
+    updatedAt: new Date().toISOString(),
+    completedAt,
+    currentTask,
+    lastError,
+    counters: {
+      tasksClaimed: Number(counters.tasksClaimed || 0),
+      tasksCompleted: Number(counters.tasksCompleted || 0),
+      tasksFailed: Number(counters.tasksFailed || 0),
+      idleLoops: Number(counters.idleLoops || 0),
+      stockRows: Number(counters.stockRows || 0),
+      quoteRows: Number(counters.quoteRows || 0),
+      rawGreekRows: Number(counters.rawGreekRows || 0),
+      finalGreekRows: Number(counters.finalGreekRows || 0),
+      stockMs: Number(counters.stockMs || 0),
+      quoteMs: Number(counters.quoteMs || 0),
+      rawGreekMs: Number(counters.rawGreekMs || 0),
+      calcGreekMs: Number(counters.calcGreekMs || 0),
+    },
   };
-  jobs.forEach((job) => {
-    if (job.status === 'complete') report.completedJobs += 1;
-    if (job.status === 'failed') report.failedJobs += 1;
-    report.totalStockRows += Number(job.stockRows || 0);
-    report.totalQuoteRows += Number(job.quoteRows || 0);
-    report.totalRawGreekRows += Number(job.rawGreekRows || 0);
-    report.totalFinalGreekRows += Number(job.finalGreekRows || 0);
-    if (job.greekMode === 'raw' && job.status === 'complete') report.totalIndexGreekJobs += 1;
-    if (job.greekMode === 'calculated' && job.status === 'complete') report.totalCalculatedGreekJobs += 1;
-    report.stockMs += Number(job.stockMs || 0);
-    report.quoteMs += Number(job.quoteMs || 0);
-    report.indexGreekMs += Number(job.indexGreekMs || 0);
-    report.calcGreekMs += Number(job.calcGreekMs || 0);
-  });
-  return report;
 }
 
-async function main() {
-  const runId = String(process.env.PARQUET_RUN_ID || '').trim() || buildRunId('parquet-benchmark');
-  const runRoot = resolveRunRoot(runId, process.env);
+function persistWorkerReport(reportPath, payload) {
+  writeJsonFile(reportPath, payload);
+}
+
+async function loadOrCreateManifest({
+  runId,
+  runRoot,
+  workerIndex,
+  startDate,
+  endDate,
+  symbolFile,
+  symbolLimit,
+  extraSymbols,
+  indexGreeksSymbols,
+}) {
   const layout = ensureRunLayout(runRoot);
-  const workerTotal = Math.max(1, Math.trunc(Number(process.env.PARQUET_WORKER_TOTAL || 1)));
-  const workerIndex = Math.max(0, Math.trunc(Number(process.env.PARQUET_WORKER_INDEX || 0)));
-  if (workerIndex >= workerTotal) {
-    throw new Error(`invalid_worker_index:${workerIndex}/${workerTotal}`);
+  const manifestPath = path.join(layout.manifestsRoot, 'run.json');
+  if (fs.existsSync(manifestPath)) {
+    return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   }
 
-  const startDate = String(process.env.START_DATE || '2025-01-02').trim();
-  const endDate = String(process.env.END_DATE || '2025-01-08').trim();
-  const symbolFile = path.resolve(process.env.SYMBOL_FILE || DEFAULT_SYMBOL_FILE);
-  const symbolLimit = Math.max(1, Math.trunc(Number(process.env.SYMBOL_LIMIT || 100)));
-  const extraSymbols = parseCsv(
-    Object.prototype.hasOwnProperty.call(process.env, 'EXTRA_SYMBOLS')
-      ? process.env.EXTRA_SYMBOLS
-      : DEFAULT_INDEX_GREEKS_SYMBOLS.join(','),
-  );
-  const indexGreeksSymbols = parseIndexGreeksSymbols(process.env);
-
-  const manifestPath = path.join(layout.manifestsRoot, 'run.json');
-  let built;
-  if (!fs.existsSync(manifestPath) || workerIndex === 0) {
-    built = await buildJobs({
+  if (workerIndex === 0) {
+    const built = await buildJobs({
       startDate,
       endDate,
       symbolFile,
@@ -129,7 +137,7 @@ async function main() {
       extraSymbols,
       env: process.env,
     });
-    writeJsonFile(manifestPath, {
+    const manifest = {
       runId,
       runRoot,
       createdAt: new Date().toISOString(),
@@ -142,211 +150,348 @@ async function main() {
       openDays: built.openDays,
       jobCount: built.jobs.length,
       indexGreeksSymbols: Array.from(indexGreeksSymbols),
-    });
-  } else {
-    built = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-    built.jobs = [];
-    const openDays = Array.isArray(built.openDays) ? built.openDays : [];
-    const symbols = Array.isArray(built.symbols) ? built.symbols : [];
-    openDays.forEach((dayIso) => {
-      symbols.forEach((symbol) => {
-        built.jobs.push({ symbol, dayIso });
-      });
-    });
-    if (!built.jobs.length) {
-      built = await buildJobs({
-        startDate,
-        endDate,
-        symbolFile,
-        symbolLimit,
-        extraSymbols,
-        env: process.env,
-      });
-      writeJsonFile(manifestPath, {
-        runId,
-        runRoot,
-        createdAt: new Date().toISOString(),
-        startDate,
-        endDate,
-        symbolFile,
-        symbolLimit,
-        extraSymbols,
-        symbols: built.symbols,
-        openDays: built.openDays,
-        jobCount: built.jobs.length,
-        indexGreeksSymbols: Array.from(indexGreeksSymbols),
-      });
-    }
+    };
+    writeJsonFile(manifestPath, manifest);
+    return manifest;
   }
 
-  const workerJobs = shardJobsBalanced(built.jobs, workerTotal, workerIndex);
-  const existingReports = loadExistingWorkerReports(layout.reportsRoot);
-  const completedJobKeys = new Set();
-  existingReports.forEach((report) => {
-    (Array.isArray(report.jobs) ? report.jobs : []).forEach((job) => {
-      if (job?.status === 'complete' && job.symbol && job.dayIso) {
-        completedJobKeys.add(jobKey(job.symbol, job.dayIso));
-      }
-    });
-  });
-
-  const workerReportPath = path.join(layout.reportsRoot, `worker-${workerIndex}.json`);
-  const existingWorkerReport = fs.existsSync(workerReportPath)
-    ? JSON.parse(fs.readFileSync(workerReportPath, 'utf8'))
-    : null;
-  const jobsByKey = new Map();
-  (Array.isArray(existingWorkerReport?.jobs) ? existingWorkerReport.jobs : []).forEach((job) => {
-    if (job?.symbol && job?.dayIso) {
-      jobsByKey.set(jobKey(job.symbol, job.dayIso), job);
+  for (let attempt = 0; attempt < 120; attempt += 1) {
+    if (fs.existsSync(manifestPath)) {
+      return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
     }
+    await sleep(500);
+  }
+
+  const built = await buildJobs({
+    startDate,
+    endDate,
+    symbolFile,
+    symbolLimit,
+    extraSymbols,
+    env: process.env,
   });
-  let report = buildWorkerReport({
+  const manifest = {
     runId,
     runRoot,
-    workerIndex,
-    workerTotal,
-    totalJobs: workerJobs.length,
-    startedAt: existingWorkerReport?.startedAt || new Date().toISOString(),
-    jobsByKey,
-  });
-  writeJsonFile(workerReportPath, report);
+    createdAt: new Date().toISOString(),
+    startDate,
+    endDate,
+    symbolFile,
+    symbolLimit,
+    extraSymbols,
+    symbols: built.symbols,
+    openDays: built.openDays,
+    jobCount: built.jobs.length,
+    indexGreeksSymbols: Array.from(indexGreeksSymbols),
+  };
+  writeJsonFile(manifestPath, manifest);
+  return manifest;
+}
 
-  for (let index = 0; index < workerJobs.length; index += 1) {
-    const job = workerJobs[index];
-    const key = jobKey(job.symbol, job.dayIso);
-    if (completedJobKeys.has(key)) {
-      console.log('[PARQUET_JOB_SKIP]', JSON.stringify({
-        symbol: job.symbol,
-        dayIso: job.dayIso,
-        reason: 'already_complete',
-      }));
-      continue;
+function manifestJobs(manifest) {
+  const symbols = Array.isArray(manifest?.symbols) ? manifest.symbols : [];
+  const openDays = Array.isArray(manifest?.openDays) ? manifest.openDays : [];
+  const jobs = [];
+  openDays.forEach((dayIso) => {
+    symbols.forEach((symbol) => {
+      jobs.push({ symbol, dayIso });
+    });
+  });
+  return jobs;
+}
+
+async function runClaimedTask(claim, { runId, runRoot }) {
+  const { symbol, dayIso, greekMode, stages } = claim.job;
+  if (claim.stageName === 'stock') {
+    const startedAtMs = Date.now();
+    const result = await downloadStockToParquet({
+      runRoot,
+      symbol,
+      dayIso,
+      env: process.env,
+    });
+    return {
+      elapsedMs: Date.now() - startedAtMs,
+      rowCount: result.rowCount,
+      meta: {
+        filePath: result.filePath,
+      },
+      counterPatch: {
+        stockRows: result.rowCount,
+        stockMs: Date.now() - startedAtMs,
+      },
+    };
+  }
+
+  if (claim.stageName === 'quotes') {
+    const startedAtMs = Date.now();
+    const result = await downloadQuotesToParquet({
+      runRoot,
+      symbol,
+      dayIso,
+      env: process.env,
+    });
+    const elapsedMs = Date.now() - startedAtMs;
+    return {
+      elapsedMs,
+      rowCount: result.rowCount,
+      meta: {
+        expirations: result.expirations,
+        expirationCount: result.expirations.length,
+        filePath: result.filePath,
+      },
+      counterPatch: {
+        quoteRows: result.rowCount,
+        quoteMs: elapsedMs,
+      },
+    };
+  }
+
+  if (claim.stageName === 'greeks' && greekMode === 'raw') {
+    const quoteInfo = Array.isArray(stages?.quotes?.meta?.expirations)
+      ? { expirations: stages.quotes.meta.expirations }
+      : await probeQuotePartition(getQuotePartitionDir(runRoot, symbol, dayIso));
+    const expirations = Array.isArray(quoteInfo?.expirations) ? quoteInfo.expirations : [];
+    if (expirations.length === 0) {
+      throw new Error(`missing_quote_expirations:${symbol}:${dayIso}`);
     }
     const startedAtMs = Date.now();
-    const jobSummary = {
-      symbol: job.symbol,
-      dayIso: job.dayIso,
-      jobIndex: index + 1,
-      totalJobs: workerJobs.length,
-      greekMode: indexGreeksSymbols.has(job.symbol) ? 'raw' : 'calculated',
-      status: 'running',
-      stockRows: 0,
-      quoteRows: 0,
-      rawGreekRows: 0,
-      finalGreekRows: 0,
-      stockMs: 0,
-      quoteMs: 0,
-      indexGreekMs: 0,
-      calcGreekMs: 0,
-      elapsedMs: 0,
-      error: null,
-    };
-    console.log('[PARQUET_JOB_START]', JSON.stringify(jobSummary));
-    try {
-      const stockStartedAtMs = Date.now();
-      const stockResult = await downloadStockToParquet({
-        runRoot,
-        symbol: job.symbol,
-        dayIso: job.dayIso,
-        env: process.env,
-      });
-      jobSummary.stockMs = Math.max(0, Date.now() - stockStartedAtMs);
-      report.totalStockRows += stockResult.rowCount;
-      jobSummary.stockRows = stockResult.rowCount;
-
-      const quoteStartedAtMs = Date.now();
-      const quoteResult = await downloadQuotesToParquet({
-        runRoot,
-        symbol: job.symbol,
-        dayIso: job.dayIso,
-        env: process.env,
-      });
-      jobSummary.quoteMs = Math.max(0, Date.now() - quoteStartedAtMs);
-      report.totalQuoteRows += quoteResult.rowCount;
-      jobSummary.quoteRows = quoteResult.rowCount;
-
-      if (indexGreeksSymbols.has(job.symbol)) {
-        const rawStartedAtMs = Date.now();
-        const rawResult = await downloadIndexGreeksToParquet({
-          runRoot,
-          symbol: job.symbol,
-          dayIso: job.dayIso,
-          expirations: quoteResult.expirations,
-          runId,
-          env: process.env,
-        });
-        jobSummary.indexGreekMs = Math.max(0, Date.now() - rawStartedAtMs);
-        report.totalRawGreekRows += rawResult.rawRowsWritten;
-        report.totalFinalGreekRows += rawResult.rawRowsWritten;
-        report.totalIndexGreekJobs += 1;
-        jobSummary.rawGreekRows = rawResult.rawRowsWritten;
-        jobSummary.finalGreekRows = rawResult.rawRowsWritten;
-      } else {
-        const calcStartedAtMs = Date.now();
-        const calcResult = await calculateGreeksToParquet({
-          runRoot,
-          symbol: job.symbol,
-          dayIso: job.dayIso,
-          stockByMinute: stockResult.stockByMinute,
-          runId,
-          env: process.env,
-        });
-        jobSummary.calcGreekMs = Math.max(0, Date.now() - calcStartedAtMs);
-        report.totalFinalGreekRows += calcResult.writtenRows;
-        report.totalCalculatedGreekJobs += 1;
-        jobSummary.finalGreekRows = calcResult.writtenRows;
-      }
-
-      jobSummary.status = 'complete';
-      report.completedJobs += 1;
-    } catch (error) {
-      report.failedJobs += 1;
-      jobSummary.status = 'failed';
-      jobSummary.error = String(error?.stack || error?.message || error);
-      console.error('[PARQUET_JOB_FAILED]', JSON.stringify({
-        symbol: job.symbol,
-        dayIso: job.dayIso,
-        error: jobSummary.error.split('\n')[0],
-      }));
-    }
-    jobSummary.elapsedMs = Math.max(0, Date.now() - startedAtMs);
-    jobsByKey.set(key, jobSummary);
-    report = buildWorkerReport({
-      runId,
+    const result = await downloadIndexGreeksToParquet({
       runRoot,
-      workerIndex,
-      workerTotal,
-      totalJobs: workerJobs.length,
-      startedAt: report.startedAt,
-      jobsByKey,
+      symbol,
+      dayIso,
+      expirations,
+      runId,
+      env: process.env,
     });
-    writeJsonFile(workerReportPath, report);
-    console.log('[PARQUET_JOB_DONE]', JSON.stringify(jobSummary));
+    const elapsedMs = Date.now() - startedAtMs;
+    return {
+      elapsedMs,
+      rowCount: result.rawRowsWritten,
+      meta: {
+        expirations,
+        rawPath: result.rawPath,
+        finalPath: result.finalPath,
+      },
+      counterPatch: {
+        rawGreekRows: result.rawRowsWritten,
+        finalGreekRows: result.rawRowsWritten,
+        rawGreekMs: elapsedMs,
+      },
+    };
   }
 
-  report = buildWorkerReport({
+  if (claim.stageName === 'greeks' && greekMode === 'calculated') {
+    const stockPartitionDir = path.join(runRoot, 'datasets', 'raw', 'stock_ohlc_minute', `symbol=${symbol}`, `trade_date_utc=${dayIso}`);
+    const stock = await loadStockPartition(stockPartitionDir);
+    if (!stock) {
+      throw new Error(`missing_stock_parquet:${symbol}:${dayIso}`);
+    }
+    const startedAtMs = Date.now();
+    const result = await calculateGreeksToParquet({
+      runRoot,
+      symbol,
+      dayIso,
+      stockByMinute: stock.stockByMinute,
+      runId,
+      env: process.env,
+    });
+    const elapsedMs = Date.now() - startedAtMs;
+    return {
+      elapsedMs,
+      rowCount: result.writtenRows,
+      meta: {
+        finalPath: result.finalPath,
+      },
+      counterPatch: {
+        finalGreekRows: result.writtenRows,
+        calcGreekMs: elapsedMs,
+      },
+    };
+  }
+
+  throw new Error(`unsupported_task:${claim.stageName}:${greekMode}`);
+}
+
+async function main() {
+  const role = resolveWorkerRole();
+  const workerIndex = resolveWorkerIndex(role);
+  const workerTotal = resolveWorkerTotal(role);
+  if (workerIndex >= workerTotal) {
+    throw new Error(`invalid_worker_index:${workerIndex}/${workerTotal}:${role}`);
+  }
+
+  const runId = String(process.env.PARQUET_RUN_ID || '').trim() || buildRunId('parquet-benchmark');
+  const runRoot = resolveRunRoot(runId, process.env);
+  const layout = ensureRunLayout(runRoot);
+  const startDate = String(process.env.START_DATE || '2025-01-02').trim();
+  const endDate = String(process.env.END_DATE || '2025-01-08').trim();
+  const symbolFile = path.resolve(process.env.SYMBOL_FILE || DEFAULT_SYMBOL_FILE);
+  const symbolLimit = Math.max(1, Math.trunc(Number(process.env.SYMBOL_LIMIT || 100)));
+  const extraSymbols = parseCsv(
+    Object.prototype.hasOwnProperty.call(process.env, 'EXTRA_SYMBOLS')
+      ? process.env.EXTRA_SYMBOLS
+      : DEFAULT_INDEX_GREEKS_SYMBOLS.join(','),
+  );
+  const indexGreeksSymbols = parseIndexGreeksSymbols(process.env);
+  const stageMaxAttempts = normalizeStageMaxAttempts(process.env);
+  const workerId = `${role}-${workerIndex}`;
+
+  const manifest = await loadOrCreateManifest({
     runId,
     runRoot,
     workerIndex,
-    workerTotal,
-    totalJobs: workerJobs.length,
-    startedAt: report.startedAt,
-    jobsByKey,
+    startDate,
+    endDate,
+    symbolFile,
+    symbolLimit,
+    extraSymbols,
+    indexGreeksSymbols,
   });
-  report.completedAt = new Date().toISOString();
-  writeJsonFile(workerReportPath, report);
+  const jobs = manifestJobs(manifest);
+  const shouldInitializeStates = role === DOWNLOAD_ROLE && workerIndex === 0;
+  if (shouldInitializeStates) {
+    await ensureJobStates({
+      runId,
+      runRoot,
+      jobs,
+      indexGreeksSymbols,
+    });
+    writeJobsReady(runRoot, { jobCount: jobs.length, initializedBy: workerId });
+  } else {
+    await waitForJobStatesReady(runRoot);
+  }
+
+  const reportPath = workerReportPath(layout.reportsRoot, role, workerIndex);
+  const counters = {};
+  const startedAt = new Date().toISOString();
+  let currentTask = null;
+  let lastError = null;
+  let stopLogged = false;
+
+  const writeReport = (completedAt = null) => {
+    persistWorkerReport(reportPath, buildWorkerReport({
+      runId,
+      runRoot,
+      role,
+      workerIndex,
+      workerTotal,
+      startedAt,
+      currentTask,
+      counters,
+      completedAt,
+      lastError,
+    }));
+  };
+
+  const requestStop = (reason) => {
+    requestRunStop(runRoot, `${reason}:${workerId}`);
+  };
+
+  process.on('SIGINT', () => requestStop('sigint'));
+  process.on('SIGTERM', () => requestStop('sigterm'));
+
+  writeReport();
+
+  while (true) {
+    const stopRequested = readRunStopRequest(runRoot);
+    if (stopRequested && !stopLogged) {
+      stopLogged = true;
+      console.log('[PARQUET_STOP_REQUESTED]', JSON.stringify({
+        role,
+        workerIndex,
+        reason: stopRequested.reason || 'requested',
+      }));
+    }
+
+    const claim = await claimNextTask({
+      runRoot,
+      role,
+      workerId,
+      maxAttempts: stageMaxAttempts,
+    });
+
+    if (!claim) {
+      const runState = collectRunState(runRoot, { maxAttempts: stageMaxAttempts });
+      counters.idleLoops = Number(counters.idleLoops || 0) + 1;
+      currentTask = null;
+      writeReport();
+      if (!roleShouldContinue(runState, role)) break;
+      await sleep(1000);
+      continue;
+    }
+
+    counters.tasksClaimed = Number(counters.tasksClaimed || 0) + 1;
+    currentTask = {
+      symbol: claim.job.symbol,
+      dayIso: claim.job.dayIso,
+      greekMode: claim.job.greekMode,
+      stageName: claim.stageName,
+      claimedAt: new Date().toISOString(),
+    };
+    writeReport();
+    console.log('[PARQUET_TASK_START]', JSON.stringify({
+      role,
+      workerIndex,
+      symbol: claim.job.symbol,
+      dayIso: claim.job.dayIso,
+      greekMode: claim.job.greekMode,
+      stageName: claim.stageName,
+    }));
+
+    try {
+      const result = await runClaimedTask(claim, { runId, runRoot });
+      await completeTask(claim, {
+        rowCount: result.rowCount,
+        elapsedMs: result.elapsedMs,
+        meta: result.meta,
+      });
+      counters.tasksCompleted = Number(counters.tasksCompleted || 0) + 1;
+      Object.entries(result.counterPatch || {}).forEach(([key, value]) => {
+        counters[key] = Number(counters[key] || 0) + Number(value || 0);
+      });
+      console.log('[PARQUET_TASK_DONE]', JSON.stringify({
+        role,
+        workerIndex,
+        symbol: claim.job.symbol,
+        dayIso: claim.job.dayIso,
+        stageName: claim.stageName,
+        rowCount: result.rowCount,
+        elapsedMs: result.elapsedMs,
+      }));
+      lastError = null;
+    } catch (error) {
+      counters.tasksFailed = Number(counters.tasksFailed || 0) + 1;
+      lastError = String(error?.stack || error?.message || error);
+      await failTask(claim, error);
+      console.error('[PARQUET_TASK_FAILED]', JSON.stringify({
+        role,
+        workerIndex,
+        symbol: claim.job.symbol,
+        dayIso: claim.job.dayIso,
+        stageName: claim.stageName,
+        error: lastError.split('\n')[0],
+      }));
+    }
+
+    currentTask = null;
+    writeReport();
+  }
+
+  writeReport(new Date().toISOString());
+  const runState = collectRunState(runRoot, { maxAttempts: stageMaxAttempts });
   console.log(JSON.stringify({
     runId,
     runRoot,
+    role,
     workerIndex,
     workerTotal,
-    totalJobs: report.totalJobs,
-    completedJobs: report.completedJobs,
-    failedJobs: report.failedJobs,
-    totalStockRows: report.totalStockRows,
-    totalQuoteRows: report.totalQuoteRows,
-    totalRawGreekRows: report.totalRawGreekRows,
-    totalFinalGreekRows: report.totalFinalGreekRows,
+    stopRequested: Boolean(runState.stopRequested),
+    totalJobs: runState.totalJobs,
+    completeJobs: runState.completeJobs,
+    failedJobs: runState.failedJobs,
+    downloadReady: runState.downloadReady,
+    computeReady: runState.computeReady,
   }, null, 2));
 }
 

@@ -52,6 +52,8 @@ const DEFAULT_THETA_GLOBAL_COOLDOWN_MS = 30000;
 const DEFAULT_THETA_MAX_CONCURRENT_CONNECTIONS = 4;
 const DEFAULT_MARKET_OPEN_TIME = '09:30:00';
 const DEFAULT_MARKET_REGULAR_CLOSE_TIME = '16:00:00';
+const DEFAULT_PARQUET_WRITE_MAX_PENDING_BATCHES = 8;
+const DEFAULT_PARQUET_WRITE_MAX_PENDING_ROWS = 40000;
 
 const HEAVY_SYMBOL_WEIGHTS = new Map([
   ['SPXW', 64],
@@ -209,6 +211,10 @@ function resolveLayout(runRoot) {
     manifestsRoot: path.join(runRoot, 'manifests'),
     reportsRoot: path.join(runRoot, 'reports'),
     logsRoot: path.join(runRoot, 'logs'),
+    stateRoot: path.join(runRoot, 'state'),
+    jobStateRoot: path.join(runRoot, 'state', 'jobs'),
+    lockRoot: path.join(runRoot, 'state', 'locks'),
+    controlRoot: path.join(runRoot, 'state', 'control'),
     rawStockRoot: path.join(runRoot, 'datasets', 'raw', 'stock_ohlc_minute'),
     rawQuoteRoot: path.join(runRoot, 'datasets', 'raw', 'option_quote_minute'),
     rawGreeksRoot: path.join(runRoot, 'datasets', 'raw', 'option_greeks_minute'),
@@ -1219,6 +1225,10 @@ function getPartitionPartPath(partitionDir, partIndex = 0) {
   return path.join(partitionDir, `part-${String(Math.max(0, partIndex)).padStart(4, '0')}.parquet`);
 }
 
+function getPartitionSuccessMarkerPath(partitionDir) {
+  return path.join(partitionDir, '_SUCCESS.json');
+}
+
 function resetPartitionDir(partitionDir) {
   fs.rmSync(partitionDir, { recursive: true, force: true });
   ensureDir(partitionDir);
@@ -1266,6 +1276,65 @@ async function appendRows(writer, rows) {
   }
 }
 
+function createAsyncBatchAppender(writeBatch, {
+  env = process.env,
+  maxPendingBatches = Math.max(1, Math.trunc(parseNumberEnv(
+    'PARQUET_WRITE_MAX_PENDING_BATCHES',
+    DEFAULT_PARQUET_WRITE_MAX_PENDING_BATCHES,
+    env,
+  ))),
+  maxPendingRows = Math.max(1000, Math.trunc(parseNumberEnv(
+    'PARQUET_WRITE_MAX_PENDING_ROWS',
+    DEFAULT_PARQUET_WRITE_MAX_PENDING_ROWS,
+    env,
+  ))),
+} = {}) {
+  let pendingBatches = 0;
+  let pendingRows = 0;
+  let queue = Promise.resolve();
+  let firstError = null;
+
+  async function drain() {
+    await queue;
+    if (firstError) {
+      const error = firstError;
+      firstError = null;
+      throw error;
+    }
+  }
+
+  async function schedule(rows, { forceDrain = false, rowCount = null } = {}) {
+    const normalizedRowCount = Number.isFinite(Number(rowCount))
+      ? Math.max(0, Math.trunc(Number(rowCount)))
+      : (Array.isArray(rows) ? rows.length : 0);
+    if (normalizedRowCount === 0) {
+      if (forceDrain) await drain();
+      return;
+    }
+    if (firstError) throw firstError;
+    pendingBatches += 1;
+    pendingRows += normalizedRowCount;
+    queue = queue.then(async () => {
+      try {
+        await writeBatch(rows);
+      } catch (error) {
+        firstError = firstError || error;
+      } finally {
+        pendingBatches = Math.max(0, pendingBatches - 1);
+        pendingRows = Math.max(0, pendingRows - normalizedRowCount);
+      }
+    });
+    if (forceDrain || pendingBatches >= maxPendingBatches || pendingRows >= maxPendingRows) {
+      await drain();
+    }
+  }
+
+  return {
+    schedule,
+    drain,
+  };
+}
+
 async function runTasksWithConcurrency(tasks, concurrency, workerFn) {
   if (!Array.isArray(tasks) || tasks.length === 0) return [];
   const normalizedConcurrency = Math.max(1, Math.min(tasks.length, Math.trunc(concurrency || 1)));
@@ -1303,6 +1372,24 @@ async function scanParquetFiles(partitionDir, onRow) {
   }
 }
 
+function readPartitionSuccessMarker(partitionDir) {
+  const markerPath = getPartitionSuccessMarkerPath(partitionDir);
+  if (!fs.existsSync(markerPath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(markerPath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function writePartitionSuccessMarker(partitionDir, payload) {
+  const markerPath = getPartitionSuccessMarkerPath(partitionDir);
+  writeJsonFile(markerPath, {
+    completedAt: nowIso(),
+    ...payload,
+  });
+}
+
 async function loadStockPartition(partitionDir) {
   const partFiles = listParquetPartFiles(partitionDir);
   if (partFiles.length === 0) return null;
@@ -1316,6 +1403,34 @@ async function loadStockPartition(partitionDir) {
     }
   });
   return { rowCount, stockByMinute };
+}
+
+async function probeStockPartition(partitionDir) {
+  const marker = readPartitionSuccessMarker(partitionDir);
+  if (marker?.rowCount !== undefined) {
+    const loaded = await loadStockPartition(partitionDir);
+    if (!loaded) return null;
+    return {
+      rowCount: loaded.rowCount,
+      stockByMinute: loaded.stockByMinute,
+      marker,
+      legacy: false,
+    };
+  }
+  const legacy = await loadStockPartition(partitionDir);
+  if (!legacy) return null;
+  writePartitionSuccessMarker(partitionDir, {
+    stage: 'stock',
+    rowCount: legacy.rowCount,
+    partCount: listParquetPartFiles(partitionDir).length,
+    legacyInferred: true,
+  });
+  return {
+    rowCount: legacy.rowCount,
+    stockByMinute: legacy.stockByMinute,
+    marker: readPartitionSuccessMarker(partitionDir),
+    legacy: true,
+  };
 }
 
 async function summarizeQuotePartition(partitionDir) {
@@ -1333,6 +1448,34 @@ async function summarizeQuotePartition(partitionDir) {
   };
 }
 
+async function probeQuotePartition(partitionDir) {
+  const marker = readPartitionSuccessMarker(partitionDir);
+  if (marker?.rowCount !== undefined) {
+    const summary = await summarizeQuotePartition(partitionDir);
+    if (!summary) return null;
+    return {
+      ...summary,
+      marker,
+      legacy: false,
+    };
+  }
+  const legacy = await summarizeQuotePartition(partitionDir);
+  if (!legacy) return null;
+  writePartitionSuccessMarker(partitionDir, {
+    stage: 'quotes',
+    rowCount: legacy.rowCount,
+    expirationCount: legacy.expirations.length,
+    expirations: legacy.expirations,
+    partCount: listParquetPartFiles(partitionDir).length,
+    legacyInferred: true,
+  });
+  return {
+    ...legacy,
+    marker: readPartitionSuccessMarker(partitionDir),
+    legacy: true,
+  };
+}
+
 async function summarizeRowPartition(partitionDir) {
   const partFiles = listParquetPartFiles(partitionDir);
   if (partFiles.length === 0) return null;
@@ -1341,6 +1484,32 @@ async function summarizeRowPartition(partitionDir) {
     rowCount += 1;
   });
   return { rowCount };
+}
+
+async function probeRowPartition(partitionDir, stage = 'rows') {
+  const marker = readPartitionSuccessMarker(partitionDir);
+  if (marker?.rowCount !== undefined) {
+    const summary = await summarizeRowPartition(partitionDir);
+    if (!summary) return null;
+    return {
+      ...summary,
+      marker,
+      legacy: false,
+    };
+  }
+  const legacy = await summarizeRowPartition(partitionDir);
+  if (!legacy) return null;
+  writePartitionSuccessMarker(partitionDir, {
+    stage,
+    rowCount: legacy.rowCount,
+    partCount: listParquetPartFiles(partitionDir).length,
+    legacyInferred: true,
+  });
+  return {
+    ...legacy,
+    marker: readPartitionSuccessMarker(partitionDir),
+    legacy: true,
+  };
 }
 
 function writeJsonFile(filePath, payload) {
@@ -1713,6 +1882,13 @@ async function writeQuoteWindowPart({
   const expirations = new Set();
   let writtenRows = 0;
   const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
+  const appender = createAsyncBatchAppender(async (rows) => {
+    await appendRows(handle.writer, rows);
+    writtenRows += rows.length;
+    if (writtenRows > 0 && writtenRows % logEvery === 0) {
+      console.log('[PARQUET_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
+    }
+  }, { env });
   const endpoint = historicalPrivate.resolveThetaOptionQuoteEndpoint(symbol, dayIso, env, window);
   try {
     if (!endpoint) {
@@ -1722,14 +1898,11 @@ async function writeQuoteWindowPart({
     const format = new URL(endpoint).searchParams.get('format');
     if (format === 'ndjson') {
       let buffer = [];
-      const flush = async () => {
+      const flush = async (forceDrain = false) => {
         if (buffer.length === 0) return;
-        await appendRows(handle.writer, buffer);
-        writtenRows += buffer.length;
+        const rows = buffer;
         buffer = [];
-        if (writtenRows > 0 && writtenRows % logEvery === 0) {
-          console.log('[PARQUET_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
-        }
+        await appender.schedule(rows, { forceDrain });
       };
       const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
         env,
@@ -1740,7 +1913,7 @@ async function writeQuoteWindowPart({
           expirations.add(normalized.expiration);
           buffer.push(normalized);
           if (buffer.length >= 2000) {
-            await flush();
+            await flush(false);
           }
         },
       }), {
@@ -1750,7 +1923,8 @@ async function writeQuoteWindowPart({
       if (!result.response.ok && result.response.status !== 472) {
         throw new Error(`thetadata_request_failed:${result.response.status}`);
       }
-      await flush();
+      await flush(true);
+      await appender.drain();
     } else {
       const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
         env,
@@ -1763,8 +1937,7 @@ async function writeQuoteWindowPart({
           expirations.add(row.expiration);
           return { ...row, source_endpoint: endpoint };
         });
-      await appendRows(handle.writer, normalizedRows);
-      writtenRows += normalizedRows.length;
+      await appender.schedule(normalizedRows, { forceDrain: true });
     }
     await handle.close(writtenRows > 0);
     return {
@@ -1795,24 +1968,12 @@ async function writeRawIndexWindowPart({
   const expirationConcurrency = Math.max(1, Math.min(expirations.length || 1, parseHeavyRawIndexExpirationConcurrency(env)));
   let rawRowsWritten = 0;
   try {
-    let appendLock = Promise.resolve();
-    async function appendWithLock(rawRows, finalRows) {
-      const previous = appendLock;
-      let release;
-      appendLock = new Promise((resolve) => {
-        release = resolve;
-      });
-      await previous;
-      try {
-        if (rawRows.length > 0) {
-          await appendRows(rawHandle.writer, rawRows);
-          await appendRows(finalHandle.writer, finalRows);
-          rawRowsWritten += rawRows.length;
-        }
-      } finally {
-        release();
-      }
-    }
+    const appender = createAsyncBatchAppender(async ({ rawRows, finalRows }) => {
+      if (!rawRows.length) return;
+      await appendRows(rawHandle.writer, rawRows);
+      await appendRows(finalHandle.writer, finalRows);
+      rawRowsWritten += rawRows.length;
+    }, { env });
     await runTasksWithConcurrency(expirations, expirationConcurrency, async (expiration) => {
       const endpoint = historicalPrivate.resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, {
         format: syncFormat,
@@ -1830,7 +1991,7 @@ async function writeRawIndexWindowPart({
           const finalRows = finalBuffer;
           rawBuffer = [];
           finalBuffer = [];
-          await appendWithLock(rows, finalRows);
+          await appender.schedule({ rawRows: rows, finalRows }, { forceDrain: force, rowCount: rows.length });
         };
         const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
           env,
@@ -1868,10 +2029,10 @@ async function writeRawIndexWindowPart({
           calcVersion: 'theta_raw_v1',
           sourceEndpoint: endpoint,
         }));
-        await appendWithLock(normalizedRows, finalRows);
+        await appender.schedule({ rawRows: normalizedRows, finalRows }, { forceDrain: true, rowCount: normalizedRows.length });
       }
     });
-    await appendLock;
+    await appender.drain();
     await rawHandle.close(rawRowsWritten > 0);
     await finalHandle.close(rawRowsWritten > 0);
     return { rawRowsWritten };
@@ -1887,7 +2048,7 @@ async function downloadStockToParquet({ runRoot, symbol, dayIso, env = process.e
   const partitionDir = getStockPartitionDir(runRoot, symbol, dayIso);
   const filePath = getStockPath(runRoot, symbol, dayIso);
   if (parseResumeExisting(env)) {
-    const existing = await loadStockPartition(partitionDir);
+    const existing = await probeStockPartition(partitionDir);
     if (existing) {
       console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({ stage: 'stock', symbol, dayIso, rowCount: existing.rowCount }));
       return {
@@ -1918,6 +2079,17 @@ async function downloadStockToParquet({ runRoot, symbol, dayIso, env = process.e
     throw error;
   }
   const stockByMinute = new Map(normalizedRows.map((row) => [row.minute_bucket_utc, toNumber(row.close)]).filter(([, close]) => close !== null));
+  const stockPartCount = listParquetPartFiles(partitionDir).length;
+  if (normalizedRows.length > 0 && stockPartCount === 0) {
+    throw new Error(`stock_partition_missing_after_write:${symbol}:${dayIso}`);
+  }
+  if (stockPartCount > 0) {
+    writePartitionSuccessMarker(partitionDir, {
+      stage: 'stock',
+      rowCount: normalizedRows.length,
+      partCount: stockPartCount,
+    });
+  }
   return {
     rowCount: normalizedRows.length,
     filePath,
@@ -1930,7 +2102,7 @@ async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.
   const partitionDir = getQuotePartitionDir(runRoot, symbol, dayIso);
   const filePath = getPartitionPartPath(partitionDir, 0);
   if (parseResumeExisting(env)) {
-    const existing = await summarizeQuotePartition(partitionDir);
+    const existing = await probeQuotePartition(partitionDir);
     if (existing) {
       console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({
         stage: 'quotes',
@@ -2014,6 +2186,19 @@ async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.
       }
     }
   }
+  const quotePartCount = listParquetPartFiles(partitionDir).length;
+  if ((writtenRows > 0 || expirations.size > 0) && quotePartCount === 0) {
+    throw new Error(`quote_partition_missing_after_write:${symbol}:${dayIso}`);
+  }
+  if (quotePartCount > 0) {
+    writePartitionSuccessMarker(partitionDir, {
+      stage: 'quotes',
+      rowCount: writtenRows,
+      expirationCount: expirations.size,
+      expirations: Array.from(expirations).sort(),
+      partCount: quotePartCount,
+    });
+  }
   return {
     rowCount: writtenRows,
     filePath: partitionDir,
@@ -2033,8 +2218,8 @@ async function downloadIndexGreeksToParquet({
   const rawPartitionDir = getRawGreeksPartitionDir(runRoot, symbol, dayIso);
   const finalPartitionDir = getFinalGreeksPartitionDir(runRoot, symbol, dayIso);
   if (parseResumeExisting(env)) {
-    const existingRaw = await summarizeRowPartition(rawPartitionDir);
-    const existingFinal = await summarizeRowPartition(finalPartitionDir);
+    const existingRaw = await probeRowPartition(rawPartitionDir, 'raw_greeks');
+    const existingFinal = await probeRowPartition(finalPartitionDir, 'final_greeks_raw');
     if (existingRaw && existingFinal) {
       console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({
         stage: 'raw_greeks',
@@ -2137,6 +2322,25 @@ async function downloadIndexGreeksToParquet({
       rawRowsWritten += Number(part?.rawRowsWritten || 0);
     }
   }
+  const rawPartCount = listParquetPartFiles(rawPartitionDir).length;
+  const finalRawPartCount = listParquetPartFiles(finalPartitionDir).length;
+  if (rawRowsWritten > 0 && (rawPartCount === 0 || finalRawPartCount === 0)) {
+    throw new Error(`raw_greeks_partition_missing_after_write:${symbol}:${dayIso}`);
+  }
+  if (rawPartCount > 0) {
+    writePartitionSuccessMarker(rawPartitionDir, {
+      stage: 'raw_greeks',
+      rowCount: rawRowsWritten,
+      partCount: rawPartCount,
+    });
+  }
+  if (finalRawPartCount > 0) {
+    writePartitionSuccessMarker(finalPartitionDir, {
+      stage: 'final_greeks_raw',
+      rowCount: rawRowsWritten,
+      partCount: finalRawPartCount,
+    });
+  }
   return {
     rawRowsWritten,
     rawPath: rawPartitionDir,
@@ -2158,7 +2362,7 @@ async function calculateGreeksToParquet({
     throw new Error(`missing_quote_parquet:${symbol}:${dayIso}`);
   }
   if (parseResumeExisting(env)) {
-    const existing = await summarizeRowPartition(getFinalGreeksPartitionDir(runRoot, symbol, dayIso));
+    const existing = await probeRowPartition(getFinalGreeksPartitionDir(runRoot, symbol, dayIso), 'final_greeks_calculated');
     if (existing) {
       console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({
         stage: 'calc_greeks',
@@ -2207,6 +2411,18 @@ async function calculateGreeksToParquet({
     await handle.close(false);
     throw error;
   }
+  const finalCalcPartitionDir = getFinalGreeksPartitionDir(runRoot, symbol, dayIso);
+  const finalCalcPartCount = listParquetPartFiles(finalCalcPartitionDir).length;
+  if (writtenRows > 0 && finalCalcPartCount === 0) {
+    throw new Error(`calc_greeks_partition_missing_after_write:${symbol}:${dayIso}`);
+  }
+  if (finalCalcPartCount > 0) {
+    writePartitionSuccessMarker(finalCalcPartitionDir, {
+      stage: 'final_greeks_calculated',
+      rowCount: writtenRows,
+      partCount: finalCalcPartCount,
+    });
+  }
   return {
     writtenRows,
     finalPath,
@@ -2230,8 +2446,19 @@ module.exports = {
   downloadQuotesToParquet,
   downloadStockToParquet,
   ensureRunLayout,
+  getFinalGreeksPartitionDir,
+  getPartitionSuccessMarkerPath,
+  getQuotePartitionDir,
+  getRawGreeksPartitionDir,
+  getStockPartitionDir,
+  loadStockPartition,
   parseIndexGreeksSymbols,
+  probeQuotePartition,
+  probeRowPartition,
+  probeStockPartition,
   resolveRunRoot,
   shardJobsBalanced,
+  summarizeQuotePartition,
   writeJsonFile,
+  writePartitionSuccessMarker,
 };
