@@ -14,7 +14,8 @@ const {
   __private: historicalPrivate,
 } = require('../../historical-flow');
 
-const DEFAULT_PARQUET_ROOT = path.join(os.homedir(), 'Library', 'Caches', 'phenixflow', 'parquet');
+const DEFAULT_LOCAL_PARQUET_ROOT = path.join(os.homedir(), 'Library', 'Caches', 'phenixflow', 'parquet');
+const DEFAULT_EXTERNAL_PARQUET_ROOT = path.join('/Volumes', 'Phenix4TB', 'phenixflow', 'parquet');
 const DEFAULT_SYMBOL_FILE = path.resolve(__dirname, '..', '..', 'config', 'top100-universe.json');
 const DEFAULT_INDEX_GREEKS_SYMBOLS = Object.freeze(['SPX', 'SPXW', 'SPY', 'QQQ', 'VIX', 'VIXW', 'RUT', 'RUTW', 'XSP']);
 const DEFAULT_THETADATA_BASE_URL = 'http://127.0.0.1:25503';
@@ -35,6 +36,22 @@ const DEFAULT_GREEKS_DIVIDEND_YIELD = 0.0;
 const DEFAULT_GREEKS_FALLBACK_RATE = 0.0;
 const DEFAULT_CALENDAR_PATH = '/v3/calendar/on_date';
 const DEFAULT_CHUNK_LOG_EVERY = 250000;
+const DEFAULT_HEAVY_RAW_INDEX_MIN_EXPIRATIONS = 120;
+const DEFAULT_HEAVY_RAW_INDEX_QUOTE_WINDOW_MINUTES = 15;
+const DEFAULT_HEAVY_RAW_INDEX_WINDOW_MINUTES = 5;
+const DEFAULT_HEAVY_RAW_INDEX_QUOTE_CONCURRENCY = 4;
+const DEFAULT_HEAVY_RAW_INDEX_GREEKS_CONCURRENCY = 4;
+const DEFAULT_HEAVY_RAW_INDEX_EXPIRATION_CONCURRENCY = 4;
+const DEFAULT_HEAVY_RAW_INDEX_EXPIRATION_GROUP_SIZE = 6;
+const DEFAULT_HEAVY_RAW_INDEX_EXPIRATION_GROUP_MAX_EXPIRATIONS = 64;
+const DEFAULT_PARQUET_RESUME_EXISTING = true;
+const DEFAULT_THETA_RETRY_ATTEMPTS = 8;
+const DEFAULT_THETA_RETRY_BASE_DELAY_MS = 2000;
+const DEFAULT_THETA_RETRY_MAX_DELAY_MS = 60000;
+const DEFAULT_THETA_GLOBAL_COOLDOWN_MS = 30000;
+const DEFAULT_THETA_MAX_CONCURRENT_CONNECTIONS = 4;
+const DEFAULT_MARKET_OPEN_TIME = '09:30:00';
+const DEFAULT_MARKET_REGULAR_CLOSE_TIME = '16:00:00';
 
 const HEAVY_SYMBOL_WEIGHTS = new Map([
   ['SPXW', 64],
@@ -58,6 +75,8 @@ const HEAVY_SYMBOL_WEIGHTS = new Map([
   ['MU', 12],
   ['NFLX', 12],
 ]);
+
+const DEFAULT_HEAVY_RAW_INDEX_SYMBOLS = new Set(DEFAULT_INDEX_GREEKS_SYMBOLS);
 
 function withCompression(fields) {
   return Object.fromEntries(
@@ -156,6 +175,12 @@ function nowIso() {
   return new Date().toISOString();
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, Math.max(0, Math.trunc(ms || 0)));
+  });
+}
+
 function buildRunId(prefix = 'parquet-greeks') {
   return `${prefix}-${new Date().toISOString().replace(/[-:.]/g, '').slice(0, 15)}Z`;
 }
@@ -166,7 +191,11 @@ function resolveThetaBaseUrl(env = process.env) {
 
 function resolveParquetRoot(env = process.env) {
   const configured = String(env.PHENIXFLOW_PARQUET_ROOT || '').trim();
-  return configured ? path.resolve(configured) : DEFAULT_PARQUET_ROOT;
+  if (configured) return path.resolve(configured);
+  if (fs.existsSync(path.dirname(DEFAULT_EXTERNAL_PARQUET_ROOT))) {
+    return DEFAULT_EXTERNAL_PARQUET_ROOT;
+  }
+  return DEFAULT_LOCAL_PARQUET_ROOT;
 }
 
 function resolveRunRoot(runId, env = process.env) {
@@ -309,6 +338,10 @@ function parseBooleanLike(value, fallback = false) {
   return fallback;
 }
 
+function parseResumeExisting(env = process.env) {
+  return parseBooleanLike(env.PARQUET_RESUME_EXISTING, DEFAULT_PARQUET_RESUME_EXISTING);
+}
+
 function parseNumberEnv(envKey, fallback, env = process.env) {
   const parsed = Number(env[envKey]);
   return Number.isFinite(parsed) ? parsed : fallback;
@@ -317,6 +350,345 @@ function parseNumberEnv(envKey, fallback, env = process.env) {
 function parseIndexGreeksSymbols(env = process.env) {
   const raw = String(env.PARQUET_INDEX_GREEKS_SYMBOLS || env.INDEX_GREEKS_SYMBOLS || DEFAULT_INDEX_GREEKS_SYMBOLS.join(',')).trim();
   return new Set(raw.split(',').map((token) => normalizeSymbol(token)).filter(Boolean));
+}
+
+function parseThetaRetryAttempts(env = process.env) {
+  return Math.max(1, Math.min(32, Math.trunc(parseNumberEnv(
+    'PARQUET_THETA_RETRY_ATTEMPTS',
+    DEFAULT_THETA_RETRY_ATTEMPTS,
+    env,
+  ))));
+}
+
+function parseThetaRetryBaseDelayMs(env = process.env) {
+  return Math.max(250, Math.trunc(parseNumberEnv(
+    'PARQUET_THETA_RETRY_BASE_DELAY_MS',
+    DEFAULT_THETA_RETRY_BASE_DELAY_MS,
+    env,
+  )));
+}
+
+function parseThetaRetryMaxDelayMs(env = process.env) {
+  return Math.max(parseThetaRetryBaseDelayMs(env), Math.trunc(parseNumberEnv(
+    'PARQUET_THETA_RETRY_MAX_DELAY_MS',
+    DEFAULT_THETA_RETRY_MAX_DELAY_MS,
+    env,
+  )));
+}
+
+function parseThetaGlobalCooldownMs(env = process.env) {
+  return Math.max(1000, Math.trunc(parseNumberEnv(
+    'PARQUET_THETA_GLOBAL_COOLDOWN_MS',
+    DEFAULT_THETA_GLOBAL_COOLDOWN_MS,
+    env,
+  )));
+}
+
+function parseThetaMaxConcurrentConnections(env = process.env) {
+  return Math.max(1, Math.min(16, Math.trunc(parseNumberEnv(
+    'PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS',
+    DEFAULT_THETA_MAX_CONCURRENT_CONNECTIONS,
+    env,
+  ))));
+}
+
+function resolveThetaRateLimitStatePath(env = process.env) {
+  const configured = String(env.PARQUET_THETA_RATE_LIMIT_STATE_PATH || '').trim();
+  if (configured) return path.resolve(configured);
+  return path.join(resolveParquetRoot(env), 'theta-rate-limit-state.json');
+}
+
+function resolveThetaConnectionSlotsRoot(env = process.env) {
+  const configured = String(env.PARQUET_THETA_CONNECTION_SLOTS_ROOT || '').trim();
+  if (configured) return path.resolve(configured);
+  return path.join(resolveParquetRoot(env), 'theta-connection-slots');
+}
+
+function isPidAlive(pid) {
+  const normalizedPid = Math.trunc(Number(pid) || 0);
+  if (normalizedPid <= 0) return false;
+  try {
+    process.kill(normalizedPid, 0);
+    return true;
+  } catch (error) {
+    return error?.code === 'EPERM';
+  }
+}
+
+function cleanupStaleThetaConnectionSlot(slotPath) {
+  if (!fs.existsSync(slotPath)) return false;
+  const metadataPath = path.join(slotPath, 'metadata.json');
+  try {
+    const metadata = fs.existsSync(metadataPath)
+      ? JSON.parse(fs.readFileSync(metadataPath, 'utf8'))
+      : null;
+    if (metadata && isPidAlive(metadata.pid)) return false;
+  } catch {
+    // Fall through and reclaim the orphaned slot.
+  }
+  fs.rmSync(slotPath, { recursive: true, force: true });
+  return true;
+}
+
+async function acquireThetaConnectionSlot({
+  env = process.env,
+  label = 'theta_request',
+} = {}) {
+  const slotsRoot = resolveThetaConnectionSlotsRoot(env);
+  ensureDir(slotsRoot);
+  const slotCount = parseThetaMaxConcurrentConnections(env);
+  const token = `${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  const startedAtMs = Date.now();
+  let waitLogged = false;
+
+  while (true) {
+    for (let slotIndex = 0; slotIndex < slotCount; slotIndex += 1) {
+      const slotPath = path.join(slotsRoot, `slot-${slotIndex}`);
+      try {
+        fs.mkdirSync(slotPath);
+        fs.writeFileSync(path.join(slotPath, 'metadata.json'), `${JSON.stringify({
+          token,
+          label,
+          pid: process.pid,
+          acquiredAt: nowIso(),
+        }, null, 2)}\n`, 'utf8');
+        return { slotIndex, slotPath, token };
+      } catch (error) {
+        if (error?.code !== 'EEXIST') throw error;
+        cleanupStaleThetaConnectionSlot(slotPath);
+      }
+    }
+
+    if (!waitLogged && (Date.now() - startedAtMs) >= 1000) {
+      waitLogged = true;
+      console.log('[PARQUET_THETA_SLOT_WAIT]', JSON.stringify({
+        label,
+        waitedMs: Date.now() - startedAtMs,
+        slotCount,
+      }));
+    }
+    await sleep(200 + Math.trunc(Math.random() * 150));
+  }
+}
+
+function releaseThetaConnectionSlot(slot) {
+  if (!slot?.slotPath) return;
+  try {
+    const metadataPath = path.join(slot.slotPath, 'metadata.json');
+    if (fs.existsSync(metadataPath)) {
+      try {
+        const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+        if (slot.token && metadata?.token && metadata.token !== slot.token) return;
+      } catch {
+        // Best effort cleanup.
+      }
+    }
+    fs.rmSync(slot.slotPath, { recursive: true, force: true });
+  } catch {
+    // Best effort cleanup.
+  }
+}
+
+async function withThetaConnectionSlot(taskFn, {
+  env = process.env,
+  label = 'theta_request',
+} = {}) {
+  const slot = await acquireThetaConnectionSlot({ env, label });
+  try {
+    return await taskFn(slot);
+  } finally {
+    releaseThetaConnectionSlot(slot);
+  }
+}
+
+function readThetaRateLimitState(env = process.env) {
+  const filePath = resolveThetaRateLimitStatePath(env);
+  if (!fs.existsSync(filePath)) return null;
+  try {
+    const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const untilMs = Number(parsed?.untilMs || 0);
+    if (!Number.isFinite(untilMs) || untilMs <= 0) return null;
+    return { filePath, untilMs, reason: parsed?.reason || null, updatedAt: parsed?.updatedAt || null };
+  } catch {
+    return null;
+  }
+}
+
+function writeThetaRateLimitState(untilMs, {
+  env = process.env,
+  reason = null,
+} = {}) {
+  const filePath = resolveThetaRateLimitStatePath(env);
+  ensureDir(path.dirname(filePath));
+  const tempPath = `${filePath}.tmp`;
+  const payload = {
+    untilMs: Math.max(0, Math.trunc(untilMs || 0)),
+    reason: reason || null,
+    updatedAt: nowIso(),
+  };
+  fs.writeFileSync(tempPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
+  fs.renameSync(tempPath, filePath);
+}
+
+async function waitForThetaCooldown(env = process.env) {
+  while (true) {
+    const state = readThetaRateLimitState(env);
+    if (!state) return;
+    const remainingMs = state.untilMs - Date.now();
+    if (remainingMs <= 0) return;
+    console.log('[PARQUET_THETA_COOLDOWN_WAIT]', JSON.stringify({
+      untilIso: new Date(state.untilMs).toISOString(),
+      waitMs: remainingMs,
+      reason: state.reason || null,
+    }));
+    await sleep(remainingMs);
+  }
+}
+
+function markThetaCooldown(delayMs, {
+  env = process.env,
+  reason = null,
+} = {}) {
+  const minimumDelayMs = parseThetaGlobalCooldownMs(env);
+  const desiredUntilMs = Date.now() + Math.max(minimumDelayMs, Math.trunc(delayMs || 0));
+  const existing = readThetaRateLimitState(env);
+  if (existing && existing.untilMs >= desiredUntilMs) return;
+  writeThetaRateLimitState(desiredUntilMs, { env, reason });
+}
+
+function isRetryableThetaError(error) {
+  const message = String(error?.message || error || '');
+  if (!message) return false;
+  if (/thetadata_request_failed:429/.test(message)) return true;
+  if (/thetadata_request_timeout:/.test(message)) return true;
+  if (/thetadata_request_idle_timeout:/.test(message)) return true;
+  if (/fetch failed/i.test(message)) return true;
+  if (/ECONNRESET|EPIPE|socket hang up|UND_ERR|ETIMEDOUT|ECONNREFUSED/i.test(message)) return true;
+  return false;
+}
+
+function computeRetryDelayMs(attempt, env = process.env) {
+  const baseDelayMs = parseThetaRetryBaseDelayMs(env);
+  const maxDelayMs = parseThetaRetryMaxDelayMs(env);
+  const backoffMs = Math.min(maxDelayMs, baseDelayMs * (2 ** Math.max(0, attempt - 1)));
+  const jitterMs = Math.trunc(Math.random() * Math.max(250, Math.trunc(baseDelayMs / 3)));
+  return Math.min(maxDelayMs, backoffMs + jitterMs);
+}
+
+async function withThetaRetry(taskFn, {
+  env = process.env,
+  label = 'theta_request',
+  attempts = parseThetaRetryAttempts(env),
+} = {}) {
+  let lastError = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    await waitForThetaCooldown(env);
+    try {
+      return await withThetaConnectionSlot(
+        () => taskFn({ attempt, attempts }),
+        { env, label },
+      );
+    } catch (error) {
+      lastError = error;
+      if (!isRetryableThetaError(error) || attempt >= attempts) {
+        throw error;
+      }
+      const message = String(error?.message || error || '');
+      const retryDelayMs = computeRetryDelayMs(attempt, env);
+      if (/thetadata_request_failed:429/.test(message)) {
+        markThetaCooldown(retryDelayMs, { env, reason: `${label}:429` });
+      }
+      console.warn('[PARQUET_THETA_RETRY]', JSON.stringify({
+        label,
+        attempt,
+        attempts,
+        retryDelayMs,
+        error: message.split('\n')[0],
+      }));
+      await sleep(retryDelayMs);
+    }
+  }
+  throw lastError || new Error(`theta_retry_failed:${label}`);
+}
+
+function parseHeavyRawIndexSymbols(env = process.env) {
+  const raw = String(env.PARQUET_HEAVY_RAW_INDEX_SYMBOLS || Array.from(DEFAULT_HEAVY_RAW_INDEX_SYMBOLS).join(',')).trim();
+  return new Set(raw.split(',').map((token) => normalizeSymbol(token)).filter(Boolean));
+}
+
+function parseHeavyRawIndexMinExpirations(env = process.env) {
+  return Math.max(1, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_MIN_EXPIRATIONS',
+    DEFAULT_HEAVY_RAW_INDEX_MIN_EXPIRATIONS,
+    env,
+  )));
+}
+
+function parseHeavyRawIndexWindowMinutes(env = process.env) {
+  return Math.max(1, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_WINDOW_MINUTES',
+    DEFAULT_HEAVY_RAW_INDEX_WINDOW_MINUTES,
+    env,
+  )));
+}
+
+function parseHeavyRawIndexQuoteWindowMinutes(env = process.env) {
+  return Math.max(1, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_QUOTE_WINDOW_MINUTES',
+    DEFAULT_HEAVY_RAW_INDEX_QUOTE_WINDOW_MINUTES,
+    env,
+  )));
+}
+
+function parseHeavyRawIndexQuoteConcurrency(env = process.env) {
+  return Math.max(1, Math.min(32, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_QUOTE_CONCURRENCY',
+    DEFAULT_HEAVY_RAW_INDEX_QUOTE_CONCURRENCY,
+    env,
+  ))));
+}
+
+function parseHeavyRawIndexGreeksConcurrency(env = process.env) {
+  return Math.max(1, Math.min(32, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_GREEKS_CONCURRENCY',
+    DEFAULT_HEAVY_RAW_INDEX_GREEKS_CONCURRENCY,
+    env,
+  ))));
+}
+
+function parseHeavyRawIndexExpirationConcurrency(env = process.env) {
+  return Math.max(1, Math.min(32, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_EXPIRATION_CONCURRENCY',
+    DEFAULT_HEAVY_RAW_INDEX_EXPIRATION_CONCURRENCY,
+    env,
+  ))));
+}
+
+function parseHeavyRawIndexExpirationGroupSize(env = process.env) {
+  return Math.max(1, Math.min(64, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_EXPIRATION_GROUP_SIZE',
+    DEFAULT_HEAVY_RAW_INDEX_EXPIRATION_GROUP_SIZE,
+    env,
+  ))));
+}
+
+function parseHeavyRawIndexExpirationGroupMaxExpirations(env = process.env) {
+  return Math.max(1, Math.trunc(parseNumberEnv(
+    'PARQUET_HEAVY_RAW_INDEX_EXPIRATION_GROUP_MAX_EXPIRATIONS',
+    DEFAULT_HEAVY_RAW_INDEX_EXPIRATION_GROUP_MAX_EXPIRATIONS,
+    env,
+  )));
+}
+
+function shouldSplitHeavyRawIndexJob(symbol, {
+  expirationCount = 0,
+  env = process.env,
+} = {}) {
+  if (!parseBooleanLike(env.PARQUET_HEAVY_RAW_INDEX_SPLIT_ENABLED, true)) return false;
+  const normalizedSymbol = normalizeSymbol(symbol);
+  if (!normalizedSymbol) return false;
+  if (parseHeavyRawIndexSymbols(env).has(normalizedSymbol)) return true;
+  return expirationCount >= parseHeavyRawIndexMinExpirations(env);
 }
 
 function parseLargeSymbols(env = process.env) {
@@ -512,6 +884,52 @@ function parseCalendarSessionWindow(rawBody, env = process.env) {
   };
 }
 
+function buildFallbackSessionWindow(env = process.env) {
+  const openSecond = parseTimeHmsToSecondOfDay(DEFAULT_MARKET_OPEN_TIME);
+  const regularCloseSecond = parseTimeHmsToSecondOfDay(DEFAULT_MARKET_REGULAR_CLOSE_TIME);
+  const closePadMinutes = Math.max(0, Math.min(240, Math.trunc(parseNumberEnv('THETADATA_CALENDAR_CLOSE_PAD_MINUTES', 15, env))));
+  const paddedCloseSecond = Math.min(86399, regularCloseSecond + (closePadMinutes * 60));
+  return {
+    isOpen: true,
+    type: 'fallback_default',
+    openTime: formatSecondOfDayAsHms(openSecond),
+    regularCloseTime: formatSecondOfDayAsHms(regularCloseSecond),
+    closeTime: formatSecondOfDayAsHms(paddedCloseSecond),
+    closePadMinutes,
+  };
+}
+
+function hasUsableSessionBounds(sessionWindow) {
+  if (!sessionWindow || sessionWindow.isOpen === false) return false;
+  const openSecond = parseTimeHmsToSecondOfDay(sessionWindow.openTime);
+  const closeSecond = parseTimeHmsToSecondOfDay(sessionWindow.regularCloseTime || sessionWindow.closeTime);
+  return openSecond !== null && closeSecond !== null && closeSecond >= openSecond;
+}
+
+function resolveProcessingSessionWindow(sessionWindow, {
+  symbol = null,
+  dayIso = null,
+  stage = 'processing',
+  env = process.env,
+} = {}) {
+  if (hasUsableSessionBounds(sessionWindow)) return sessionWindow;
+  const fallback = buildFallbackSessionWindow(env);
+  console.warn('[PARQUET_SESSION_WINDOW_FALLBACK]', JSON.stringify({
+    symbol: normalizeSymbol(symbol),
+    dayIso: normalizeIsoDate(dayIso),
+    stage,
+    reason: sessionWindow?.isOpen === false ? 'calendar_closed_or_missing_bounds' : 'missing_or_invalid_bounds',
+    originalType: sessionWindow?.type || null,
+    originalOpenTime: sessionWindow?.openTime || null,
+    originalRegularCloseTime: sessionWindow?.regularCloseTime || null,
+    originalCloseTime: sessionWindow?.closeTime || null,
+    fallbackOpenTime: fallback.openTime,
+    fallbackRegularCloseTime: fallback.regularCloseTime,
+    fallbackCloseTime: fallback.closeTime,
+  }));
+  return fallback;
+}
+
 async function fetchTextWithTimeout(url, {
   env = process.env,
   timeoutMs = parseNumberEnv('THETADATA_TIMEOUT_MS', DEFAULT_TIMEOUT_MS, env),
@@ -638,9 +1056,12 @@ async function fetchCalendarSessionWindow(dayIso, env = process.env) {
   const calendarPath = String(env.THETADATA_CALENDAR_PATH || DEFAULT_CALENDAR_PATH).trim();
   const normalizedPath = calendarPath.startsWith('/') ? calendarPath : `/${calendarPath}`;
   const url = `${baseUrl}${normalizedPath}?date=${toYyyymmdd(`${dayIso}T00:00:00.000Z`)}&format=json`;
-  const { response, body } = await fetchTextWithTimeout(url, {
+  const { response, body } = await withThetaConnectionSlot(() => fetchTextWithTimeout(url, {
     env,
     timeoutMs: parseNumberEnv('THETADATA_CALENDAR_TIMEOUT_MS', DEFAULT_CALENDAR_TIMEOUT_MS, env),
+  }), {
+    env,
+    label: `calendar:${dayIso}`,
   });
   if (!response.ok) {
     throw new Error(`calendar_http_${response.status}:${dayIso}`);
@@ -744,16 +1165,58 @@ function getStockPath(runRoot, symbol, dayIso) {
   return path.join(resolveLayout(runRoot).rawStockRoot, `symbol=${symbol}`, `trade_date_utc=${dayIso}`, 'part-000.parquet');
 }
 
+function getStockPartitionDir(runRoot, symbol, dayIso) {
+  return path.dirname(getStockPath(runRoot, symbol, dayIso));
+}
+
 function getQuotePath(runRoot, symbol, dayIso) {
   return path.join(resolveLayout(runRoot).rawQuoteRoot, `symbol=${symbol}`, `trade_date_utc=${dayIso}`, 'part-000.parquet');
+}
+
+function getQuotePartitionDir(runRoot, symbol, dayIso) {
+  return path.dirname(getQuotePath(runRoot, symbol, dayIso));
 }
 
 function getRawGreeksPath(runRoot, symbol, dayIso) {
   return path.join(resolveLayout(runRoot).rawGreeksRoot, `symbol=${symbol}`, `trade_date_utc=${dayIso}`, 'part-000.parquet');
 }
 
+function getRawGreeksPartitionDir(runRoot, symbol, dayIso) {
+  return path.dirname(getRawGreeksPath(runRoot, symbol, dayIso));
+}
+
 function getFinalGreeksPath(runRoot, symbol, dayIso) {
   return path.join(resolveLayout(runRoot).finalGreeksRoot, `symbol=${symbol}`, `trade_date_utc=${dayIso}`, 'part-000.parquet');
+}
+
+function getFinalGreeksPartitionDir(runRoot, symbol, dayIso) {
+  return path.dirname(getFinalGreeksPath(runRoot, symbol, dayIso));
+}
+
+function getPartitionPartPath(partitionDir, partIndex = 0) {
+  return path.join(partitionDir, `part-${String(Math.max(0, partIndex)).padStart(4, '0')}.parquet`);
+}
+
+function resetPartitionDir(partitionDir) {
+  fs.rmSync(partitionDir, { recursive: true, force: true });
+  ensureDir(partitionDir);
+}
+
+function listParquetPartFiles(partitionDir) {
+  if (!fs.existsSync(partitionDir)) return [];
+  return fs.readdirSync(partitionDir)
+    .filter((name) => name.endsWith('.parquet'))
+    .sort()
+    .map((name) => path.join(partitionDir, name));
+}
+
+function chunkArray(values, chunkSize) {
+  const size = Math.max(1, Math.trunc(chunkSize || 1));
+  const out = [];
+  for (let index = 0; index < values.length; index += size) {
+    out.push(values.slice(index, index + size));
+  }
+  return out;
 }
 
 async function openParquetWriter(schema, filePath) {
@@ -779,6 +1242,83 @@ async function appendRows(writer, rows) {
   for (const row of rows) {
     await writer.appendRow(row);
   }
+}
+
+async function runTasksWithConcurrency(tasks, concurrency, workerFn) {
+  if (!Array.isArray(tasks) || tasks.length === 0) return [];
+  const normalizedConcurrency = Math.max(1, Math.min(tasks.length, Math.trunc(concurrency || 1)));
+  const results = new Array(tasks.length);
+  let nextIndex = 0;
+  async function runWorker() {
+    while (true) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      if (currentIndex >= tasks.length) return;
+      results[currentIndex] = await workerFn(tasks[currentIndex], currentIndex);
+    }
+  }
+  await Promise.all(Array.from({ length: normalizedConcurrency }, () => runWorker()));
+  return results;
+}
+
+async function scanParquetFiles(partitionDir, onRow) {
+  const partFiles = listParquetPartFiles(partitionDir);
+  for (const filePath of partFiles) {
+    const reader = await parquet.ParquetReader.openFile(filePath);
+    try {
+      const cursor = reader.getCursor();
+      while (true) {
+        const row = await cursor.next();
+        if (!row) break;
+        const maybePromise = onRow(row, filePath);
+        if (maybePromise && typeof maybePromise.then === 'function') {
+          await maybePromise;
+        }
+      }
+    } finally {
+      await reader.close();
+    }
+  }
+}
+
+async function loadStockPartition(partitionDir) {
+  const partFiles = listParquetPartFiles(partitionDir);
+  if (partFiles.length === 0) return null;
+  let rowCount = 0;
+  const stockByMinute = new Map();
+  await scanParquetFiles(partitionDir, (row) => {
+    rowCount += 1;
+    const close = toNumber(row.close);
+    if (row?.minute_bucket_utc && close !== null) {
+      stockByMinute.set(row.minute_bucket_utc, close);
+    }
+  });
+  return { rowCount, stockByMinute };
+}
+
+async function summarizeQuotePartition(partitionDir) {
+  const partFiles = listParquetPartFiles(partitionDir);
+  if (partFiles.length === 0) return null;
+  let rowCount = 0;
+  const expirations = new Set();
+  await scanParquetFiles(partitionDir, (row) => {
+    rowCount += 1;
+    if (row?.expiration) expirations.add(normalizeIsoDate(row.expiration));
+  });
+  return {
+    rowCount,
+    expirations: Array.from(expirations).filter(Boolean).sort(),
+  };
+}
+
+async function summarizeRowPartition(partitionDir) {
+  const partFiles = listParquetPartFiles(partitionDir);
+  if (partFiles.length === 0) return null;
+  let rowCount = 0;
+  await scanParquetFiles(partitionDir, () => {
+    rowCount += 1;
+  });
+  return { rowCount };
 }
 
 function writeJsonFile(filePath, payload) {
@@ -1139,11 +1679,208 @@ function computeGreeksFromQuoteRow(quoteRow, stockByMinute, {
   };
 }
 
+async function writeQuoteWindowPart({
+  filePath,
+  symbol,
+  dayIso,
+  window,
+  includeRawPayload = false,
+  env = process.env,
+}) {
+  const handle = await openParquetWriter(RAW_QUOTE_SCHEMA, filePath);
+  const expirations = new Set();
+  let writtenRows = 0;
+  const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
+  const endpoint = historicalPrivate.resolveThetaOptionQuoteEndpoint(symbol, dayIso, env, window);
+  try {
+    if (!endpoint) {
+      await handle.close(false);
+      return { rowCount: 0, expirations: [], endpoint: null };
+    }
+    const format = new URL(endpoint).searchParams.get('format');
+    if (format === 'ndjson') {
+      let buffer = [];
+      const flush = async () => {
+        if (buffer.length === 0) return;
+        await appendRows(handle.writer, buffer);
+        writtenRows += buffer.length;
+        buffer = [];
+        if (writtenRows > 0 && writtenRows % logEvery === 0) {
+          console.log('[PARQUET_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
+        }
+      };
+      const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
+        env,
+        onRow: async (rawRow) => {
+          const normalized = normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload });
+          if (!normalized) return;
+          normalized.source_endpoint = endpoint;
+          expirations.add(normalized.expiration);
+          buffer.push(normalized);
+          if (buffer.length >= 2000) {
+            await flush();
+          }
+        },
+      }), {
+        env,
+        label: `quote:${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
+      });
+      if (!result.response.ok && result.response.status !== 472) {
+        throw new Error(`thetadata_request_failed:${result.response.status}`);
+      }
+      await flush();
+    } else {
+      const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
+        env,
+        label: `quote:${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
+      });
+      const normalizedRows = rows
+        .map((rawRow) => normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload }))
+        .filter(Boolean)
+        .map((row) => {
+          expirations.add(row.expiration);
+          return { ...row, source_endpoint: endpoint };
+        });
+      await appendRows(handle.writer, normalizedRows);
+      writtenRows += normalizedRows.length;
+    }
+    await handle.close(writtenRows > 0);
+    return {
+      rowCount: writtenRows,
+      expirations: Array.from(expirations),
+      endpoint,
+    };
+  } catch (error) {
+    await handle.close(false);
+    throw error;
+  }
+}
+
+async function writeRawIndexWindowPart({
+  rawPath,
+  finalPath,
+  symbol,
+  dayIso,
+  expirations,
+  window,
+  runId,
+  includeRawPayload = false,
+  env = process.env,
+}) {
+  const rawHandle = await openParquetWriter(RAW_GREEKS_SCHEMA, rawPath);
+  const finalHandle = await openParquetWriter(FINAL_GREEKS_SCHEMA, finalPath);
+  const syncFormat = String(env.THETADATA_GREEKS_SYNC_FORMAT || 'ndjson').trim().toLowerCase() === 'json' ? 'json' : 'ndjson';
+  const expirationConcurrency = Math.max(1, Math.min(expirations.length || 1, parseHeavyRawIndexExpirationConcurrency(env)));
+  let rawRowsWritten = 0;
+  try {
+    let appendLock = Promise.resolve();
+    async function appendWithLock(rawRows, finalRows) {
+      const previous = appendLock;
+      let release;
+      appendLock = new Promise((resolve) => {
+        release = resolve;
+      });
+      await previous;
+      try {
+        if (rawRows.length > 0) {
+          await appendRows(rawHandle.writer, rawRows);
+          await appendRows(finalHandle.writer, finalRows);
+          rawRowsWritten += rawRows.length;
+        }
+      } finally {
+        release();
+      }
+    }
+    await runTasksWithConcurrency(expirations, expirationConcurrency, async (expiration) => {
+      const endpoint = historicalPrivate.resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, {
+        format: syncFormat,
+        startTime: window.startTime || null,
+        endTime: window.endTime || null,
+      });
+      if (!endpoint) return;
+      if (syncFormat === 'ndjson') {
+        let rawBuffer = [];
+        let finalBuffer = [];
+        const flush = async (force = false) => {
+          if (!force && rawBuffer.length < 2000) return;
+          if (rawBuffer.length === 0) return;
+          const rows = rawBuffer;
+          const finalRows = finalBuffer;
+          rawBuffer = [];
+          finalBuffer = [];
+          await appendWithLock(rows, finalRows);
+        };
+        const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
+          env,
+          onRow: async (rawRow) => {
+            const normalized = normalizeOptionGreeksRow(rawRow, dayIso, { includeRawPayload });
+            if (!normalized) return;
+            normalized.source_endpoint = endpoint;
+            rawBuffer.push(normalized);
+            finalBuffer.push(normalizeFinalGreekFromRaw(normalized, {
+              runId,
+              calcVersion: 'theta_raw_v1',
+              sourceEndpoint: endpoint,
+            }));
+            await flush(false);
+          },
+        }), {
+          env,
+          label: `raw_greeks:${symbol}:${expiration}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
+        });
+        if (!result.response.ok && result.response.status !== 472) {
+          throw new Error(`thetadata_request_failed:${result.response.status}`);
+        }
+        await flush(true);
+      } else {
+        const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
+          env,
+          label: `raw_greeks:${symbol}:${expiration}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
+        });
+        const normalizedRows = rows
+          .map((rawRow) => normalizeOptionGreeksRow(rawRow, dayIso, { includeRawPayload }))
+          .filter(Boolean)
+          .map((row) => ({ ...row, source_endpoint: endpoint }));
+        const finalRows = normalizedRows.map((row) => normalizeFinalGreekFromRaw(row, {
+          runId,
+          calcVersion: 'theta_raw_v1',
+          sourceEndpoint: endpoint,
+        }));
+        await appendWithLock(normalizedRows, finalRows);
+      }
+    });
+    await appendLock;
+    await rawHandle.close(rawRowsWritten > 0);
+    await finalHandle.close(rawRowsWritten > 0);
+    return { rawRowsWritten };
+  } catch (error) {
+    await rawHandle.close(false);
+    await finalHandle.close(false);
+    throw error;
+  }
+}
+
 async function downloadStockToParquet({ runRoot, symbol, dayIso, env = process.env }) {
   const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
+  const partitionDir = getStockPartitionDir(runRoot, symbol, dayIso);
   const filePath = getStockPath(runRoot, symbol, dayIso);
+  if (parseResumeExisting(env)) {
+    const existing = await loadStockPartition(partitionDir);
+    if (existing) {
+      console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({ stage: 'stock', symbol, dayIso, rowCount: existing.rowCount }));
+      return {
+        rowCount: existing.rowCount,
+        filePath,
+        stockByMinute: existing.stockByMinute,
+      };
+    }
+  }
+  resetPartitionDir(partitionDir);
   const endpoint = historicalPrivate.resolveThetaSpotEndpoint(symbol, dayIso, env);
-  const rows = endpoint ? await historicalPrivate.fetchThetaRows(endpoint, { env }) : [];
+  const rows = endpoint ? await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
+    env,
+    label: `stock:${symbol}:${dayIso}`,
+  }) : [];
   const normalizedRows = normalizeStockOhlcRows(rows, dayIso, { includeRawPayload })
     .map((row) => ({
       ...row,
@@ -1168,71 +1905,96 @@ async function downloadStockToParquet({ runRoot, symbol, dayIso, env = process.e
 
 async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.env }) {
   const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
-  const filePath = getQuotePath(runRoot, symbol, dayIso);
-  const sessionWindow = await fetchCalendarSessionWindow(dayIso, env).catch(() => null);
+  const partitionDir = getQuotePartitionDir(runRoot, symbol, dayIso);
+  const filePath = getPartitionPartPath(partitionDir, 0);
+  if (parseResumeExisting(env)) {
+    const existing = await summarizeQuotePartition(partitionDir);
+    if (existing) {
+      console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({
+        stage: 'quotes',
+        symbol,
+        dayIso,
+        rowCount: existing.rowCount,
+        expirationCount: existing.expirations.length,
+      }));
+      return {
+        rowCount: existing.rowCount,
+        filePath: partitionDir,
+        expirations: existing.expirations,
+      };
+    }
+  }
+  const sessionWindow = resolveProcessingSessionWindow(
+    await fetchCalendarSessionWindow(dayIso, env).catch(() => null),
+    { symbol, dayIso, stage: 'quotes', env },
+  );
+  const splitHeavyRawIndex = shouldSplitHeavyRawIndexJob(symbol, { env });
   const quoteWindows = resolveThetaTimeWindowsForSymbol(symbol, {
     sessionStartTime: sessionWindow?.openTime || null,
     sessionEndTime: sessionWindow?.regularCloseTime || sessionWindow?.closeTime || null,
+    windowMinutes: splitHeavyRawIndex ? parseHeavyRawIndexQuoteWindowMinutes(env) : null,
+    forceWindowing: splitHeavyRawIndex,
     env,
   });
-  const handle = await openParquetWriter(RAW_QUOTE_SCHEMA, filePath);
+  resetPartitionDir(partitionDir);
   const expirations = new Set();
   let writtenRows = 0;
-  const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
-  try {
-    for (const window of quoteWindows) {
-      const endpoint = historicalPrivate.resolveThetaOptionQuoteEndpoint(symbol, dayIso, env, window);
-      if (!endpoint) continue;
-      const format = new URL(endpoint).searchParams.get('format');
-      if (format === 'ndjson') {
-        let buffer = [];
-        const flush = async () => {
-          if (buffer.length === 0) return;
-          await appendRows(handle.writer, buffer);
-          writtenRows += buffer.length;
-          buffer = [];
-          if (writtenRows > 0 && writtenRows % logEvery === 0) {
-            console.log('[PARQUET_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
-          }
-        };
-        const result = await fetchNdjsonRows(endpoint, {
+  const quoteConcurrency = splitHeavyRawIndex ? parseHeavyRawIndexQuoteConcurrency(env) : 1;
+  if (splitHeavyRawIndex && quoteWindows.length > 1 && quoteConcurrency > 1) {
+    console.log('[PARQUET_QUOTE_SPLIT_PLAN]', JSON.stringify({
+      symbol,
+      dayIso,
+      windowCount: quoteWindows.length,
+      windowMinutes: parseHeavyRawIndexQuoteWindowMinutes(env),
+      concurrency: quoteConcurrency,
+    }));
+    const parts = await runTasksWithConcurrency(quoteWindows, quoteConcurrency, async (window, partIndex) => {
+      const partResult = await writeQuoteWindowPart({
+        filePath: getPartitionPartPath(partitionDir, partIndex),
+        symbol,
+        dayIso,
+        window,
+        includeRawPayload,
+        env,
+      });
+      return {
+        rowCount: partResult.rowCount,
+        expirations: partResult.expirations,
+      };
+    });
+    parts.forEach((part) => {
+      writtenRows += Number(part?.rowCount || 0);
+      (part?.expirations || []).forEach((expiration) => expirations.add(expiration));
+    });
+  } else {
+    const partResult = await writeQuoteWindowPart({
+      filePath,
+      symbol,
+      dayIso,
+      window: quoteWindows[0] || {},
+      includeRawPayload,
+      env,
+    });
+    writtenRows = partResult.rowCount;
+    partResult.expirations.forEach((expiration) => expirations.add(expiration));
+    if (quoteWindows.length > 1) {
+      for (let index = 1; index < quoteWindows.length; index += 1) {
+        const extraResult = await writeQuoteWindowPart({
+          filePath: getPartitionPartPath(partitionDir, index),
+          symbol,
+          dayIso,
+          window: quoteWindows[index],
+          includeRawPayload,
           env,
-          onRow: async (rawRow) => {
-            const normalized = normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload });
-            if (!normalized) return;
-            normalized.source_endpoint = endpoint;
-            expirations.add(normalized.expiration);
-            buffer.push(normalized);
-            if (buffer.length >= 2000) {
-              await flush();
-            }
-          },
         });
-        if (!result.response.ok && result.response.status !== 472) {
-          throw new Error(`thetadata_request_failed:${result.response.status}`);
-        }
-        await flush();
-      } else {
-        const rows = await historicalPrivate.fetchThetaRows(endpoint, { env });
-        const normalizedRows = rows
-          .map((rawRow) => normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload }))
-          .filter(Boolean)
-          .map((row) => {
-            expirations.add(row.expiration);
-            return { ...row, source_endpoint: endpoint };
-          });
-        await appendRows(handle.writer, normalizedRows);
-        writtenRows += normalizedRows.length;
+        writtenRows += extraResult.rowCount;
+        extraResult.expirations.forEach((expiration) => expirations.add(expiration));
       }
     }
-    await handle.close(true);
-  } catch (error) {
-    await handle.close(false);
-    throw error;
   }
   return {
     rowCount: writtenRows,
-    filePath,
+    filePath: partitionDir,
     expirations: Array.from(expirations).sort(),
   };
 }
@@ -1246,97 +2008,117 @@ async function downloadIndexGreeksToParquet({
   env = process.env,
 }) {
   const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
-  const rawPath = getRawGreeksPath(runRoot, symbol, dayIso);
-  const finalPath = getFinalGreeksPath(runRoot, symbol, dayIso);
-  const rawHandle = await openParquetWriter(RAW_GREEKS_SCHEMA, rawPath);
-  const finalHandle = await openParquetWriter(FINAL_GREEKS_SCHEMA, finalPath);
-  const sessionWindow = await fetchCalendarSessionWindow(dayIso, env).catch(() => null);
+  const rawPartitionDir = getRawGreeksPartitionDir(runRoot, symbol, dayIso);
+  const finalPartitionDir = getFinalGreeksPartitionDir(runRoot, symbol, dayIso);
+  if (parseResumeExisting(env)) {
+    const existingRaw = await summarizeRowPartition(rawPartitionDir);
+    const existingFinal = await summarizeRowPartition(finalPartitionDir);
+    if (existingRaw && existingFinal) {
+      console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({
+        stage: 'raw_greeks',
+        symbol,
+        dayIso,
+        rowCount: existingRaw.rowCount,
+      }));
+      return {
+        rawRowsWritten: existingRaw.rowCount,
+        rawPath: rawPartitionDir,
+        finalPath: finalPartitionDir,
+      };
+    }
+  }
+  const sessionWindow = resolveProcessingSessionWindow(
+    await fetchCalendarSessionWindow(dayIso, env).catch(() => null),
+    { symbol, dayIso, stage: 'raw_greeks', env },
+  );
   const openSecond = parseTimeHmsToSecondOfDay(sessionWindow?.openTime || null);
   const closeSecondRaw = parseTimeHmsToSecondOfDay(sessionWindow?.regularCloseTime || sessionWindow?.closeTime || null);
   const coreCloseSecond = closeSecondRaw === null ? null : Math.max(openSecond ?? 0, closeSecondRaw - 60);
+  const splitHeavyRawIndex = shouldSplitHeavyRawIndexJob(symbol, {
+    expirationCount: expirations.length,
+    env,
+  });
   const adaptivePlan = resolveThetaGreeksAdaptiveWindowMinutes({
     symbol,
     expirationCount: expirations.length,
     env,
   });
+  const sessionStartTime = sessionWindow?.openTime || null;
+  const sessionEndTime = coreCloseSecond === null ? null : formatSecondOfDayAsHms(coreCloseSecond);
+  const effectiveWindowMinutes = splitHeavyRawIndex
+    ? Math.min(adaptivePlan.windowMinutes, parseHeavyRawIndexWindowMinutes(env))
+    : adaptivePlan.windowMinutes;
   const windows = resolveThetaTimeWindowsForSymbol(symbol, {
-    sessionStartTime: sessionWindow?.openTime || null,
-    sessionEndTime: coreCloseSecond === null ? null : formatSecondOfDayAsHms(coreCloseSecond),
-    windowMinutes: adaptivePlan.windowMinutes,
+    sessionStartTime,
+    sessionEndTime,
+    windowMinutes: effectiveWindowMinutes,
     forceWindowing: true,
     env,
   });
-  const syncFormat = String(env.THETADATA_GREEKS_SYNC_FORMAT || 'ndjson').trim().toLowerCase() === 'json' ? 'json' : 'ndjson';
+  resetPartitionDir(rawPartitionDir);
+  resetPartitionDir(finalPartitionDir);
   let rawRowsWritten = 0;
-  try {
-    for (const expiration of expirations) {
-      for (const window of windows) {
-        const endpoint = historicalPrivate.resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, {
-          format: syncFormat,
-          startTime: window.startTime || null,
-          endTime: window.endTime || null,
-        });
-        if (!endpoint) continue;
-        if (syncFormat === 'ndjson') {
-          let rawBuffer = [];
-          let finalBuffer = [];
-          const flush = async () => {
-            if (rawBuffer.length === 0) return;
-            await appendRows(rawHandle.writer, rawBuffer);
-            await appendRows(finalHandle.writer, finalBuffer);
-            rawRowsWritten += rawBuffer.length;
-            rawBuffer = [];
-            finalBuffer = [];
-          };
-          const result = await fetchNdjsonRows(endpoint, {
-            env,
-            onRow: async (rawRow) => {
-              const normalized = normalizeOptionGreeksRow(rawRow, dayIso, { includeRawPayload });
-              if (!normalized) return;
-              normalized.source_endpoint = endpoint;
-              rawBuffer.push(normalized);
-              finalBuffer.push(normalizeFinalGreekFromRaw(normalized, {
-                runId,
-                calcVersion: 'theta_raw_v1',
-                sourceEndpoint: endpoint,
-              }));
-              if (rawBuffer.length >= 2000) {
-                await flush();
-              }
-            },
-          });
-          if (!result.response.ok && result.response.status !== 472) {
-            throw new Error(`thetadata_request_failed:${result.response.status}`);
-          }
-          await flush();
-        } else {
-          const rows = await historicalPrivate.fetchThetaRows(endpoint, { env });
-          const normalizedRows = rows
-            .map((rawRow) => normalizeOptionGreeksRow(rawRow, dayIso, { includeRawPayload }))
-            .filter(Boolean)
-            .map((row) => ({ ...row, source_endpoint: endpoint }));
-          const finalRows = normalizedRows.map((row) => normalizeFinalGreekFromRaw(row, {
-            runId,
-            calcVersion: 'theta_raw_v1',
-            sourceEndpoint: endpoint,
-          }));
-          await appendRows(rawHandle.writer, normalizedRows);
-          await appendRows(finalHandle.writer, finalRows);
-          rawRowsWritten += normalizedRows.length;
-        }
-      }
+  const greekConcurrency = splitHeavyRawIndex ? parseHeavyRawIndexGreeksConcurrency(env) : 1;
+  const groupModeEnabled = splitHeavyRawIndex
+    && expirations.length <= parseHeavyRawIndexExpirationGroupMaxExpirations(env);
+  const tasks = groupModeEnabled
+    ? chunkArray(expirations, parseHeavyRawIndexExpirationGroupSize(env)).map((group, partIndex) => ({
+      partIndex,
+      expirations: group,
+      window: { startTime: sessionStartTime, endTime: sessionEndTime },
+    }))
+    : windows.map((window, partIndex) => ({
+      partIndex,
+      expirations,
+      window,
+    }));
+  if (splitHeavyRawIndex && tasks.length > 1 && greekConcurrency > 1) {
+    console.log('[PARQUET_RAW_GREEKS_SPLIT_PLAN]', JSON.stringify({
+      symbol,
+      dayIso,
+      expirationCount: expirations.length,
+      taskMode: groupModeEnabled ? 'expiration_groups' : 'time_windows',
+      taskCount: tasks.length,
+      windowCount: windows.length,
+      windowMinutes: effectiveWindowMinutes,
+      expirationGroupSize: groupModeEnabled ? parseHeavyRawIndexExpirationGroupSize(env) : null,
+      concurrency: greekConcurrency,
+      mode: adaptivePlan.mode,
+    }));
+    const parts = await runTasksWithConcurrency(tasks, greekConcurrency, async (task) => writeRawIndexWindowPart({
+      rawPath: getPartitionPartPath(rawPartitionDir, task.partIndex),
+      finalPath: getPartitionPartPath(finalPartitionDir, task.partIndex),
+      symbol,
+      dayIso,
+      expirations: task.expirations,
+      window: task.window,
+      runId,
+      includeRawPayload,
+      env,
+    }));
+    parts.forEach((part) => {
+      rawRowsWritten += Number(part?.rawRowsWritten || 0);
+    });
+  } else {
+    for (const task of tasks) {
+      const part = await writeRawIndexWindowPart({
+        rawPath: getPartitionPartPath(rawPartitionDir, task.partIndex),
+        finalPath: getPartitionPartPath(finalPartitionDir, task.partIndex),
+        symbol,
+        dayIso,
+        expirations: task.expirations,
+        window: task.window,
+        runId,
+        includeRawPayload,
+        env,
+      });
+      rawRowsWritten += Number(part?.rawRowsWritten || 0);
     }
-    await rawHandle.close(true);
-    await finalHandle.close(true);
-  } catch (error) {
-    await rawHandle.close(false);
-    await finalHandle.close(false);
-    throw error;
   }
   return {
     rawRowsWritten,
-    rawPath,
-    finalPath,
+    rawPath: rawPartitionDir,
+    finalPath: finalPartitionDir,
   };
 }
 
@@ -1348,10 +2130,27 @@ async function calculateGreeksToParquet({
   runId,
   env = process.env,
 }) {
-  const quotePath = getQuotePath(runRoot, symbol, dayIso);
+  const quotePartFiles = listParquetPartFiles(getQuotePartitionDir(runRoot, symbol, dayIso));
   const finalPath = getFinalGreeksPath(runRoot, symbol, dayIso);
-  const reader = await parquet.ParquetReader.openFile(quotePath);
-  const cursor = reader.getCursor();
+  if (quotePartFiles.length === 0) {
+    throw new Error(`missing_quote_parquet:${symbol}:${dayIso}`);
+  }
+  if (parseResumeExisting(env)) {
+    const existing = await summarizeRowPartition(getFinalGreeksPartitionDir(runRoot, symbol, dayIso));
+    if (existing) {
+      console.log('[PARQUET_STAGE_RESUME]', JSON.stringify({
+        stage: 'calc_greeks',
+        symbol,
+        dayIso,
+        rowCount: existing.rowCount,
+      }));
+      return {
+        writtenRows: existing.rowCount,
+        finalPath,
+      };
+    }
+  }
+  resetPartitionDir(getFinalGreeksPartitionDir(runRoot, symbol, dayIso));
   const handle = await openParquetWriter(FINAL_GREEKS_SCHEMA, finalPath);
   const riskFreeRate = parseNumberEnv('CALC_GREEKS_FALLBACK_RATE', DEFAULT_GREEKS_FALLBACK_RATE, env);
   const dividendYield = parseNumberEnv('CALC_GREEKS_DIVIDEND_YIELD', DEFAULT_GREEKS_DIVIDEND_YIELD, env);
@@ -1361,25 +2160,28 @@ async function calculateGreeksToParquet({
   const calcVersion = String(env.CALC_GREEKS_VERSION || 'bs_v1').trim() || 'bs_v1';
   let writtenRows = 0;
   try {
-    while (true) {
-      const row = await cursor.next();
-      if (!row) break;
-      const finalRow = computeGreeksFromQuoteRow(row, stockByMinute, {
-        runId,
-        calcVersion,
-        riskFreeRate,
-        dividendYield,
-        ivLow,
-        ivHigh,
-        ivIterations,
-      });
-      await handle.writer.appendRow(finalRow);
-      writtenRows += 1;
+    for (const quotePath of quotePartFiles) {
+      const reader = await parquet.ParquetReader.openFile(quotePath);
+      const cursor = reader.getCursor();
+      while (true) {
+        const row = await cursor.next();
+        if (!row) break;
+        const finalRow = computeGreeksFromQuoteRow(row, stockByMinute, {
+          runId,
+          calcVersion,
+          riskFreeRate,
+          dividendYield,
+          ivLow,
+          ivHigh,
+          ivIterations,
+        });
+        await handle.writer.appendRow(finalRow);
+        writtenRows += 1;
+      }
+      await reader.close();
     }
-    await reader.close();
     await handle.close(true);
   } catch (error) {
-    await reader.close();
     await handle.close(false);
     throw error;
   }
@@ -1390,6 +2192,13 @@ async function calculateGreeksToParquet({
 }
 
 module.exports = {
+  __private: {
+    buildFallbackSessionWindow,
+    parseThetaMaxConcurrentConnections,
+    resolveProcessingSessionWindow,
+    resolveThetaConnectionSlotsRoot,
+    resolveThetaTimeWindowsForSymbol,
+  },
   DEFAULT_INDEX_GREEKS_SYMBOLS,
   DEFAULT_SYMBOL_FILE,
   buildJobs,

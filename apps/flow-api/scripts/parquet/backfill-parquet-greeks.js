@@ -25,6 +25,78 @@ function parseCsv(rawValue) {
     .filter(Boolean);
 }
 
+function jobKey(symbol, dayIso) {
+  return `${symbol}::${dayIso}`;
+}
+
+function loadExistingWorkerReports(reportsRoot) {
+  if (!fs.existsSync(reportsRoot)) return [];
+  return fs.readdirSync(reportsRoot)
+    .filter((name) => /^worker-\d+\.json$/.test(name))
+    .sort()
+    .map((name) => {
+      const reportPath = path.join(reportsRoot, name);
+      try {
+        return JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
+}
+
+function buildWorkerReport({
+  runId,
+  runRoot,
+  workerIndex,
+  workerTotal,
+  totalJobs,
+  startedAt,
+  jobsByKey,
+}) {
+  const jobs = Array.from(jobsByKey.values()).sort((left, right) => {
+    if (left.dayIso !== right.dayIso) return String(left.dayIso).localeCompare(String(right.dayIso));
+    return String(left.symbol).localeCompare(String(right.symbol));
+  });
+  const report = {
+    runId,
+    runRoot,
+    workerIndex,
+    workerTotal,
+    startedAt,
+    completedAt: null,
+    totalJobs,
+    completedJobs: 0,
+    failedJobs: 0,
+    totalStockRows: 0,
+    totalQuoteRows: 0,
+    totalRawGreekRows: 0,
+    totalFinalGreekRows: 0,
+    totalIndexGreekJobs: 0,
+    totalCalculatedGreekJobs: 0,
+    stockMs: 0,
+    quoteMs: 0,
+    indexGreekMs: 0,
+    calcGreekMs: 0,
+    jobs,
+  };
+  jobs.forEach((job) => {
+    if (job.status === 'complete') report.completedJobs += 1;
+    if (job.status === 'failed') report.failedJobs += 1;
+    report.totalStockRows += Number(job.stockRows || 0);
+    report.totalQuoteRows += Number(job.quoteRows || 0);
+    report.totalRawGreekRows += Number(job.rawGreekRows || 0);
+    report.totalFinalGreekRows += Number(job.finalGreekRows || 0);
+    if (job.greekMode === 'raw' && job.status === 'complete') report.totalIndexGreekJobs += 1;
+    if (job.greekMode === 'calculated' && job.status === 'complete') report.totalCalculatedGreekJobs += 1;
+    report.stockMs += Number(job.stockMs || 0);
+    report.quoteMs += Number(job.quoteMs || 0);
+    report.indexGreekMs += Number(job.indexGreekMs || 0);
+    report.calcGreekMs += Number(job.calcGreekMs || 0);
+  });
+  return report;
+}
+
 async function main() {
   const runId = String(process.env.PARQUET_RUN_ID || '').trim() || buildRunId('parquet-benchmark');
   const runRoot = resolveRunRoot(runId, process.env);
@@ -108,32 +180,48 @@ async function main() {
   }
 
   const workerJobs = shardJobsBalanced(built.jobs, workerTotal, workerIndex);
+  const existingReports = loadExistingWorkerReports(layout.reportsRoot);
+  const completedJobKeys = new Set();
+  existingReports.forEach((report) => {
+    (Array.isArray(report.jobs) ? report.jobs : []).forEach((job) => {
+      if (job?.status === 'complete' && job.symbol && job.dayIso) {
+        completedJobKeys.add(jobKey(job.symbol, job.dayIso));
+      }
+    });
+  });
+
   const workerReportPath = path.join(layout.reportsRoot, `worker-${workerIndex}.json`);
-  const report = {
+  const existingWorkerReport = fs.existsSync(workerReportPath)
+    ? JSON.parse(fs.readFileSync(workerReportPath, 'utf8'))
+    : null;
+  const jobsByKey = new Map();
+  (Array.isArray(existingWorkerReport?.jobs) ? existingWorkerReport.jobs : []).forEach((job) => {
+    if (job?.symbol && job?.dayIso) {
+      jobsByKey.set(jobKey(job.symbol, job.dayIso), job);
+    }
+  });
+  let report = buildWorkerReport({
     runId,
     runRoot,
     workerIndex,
     workerTotal,
-    startedAt: new Date().toISOString(),
-    completedAt: null,
     totalJobs: workerJobs.length,
-    completedJobs: 0,
-    failedJobs: 0,
-    totalStockRows: 0,
-    totalQuoteRows: 0,
-    totalRawGreekRows: 0,
-    totalFinalGreekRows: 0,
-    totalIndexGreekJobs: 0,
-    totalCalculatedGreekJobs: 0,
-    stockMs: 0,
-    quoteMs: 0,
-    indexGreekMs: 0,
-    calcGreekMs: 0,
-    jobs: [],
-  };
+    startedAt: existingWorkerReport?.startedAt || new Date().toISOString(),
+    jobsByKey,
+  });
+  writeJsonFile(workerReportPath, report);
 
   for (let index = 0; index < workerJobs.length; index += 1) {
     const job = workerJobs[index];
+    const key = jobKey(job.symbol, job.dayIso);
+    if (completedJobKeys.has(key)) {
+      console.log('[PARQUET_JOB_SKIP]', JSON.stringify({
+        symbol: job.symbol,
+        dayIso: job.dayIso,
+        reason: 'already_complete',
+      }));
+      continue;
+    }
     const startedAtMs = Date.now();
     const jobSummary = {
       symbol: job.symbol,
@@ -146,6 +234,10 @@ async function main() {
       quoteRows: 0,
       rawGreekRows: 0,
       finalGreekRows: 0,
+      stockMs: 0,
+      quoteMs: 0,
+      indexGreekMs: 0,
+      calcGreekMs: 0,
       elapsedMs: 0,
       error: null,
     };
@@ -158,7 +250,7 @@ async function main() {
         dayIso: job.dayIso,
         env: process.env,
       });
-      report.stockMs += Math.max(0, Date.now() - stockStartedAtMs);
+      jobSummary.stockMs = Math.max(0, Date.now() - stockStartedAtMs);
       report.totalStockRows += stockResult.rowCount;
       jobSummary.stockRows = stockResult.rowCount;
 
@@ -169,7 +261,7 @@ async function main() {
         dayIso: job.dayIso,
         env: process.env,
       });
-      report.quoteMs += Math.max(0, Date.now() - quoteStartedAtMs);
+      jobSummary.quoteMs = Math.max(0, Date.now() - quoteStartedAtMs);
       report.totalQuoteRows += quoteResult.rowCount;
       jobSummary.quoteRows = quoteResult.rowCount;
 
@@ -183,7 +275,7 @@ async function main() {
           runId,
           env: process.env,
         });
-        report.indexGreekMs += Math.max(0, Date.now() - rawStartedAtMs);
+        jobSummary.indexGreekMs = Math.max(0, Date.now() - rawStartedAtMs);
         report.totalRawGreekRows += rawResult.rawRowsWritten;
         report.totalFinalGreekRows += rawResult.rawRowsWritten;
         report.totalIndexGreekJobs += 1;
@@ -199,7 +291,7 @@ async function main() {
           runId,
           env: process.env,
         });
-        report.calcGreekMs += Math.max(0, Date.now() - calcStartedAtMs);
+        jobSummary.calcGreekMs = Math.max(0, Date.now() - calcStartedAtMs);
         report.totalFinalGreekRows += calcResult.writtenRows;
         report.totalCalculatedGreekJobs += 1;
         jobSummary.finalGreekRows = calcResult.writtenRows;
@@ -218,11 +310,29 @@ async function main() {
       }));
     }
     jobSummary.elapsedMs = Math.max(0, Date.now() - startedAtMs);
-    report.jobs.push(jobSummary);
+    jobsByKey.set(key, jobSummary);
+    report = buildWorkerReport({
+      runId,
+      runRoot,
+      workerIndex,
+      workerTotal,
+      totalJobs: workerJobs.length,
+      startedAt: report.startedAt,
+      jobsByKey,
+    });
     writeJsonFile(workerReportPath, report);
     console.log('[PARQUET_JOB_DONE]', JSON.stringify(jobSummary));
   }
 
+  report = buildWorkerReport({
+    runId,
+    runRoot,
+    workerIndex,
+    workerTotal,
+    totalJobs: workerJobs.length,
+    startedAt: report.startedAt,
+    jobsByKey,
+  });
   report.completedAt = new Date().toISOString();
   writeJsonFile(workerReportPath, report);
   console.log(JSON.stringify({
