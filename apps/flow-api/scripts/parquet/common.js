@@ -1242,6 +1242,22 @@ function listParquetPartFiles(partitionDir) {
     .map((name) => path.join(partitionDir, name));
 }
 
+function promoteTempParquetFiles(partitionDir) {
+  if (!fs.existsSync(partitionDir)) return 0;
+  let promoted = 0;
+  for (const name of fs.readdirSync(partitionDir).filter((entry) => entry.endsWith('.parquet.tmp')).sort()) {
+    const tempPath = path.join(partitionDir, name);
+    const finalPath = path.join(partitionDir, name.slice(0, -4));
+    if (fs.existsSync(finalPath)) {
+      fs.unlinkSync(tempPath);
+      continue;
+    }
+    fs.renameSync(tempPath, finalPath);
+    promoted += 1;
+  }
+  return promoted;
+}
+
 function chunkArray(values, chunkSize) {
   const size = Math.max(1, Math.trunc(chunkSize || 1));
   const out = [];
@@ -1882,13 +1898,14 @@ async function writeQuoteWindowPart({
   const expirations = new Set();
   let writtenRows = 0;
   const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
-  const appender = createAsyncBatchAppender(async (rows) => {
+  const writeRowsNow = async (rows) => {
+    if (!Array.isArray(rows) || rows.length === 0) return;
     await appendRows(handle.writer, rows);
     writtenRows += rows.length;
     if (writtenRows > 0 && writtenRows % logEvery === 0) {
       console.log('[PARQUET_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
     }
-  }, { env });
+  };
   const endpoint = historicalPrivate.resolveThetaOptionQuoteEndpoint(symbol, dayIso, env, window);
   try {
     if (!endpoint) {
@@ -1899,10 +1916,11 @@ async function writeQuoteWindowPart({
     if (format === 'ndjson') {
       let buffer = [];
       const flush = async (forceDrain = false) => {
+        if (!forceDrain && buffer.length < 2000) return;
         if (buffer.length === 0) return;
         const rows = buffer;
         buffer = [];
-        await appender.schedule(rows, { forceDrain });
+        await writeRowsNow(rows);
       };
       const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
         env,
@@ -1924,7 +1942,6 @@ async function writeQuoteWindowPart({
         throw new Error(`thetadata_request_failed:${result.response.status}`);
       }
       await flush(true);
-      await appender.drain();
     } else {
       const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
         env,
@@ -1937,7 +1954,7 @@ async function writeQuoteWindowPart({
           expirations.add(row.expiration);
           return { ...row, source_endpoint: endpoint };
         });
-      await appender.schedule(normalizedRows, { forceDrain: true });
+      await writeRowsNow(normalizedRows);
     }
     await handle.close(writtenRows > 0);
     return {
@@ -1968,12 +1985,12 @@ async function writeRawIndexWindowPart({
   const expirationConcurrency = Math.max(1, Math.min(expirations.length || 1, parseHeavyRawIndexExpirationConcurrency(env)));
   let rawRowsWritten = 0;
   try {
-    const appender = createAsyncBatchAppender(async ({ rawRows, finalRows }) => {
+    const writeRowsNow = async ({ rawRows, finalRows }) => {
       if (!rawRows.length) return;
       await appendRows(rawHandle.writer, rawRows);
       await appendRows(finalHandle.writer, finalRows);
       rawRowsWritten += rawRows.length;
-    }, { env });
+    };
     await runTasksWithConcurrency(expirations, expirationConcurrency, async (expiration) => {
       const endpoint = historicalPrivate.resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, {
         format: syncFormat,
@@ -1991,7 +2008,7 @@ async function writeRawIndexWindowPart({
           const finalRows = finalBuffer;
           rawBuffer = [];
           finalBuffer = [];
-          await appender.schedule({ rawRows: rows, finalRows }, { forceDrain: force, rowCount: rows.length });
+          await writeRowsNow({ rawRows: rows, finalRows });
         };
         const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
           env,
@@ -2029,10 +2046,9 @@ async function writeRawIndexWindowPart({
           calcVersion: 'theta_raw_v1',
           sourceEndpoint: endpoint,
         }));
-        await appender.schedule({ rawRows: normalizedRows, finalRows }, { forceDrain: true, rowCount: normalizedRows.length });
+        await writeRowsNow({ rawRows: normalizedRows, finalRows });
       }
     });
-    await appender.drain();
     await rawHandle.close(rawRowsWritten > 0);
     await finalHandle.close(rawRowsWritten > 0);
     return { rawRowsWritten };
@@ -2079,6 +2095,7 @@ async function downloadStockToParquet({ runRoot, symbol, dayIso, env = process.e
     throw error;
   }
   const stockByMinute = new Map(normalizedRows.map((row) => [row.minute_bucket_utc, toNumber(row.close)]).filter(([, close]) => close !== null));
+  promoteTempParquetFiles(partitionDir);
   const stockPartCount = listParquetPartFiles(partitionDir).length;
   if (normalizedRows.length > 0 && stockPartCount === 0) {
     throw new Error(`stock_partition_missing_after_write:${symbol}:${dayIso}`);
@@ -2186,6 +2203,7 @@ async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.
       }
     }
   }
+  promoteTempParquetFiles(partitionDir);
   const quotePartCount = listParquetPartFiles(partitionDir).length;
   if ((writtenRows > 0 || expirations.size > 0) && quotePartCount === 0) {
     throw new Error(`quote_partition_missing_after_write:${symbol}:${dayIso}`);
@@ -2322,6 +2340,8 @@ async function downloadIndexGreeksToParquet({
       rawRowsWritten += Number(part?.rawRowsWritten || 0);
     }
   }
+  promoteTempParquetFiles(rawPartitionDir);
+  promoteTempParquetFiles(finalPartitionDir);
   const rawPartCount = listParquetPartFiles(rawPartitionDir).length;
   const finalRawPartCount = listParquetPartFiles(finalPartitionDir).length;
   if (rawRowsWritten > 0 && (rawPartCount === 0 || finalRawPartCount === 0)) {
@@ -2412,6 +2432,7 @@ async function calculateGreeksToParquet({
     throw error;
   }
   const finalCalcPartitionDir = getFinalGreeksPartitionDir(runRoot, symbol, dayIso);
+  promoteTempParquetFiles(finalCalcPartitionDir);
   const finalCalcPartCount = listParquetPartFiles(finalCalcPartitionDir).length;
   if (writtenRows > 0 && finalCalcPartCount === 0) {
     throw new Error(`calc_greeks_partition_missing_after_write:${symbol}:${dayIso}`);

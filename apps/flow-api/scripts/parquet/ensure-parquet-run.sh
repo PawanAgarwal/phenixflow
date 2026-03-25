@@ -106,15 +106,49 @@ if [ "$TOTAL_JOBS" -gt 0 ] && [ "$COMPLETED_JOBS" -ge "$TOTAL_JOBS" ]; then
 fi
 
 echo "[$(timestamp)] relaunching $RUN_ID" >>"$ENSURE_LOG"
-nohup env \
-  START_DATE="$START_DATE" \
-  END_DATE="$END_DATE" \
-  PARQUET_RUN_ID="$RUN_ID" \
-  PARQUET_WORKERS="$PARQUET_WORKERS" \
-  PARQUET_DOWNLOAD_WORKERS="$PARQUET_DOWNLOAD_WORKERS" \
-  PARQUET_COMPUTE_WORKERS="$PARQUET_COMPUTE_WORKERS" \
-  PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS" \
-  THETADATA_BASE_URL="$THETADATA_BASE_URL" \
-  PARQUET_RESUME_EXISTING=1 \
-  bash "$RUN_SCRIPT" >>"$LAUNCH_LOG" 2>&1 < /dev/null &
-echo "[$(timestamp)] launched pid=$!" >>"$ENSURE_LOG"
+LAUNCH_PID="$(
+  python3 - "$RUN_SCRIPT" "$LAUNCH_LOG" "$START_DATE" "$END_DATE" "$RUN_ID" "$PARQUET_WORKERS" "$PARQUET_DOWNLOAD_WORKERS" "$PARQUET_COMPUTE_WORKERS" "$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS" "$THETADATA_BASE_URL" <<'PY'
+import os
+import subprocess
+import sys
+
+(
+    run_script,
+    launch_log,
+    start_date,
+    end_date,
+    run_id,
+    parquet_workers,
+    parquet_download_workers,
+    parquet_compute_workers,
+    theta_max_connections,
+    theta_base_url,
+) = sys.argv[1:]
+
+env = os.environ.copy()
+env.update({
+    "START_DATE": start_date,
+    "END_DATE": end_date,
+    "PARQUET_RUN_ID": run_id,
+    "PARQUET_WORKERS": parquet_workers,
+    "PARQUET_DOWNLOAD_WORKERS": parquet_download_workers,
+    "PARQUET_COMPUTE_WORKERS": parquet_compute_workers,
+    "PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS": theta_max_connections,
+    "THETADATA_BASE_URL": theta_base_url,
+    "PARQUET_RESUME_EXISTING": "1",
+})
+
+with open(launch_log, "ab", buffering=0) as handle:
+    process = subprocess.Popen(
+        ["bash", run_script],
+        stdin=subprocess.DEVNULL,
+        stdout=handle,
+        stderr=subprocess.STDOUT,
+        start_new_session=True,
+        close_fds=True,
+        env=env,
+    )
+    print(process.pid)
+PY
+)"
+echo "[$(timestamp)] launched pid=$LAUNCH_PID" >>"$ENSURE_LOG"

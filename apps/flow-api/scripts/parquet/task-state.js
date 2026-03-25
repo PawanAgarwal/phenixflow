@@ -422,6 +422,7 @@ async function claimNextTask({
   workerId,
   maxAttempts = normalizeStageMaxAttempts(process.env),
 }) {
+  if (readRunStopRequest(runRoot)) return null;
   const files = listJobStateFiles(runRoot);
   for (const filePath of files) {
     const current = readJsonFile(filePath);
@@ -521,8 +522,7 @@ function cleanupNonRunningStageLocks(state) {
     if (!stage || stage.status === 'running') continue;
     const lockPath = getTaskLockPath(state.runRoot, state.symbol, state.dayIso, stageName);
     if (fs.existsSync(lockPath)) {
-      fs.rmSync(lockPath, { recursive: true, force: true });
-      cleaned = true;
+      cleaned = cleanupStaleLock(lockPath) || cleaned;
     }
   }
   return cleaned;
@@ -533,10 +533,13 @@ async function completeTask(claim, {
   elapsedMs = 0,
   meta = {},
 } = {}) {
+  const lockMetadata = readJsonFile(claim.lockPath);
+  if (!lockMetadata?.token || lockMetadata.token !== claim.token) return;
   await withJobStateLock(claim.job.runRoot, claim.job.symbol, claim.job.dayIso, async () => {
     const state = readJsonFile(claim.statePath);
     if (!state) return;
     const stage = state.stages[claim.stageName];
+    if (stage.status !== 'running' || stage.claimedBy !== lockMetadata.workerId) return;
     stage.status = 'complete';
     stage.completedAt = nowIso();
     stage.updatedAt = stage.completedAt;
@@ -555,10 +558,13 @@ async function failTask(claim, error, {
   elapsedMs = 0,
   meta = {},
 } = {}) {
+  const lockMetadata = readJsonFile(claim.lockPath);
+  if (!lockMetadata?.token || lockMetadata.token !== claim.token) return;
   await withJobStateLock(claim.job.runRoot, claim.job.symbol, claim.job.dayIso, async () => {
     const state = readJsonFile(claim.statePath);
     if (!state) return;
     const stage = state.stages[claim.stageName];
+    if (stage.status !== 'running' || stage.claimedBy !== lockMetadata.workerId) return;
     stage.status = 'failed';
     stage.completedAt = null;
     stage.updatedAt = nowIso();

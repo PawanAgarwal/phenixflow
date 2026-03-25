@@ -86,9 +86,15 @@ function collectStatus(runRoot) {
     });
   }
 
-  aggregate.state = aggregate.activePids.length > 0
-    ? 'running'
-    : (summary ? 'finished' : 'idle');
+  if (aggregate.activePids.length > 0) {
+    aggregate.state = 'running';
+  } else if (aggregate.totalJobs > 0 && aggregate.completeJobs < aggregate.totalJobs) {
+    aggregate.state = 'paused';
+  } else if (summary) {
+    aggregate.state = 'finished';
+  } else {
+    aggregate.state = 'idle';
+  }
   return aggregate;
 }
 
