@@ -404,6 +404,10 @@ function resolveThetaConnectionSlotsRoot(env = process.env) {
   return path.join(resolveParquetRoot(env), 'theta-connection-slots');
 }
 
+function resolveThetaConnectionSlotPath(slotsRoot, slotIndex) {
+  return path.join(slotsRoot, `slot-${slotIndex}.lock`);
+}
+
 function isPidAlive(pid) {
   const normalizedPid = Math.trunc(Number(pid) || 0);
   if (normalizedPid <= 0) return false;
@@ -415,17 +419,37 @@ function isPidAlive(pid) {
   }
 }
 
+function readThetaConnectionSlotMetadata(slotPath) {
+  if (!fs.existsSync(slotPath)) return null;
+  try {
+    const stat = fs.statSync(slotPath);
+    if (stat.isDirectory()) {
+      const metadataPath = path.join(slotPath, 'metadata.json');
+      if (!fs.existsSync(metadataPath)) {
+        return { slotType: 'dir', pid: null, token: null };
+      }
+      const parsed = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
+      return {
+        slotType: 'dir',
+        pid: Number(parsed?.pid || 0) || null,
+        token: parsed?.token || null,
+      };
+    }
+    const parsed = JSON.parse(fs.readFileSync(slotPath, 'utf8'));
+    return {
+      slotType: 'file',
+      pid: Number(parsed?.pid || 0) || null,
+      token: parsed?.token || null,
+    };
+  } catch {
+    return { slotType: 'unknown', pid: null, token: null };
+  }
+}
+
 function cleanupStaleThetaConnectionSlot(slotPath) {
   if (!fs.existsSync(slotPath)) return false;
-  const metadataPath = path.join(slotPath, 'metadata.json');
-  try {
-    const metadata = fs.existsSync(metadataPath)
-      ? JSON.parse(fs.readFileSync(metadataPath, 'utf8'))
-      : null;
-    if (metadata && isPidAlive(metadata.pid)) return false;
-  } catch {
-    // Fall through and reclaim the orphaned slot.
-  }
+  const metadata = readThetaConnectionSlotMetadata(slotPath);
+  if (metadata?.pid && isPidAlive(metadata.pid)) return false;
   fs.rmSync(slotPath, { recursive: true, force: true });
   return true;
 }
@@ -443,17 +467,20 @@ async function acquireThetaConnectionSlot({
 
   while (true) {
     for (let slotIndex = 0; slotIndex < slotCount; slotIndex += 1) {
-      const slotPath = path.join(slotsRoot, `slot-${slotIndex}`);
+      const slotPath = resolveThetaConnectionSlotPath(slotsRoot, slotIndex);
       try {
-        fs.mkdirSync(slotPath);
-        fs.writeFileSync(path.join(slotPath, 'metadata.json'), `${JSON.stringify({
+        fs.writeFileSync(slotPath, `${JSON.stringify({
           token,
           label,
           pid: process.pid,
           acquiredAt: nowIso(),
-        }, null, 2)}\n`, 'utf8');
+        }, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' });
         return { slotIndex, slotPath, token };
       } catch (error) {
+        if (error?.code === 'ENOENT') {
+          ensureDir(slotsRoot);
+          continue;
+        }
         if (error?.code !== 'EEXIST') throw error;
         cleanupStaleThetaConnectionSlot(slotPath);
       }
@@ -474,14 +501,9 @@ async function acquireThetaConnectionSlot({
 function releaseThetaConnectionSlot(slot) {
   if (!slot?.slotPath) return;
   try {
-    const metadataPath = path.join(slot.slotPath, 'metadata.json');
-    if (fs.existsSync(metadataPath)) {
-      try {
-        const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
-        if (slot.token && metadata?.token && metadata.token !== slot.token) return;
-      } catch {
-        // Best effort cleanup.
-      }
+    if (fs.existsSync(slot.slotPath)) {
+      const metadata = readThetaConnectionSlotMetadata(slot.slotPath);
+      if (slot.token && metadata?.token && metadata.token !== slot.token) return;
     }
     fs.rmSync(slot.slotPath, { recursive: true, force: true });
   } catch {
