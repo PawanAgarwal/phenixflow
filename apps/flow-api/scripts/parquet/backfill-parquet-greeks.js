@@ -8,12 +8,16 @@ const {
   buildJobs,
   buildRunId,
   calculateGreeksToParquet,
-  downloadIndexGreeksToParquet,
-  downloadQuotesToParquet,
+  collectThetaConnectionSlotUsage,
+  downloadQuoteRequestToParquet,
+  downloadQuoteRequestToSpool,
+  downloadRawGreeksRequestToParquet,
   downloadStockToParquet,
+  downloadTradeRequestToParquet,
   ensureRunLayout,
   getQuotePartitionDir,
   loadStockPartition,
+  parseQuoteRequestSpoolToParquet,
   parseIndexGreeksSymbols,
   probeQuotePartition,
   resolveRunRoot,
@@ -22,12 +26,17 @@ const {
 const {
   COMPUTE_ROLE,
   DOWNLOAD_ROLE,
+  claimNextDownloadRequest,
   claimNextTask,
   collectRunState,
+  completeDownloadRequest,
   completeTask,
   ensureJobStates,
+  ensureRequestStates,
+  failDownloadRequest,
   failTask,
   normalizeStageMaxAttempts,
+  pruneCompleteRequestStatesForCompletedStages,
   readRunStopRequest,
   requestRunStop,
   roleShouldContinue,
@@ -96,10 +105,12 @@ function buildWorkerReport({
       tasksFailed: Number(counters.tasksFailed || 0),
       idleLoops: Number(counters.idleLoops || 0),
       stockRows: Number(counters.stockRows || 0),
+      tradeRows: Number(counters.tradeRows || 0),
       quoteRows: Number(counters.quoteRows || 0),
       rawGreekRows: Number(counters.rawGreekRows || 0),
       finalGreekRows: Number(counters.finalGreekRows || 0),
       stockMs: Number(counters.stockMs || 0),
+      tradeMs: Number(counters.tradeMs || 0),
       quoteMs: Number(counters.quoteMs || 0),
       rawGreekMs: Number(counters.rawGreekMs || 0),
       calcGreekMs: Number(counters.calcGreekMs || 0),
@@ -114,6 +125,7 @@ function persistWorkerReport(reportPath, payload) {
 async function loadOrCreateManifest({
   runId,
   runRoot,
+  role,
   workerIndex,
   startDate,
   endDate,
@@ -128,7 +140,7 @@ async function loadOrCreateManifest({
     return JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
   }
 
-  if (workerIndex === 0) {
+  if (role === DOWNLOAD_ROLE && workerIndex === 0) {
     const built = await buildJobs({
       startDate,
       endDate,
@@ -200,7 +212,195 @@ function manifestJobs(manifest) {
   return jobs;
 }
 
+function buildThetaDownloadSnapshot() {
+  const usage = collectThetaConnectionSlotUsage(process.env);
+  return {
+    thetaSlotsInUse: usage.slotsInUse,
+    thetaSlotCapacity: usage.slotCapacity,
+    thetaActiveRequests: usage.thetaActiveRequests,
+    thetaQueuedRequests: usage.thetaQueuedRequests,
+    thetaInUseByKind: usage.inUseByKind,
+  };
+}
+
 async function runClaimedTask(claim, { runId, runRoot }) {
+  if (claim.request) {
+    const request = claim.request;
+    if (request.kind === 'stock') {
+      const startedAtMs = Date.now();
+      const result = await downloadStockToParquet({
+        runRoot,
+        symbol: request.symbol,
+        dayIso: request.dayIso,
+        env: process.env,
+      });
+      const elapsedMs = Date.now() - startedAtMs;
+      return {
+        elapsedMs,
+        rowCount: result.rowCount,
+        meta: {
+          filePath: result.filePath,
+          partitionDir: path.dirname(result.filePath),
+        },
+        counterPatch: {
+          stockRows: result.rowCount,
+          stockMs: elapsedMs,
+        },
+      };
+    }
+
+    if (request.kind === 'trades') {
+      const startedAtMs = Date.now();
+      const result = await downloadTradeRequestToParquet({
+        runRoot,
+        symbol: request.symbol,
+        dayIso: request.dayIso,
+        partIndex: request.partIndex,
+        window: request.window,
+        env: process.env,
+      });
+      const elapsedMs = Date.now() - startedAtMs;
+      return {
+        elapsedMs,
+        rowCount: result.rowCount,
+        meta: {
+          filePath: result.filePath,
+          partitionDir: result.partitionDir,
+          window: request.window,
+          partIndex: request.partIndex,
+          endpoint: result.endpoint,
+        },
+        counterPatch: {
+          tradeRows: result.rowCount,
+          tradeMs: elapsedMs,
+        },
+      };
+    }
+
+    if (request.kind === 'quote') {
+      const startedAtMs = Date.now();
+      const result = await downloadQuoteRequestToParquet({
+        runRoot,
+        symbol: request.symbol,
+        dayIso: request.dayIso,
+        partIndex: request.partIndex,
+        window: request.window,
+        env: process.env,
+      });
+      const elapsedMs = Date.now() - startedAtMs;
+      return {
+        elapsedMs,
+        rowCount: result.rowCount,
+        meta: {
+          filePath: result.filePath,
+          partitionDir: result.partitionDir,
+          expirations: result.expirations,
+          expirationCount: result.expirations.length,
+          window: request.window,
+          partIndex: request.partIndex,
+        },
+        counterPatch: {
+          quoteRows: result.rowCount,
+          quoteMs: elapsedMs,
+        },
+      };
+    }
+
+    if (request.kind === 'quote_fetch') {
+      const startedAtMs = Date.now();
+      const result = await downloadQuoteRequestToSpool({
+        runRoot,
+        symbol: request.symbol,
+        dayIso: request.dayIso,
+        partIndex: request.partIndex,
+        window: request.window,
+        env: process.env,
+      });
+      const elapsedMs = Date.now() - startedAtMs;
+      return {
+        elapsedMs,
+        rowCount: result.rowCount,
+        meta: {
+          outputPath: result.spoolPath,
+          partitionDir: path.dirname(result.spoolPath),
+          endpoint: result.endpoint,
+          spoolBytes: result.spoolBytes,
+          spoolElapsedMs: result.spoolElapsedMs,
+          window: request.window,
+          partIndex: request.partIndex,
+        },
+        counterPatch: {
+          quoteRows: result.rowCount,
+          quoteMs: elapsedMs,
+        },
+      };
+    }
+
+    if (request.kind === 'quote_parse') {
+      const startedAtMs = Date.now();
+      const result = await parseQuoteRequestSpoolToParquet({
+        runRoot,
+        symbol: request.symbol,
+        dayIso: request.dayIso,
+        partIndex: request.partIndex,
+        window: request.window,
+        env: process.env,
+      });
+      const elapsedMs = Date.now() - startedAtMs;
+      return {
+        elapsedMs,
+        rowCount: result.rowCount,
+        meta: {
+          filePath: result.filePath,
+          partitionDir: result.partitionDir,
+          expirations: result.expirations,
+          expirationCount: result.expirations.length,
+          window: request.window,
+          partIndex: request.partIndex,
+          sourcePath: result.spoolPath,
+          parseElapsedMs: result.parseElapsedMs,
+        },
+        counterPatch: {
+          quoteRows: result.rowCount,
+          quoteMs: elapsedMs,
+        },
+      };
+    }
+
+    if (request.kind === 'raw_greeks') {
+      const startedAtMs = Date.now();
+      const result = await downloadRawGreeksRequestToParquet({
+        runRoot,
+        symbol: request.symbol,
+        dayIso: request.dayIso,
+        expirations: request.expirations,
+        window: request.window,
+        partIndex: request.partIndex,
+        runId,
+        env: process.env,
+      });
+      const elapsedMs = Date.now() - startedAtMs;
+      return {
+        elapsedMs,
+        rowCount: result.rawRowsWritten,
+        meta: {
+          expirations: request.expirations,
+          window: request.window,
+          partIndex: request.partIndex,
+          rawPath: result.rawPath,
+          finalPath: result.finalPath,
+        },
+        counterPatch: {
+          rawGreekRows: result.rawRowsWritten,
+          finalGreekRows: result.rawRowsWritten,
+          rawGreekMs: elapsedMs,
+        },
+      };
+    }
+
+    throw new Error(`unsupported_request_kind:${request.kind}`);
+  }
+
   const { symbol, dayIso, greekMode, stages } = claim.job;
   if (claim.stageName === 'stock') {
     const startedAtMs = Date.now();
@@ -219,64 +419,6 @@ async function runClaimedTask(claim, { runId, runRoot }) {
       counterPatch: {
         stockRows: result.rowCount,
         stockMs: Date.now() - startedAtMs,
-      },
-    };
-  }
-
-  if (claim.stageName === 'quotes') {
-    const startedAtMs = Date.now();
-    const result = await downloadQuotesToParquet({
-      runRoot,
-      symbol,
-      dayIso,
-      env: process.env,
-    });
-    const elapsedMs = Date.now() - startedAtMs;
-    return {
-      elapsedMs,
-      rowCount: result.rowCount,
-      meta: {
-        expirations: result.expirations,
-        expirationCount: result.expirations.length,
-        filePath: result.filePath,
-      },
-      counterPatch: {
-        quoteRows: result.rowCount,
-        quoteMs: elapsedMs,
-      },
-    };
-  }
-
-  if (claim.stageName === 'greeks' && greekMode === 'raw') {
-    const quoteInfo = Array.isArray(stages?.quotes?.meta?.expirations)
-      ? { expirations: stages.quotes.meta.expirations }
-      : await probeQuotePartition(getQuotePartitionDir(runRoot, symbol, dayIso));
-    const expirations = Array.isArray(quoteInfo?.expirations) ? quoteInfo.expirations : [];
-    if (expirations.length === 0) {
-      throw new Error(`missing_quote_expirations:${symbol}:${dayIso}`);
-    }
-    const startedAtMs = Date.now();
-    const result = await downloadIndexGreeksToParquet({
-      runRoot,
-      symbol,
-      dayIso,
-      expirations,
-      runId,
-      env: process.env,
-    });
-    const elapsedMs = Date.now() - startedAtMs;
-    return {
-      elapsedMs,
-      rowCount: result.rawRowsWritten,
-      meta: {
-        expirations,
-        rawPath: result.rawPath,
-        finalPath: result.finalPath,
-      },
-      counterPatch: {
-        rawGreekRows: result.rawRowsWritten,
-        finalGreekRows: result.rawRowsWritten,
-        rawGreekMs: elapsedMs,
       },
     };
   }
@@ -340,6 +482,7 @@ async function main() {
   const manifest = await loadOrCreateManifest({
     runId,
     runRoot,
+    role,
     workerIndex,
     startDate,
     endDate,
@@ -357,9 +500,22 @@ async function main() {
       jobs,
       indexGreeksSymbols,
     });
-    writeJobsReady(runRoot, { jobCount: jobs.length, initializedBy: workerId });
+    await ensureRequestStates({
+      runRoot,
+      jobs,
+      env: process.env,
+    });
+    const pruned = pruneCompleteRequestStatesForCompletedStages(runRoot);
+    writeJobsReady(runRoot, {
+      jobCount: jobs.length,
+      initializedBy: workerId,
+      readyToken: String(process.env.PARQUET_READY_TOKEN || '').trim() || null,
+      prunedCompletedRequests: pruned.removed,
+    });
   } else {
-    await waitForJobStatesReady(runRoot);
+    await waitForJobStatesReady(runRoot, {
+      readyToken: String(process.env.PARQUET_READY_TOKEN || '').trim() || null,
+    });
   }
 
   const reportPath = workerReportPath(layout.reportsRoot, role, workerIndex);
@@ -404,12 +560,20 @@ async function main() {
       }));
     }
 
-    const claim = await claimNextTask({
-      runRoot,
-      role,
-      workerId,
-      maxAttempts: stageMaxAttempts,
-    });
+    const claim = role === DOWNLOAD_ROLE
+      ? await claimNextDownloadRequest({
+        runRoot,
+        workerId,
+        maxAttempts: stageMaxAttempts,
+        env: process.env,
+      })
+      : await claimNextTask({
+        runRoot,
+        role,
+        workerId,
+        maxAttempts: stageMaxAttempts,
+        env: process.env,
+      });
 
     if (!claim) {
       const runState = collectRunState(runRoot, { maxAttempts: stageMaxAttempts });
@@ -422,30 +586,54 @@ async function main() {
     }
 
     counters.tasksClaimed = Number(counters.tasksClaimed || 0) + 1;
-    currentTask = {
-      symbol: claim.job.symbol,
-      dayIso: claim.job.dayIso,
-      greekMode: claim.job.greekMode,
-      stageName: claim.stageName,
-      claimedAt: new Date().toISOString(),
-    };
+    currentTask = claim.request
+      ? {
+        requestId: claim.request.requestId,
+        symbol: claim.request.symbol,
+        dayIso: claim.request.dayIso,
+        greekMode: claim.request.greekMode,
+        stageName: claim.request.stageName,
+        requestKind: claim.request.kind,
+        partIndex: claim.request.partIndex,
+        window: claim.request.window || null,
+        claimedAt: new Date().toISOString(),
+      }
+      : {
+        symbol: claim.job.symbol,
+        dayIso: claim.job.dayIso,
+        greekMode: claim.job.greekMode,
+        stageName: claim.stageName,
+        claimedAt: new Date().toISOString(),
+      };
     writeReport();
     console.log('[PARQUET_TASK_START]', JSON.stringify({
       role,
       workerIndex,
-      symbol: claim.job.symbol,
-      dayIso: claim.job.dayIso,
-      greekMode: claim.job.greekMode,
-      stageName: claim.stageName,
+      symbol: claim.request ? claim.request.symbol : claim.job.symbol,
+      dayIso: claim.request ? claim.request.dayIso : claim.job.dayIso,
+      greekMode: claim.request ? claim.request.greekMode : claim.job.greekMode,
+      stageName: claim.request ? claim.request.stageName : claim.stageName,
+      requestKind: claim.request ? claim.request.kind : null,
+      partIndex: claim.request ? claim.request.partIndex : null,
+      ...(claim.request ? buildThetaDownloadSnapshot() : {}),
     }));
 
     try {
       const result = await runClaimedTask(claim, { runId, runRoot });
-      await completeTask(claim, {
-        rowCount: result.rowCount,
-        elapsedMs: result.elapsedMs,
-        meta: result.meta,
-      });
+      if (claim.request) {
+        await completeDownloadRequest(claim, {
+          rowCount: result.rowCount,
+          elapsedMs: result.elapsedMs,
+          meta: result.meta,
+          env: process.env,
+        });
+      } else {
+        await completeTask(claim, {
+          rowCount: result.rowCount,
+          elapsedMs: result.elapsedMs,
+          meta: result.meta,
+        });
+      }
       counters.tasksCompleted = Number(counters.tasksCompleted || 0) + 1;
       Object.entries(result.counterPatch || {}).forEach(([key, value]) => {
         counters[key] = Number(counters[key] || 0) + Number(value || 0);
@@ -453,24 +641,36 @@ async function main() {
       console.log('[PARQUET_TASK_DONE]', JSON.stringify({
         role,
         workerIndex,
-        symbol: claim.job.symbol,
-        dayIso: claim.job.dayIso,
-        stageName: claim.stageName,
+        symbol: claim.request ? claim.request.symbol : claim.job.symbol,
+        dayIso: claim.request ? claim.request.dayIso : claim.job.dayIso,
+        stageName: claim.request ? claim.request.stageName : claim.stageName,
+        requestKind: claim.request ? claim.request.kind : null,
+        partIndex: claim.request ? claim.request.partIndex : null,
         rowCount: result.rowCount,
         elapsedMs: result.elapsedMs,
+        ...(claim.request ? buildThetaDownloadSnapshot() : {}),
       }));
       lastError = null;
     } catch (error) {
       counters.tasksFailed = Number(counters.tasksFailed || 0) + 1;
       lastError = String(error?.stack || error?.message || error);
-      await failTask(claim, error);
+      if (claim.request) {
+        await failDownloadRequest(claim, error, {
+          env: process.env,
+        });
+      } else {
+        await failTask(claim, error);
+      }
       console.error('[PARQUET_TASK_FAILED]', JSON.stringify({
         role,
         workerIndex,
-        symbol: claim.job.symbol,
-        dayIso: claim.job.dayIso,
-        stageName: claim.stageName,
+        symbol: claim.request ? claim.request.symbol : claim.job.symbol,
+        dayIso: claim.request ? claim.request.dayIso : claim.job.dayIso,
+        stageName: claim.request ? claim.request.stageName : claim.stageName,
+        requestKind: claim.request ? claim.request.kind : null,
+        partIndex: claim.request ? claim.request.partIndex : null,
         error: lastError.split('\n')[0],
+        ...(claim.request ? buildThetaDownloadSnapshot() : {}),
       }));
     }
 

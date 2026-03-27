@@ -10,23 +10,35 @@ detect_default_parquet_workers() {
   if ! [[ "$cpu_count" =~ ^[0-9]+$ ]]; then
     cpu_count=8
   fi
-  workers=$(( cpu_count > 2 ? cpu_count - 2 : 1 ))
-  if (( workers > 8 )); then
-    workers=8
+  workers=$(( cpu_count + 8 ))
+  if (( workers > 18 )); then
+    workers=18
   fi
-  if (( workers < 1 )); then
-    workers=1
+  if (( workers < 4 )); then
+    workers=4
   fi
   printf '%s\n' "$workers"
 }
 
 derive_download_workers() {
-  local total theta_cap download
+  local total theta_active theta_queued download compute_floor desired_extra
   total="$1"
-  theta_cap="$2"
-  download=$theta_cap
-  if (( download > total - 1 )); then
-    download=$(( total > 1 ? total - 1 : 1 ))
+  theta_active="$2"
+  theta_queued="$3"
+  compute_floor=2
+  if (( total <= 3 )); then
+    compute_floor=1
+  fi
+  desired_extra="$theta_queued"
+  if (( desired_extra > theta_active )); then
+    desired_extra="$theta_active"
+  fi
+  download=$(( theta_active + desired_extra ))
+  if (( download > total - compute_floor )); then
+    download=$(( total > compute_floor ? total - compute_floor : 1 ))
+  fi
+  if (( download < theta_active )); then
+    download="$theta_active"
   fi
   if (( download < 1 )); then
     download=1
@@ -38,7 +50,11 @@ START_DATE="${START_DATE:-2025-01-02}"
 END_DATE="${END_DATE:-2025-01-08}"
 SYMBOL_FILE="${SYMBOL_FILE:-$ROOT_DIR/apps/flow-api/config/top100-universe.json}"
 SYMBOL_LIMIT="${SYMBOL_LIMIT:-100}"
-EXTRA_SYMBOLS="${EXTRA_SYMBOLS:-SPX,SPXW,SPY,QQQ,VIX,VIXW,RUT,RUTW,XSP}"
+if [ "${EXTRA_SYMBOLS+x}" = "x" ]; then
+  EXTRA_SYMBOLS="${EXTRA_SYMBOLS}"
+else
+  EXTRA_SYMBOLS="SPX,SPXW,SPY,QQQ,VIX,VIXW,RUT,RUTW,XSP"
+fi
 PARQUET_WORKERS="${PARQUET_WORKERS:-$(detect_default_parquet_workers)}"
 THETADATA_BASE_URL="${THETADATA_BASE_URL:-http://127.0.0.1:25503}"
 PARQUET_RUN_ID="${PARQUET_RUN_ID:-parquet-jan2025-week-$(date -u +%Y%m%dT%H%M%SZ)}"
@@ -50,8 +66,15 @@ PARQUET_THETA_RETRY_ATTEMPTS="${PARQUET_THETA_RETRY_ATTEMPTS:-8}"
 PARQUET_THETA_RETRY_BASE_DELAY_MS="${PARQUET_THETA_RETRY_BASE_DELAY_MS:-2000}"
 PARQUET_THETA_RETRY_MAX_DELAY_MS="${PARQUET_THETA_RETRY_MAX_DELAY_MS:-60000}"
 PARQUET_THETA_GLOBAL_COOLDOWN_MS="${PARQUET_THETA_GLOBAL_COOLDOWN_MS:-30000}"
-PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="${PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS:-4}"
-PARQUET_DOWNLOAD_WORKERS="${PARQUET_DOWNLOAD_WORKERS:-$(derive_download_workers "$PARQUET_WORKERS" "$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS")}"
+PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="${PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS:-8}"
+PARQUET_THETA_ACTIVE_TARGET="${PARQUET_THETA_ACTIVE_TARGET:-$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS}"
+PARQUET_THETA_QUEUED_TARGET="${PARQUET_THETA_QUEUED_TARGET:-16}"
+PARQUET_THETA_PER_JOB_LIMIT="${PARQUET_THETA_PER_JOB_LIMIT:-1}"
+PARQUET_THETA_PER_JOB_BURST_LIMIT="${PARQUET_THETA_PER_JOB_BURST_LIMIT:-2}"
+PARQUET_HEAVY_DOWNLOAD_WORKERS="${PARQUET_HEAVY_DOWNLOAD_WORKERS:-0}"
+PARQUET_HEAVY_DOWNLOAD_SYMBOLS="${PARQUET_HEAVY_DOWNLOAD_SYMBOLS:-}"
+PARQUET_PUBLISH_ON_SUCCESS="${PARQUET_PUBLISH_ON_SUCCESS:-1}"
+PARQUET_DOWNLOAD_WORKERS="${PARQUET_DOWNLOAD_WORKERS:-$(derive_download_workers "$PARQUET_WORKERS" "$PARQUET_THETA_ACTIVE_TARGET" "$PARQUET_THETA_QUEUED_TARGET")}"
 PARQUET_COMPUTE_WORKERS="${PARQUET_COMPUTE_WORKERS:-$(( PARQUET_WORKERS - PARQUET_DOWNLOAD_WORKERS ))}"
 if (( PARQUET_COMPUTE_WORKERS < 1 )); then
   PARQUET_COMPUTE_WORKERS=1
@@ -62,6 +85,9 @@ export START_DATE END_DATE SYMBOL_FILE SYMBOL_LIMIT EXTRA_SYMBOLS THETADATA_BASE
 export PARQUET_RESUME_EXISTING PARQUET_STAGE_MAX_ATTEMPTS
 export PARQUET_HEAVY_RAW_INDEX_QUOTE_CONCURRENCY PARQUET_HEAVY_RAW_INDEX_GREEKS_CONCURRENCY PARQUET_HEAVY_RAW_INDEX_EXPIRATION_CONCURRENCY
 export PARQUET_THETA_RETRY_ATTEMPTS PARQUET_THETA_RETRY_BASE_DELAY_MS PARQUET_THETA_RETRY_MAX_DELAY_MS PARQUET_THETA_GLOBAL_COOLDOWN_MS PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS
+export PARQUET_THETA_ACTIVE_TARGET PARQUET_THETA_QUEUED_TARGET PARQUET_THETA_PER_JOB_LIMIT PARQUET_THETA_PER_JOB_BURST_LIMIT
+export PARQUET_HEAVY_DOWNLOAD_WORKERS PARQUET_HEAVY_DOWNLOAD_SYMBOLS
+export PARQUET_PUBLISH_ON_SUCCESS
 
 DEFAULT_LOCAL_PARQUET_ROOT="${HOME}/Library/Caches/phenixflow/parquet"
 DEFAULT_EXTERNAL_PARQUET_ROOT="/Volumes/Phenix4TB/phenixflow/parquet"
@@ -78,11 +104,15 @@ LOG_ROOT="$RUN_ROOT/logs"
 REPORT_ROOT="$RUN_ROOT/reports"
 STATE_CONTROL_ROOT="$RUN_ROOT/state/control"
 STOP_PATH="$STATE_CONTROL_ROOT/stop-requested.json"
+READY_PATH="$STATE_CONTROL_ROOT/jobs-ready.json"
 mkdir -p "$LOG_ROOT" "$REPORT_ROOT" "$STATE_CONTROL_ROOT"
 rm -f "$REPORT_ROOT/summary.json"
 rm -f "$STOP_PATH"
 
 RUN_STARTED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+PARQUET_READY_TOKEN="${PARQUET_READY_TOKEN:-$PARQUET_RUN_ID-$RUN_STARTED_AT-$$}"
+export PARQUET_READY_TOKEN
+rm -f "$READY_PATH"
 
 echo "Parquet benchmark run: $PARQUET_RUN_ID"
 echo "Run root: $RUN_ROOT"
@@ -92,6 +122,11 @@ echo "Worker budget: $PARQUET_WORKERS"
 echo "Download workers: $PARQUET_DOWNLOAD_WORKERS"
 echo "Compute workers: $PARQUET_COMPUTE_WORKERS"
 echo "Theta connection cap: $PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS"
+echo "Theta active target: $PARQUET_THETA_ACTIVE_TARGET"
+echo "Theta queued target: $PARQUET_THETA_QUEUED_TARGET"
+echo "Theta per-job limit: $PARQUET_THETA_PER_JOB_LIMIT"
+echo "Theta per-job burst limit: $PARQUET_THETA_PER_JOB_BURST_LIMIT"
+echo "Heavy download workers: $PARQUET_HEAVY_DOWNLOAD_WORKERS"
 echo "Started at: $RUN_STARTED_AT"
 
 request_stop() {
@@ -149,6 +184,7 @@ done
 node - <<'NODE' "$RUN_ROOT" "$RUN_STARTED_AT" "$PARQUET_DOWNLOAD_WORKERS" "$PARQUET_COMPUTE_WORKERS"
 const fs = require('node:fs');
 const path = require('node:path');
+const { collectRunState } = require(path.join(process.cwd(), 'apps/flow-api/scripts/parquet/task-state.js'));
 
 const runRoot = process.argv[2];
 const runStartedAt = process.argv[3];
@@ -172,10 +208,12 @@ const summary = {
   failedJobs: 0,
   runningJobs: 0,
   totalStockRows: 0,
+  totalTradeRows: 0,
   totalQuoteRows: 0,
   totalRawGreekRows: 0,
   totalFinalGreekRows: 0,
   stockMs: 0,
+  tradeMs: 0,
   quoteMs: 0,
   rawGreekMs: 0,
   calcGreekMs: 0,
@@ -193,10 +231,12 @@ for (const jobFile of jobFiles) {
   if (job.status === 'failed') summary.failedJobs += 1;
   if (job.status === 'running') summary.runningJobs += 1;
   summary.totalStockRows += Number(job?.stages?.stock?.rowCount || 0);
+  summary.totalTradeRows += Number(job?.stages?.trades?.rowCount || 0);
   summary.totalQuoteRows += Number(job?.stages?.quotes?.rowCount || 0);
   summary.totalRawGreekRows += job.greekMode === 'raw' ? Number(job?.stages?.greeks?.rowCount || 0) : 0;
   summary.totalFinalGreekRows += Number(job?.stages?.greeks?.rowCount || 0);
   summary.stockMs += Number(job?.stages?.stock?.elapsedMs || 0);
+  summary.tradeMs += Number(job?.stages?.trades?.elapsedMs || 0);
   summary.quoteMs += Number(job?.stages?.quotes?.elapsedMs || 0);
   if (job.greekMode === 'raw') {
     summary.rawGreekMs += Number(job?.stages?.greeks?.elapsedMs || 0);
@@ -219,9 +259,36 @@ for (const workerFile of workerFiles) {
   });
 }
 
+const live = collectRunState(runRoot);
+summary.downloadReady = Number(live.downloadReady || 0);
+summary.computeReady = Number(live.computeReady || 0);
+summary.downloadRunning = Number(live.downloadRunning || 0);
+summary.computeRunning = Number(live.computeRunning || 0);
+summary.thetaActiveTarget = Number(live.thetaActiveTarget || 0);
+summary.thetaConfiguredQueuedTarget = Number(live.thetaConfiguredQueuedTarget || 0);
+summary.thetaEffectiveQueuedTarget = Number(live.thetaEffectiveQueuedTarget || 0);
+summary.thetaActiveRequests = Number(live.thetaActiveRequests || 0);
+summary.thetaQueuedRequests = Number(live.thetaQueuedRequests || 0);
+summary.thetaOutstandingTarget = Number(live.thetaOutstandingTarget || 0);
+summary.thetaUtilizationPct = Number(live.thetaUtilizationPct || 0);
+summary.thetaDistinctJobsInFlight = Number(live.thetaDistinctJobsInFlight || 0);
+summary.thetaRecent429Count = Number(live.thetaRecent429Count || 0);
+summary.thetaRecentRetryCount = Number(live.thetaRecentRetryCount || 0);
+summary.thetaCooldownActive = Boolean(live.thetaCooldownActive);
+summary.thetaPotentialDegradedReason = live.thetaPotentialDegradedReason || null;
+summary.readyRequestsByKind = live.readyRequestsByKind || { stock: 0, trades: 0, quote: 0, raw_greeks: 0 };
+summary.runningRequestsByKind = live.runningRequestsByKind || { stock: 0, trades: 0, quote: 0, raw_greeks: 0 };
+
 const summaryPath = path.join(reportsRoot, 'summary.json');
 fs.writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
 console.log(JSON.stringify(summary, null, 2));
 NODE
+
+if [ "$status" -eq 0 ] && [ "${PARQUET_PUBLISH_ON_SUCCESS}" = "1" ]; then
+  echo "Publishing completed parquet run into stable dataset root..."
+  if ! node "$ROOT_DIR/apps/flow-api/scripts/parquet/publish-parquet-run.js" "$RUN_ROOT"; then
+    status=1
+  fi
+fi
 
 exit "$status"

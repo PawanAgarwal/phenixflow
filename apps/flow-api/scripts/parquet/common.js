@@ -1,3 +1,4 @@
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
@@ -49,11 +50,16 @@ const DEFAULT_THETA_RETRY_ATTEMPTS = 8;
 const DEFAULT_THETA_RETRY_BASE_DELAY_MS = 2000;
 const DEFAULT_THETA_RETRY_MAX_DELAY_MS = 60000;
 const DEFAULT_THETA_GLOBAL_COOLDOWN_MS = 30000;
-const DEFAULT_THETA_MAX_CONCURRENT_CONNECTIONS = 4;
+const DEFAULT_THETA_MAX_CONCURRENT_CONNECTIONS = 8;
+const DEFAULT_PARQUET_THETA_ACTIVE_TARGET = 8;
+const DEFAULT_PARQUET_THETA_QUEUED_TARGET = 16;
 const DEFAULT_MARKET_OPEN_TIME = '09:30:00';
 const DEFAULT_MARKET_REGULAR_CLOSE_TIME = '16:00:00';
 const DEFAULT_PARQUET_WRITE_MAX_PENDING_BATCHES = 8;
 const DEFAULT_PARQUET_WRITE_MAX_PENDING_ROWS = 40000;
+const DEFAULT_NDJSON_CALLBACK_BATCH_SIZE = 4000;
+const DEFAULT_QUOTE_WRITE_BATCH_ROWS = 4000;
+const DEFAULT_QUOTE_SPOOL_DELETE_ON_SUCCESS = true;
 
 const HEAVY_SYMBOL_WEIGHTS = new Map([
   ['SPXW', 64],
@@ -111,6 +117,27 @@ const RAW_QUOTE_SCHEMA = new parquet.ParquetSchema(withCompression({
   last: { type: 'DOUBLE', optional: true },
   bid_size: { type: 'INT32', optional: true },
   ask_size: { type: 'INT32', optional: true },
+  source_endpoint: { type: 'UTF8', optional: true },
+  raw_payload_json: { type: 'UTF8', optional: true },
+}));
+
+const RAW_TRADES_SCHEMA = new parquet.ParquetSchema(withCompression({
+  trade_id: { type: 'UTF8' },
+  symbol: { type: 'UTF8' },
+  trade_date_utc: { type: 'UTF8' },
+  trade_ts_utc: { type: 'UTF8' },
+  trade_ts_et: { type: 'UTF8', optional: true },
+  minute_bucket_utc: { type: 'UTF8' },
+  expiration: { type: 'UTF8' },
+  strike: { type: 'DOUBLE' },
+  option_right: { type: 'UTF8' },
+  price: { type: 'DOUBLE' },
+  size: { type: 'INT32' },
+  bid: { type: 'DOUBLE', optional: true },
+  ask: { type: 'DOUBLE', optional: true },
+  condition_code: { type: 'UTF8', optional: true },
+  exchange: { type: 'UTF8', optional: true },
+  watermark: { type: 'UTF8', optional: true },
   source_endpoint: { type: 'UTF8', optional: true },
   raw_payload_json: { type: 'UTF8', optional: true },
 }));
@@ -204,6 +231,20 @@ function resolveRunRoot(runId, env = process.env) {
   return path.join(resolveParquetRoot(env), 'runs', runId);
 }
 
+function resolvePublishedDatasetsRoot(env = process.env) {
+  const configured = String(env.PHENIXFLOW_PARQUET_DATASETS_ROOT || '').trim();
+  if (configured) return path.resolve(configured);
+  return path.join(resolveParquetRoot(env), 'datasets');
+}
+
+function resolvePublishedCurrentRoot(env = process.env) {
+  return path.join(resolvePublishedDatasetsRoot(env), 'current');
+}
+
+function resolvePublishedReleasesRoot(env = process.env) {
+  return path.join(resolvePublishedDatasetsRoot(env), 'releases');
+}
+
 function resolveLayout(runRoot) {
   return {
     runRoot,
@@ -217,6 +258,7 @@ function resolveLayout(runRoot) {
     controlRoot: path.join(runRoot, 'state', 'control'),
     rawStockRoot: path.join(runRoot, 'datasets', 'raw', 'stock_ohlc_minute'),
     rawQuoteRoot: path.join(runRoot, 'datasets', 'raw', 'option_quote_minute'),
+    rawTradeRoot: path.join(runRoot, 'datasets', 'raw', 'option_trades'),
     rawGreeksRoot: path.join(runRoot, 'datasets', 'raw', 'option_greeks_minute'),
     finalGreeksRoot: path.join(runRoot, 'datasets', 'derived', 'option_greeks_minute'),
   };
@@ -398,6 +440,54 @@ function parseThetaMaxConcurrentConnections(env = process.env) {
   ))));
 }
 
+function parseThetaActiveTarget(env = process.env) {
+  const fallback = parseThetaMaxConcurrentConnections(env);
+  return Math.max(1, Math.min(16, Math.trunc(parseNumberEnv(
+    'PARQUET_THETA_ACTIVE_TARGET',
+    fallback || DEFAULT_PARQUET_THETA_ACTIVE_TARGET,
+    env,
+  ))));
+}
+
+function parseThetaQueuedTarget(env = process.env) {
+  return Math.max(0, Math.min(32, Math.trunc(parseNumberEnv(
+    'PARQUET_THETA_QUEUED_TARGET',
+    DEFAULT_PARQUET_THETA_QUEUED_TARGET,
+    env,
+  ))));
+}
+
+function parseNdjsonCallbackBatchSize(env = process.env) {
+  return Math.max(1, Math.min(50000, Math.trunc(parseNumberEnv(
+    'PARQUET_NDJSON_CALLBACK_BATCH_SIZE',
+    DEFAULT_NDJSON_CALLBACK_BATCH_SIZE,
+    env,
+  ))));
+}
+
+function parseQuoteWriteBatchRows(env = process.env) {
+  return Math.max(250, Math.min(50000, Math.trunc(parseNumberEnv(
+    'PARQUET_QUOTE_WRITE_BATCH_ROWS',
+    DEFAULT_QUOTE_WRITE_BATCH_ROWS,
+    env,
+  ))));
+}
+
+function parseQuoteUseSpool(env = process.env) {
+  return parseBooleanLike(env.PARQUET_QUOTE_USE_SPOOL, false);
+}
+
+function parseQuoteDeleteSpoolOnSuccess(env = process.env) {
+  return parseBooleanLike(env.PARQUET_QUOTE_DELETE_SPOOL_ON_SUCCESS, DEFAULT_QUOTE_SPOOL_DELETE_ON_SUCCESS);
+}
+
+function parseThetaOutstandingTarget(env = process.env) {
+  return Math.max(
+    parseThetaActiveTarget(env),
+    parseThetaActiveTarget(env) + parseThetaQueuedTarget(env),
+  );
+}
+
 function resolveThetaRateLimitStatePath(env = process.env) {
   const configured = String(env.PARQUET_THETA_RATE_LIMIT_STATE_PATH || '').trim();
   if (configured) return path.resolve(configured);
@@ -439,6 +529,8 @@ function readThetaConnectionSlotMetadata(slotPath) {
         slotType: 'dir',
         pid: Number(parsed?.pid || 0) || null,
         token: parsed?.token || null,
+        label: parsed?.label || null,
+        acquiredAt: parsed?.acquiredAt || null,
       };
     }
     const parsed = JSON.parse(fs.readFileSync(slotPath, 'utf8'));
@@ -446,9 +538,17 @@ function readThetaConnectionSlotMetadata(slotPath) {
       slotType: 'file',
       pid: Number(parsed?.pid || 0) || null,
       token: parsed?.token || null,
+      label: parsed?.label || null,
+      acquiredAt: parsed?.acquiredAt || null,
     };
   } catch {
-    return { slotType: 'unknown', pid: null, token: null };
+    return {
+      slotType: 'unknown',
+      pid: null,
+      token: null,
+      label: null,
+      acquiredAt: null,
+    };
   }
 }
 
@@ -466,7 +566,7 @@ async function acquireThetaConnectionSlot({
 } = {}) {
   const slotsRoot = resolveThetaConnectionSlotsRoot(env);
   ensureDir(slotsRoot);
-  const slotCount = parseThetaMaxConcurrentConnections(env);
+  const slotCount = parseThetaOutstandingTarget(env);
   const token = `${process.pid}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
   const startedAtMs = Date.now();
   let waitLogged = false;
@@ -481,7 +581,13 @@ async function acquireThetaConnectionSlot({
           pid: process.pid,
           acquiredAt: nowIso(),
         }, null, 2)}\n`, { encoding: 'utf8', flag: 'wx' });
-        return { slotIndex, slotPath, token };
+        return {
+          slotIndex,
+          slotPath,
+          token,
+          label,
+          requestedAtMs: startedAtMs,
+        };
       } catch (error) {
         if (error?.code === 'ENOENT') {
           ensureDir(slotsRoot);
@@ -517,15 +623,109 @@ function releaseThetaConnectionSlot(slot) {
   }
 }
 
+function resolveThetaRequestEventsPath(env = process.env) {
+  const runId = String(env.PARQUET_RUN_ID || '').trim();
+  if (!runId) return null;
+  return path.join(resolveRunRoot(runId, env), 'reports', 'theta-request-events.ndjson');
+}
+
+function collectThetaConnectionSlotUsage(env = process.env) {
+  const slotsRoot = resolveThetaConnectionSlotsRoot(env);
+  const slotCapacity = parseThetaOutstandingTarget(env);
+  const activeTarget = parseThetaActiveTarget(env);
+  const queuedTarget = parseThetaQueuedTarget(env);
+  let slotsInUse = 0;
+  const inUseByKind = {};
+  for (let slotIndex = 0; slotIndex < slotCapacity; slotIndex += 1) {
+    const slotPath = resolveThetaConnectionSlotPath(slotsRoot, slotIndex);
+    if (!fs.existsSync(slotPath)) continue;
+    cleanupStaleThetaConnectionSlot(slotPath);
+    if (!fs.existsSync(slotPath)) continue;
+    const metadata = readThetaConnectionSlotMetadata(slotPath);
+    slotsInUse += 1;
+    const rawLabel = String(metadata?.label || 'unknown');
+    const labelKind = rawLabel.includes(':') ? rawLabel.split(':', 1)[0] : rawLabel;
+    inUseByKind[labelKind] = Number(inUseByKind[labelKind] || 0) + 1;
+  }
+  return {
+    slotCapacity,
+    slotsInUse,
+    activeTarget,
+    queuedTarget,
+    thetaActiveRequests: Math.min(activeTarget, slotsInUse),
+    thetaQueuedRequests: Math.max(0, slotsInUse - activeTarget),
+    inUseByKind,
+  };
+}
+
+function appendThetaRequestEvent({
+  phase,
+  status = 'success',
+  label = 'theta_request',
+  slotIndex = null,
+  waitedMs = 0,
+  durationMs = null,
+  error = null,
+  env = process.env,
+} = {}) {
+  const eventsPath = resolveThetaRequestEventsPath(env);
+  if (!eventsPath) return;
+  const usage = collectThetaConnectionSlotUsage(env);
+  ensureDir(path.dirname(eventsPath));
+  const payload = {
+    ts: nowIso(),
+    pid: process.pid,
+    phase,
+    status,
+    label,
+    slotIndex,
+    waitedMs: Math.max(0, Math.trunc(Number(waitedMs || 0))),
+    durationMs: durationMs === null || durationMs === undefined ? null : Math.max(0, Math.trunc(Number(durationMs || 0))),
+    error: error ? String(error) : null,
+    slotCapacity: usage.slotCapacity,
+    slotsInUse: usage.slotsInUse,
+    thetaActiveTarget: usage.activeTarget,
+    thetaQueuedTarget: usage.queuedTarget,
+    thetaActiveRequests: usage.thetaActiveRequests,
+    thetaQueuedRequests: usage.thetaQueuedRequests,
+    inUseByKind: usage.inUseByKind,
+  };
+  fs.appendFileSync(eventsPath, `${JSON.stringify(payload)}\n`, 'utf8');
+  console.log(`[PARQUET_THETA_REQUEST_${String(phase || 'event').toUpperCase()}]`, JSON.stringify(payload));
+}
+
 async function withThetaConnectionSlot(taskFn, {
   env = process.env,
   label = 'theta_request',
 } = {}) {
   const slot = await acquireThetaConnectionSlot({ env, label });
+  const startedAtMs = Date.now();
+  appendThetaRequestEvent({
+    phase: 'start',
+    status: 'running',
+    label,
+    slotIndex: slot?.slotIndex ?? null,
+    waitedMs: Math.max(0, startedAtMs - Number(slot?.requestedAtMs || startedAtMs)),
+    env,
+  });
+  let thrownError = null;
   try {
     return await taskFn(slot);
+  } catch (error) {
+    thrownError = error;
+    throw error;
   } finally {
     releaseThetaConnectionSlot(slot);
+    appendThetaRequestEvent({
+      phase: 'finish',
+      status: thrownError ? 'failed' : 'success',
+      label,
+      slotIndex: slot?.slotIndex ?? null,
+      waitedMs: Math.max(0, startedAtMs - Number(slot?.requestedAtMs || startedAtMs)),
+      durationMs: Date.now() - startedAtMs,
+      error: thrownError ? String(thrownError?.message || thrownError) : null,
+      env,
+    });
   }
 }
 
@@ -886,6 +1086,161 @@ function resolveThetaTimeWindowsForSymbol(symbol, {
   return windows;
 }
 
+function estimateWindowMinutes(window = {}) {
+  const startSecond = parseTimeHmsToSecondOfDay(window?.startTime || null);
+  const endSecond = parseTimeHmsToSecondOfDay(window?.endTime || null);
+  if (startSecond === null || endSecond === null || endSecond < startSecond) return 1;
+  return Math.max(1, Math.ceil(((endSecond - startSecond) + 1) / 60));
+}
+
+function resolveQuoteRequestPlan({
+  runRoot = null,
+  symbol,
+  dayIso,
+  sessionWindow = null,
+  env = process.env,
+} = {}) {
+  const effectiveSessionWindow = resolveProcessingSessionWindow(sessionWindow, {
+    symbol,
+    dayIso,
+    stage: 'quotes',
+    env,
+  });
+  const splitHeavyRawIndex = shouldSplitHeavyRawIndexJob(symbol, { env });
+  const quoteWindows = resolveThetaTimeWindowsForSymbol(symbol, {
+    sessionStartTime: effectiveSessionWindow?.openTime || null,
+    sessionEndTime: effectiveSessionWindow?.regularCloseTime || effectiveSessionWindow?.closeTime || null,
+    windowMinutes: splitHeavyRawIndex ? parseHeavyRawIndexQuoteWindowMinutes(env) : null,
+    forceWindowing: splitHeavyRawIndex,
+    env,
+  });
+  const quotePartitionDir = runRoot ? getQuotePartitionDir(runRoot, symbol, dayIso) : null;
+  return {
+    sessionWindow: effectiveSessionWindow,
+    splitHeavyRawIndex,
+    requests: quoteWindows.map((window, partIndex) => ({
+      kind: 'quote',
+      partIndex,
+      window,
+      filePath: quotePartitionDir ? getPartitionPartPath(quotePartitionDir, partIndex) : null,
+      schedulerPriority: splitHeavyRawIndex ? 60 : 30,
+      estimatedCost: estimateWindowMinutes(window),
+      fairnessKey: `${normalizeSymbol(symbol)}__${normalizeIsoDate(dayIso)}`,
+    })),
+  };
+}
+
+function resolveTradeRequestPlan({
+  runRoot = null,
+  symbol,
+  dayIso,
+  sessionWindow = null,
+  env = process.env,
+} = {}) {
+  const effectiveSessionWindow = resolveProcessingSessionWindow(sessionWindow, {
+    symbol,
+    dayIso,
+    stage: 'trades',
+    env,
+  });
+  const tradeWindows = resolveThetaTimeWindowsForSymbol(symbol, {
+    sessionStartTime: effectiveSessionWindow?.openTime || null,
+    sessionEndTime: effectiveSessionWindow?.closeTime || effectiveSessionWindow?.regularCloseTime || null,
+    windowMinutes: parseLargeSymbolWindowMinutes(env),
+    forceWindowing: false,
+    env,
+  });
+  const tradePartitionDir = runRoot ? getTradePartitionDir(runRoot, symbol, dayIso) : null;
+  return {
+    sessionWindow: effectiveSessionWindow,
+    requests: tradeWindows.map((window, partIndex) => ({
+      kind: 'trades',
+      partIndex,
+      window,
+      filePath: tradePartitionDir ? getPartitionPartPath(tradePartitionDir, partIndex) : null,
+      schedulerPriority: 35,
+      estimatedCost: estimateWindowMinutes(window),
+      fairnessKey: `${normalizeSymbol(symbol)}__${normalizeIsoDate(dayIso)}`,
+    })),
+  };
+}
+
+function resolveRawGreeksRequestPlan({
+  runRoot = null,
+  symbol,
+  dayIso,
+  expirations,
+  sessionWindow = null,
+  env = process.env,
+} = {}) {
+  const normalizedExpirations = Array.isArray(expirations)
+    ? expirations.map((value) => normalizeIsoDate(value)).filter(Boolean)
+    : [];
+  const effectiveSessionWindow = resolveProcessingSessionWindow(sessionWindow, {
+    symbol,
+    dayIso,
+    stage: 'raw_greeks',
+    env,
+  });
+  const openSecond = parseTimeHmsToSecondOfDay(effectiveSessionWindow?.openTime || null);
+  const closeSecondRaw = parseTimeHmsToSecondOfDay(effectiveSessionWindow?.regularCloseTime || effectiveSessionWindow?.closeTime || null);
+  const coreCloseSecond = closeSecondRaw === null ? null : Math.max(openSecond ?? 0, closeSecondRaw - 60);
+  const splitHeavyRawIndex = shouldSplitHeavyRawIndexJob(symbol, {
+    expirationCount: normalizedExpirations.length,
+    env,
+  });
+  const adaptivePlan = resolveThetaGreeksAdaptiveWindowMinutes({
+    symbol,
+    expirationCount: normalizedExpirations.length,
+    env,
+  });
+  const sessionStartTime = effectiveSessionWindow?.openTime || null;
+  const sessionEndTime = coreCloseSecond === null ? null : formatSecondOfDayAsHms(coreCloseSecond);
+  const effectiveWindowMinutes = splitHeavyRawIndex
+    ? Math.min(adaptivePlan.windowMinutes, parseHeavyRawIndexWindowMinutes(env))
+    : adaptivePlan.windowMinutes;
+  const windows = resolveThetaTimeWindowsForSymbol(symbol, {
+    sessionStartTime,
+    sessionEndTime,
+    windowMinutes: effectiveWindowMinutes,
+    forceWindowing: true,
+    env,
+  });
+  const groupModeEnabled = splitHeavyRawIndex
+    && normalizedExpirations.length <= parseHeavyRawIndexExpirationGroupMaxExpirations(env);
+  const rawPartitionDir = runRoot ? getRawGreeksPartitionDir(runRoot, symbol, dayIso) : null;
+  const finalPartitionDir = runRoot ? getFinalGreeksPartitionDir(runRoot, symbol, dayIso) : null;
+  const tasks = groupModeEnabled
+    ? chunkArray(normalizedExpirations, parseHeavyRawIndexExpirationGroupSize(env)).map((group, partIndex) => ({
+      kind: 'raw_greeks',
+      partIndex,
+      expirations: group,
+      window: { startTime: sessionStartTime, endTime: sessionEndTime },
+      taskMode: 'expiration_groups',
+    }))
+    : windows.map((window, partIndex) => ({
+      kind: 'raw_greeks',
+      partIndex,
+      expirations: normalizedExpirations,
+      window,
+      taskMode: 'time_windows',
+    }));
+  return {
+    sessionWindow: effectiveSessionWindow,
+    splitHeavyRawIndex,
+    mode: adaptivePlan.mode,
+    effectiveWindowMinutes,
+    requests: tasks.map((task) => ({
+      ...task,
+      rawPath: rawPartitionDir ? getPartitionPartPath(rawPartitionDir, task.partIndex) : null,
+      finalPath: finalPartitionDir ? getPartitionPartPath(finalPartitionDir, task.partIndex) : null,
+      schedulerPriority: groupModeEnabled ? 70 : 80,
+      estimatedCost: Math.max(1, estimateWindowMinutes(task.window) * Math.max(1, task.expirations.length)),
+      fairnessKey: `${normalizeSymbol(symbol)}__${normalizeIsoDate(dayIso)}`,
+    })),
+  };
+}
+
 function parseCalendarSessionWindow(rawBody, env = process.env) {
   const rows = parseJsonRows(rawBody);
   const row = rows.find((entry) => entry && typeof entry === 'object') || null;
@@ -983,6 +1338,8 @@ async function fetchNdjsonRows(url, {
   env = process.env,
   timeoutMs = parseNumberEnv('THETADATA_STREAM_IDLE_TIMEOUT_MS', DEFAULT_STREAM_IDLE_TIMEOUT_MS, env),
   onRow,
+  onRows = null,
+  rowBatchSize = parseNdjsonCallbackBatchSize(env),
 } = {}) {
   const controller = new AbortController();
   let timer = null;
@@ -1010,10 +1367,20 @@ async function fetchNdjsonRows(url, {
     if (!response.body || typeof response.body.getReader !== 'function') {
       const body = await response.text();
       const rows = parseJsonRows(body);
-      for (const row of rows) {
-        const maybePromise = onRow(row);
-        if (maybePromise && typeof maybePromise.then === 'function') {
-          await maybePromise;
+      if (typeof onRows === 'function') {
+        const normalizedBatchSize = Math.max(1, Math.trunc(Number(rowBatchSize || 1)));
+        for (let index = 0; index < rows.length; index += normalizedBatchSize) {
+          const maybePromise = onRows(rows.slice(index, index + normalizedBatchSize));
+          if (maybePromise && typeof maybePromise.then === 'function') {
+            await maybePromise;
+          }
+        }
+      } else if (typeof onRow === 'function') {
+        for (const row of rows) {
+          const maybePromise = onRow(row);
+          if (maybePromise && typeof maybePromise.then === 'function') {
+            await maybePromise;
+          }
         }
       }
       return {
@@ -1026,8 +1393,21 @@ async function fetchNdjsonRows(url, {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let buffer = '';
+    let rowBatch = [];
     let rowCount = 0;
     let bytesDownloaded = 0;
+    const flushRowBatch = async (force = false) => {
+      if (typeof onRows !== 'function') return;
+      const normalizedBatchSize = Math.max(1, Math.trunc(Number(rowBatchSize || 1)));
+      if (!force && rowBatch.length < normalizedBatchSize) return;
+      if (rowBatch.length === 0) return;
+      const batch = rowBatch;
+      rowBatch = [];
+      const maybePromise = onRows(batch);
+      if (maybePromise && typeof maybePromise.then === 'function') {
+        await maybePromise;
+      }
+    };
     while (true) {
       const { value, done } = await reader.read();
       if (done) break;
@@ -1042,9 +1422,14 @@ async function fetchNdjsonRows(url, {
         buffer = buffer.slice(newlineIndex + 1);
         if (line) {
           const parsed = JSON.parse(line);
-          const maybePromise = onRow(parsed);
-          if (maybePromise && typeof maybePromise.then === 'function') {
-            await maybePromise;
+          if (typeof onRows === 'function') {
+            rowBatch.push(parsed);
+            await flushRowBatch(false);
+          } else if (typeof onRow === 'function') {
+            const maybePromise = onRow(parsed);
+            if (maybePromise && typeof maybePromise.then === 'function') {
+              await maybePromise;
+            }
           }
           rowCount += 1;
         }
@@ -1055,12 +1440,17 @@ async function fetchNdjsonRows(url, {
     const tail = buffer.trim();
     if (tail) {
       const parsed = JSON.parse(tail);
-      const maybePromise = onRow(parsed);
-      if (maybePromise && typeof maybePromise.then === 'function') {
-        await maybePromise;
+      if (typeof onRows === 'function') {
+        rowBatch.push(parsed);
+      } else if (typeof onRow === 'function') {
+        const maybePromise = onRow(parsed);
+        if (maybePromise && typeof maybePromise.then === 'function') {
+          await maybePromise;
+        }
       }
       rowCount += 1;
     }
+    await flushRowBatch(true);
     return {
       response,
       rowCount,
@@ -1077,6 +1467,187 @@ async function fetchNdjsonRows(url, {
   } finally {
     if (timer) clearTimeout(timer);
   }
+}
+
+async function fetchNdjsonToFile(url, {
+  outputPath,
+  env = process.env,
+  timeoutMs = parseNumberEnv('THETADATA_STREAM_IDLE_TIMEOUT_MS', DEFAULT_STREAM_IDLE_TIMEOUT_MS, env),
+} = {}) {
+  if (!outputPath) throw new Error('missing_spool_output_path');
+  ensureDir(path.dirname(outputPath));
+  const tempPath = `${outputPath}.tmp`;
+  if (fs.existsSync(tempPath)) fs.rmSync(tempPath, { recursive: true, force: true });
+  if (fs.existsSync(outputPath)) fs.rmSync(outputPath, { recursive: true, force: true });
+  const controller = new AbortController();
+  let timer = null;
+  let timeoutKind = null;
+  const startedAtMs = Date.now();
+  const resetIdleTimer = () => {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      timeoutKind = 'idle';
+      controller.abort();
+    }, timeoutMs);
+  };
+  let writer = null;
+  try {
+    resetIdleTimer();
+    const response = await fetch(url, { signal: controller.signal });
+    writer = fs.createWriteStream(tempPath, { encoding: 'utf8' });
+    let bytesDownloaded = 0;
+    let rowCount = 0;
+    const countChunkRows = (value) => {
+      if (!value || value.length === 0) return 0;
+      let count = 0;
+      for (let index = 0; index < value.length; index += 1) {
+        if (value[index] === 10) count += 1;
+      }
+      return count;
+    };
+    const writeChunk = async (chunk) => new Promise((resolve, reject) => {
+      writer.write(chunk, (error) => {
+        if (error) reject(error);
+        else resolve();
+      });
+    });
+    if (!response.ok) {
+      const body = await response.text();
+      if (body) {
+        await writeChunk(body);
+        bytesDownloaded = Buffer.byteLength(body);
+        rowCount = body.split('\n').filter((line) => line.trim()).length;
+      }
+      await new Promise((resolve, reject) => writer.end((error) => (error ? reject(error) : resolve())));
+      writer = null;
+      fs.renameSync(tempPath, outputPath);
+      return {
+        response,
+        outputPath,
+        rowCount,
+        durationMs: Date.now() - startedAtMs,
+        bytesDownloaded,
+      };
+    }
+    if (!response.body || typeof response.body.getReader !== 'function') {
+      const body = await response.text();
+      await writeChunk(body);
+      bytesDownloaded = Buffer.byteLength(body);
+      rowCount = body.split('\n').filter((line) => line.trim()).length;
+      await new Promise((resolve, reject) => writer.end((error) => (error ? reject(error) : resolve())));
+      writer = null;
+      fs.renameSync(tempPath, outputPath);
+      return {
+        response,
+        outputPath,
+        rowCount,
+        durationMs: Date.now() - startedAtMs,
+        bytesDownloaded,
+      };
+    }
+    const reader = response.body.getReader();
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      if (value && value.length > 0) {
+        bytesDownloaded += value.length;
+        rowCount += countChunkRows(value);
+        resetIdleTimer();
+        await writeChunk(value);
+      }
+    }
+    await new Promise((resolve, reject) => writer.end((error) => (error ? reject(error) : resolve())));
+    writer = null;
+    fs.renameSync(tempPath, outputPath);
+    return {
+      response,
+      outputPath,
+      rowCount,
+      durationMs: Date.now() - startedAtMs,
+      bytesDownloaded,
+    };
+  } catch (error) {
+    if (error?.name === 'AbortError') {
+      throw new Error(timeoutKind === 'idle'
+        ? `thetadata_request_idle_timeout:${timeoutMs}`
+        : `thetadata_request_timeout:${timeoutMs}`);
+    }
+    throw error;
+  } finally {
+    if (timer) clearTimeout(timer);
+    if (writer) {
+      try {
+        await new Promise((resolve) => writer.end(() => resolve()));
+      } catch {
+        // Best effort cleanup.
+      }
+    }
+    if (fs.existsSync(tempPath) && !fs.existsSync(outputPath)) {
+      fs.rmSync(tempPath, { recursive: true, force: true });
+    }
+  }
+}
+
+async function parseNdjsonFileRows(filePath, {
+  onRow,
+  onRows = null,
+  rowBatchSize = parseNdjsonCallbackBatchSize(process.env),
+} = {}) {
+  const normalizedBatchSize = Math.max(1, Math.trunc(Number(rowBatchSize || 1)));
+  const decoder = new TextDecoder();
+  const stream = fs.createReadStream(filePath);
+  let buffer = '';
+  let rowBatch = [];
+  let rowCount = 0;
+  const flushRowBatch = async (force = false) => {
+    if (typeof onRows !== 'function') return;
+    if (!force && rowBatch.length < normalizedBatchSize) return;
+    if (rowBatch.length === 0) return;
+    const batch = rowBatch;
+    rowBatch = [];
+    const maybePromise = onRows(batch);
+    if (maybePromise && typeof maybePromise.then === 'function') {
+      await maybePromise;
+    }
+  };
+  for await (const chunk of stream) {
+    buffer += decoder.decode(chunk, { stream: true });
+    let newlineIndex = buffer.indexOf('\n');
+    while (newlineIndex >= 0) {
+      const line = buffer.slice(0, newlineIndex).trim();
+      buffer = buffer.slice(newlineIndex + 1);
+      if (line) {
+        const parsed = JSON.parse(line);
+        if (typeof onRows === 'function') {
+          rowBatch.push(parsed);
+          await flushRowBatch(false);
+        } else if (typeof onRow === 'function') {
+          const maybePromise = onRow(parsed);
+          if (maybePromise && typeof maybePromise.then === 'function') {
+            await maybePromise;
+          }
+        }
+        rowCount += 1;
+      }
+      newlineIndex = buffer.indexOf('\n');
+    }
+  }
+  buffer += decoder.decode();
+  const tail = buffer.trim();
+  if (tail) {
+    const parsed = JSON.parse(tail);
+    if (typeof onRows === 'function') {
+      rowBatch.push(parsed);
+    } else if (typeof onRow === 'function') {
+      const maybePromise = onRow(parsed);
+      if (maybePromise && typeof maybePromise.then === 'function') {
+        await maybePromise;
+      }
+    }
+    rowCount += 1;
+  }
+  await flushRowBatch(true);
+  return { rowCount };
 }
 
 async function fetchCalendarSessionWindow(dayIso, env = process.env) {
@@ -1205,6 +1776,29 @@ function getQuotePartitionDir(runRoot, symbol, dayIso) {
   return path.dirname(getQuotePath(runRoot, symbol, dayIso));
 }
 
+function getTradePath(runRoot, symbol, dayIso) {
+  return path.join(resolveLayout(runRoot).rawTradeRoot, `symbol=${symbol}`, `trade_date_utc=${dayIso}`, 'part-000.parquet');
+}
+
+function getTradePartitionDir(runRoot, symbol, dayIso) {
+  return path.dirname(getTradePath(runRoot, symbol, dayIso));
+}
+
+function getQuoteSpoolPath(runRoot, symbol, dayIso, partIndex = 0) {
+  return path.join(
+    resolveLayout(runRoot).stateRoot,
+    'spool',
+    'option_quote_minute',
+    `symbol=${symbol}`,
+    `trade_date_utc=${dayIso}`,
+    `part-${String(Math.max(0, partIndex)).padStart(4, '0')}.ndjson`,
+  );
+}
+
+function getQuoteSpoolPartitionDir(runRoot, symbol, dayIso) {
+  return path.dirname(getQuoteSpoolPath(runRoot, symbol, dayIso, 0));
+}
+
 function getRawGreeksPath(runRoot, symbol, dayIso) {
   return path.join(resolveLayout(runRoot).rawGreeksRoot, `symbol=${symbol}`, `trade_date_utc=${dayIso}`, 'part-000.parquet');
 }
@@ -1320,7 +1914,8 @@ function createAsyncBatchAppender(writeBatch, {
   }
 
   async function schedule(rows, { forceDrain = false, rowCount = null } = {}) {
-    const normalizedRowCount = Number.isFinite(Number(rowCount))
+    const hasExplicitRowCount = !(rowCount === null || rowCount === undefined || rowCount === '');
+    const normalizedRowCount = hasExplicitRowCount && Number.isFinite(Number(rowCount))
       ? Math.max(0, Math.trunc(Number(rowCount)))
       : (Array.isArray(rows) ? rows.length : 0);
     if (normalizedRowCount === 0) {
@@ -1586,6 +2181,51 @@ function normalizeOptionQuoteRow(row, dayIso, { includeRawPayload = false } = {}
     last: toNumber(pickField(row, ['last', 'price', 'mark', 'mid'])),
     bid_size: toInteger(pickField(row, ['bid_size', 'bidSize', 'bidsize'])),
     ask_size: toInteger(pickField(row, ['ask_size', 'askSize', 'asksize'])),
+    source_endpoint: null,
+    raw_payload_json: includeRawPayload ? JSON.stringify(row) : null,
+  };
+}
+
+function normalizeOptionTradeRow(row, symbol, dayIso, { includeRawPayload = false } = {}) {
+  if (!row || typeof row !== 'object') return null;
+  const fallbackTs = `${dayIso}T00:00:00.000Z`;
+  const expiration = normalizeIsoDate(pickField(row, ['expiration', 'exp', 'expiry', 'expiration_date']));
+  const strike = toNumber(pickField(row, ['strike', 'strike_price']));
+  const optionRight = normalizeRight(String(pickField(row, ['right', 'option_right', 'side']) || ''));
+  const price = toNumber(pickField(row, ['price', 'trade_price', 'last']));
+  const size = toInteger(pickField(row, ['size', 'trade_size', 'quantity', 'qty']));
+  if (!expiration || strike === null || !optionRight || price === null || size === null) return null;
+  const tradeTsUtc = toIsoFromAnyTs(
+    pickField(row, ['trade_timestamp', 'trade_ts', 'timestamp', 'time']),
+    fallbackTs,
+  );
+  const minuteBucketUtc = toMinuteBucketUtc(tradeTsUtc);
+  if (!tradeTsUtc || !minuteBucketUtc) return null;
+  const bid = toNumber(pickField(row, ['bid', 'bid_price']));
+  const ask = toNumber(pickField(row, ['ask', 'ask_price']));
+  const conditionCode = pickField(row, ['condition_code', 'condition', 'sale_condition']);
+  const exchange = pickField(row, ['exchange', 'exch']);
+  const tradeId = crypto
+    .createHash('sha1')
+    .update([symbol, expiration, strike, optionRight, tradeTsUtc, price, size, conditionCode || '', exchange || ''].join('|'))
+    .digest('hex');
+  return {
+    trade_id: tradeId,
+    symbol,
+    trade_date_utc: dayIso,
+    trade_ts_utc: tradeTsUtc,
+    trade_ts_et: tradeTsUtc,
+    minute_bucket_utc: minuteBucketUtc,
+    expiration,
+    strike,
+    option_right: optionRight,
+    price,
+    size,
+    bid,
+    ask,
+    condition_code: conditionCode === null ? null : String(conditionCode),
+    exchange: exchange === null ? null : String(exchange),
+    watermark: `theta-sync-${dayIso}`,
     source_endpoint: null,
     raw_payload_json: includeRawPayload ? JSON.stringify(row) : null,
   };
@@ -1898,14 +2538,22 @@ async function writeQuoteWindowPart({
   const expirations = new Set();
   let writtenRows = 0;
   const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
+  const callbackBatchSize = parseNdjsonCallbackBatchSize(env);
+  const quoteWriteBatchRows = parseQuoteWriteBatchRows(env);
   const writeRowsNow = async (rows) => {
     if (!Array.isArray(rows) || rows.length === 0) return;
-    await appendRows(handle.writer, rows);
+    try {
+      await appendRows(handle.writer, rows);
+    } catch (error) {
+      const context = `${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}:${filePath}`;
+      throw new Error(`quote_append_failed:${context}:${String(error?.stack || error?.message || error)}`);
+    }
     writtenRows += rows.length;
     if (writtenRows > 0 && writtenRows % logEvery === 0) {
       console.log('[PARQUET_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
     }
   };
+  const asyncAppender = createAsyncBatchAppender(writeRowsNow, { env });
   const endpoint = historicalPrivate.resolveThetaOptionQuoteEndpoint(symbol, dayIso, env, window);
   try {
     if (!endpoint) {
@@ -1914,25 +2562,29 @@ async function writeQuoteWindowPart({
     }
     const format = new URL(endpoint).searchParams.get('format');
     if (format === 'ndjson') {
-      let buffer = [];
-      const flush = async (forceDrain = false) => {
-        if (!forceDrain && buffer.length < 2000) return;
-        if (buffer.length === 0) return;
-        const rows = buffer;
-        buffer = [];
-        await writeRowsNow(rows);
+      let normalizedBuffer = [];
+      const flushNormalized = async (force = false) => {
+        if (!force && normalizedBuffer.length < quoteWriteBatchRows) return;
+        if (normalizedBuffer.length === 0) return;
+        const rows = normalizedBuffer;
+        normalizedBuffer = [];
+        await asyncAppender.schedule(rows, {
+          forceDrain: force,
+          rowCount: rows.length,
+        });
       };
       const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
         env,
-        onRow: async (rawRow) => {
-          const normalized = normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload });
-          if (!normalized) return;
-          normalized.source_endpoint = endpoint;
-          expirations.add(normalized.expiration);
-          buffer.push(normalized);
-          if (buffer.length >= 2000) {
-            await flush(false);
+        rowBatchSize: callbackBatchSize,
+        onRows: async (rawRows) => {
+          for (const rawRow of rawRows) {
+            const normalized = normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload });
+            if (!normalized) continue;
+            normalized.source_endpoint = endpoint;
+            expirations.add(normalized.expiration);
+            normalizedBuffer.push(normalized);
           }
+          await flushNormalized(false);
         },
       }), {
         env,
@@ -1941,7 +2593,8 @@ async function writeQuoteWindowPart({
       if (!result.response.ok && result.response.status !== 472) {
         throw new Error(`thetadata_request_failed:${result.response.status}`);
       }
-      await flush(true);
+      await flushNormalized(true);
+      await asyncAppender.drain();
     } else {
       const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
         env,
@@ -1954,7 +2607,11 @@ async function writeQuoteWindowPart({
           expirations.add(row.expiration);
           return { ...row, source_endpoint: endpoint };
         });
-      await writeRowsNow(normalizedRows);
+      await asyncAppender.schedule(normalizedRows, {
+        forceDrain: true,
+        rowCount: normalizedRows.length,
+      });
+      await asyncAppender.drain();
     }
     await handle.close(writtenRows > 0);
     return {
@@ -1968,6 +2625,312 @@ async function writeQuoteWindowPart({
   }
 }
 
+async function writeTradeWindowPart({
+  filePath,
+  symbol,
+  dayIso,
+  window,
+  includeRawPayload = false,
+  env = process.env,
+}) {
+  const handle = await openParquetWriter(RAW_TRADES_SCHEMA, filePath);
+  let writtenRows = 0;
+  const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
+  const callbackBatchSize = parseNdjsonCallbackBatchSize(env);
+  const tradeWriteBatchRows = Math.max(500, parseQuoteWriteBatchRows(env));
+  const endpoint = historicalPrivate.resolveThetaEndpoint(
+    symbol,
+    toYyyymmdd(`${dayIso}T00:00:00.000Z`),
+    env,
+    window,
+  );
+  const writeRowsNow = async (rows) => {
+    if (!Array.isArray(rows) || rows.length === 0) return;
+    try {
+      await appendRows(handle.writer, rows);
+    } catch (error) {
+      const context = `${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}:${filePath}`;
+      throw new Error(`trade_append_failed:${context}:${String(error?.stack || error?.message || error)}`);
+    }
+    writtenRows += rows.length;
+    if (writtenRows > 0 && writtenRows % logEvery === 0) {
+      console.log('[PARQUET_TRADE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
+    }
+  };
+  const asyncAppender = createAsyncBatchAppender(writeRowsNow, { env });
+  try {
+    if (!endpoint) {
+      await handle.close(false);
+      return { rowCount: 0, endpoint: null };
+    }
+    const format = new URL(endpoint).searchParams.get('format');
+    if (format === 'ndjson') {
+      let normalizedBuffer = [];
+      const flushNormalized = async (force = false) => {
+        if (!force && normalizedBuffer.length < tradeWriteBatchRows) return;
+        if (normalizedBuffer.length === 0) return;
+        const rows = normalizedBuffer;
+        normalizedBuffer = [];
+        await asyncAppender.schedule(rows, {
+          forceDrain: force,
+          rowCount: rows.length,
+        });
+      };
+      const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
+        env,
+        rowBatchSize: callbackBatchSize,
+        onRows: async (rawRows) => {
+          for (const rawRow of rawRows) {
+            const normalized = normalizeOptionTradeRow(rawRow, symbol, dayIso, { includeRawPayload });
+            if (!normalized) continue;
+            normalized.source_endpoint = endpoint;
+            normalizedBuffer.push(normalized);
+          }
+          await flushNormalized(false);
+        },
+      }), {
+        env,
+        label: `trade:${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
+      });
+      if (!result.response.ok && result.response.status !== 472) {
+        throw new Error(`thetadata_request_failed:${result.response.status}`);
+      }
+      await flushNormalized(true);
+      await asyncAppender.drain();
+    } else {
+      const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
+        env,
+        label: `trade:${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
+      });
+      const normalizedRows = rows
+        .map((rawRow) => normalizeOptionTradeRow(rawRow, symbol, dayIso, { includeRawPayload }))
+        .filter(Boolean)
+        .map((row) => ({ ...row, source_endpoint: endpoint }));
+      await asyncAppender.schedule(normalizedRows, {
+        forceDrain: true,
+        rowCount: normalizedRows.length,
+      });
+      await asyncAppender.drain();
+    }
+    await handle.close(writtenRows > 0);
+    return {
+      rowCount: writtenRows,
+      endpoint,
+    };
+  } catch (error) {
+    await handle.close(false);
+    throw error;
+  }
+}
+
+async function parseQuoteSpoolToParquet({
+  spoolPath,
+  filePath,
+  symbol,
+  dayIso,
+  endpoint,
+  includeRawPayload = false,
+  env = process.env,
+} = {}) {
+  const handle = await openParquetWriter(RAW_QUOTE_SCHEMA, filePath);
+  const expirations = new Set();
+  let writtenRows = 0;
+  const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
+  const callbackBatchSize = parseNdjsonCallbackBatchSize(env);
+  const quoteWriteBatchRows = parseQuoteWriteBatchRows(env);
+  const writeRowsNow = async (rows) => {
+    if (!Array.isArray(rows) || rows.length === 0) return;
+    try {
+      await appendRows(handle.writer, rows);
+    } catch (error) {
+      const context = `${symbol}:${dayIso}:${filePath}`;
+      throw new Error(`quote_append_failed:${context}:${String(error?.stack || error?.message || error)}`);
+    }
+    writtenRows += rows.length;
+    if (writtenRows > 0 && writtenRows % logEvery === 0) {
+      console.log('[PARQUET_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows, source: 'spool' }));
+    }
+  };
+  const asyncAppender = createAsyncBatchAppender(writeRowsNow, { env });
+  try {
+    let normalizedBuffer = [];
+    const flushNormalized = async (force = false) => {
+      if (!force && normalizedBuffer.length < quoteWriteBatchRows) return;
+      if (normalizedBuffer.length === 0) return;
+      const rows = normalizedBuffer;
+      normalizedBuffer = [];
+      await asyncAppender.schedule(rows, {
+        forceDrain: force,
+        rowCount: rows.length,
+      });
+    };
+    await parseNdjsonFileRows(spoolPath, {
+      rowBatchSize: callbackBatchSize,
+      onRows: async (rawRows) => {
+        for (const rawRow of rawRows) {
+          const normalized = normalizeOptionQuoteRow(rawRow, dayIso, { includeRawPayload });
+          if (!normalized) continue;
+          normalized.source_endpoint = endpoint;
+          expirations.add(normalized.expiration);
+          normalizedBuffer.push(normalized);
+        }
+        await flushNormalized(false);
+      },
+    });
+    await flushNormalized(true);
+    await asyncAppender.drain();
+    await handle.close(writtenRows > 0);
+    return {
+      rowCount: writtenRows,
+      expirations: Array.from(expirations),
+    };
+  } catch (error) {
+    await handle.close(false);
+    throw error;
+  }
+}
+
+async function downloadQuoteRequestToSpool({
+  runRoot,
+  symbol,
+  dayIso,
+  partIndex = 0,
+  window = {},
+  env = process.env,
+} = {}) {
+  const spoolPath = getQuoteSpoolPath(runRoot, symbol, dayIso, partIndex);
+  const endpoint = historicalPrivate.resolveThetaOptionQuoteEndpoint(symbol, dayIso, env, window);
+  if (!endpoint) {
+    return {
+      rowCount: 0,
+      spoolPath,
+      endpoint: null,
+      spoolBytes: 0,
+      spoolElapsedMs: 0,
+    };
+  }
+  const format = new URL(endpoint).searchParams.get('format');
+  if (format !== 'ndjson') {
+    throw new Error(`quote_spool_requires_ndjson:${symbol}:${dayIso}`);
+  }
+  ensureDir(path.dirname(spoolPath));
+  const spoolResult = await withThetaRetry(() => fetchNdjsonToFile(endpoint, {
+    outputPath: spoolPath,
+    env,
+  }), {
+    env,
+    label: `quote_spool:${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
+  });
+  if (!spoolResult.response.ok && spoolResult.response.status !== 472) {
+    throw new Error(`thetadata_request_failed:${spoolResult.response.status}`);
+  }
+  return {
+    rowCount: Number(spoolResult.rowCount || 0),
+    spoolPath,
+    endpoint,
+    spoolBytes: Number(spoolResult.bytesDownloaded || 0),
+    spoolElapsedMs: Math.max(0, Math.trunc(Number(spoolResult.durationMs || 0))),
+  };
+}
+
+async function parseQuoteRequestSpoolToParquet({
+  runRoot,
+  symbol,
+  dayIso,
+  partIndex = 0,
+  window = {},
+  env = process.env,
+} = {}) {
+  const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
+  const partitionDir = getQuotePartitionDir(runRoot, symbol, dayIso);
+  const filePath = getPartitionPartPath(partitionDir, partIndex);
+  const spoolPath = getQuoteSpoolPath(runRoot, symbol, dayIso, partIndex);
+  const endpoint = historicalPrivate.resolveThetaOptionQuoteEndpoint(symbol, dayIso, env, window);
+  if (!endpoint) {
+    return {
+      rowCount: 0,
+      filePath,
+      partitionDir,
+      expirations: [],
+      endpoint: null,
+      spoolPath,
+      parseElapsedMs: 0,
+    };
+  }
+  if (!fs.existsSync(spoolPath)) {
+    throw new Error(`missing_quote_spool:${symbol}:${dayIso}:${partIndex}`);
+  }
+  const parseStartedAtMs = Date.now();
+  const parseResult = await parseQuoteSpoolToParquet({
+    spoolPath,
+    filePath,
+    symbol,
+    dayIso,
+    endpoint,
+    includeRawPayload,
+    env,
+  });
+  const parseElapsedMs = Date.now() - parseStartedAtMs;
+  if (parseQuoteDeleteSpoolOnSuccess(env)) {
+    fs.rmSync(spoolPath, { recursive: true, force: true });
+  }
+  return {
+    rowCount: parseResult.rowCount,
+    filePath,
+    partitionDir,
+    expirations: parseResult.expirations,
+    endpoint,
+    spoolPath,
+    parseElapsedMs,
+  };
+}
+
+async function downloadQuoteRequestViaSpoolToParquet({
+  runRoot,
+  symbol,
+  dayIso,
+  partIndex = 0,
+  window = {},
+  env = process.env,
+} = {}) {
+  const partitionDir = getQuotePartitionDir(runRoot, symbol, dayIso);
+  const filePath = getPartitionPartPath(partitionDir, partIndex);
+  const spoolResult = await downloadQuoteRequestToSpool({
+    runRoot,
+    symbol,
+    dayIso,
+    partIndex,
+    window,
+    env,
+  });
+  if (!spoolResult.endpoint) {
+    return {
+      rowCount: 0,
+      filePath,
+      partitionDir,
+      expirations: [],
+      endpoint: null,
+      spoolPath: spoolResult.spoolPath,
+      spoolBytes: 0,
+      spoolElapsedMs: 0,
+      parseElapsedMs: 0,
+    };
+  }
+  const parseResult = await parseQuoteRequestSpoolToParquet({
+    runRoot,
+    symbol,
+    dayIso,
+    partIndex,
+    window,
+    env,
+  });
+  return {
+    ...parseResult,
+    spoolBytes: spoolResult.spoolBytes,
+    spoolElapsedMs: spoolResult.spoolElapsedMs,
+  };
+}
+
 async function writeRawIndexWindowPart({
   rawPath,
   finalPath,
@@ -1977,12 +2940,21 @@ async function writeRawIndexWindowPart({
   window,
   runId,
   includeRawPayload = false,
+  expirationConcurrencyOverride = null,
   env = process.env,
 }) {
   const rawHandle = await openParquetWriter(RAW_GREEKS_SCHEMA, rawPath);
   const finalHandle = await openParquetWriter(FINAL_GREEKS_SCHEMA, finalPath);
   const syncFormat = String(env.THETADATA_GREEKS_SYNC_FORMAT || 'ndjson').trim().toLowerCase() === 'json' ? 'json' : 'ndjson';
-  const expirationConcurrency = Math.max(1, Math.min(expirations.length || 1, parseHeavyRawIndexExpirationConcurrency(env)));
+  const expirationConcurrency = Math.max(
+    1,
+    Math.min(
+      expirations.length || 1,
+      expirationConcurrencyOverride === null || expirationConcurrencyOverride === undefined
+        ? parseHeavyRawIndexExpirationConcurrency(env)
+        : Math.max(1, Math.trunc(Number(expirationConcurrencyOverride) || 1)),
+    ),
+  );
   let rawRowsWritten = 0;
   try {
     const writeRowsNow = async ({ rawRows, finalRows }) => {
@@ -1991,6 +2963,7 @@ async function writeRawIndexWindowPart({
       await appendRows(finalHandle.writer, finalRows);
       rawRowsWritten += rawRows.length;
     };
+    const asyncAppender = createAsyncBatchAppender(writeRowsNow, { env });
     await runTasksWithConcurrency(expirations, expirationConcurrency, async (expiration) => {
       const endpoint = historicalPrivate.resolveThetaGreeksEndpoint(symbol, expiration, dayIso, env, {
         format: syncFormat,
@@ -2008,7 +2981,10 @@ async function writeRawIndexWindowPart({
           const finalRows = finalBuffer;
           rawBuffer = [];
           finalBuffer = [];
-          await writeRowsNow({ rawRows: rows, finalRows });
+          await asyncAppender.schedule({ rawRows: rows, finalRows }, {
+            forceDrain: force,
+            rowCount: rows.length,
+          });
         };
         const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
           env,
@@ -2032,6 +3008,7 @@ async function writeRawIndexWindowPart({
           throw new Error(`thetadata_request_failed:${result.response.status}`);
         }
         await flush(true);
+        await asyncAppender.drain();
       } else {
         const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
           env,
@@ -2046,9 +3023,14 @@ async function writeRawIndexWindowPart({
           calcVersion: 'theta_raw_v1',
           sourceEndpoint: endpoint,
         }));
-        await writeRowsNow({ rawRows: normalizedRows, finalRows });
+        await asyncAppender.schedule({ rawRows: normalizedRows, finalRows }, {
+          forceDrain: true,
+          rowCount: normalizedRows.length,
+        });
+        await asyncAppender.drain();
       }
     });
+    await asyncAppender.drain();
     await rawHandle.close(rawRowsWritten > 0);
     await finalHandle.close(rawRowsWritten > 0);
     return { rawRowsWritten };
@@ -2114,6 +3096,71 @@ async function downloadStockToParquet({ runRoot, symbol, dayIso, env = process.e
   };
 }
 
+async function downloadQuoteRequestToParquet({
+  runRoot,
+  symbol,
+  dayIso,
+  partIndex = 0,
+  window = {},
+  env = process.env,
+}) {
+  if (parseQuoteUseSpool(env)) {
+    return downloadQuoteRequestViaSpoolToParquet({
+      runRoot,
+      symbol,
+      dayIso,
+      partIndex,
+      window,
+      env,
+    });
+  }
+  const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
+  const partitionDir = getQuotePartitionDir(runRoot, symbol, dayIso);
+  const filePath = getPartitionPartPath(partitionDir, partIndex);
+  const result = await writeQuoteWindowPart({
+    filePath,
+    symbol,
+    dayIso,
+    window,
+    includeRawPayload,
+    env,
+  });
+  return {
+    rowCount: result.rowCount,
+    filePath,
+    partitionDir,
+    expirations: result.expirations,
+    endpoint: result.endpoint,
+  };
+}
+
+async function downloadTradeRequestToParquet({
+  runRoot,
+  symbol,
+  dayIso,
+  partIndex = 0,
+  window = {},
+  env = process.env,
+}) {
+  const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
+  const partitionDir = getTradePartitionDir(runRoot, symbol, dayIso);
+  const filePath = getPartitionPartPath(partitionDir, partIndex);
+  const result = await writeTradeWindowPart({
+    filePath,
+    symbol,
+    dayIso,
+    window,
+    includeRawPayload,
+    env,
+  });
+  return {
+    rowCount: result.rowCount,
+    filePath,
+    partitionDir,
+    endpoint: result.endpoint,
+  };
+}
+
 async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.env }) {
   const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
   const partitionDir = getQuotePartitionDir(runRoot, symbol, dayIso);
@@ -2135,23 +3182,19 @@ async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.
       };
     }
   }
-  const sessionWindow = resolveProcessingSessionWindow(
-    await fetchCalendarSessionWindow(dayIso, env).catch(() => null),
-    { symbol, dayIso, stage: 'quotes', env },
-  );
-  const splitHeavyRawIndex = shouldSplitHeavyRawIndexJob(symbol, { env });
-  const quoteWindows = resolveThetaTimeWindowsForSymbol(symbol, {
-    sessionStartTime: sessionWindow?.openTime || null,
-    sessionEndTime: sessionWindow?.regularCloseTime || sessionWindow?.closeTime || null,
-    windowMinutes: splitHeavyRawIndex ? parseHeavyRawIndexQuoteWindowMinutes(env) : null,
-    forceWindowing: splitHeavyRawIndex,
+  const quotePlan = resolveQuoteRequestPlan({
+    runRoot,
+    symbol,
+    dayIso,
+    sessionWindow: await fetchCalendarSessionWindow(dayIso, env).catch(() => null),
     env,
   });
+  const quoteWindows = quotePlan.requests.map((request) => request.window);
   resetPartitionDir(partitionDir);
   const expirations = new Set();
   let writtenRows = 0;
-  const quoteConcurrency = splitHeavyRawIndex ? parseHeavyRawIndexQuoteConcurrency(env) : 1;
-  if (splitHeavyRawIndex && quoteWindows.length > 1 && quoteConcurrency > 1) {
+  const quoteConcurrency = quotePlan.splitHeavyRawIndex ? parseHeavyRawIndexQuoteConcurrency(env) : 1;
+  if (quotePlan.splitHeavyRawIndex && quoteWindows.length > 1 && quoteConcurrency > 1) {
     console.log('[PARQUET_QUOTE_SPLIT_PLAN]', JSON.stringify({
       symbol,
       dayIso,
@@ -2159,12 +3202,12 @@ async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.
       windowMinutes: parseHeavyRawIndexQuoteWindowMinutes(env),
       concurrency: quoteConcurrency,
     }));
-    const parts = await runTasksWithConcurrency(quoteWindows, quoteConcurrency, async (window, partIndex) => {
+    const parts = await runTasksWithConcurrency(quotePlan.requests, quoteConcurrency, async (request) => {
       const partResult = await writeQuoteWindowPart({
-        filePath: getPartitionPartPath(partitionDir, partIndex),
+        filePath: request.filePath,
         symbol,
         dayIso,
-        window,
+        window: request.window,
         includeRawPayload,
         env,
       });
@@ -2182,19 +3225,20 @@ async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.
       filePath,
       symbol,
       dayIso,
-      window: quoteWindows[0] || {},
+      window: quotePlan.requests[0]?.window || {},
       includeRawPayload,
       env,
     });
     writtenRows = partResult.rowCount;
     partResult.expirations.forEach((expiration) => expirations.add(expiration));
-    if (quoteWindows.length > 1) {
-      for (let index = 1; index < quoteWindows.length; index += 1) {
+    if (quotePlan.requests.length > 1) {
+      for (let index = 1; index < quotePlan.requests.length; index += 1) {
+        const request = quotePlan.requests[index];
         const extraResult = await writeQuoteWindowPart({
-          filePath: getPartitionPartPath(partitionDir, index),
+          filePath: request.filePath,
           symbol,
           dayIso,
-          window: quoteWindows[index],
+          window: request.window,
           includeRawPayload,
           env,
         });
@@ -2221,6 +3265,42 @@ async function downloadQuotesToParquet({ runRoot, symbol, dayIso, env = process.
     rowCount: writtenRows,
     filePath: partitionDir,
     expirations: Array.from(expirations).sort(),
+  };
+}
+
+async function downloadRawGreeksRequestToParquet({
+  runRoot,
+  symbol,
+  dayIso,
+  expirations,
+  window,
+  partIndex = 0,
+  runId,
+  env = process.env,
+}) {
+  const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
+  const rawPartitionDir = getRawGreeksPartitionDir(runRoot, symbol, dayIso);
+  const finalPartitionDir = getFinalGreeksPartitionDir(runRoot, symbol, dayIso);
+  const rawPath = getPartitionPartPath(rawPartitionDir, partIndex);
+  const finalPath = getPartitionPartPath(finalPartitionDir, partIndex);
+  const result = await writeRawIndexWindowPart({
+    rawPath,
+    finalPath,
+    symbol,
+    dayIso,
+    expirations,
+    window,
+    runId,
+    includeRawPayload,
+    expirationConcurrencyOverride: 1,
+    env,
+  });
+  return {
+    rawRowsWritten: result.rawRowsWritten,
+    rawPath,
+    finalPath,
+    rawPartitionDir,
+    finalPartitionDir,
   };
 }
 
@@ -2252,67 +3332,36 @@ async function downloadIndexGreeksToParquet({
       };
     }
   }
-  const sessionWindow = resolveProcessingSessionWindow(
-    await fetchCalendarSessionWindow(dayIso, env).catch(() => null),
-    { symbol, dayIso, stage: 'raw_greeks', env },
-  );
-  const openSecond = parseTimeHmsToSecondOfDay(sessionWindow?.openTime || null);
-  const closeSecondRaw = parseTimeHmsToSecondOfDay(sessionWindow?.regularCloseTime || sessionWindow?.closeTime || null);
-  const coreCloseSecond = closeSecondRaw === null ? null : Math.max(openSecond ?? 0, closeSecondRaw - 60);
-  const splitHeavyRawIndex = shouldSplitHeavyRawIndexJob(symbol, {
-    expirationCount: expirations.length,
-    env,
-  });
-  const adaptivePlan = resolveThetaGreeksAdaptiveWindowMinutes({
+  const rawGreeksPlan = resolveRawGreeksRequestPlan({
+    runRoot,
     symbol,
-    expirationCount: expirations.length,
-    env,
-  });
-  const sessionStartTime = sessionWindow?.openTime || null;
-  const sessionEndTime = coreCloseSecond === null ? null : formatSecondOfDayAsHms(coreCloseSecond);
-  const effectiveWindowMinutes = splitHeavyRawIndex
-    ? Math.min(adaptivePlan.windowMinutes, parseHeavyRawIndexWindowMinutes(env))
-    : adaptivePlan.windowMinutes;
-  const windows = resolveThetaTimeWindowsForSymbol(symbol, {
-    sessionStartTime,
-    sessionEndTime,
-    windowMinutes: effectiveWindowMinutes,
-    forceWindowing: true,
+    dayIso,
+    expirations,
+    sessionWindow: await fetchCalendarSessionWindow(dayIso, env).catch(() => null),
     env,
   });
   resetPartitionDir(rawPartitionDir);
   resetPartitionDir(finalPartitionDir);
   let rawRowsWritten = 0;
-  const greekConcurrency = splitHeavyRawIndex ? parseHeavyRawIndexGreeksConcurrency(env) : 1;
-  const groupModeEnabled = splitHeavyRawIndex
-    && expirations.length <= parseHeavyRawIndexExpirationGroupMaxExpirations(env);
-  const tasks = groupModeEnabled
-    ? chunkArray(expirations, parseHeavyRawIndexExpirationGroupSize(env)).map((group, partIndex) => ({
-      partIndex,
-      expirations: group,
-      window: { startTime: sessionStartTime, endTime: sessionEndTime },
-    }))
-    : windows.map((window, partIndex) => ({
-      partIndex,
-      expirations,
-      window,
-    }));
-  if (splitHeavyRawIndex && tasks.length > 1 && greekConcurrency > 1) {
+  const greekConcurrency = rawGreeksPlan.splitHeavyRawIndex ? parseHeavyRawIndexGreeksConcurrency(env) : 1;
+  if (rawGreeksPlan.splitHeavyRawIndex && rawGreeksPlan.requests.length > 1 && greekConcurrency > 1) {
     console.log('[PARQUET_RAW_GREEKS_SPLIT_PLAN]', JSON.stringify({
       symbol,
       dayIso,
       expirationCount: expirations.length,
-      taskMode: groupModeEnabled ? 'expiration_groups' : 'time_windows',
-      taskCount: tasks.length,
-      windowCount: windows.length,
-      windowMinutes: effectiveWindowMinutes,
-      expirationGroupSize: groupModeEnabled ? parseHeavyRawIndexExpirationGroupSize(env) : null,
+      taskMode: rawGreeksPlan.requests[0]?.taskMode || null,
+      taskCount: rawGreeksPlan.requests.length,
+      windowCount: rawGreeksPlan.requests.filter((request) => request.taskMode === 'time_windows').length,
+      windowMinutes: rawGreeksPlan.effectiveWindowMinutes,
+      expirationGroupSize: rawGreeksPlan.requests[0]?.taskMode === 'expiration_groups'
+        ? parseHeavyRawIndexExpirationGroupSize(env)
+        : null,
       concurrency: greekConcurrency,
-      mode: adaptivePlan.mode,
+      mode: rawGreeksPlan.mode,
     }));
-    const parts = await runTasksWithConcurrency(tasks, greekConcurrency, async (task) => writeRawIndexWindowPart({
-      rawPath: getPartitionPartPath(rawPartitionDir, task.partIndex),
-      finalPath: getPartitionPartPath(finalPartitionDir, task.partIndex),
+    const parts = await runTasksWithConcurrency(rawGreeksPlan.requests, greekConcurrency, async (task) => writeRawIndexWindowPart({
+      rawPath: task.rawPath,
+      finalPath: task.finalPath,
       symbol,
       dayIso,
       expirations: task.expirations,
@@ -2325,10 +3374,10 @@ async function downloadIndexGreeksToParquet({
       rawRowsWritten += Number(part?.rawRowsWritten || 0);
     });
   } else {
-    for (const task of tasks) {
+    for (const task of rawGreeksPlan.requests) {
       const part = await writeRawIndexWindowPart({
-        rawPath: getPartitionPartPath(rawPartitionDir, task.partIndex),
-        finalPath: getPartitionPartPath(finalPartitionDir, task.partIndex),
+        rawPath: task.rawPath,
+        finalPath: task.finalPath,
         symbol,
         dayIso,
         expirations: task.expirations,
@@ -2453,33 +3502,69 @@ async function calculateGreeksToParquet({
 module.exports = {
   __private: {
     buildFallbackSessionWindow,
+    downloadQuoteRequestToSpool,
+    fetchNdjsonToFile,
+    fetchNdjsonRows,
+    getQuoteSpoolPath,
+    normalizeOptionTradeRow,
+    normalizeOptionQuoteRow,
+    parseNdjsonFileRows,
+    parseQuoteRequestSpoolToParquet,
+    parseQuoteSpoolToParquet,
     parseThetaMaxConcurrentConnections,
     resolveProcessingSessionWindow,
     resolveThetaConnectionSlotsRoot,
+    resolveTradeRequestPlan,
     resolveThetaTimeWindowsForSymbol,
+    withThetaConnectionSlot,
   },
   DEFAULT_INDEX_GREEKS_SYMBOLS,
   DEFAULT_SYMBOL_FILE,
   buildJobs,
   buildRunId,
   calculateGreeksToParquet,
+  collectThetaConnectionSlotUsage,
+  fetchCalendarSessionWindow,
   downloadIndexGreeksToParquet,
+  downloadQuoteRequestToParquet,
+  downloadTradeRequestToParquet,
+  downloadQuoteRequestToSpool,
+  downloadRawGreeksRequestToParquet,
   downloadQuotesToParquet,
   downloadStockToParquet,
   ensureRunLayout,
   getFinalGreeksPartitionDir,
+  getFinalGreeksPath,
+  getPartitionPartPath,
   getPartitionSuccessMarkerPath,
   getQuotePartitionDir,
+  getQuotePath,
+  getQuoteSpoolPartitionDir,
+  getQuoteSpoolPath,
   getRawGreeksPartitionDir,
+  getRawGreeksPath,
   getStockPartitionDir,
+  getStockPath,
+  getTradePartitionDir,
+  getTradePath,
+  listParquetPartFiles,
+  listOpenDaysInRange,
   loadStockPartition,
   parseIndexGreeksSymbols,
   probeQuotePartition,
   probeRowPartition,
   probeStockPartition,
+  resolveParquetRoot,
+  resolvePublishedCurrentRoot,
+  resolvePublishedDatasetsRoot,
+  resolvePublishedReleasesRoot,
+  resolveQuoteRequestPlan,
+  resolveRawGreeksRequestPlan,
+  resolveTradeRequestPlan,
   resolveRunRoot,
   shardJobsBalanced,
   summarizeQuotePartition,
+  parseQuoteRequestSpoolToParquet,
   writeJsonFile,
   writePartitionSuccessMarker,
 };
