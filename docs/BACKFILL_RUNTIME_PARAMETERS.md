@@ -1,6 +1,6 @@
 # Backfill Runtime Parameters
 
-This is the canonical run-time parameter guide for ClickHouse historical backfill.
+This is the canonical run-time parameter guide for ClickHouse and parquet historical backfill.
 
 Use this instead of rediscovering knobs from code.
 
@@ -10,6 +10,9 @@ Applies to:
 
 - `scripts/backfill/backfill-clickhouse-historical-days.js`
 - `scripts/backfill/backfill-clickhouse-historical-days-parallel.sh`
+- `apps/flow-api/scripts/parquet/backfill-parquet-greeks.js`
+- `apps/flow-api/scripts/parquet/run-jan2025-week-benchmark.sh`
+- `apps/flow-api/scripts/parquet/ensure-parquet-run.sh`
 
 ## Required Prerequisites
 
@@ -193,6 +196,36 @@ CLICKHOUSE_ENRICH_GREEKS_SOURCE=index_raw \
 bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
 ```
 
+### 6) Parquet throughput refactor profile
+
+Use for parquet-only historical download + greek generation runs:
+
+```bash
+THETADATA_BASE_URL=http://127.0.0.1:25503 \
+PARQUET_WORKERS=18 \
+PARQUET_DOWNLOAD_WORKERS=16 \
+PARQUET_COMPUTE_WORKERS=2 \
+PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS=8 \
+PARQUET_THETA_ACTIVE_TARGET=8 \
+PARQUET_THETA_QUEUED_TARGET=16 \
+PARQUET_THETA_PER_JOB_LIMIT=1 \
+PARQUET_THETA_PER_JOB_BURST_LIMIT=2 \
+PARQUET_HEAVY_RAW_INDEX_QUOTE_WINDOW_MINUTES=15 \
+PARQUET_HEAVY_RAW_INDEX_WINDOW_MINUTES=5 \
+PARQUET_HEAVY_RAW_INDEX_EXPIRATION_GROUP_SIZE=6 \
+THETADATA_OPTION_QUOTE_FORMAT=ndjson \
+THETADATA_GREEKS_SYNC_FORMAT=ndjson \
+THETADATA_STREAM_IDLE_TIMEOUT_MS=1800000 \
+bash apps/flow-api/scripts/parquet/run-jan2025-week-benchmark.sh
+```
+
+Notes:
+- Default worker topology on this 10-core machine is `16` download workers and `2` compute workers.
+- The parquet scheduler intentionally targets `8` active Theta requests plus up to `16` extra outstanding requests so Theta Terminal can keep all Pro request slots full with a modest client-managed buffer.
+- Theta Terminal supports `request_queue_length` in its `config.toml` under the log directory, and values like `128` are possible, but larger queues can increase client/server timeout risk when the queue fills with large requests.
+- Preferred policy: manage concurrency in the client with the parquet scheduler / async-semaphore model, and treat Theta’s internal queue as a small safety buffer.
+- For current Pro runs, leave Theta Terminal `request_queue_length` at `16` unless there is a measured reason to change it; the client targets `24` outstanding requests by default (`8` active + `16` queued), but worker availability may keep the live queue below that ceiling.
+
 ## Parameter Reference
 
 ### Core execution
@@ -265,6 +298,51 @@ bash scripts/backfill/backfill-clickhouse-historical-days-parallel.sh
   - `1800000` (30 min) is safe default.
   - `0` disables client idle timeout (use only if external watchdog exists).
 - `THETADATA_DOWNLOAD_TRACE=1` (default): emit `[THETA_DOWNLOAD]` for every Theta request with rows and `bytesDownloaded`.
+
+### Parquet scheduler behavior
+
+- `PARQUET_WORKERS`: total parquet worker budget.
+  - Default launcher behavior on this machine is `min(physical_cores + 8, 18)` to allow an I/O-heavy download pool while keeping a small compute lane.
+- `PARQUET_DOWNLOAD_WORKERS`: dedicated Theta/download workers.
+  - Default when unset: derived from `PARQUET_WORKERS`, `PARQUET_THETA_ACTIVE_TARGET`, and `PARQUET_THETA_QUEUED_TARGET`.
+  - Current recommended default: `16`.
+- `PARQUET_COMPUTE_WORKERS`: local calculated-greeks workers.
+  - Default when unset: `PARQUET_WORKERS - PARQUET_DOWNLOAD_WORKERS`.
+  - Current recommended default: `2`.
+- `PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS`: hard client-side Theta connection cap.
+  - Keep at `8` for current Theta Pro limits.
+- `PARQUET_THETA_ACTIVE_TARGET`: active Theta request target.
+  - Default: `8`.
+- `PARQUET_THETA_QUEUED_TARGET`: additional outstanding request target beyond active slots.
+  - Default: `16`.
+- `PARQUET_THETA_PER_JOB_LIMIT`: normal fairness cap per symbol-day/job.
+  - Default: `1`.
+- `PARQUET_THETA_PER_JOB_BURST_LIMIT`: temporary fairness cap when there are too few distinct ready jobs to fill all slots.
+  - Default: `2`.
+- `PARQUET_HEAVY_RAW_INDEX_QUOTE_WINDOW_MINUTES`: heavy raw-index quote split size.
+  - Default: `15`.
+- `PARQUET_HEAVY_RAW_INDEX_WINDOW_MINUTES`: heavy raw-index raw-greeks split size.
+  - Default: `5`.
+- `PARQUET_HEAVY_RAW_INDEX_EXPIRATION_GROUP_SIZE`: heavy raw-index expiration-group split size.
+  - Default: `6`.
+
+Parquet monitor counters:
+- `thetaActiveRequests`
+- `thetaQueuedRequests`
+- `thetaOutstandingTarget`
+- `thetaUtilizationPct`
+- `thetaDistinctJobsInFlight`
+- `thetaRecent429Count`
+- `thetaRecentRetryCount`
+- `thetaCooldownActive`
+- `thetaFullSaturationPossible`
+- `thetaMaxPossibleRequestsNow`
+- `readyRequestsByKind`
+- `runningRequestsByKind`
+
+Interpretation:
+- If `thetaActiveRequests < 4` and `thetaFullSaturationPossible=false`, the scheduler is limited by fairness or too few distinct jobs, not by a stall.
+- If `thetaActiveRequests < 4` and `thetaFullSaturationPossible=true` for repeated monitor samples, treat it as degraded and inspect cooldown, recent retries, or request planning.
 - `THETADATA_LARGE_SYMBOLS`: comma list or `all`.
 - `THETADATA_LARGE_SYMBOL_WINDOW_MINUTES`: window split for heavy symbols (default 60).
 - SOFR reference source:

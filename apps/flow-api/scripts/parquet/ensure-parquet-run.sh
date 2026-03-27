@@ -13,23 +13,35 @@ detect_default_parquet_workers() {
   if ! [[ "$cpu_count" =~ ^[0-9]+$ ]]; then
     cpu_count=8
   fi
-  workers=$(( cpu_count > 2 ? cpu_count - 2 : 1 ))
-  if (( workers > 8 )); then
-    workers=8
+  workers=$(( cpu_count + 8 ))
+  if (( workers > 18 )); then
+    workers=18
   fi
-  if (( workers < 1 )); then
-    workers=1
+  if (( workers < 4 )); then
+    workers=4
   fi
   printf '%s\n' "$workers"
 }
 
 derive_download_workers() {
-  local total theta_cap download
+  local total theta_active theta_queued download compute_floor desired_extra
   total="$1"
-  theta_cap="$2"
-  download=$theta_cap
-  if (( download > total - 1 )); then
-    download=$(( total > 1 ? total - 1 : 1 ))
+  theta_active="$2"
+  theta_queued="$3"
+  compute_floor=2
+  if (( total <= 3 )); then
+    compute_floor=1
+  fi
+  desired_extra="$theta_queued"
+  if (( desired_extra > theta_active )); then
+    desired_extra="$theta_active"
+  fi
+  download=$(( theta_active + desired_extra ))
+  if (( download > total - compute_floor )); then
+    download=$(( total > compute_floor ? total - compute_floor : 1 ))
+  fi
+  if (( download < theta_active )); then
+    download="$theta_active"
   fi
   if (( download < 1 )); then
     download=1
@@ -53,8 +65,14 @@ RUN_ROOT="$PARQUET_ROOT/runs/$RUN_ID"
 START_DATE="${START_DATE:-2025-02-01}"
 END_DATE="${END_DATE:-2025-02-28}"
 PARQUET_WORKERS="${PARQUET_WORKERS:-$(detect_default_parquet_workers)}"
-PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="${PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS:-4}"
-PARQUET_DOWNLOAD_WORKERS="${PARQUET_DOWNLOAD_WORKERS:-$(derive_download_workers "$PARQUET_WORKERS" "$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS")}"
+PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS="${PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS:-8}"
+PARQUET_THETA_ACTIVE_TARGET="${PARQUET_THETA_ACTIVE_TARGET:-$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS}"
+PARQUET_THETA_QUEUED_TARGET="${PARQUET_THETA_QUEUED_TARGET:-16}"
+PARQUET_THETA_PER_JOB_LIMIT="${PARQUET_THETA_PER_JOB_LIMIT:-1}"
+PARQUET_THETA_PER_JOB_BURST_LIMIT="${PARQUET_THETA_PER_JOB_BURST_LIMIT:-2}"
+PARQUET_HEAVY_DOWNLOAD_WORKERS="${PARQUET_HEAVY_DOWNLOAD_WORKERS:-0}"
+PARQUET_HEAVY_DOWNLOAD_SYMBOLS="${PARQUET_HEAVY_DOWNLOAD_SYMBOLS:-}"
+PARQUET_DOWNLOAD_WORKERS="${PARQUET_DOWNLOAD_WORKERS:-$(derive_download_workers "$PARQUET_WORKERS" "$PARQUET_THETA_ACTIVE_TARGET" "$PARQUET_THETA_QUEUED_TARGET")}"
 PARQUET_COMPUTE_WORKERS="${PARQUET_COMPUTE_WORKERS:-$(( PARQUET_WORKERS - PARQUET_DOWNLOAD_WORKERS ))}"
 if (( PARQUET_COMPUTE_WORKERS < 1 )); then
   PARQUET_COMPUTE_WORKERS=1
@@ -107,7 +125,7 @@ fi
 
 echo "[$(timestamp)] relaunching $RUN_ID" >>"$ENSURE_LOG"
 LAUNCH_PID="$(
-  python3 - "$RUN_SCRIPT" "$LAUNCH_LOG" "$START_DATE" "$END_DATE" "$RUN_ID" "$PARQUET_WORKERS" "$PARQUET_DOWNLOAD_WORKERS" "$PARQUET_COMPUTE_WORKERS" "$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS" "$THETADATA_BASE_URL" <<'PY'
+  python3 - "$RUN_SCRIPT" "$LAUNCH_LOG" "$START_DATE" "$END_DATE" "$RUN_ID" "$PARQUET_WORKERS" "$PARQUET_DOWNLOAD_WORKERS" "$PARQUET_COMPUTE_WORKERS" "$PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS" "$PARQUET_THETA_ACTIVE_TARGET" "$PARQUET_THETA_QUEUED_TARGET" "$PARQUET_THETA_PER_JOB_LIMIT" "$PARQUET_THETA_PER_JOB_BURST_LIMIT" "$THETADATA_BASE_URL" <<'PY'
 import os
 import subprocess
 import sys
@@ -122,6 +140,10 @@ import sys
     parquet_download_workers,
     parquet_compute_workers,
     theta_max_connections,
+    theta_active_target,
+    theta_queued_target,
+    theta_per_job_limit,
+    theta_per_job_burst_limit,
     theta_base_url,
 ) = sys.argv[1:]
 
@@ -134,6 +156,12 @@ env.update({
     "PARQUET_DOWNLOAD_WORKERS": parquet_download_workers,
     "PARQUET_COMPUTE_WORKERS": parquet_compute_workers,
     "PARQUET_THETA_MAX_CONCURRENT_CONNECTIONS": theta_max_connections,
+    "PARQUET_THETA_ACTIVE_TARGET": theta_active_target,
+    "PARQUET_THETA_QUEUED_TARGET": theta_queued_target,
+    "PARQUET_THETA_PER_JOB_LIMIT": theta_per_job_limit,
+    "PARQUET_THETA_PER_JOB_BURST_LIMIT": theta_per_job_burst_limit,
+    "PARQUET_HEAVY_DOWNLOAD_WORKERS": os.environ.get("PARQUET_HEAVY_DOWNLOAD_WORKERS", "0"),
+    "PARQUET_HEAVY_DOWNLOAD_SYMBOLS": os.environ.get("PARQUET_HEAVY_DOWNLOAD_SYMBOLS", ""),
     "THETADATA_BASE_URL": theta_base_url,
     "PARQUET_RESUME_EXISTING": "1",
 })

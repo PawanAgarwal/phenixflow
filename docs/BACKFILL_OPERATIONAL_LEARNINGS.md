@@ -1,6 +1,6 @@
 # Backfill Operational Learnings
 
-Last updated: 2026-03-12
+Last updated: 2026-03-26
 
 This document captures concrete lessons from multi-day historical backfill and remediation runs so future agents do not repeat avoidable failures.
 
@@ -11,7 +11,7 @@ This document captures concrete lessons from multi-day historical backfill and r
    - failure classification/requeue complete.
 2. Do not count unattempted days as missing.
 3. Use targeted reruns, not full-range reruns, for remediation.
-4. Keep Theta concurrency at provider cap (`<= 4`) unless provider limits change.
+4. Keep Theta concurrency at provider cap (`<= 8` on current Pro option access) unless provider limits change.
 5. Keep run artifacts and produce an end-of-wave verification summary.
 
 ## 2. Failure Signatures and Correct Actions
@@ -29,7 +29,7 @@ This document captures concrete lessons from multi-day historical backfill and r
 | Explicit raw-component remediation (without tradequote) still triggered trade sync and became mutation-bound | Trade stream was designed as base day-cache sync for full runs, and legacy `BACKFILL_FORCE_TRADE_SYNC` could force-apply during selective component waves | Make `tradequote` an explicit raw-component token; default to trade-sync `skip` whenever explicit component selection excludes `tradequote`; keep override via `BACKFILL_TRADE_SYNC_MODE=force` only for trade-stream repair | Monitor `[BACKFILL_RAW_COMPONENTS_TRADE_SYNC_POLICY]`; if non-skip override usage stays zero across waves, remove that override path |
 | Quote remediation in force mode transferred full-day payloads even for small holes | Force quote mode bypassed gap-window planning and always requested broad windows | In `BACKFILL_FORCE_QUOTE_FULL=1`, prefer contiguous missing-minute windows and only fall back to full-day when gap planning is not efficient | Monitor `[QUOTE_GAP_FILL]` strategy mix and `[QUOTE_WINDOW_PLAN]` window counts; keep force-full strict mode as opt-out only |
 | Greeks remediation transferred broad day windows even when only a few minutes were missing | Greeks sync previously keyed only on day-level existence and lacked minute-gap planning | Add greeks gap-window planning (`BACKFILL_GREEKS_GAP_FILL=1`) with trade-minute baseline and fallback only when gap fragmentation is high | Monitor `[GREEKS_GAP_FILL]` strategy mix and `[GREEKS_WINDOW_PLAN]` adaptive window telemetry |
-| Large runs sometimes started below Theta cap (for example, effective download workers dropped to 1-3) and silently ran slow for hours | Worker auto-caps (memory/overlap) reduced download workers without hard fail | Add startup guard (`BACKFILL_DOWNLOAD_WORKER_GUARD*`) to fail fast when large jobs launch below required download worker target | Keep guard enabled by default and relaunch with asymmetric overlap (`DOWNLOAD_WORKERS=4 ENRICH_WORKERS=2`) |
+| Large runs sometimes started below Theta cap (for example, effective download workers dropped below the current 8-request Pro ceiling) and silently ran slow for hours | Worker auto-caps (memory/overlap) reduced download workers without hard fail | Add startup guard (`BACKFILL_DOWNLOAD_WORKER_GUARD*`) to fail fast when large jobs launch below required download worker target | Keep guard enabled by default and relaunch with an explicit high-download profile instead of accepting a silent downgrade |
 | Download workers hit OOM on heavy symbols (AAPL/MSFT/NVDA) even before many jobs completed | Greeks hydration accumulated all expirations for a symbol-day in memory before write | Stream greeks by expiration and write incrementally; perform day-scope delete once on first batch and append remaining batches | Keep per-worker heap in the `1024-1536` MB range and validate heavy-symbol canary emits `[GREEKS_SYNC_STATS]` without heap growth before full-range relaunch |
 | Pipeline workers intermittently OOM/restarted mid-wave under overlap even after stream fixes | 1 GB default V8 heap in pipeline launcher was too tight once multiple components overlapped | Raise pipeline launcher default heap to `1536` and keep worker-count caps from RAM budget logic | For overlap waves, prefer `DOWNLOAD_WORKERS=4 ENRICH_WORKERS=2` and only increase after canary stability |
 | Enrich-only tail run hit OOM even after pipeline hardening | Parallel runner still defaulted worker heap to 1 GB (`BACKFILL_NODE_MAX_OLD_SPACE_MB=1024`) | Raise parallel runner default heap to `1536` so manual enrich/download reruns use the same safe baseline | Keep per-worker heap aligned across pipeline + parallel launchers to avoid mode-specific instability |
@@ -40,6 +40,10 @@ This document captures concrete lessons from multi-day historical backfill and r
 | Repeatedly rerunning same day after each fix | No canary progression discipline | Validate on one canary day, then proceed to next day | Add day progression gate in runbook |
 | Long run with poor visibility | Insufficient telemetry and per-job coverage detail | Enable gap telemetry and stream heartbeats while debugging | Keep telemetry toggle documented and standardized |
 | Could not explain “slow run” vs expected network throughput | Request telemetry had rows/duration but no byte counters, so actual bandwidth and payload size were unknown | Add `bytesDownloaded` to all `[THETA_DOWNLOAD]` log paths and aggregate bytes/sec in `scripts/backfill/aggregate-run-telemetry.js` | Use bytes/sec + rows/sec together; if bytes/sec is high but wall time is slow, optimize DB path before changing Theta concurrency |
+| Theta queue length looked like an easy speed knob | Theta Terminal allows larger `request_queue_length`, but filling a large server queue with heavy requests can increase client/server timeout risk | Keep client-side concurrency managed by the parquet async scheduler/semaphore and use Theta queue length only as a modest buffer (`16` for current Pro runs) | Do not use a large server queue setting as the primary concurrency controller |
+| Parquet leaf quote/raw requests intermittently failed with `writer was closed` during parallel request scheduling | Request-level completion logic promoted every `*.parquet.tmp` file in the partition, so one finished leaf could touch another leaf's still-open temp file | Remove eager `promoteTempParquetFiles(...)` from parallel request-level paths; only promote safely after a controlled whole-stage barrier or startup recovery step | In parallel parquet mode, let each leaf writer rename only its own temp file on successful close |
+| Parquet monitor reported degraded Theta utilization on tiny canaries even though the scheduler was behaving correctly | Per-job fairness intentionally capped one symbol-day to 1-2 outstanding requests, so a 1-2 job canary could never fill 4 active slots | Add `thetaFullSaturationPossible` and `thetaMaxPossibleRequestsNow` to the monitor and suppress degraded alerts when full saturation is structurally impossible | Judge saturation only when enough distinct ready/running jobs exist to fill the active target |
+| Heavy raw-index parquet tails still stranded workers late in the run | Symbol-day scheduling hid time-window / expiration-group leaf work inside a single job | Move heavy quote/raw-greeks split planning into first-class request files and schedule those leaves directly with fairness-aware Theta slot dispatch | Keep `state/requests/*.json` canonical for downloader leaf work and only roll stage completion up from leaf results |
 | Worker OOM or unstable throughput | Over-aggressive worker/memory settings | Reduce workers and/or heap, split heavy-symbol windows | Keep memory budget caps and large-symbol windows in canonical params |
 
 ## 3. Required Verification Dimensions
@@ -61,6 +65,11 @@ For each run wave:
    - transient retries,
    - failed jobs,
    - requeue completion status.
+5. Theta scheduler health for parquet runs:
+   - percent of samples with `thetaActiveRequests >= active_target`,
+   - whether `thetaFullSaturationPossible` was true during low-utilization windows,
+   - distinct jobs in flight,
+   - recent `429` / timeout burst behavior.
 
 ## 4. Start-From-Scratch Playbook
 1. Preflight:
