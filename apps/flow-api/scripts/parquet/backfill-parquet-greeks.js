@@ -106,6 +106,7 @@ function buildWorkerReport({
       idleLoops: Number(counters.idleLoops || 0),
       stockRows: Number(counters.stockRows || 0),
       tradeRows: Number(counters.tradeRows || 0),
+      tradeQuoteRows: Number(counters.tradeQuoteRows || 0),
       quoteRows: Number(counters.quoteRows || 0),
       rawGreekRows: Number(counters.rawGreekRows || 0),
       finalGreekRows: Number(counters.finalGreekRows || 0),
@@ -266,12 +267,16 @@ async function runClaimedTask(claim, { runId, runRoot }) {
         meta: {
           filePath: result.filePath,
           partitionDir: result.partitionDir,
+          tradeQuoteFilePath: result.tradeQuoteFilePath,
+          tradeQuotePartitionDir: result.tradeQuotePartitionDir,
+          tradeQuoteRowCount: result.tradeQuoteRowCount,
           window: request.window,
           partIndex: request.partIndex,
           endpoint: result.endpoint,
         },
         counterPatch: {
           tradeRows: result.rowCount,
+          tradeQuoteRows: result.tradeQuoteRowCount,
           tradeMs: elapsedMs,
         },
       };

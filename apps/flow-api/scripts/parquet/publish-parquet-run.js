@@ -323,6 +323,12 @@ function copyPublishedPartitions({
         datasetKey: `raw/option_trades/${monthKey}`,
       },
       {
+        enabled: job?.stages?.trades?.status === 'complete',
+        sourceDir: path.join(runRoot, 'datasets', 'raw', 'option_trade_quote', `symbol=${symbol}`, `trade_date_utc=${dayIso}`),
+        targetDir: path.join(stagingReleaseRoot, relativeDatasetDir(path.join('raw', 'option_trade_quote'), monthKey, symbol, dayIso)),
+        datasetKey: `raw/option_trade_quote/${monthKey}`,
+      },
+      {
         enabled: job.greekMode === 'raw' && job?.stages?.greeks?.status === 'complete',
         sourceDir: path.join(runRoot, 'datasets', 'raw', 'option_greeks_minute', `symbol=${symbol}`, `trade_date_utc=${dayIso}`),
         targetDir: path.join(stagingReleaseRoot, relativeDatasetDir(path.join('raw', 'option_greeks_minute'), monthKey, symbol, dayIso)),
@@ -460,6 +466,7 @@ async function publishRun(runRoot, { force = false, env = process.env } = {}) {
     'raw/stock_ohlc_minute',
     'raw/option_quote_minute',
     'raw/option_trades',
+    'raw/option_trade_quote',
     'raw/option_greeks_minute',
     'derived/option_greeks_minute',
   ];

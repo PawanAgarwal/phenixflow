@@ -142,6 +142,37 @@ const RAW_TRADES_SCHEMA = new parquet.ParquetSchema(withCompression({
   raw_payload_json: { type: 'UTF8', optional: true },
 }));
 
+const RAW_TRADE_QUOTES_SCHEMA = new parquet.ParquetSchema(withCompression({
+  request_symbol: { type: 'UTF8' },
+  symbol: { type: 'UTF8' },
+  trade_date_utc: { type: 'UTF8' },
+  minute_bucket_utc: { type: 'UTF8' },
+  expiration: { type: 'UTF8' },
+  strike: { type: 'DOUBLE' },
+  right: { type: 'UTF8' },
+  trade_timestamp: { type: 'UTF8' },
+  quote_timestamp: { type: 'UTF8', optional: true },
+  sequence: { type: 'INT64', optional: true },
+  ext_condition1: { type: 'INT32', optional: true },
+  ext_condition2: { type: 'INT32', optional: true },
+  ext_condition3: { type: 'INT32', optional: true },
+  ext_condition4: { type: 'INT32', optional: true },
+  condition: { type: 'INT32', optional: true },
+  size: { type: 'INT32' },
+  exchange: { type: 'INT32', optional: true },
+  price: { type: 'DOUBLE' },
+  bid_size: { type: 'INT32', optional: true },
+  bid_exchange: { type: 'INT32', optional: true },
+  bid: { type: 'DOUBLE', optional: true },
+  bid_condition: { type: 'INT32', optional: true },
+  ask_size: { type: 'INT32', optional: true },
+  ask_exchange: { type: 'INT32', optional: true },
+  ask: { type: 'DOUBLE', optional: true },
+  ask_condition: { type: 'INT32', optional: true },
+  source_endpoint: { type: 'UTF8', optional: true },
+  raw_payload_json: { type: 'UTF8', optional: true },
+}));
+
 const RAW_GREEKS_SCHEMA = new parquet.ParquetSchema(withCompression({
   symbol: { type: 'UTF8' },
   trade_date_utc: { type: 'UTF8' },
@@ -259,6 +290,7 @@ function resolveLayout(runRoot) {
     rawStockRoot: path.join(runRoot, 'datasets', 'raw', 'stock_ohlc_minute'),
     rawQuoteRoot: path.join(runRoot, 'datasets', 'raw', 'option_quote_minute'),
     rawTradeRoot: path.join(runRoot, 'datasets', 'raw', 'option_trades'),
+    rawTradeQuoteRoot: path.join(runRoot, 'datasets', 'raw', 'option_trade_quote'),
     rawGreeksRoot: path.join(runRoot, 'datasets', 'raw', 'option_greeks_minute'),
     finalGreeksRoot: path.join(runRoot, 'datasets', 'derived', 'option_greeks_minute'),
   };
@@ -1784,6 +1816,14 @@ function getTradePartitionDir(runRoot, symbol, dayIso) {
   return path.dirname(getTradePath(runRoot, symbol, dayIso));
 }
 
+function getTradeQuotePath(runRoot, symbol, dayIso) {
+  return path.join(resolveLayout(runRoot).rawTradeQuoteRoot, `symbol=${symbol}`, `trade_date_utc=${dayIso}`, 'part-000.parquet');
+}
+
+function getTradeQuotePartitionDir(runRoot, symbol, dayIso) {
+  return path.dirname(getTradeQuotePath(runRoot, symbol, dayIso));
+}
+
 function getQuoteSpoolPath(runRoot, symbol, dayIso, partIndex = 0) {
   return path.join(
     resolveLayout(runRoot).stateRoot,
@@ -2231,6 +2271,59 @@ function normalizeOptionTradeRow(row, symbol, dayIso, { includeRawPayload = fals
   };
 }
 
+function normalizeOptionTradeQuoteRow(row, requestSymbol, dayIso, { includeRawPayload = false } = {}) {
+  if (!row || typeof row !== 'object') return null;
+  const fallbackTs = `${dayIso}T00:00:00.000Z`;
+  const symbol = normalizeSymbol(pickField(row, ['symbol', 'root', 'underlying'])) || normalizeSymbol(requestSymbol);
+  const expiration = normalizeIsoDate(pickField(row, ['expiration', 'exp', 'expiry', 'expiration_date']));
+  const strike = toNumber(pickField(row, ['strike', 'strike_price']));
+  const right = normalizeRight(String(pickField(row, ['right', 'option_right', 'side']) || ''));
+  const price = toNumber(pickField(row, ['price', 'trade_price', 'last']));
+  const size = toInteger(pickField(row, ['size', 'trade_size', 'quantity', 'qty']));
+  const tradeTimestamp = toIsoFromAnyTs(
+    pickField(row, ['trade_timestamp', 'trade_ts', 'timestamp', 'time']),
+    fallbackTs,
+  );
+  const quoteTimestamp = toIsoFromAnyTs(
+    pickField(row, ['quote_timestamp', 'quote_ts', 'quote_time']),
+    tradeTimestamp || fallbackTs,
+  );
+  const minuteBucketUtc = toMinuteBucketUtc(tradeTimestamp);
+  if (!symbol || !expiration || strike === null || !right || price === null || size === null || !tradeTimestamp || !minuteBucketUtc) {
+    return null;
+  }
+  return {
+    request_symbol: normalizeSymbol(requestSymbol),
+    symbol,
+    trade_date_utc: dayIso,
+    minute_bucket_utc: minuteBucketUtc,
+    expiration,
+    strike,
+    right,
+    trade_timestamp: tradeTimestamp,
+    quote_timestamp: quoteTimestamp,
+    sequence: toInteger(pickField(row, ['sequence'])),
+    ext_condition1: toInteger(pickField(row, ['ext_condition1'])),
+    ext_condition2: toInteger(pickField(row, ['ext_condition2'])),
+    ext_condition3: toInteger(pickField(row, ['ext_condition3'])),
+    ext_condition4: toInteger(pickField(row, ['ext_condition4'])),
+    condition: toInteger(pickField(row, ['condition', 'condition_code', 'sale_condition'])),
+    size,
+    exchange: toInteger(pickField(row, ['exchange', 'exch'])),
+    price,
+    bid_size: toInteger(pickField(row, ['bid_size'])),
+    bid_exchange: toInteger(pickField(row, ['bid_exchange'])),
+    bid: toNumber(pickField(row, ['bid', 'bid_price'])),
+    bid_condition: toInteger(pickField(row, ['bid_condition'])),
+    ask_size: toInteger(pickField(row, ['ask_size'])),
+    ask_exchange: toInteger(pickField(row, ['ask_exchange'])),
+    ask: toNumber(pickField(row, ['ask', 'ask_price'])),
+    ask_condition: toInteger(pickField(row, ['ask_condition'])),
+    source_endpoint: null,
+    raw_payload_json: includeRawPayload ? JSON.stringify(row) : null,
+  };
+}
+
 function normalizeOptionGreeksRow(row, dayIso, { includeRawPayload = false } = {}) {
   const fallbackTs = `${dayIso}T00:00:00.000Z`;
   const symbol = normalizeSymbol(pickField(row, ['symbol', 'root', 'underlying']));
@@ -2626,15 +2719,18 @@ async function writeQuoteWindowPart({
 }
 
 async function writeTradeWindowPart({
-  filePath,
+  tradeFilePath,
+  tradeQuoteFilePath,
   symbol,
   dayIso,
   window,
   includeRawPayload = false,
   env = process.env,
 }) {
-  const handle = await openParquetWriter(RAW_TRADES_SCHEMA, filePath);
-  let writtenRows = 0;
+  const tradeHandle = await openParquetWriter(RAW_TRADES_SCHEMA, tradeFilePath);
+  const tradeQuoteHandle = await openParquetWriter(RAW_TRADE_QUOTES_SCHEMA, tradeQuoteFilePath);
+  let writtenTradeRows = 0;
+  let writtenTradeQuoteRows = 0;
   const logEvery = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_PROGRESS_EVERY_ROWS', DEFAULT_CHUNK_LOG_EVERY, env)));
   const callbackBatchSize = parseNdjsonCallbackBatchSize(env);
   const tradeWriteBatchRows = Math.max(500, parseQuoteWriteBatchRows(env));
@@ -2644,47 +2740,78 @@ async function writeTradeWindowPart({
     env,
     window,
   );
-  const writeRowsNow = async (rows) => {
+  const writeTradeRowsNow = async (rows) => {
     if (!Array.isArray(rows) || rows.length === 0) return;
     try {
-      await appendRows(handle.writer, rows);
+      await appendRows(tradeHandle.writer, rows);
     } catch (error) {
-      const context = `${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}:${filePath}`;
+      const context = `${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}:${tradeFilePath}`;
       throw new Error(`trade_append_failed:${context}:${String(error?.stack || error?.message || error)}`);
     }
-    writtenRows += rows.length;
-    if (writtenRows > 0 && writtenRows % logEvery === 0) {
-      console.log('[PARQUET_TRADE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows }));
+    writtenTradeRows += rows.length;
+    if (writtenTradeRows > 0 && writtenTradeRows % logEvery === 0) {
+      console.log('[PARQUET_TRADE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows: writtenTradeRows }));
     }
   };
-  const asyncAppender = createAsyncBatchAppender(writeRowsNow, { env });
+  const writeTradeQuoteRowsNow = async (rows) => {
+    if (!Array.isArray(rows) || rows.length === 0) return;
+    try {
+      await appendRows(tradeQuoteHandle.writer, rows);
+    } catch (error) {
+      const context = `${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}:${tradeQuoteFilePath}`;
+      throw new Error(`trade_quote_append_failed:${context}:${String(error?.stack || error?.message || error)}`);
+    }
+    writtenTradeQuoteRows += rows.length;
+    if (writtenTradeQuoteRows > 0 && writtenTradeQuoteRows % logEvery === 0) {
+      console.log('[PARQUET_TRADE_QUOTE_PROGRESS]', JSON.stringify({ symbol, dayIso, writtenRows: writtenTradeQuoteRows }));
+    }
+  };
+  const tradeAppender = createAsyncBatchAppender(writeTradeRowsNow, { env });
+  const tradeQuoteAppender = createAsyncBatchAppender(writeTradeQuoteRowsNow, { env });
   try {
     if (!endpoint) {
-      await handle.close(false);
-      return { rowCount: 0, endpoint: null };
+      await tradeHandle.close(false);
+      await tradeQuoteHandle.close(false);
+      return { tradeRowCount: 0, tradeQuoteRowCount: 0, endpoint: null };
     }
     const format = new URL(endpoint).searchParams.get('format');
     if (format === 'ndjson') {
-      let normalizedBuffer = [];
+      let normalizedTradeBuffer = [];
+      let normalizedTradeQuoteBuffer = [];
       const flushNormalized = async (force = false) => {
-        if (!force && normalizedBuffer.length < tradeWriteBatchRows) return;
-        if (normalizedBuffer.length === 0) return;
-        const rows = normalizedBuffer;
-        normalizedBuffer = [];
-        await asyncAppender.schedule(rows, {
-          forceDrain: force,
-          rowCount: rows.length,
-        });
+        if (!force && normalizedTradeBuffer.length < tradeWriteBatchRows && normalizedTradeQuoteBuffer.length < tradeWriteBatchRows) return;
+        const tradeRows = normalizedTradeBuffer;
+        const tradeQuoteRows = normalizedTradeQuoteBuffer;
+        normalizedTradeBuffer = [];
+        normalizedTradeQuoteBuffer = [];
+        if (tradeRows.length > 0) {
+          await tradeAppender.schedule(tradeRows, {
+            forceDrain: force,
+            rowCount: tradeRows.length,
+          });
+        }
+        if (tradeQuoteRows.length > 0) {
+          await tradeQuoteAppender.schedule(tradeQuoteRows, {
+            forceDrain: force,
+            rowCount: tradeQuoteRows.length,
+          });
+        }
       };
       const result = await withThetaRetry(() => fetchNdjsonRows(endpoint, {
         env,
         rowBatchSize: callbackBatchSize,
         onRows: async (rawRows) => {
           for (const rawRow of rawRows) {
-            const normalized = normalizeOptionTradeRow(rawRow, symbol, dayIso, { includeRawPayload });
-            if (!normalized) continue;
-            normalized.source_endpoint = endpoint;
-            normalizedBuffer.push(normalized);
+            const normalizedTrade = normalizeOptionTradeRow(rawRow, symbol, dayIso, { includeRawPayload });
+            if (normalizedTrade) {
+              normalizedTrade.source_endpoint = endpoint;
+              normalizedTradeBuffer.push(normalizedTrade);
+            }
+            const normalizedTradeQuote = normalizeOptionTradeQuoteRow(rawRow, symbol, dayIso, { includeRawPayload });
+            if (normalizedTradeQuote) {
+              normalizedTradeQuote.source_endpoint = endpoint;
+              normalizedTradeQuoteBuffer.push(normalizedTradeQuote);
+            }
           }
           await flushNormalized(false);
         },
@@ -2696,29 +2823,42 @@ async function writeTradeWindowPart({
         throw new Error(`thetadata_request_failed:${result.response.status}`);
       }
       await flushNormalized(true);
-      await asyncAppender.drain();
+      await tradeAppender.drain();
+      await tradeQuoteAppender.drain();
     } else {
       const rows = await withThetaRetry(() => historicalPrivate.fetchThetaRows(endpoint, { env }), {
         env,
         label: `trade:${symbol}:${dayIso}:${window.startTime || 'full'}-${window.endTime || 'end'}`,
       });
-      const normalizedRows = rows
+      const normalizedTradeRows = rows
         .map((rawRow) => normalizeOptionTradeRow(rawRow, symbol, dayIso, { includeRawPayload }))
         .filter(Boolean)
         .map((row) => ({ ...row, source_endpoint: endpoint }));
-      await asyncAppender.schedule(normalizedRows, {
+      const normalizedTradeQuoteRows = rows
+        .map((rawRow) => normalizeOptionTradeQuoteRow(rawRow, symbol, dayIso, { includeRawPayload }))
+        .filter(Boolean)
+        .map((row) => ({ ...row, source_endpoint: endpoint }));
+      await tradeAppender.schedule(normalizedTradeRows, {
         forceDrain: true,
-        rowCount: normalizedRows.length,
+        rowCount: normalizedTradeRows.length,
       });
-      await asyncAppender.drain();
+      await tradeQuoteAppender.schedule(normalizedTradeQuoteRows, {
+        forceDrain: true,
+        rowCount: normalizedTradeQuoteRows.length,
+      });
+      await tradeAppender.drain();
+      await tradeQuoteAppender.drain();
     }
-    await handle.close(writtenRows > 0);
+    await tradeHandle.close(writtenTradeRows > 0);
+    await tradeQuoteHandle.close(writtenTradeQuoteRows > 0);
     return {
-      rowCount: writtenRows,
+      tradeRowCount: writtenTradeRows,
+      tradeQuoteRowCount: writtenTradeQuoteRows,
       endpoint,
     };
   } catch (error) {
-    await handle.close(false);
+    await tradeHandle.close(false);
+    await tradeQuoteHandle.close(false);
     throw error;
   }
 }
@@ -3143,10 +3283,13 @@ async function downloadTradeRequestToParquet({
   env = process.env,
 }) {
   const includeRawPayload = parseBooleanLike(env.PARQUET_INCLUDE_RAW_PAYLOAD, false);
-  const partitionDir = getTradePartitionDir(runRoot, symbol, dayIso);
-  const filePath = getPartitionPartPath(partitionDir, partIndex);
+  const tradePartitionDir = getTradePartitionDir(runRoot, symbol, dayIso);
+  const tradeQuotePartitionDir = getTradeQuotePartitionDir(runRoot, symbol, dayIso);
+  const tradeFilePath = getPartitionPartPath(tradePartitionDir, partIndex);
+  const tradeQuoteFilePath = getPartitionPartPath(tradeQuotePartitionDir, partIndex);
   const result = await writeTradeWindowPart({
-    filePath,
+    tradeFilePath,
+    tradeQuoteFilePath,
     symbol,
     dayIso,
     window,
@@ -3154,9 +3297,12 @@ async function downloadTradeRequestToParquet({
     env,
   });
   return {
-    rowCount: result.rowCount,
-    filePath,
-    partitionDir,
+    rowCount: result.tradeRowCount,
+    tradeQuoteRowCount: result.tradeQuoteRowCount,
+    filePath: tradeFilePath,
+    partitionDir: tradePartitionDir,
+    tradeQuoteFilePath,
+    tradeQuotePartitionDir,
     endpoint: result.endpoint,
   };
 }
@@ -3545,6 +3691,8 @@ module.exports = {
   getRawGreeksPath,
   getStockPartitionDir,
   getStockPath,
+  getTradeQuotePartitionDir,
+  getTradeQuotePath,
   getTradePartitionDir,
   getTradePath,
   listParquetPartFiles,

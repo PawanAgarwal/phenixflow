@@ -12,6 +12,7 @@ const {
   getQuoteSpoolPartitionDir,
   getRawGreeksPartitionDir,
   getStockPartitionDir,
+  getTradeQuotePartitionDir,
   getTradePartitionDir,
   listParquetPartFiles,
   parseQuoteRequestSpoolToParquet,
@@ -343,21 +344,40 @@ async function inferExistingStageState(jobState) {
   }
 
   const tradePartitionDir = getTradePartitionDir(runRoot, symbol, dayIso);
+  const tradeQuotePartitionDir = getTradeQuotePartitionDir(runRoot, symbol, dayIso);
   const tradeMarker = readJsonFile(path.join(tradePartitionDir, '_SUCCESS.json'));
-  if ((Number(tradeMarker?.partCount || 0) > 0) || partitionHasData(tradePartitionDir)) {
+  const tradeQuoteMarker = readJsonFile(path.join(tradeQuotePartitionDir, '_SUCCESS.json'));
+  const hasTradeData = (Number(tradeMarker?.partCount || 0) > 0) || partitionHasData(tradePartitionDir);
+  const hasTradeQuoteData = (Number(tradeQuoteMarker?.partCount || 0) > 0) || partitionHasData(tradeQuotePartitionDir);
+  if (hasTradeData && hasTradeQuoteData) {
     const tradeProbe = await probeRowPartition(tradePartitionDir, 'trades');
+    const tradeQuoteProbe = await probeRowPartition(tradeQuotePartitionDir, 'trade_quotes');
     jobState.stages.trades = {
       ...jobState.stages.trades,
       controlMode: 'requests',
       status: 'complete',
       startedAt: jobState.stages.trades.startedAt || tradeMarker?.completedAt || jobState.createdAt,
-      completedAt: tradeMarker?.completedAt || tradeProbe?.marker?.completedAt || nowIso(),
+      completedAt: tradeQuoteMarker?.completedAt || tradeMarker?.completedAt || tradeQuoteProbe?.marker?.completedAt || tradeProbe?.marker?.completedAt || nowIso(),
       updatedAt: nowIso(),
       rowCount: Number(tradeProbe?.rowCount || tradeMarker?.rowCount || jobState.stages.trades.rowCount || 0),
       meta: {
         ...(jobState.stages.trades.meta || {}),
         partCount: tradeMarker?.partCount || tradeProbe?.marker?.partCount || null,
-        legacyFastPath: !tradeMarker,
+        tradeQuotePartCount: tradeQuoteMarker?.partCount || tradeQuoteProbe?.marker?.partCount || null,
+        tradeQuoteRowCount: Number(tradeQuoteProbe?.rowCount || tradeQuoteMarker?.rowCount || 0),
+        legacyFastPath: !tradeMarker || !tradeQuoteMarker,
+      },
+    };
+  } else if (jobState.stages.trades.controlMode === 'requests' && jobState.stages.trades.status === 'complete') {
+    jobState.stages.trades = {
+      ...jobState.stages.trades,
+      status: 'pending',
+      completedAt: null,
+      updatedAt: nowIso(),
+      meta: {
+        ...(jobState.stages.trades.meta || {}),
+        missingTradeRowsOutput: !hasTradeData,
+        missingTradeQuoteOutput: !hasTradeQuoteData,
       },
     };
   }
@@ -728,12 +748,18 @@ function buildInitialRequestState({
 function requestHasOutput(request) {
   if (
     request.kind === REQUEST_KIND_STOCK
-    || request.kind === REQUEST_KIND_TRADES
     || request.kind === REQUEST_KIND_QUOTE
     || request.kind === REQUEST_KIND_QUOTE_FETCH
     || request.kind === REQUEST_KIND_QUOTE_PARSE
   ) {
     return Boolean(request.outputPath && fs.existsSync(request.outputPath));
+  }
+  if (request.kind === REQUEST_KIND_TRADES) {
+    const hasPrimary = Boolean(request.outputPath && fs.existsSync(request.outputPath));
+    const hasSecondary = request.secondaryOutputPath
+      ? Boolean(fs.existsSync(request.secondaryOutputPath))
+      : true;
+    return hasPrimary && hasSecondary;
   }
   if (request.kind === REQUEST_KIND_RAW_GREEKS) {
     return Boolean(
@@ -745,7 +771,9 @@ function requestHasOutput(request) {
 }
 
 function mergePlannedRequestState(existing, planned, stageState) {
-  const recoveredComplete = stageState?.status === 'complete' || requestHasOutput(planned);
+  const stageRecoveredComplete = stageState?.status === 'complete';
+  const outputRecoveredComplete = requestHasOutput(planned);
+  const recoveredComplete = stageRecoveredComplete || outputRecoveredComplete;
   if (!existing) {
     return {
       ...planned,
@@ -757,11 +785,12 @@ function mergePlannedRequestState(existing, planned, stageState) {
         : 0,
       meta: {
         ...planned.meta,
-        recoveredFromOutputs: recoveredComplete && stageState?.status !== 'complete',
-        recoveredFromStage: recoveredComplete && stageState?.status === 'complete',
+        recoveredFromOutputs: recoveredComplete && !stageRecoveredComplete,
+        recoveredFromStage: recoveredComplete && stageRecoveredComplete,
       },
     };
   }
+  const resetForMissingOutput = existing.status === 'complete' && !stageRecoveredComplete && !outputRecoveredComplete;
   return {
     ...existing,
     runId: planned.runId,
@@ -783,9 +812,21 @@ function mergePlannedRequestState(existing, planned, stageState) {
     secondaryOutputPath: planned.secondaryOutputPath,
     schedulerPriority: planned.schedulerPriority,
     estimatedCost: planned.estimatedCost,
+    status: resetForMissingOutput ? 'pending' : existing.status,
+    claimToken: resetForMissingOutput ? null : existing.claimToken,
+    claimedBy: resetForMissingOutput ? null : existing.claimedBy,
+    claimedPid: resetForMissingOutput ? null : existing.claimedPid,
+    claimedAt: resetForMissingOutput ? null : existing.claimedAt,
+    startedAt: resetForMissingOutput ? null : existing.startedAt,
+    completedAt: resetForMissingOutput ? null : existing.completedAt,
+    updatedAt: nowIso(),
+    error: resetForMissingOutput ? null : existing.error,
+    rowCount: resetForMissingOutput ? 0 : existing.rowCount,
+    elapsedMs: resetForMissingOutput ? 0 : existing.elapsedMs,
     meta: {
       ...(existing.meta || {}),
       ...(planned.meta || {}),
+      resetForMissingOutput,
     },
   };
 }
@@ -868,6 +909,8 @@ async function ensureTradeRequestsForJobState(state, {
       window: request.window,
       partitionDir: getTradePartitionDir(state.runRoot, state.symbol, state.dayIso),
       outputPath: request.filePath,
+      secondaryPartitionDir: getTradeQuotePartitionDir(state.runRoot, state.symbol, state.dayIso),
+      secondaryOutputPath: getPartitionPartPath(getTradeQuotePartitionDir(state.runRoot, state.symbol, state.dayIso), request.partIndex),
       schedulerPriority: request.schedulerPriority,
       estimatedCost: request.estimatedCost,
     });
@@ -1396,13 +1439,23 @@ async function summarizeRequestControlledStage(state, stageName, requestEntries,
     }
   } else if (stageName === 'trades') {
     const partitionDir = getTradePartitionDir(state.runRoot, state.symbol, state.dayIso);
+    const tradeQuotePartitionDir = getTradeQuotePartitionDir(state.runRoot, state.symbol, state.dayIso);
     const partCount = listParquetPartFiles(partitionDir).length;
+    const tradeQuotePartCount = listParquetPartFiles(tradeQuotePartitionDir).length;
+    const tradeQuoteRowCount = requests.reduce((sum, request) => sum + Number(request?.meta?.tradeQuoteRowCount || 0), 0);
     meta.partCount = partCount;
+    meta.tradeQuotePartCount = tradeQuotePartCount;
+    meta.tradeQuoteRowCount = tradeQuoteRowCount;
     if (completeRequests.length === requests.length) {
       writePartitionSuccessMarker(partitionDir, {
         stage: 'trades',
         rowCount,
         partCount,
+      });
+      writePartitionSuccessMarker(tradeQuotePartitionDir, {
+        stage: 'trade_quotes',
+        rowCount: tradeQuoteRowCount,
+        partCount: tradeQuotePartCount,
       });
     }
   } else if (stageName === 'quotes') {

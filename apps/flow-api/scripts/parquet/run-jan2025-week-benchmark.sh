@@ -209,6 +209,7 @@ const summary = {
   runningJobs: 0,
   totalStockRows: 0,
   totalTradeRows: 0,
+  totalTradeQuoteRows: 0,
   totalQuoteRows: 0,
   totalRawGreekRows: 0,
   totalFinalGreekRows: 0,
@@ -232,6 +233,7 @@ for (const jobFile of jobFiles) {
   if (job.status === 'running') summary.runningJobs += 1;
   summary.totalStockRows += Number(job?.stages?.stock?.rowCount || 0);
   summary.totalTradeRows += Number(job?.stages?.trades?.rowCount || 0);
+  summary.totalTradeQuoteRows += Number(job?.stages?.trades?.meta?.tradeQuoteRowCount || 0);
   summary.totalQuoteRows += Number(job?.stages?.quotes?.rowCount || 0);
   summary.totalRawGreekRows += job.greekMode === 'raw' ? Number(job?.stages?.greeks?.rowCount || 0) : 0;
   summary.totalFinalGreekRows += Number(job?.stages?.greeks?.rowCount || 0);
