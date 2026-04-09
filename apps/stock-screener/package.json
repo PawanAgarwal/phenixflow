@@ -1,0 +1,14 @@
+{
+  "name": "stock-screener",
+  "version": "1.0.0",
+  "description": "200-week moving average screener for high-quality stocks",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "screen": "node index.js",
+    "screen:sp500": "node index.js --index sp500",
+    "screen:nasdaq": "node index.js --index nasdaq100",
+    "screen:all": "node index.js --index all",
+    "screen:custom": "node index.js --symbols"
+  }
+}

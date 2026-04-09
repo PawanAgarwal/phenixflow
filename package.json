@@ -40,7 +40,10 @@
     "enrich:option-trades:parallel": "bash apps/flow-api/scripts/backfill/enrich-option-trades-parallel.sh",
     "research:option-rr": "node apps/flow-api/scripts/backfill/research-option-rr-strategies.js",
     "vixregime:check": "node projects/vixregime/scripts/check-required-data.js",
-    "vixregime:backtest": "node projects/vixregime/scripts/backtest-spx-vix-regime.js"
+    "vixregime:backtest": "node projects/vixregime/scripts/backtest-spx-vix-regime.js",
+    "screener:200w": "node apps/stock-screener/index.js",
+    "screener:200w:sp500": "node apps/stock-screener/index.js --index sp500",
+    "screener:200w:nasdaq": "node apps/stock-screener/index.js --index nasdaq100"
   },
   "engines": {
     "node": ">=20"
