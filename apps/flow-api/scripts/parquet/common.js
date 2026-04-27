@@ -835,6 +835,10 @@ function computeRetryDelayMs(attempt, env = process.env) {
   return Math.min(maxDelayMs, backoffMs + jitterMs);
 }
 
+function shouldMarkGlobalThetaCooldown(label) {
+  return !String(label || '').startsWith('stock:');
+}
+
 async function withThetaRetry(taskFn, {
   env = process.env,
   label = 'theta_request',
@@ -855,7 +859,7 @@ async function withThetaRetry(taskFn, {
       }
       const message = String(error?.message || error || '');
       const retryDelayMs = computeRetryDelayMs(attempt, env);
-      if (/thetadata_request_failed:429/.test(message)) {
+      if (/thetadata_request_failed:429/.test(message) && shouldMarkGlobalThetaCooldown(label)) {
         markThetaCooldown(retryDelayMs, { env, reason: `${label}:429` });
       }
       console.warn('[PARQUET_THETA_RETRY]', JSON.stringify({

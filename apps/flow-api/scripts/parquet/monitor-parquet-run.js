@@ -117,6 +117,122 @@ function sampleLoopbackBandwidth() {
   }
 }
 
+function parseTopCpuLine(output) {
+  const text = String(output || '');
+  const match = text.match(/CPU usage:\s*([\d.]+)% user,\s*([\d.]+)% sys,\s*([\d.]+)% idle/i);
+  if (!match) return {};
+  return {
+    systemCpuUserPct: Number(match[1]),
+    systemCpuSysPct: Number(match[2]),
+    systemCpuIdlePct: Number(match[3]),
+  };
+}
+
+function parseTopPhysMemLine(output) {
+  const text = String(output || '');
+  const match = text.match(/PhysMem:\s*([^()]+)\(([^,]+),\s*([^)]+)\),\s*([^.]+)\./i);
+  if (!match) return {};
+  return {
+    systemPhysMemUsed: match[1].trim(),
+    systemPhysMemWired: match[2].trim(),
+    systemPhysMemCompressor: match[3].trim(),
+    systemPhysMemUnused: match[4].trim(),
+  };
+}
+
+function sampleSystemUsage() {
+  try {
+    const output = execFileSync('top', ['-l', '1'], {
+      encoding: 'utf8',
+      timeout: 8000,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    return {
+      ...parseTopCpuLine(output),
+      ...parseTopPhysMemLine(output),
+    };
+  } catch (error) {
+    return {
+      systemUsageError: String(error?.message || error),
+    };
+  }
+}
+
+function parsePsRows(output) {
+  return String(output || '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const match = line.match(/^(\d+)\s+([\d.]+)\s+(\d+)\s+(.*)$/);
+      if (!match) return null;
+      return {
+        pid: Number(match[1]),
+        cpuPct: Number(match[2]),
+        rssKb: Number(match[3]),
+        command: match[4],
+      };
+    })
+    .filter(Boolean);
+}
+
+function sampleProcessUsage(activePids = []) {
+  const metrics = {
+    workerNodeCount: 0,
+    workerNodeCpuPctSum: 0,
+    workerNodeRssMbSum: 0,
+    thetaServerPid: null,
+    thetaServerCpuPct: 0,
+    thetaServerRssMb: 0,
+  };
+
+  try {
+    const pids = Array.from(new Set((Array.isArray(activePids) ? activePids : [])
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value) && value > 0)));
+    if (pids.length > 0) {
+      const output = execFileSync('ps', ['-p', pids.join(','), '-o', 'pid=,%cpu=,rss=,command='], {
+        encoding: 'utf8',
+        timeout: 8000,
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+      const rows = parsePsRows(output);
+      metrics.workerNodeCount = rows.length;
+      metrics.workerNodeCpuPctSum = Number(rows.reduce((sum, row) => sum + Number(row.cpuPct || 0), 0).toFixed(2));
+      metrics.workerNodeRssMbSum = Number((rows.reduce((sum, row) => sum + Number(row.rssKb || 0), 0) / 1024).toFixed(2));
+    }
+  } catch (error) {
+    metrics.workerUsageError = String(error?.message || error);
+  }
+
+  try {
+    const pidOutput = execFileSync('lsof', ['-tiTCP:25503', '-sTCP:LISTEN'], {
+      encoding: 'utf8',
+      timeout: 8000,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    }).trim();
+    const thetaPid = Number(String(pidOutput).split(/\s+/).find(Boolean) || 0);
+    if (Number.isInteger(thetaPid) && thetaPid > 0) {
+      metrics.thetaServerPid = thetaPid;
+      const output = execFileSync('ps', ['-p', String(thetaPid), '-o', 'pid=,%cpu=,rss=,command='], {
+        encoding: 'utf8',
+        timeout: 8000,
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+      const row = parsePsRows(output)[0] || null;
+      if (row) {
+        metrics.thetaServerCpuPct = Number(Number(row.cpuPct || 0).toFixed(2));
+        metrics.thetaServerRssMb = Number((Number(row.rssKb || 0) / 1024).toFixed(2));
+        metrics.thetaServerCommand = row.command;
+      }
+    }
+  } catch (error) {
+    metrics.thetaServerUsageError = String(error?.message || error);
+  }
+
+  return metrics;
+}
+
 function pidAlive(pid) {
   try {
     process.kill(pid, 0);
@@ -196,14 +312,21 @@ function updateThetaMonitorState(runRoot, status) {
   const streak = lowTheta
     ? Math.max(0, Number(previous.lowThetaActiveSampleStreak || 0)) + 1
     : 0;
+  const lowBandwidth = backlogExists && Number(status.loopbackNodeInAvgMBps || 0) > 0
+    && Number(status.loopbackNodeInAvgMBps || 0) < 1;
+  const bandwidthStreak = lowBandwidth
+    ? Math.max(0, Number(previous.lowBandwidthSampleStreak || 0)) + 1
+    : 0;
   const next = {
     lowThetaActiveSampleStreak: streak,
+    lowBandwidthSampleStreak: bandwidthStreak,
     lastCheckedAt: new Date().toISOString(),
     degradedReason: streak >= 3 ? (status.thetaPotentialDegradedReason || 'lock_contention_or_claim_stall') : null,
   };
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, `${JSON.stringify(next, null, 2)}\n`, 'utf8');
   status.thetaLowActiveSampleStreak = streak;
+  status.lowBandwidthSampleStreak = bandwidthStreak;
   status.thetaDegradedReason = next.degradedReason;
   return status;
 }
@@ -211,10 +334,13 @@ function updateThetaMonitorState(runRoot, status) {
 async function main() {
   const args = parseArgs(process.argv);
   do {
-    const status = updateThetaMonitorState(args.runRoot, collectStatus(args.runRoot));
+    const status = collectStatus(args.runRoot);
     if (args.sampleBandwidth) {
       Object.assign(status, sampleLoopbackBandwidth());
+      Object.assign(status, sampleSystemUsage());
+      Object.assign(status, sampleProcessUsage(status.activePids));
     }
+    updateThetaMonitorState(args.runRoot, status);
     console.log(JSON.stringify(status));
     if (!args.watch || status.state !== 'running') break;
     await sleep(args.intervalSeconds * 1000);

@@ -15,11 +15,9 @@ const {
   getTradeQuotePartitionDir,
   getTradePartitionDir,
   listParquetPartFiles,
-  parseQuoteRequestSpoolToParquet,
   parseIndexGreeksSymbols,
   probeQuotePartition,
   probeRowPartition,
-  probeStockPartition,
   resolveQuoteRequestPlan,
   resolveRawGreeksRequestPlan,
   resolveTradeRequestPlan,
@@ -138,6 +136,25 @@ function parseHeavyDownloadSymbols(env = process.env) {
   return parseIndexGreeksSymbols(env);
 }
 
+function parseAdaptiveQuoteMinWindowMinutes(env = process.env) {
+  return Math.max(1, Math.min(120, Math.trunc(parseNumberEnv(
+    'PARQUET_ADAPTIVE_QUOTE_MIN_WINDOW_MINUTES',
+    5,
+    env,
+  ))));
+}
+
+function parseAdaptiveQuoteLargeWindowMinutes(env = process.env) {
+  return Math.max(
+    parseAdaptiveQuoteMinWindowMinutes(env),
+    Math.min(240, Math.trunc(parseNumberEnv(
+      'PARQUET_ADAPTIVE_QUOTE_LARGE_WINDOW_MINUTES',
+      60,
+      env,
+    ))),
+  );
+}
+
 function resolveDownloadWorkerLane(env = process.env) {
   const heavyWorkers = parseHeavyDownloadWorkers(env);
   const totalWorkers = Math.max(1, Math.trunc(parseNumberEnv('PARQUET_DOWNLOAD_WORKER_TOTAL', 1, env)));
@@ -169,6 +186,70 @@ function jobId(symbol, dayIso) {
   return `${String(symbol).trim().toUpperCase()}__${String(dayIso).trim()}`;
 }
 
+function parseTimeHmsToSecondOfDay(value) {
+  if (typeof value !== 'string') return null;
+  const match = /^(\d{2}):(\d{2}):(\d{2})$/.exec(value.trim());
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  const second = Number(match[3]);
+  if (
+    !Number.isInteger(hour) || hour < 0 || hour > 23
+    || !Number.isInteger(minute) || minute < 0 || minute > 59
+    || !Number.isInteger(second) || second < 0 || second > 59
+  ) {
+    return null;
+  }
+  return (hour * 3600) + (minute * 60) + second;
+}
+
+function formatSecondOfDayAsHms(value) {
+  const bounded = Math.max(0, Math.min(86399, Math.trunc(Number(value) || 0)));
+  const hours = Math.trunc(bounded / 3600);
+  const minutes = Math.trunc((bounded % 3600) / 60);
+  const seconds = bounded % 60;
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function estimateWindowMinutes(window = {}) {
+  const startSecond = parseTimeHmsToSecondOfDay(window?.startTime || null);
+  const endSecond = parseTimeHmsToSecondOfDay(window?.endTime || null);
+  if (startSecond === null || endSecond === null || endSecond < startSecond) return 1;
+  return Math.max(1, Math.ceil(((endSecond - startSecond) + 1) / 60));
+}
+
+function splitTimeWindow(window = {}, childWindowMinutes) {
+  const startSecond = parseTimeHmsToSecondOfDay(window?.startTime || null);
+  const endSecond = parseTimeHmsToSecondOfDay(window?.endTime || null);
+  const normalizedChildMinutes = Math.max(1, Math.trunc(Number(childWindowMinutes) || 0));
+  if (startSecond === null || endSecond === null || endSecond < startSecond || normalizedChildMinutes <= 0) {
+    return [];
+  }
+  const childWindowSeconds = normalizedChildMinutes * 60;
+  const spanSeconds = (endSecond - startSecond) + 1;
+  if (childWindowSeconds >= spanSeconds) return [];
+  const windows = [];
+  for (let cursor = startSecond; cursor <= endSecond; cursor += childWindowSeconds) {
+    const windowEnd = Math.min(endSecond, cursor + childWindowSeconds - 1);
+    windows.push({
+      startTime: formatSecondOfDayAsHms(cursor),
+      endTime: formatSecondOfDayAsHms(windowEnd),
+    });
+  }
+  return windows;
+}
+
+function chooseAdaptiveQuoteWindowMinutes(currentWindowMinutes, env = process.env) {
+  const current = Math.max(1, Math.trunc(Number(currentWindowMinutes) || 1));
+  const minWindowMinutes = parseAdaptiveQuoteMinWindowMinutes(env);
+  const largeWindowMinutes = parseAdaptiveQuoteLargeWindowMinutes(env);
+  if (current <= minWindowMinutes) return null;
+  if (current > largeWindowMinutes) return largeWindowMinutes;
+  if (current > 15) return 15;
+  if (current > minWindowMinutes) return minWindowMinutes;
+  return null;
+}
+
 function buildRequestId(symbol, dayIso, kind, partIndex = 0) {
   return `${jobId(symbol, dayIso)}__${kind}__${String(Math.max(0, Math.trunc(partIndex || 0))).padStart(4, '0')}`;
 }
@@ -195,15 +276,6 @@ function getRequestStatePath(runRoot, requestId) {
 
 function getSessionWindowCachePath(runRoot, dayIso) {
   return path.join(getStatePaths(runRoot).sessionCacheRoot, `${String(dayIso).trim()}.json`);
-}
-
-function getRequestStatePathForParts(runRoot, {
-  symbol,
-  dayIso,
-  kind,
-  partIndex = 0,
-}) {
-  return getRequestStatePath(runRoot, buildRequestId(symbol, dayIso, kind, partIndex));
 }
 
 function getTaskLockPath(runRoot, symbol, dayIso, stageName) {
@@ -831,6 +903,188 @@ function mergePlannedRequestState(existing, planned, stageState) {
   };
 }
 
+function clearRequestClaim(requestState) {
+  requestState.claimToken = null;
+  requestState.claimedBy = null;
+  requestState.claimedPid = null;
+  requestState.claimedAt = null;
+}
+
+function markRequestSuperseded(requestState, meta = {}) {
+  requestState.status = 'complete';
+  requestState.completedAt = nowIso();
+  requestState.updatedAt = requestState.completedAt;
+  clearRequestClaim(requestState);
+  requestState.error = null;
+  requestState.rowCount = Number(requestState.rowCount || 0);
+  requestState.meta = {
+    ...(requestState.meta || {}),
+    ...meta,
+    superseded: true,
+  };
+  return requestState;
+}
+
+function removeRequestOutputs(requestState) {
+  if (requestState?.outputPath) {
+    fs.rmSync(requestState.outputPath, { recursive: true, force: true });
+  }
+  if (requestState?.secondaryOutputPath) {
+    fs.rmSync(requestState.secondaryOutputPath, { recursive: true, force: true });
+  }
+}
+
+function buildAdaptiveQuoteChildPartIndex(parentPartIndex, childIndex) {
+  const normalizedParent = Math.max(0, Math.trunc(Number(parentPartIndex) || 0));
+  const normalizedChild = Math.max(0, Math.trunc(Number(childIndex) || 0));
+  return 10000 + (normalizedParent * 100) + normalizedChild;
+}
+
+function createAdaptiveQuoteChildRequests(parentRequest, stageState, env = process.env) {
+  if (
+    parentRequest.kind !== REQUEST_KIND_QUOTE
+    && parentRequest.kind !== REQUEST_KIND_QUOTE_FETCH
+  ) {
+    return [];
+  }
+  const currentWindowMinutes = estimateWindowMinutes(parentRequest.window || {});
+  const childWindowMinutes = chooseAdaptiveQuoteWindowMinutes(currentWindowMinutes, env);
+  if (!childWindowMinutes || childWindowMinutes >= currentWindowMinutes) return [];
+  const childWindows = splitTimeWindow(parentRequest.window || {}, childWindowMinutes);
+  if (childWindows.length <= 1) return [];
+  const childRequests = [];
+  const inheritedMeta = { ...(parentRequest.meta || {}) };
+  delete inheritedMeta.lastFailureAt;
+  delete inheritedMeta.lastFailureError;
+  delete inheritedMeta.lastSuccessAt;
+  delete inheritedMeta.adaptiveSplitChildren;
+  delete inheritedMeta.superseded;
+  childWindows.forEach((window, childIndex) => {
+    const partIndex = buildAdaptiveQuoteChildPartIndex(parentRequest.partIndex, childIndex);
+    if (parentRequest.kind === REQUEST_KIND_QUOTE) {
+      childRequests.push(buildInitialRequestState({
+        runId: parentRequest.runId,
+        runRoot: parentRequest.runRoot,
+        job: parentRequest,
+        kind: REQUEST_KIND_QUOTE,
+        partIndex,
+        window,
+        partitionDir: parentRequest.partitionDir,
+        outputPath: getPartitionPartPath(parentRequest.partitionDir, partIndex),
+        schedulerPriority: Math.max(0, Math.trunc(Number(parentRequest.schedulerPriority || 0))),
+        estimatedCost: estimateWindowMinutes(window),
+        meta: {
+          ...inheritedMeta,
+          adaptiveSplitParentRequestId: parentRequest.requestId,
+          adaptiveSplitSourceWindowMinutes: currentWindowMinutes,
+          adaptiveSplitWindowMinutes: childWindowMinutes,
+          adaptiveSplitDepth: Number(parentRequest?.meta?.adaptiveSplitDepth || 0) + 1,
+        },
+      }));
+      return;
+    }
+    const fetchRequest = buildInitialRequestState({
+      runId: parentRequest.runId,
+      runRoot: parentRequest.runRoot,
+      job: parentRequest,
+      kind: REQUEST_KIND_QUOTE_FETCH,
+      partIndex,
+      window,
+      partitionDir: parentRequest.partitionDir,
+      outputPath: getQuoteSpoolPath(parentRequest.runRoot, parentRequest.symbol, parentRequest.dayIso, partIndex),
+      schedulerPriority: Math.max(0, Math.trunc(Number(parentRequest.schedulerPriority || 0))),
+      estimatedCost: estimateWindowMinutes(window),
+      meta: {
+        ...inheritedMeta,
+        adaptiveSplitParentRequestId: parentRequest.requestId,
+        adaptiveSplitSourceWindowMinutes: currentWindowMinutes,
+        adaptiveSplitWindowMinutes: childWindowMinutes,
+        adaptiveSplitDepth: Number(parentRequest?.meta?.adaptiveSplitDepth || 0) + 1,
+      },
+    });
+    childRequests.push(fetchRequest);
+    childRequests.push(buildInitialRequestState({
+      runId: parentRequest.runId,
+      runRoot: parentRequest.runRoot,
+      job: parentRequest,
+      kind: REQUEST_KIND_QUOTE_PARSE,
+      partIndex,
+      window,
+      partitionDir: getQuotePartitionDir(parentRequest.runRoot, parentRequest.symbol, parentRequest.dayIso),
+      outputPath: getPartitionPartPath(getQuotePartitionDir(parentRequest.runRoot, parentRequest.symbol, parentRequest.dayIso), partIndex),
+      schedulerPriority: Math.max(0, Math.trunc(Number(parentRequest.schedulerPriority || 0))),
+      estimatedCost: estimateWindowMinutes(window),
+      meta: {
+        adaptiveSplitParentRequestId: parentRequest.requestId,
+        adaptiveSplitSourceWindowMinutes: currentWindowMinutes,
+        adaptiveSplitWindowMinutes: childWindowMinutes,
+        adaptiveSplitDepth: Number(parentRequest?.meta?.adaptiveSplitDepth || 0) + 1,
+        sourceRequestId: fetchRequest.requestId,
+        sourcePath: fetchRequest.outputPath,
+      },
+    }));
+  });
+  return childRequests;
+}
+
+function maybeSubdivideAdaptiveQuoteRequest(runRoot, requestState, stageState, env = process.env) {
+  if (
+    requestState.kind !== REQUEST_KIND_QUOTE
+    && requestState.kind !== REQUEST_KIND_QUOTE_FETCH
+  ) {
+    return { created: 0, childRequestIds: [] };
+  }
+  const failureMessage = String(
+    requestState.error
+    || requestState?.meta?.lastFailureError
+    || ''
+  );
+  if (!isRetryableThetaMessage(failureMessage)) {
+    return { created: 0, childRequestIds: [] };
+  }
+  const childRequests = createAdaptiveQuoteChildRequests(requestState, stageState, env);
+  if (!childRequests.length) return { created: 0, childRequestIds: [] };
+
+  const childRequestIds = [];
+  for (const child of childRequests) {
+    const childPath = getRequestStatePath(runRoot, child.requestId);
+    const existingChild = readJsonFile(childPath);
+    const merged = mergePlannedRequestState(existingChild, child, stageState);
+    writeJsonAtomic(childPath, merged);
+    childRequestIds.push(child.requestId);
+  }
+
+  removeRequestOutputs(requestState);
+  markRequestSuperseded(requestState, {
+    adaptiveSplit: true,
+    adaptiveSplitChildren: childRequestIds,
+    adaptiveSplitSourceWindow: requestState.window,
+  });
+  writeJsonAtomic(getRequestStatePath(runRoot, requestState.requestId), requestState);
+
+  if (requestState.kind === REQUEST_KIND_QUOTE_FETCH) {
+    const parentParsePath = getRequestStatePath(
+      runRoot,
+      buildRequestId(requestState.symbol, requestState.dayIso, REQUEST_KIND_QUOTE_PARSE, requestState.partIndex),
+    );
+    const parentParseState = readJsonFile(parentParsePath);
+    if (parentParseState && parentParseState.status !== 'complete') {
+      removeRequestOutputs(parentParseState);
+      markRequestSuperseded(parentParseState, {
+        adaptiveSplit: true,
+        adaptiveSplitChildren: childRequestIds.filter((requestId) => requestId.includes('__quote_parse__')),
+        adaptiveSplitParentRequestId: requestState.requestId,
+      });
+      writeJsonAtomic(parentParsePath, parentParseState);
+    }
+  }
+
+  return {
+    created: childRequestIds.length,
+    childRequestIds,
+  };
+}
+
 async function loadSessionWindowForDay(sessionCache, dayIso, env = process.env, {
   runRoot = null,
 } = {}) {
@@ -859,11 +1113,6 @@ function listRequestStatesForJob(runRoot, targetJobId) {
     .filter((filePath) => path.basename(filePath).startsWith(`${targetJobId}__`))
     .map((filePath) => ({ filePath, state: readJsonFile(filePath) }))
     .filter((entry) => entry.state);
-}
-
-function getRequestEntriesForJobKind(runRoot, targetJobId, kind) {
-  return listRequestStatesForJob(runRoot, targetJobId)
-    .filter((entry) => entry.state.kind === kind);
 }
 
 async function ensureStockRequestForJobState(state) {
@@ -1228,19 +1477,20 @@ function buildDownloadSchedulerSnapshot(runRoot, jobStates, requestStates, {
   const cooldown = readThetaCooldownState(runRoot);
   const nowMs = Date.now();
   const thetaRequestStates = requestStates.filter((request) => isThetaDownloadRequestKind(request.kind));
-  const recent429Count = thetaRequestStates.filter((request) => {
+  const thetaNonStockRequestStates = thetaRequestStates.filter((request) => request.kind !== REQUEST_KIND_STOCK);
+  const recent429Count = thetaNonStockRequestStates.filter((request) => {
     const failureAt = Date.parse(request?.meta?.lastFailureAt || '');
     return Number.isFinite(failureAt)
       && (nowMs - failureAt) <= THETA_RETRY_WINDOW_MS
       && /thetadata_request_failed:429/.test(String(request?.meta?.lastFailureError || ''));
   }).length;
-  const recentRetryCount = thetaRequestStates.filter((request) => {
+  const recentRetryCount = thetaNonStockRequestStates.filter((request) => {
     const failureAt = Date.parse(request?.meta?.lastFailureAt || '');
     return Number.isFinite(failureAt)
       && (nowMs - failureAt) <= THETA_RETRY_WINDOW_MS
       && isRetryableThetaMessage(request?.meta?.lastFailureError || '');
   }).length;
-  const burstRetryCount = thetaRequestStates.filter((request) => {
+  const burstRetryCount = thetaNonStockRequestStates.filter((request) => {
     const failureAt = Date.parse(request?.meta?.lastFailureAt || '');
     return Number.isFinite(failureAt)
       && (nowMs - failureAt) <= THETA_RETRY_WINDOW_MS
@@ -1253,10 +1503,13 @@ function buildDownloadSchedulerSnapshot(runRoot, jobStates, requestStates, {
   runningRequests.forEach((request) => {
     runningByJob.set(request.fairnessKey, Number(runningByJob.get(request.fairnessKey) || 0) + 1);
   });
+  const runningStockCount = runningRequests.filter((request) => request.kind === REQUEST_KIND_STOCK).length;
   const readyRequests = thetaRequestStates.filter((request) => {
     if (request.status === 'complete' || request.status === 'running') return false;
     return Number(request.attempts || 0) < maxAttempts;
   });
+  const readyNonStockCount = readyRequests.filter((request) => request.kind !== REQUEST_KIND_STOCK).length;
+  const stockRequestCap = readyNonStockCount > 0 ? 1 : 2;
   const readyDistinctJobs = new Set(readyRequests.map((request) => request.fairnessKey));
   const burstAllowed = readyDistinctJobs.size < activeTarget;
   const computeReadyCount = jobStates.reduce((count, state) => {
@@ -1265,11 +1518,20 @@ function buildDownloadSchedulerSnapshot(runRoot, jobStates, requestStates, {
   const requestMapByJob = buildRequestMapByJob(jobStates);
   const claimableRequests = [];
   let fairnessBlocked = 0;
+  let stockBlocked = 0;
   for (const requestState of readyRequests) {
     const runningForJob = Number(runningByJob.get(requestState.fairnessKey) || 0);
     const allowedLimit = burstAllowed ? perJobBurstLimit : perJobLimit;
     if (runningForJob >= allowedLimit) {
       fairnessBlocked += 1;
+      continue;
+    }
+    if (
+      requestState.kind === REQUEST_KIND_STOCK
+      && readyNonStockCount > 0
+      && runningStockCount >= stockRequestCap
+    ) {
+      stockBlocked += 1;
       continue;
     }
     const jobState = requestMapByJob.get(requestState.jobId) || null;
@@ -1376,11 +1638,12 @@ function buildDownloadSchedulerSnapshot(runRoot, jobStates, requestStates, {
     runningRequests,
     claimableRequests,
     fairnessBlocked,
+    stockBlocked,
     computeReadyCount,
   };
 }
 
-async function summarizeRequestControlledStage(state, stageName, requestEntries, env = process.env) {
+async function summarizeRequestControlledStage(state, stageName, requestEntries) {
   const stage = state.stages[stageName];
   const requests = requestEntries.map((entry) => entry.state);
   if (requests.length === 0) {
@@ -1535,7 +1798,6 @@ async function summarizeRequestControlledStage(state, stageName, requestEntries,
 
 async function syncRequestControlledStagesForJob(runRoot, symbol, dayIso, {
   maxAttempts = normalizeStageMaxAttempts(process.env),
-  env = process.env,
 } = {}) {
   return withJobStateLock(runRoot, symbol, dayIso, async () => {
     const statePath = getJobStatePath(runRoot, symbol, dayIso);
@@ -1547,7 +1809,6 @@ async function syncRequestControlledStagesForJob(runRoot, symbol, dayIso, {
         state,
         'stock',
         requestEntries.filter((entry) => entry.state.kind === REQUEST_KIND_STOCK),
-        env,
       );
     }
     if (state.stages.trades.controlMode === 'requests') {
@@ -1555,7 +1816,6 @@ async function syncRequestControlledStagesForJob(runRoot, symbol, dayIso, {
         state,
         'trades',
         requestEntries.filter((entry) => entry.state.kind === REQUEST_KIND_TRADES),
-        env,
       );
     }
     if (state.stages.quotes.controlMode === 'requests') {
@@ -1567,7 +1827,6 @@ async function syncRequestControlledStagesForJob(runRoot, symbol, dayIso, {
           || entry.state.kind === REQUEST_KIND_QUOTE_FETCH
           || entry.state.kind === REQUEST_KIND_QUOTE_PARSE
         )),
-        env,
       );
     }
     if (state.greekMode === 'raw' && state.stages.greeks.controlMode === 'requests') {
@@ -1575,7 +1834,6 @@ async function syncRequestControlledStagesForJob(runRoot, symbol, dayIso, {
         state,
         'greeks',
         requestEntries.filter((entry) => entry.state.kind === REQUEST_KIND_RAW_GREEKS),
-        env,
       );
     } else if (state.greekMode === 'calculated') {
       const candidate = getCandidateForRole(state, COMPUTE_ROLE, maxAttempts);
@@ -1917,6 +2175,28 @@ async function failDownloadRequest(claim, error, {
 } = {}) {
   const current = readJsonFile(claim.requestPath);
   if (!current?.claimToken || current.claimToken !== claim.token) return null;
+  const adaptiveSplitResult = maybeSubdivideAdaptiveQuoteRequest(
+    current.runRoot,
+    {
+      ...current,
+      error: String(error?.stack || error?.message || error),
+      elapsedMs: Math.max(0, Math.trunc(Number(elapsedMs || 0))),
+      meta: {
+        ...(current.meta || {}),
+        ...meta,
+        lastFailureAt: nowIso(),
+        lastFailureError: String(error?.stack || error?.message || error),
+      },
+    },
+    null,
+    env,
+  );
+  if (adaptiveSplitResult.created > 0) {
+    return syncRequestControlledStagesForJob(current.runRoot, current.symbol, current.dayIso, {
+      maxAttempts: normalizeStageMaxAttempts(env),
+      env,
+    });
+  }
   current.status = 'failed';
   current.completedAt = null;
   current.updatedAt = nowIso();
@@ -1937,6 +2217,46 @@ async function failDownloadRequest(claim, error, {
     maxAttempts: normalizeStageMaxAttempts(env),
     env,
   });
+}
+
+async function subdivideAdaptiveQuoteRequestsForRun(runRoot, {
+  env = process.env,
+  onlyFailedOrRetried = true,
+} = {}) {
+  let subdividedRequests = 0;
+  let childRequests = 0;
+  for (const requestPath of listRequestStateFiles(runRoot)) {
+    const requestState = readJsonFile(requestPath);
+    if (!requestState) continue;
+    if (reconcileStaleRunningRequestState(requestState)) {
+      writeJsonAtomic(requestPath, requestState);
+    }
+    if (
+      requestState.kind !== REQUEST_KIND_QUOTE
+      && requestState.kind !== REQUEST_KIND_QUOTE_FETCH
+    ) {
+      continue;
+    }
+    if (requestState.status === 'complete') continue;
+    if (onlyFailedOrRetried) {
+      const attempts = Number(requestState.attempts || 0);
+      const lastFailureError = String(requestState?.meta?.lastFailureError || requestState.error || '');
+      if (attempts < 1 && !isRetryableThetaMessage(lastFailureError)) continue;
+    }
+    const result = maybeSubdivideAdaptiveQuoteRequest(runRoot, requestState, null, env);
+    if (result.created > 0) {
+      subdividedRequests += 1;
+      childRequests += result.created;
+      await syncRequestControlledStagesForJob(runRoot, requestState.symbol, requestState.dayIso, {
+        maxAttempts: normalizeStageMaxAttempts(env),
+        env,
+      });
+    }
+  }
+  return {
+    subdividedRequests,
+    childRequests,
+  };
 }
 
 function collectRunState(runRoot, {
@@ -2106,6 +2426,7 @@ module.exports = {
   requestRunStop,
   roleShouldContinue,
   sleep,
+  subdivideAdaptiveQuoteRequestsForRun,
   waitForJobStatesReady,
   writeJobsReady,
   writeJsonAtomic,

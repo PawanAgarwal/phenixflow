@@ -15,11 +15,9 @@ const {
   downloadStockToParquet,
   downloadTradeRequestToParquet,
   ensureRunLayout,
-  getQuotePartitionDir,
   loadStockPartition,
   parseQuoteRequestSpoolToParquet,
   parseIndexGreeksSymbols,
-  probeQuotePartition,
   resolveRunRoot,
   writeJsonFile,
 } = require('./common');
@@ -43,6 +41,8 @@ const {
   sleep,
   waitForJobStatesReady,
   writeJobsReady,
+  listJobStateFiles,
+  listRequestStateFiles,
 } = require('./task-state');
 
 function parseCsv(rawValue) {
@@ -211,6 +211,13 @@ function manifestJobs(manifest) {
     });
   });
   return jobs;
+}
+
+function parseBooleanLike(value, fallback = false) {
+  if (value === undefined || value === null || value === '') return fallback;
+  const normalized = String(value).trim().toLowerCase();
+  if (!normalized) return fallback;
+  return normalized === '1' || normalized === 'true' || normalized === 'yes' || normalized === 'on';
 }
 
 function buildThetaDownloadSnapshot() {
@@ -406,7 +413,7 @@ async function runClaimedTask(claim, { runId, runRoot }) {
     throw new Error(`unsupported_request_kind:${request.kind}`);
   }
 
-  const { symbol, dayIso, greekMode, stages } = claim.job;
+  const { symbol, dayIso, greekMode } = claim.job;
   if (claim.stageName === 'stock') {
     const startedAtMs = Date.now();
     const result = await downloadStockToParquet({
@@ -499,23 +506,32 @@ async function main() {
   const jobs = manifestJobs(manifest);
   const shouldInitializeStates = role === DOWNLOAD_ROLE && workerIndex === 0;
   if (shouldInitializeStates) {
-    await ensureJobStates({
-      runId,
-      runRoot,
-      jobs,
-      indexGreeksSymbols,
-    });
-    await ensureRequestStates({
-      runRoot,
-      jobs,
-      env: process.env,
-    });
+    const fastResumeSkipInit = parseBooleanLike(process.env.PARQUET_FAST_RESUME_SKIP_INIT, true);
+    const existingJobStateCount = listJobStateFiles(runRoot).length;
+    const existingRequestStateCount = listRequestStateFiles(runRoot).length;
+    const canFastResumeExistingState = fastResumeSkipInit
+      && existingJobStateCount >= jobs.length
+      && existingRequestStateCount > 0;
+    if (!canFastResumeExistingState) {
+      await ensureJobStates({
+        runId,
+        runRoot,
+        jobs,
+        indexGreeksSymbols,
+      });
+      await ensureRequestStates({
+        runRoot,
+        jobs,
+        env: process.env,
+      });
+    }
     const pruned = pruneCompleteRequestStatesForCompletedStages(runRoot);
     writeJobsReady(runRoot, {
       jobCount: jobs.length,
       initializedBy: workerId,
       readyToken: String(process.env.PARQUET_READY_TOKEN || '').trim() || null,
       prunedCompletedRequests: pruned.removed,
+      fastResumeSkippedInit: canFastResumeExistingState,
     });
   } else {
     await waitForJobStatesReady(runRoot, {

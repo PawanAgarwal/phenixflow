@@ -27,6 +27,7 @@
     "clickhouse:import:sqlite": "bash infra/clickhouse/scripts/import-from-sqlite.sh",
     "parquet:greeks:backfill": "node apps/flow-api/scripts/parquet/backfill-parquet-greeks.js",
     "parquet:greeks:jan2025-week": "bash apps/flow-api/scripts/parquet/run-jan2025-week-benchmark.sh",
+    "parquet:massive:options:1m": "node apps/flow-api/scripts/parquet/download-massive-options-1m.js",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",

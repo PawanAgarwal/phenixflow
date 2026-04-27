@@ -103,7 +103,7 @@ FAILED_JOBS=0
 if [ -n "$STATUS_JSON" ]; then
   STATE="$(printf '%s' "$STATUS_JSON" | node -e 'const fs=require("node:fs"); const data=JSON.parse(fs.readFileSync(0,"utf8")); process.stdout.write(String(data.state || "unknown"));')"
   TOTAL_JOBS="$(printf '%s' "$STATUS_JSON" | node -e 'const fs=require("node:fs"); const data=JSON.parse(fs.readFileSync(0,"utf8")); process.stdout.write(String(Number(data.totalJobs || 0)));')"
-  COMPLETED_JOBS="$(printf '%s' "$STATUS_JSON" | node -e 'const fs=require("node:fs"); const data=JSON.parse(fs.readFileSync(0,"utf8")); process.stdout.write(String(Number(data.completedJobs || 0)));')"
+  COMPLETED_JOBS="$(printf '%s' "$STATUS_JSON" | node -e 'const fs=require("node:fs"); const data=JSON.parse(fs.readFileSync(0,"utf8")); process.stdout.write(String(Number(data.completeJobs ?? data.completedJobs ?? 0)));')"
   FAILED_JOBS="$(printf '%s' "$STATUS_JSON" | node -e 'const fs=require("node:fs"); const data=JSON.parse(fs.readFileSync(0,"utf8")); process.stdout.write(String(Number(data.failedJobs || 0)));')"
 fi
 
