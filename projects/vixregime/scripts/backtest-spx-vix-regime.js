@@ -3,6 +3,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const {
+  queryRowsSync,
+  resolveFlowReadBackend,
+  buildArtifactPath,
+} = require('../../packages/clickhouse-core');
+const {
   DEFAULT_REQUIRED_SYMBOLS,
   readThresholdConfig,
   computeCoverageReport,
@@ -18,7 +23,6 @@ const {
   loadEventCalendar,
   annotateDailyEventFeatures,
 } = require('../src/event-days');
-const { loadMassiveMinuteRows, resolveMassiveDatasetRoots } = require('../src/massive-data');
 
 const START_DATE = String(process.env.START_DATE || '2025-01-02').trim();
 const END_DATE = String(process.env.END_DATE || new Date().toISOString().slice(0, 10)).trim();
@@ -28,7 +32,7 @@ const REQUIRED_SYMBOLS = (process.env.REQUIRED_SYMBOLS || DEFAULT_REQUIRED_SYMBO
   .filter(Boolean);
 const OUTPUT_PATH = path.resolve(
   process.env.OUTPUT_PATH
-    || path.join(__dirname, '..', 'artifacts', 'reports', `vixregime-backtest-${START_DATE}-${END_DATE}.json`),
+    || path.join(process.cwd(), 'vixregime', 'artifacts', 'reports', `vixregime-backtest-${START_DATE}-${END_DATE}.json`),
 );
 const THRESHOLD_PATH = path.resolve(
   process.env.THRESHOLD_PATH || path.join(__dirname, '..', 'config', 'vix-regime-thresholds.json'),
@@ -43,15 +47,37 @@ const EARNINGS_CALENDAR_PATH = path.resolve(
   process.env.EARNINGS_CALENDAR_PATH || path.join(__dirname, '..', 'config', 'major-earnings-days.json'),
 );
 
-async function run() {
+function buildDatasetQuery(symbols = []) {
+  const escaped = symbols.map((symbol) => `'${symbol.replace(/'/g, "''")}'`).join(', ');
+  return `
+    SELECT
+      symbol,
+      toString(trade_date_utc) AS tradeDateUtc,
+      toString(minute_bucket_utc) AS minuteUtc,
+      open,
+      high,
+      low,
+      close,
+      volume
+    FROM options.stock_ohlc_minute_raw
+    WHERE symbol IN (${escaped})
+      AND trade_date_utc >= toDate({startDate:String})
+      AND trade_date_utc <= toDate({endDate:String})
+    ORDER BY symbol ASC, minute_bucket_utc ASC
+  `;
+}
+
+function run() {
+  const backend = resolveFlowReadBackend(process.env);
+  if (backend !== 'clickhouse') {
+    throw new Error(`clickhouse_backend_required:${backend}`);
+  }
+
   const thresholdConfig = readThresholdConfig(THRESHOLD_PATH);
-  const rawRows = await loadMassiveMinuteRows({
+  const rawRows = queryRowsSync(buildDatasetQuery(REQUIRED_SYMBOLS), {
     startDate: START_DATE,
     endDate: END_DATE,
-    requiredSymbols: REQUIRED_SYMBOLS,
-    env: process.env,
-  });
-  const dataSource = resolveMassiveDatasetRoots(process.env);
+  }, process.env);
 
   const coverage = computeCoverageReport(rawRows, { requiredSymbols: REQUIRED_SYMBOLS });
   if (!coverage.datasetReady) {
@@ -90,10 +116,7 @@ async function run() {
 
   const output = {
     generatedAt: new Date().toISOString(),
-    dataSource: {
-      type: 'massive_csv',
-      ...dataSource,
-    },
+    artifactPath: buildArtifactPath(process.env),
     startDate: START_DATE,
     endDate: END_DATE,
     thresholdPath: THRESHOLD_PATH,
@@ -134,7 +157,4 @@ async function run() {
   }, null, 2));
 }
 
-run().catch((error) => {
-  console.error(error.stack || error.message || String(error));
-  process.exitCode = 1;
-});
+run();
