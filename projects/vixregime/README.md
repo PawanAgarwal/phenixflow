@@ -7,7 +7,7 @@ This workspace contains the SPX/VIX-family regime classifier and ETF allocation 
 - Validates coverage for the required symbols:
   - `SPX`, `SPY`, `SPXL`, `SPXS`
   - `VIX`, `VIX1D`, `VIX3M`, `VIX9D`
-- Builds day-level and causal minute-level features from `options.stock_ohlc_minute_raw`
+- Builds day-level and causal minute-level features directly from Massive minute CSV files
 - Classifies each bar into:
   - `Calm`
   - `Normal`
@@ -32,6 +32,7 @@ This workspace contains the SPX/VIX-family regime classifier and ETF allocation 
 From repo root:
 
 ```bash
+export MASSIVE_DATA_ROOT=/Volumes/SEC4TB/massive-data
 node projects/vixregime/scripts/check-required-data.js
 node projects/vixregime/scripts/backtest-spx-vix-regime.js
 ```
@@ -75,3 +76,10 @@ Latest successful run on the current dataset produced:
   - max drawdown `-13.51%`
 
 These numbers are baseline outputs from the current ruleset, not tuned production targets.
+
+## Data Source
+
+- Default Massive root: `/Volumes/SEC4TB/massive-data`
+- Stock minute aggregates: `massive/stock_quotes_1m`
+- Index minute aggregates: `massive/indices_1m`
+- The loader normalizes Massive index tickers like `I:VIX` to the repo symbol names used by the model.

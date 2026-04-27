@@ -177,6 +177,6 @@ Interpretation:
 
 ## Current Operational Note
 
-- The local ClickHouse dataset currently covers `2025-01-02` onward for this workflow.
-- A true `2024` month-by-month validation will require backfilling the required symbols for `2024` into `options.stock_ohlc_minute_raw`.
+- The local Massive CSV store currently covers `2025-01-02` onward for this workflow.
+- A true `2024` month-by-month validation will require extending the required Massive minute datasets to cover `2024`.
 - The stricter monthly walk-forward retrain can be used as a stress test, but the frozen fixed-window holdout model above is the currently selected model to run.
