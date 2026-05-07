@@ -1,0 +1,35 @@
+{
+  "projectName": "pym-v5-replication",
+  "dataPolicy": {
+    "provider": "Massive",
+    "allowLegacyDatabase": false,
+    "note": "Market-data reads for replication must use Massive only. Use local flat files when cached; use Massive adjusted daily REST bars for Composer-style EOD replication when credentials are available."
+  },
+  "source": {
+    "notionUrl": "https://cold-bread-d1c.notion.site/PYM-V5-report-359c3619192b80cba378d06abea05542",
+    "notionPageId": "359c3619-192b-80cb-a378-d06abea05542",
+    "notionLinkedPageIds": ["359c3619-192b-8062-8b16-d90f271e71b0"],
+    "composerFactsheetUrl": "https://app.composer.trade/symphony/XPGix2infTwwWMORgqmV/factsheet",
+    "composerApiBase": "https://backtest-api.composer.trade",
+    "composerSymphonyId": "XPGix2infTwwWMORgqmV"
+  },
+  "roots": {
+    "historical": "/Volumes/SEC4TB/massive-data/massive",
+    "liveParquet": "/Volumes/SEC4TB/massive-data/massive-live/parquet/massive",
+    "calendar": "/Volumes/SEC4TB/massive-data/calendar/us-equities-options-calendar.json"
+  },
+  "datasets": {
+    "stockBars": "stock_quotes_1m"
+  },
+  "windows": {
+    "buildStartDate": "2025-01-02",
+    "backtestStartDate": "2025-01-02",
+    "endDate": "auto"
+  },
+  "execution": {
+    "initialCapital": 10000,
+    "timing": "next_close",
+    "transactionCostBps": 1,
+    "slippageBps": 1
+  }
+}
