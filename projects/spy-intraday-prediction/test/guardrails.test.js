@@ -1,0 +1,34 @@
+const fs = require('node:fs');
+const path = require('node:path');
+
+const projectRoot = path.resolve(__dirname, '..');
+const codeRoots = ['src', 'scripts', 'python'];
+
+function collectFiles(dir) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  return entries.flatMap((entry) => {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) return collectFiles(fullPath);
+    return entry.isFile() && (fullPath.endsWith('.js') || fullPath.endsWith('.py')) ? [fullPath] : [];
+  });
+}
+
+describe('Massive-only project guardrails', () => {
+  it('does not import forbidden data-source helpers from project code', () => {
+    const forbiddenProvider = 'click' + 'house';
+    const importPattern = new RegExp(
+      `(require\\([^)]*${forbiddenProvider}|from\\s+['"][^'"]*${forbiddenProvider}|import\\([^)]*${forbiddenProvider})`,
+      'i',
+    );
+    const files = codeRoots.flatMap((root) => collectFiles(path.join(projectRoot, root)));
+    const offenders = files.filter((file) => importPattern.test(fs.readFileSync(file, 'utf8')));
+    expect(offenders).toEqual([]);
+  });
+
+  it('does not embed forbidden schema table references in project code strings', () => {
+    const schemaPattern = /['"`][^'"`]*options\.[^'"`]*['"`]/i;
+    const files = codeRoots.flatMap((root) => collectFiles(path.join(projectRoot, root)));
+    const offenders = files.filter((file) => schemaPattern.test(fs.readFileSync(file, 'utf8')));
+    expect(offenders).toEqual([]);
+  });
+});

@@ -1,0 +1,117 @@
+{
+  "projectName": "spy-intraday-prediction",
+  "dataPolicy": {
+    "provider": "Massive",
+    "allowLegacyDatabase": false,
+    "historicalCutoffDate": "2026-04-27",
+    "intradayProvisionalDate": "2026-04-28"
+  },
+  "roots": {
+    "historical": "/Volumes/SEC4TB/massive-data/massive",
+    "liveParquet": "/Volumes/SEC4TB/massive-data/massive-live/parquet/massive",
+    "calendar": "/Volumes/SEC4TB/massive-data/calendar/us-equities-options-calendar.json"
+  },
+  "datasets": {
+    "stockBars": "stock_quotes_1m",
+    "indexBars": "indices_1m",
+    "optionBars": "option_quotes_1m",
+    "optionTrades": "option_trades_all"
+  },
+  "target": "SPY",
+  "stockSymbols": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "DIA",
+    "XLK",
+    "XLF",
+    "XLE",
+    "XLV",
+    "XLY",
+    "XLP",
+    "XLI",
+    "XLU",
+    "XLB",
+    "XLRE",
+    "XLC",
+    "TLT",
+    "HYG",
+    "LQD",
+    "GLD",
+    "SLV",
+    "USO",
+    "SMH",
+    "SOXX",
+    "ARKK",
+    "NVDA",
+    "TSLA",
+    "GOOGL",
+    "MSFT",
+    "META",
+    "AAPL",
+    "AMZN"
+  ],
+  "mag7Symbols": ["NVDA", "TSLA", "GOOGL", "MSFT", "META", "AAPL", "AMZN"],
+  "marketEtfSymbols": ["QQQ", "IWM", "DIA"],
+  "sectorEtfSymbols": ["XLK", "XLF", "XLE", "XLV", "XLY", "XLP", "XLI", "XLU", "XLB", "XLRE", "XLC"],
+  "riskProxySymbols": ["TLT", "HYG", "LQD", "GLD", "SLV", "USO", "SMH", "SOXX", "ARKK"],
+  "indexSymbols": ["I:SPX", "I:VIX", "I:VIX1D", "I:VIX9D", "I:VIX3M", "I:VIX1Y", "I:VVIX"],
+  "optionRoots": {
+    "spy": ["SPY"],
+    "spx": ["SPX", "SPXW"],
+    "vix": ["VIX", "VIXW"],
+    "mag7": ["NVDA", "TSLA", "GOOGL", "MSFT", "META", "AAPL", "AMZN"]
+  },
+  "session": {
+    "timeZone": "America/New_York",
+    "regularOpenMinuteEt": 570,
+    "regularCloseMinuteEt": 960
+  },
+  "windows": {
+    "train": { "name": "train_2026_01", "startDate": "2026-01-02", "endDate": "2026-01-30" },
+    "sensitivityTrain": { "name": "train_2025_plus_2026_01", "startDate": "2025-01-02", "endDate": "2026-01-30" },
+    "tests": [
+      { "name": "test_2026_02", "startDate": "2026-02-02", "endDate": "2026-02-27" },
+      { "name": "test_2026_03", "startDate": "2026-03-02", "endDate": "2026-03-31" },
+      { "name": "test_2026_04", "startDate": "2026-04-01", "endDate": "2026-04-27" }
+    ],
+    "intradayProvisional": { "name": "paper_2026_04_28", "startDate": "2026-04-28", "endDate": "2026-04-28" }
+  },
+  "horizons": [
+    { "name": "next_1m", "minutes": 1 },
+    { "name": "next_5m", "minutes": 5 },
+    { "name": "next_60m", "minutes": 60 },
+    { "name": "eod_close", "minutes": "eod" }
+  ],
+  "research": {
+    "officialTrainName": "jan_only",
+    "sensitivityTrainName": "history_plus_jan",
+    "evidenceRankedStrategies": [
+      "cross_sectional",
+      "eod_momentum",
+      "opening_option_flow",
+      "gamma_regime",
+      "meta_labeling",
+      "volatility_magnitude"
+    ],
+    "lastThirtyEntryMinuteEt": 930,
+    "openingWindowMinutes": 30,
+    "preCloseWindowStartMinuteEt": 900,
+    "tripleBarrier": {
+      "horizons": [5, 30, 60],
+      "volatilityMultiple": 1.25,
+      "minimumBarrierBps": 2.0,
+      "volatilityLookbackMinutes": 30
+    },
+    "promisingThresholds": {
+      "minBalancedAccuracyLift": 0.02,
+      "minPositiveHoldoutMonths": 2,
+      "minHighConfidenceBucketCount": 25
+    }
+  },
+  "execution": {
+    "transactionCostBps": 1.0,
+    "confidenceThreshold": 0.52,
+    "slippageBps": 1.0
+  }
+}

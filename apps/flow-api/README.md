@@ -2,7 +2,11 @@
 
 Primary options-flow backend app for Project phenixflow.
 
-This app owns the live API, ingestion worker, historical enrichment pipeline, and most flow-specific research/backfill scripts.
+This app owns the live API, ingestion worker, historical enrichment pipeline, and flow-specific
+operational scripts.
+
+For new market and strategy analysis, use the Massive-only project under
+`projects/spy-intraday-prediction` unless the user explicitly asks for live API maintenance.
 
 ## Location
 
@@ -25,9 +29,7 @@ npm run ingest:start
 
 ## Shared Infrastructure
 
-- Shared ThetaData HTTP helpers live in `packages/theta-client`.
-- Shared ClickHouse helpers live in `packages/clickhouse-core`.
-- ClickHouse machine/config/bootstrap scripts live in `infra/clickhouse`.
+- Shared ThetaData HTTP helpers live in `packages/theta-client` for legacy app flows.
 
 ## Getting Started
 

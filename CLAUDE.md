@@ -1,6 +1,14 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with code in this repository.
+
+## Current Policy
+
+All new market and strategy analysis uses Massive data only. Treat the root `README.md`,
+`AGENTS.md`, and `projects/spy-intraday-prediction/PLAN.md` as the active guidance.
+
+Do not route new analysis through legacy database backfills, `options.*` table names, or
+Theta-derived historical tables.
 
 ## Commands
 
@@ -10,108 +18,74 @@ npm test                    # Run Vitest tests
 npm run test:watch          # Watch mode
 npm run lint                # ESLint
 
-# Data operations
-npm run backfill:*          # Historical backfill operations
-npm run enrich:*            # Enrichment pipelines
-npm run clickhouse:*        # ClickHouse DB management (start/stop/status/schema/import)
-npm run sigscore:calibrate  # Calibrate scoring model
-npm run rules:activate      # Activate rule versions
-npm run oi:sync             # Open Interest sync
+# Massive flat files
+npm run parquet:massive:options:1m
 
-# Research / sub-projects
+# SPY intraday research
+npm run spy-intraday:coverage
+npm run spy-intraday:build-dataset
+npm run spy-intraday:research
+npm run spy-intraday:phase2
+npm run spy-intraday:validate-signals
+npm run spy-intraday:best-signal-full-history
+npm run spy-intraday:python-export
+npm run spy-intraday:python-research
+npm run spy-intraday:backtest
+
+# Other repo projects
 npm run vixregime:check
 npm run vixregime:backtest
 ```
 
 ## Monorepo Structure
 
-```
-apps/flow-api/      # Core options flow backend (Express API + scoring engine)
+```text
+apps/flow-api/                    # Core options flow backend
 packages/
-  clickhouse-core/  # Shared ClickHouse client wrapper
-  theta-client/     # Shared ThetaData HTTP client
-infra/clickhouse/   # ClickHouse install scripts, schema init, data migration
+  theta-client/                   # Shared ThetaData HTTP client for legacy app flows
 projects/
-  vixregime/        # VIX regime detection and backtesting
+  spy-intraday-prediction/        # Massive-only SPY intraday research
+  vixregime/                      # VIX regime detection and backtesting
   podcast-prediction/
   yieldmax/
-scripts/            # Root-level operational scripts
+scripts/                          # Root-level operational scripts
 ```
 
-## Architecture
+## SPY Intraday Research
 
-Phenixflow is a **deterministic, cache-first options flow backend** that computes `sigScore` (unusual options activity signal) using versioned rules and enriched market context, designed for 1–5 day swing trading signals.
+The Massive-only project predicts and backtests SPY intraday movement using local flat-file/parquet
+data. See `projects/spy-intraday-prediction/PLAN.md` for the sealed protocol, data roots, feature
+universe, validation gates, and current results.
 
-**Data flow:**
-```
-ThetaData (historical + live)
-  → option_trades (raw cache)
-  → enrichment engine (Greeks, IV, aggregates)
-  → option_trade_enriched (scored rows)
-  → REST API (/api/flow/*)
-```
+Key rules:
 
-### Key Source Files (under `apps/flow-api/`)
+- Coverage checks inspect Massive files/manifests only.
+- Feature rows must be causal: use only data at or before the prediction minute.
+- Official results train on January 2026 and test February, March, and April through `2026-04-27`.
+- Sensitivity tracks using longer history must be reported separately from official results.
+- Guardrail tests should fail if project code imports forbidden data-source helpers or embeds
+  forbidden schema table references.
+
+## Flow API
+
+The flow API remains the live backend for options-flow endpoints and scoring. Prefer project-level
+Massive data paths for new research work unless the user explicitly asks for live API maintenance.
+
+Key source files under `apps/flow-api/`:
 
 | File | Purpose |
 |------|---------|
 | `app.js` | Express route handlers |
 | `server.js` | Server entry point |
-| `historical-flow.js` | Core enrichment + scoring engine (~12k LOC) |
+| `historical-flow.js` | Historical enrichment and scoring engine |
 | `flow.js` | Query filtering, chip logic, sentiment |
 | `historical-formulas.js` | Metric computation formulas |
-| `storage/` | ClickHouse + SQLite abstraction |
-| `ingest/` | Continuous ingestion worker + checkpoint logic |
+| `ingest/` | Continuous ingestion worker and checkpoint logic |
 | `scoring/` | Scoring sub-modules |
-| `thetadata/` | ThetaData API integration |
+| `thetadata/` | ThetaData API integration for legacy app flows |
 
-### Scoring Models
+## Code Conventions
 
-Three models: `v1_baseline`, `v4_expanded`, `v5_swing`. The active production target is **v5_swing** with 14 component norms:
-
-`valueShockNorm`, `volOiNorm`, `repeatNorm`, `otmNorm`, `dteSwingNorm`, `flowImbalanceNorm`, `deltaPressureNorm`, `cpOiPressureNorm`, `ivSkewSurfaceNorm`, `ivTermSlopeNorm`, `underlyingTrendConfirmNorm`, `liquidityQualityNorm`, `sweepNorm`, `multilegPenaltyNorm`
-
-- Score range: `[0, 1]`; quality: `complete` (all metrics) or `partial` (some missing)
-- Missing components are excluded and remaining weights renormalized
-- Explainability via `sigScoreComponents` JSON on each enriched row
-
-### Primary Database Tables
-
-`option_trades`, `option_quote_minute_raw`, `stock_ohlc_minute_raw`, `option_trade_enriched`, `option_calculated_greeks_minute`, `contract_stats_intraday`, `symbol_stats_intraday`, `filter_rule_versions`, `saved_queries`, `ingest_checkpoints`
-
-Chunk status tables: `option_download_chunk_status`, `option_enrich_chunk_status`
-
-### Operational Constraints
-
-- **ThetaData concurrency**: max 4 concurrent connections
-- **Backfill**: gate-based — complete day D (download + enrich + verify) before advancing to D+1
-- **Memory**: target ≤10GB RSS, use streaming reads/writes with bounded queues
-- **Idempotency**: resume from last completed minute; delete only the resumed minute's scope
-- **Gap analysis**: distinguish `unattempted` vs `attempted_missing` (only the latter counts as failure)
-
-### API Conventions
-
-- Both `/api` and `/api/v1` paths are supported (backward compatible)
-- Timestamps: ISO-8601 UTC
-- Pagination: `limit` (default 25 for `/flow`, 100 for `/historical`, max 100/1000)
-- Comma-separated filter lists: e.g., `chips=calls,100k+`
-- SSE: `transport=sse` or `Accept: text/event-stream`
-- Filter versioning: `filterVersion=legacy|candidate`
-
-### Code Conventions
-
-- CommonJS modules (`module.exports`) throughout
-- Unused variable prefix convention: `_varName` (enforced by ESLint)
-- Tests live in `apps/flow-api/test/`
-
-### Agent Workflow
-
-See `AGENT_PROTOCOL.md` for the PM-led agent coordination contract and `AGENTS.md` for the operational backfill runbook. Task queue is tracked in `PM_QUEUE.md` (git-backed).
-
-### Documentation
-
-- `docs/PHENIX_ARCHITECTURE.md` — complete end-to-end system design
-- `docs/PHENIX_API_SPEC.md` — endpoint matrix and response schemas
-- `docs/PHENIX_PROJECT_GOALS.md` — v5_swing mission and calibration goals
-- `docs/BACKFILL_RUNTIME_PARAMETERS.md` — canonical backfill runtime settings
-- `docs/BACKFILL_OPERATIONAL_LEARNINGS.md` — failure signatures and remediation patterns
+- CommonJS modules (`module.exports`) throughout.
+- Unused variable prefix convention: `_varName` (enforced by ESLint).
+- Tests live near the relevant app or project.

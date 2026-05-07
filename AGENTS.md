@@ -1,122 +1,85 @@
 # PhenixFlow Agents Runbook
 
+## Current Source Of Truth
+- All new market and strategy analysis in this repo uses Massive data only.
+- The project-level master plan is `projects/spy-intraday-prediction/PLAN.md`.
+- Do not route new analysis through legacy database backfills, `options.*` table names, or
+  Theta-derived historical tables.
+
 ## Goal
-- Maintain complete last-30-day coverage for target symbols in ClickHouse for:
-  - option trade+quote stream (`option_trades`)
-  - option quote 1m raw (`option_quote_minute_raw`)
-  - stock price 1m raw (`stock_ohlc_minute_raw`)
-  - enriched option rows (`option_trade_enriched`)
-- Maximize throughput without OOM, while keeping retries/resume safe and idempotent.
+- Keep SPY intraday prediction research reproducible on the Massive flat-file/parquet dataset.
+- Preserve sealed historical results separately from intraday/provisional runs.
+- Maximize throughput without OOM by streaming large files and writing bounded artifacts.
+
+## Data Roots
+Use these canonical roots unless the user explicitly provides a different local path:
+
+- Historical Massive cache: `/Volumes/SEC4TB/massive-data/massive/`
+- Intraday/live Massive parquet: `/Volumes/SEC4TB/massive-data/massive-live/parquet/massive/`
+- Calendar cache: `/Volumes/SEC4TB/massive-data/calendar/us-equities-options-calendar.json`
+
+Expected Massive datasets:
+
+- `stock_quotes_1m`: SPY, market ETFs, sector ETFs, risk/factor ETFs, and Mag7 1m bars.
+- `indices_1m`: SPX/VIX-family 1m bars.
+- `option_quotes_1m`: OPRA option 1m aggregates.
+- `option_trades_all`: OPRA option trades.
 
 ## Hard Resource Guardrails
 - Agent memory budget: target <= 10 GB RSS.
-- Never run unbounded in-memory day arrays when streaming alternatives exist.
-- Prefer chunked read/write (2k-5k rows) with bounded queues and explicit backpressure.
-- Keep ClickHouse read windows bounded; split windows on oversized-string/heap signals.
+- Never load full multi-month option datasets into one unbounded in-memory array.
+- Prefer streaming reads, bounded iterators, chunked outputs, and explicit progress logging.
+- Keep runtime artifacts under the project `runtime/` and `artifacts/` directories unless the user
+  asks for a different destination.
 
-## ThetaData Connection/Concurrency Rules
-- Respect provider hard cap: max 4 concurrent connections.
-- Use centralized concurrency control; never exceed configured cap.
-- Preferred operating mode:
-  - stream historical endpoints (ndjson)
-  - process symbol-day in parallel up to safe cap
-  - reduce parallelism immediately if repeated 5xx/timeout bursts occur
-- Retries:
-  - retry only transient failures (timeouts, connection resets, 429/5xx)
-  - use exponential backoff with cap
-  - avoid aggressive short timeouts that trigger retry storms
+## Coverage Rules
+- Coverage checks must inspect Massive files/manifests only.
+- Skip weekends and market holidays explicitly using the cached exchange calendar when available.
+- Distinguish:
+  - `unattempted` dates/files,
+  - `attempted_missing` dates/files,
+  - `provider_sparse` dates/files where the provider data exists but is thin.
+- Default reporting should treat only `attempted_missing` as failure.
 
-## Download Reliability Rules
-- Resume from last completed minute for retryable stream failures.
-- On resume, delete/rewrite only the resumed minute scope to avoid duplicate rows.
-- Never redownload full day if minute-level resume point is known.
-- For large symbols (e.g. SPY/QQQ), request smaller windows (e.g. 60m) to reduce server/client stress.
-- Emit heartbeat logs while streaming (every N rows) so stalled streams are detectable.
+## Research Protocol
+- Official sealed protocol:
+  - Train: January 2026.
+  - Test: February 2026, March 2026, and April 2026 through `2026-04-27`.
+  - Treat `2026-04-28` and later intraday files as provisional unless a newer plan says otherwise.
+- Sensitivity tracks may use more history, but report them separately from official January-only
+  results.
+- All feature rows must be causal: use only data at or before the prediction minute.
+- Rank by prediction quality first, then SPY long/cash/short policy performance with costs,
+  slippage, drawdown, turnover, exposure share, and buy-and-hold comparison.
 
-## Enrichment Performance Rules
-- Enrichment must run streaming read -> compute -> streaming write.
-- Do not block on full 30-day downloads before enriching; pipeline download/enrich continuously.
-- Run enrichment workers at roughly 60% of physical cores by default; raise/lower based on:
-  - CPU underutilization
-  - memory headroom
-  - ClickHouse insert/query pressure
-- If CPU is low and memory headroom exists, scale workers up incrementally.
+## Massive Download Rules
+- Prefer existing local Massive caches over network downloads.
+- If refreshing flat files, use the Massive flat-file downloader and S3 credentials from the
+  environment.
+- Retry only transient failures such as timeouts, connection resets, 429, and 5xx responses.
+- Use exponential backoff with a cap and emit heartbeat/progress logs so stalled downloads are
+  detectable.
 
-## ClickHouse Behavior Expectations
-- ClickHouse supports parallel reads/writes; use this with bounded batches.
-- Keep inserts idempotent with deterministic keys and scoped deletes only where necessary.
-- Use replacing tables for status/cache tables to avoid heavy delete-before-insert when possible.
-
-## Chunk Status Policy
-- Maintain:
-  - `options.option_download_chunk_status`
-  - `options.option_enrich_chunk_status`
-- Canonical chunk baseline for stream comparability is trade chunk grid (`option_trade_quote_1m`).
-- For each chunk record status as one of:
-  - `complete`, `partial`, `missing`, `extra`
-- Rebuild chunk-status from raw/enriched tables after major backfill waves.
-
-## Calendar/Holiday Policy
-- Use Theta calendar API for market-open checks.
-- Skip closed days explicitly; do not treat holidays/weekends as failures.
-
-## Monitoring and Auto-Healing
-- Continuously monitor:
-  - worker liveness
-  - rows/sec and chunk progress
-  - retry/error rates
-  - network throughput
-- If download bandwidth remains <1 MB/s for sustained window, treat as degraded:
-  - inspect stream heartbeats and failure logs
-  - rebalance concurrency/window sizes
-  - restart only failed units, not full run
-
-## Backfill Execution Practices
-- Prefer targeted missing symbol-day lists over full-range reruns.
-- For raw-component-only remediation, ensure force mode is used when day cache would otherwise skip execution.
-- Keep reports/artifacts for each run and summarize:
-  - total/completed/failed jobs
-  - rows hydrated per component
-  - remaining missing symbol-days/chunks
-
-## Run Completion Gates (Required)
-- Do not advance from day `D` to day `D+1` until `D` passes:
-  - download verification (stock/quote/trade expectations),
-  - enrichment verification (`enrich == trade` minute coverage),
-  - worker failures resolved or explicitly classified as provider no-data.
-- If a worker fails, restart only failed units and requeue only failed symbol-days.
-- Avoid broad reruns after every code change. Use one canary day to validate fix, then continue with next day.
-
-## Gap Classification Policy
-- Missing counts must distinguish:
-  - `unattempted` symbol-days (not run yet),
-  - `attempted_missing` symbol-days (run but still short),
-  - `provider_sparse` symbol-days (attempted, but provider appears to have sparse minutes).
-- Default reporting should only treat `attempted_missing` as failure.
-- For quote gaps where `quoteSlots == tradeSlots` and both are far below quote expectation:
-  - run quote-only remediation with `BACKFILL_RAW_COMPONENTS=quote`,
-  - set `BACKFILL_FORCE=1` and `BACKFILL_FORCE_QUOTE_FULL=1`.
-
-## Throughput Benchmark Policy
-- Record baseline per run:
+## Run Completion Gates
+- Do not claim a run is complete until coverage, dataset build, and experiment artifacts are present
+  for the requested date span.
+- For changed model logic, use one small canary/smoke run first, then run the full requested window.
+- Compare reruns against the prior benchmark before calling an optimization successful:
   - wall clock duration,
-  - total raw quote rows ingested,
-  - total enriched rows,
-  - expected vs actual minute slots,
-  - normalized speed (`seconds per 1m slot` and `rows/sec`).
-- Compare each rerun against the benchmark before claiming optimization.
+  - rows/minutes scanned,
+  - prediction count,
+  - monthly returns and drawdowns,
+  - normalized throughput.
+
+## Verification
+- Run the Massive-only guardrail tests after changing project data access code.
+- Use targeted tests for the touched modeling module before running the whole suite.
+- If Python dependencies are missing, report that clearly and keep the Node research path usable.
 
 ## Git/Change Management
 - Commit in understandable chunks:
-  - streaming/perf changes
-  - reliability/retry changes
-  - observability/chunk-status changes
-- Exclude transient artifacts/reports from commits unless explicitly requested.
-
-## Canonical Runtime Parameters
-- Use `docs/BACKFILL_RUNTIME_PARAMETERS.md` as the single source of truth for:
-  - worker count and memory budget selection
-  - Theta stream timeout/heartbeat settings
-  - ClickHouse mutation/timeout settings
-  - targeted quote-only/stock-only/enrich-only runs
-- Use `docs/BACKFILL_OPERATIONAL_LEARNINGS.md` for failure signatures, remediation loops, and anti-rerun guardrails learned from prior long runs.
+  - data-access or coverage changes,
+  - modeling/research changes,
+  - reporting/observability changes,
+  - documentation/runbook changes.
+- Exclude transient runtime artifacts/reports from commits unless explicitly requested.
