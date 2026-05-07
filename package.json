@@ -48,6 +48,8 @@
     "pym-v5:build-daily": "node projects/pym-v5-replication/scripts/build-daily-bars.js",
     "pym-v5:massive-eod-build": "node projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js",
     "pym-v5:yahoo-build-daily": "node projects/pym-v5-replication/scripts/build-yahoo-daily-bars.js",
+    "pym-v5:build-rebalance-report": "node projects/pym-v5-replication/scripts/build-rebalance-report.js",
+    "pym-v5:service": "node projects/pym-v5-replication/server/index.js",
     "pym-v5:backtest": "node projects/pym-v5-replication/scripts/run-backtest.js",
     "pym-v5:compare-composer": "node projects/pym-v5-replication/scripts/compare-composer-reference.js"
   },

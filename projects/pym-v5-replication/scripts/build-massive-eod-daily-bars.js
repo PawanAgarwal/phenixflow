@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 const fs = require('node:fs');
-const os = require('node:os');
-const path = require('node:path');
 
 const {
-  PROJECT_ROOT,
   loadConfig,
   ensureDir,
   runtimePath,
 } = require('../src/config');
 const { resolveEndDate } = require('../src/calendar');
+const { loadMassiveEnv } = require('../src/env');
 const { collectTickers } = require('../src/symphony');
 
 const DEFAULT_BASE_URL = 'https://api.massive.com';
@@ -42,40 +40,6 @@ function parseBoolean(value, fallback) {
 
 function defaultScorePath(config) {
   return runtimePath('source', `composer-${config.source.composerSymphonyId}-score.json`);
-}
-
-function parseEnvFileLine(rawLine) {
-  const line = String(rawLine || '').trim();
-  if (!line || line.startsWith('#')) return null;
-  const splitIndex = line.indexOf('=');
-  if (splitIndex <= 0) return null;
-  const key = line.slice(0, splitIndex).replace(/^export\s+/, '').trim();
-  let value = line.slice(splitIndex + 1).trim();
-  if (
-    (value.startsWith('"') && value.endsWith('"'))
-    || (value.startsWith("'") && value.endsWith("'"))
-  ) {
-    value = value.slice(1, -1);
-  }
-  return key ? { key, value } : null;
-}
-
-function loadDotEnvIfExists(envPath) {
-  if (!fs.existsSync(envPath)) return false;
-  fs.readFileSync(envPath, 'utf8').split(/\r?\n/).forEach((line) => {
-    const parsed = parseEnvFileLine(line);
-    if (!parsed || process.env[parsed.key] !== undefined) return;
-    process.env[parsed.key] = parsed.value;
-  });
-  return true;
-}
-
-function loadMassiveEnv() {
-  [
-    path.join(PROJECT_ROOT, '..', '..', '.env.local'),
-    process.env.MASSIVE_ENV_FILE,
-    path.join(os.homedir(), 'config', 'massive', '.env.local'),
-  ].filter(Boolean).forEach((envPath) => loadDotEnvIfExists(path.resolve(envPath)));
 }
 
 function resolveApiKey(args, env = process.env) {

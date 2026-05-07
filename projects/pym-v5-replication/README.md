@@ -40,6 +40,33 @@ needs adjusted daily bars. For that, use Massive REST daily aggregate bars with
 3. Compare against Composer:
    `npm run pym-v5:compare-composer -- --label massive-eod-rsi-wilder`
 
+## Rebalance Service
+
+Start the local dashboard and API:
+`npm run pym-v5:service`
+
+Default URL:
+`http://localhost:3117`
+
+The machine-local LaunchAgent lives at:
+`~/Library/LaunchAgents/com.phenixflow.pym-v5-rebalance.plist`
+
+A committed reference copy with debugging metadata is kept at:
+`projects/pym-v5-replication/launchd/com.phenixflow.pym-v5-rebalance.plist`
+
+Useful endpoints:
+
+- `GET /api/rebalance/summary`
+- `GET /api/rebalance/latest`
+- `GET /api/rebalance/days`
+- `GET /api/rebalance/days/:date`
+- `POST /api/rebalance/recompute`
+- `POST /api/rebalance/refresh-eod`
+
+The service loads the latest `pym-v5-massive-eod-adjusted-daily-bars-*.jsonl`
+runtime file, evaluates the Composer tree at each EOD close from January 2025
+onward, and exposes the current post-close target composition.
+
 ## Yahoo Adjusted EOD Diagnostic
 
 This project also has an external-data diagnostic path for isolating adjusted EOD data

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PYM V5 Rebalance</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Massive adjusted EOD</p>
+          <h1>PYM V5 Rebalance</h1>
+        </div>
+        <div class="topbar-actions">
+          <div class="status-pill" id="dataStatus">Loading</div>
+          <button class="button secondary" id="recomputeButton" type="button">Recompute</button>
+          <button class="button primary" id="refreshButton" type="button">Refresh EOD</button>
+        </div>
+      </header>
+
+      <section class="metric-grid" aria-label="Strategy metrics">
+        <div class="metric-tile">
+          <span class="metric-label">Latest Rebalance</span>
+          <strong id="latestDate">-</strong>
+        </div>
+        <div class="metric-tile">
+          <span class="metric-label">Strategy Return</span>
+          <strong id="strategyReturn">-</strong>
+        </div>
+        <div class="metric-tile">
+          <span class="metric-label">SPY Return</span>
+          <strong id="spyReturn">-</strong>
+        </div>
+        <div class="metric-tile">
+          <span class="metric-label">QQQ Return</span>
+          <strong id="qqqReturn">-</strong>
+        </div>
+        <div class="metric-tile">
+          <span class="metric-label">Max Drawdown</span>
+          <strong id="maxDrawdown">-</strong>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <aside class="day-panel">
+          <div class="panel-heading">
+            <h2>Daily Results</h2>
+            <input id="dateFilter" class="date-input" type="date" min="2025-01-01">
+          </div>
+          <div class="day-table-wrap">
+            <table class="day-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Net</th>
+                  <th>Top</th>
+                </tr>
+              </thead>
+              <tbody id="dayRows"></tbody>
+            </table>
+          </div>
+        </aside>
+
+        <section class="detail-panel">
+          <div class="detail-header">
+            <div>
+              <p class="eyebrow">Selected EOD rebalance</p>
+              <h2 id="selectedTitle">-</h2>
+            </div>
+            <div class="detail-meta">
+              <span id="selectedEquity">-</span>
+              <span id="selectedTurnover">-</span>
+              <span id="selectedNextReturn">-</span>
+            </div>
+          </div>
+
+          <div class="chart-band">
+            <canvas id="equityChart" width="980" height="260"></canvas>
+          </div>
+
+          <div class="composition-layout">
+            <section class="composition-panel">
+              <div class="panel-heading">
+                <h2>Composition</h2>
+                <span id="holdingCount">-</span>
+              </div>
+              <div class="holding-table-wrap">
+                <table class="holding-table">
+                  <thead>
+                    <tr>
+                      <th>Ticker</th>
+                      <th>Weight</th>
+                      <th>Change</th>
+                      <th>Dollars</th>
+                    </tr>
+                  </thead>
+                  <tbody id="holdingRows"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="session-panel">
+              <div class="panel-heading">
+                <h2>Session</h2>
+                <span id="sessionDate">-</span>
+              </div>
+              <dl class="session-list">
+                <div>
+                  <dt>Gross exposure</dt>
+                  <dd id="grossExposure">-</dd>
+                </div>
+                <div>
+                  <dt>Estimated cost</dt>
+                  <dd id="estimatedCost">-</dd>
+                </div>
+                <div>
+                  <dt>Next close</dt>
+                  <dd id="nextClose">-</dd>
+                </div>
+                <div>
+                  <dt>Realized net</dt>
+                  <dd id="realizedNet">-</dd>
+                </div>
+                <div>
+                  <dt>End equity</dt>
+                  <dd id="endEquity">-</dd>
+                </div>
+              </dl>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

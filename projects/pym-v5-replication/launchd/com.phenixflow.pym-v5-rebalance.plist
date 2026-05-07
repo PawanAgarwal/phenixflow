@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!--
+    PhenixFlow PYM V5 Rebalance Service
+
+    Purpose:
+      Runs the local dashboard/API that calculates daily EOD rebalance snapshots
+      for the Composer PYM V5 strategy from the public Composer tree and Massive
+      adjusted EOD market data.
+
+    Source repo:
+      /Users/pawanagarwal/github/phenixflow
+
+    Project:
+      projects/pym-v5-replication
+
+    Entry point:
+      projects/pym-v5-replication/server/index.js
+
+    Local UI:
+      http://localhost:3117/
+
+    Useful docs:
+      /Users/pawanagarwal/github/phenixflow/projects/pym-v5-replication/README.md
+  -->
+  <key>Label</key>
+  <string>com.phenixflow.pym-v5-rebalance</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/node</string>
+    <string>projects/pym-v5-replication/server/index.js</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/pawanagarwal/github/phenixflow</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>NODE_ENV</key>
+    <string>production</string>
+    <key>PYM_V5_PORT</key>
+    <string>3117</string>
+    <key>SERVICE_NAME</key>
+    <string>PhenixFlow PYM V5 Rebalance Service</string>
+    <key>SERVICE_PURPOSE</key>
+    <string>Calculates daily EOD rebalance snapshots and serves the PYM V5 dashboard/API.</string>
+    <key>SERVICE_REPO_ROOT</key>
+    <string>/Users/pawanagarwal/github/phenixflow</string>
+    <key>SERVICE_PROJECT_PATH</key>
+    <string>projects/pym-v5-replication</string>
+    <key>SERVICE_ENTRYPOINT</key>
+    <string>projects/pym-v5-replication/server/index.js</string>
+    <key>SERVICE_README</key>
+    <string>/Users/pawanagarwal/github/phenixflow/projects/pym-v5-replication/README.md</string>
+    <key>SERVICE_UI_URL</key>
+    <string>http://localhost:3117/</string>
+    <key>SERVICE_API_SUMMARY_URL</key>
+    <string>http://localhost:3117/api/rebalance/summary</string>
+    <key>SERVICE_DATA_POLICY</key>
+    <string>Massive adjusted EOD bars only; runtime data under projects/pym-v5-replication/runtime.</string>
+    <key>COMPOSER_SYMPHONY_ID</key>
+    <string>XPGix2infTwwWMORgqmV</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/pawanagarwal/github/phenixflow/projects/pym-v5-replication/runtime/pym-v5-service.out.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/pawanagarwal/github/phenixflow/projects/pym-v5-replication/runtime/pym-v5-service.err.log</string>
+</dict>
+</plist>
