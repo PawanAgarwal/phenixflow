@@ -56,7 +56,8 @@
     "pym-v5:build-option-features": "node projects/pym-v5-replication/scripts/build-option-features.js",
     "pym-v5:option-overlay-suite": "node projects/pym-v5-replication/scripts/run-option-overlay-suite.js",
     "pym-v5:backtest": "node projects/pym-v5-replication/scripts/run-backtest.js",
-    "pym-v5:compare-composer": "node projects/pym-v5-replication/scripts/compare-composer-reference.js"
+    "pym-v5:compare-composer": "node projects/pym-v5-replication/scripts/compare-composer-reference.js",
+    "studies-dashboard:start": "node apps/studies-dashboard/server.js"
   },
   "engines": {
     "node": ">=20"

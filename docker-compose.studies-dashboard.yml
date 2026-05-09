@@ -1,0 +1,21 @@
+services:
+  studies-dashboard:
+    build:
+      context: .
+      dockerfile: apps/studies-dashboard/Dockerfile
+    image: phenixflow-studies-dashboard:local
+    container_name: phenixflow-studies-dashboard
+    restart: unless-stopped
+    cpus: "0.25"
+    mem_limit: 192m
+    memswap_limit: 256m
+    pids_limit: 96
+    ports:
+      - "3130:3130"
+    environment:
+      NODE_ENV: production
+      STUDIES_DASHBOARD_PORT: "3130"
+      STRATEGY_API_URL: "http://host.docker.internal:3120"
+      STUDIES_DEFAULT_STRATEGY: "pym-v5"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

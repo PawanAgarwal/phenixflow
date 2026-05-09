@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PhenixFlow Studies Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div class="title-block">
+          <p class="eyebrow">PhenixFlow studies</p>
+          <h1>Study Dashboard</h1>
+        </div>
+        <div class="actions">
+          <label class="select-wrap" for="strategySelect">
+            <span>Study</span>
+            <select id="strategySelect"></select>
+          </label>
+          <button class="button secondary" id="reloadButton" type="button">Reload</button>
+          <span class="status" id="statusText">Loading</span>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="Study summary">
+        <article class="metric">
+          <span>Latest Target</span>
+          <strong id="latestDate">-</strong>
+        </article>
+        <article class="metric">
+          <span>Study Return</span>
+          <strong id="studyReturn">-</strong>
+        </article>
+        <article class="metric">
+          <span>SPY Return</span>
+          <strong id="spyReturn">-</strong>
+        </article>
+        <article class="metric">
+          <span>Edge vs SPY</span>
+          <strong id="edgeReturn">-</strong>
+        </article>
+        <article class="metric">
+          <span>Portfolio Value</span>
+          <strong id="portfolioValue">-</strong>
+        </article>
+        <article class="metric">
+          <span>Change vs Last Day</span>
+          <strong id="latestTurnover">-</strong>
+        </article>
+      </section>
+
+      <section class="chart-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Performance</p>
+            <h2 id="chartTitle">Study vs SPY</h2>
+          </div>
+          <div class="legend" aria-label="Chart legend">
+            <span><i class="swatch strategy"></i>Study</span>
+            <span><i class="swatch spy"></i>SPY</span>
+          </div>
+        </div>
+        <canvas id="performanceChart" width="1200" height="320"></canvas>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="portfolio-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Latest portfolio</p>
+              <h2 id="portfolioTitle">-</h2>
+            </div>
+            <span class="panel-badge" id="holdingCount">-</span>
+          </div>
+          <div class="table-wrap portfolio-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Weight</th>
+                  <th>Vs Last Day</th>
+                  <th>Dollars</th>
+                </tr>
+              </thead>
+              <tbody id="portfolioRows"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="changes-panel">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Last week</p>
+              <h2>Day-over-Day Changes</h2>
+            </div>
+            <span class="panel-badge" id="weekRange">-</span>
+          </div>
+          <div class="table-wrap week-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Net</th>
+                  <th>Turnover</th>
+                  <th>Largest Target Moves</th>
+                </tr>
+              </thead>
+              <tbody id="weekRows"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
