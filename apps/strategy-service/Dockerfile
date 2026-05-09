@@ -1,0 +1,18 @@
+FROM node:20-slim
+
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV STRATEGY_SERVICE_PORT=3120
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+COPY apps/strategy-service ./apps/strategy-service
+COPY projects/pym-v5-replication/config ./projects/pym-v5-replication/config
+COPY projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js ./projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js
+COPY projects/pym-v5-replication/src ./projects/pym-v5-replication/src
+
+EXPOSE 3120
+
+CMD ["node", "apps/strategy-service/server.js"]

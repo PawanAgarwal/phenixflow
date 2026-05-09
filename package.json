@@ -43,6 +43,7 @@
     "spy-intraday:python-export": "node projects/spy-intraday-prediction/scripts/export-python-compact-dataset.js",
     "spy-intraday:python-research": "python3 projects/spy-intraday-prediction/python/run_sklearn_research.py",
     "spy-intraday:backtest": "node projects/spy-intraday-prediction/scripts/backtest-policy.js",
+    "strategy-service:start": "node apps/strategy-service/server.js",
     "pym-v5:fetch-sources": "node projects/pym-v5-replication/scripts/fetch-sources.js",
     "pym-v5:coverage": "node projects/pym-v5-replication/scripts/check-coverage.js",
     "pym-v5:build-daily": "node projects/pym-v5-replication/scripts/build-daily-bars.js",

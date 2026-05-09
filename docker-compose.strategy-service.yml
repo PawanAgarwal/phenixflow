@@ -1,0 +1,24 @@
+services:
+  strategy-service:
+    build:
+      context: .
+      dockerfile: apps/strategy-service/Dockerfile
+    image: phenixflow-strategy-service:local
+    container_name: phenixflow-strategy-service
+    restart: unless-stopped
+    cpus: "0.50"
+    mem_limit: 384m
+    memswap_limit: 512m
+    pids_limit: 128
+    ports:
+      - "3120:3120"
+    env_file:
+      - .env.local
+    environment:
+      NODE_ENV: production
+      STRATEGY_SERVICE_PORT: "3120"
+      PYM_V5_REBALANCE_START: "2025-01-01"
+      PYM_V5_EOD_FETCH_START: "2024-01-01"
+    volumes:
+      - ./projects/pym-v5-replication/runtime:/app/projects/pym-v5-replication/runtime
+      - ./projects/pym-v5-replication/artifacts:/app/projects/pym-v5-replication/artifacts
