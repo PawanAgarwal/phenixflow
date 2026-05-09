@@ -11,6 +11,7 @@ const state = {
 
 const els = {
   statusText: document.getElementById('statusText'),
+  strategyTabs: document.getElementById('strategyTabs'),
   strategySelect: document.getElementById('strategySelect'),
   reloadButton: document.getElementById('reloadButton'),
   latestDate: document.getElementById('latestDate'),
@@ -83,6 +84,32 @@ function renderStrategySelect() {
   els.strategySelect.replaceChildren(...options);
 }
 
+function switchStrategy(strategyId) {
+  if (!strategyId || strategyId === state.strategyId) return;
+  state.strategyId = strategyId;
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set('strategy', state.strategyId);
+  window.history.replaceState(null, '', nextUrl);
+  renderStrategySelect();
+  renderStrategyTabs();
+  loadStudy().catch((error) => {
+    els.statusText.textContent = error.message;
+  });
+}
+
+function renderStrategyTabs() {
+  const tabs = state.strategies.map((strategy) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = strategy.id === state.strategyId ? 'study-tab active' : 'study-tab';
+    button.textContent = strategy.displayName || strategy.name || strategy.id;
+    button.setAttribute('aria-pressed', strategy.id === state.strategyId ? 'true' : 'false');
+    button.addEventListener('click', () => switchStrategy(strategy.id));
+    return button;
+  });
+  els.strategyTabs.replaceChildren(...tabs);
+}
+
 async function loadShell() {
   const [config, strategies] = await Promise.all([
     fetchJson('/api/dashboard/config'),
@@ -97,6 +124,7 @@ async function loadShell() {
     ? defaultId
     : state.strategies[0]?.id || null;
   renderStrategySelect();
+  renderStrategyTabs();
 }
 
 async function loadStudy() {
@@ -304,13 +332,7 @@ els.reloadButton.addEventListener('click', () => {
 });
 
 els.strategySelect.addEventListener('change', () => {
-  state.strategyId = els.strategySelect.value;
-  const nextUrl = new URL(window.location.href);
-  nextUrl.searchParams.set('strategy', state.strategyId);
-  window.history.replaceState(null, '', nextUrl);
-  loadStudy().catch((error) => {
-    els.statusText.textContent = error.message;
-  });
+  switchStrategy(els.strategySelect.value);
 });
 
 window.addEventListener('resize', () => renderChart());

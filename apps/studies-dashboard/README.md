@@ -1,8 +1,8 @@
 # PhenixFlow Studies Dashboard
 
 Small Docker-friendly UI for browsing study results served by the PhenixFlow
-strategy service. The first supported study is `pym-v5`, backed by the Massive
-adjusted EOD runtime data mounted into `phenixflow-strategy-service`.
+strategy service. It discovers studies from `/api/strategies` and renders each
+one as a dashboard tab.
 
 ## Run Locally
 
@@ -26,5 +26,6 @@ strategy service through `http://host.docker.internal:3120`.
 ## Views
 
 - Study performance versus SPY.
+- Tabs for every strategy API registered in `phenixflow-strategy-service`.
 - Latest target portfolio with weight changes versus the prior target.
 - Last week of day-over-day net returns, turnover, and largest target moves.

@@ -67,6 +67,40 @@ select {
   line-height: 1.1;
 }
 
+.study-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  max-width: min(860px, calc(100vw - 40px));
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.study-tab {
+  flex: 0 0 auto;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.study-tab:hover {
+  border-color: #bbc5bd;
+  color: var(--text);
+}
+
+.study-tab.active {
+  border-color: rgba(29, 125, 98, 0.45);
+  background: #eaf4ef;
+  color: var(--green-dark);
+}
+
 .eyebrow {
   margin: 0 0 5px;
   color: var(--muted);
@@ -331,6 +365,10 @@ td span {
   .topbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .study-tabs {
+    max-width: 100%;
   }
 
   .actions {
