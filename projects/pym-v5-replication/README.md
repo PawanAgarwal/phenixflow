@@ -67,6 +67,65 @@ The service loads the latest `pym-v5-massive-eod-adjusted-daily-bars-*.jsonl`
 runtime file, evaluates the Composer tree at each EOD close from January 2025
 onward, and exposes the current post-close target composition.
 
+## Intraday Research
+
+Run the Massive-only intraday strategy suite:
+`npm run pym-v5:intraday-suite -- --start 2025-01-02`
+
+Run mark-to-mark decomposition for open/hourly windows:
+`npm run pym-v5:intraday-mark-study -- --start 2025-01-02 --cost-bps 4`
+
+The suite uses the prior EOD PYM target as the daily regime, streams Massive
+`stock_quotes_1m` files one day at a time, and tests flat-overnight intraday
+execution variants after transaction/slippage costs.
+
+Corrected flat-overnight findings through `2026-05-07`:
+
+- Full previous-EOD PYM basket intraday, 9:35-15:55, is positive at the `2 bps`
+  turnover-cost model but much weaker than the EOD strategy: `+17.14%`.
+- Top-weight variants are cleaner because they avoid dozens of tiny line-item
+  trades:
+  - top 3 weights, 9:35-15:55: `+22.11%`, about 6 trades/day.
+  - top 3 weights, 9:35-14:30: `+27.80%`, about 6 trades/day.
+  - top 5 weights, 9:35-14:30: `+20.22%`, about 10 trades/day.
+- Mark decomposition shows the EOD signal is strongest from prior close to the
+  next open/early session; independent hourly round trips are mostly too small
+  after costs, and 14:30-15:55 is the weakest bucket.
+- VWAP/momentum variants with frequent rebalance churn were not profitable in
+  the first full-window tests.
+
+These are research outputs, not live-trading recommendations. The next gate is
+spread-aware cost modeling by ticker and out-of-sample parameter discipline.
+
+## Option-Flow Research
+
+Build daily Massive option-flow features:
+`npm run pym-v5:build-option-features -- --start 2025-01-02 --end 2026-05-06`
+
+Run the PYM/option overlay sweep:
+`npm run pym-v5:option-overlay-suite -- --start 2025-01-02 --end 2026-05-06 --label grid-full`
+
+The local Massive cache has OPRA option aggregate bars and raw trades, but no
+historical Greeks or open-interest files. This suite therefore uses option-flow
+and short-dated ATM-flow proxies rather than true gamma exposure or dealer GEX.
+
+Full-window grid findings through `2026-05-06`, using the same `2 bps` turnover
+cost model as the EOD replication:
+
+- Base replicated PYM: `+81.88%`, max drawdown `-12.87%`, Sharpe `2.412`.
+- SPY buy/hold: `+25.11%`; QQQ buy/hold: `+36.17%`.
+- PYM holdings ranked by option momentum, top 8 with z >= `-0.5`:
+  `+125.97%`, max drawdown `-14.61%`, Sharpe `2.139`.
+- PYM holdings ranked by option momentum, top 10 with z >= `-0.5`:
+  `+119.12%`, max drawdown `-16.71%`, Sharpe `2.107`.
+- PYM with SPY put-pressure z >= `2.5` moved to BIL:
+  `+91.02%`, max drawdown `-6.72%`, Sharpe `2.766`.
+
+The option-rank winners are in-sample discoveries with higher turnover, so they
+need walk-forward validation before being treated as real edge. The SPY put-
+pressure overlay is more conservative: it improved total return, drawdown, and
+Sharpe versus base PYM in the full-window sweep.
+
 ## Yahoo Adjusted EOD Diagnostic
 
 This project also has an external-data diagnostic path for isolating adjusted EOD data

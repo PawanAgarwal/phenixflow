@@ -19,7 +19,9 @@
     "calendar": "/Volumes/SEC4TB/massive-data/calendar/us-equities-options-calendar.json"
   },
   "datasets": {
-    "stockBars": "stock_quotes_1m"
+    "stockBars": "stock_quotes_1m",
+    "optionBars": "option_quotes_1m",
+    "optionTrades": "option_trades_all"
   },
   "windows": {
     "buildStartDate": "2025-01-02",

@@ -51,6 +51,10 @@
     "pym-v5:yahoo-build-daily": "node projects/pym-v5-replication/scripts/build-yahoo-daily-bars.js",
     "pym-v5:build-rebalance-report": "node projects/pym-v5-replication/scripts/build-rebalance-report.js",
     "pym-v5:service": "node projects/pym-v5-replication/server/index.js",
+    "pym-v5:intraday-suite": "node projects/pym-v5-replication/scripts/run-intraday-suite.js",
+    "pym-v5:intraday-mark-study": "node projects/pym-v5-replication/scripts/run-intraday-mark-study.js",
+    "pym-v5:build-option-features": "node projects/pym-v5-replication/scripts/build-option-features.js",
+    "pym-v5:option-overlay-suite": "node projects/pym-v5-replication/scripts/run-option-overlay-suite.js",
     "pym-v5:backtest": "node projects/pym-v5-replication/scripts/run-backtest.js",
     "pym-v5:compare-composer": "node projects/pym-v5-replication/scripts/compare-composer-reference.js"
   },
