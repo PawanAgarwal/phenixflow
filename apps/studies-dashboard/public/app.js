@@ -15,6 +15,10 @@ const els = {
   strategyTabs: document.getElementById('strategyTabs'),
   strategySelect: document.getElementById('strategySelect'),
   reloadButton: document.getElementById('reloadButton'),
+  strategyInfoTitle: document.getElementById('strategyInfoTitle'),
+  strategyInfoDescription: document.getElementById('strategyInfoDescription'),
+  strategyRule: document.getElementById('strategyRule'),
+  strategyLinks: document.getElementById('strategyLinks'),
   latestDate: document.getElementById('latestDate'),
   studyReturn: document.getElementById('studyReturn'),
   spyReturn: document.getElementById('spyReturn'),
@@ -84,6 +88,35 @@ function clearDashboard() {
   const canvas = els.performanceChart;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function activeStrategyMetadata(strategy) {
+  return state.summary?.metadata || strategy || selectedStrategy();
+}
+
+function renderStrategyInfo(strategy) {
+  const metadata = activeStrategyMetadata(strategy);
+  els.strategyInfoTitle.textContent = metadata?.displayName || metadata?.name || metadata?.id || '-';
+  els.strategyInfoDescription.textContent = metadata?.description || metadata?.strategySource || '-';
+
+  const ruleLines = Array.isArray(metadata?.ruleSummary) ? metadata.ruleSummary.filter(Boolean) : [];
+  const ruleNodes = ruleLines.map((line) => {
+    const item = document.createElement('code');
+    item.textContent = line;
+    return item;
+  });
+  els.strategyRule.replaceChildren(...ruleNodes);
+
+  const links = Array.isArray(metadata?.sourceLinks) ? metadata.sourceLinks.filter((link) => link?.href) : [];
+  const linkNodes = links.map((link) => {
+    const anchor = document.createElement('a');
+    anchor.href = link.href;
+    anchor.target = '_blank';
+    anchor.rel = 'noreferrer';
+    anchor.textContent = link.label || 'Source';
+    return anchor;
+  });
+  els.strategyLinks.replaceChildren(...linkNodes);
 }
 
 async function fetchJson(path, options = {}) {
@@ -193,6 +226,7 @@ async function loadStudy() {
   state.latestPortfolio = null;
   state.weekPortfolios = [];
   clearDashboard();
+  renderStrategyInfo(strategy);
   let summary;
   let chart;
   let values;
@@ -230,6 +264,7 @@ async function loadStudy() {
 
 function renderDashboard() {
   const strategy = selectedStrategy();
+  renderStrategyInfo(strategy);
   renderSummary(strategy);
   renderPortfolio();
   renderWeekChanges();

@@ -14,6 +14,18 @@ const DEFAULT_OPTION_STRATEGY_ID = 'grid_pym_option_rank_top8_zm0p5';
 const META_LOOKBACK = 21;
 const SELECTOR_LOOKBACKS = Object.freeze([5, 10, 15, 21, 30, 42, 50, 63, 84, 126]);
 
+const TWO_SPEED_RULE_SUMMARY = Object.freeze([
+  'Train each day using only prior labeled trading days.',
+  'Blend a long-memory model with a 63-day recent-memory model.',
+  'Hold top predicted PYM candidates after the turnover governor clears the edge.',
+]);
+
+const META21_RULE_SUMMARY = Object.freeze([
+  'Build candidate selectors between ML two-speed and option top-8.',
+  'Each day pick the selector with the best prior 21-day realized score.',
+  'Hold the chosen underlying strategy portfolio for the next session.',
+]);
+
 function resolvePath(filePath) {
   if (!filePath) return null;
   return path.isAbsolute(filePath) ? filePath : path.join(REPO_ROOT, filePath);
@@ -407,6 +419,8 @@ function createArtifactStrategy(options = {}) {
     dataProvider: 'Massive adjusted EOD + Massive option aggregates',
     strategySource: options.strategySource || 'PYM V5 ML walk-forward artifact',
     description: options.description || null,
+    ruleSummary: options.ruleSummary || [],
+    sourceLinks: options.sourceLinks || [],
     artifactStrategyId: options.artifactStrategyId || null,
     defaultStartDate: options.defaultStartDate || '2025-02-03',
     supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
@@ -454,6 +468,7 @@ function createPymV5MlTwoSpeedStrategy(options = {}) {
     family: options.family || 'pym_ml_research',
     strategySource: 'PYM V5 daily walk-forward ML artifact',
     description: options.description || 'Daily walk-forward ridge return model using attention/PYM features with long-memory and recent-memory blending.',
+    ruleSummary: options.ruleSummary || TWO_SPEED_RULE_SUMMARY,
     artifactStrategyId: strategyId,
     buildReport: (metadata) => {
       const { sourceReport, rawPoints } = loadMlRawPoints(mlReportPath, strategyId);
@@ -500,6 +515,7 @@ function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
     family: options.family || 'pym_selector_research',
     strategySource: 'PYM V5 ML walk-forward artifact plus option top-8 overlay artifact',
     description: options.description || 'Walk-forward selector that chooses among two-speed-vs-option lookback selectors using only the prior 21 realized trading days.',
+    ruleSummary: options.ruleSummary || META21_RULE_SUMMARY,
     artifactStrategyId: 'walkforward_lookback_best_of_two_speed_or_option_meta21',
     buildReport: (metadata) => {
       const { sourceReport, rawPoints: twoRawPoints } = loadMlRawPoints(mlReportPath, twoSpeedId);

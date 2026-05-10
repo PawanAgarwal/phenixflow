@@ -94,13 +94,24 @@ function fakeRegistry() {
 describe('strategy-service API', () => {
   it('registers the PYM studies for dashboard discovery', () => {
     const registry = createDefaultRegistry();
-    expect(registry.listStrategies().map((strategy) => strategy.id)).toEqual([
+    const strategies = registry.listStrategies();
+    expect(strategies.map((strategy) => strategy.id)).toEqual([
       'pym-v5',
       'pym-v5-option-rank-top8',
       'pym-v5-ml-two-speed-attention',
       'pym-v5-two-speed-option-meta21',
       'pym-v5-spy-put-pressure-bil',
     ]);
+    const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
+    expect(byId['pym-v5'].sourceLinks.map((link) => link.label)).toEqual([
+      'Original Study / Notion',
+      'Composer Factsheet',
+      'Composer Source',
+    ]);
+    expect(byId['pym-v5-spy-put-pressure-bil'].ruleSummary).toContain(
+      'if SPY option put-pressure z-score >= 2.5: hold 100% BIL',
+    );
+    expect(byId['pym-v5-two-speed-option-meta21'].ruleSummary.join(' ')).toContain('prior 21-day');
   });
 
   it('lists strategies and serves chart ranges', async () => {

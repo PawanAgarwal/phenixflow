@@ -38,6 +38,7 @@ select {
 
 .topbar,
 .actions,
+.strategy-info,
 .summary-grid,
 .section-heading,
 .legend,
@@ -54,6 +55,81 @@ select {
 
 .topbar {
   margin-bottom: 16px;
+}
+
+.strategy-info {
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.strategy-info-copy {
+  min-width: 0;
+}
+
+.strategy-info h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.strategy-info p:last-of-type {
+  max-width: 920px;
+  margin: 0;
+  color: var(--muted);
+}
+
+.strategy-rule {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.strategy-rule code {
+  max-width: 100%;
+  border: 1px solid #dce4df;
+  border-radius: 6px;
+  padding: 5px 7px;
+  background: #eef5f1;
+  color: var(--green-dark);
+  font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  overflow-wrap: anywhere;
+}
+
+.strategy-info-links {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  max-width: 430px;
+}
+
+.strategy-info-links:empty {
+  display: none;
+}
+
+.strategy-info-links a {
+  min-height: 30px;
+  border: 1px solid rgba(48, 95, 184, 0.24);
+  border-radius: 8px;
+  padding: 6px 10px;
+  background: #f3f7ff;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.strategy-info-links a:hover {
+  border-color: rgba(48, 95, 184, 0.45);
+  background: #eaf1ff;
 }
 
 .title-block h1,
@@ -374,6 +450,15 @@ td span {
   .topbar {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .strategy-info {
+    flex-direction: column;
+  }
+
+  .strategy-info-links {
+    justify-content: flex-start;
+    max-width: 100%;
   }
 
   .study-tabs {

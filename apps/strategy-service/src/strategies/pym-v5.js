@@ -25,6 +25,12 @@ function latestBarsMetadata(filePath) {
   };
 }
 
+function composerSourceUrl(config) {
+  const baseUrl = String(config.source.composerApiBaseUrl || config.source.composerApiBase || '').replace(/\/$/, '');
+  if (!baseUrl || !config.source.composerSymphonyId) return null;
+  return `${baseUrl}/api/v1/public/symphonies/${config.source.composerSymphonyId}/score`;
+}
+
 function createPymV5Strategy(options = {}) {
   loadMassiveEnv();
   const config = options.config || loadConfig();
@@ -42,6 +48,11 @@ function createPymV5Strategy(options = {}) {
   };
 
   function getMetadata() {
+    const sourceLinks = [
+      { label: 'Original Study / Notion', href: config.source.notionUrl },
+      { label: 'Composer Factsheet', href: config.source.composerFactsheetUrl },
+      { label: 'Composer Source', href: composerSourceUrl(config) },
+    ].filter((link) => link.href);
     return {
       id: 'pym-v5',
       name: 'PYM V5',
@@ -51,6 +62,12 @@ function createPymV5Strategy(options = {}) {
       actionType: 'rebalance',
       dataProvider: 'Massive adjusted EOD',
       strategySource: 'Composer public tree',
+      description: 'Replicates the Composer PYM V5 daily ETF strategy from the public symphony tree using Massive adjusted EOD data.',
+      ruleSummary: [
+        'At each market close: evaluate the replicated PYM V5 Composer tree.',
+        'Hold the target ETF weights through the next close, with normal rebalance costs applied.',
+      ],
+      sourceLinks,
       composerSymphonyId: config.source.composerSymphonyId,
       defaultStartDate: options.startDate || process.env.PYM_V5_REBALANCE_START || '2025-01-01',
       supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],

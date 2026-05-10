@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PhenixFlow Studies Dashboard</title>
-    <link rel="stylesheet" href="/styles.css?v=20260509-returns">
+    <link rel="stylesheet" href="/styles.css?v=20260510-blurbs">
   </head>
   <body>
     <main class="shell">
@@ -23,6 +23,16 @@
           <span class="status" id="statusText">Loading</span>
         </div>
       </header>
+
+      <section class="strategy-info" aria-label="Study description">
+        <div class="strategy-info-copy">
+          <p class="eyebrow">How it works</p>
+          <h2 id="strategyInfoTitle">-</h2>
+          <p id="strategyInfoDescription">-</p>
+          <div class="strategy-rule" id="strategyRule"></div>
+        </div>
+        <nav class="strategy-info-links" id="strategyLinks" aria-label="Study source links"></nav>
+      </section>
 
       <section class="summary-grid" aria-label="Study summary">
         <article class="metric">
@@ -121,6 +131,6 @@
         </article>
       </section>
     </main>
-    <script src="/app.js?v=20260509-returns"></script>
+    <script src="/app.js?v=20260510-blurbs"></script>
   </body>
 </html>
