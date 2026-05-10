@@ -271,15 +271,49 @@ function weightBar(holding) {
   `;
 }
 
+function latestPortfolioRows(snapshot, changeFromPrevious) {
+  const currentRows = (snapshot.holdings || []).map((holding) => ({
+    ...holding,
+    status: 'current',
+  }));
+  const currentTickers = new Set(currentRows.map((holding) => holding.ticker));
+  const removedRows = (changeFromPrevious?.removed || [])
+    .filter((change) => !currentTickers.has(change.ticker))
+    .map((change) => ({
+      ticker: change.ticker,
+      weight: 0,
+      weightPct: 0,
+      previousWeight: change.previousWeight,
+      weightChange: change.weightChange,
+      weightChangePct: change.weightChangePct,
+      dollars: 0,
+      status: 'removed',
+    }));
+  return [...currentRows, ...removedRows];
+}
+
+function holdingCountLabel(currentCount, removedCount) {
+  const holdings = currentCount === 1 ? '1 holding' : `${currentCount} holdings`;
+  if (!removedCount) return holdings;
+  const exits = removedCount === 1 ? '1 exit' : `${removedCount} exits`;
+  return `${holdings} + ${exits}`;
+}
+
 function renderPortfolio() {
-  const { snapshot } = state.latestPortfolio;
+  const { snapshot, changeFromPrevious } = state.latestPortfolio;
+  const displayHoldings = latestPortfolioRows(snapshot, changeFromPrevious);
+  const removedCount = displayHoldings.filter((holding) => holding.status === 'removed').length;
   els.portfolioTitle.textContent = snapshot.date || '-';
-  els.holdingCount.textContent = `${snapshot.holdings.length} holdings`;
-  const rows = snapshot.holdings.map((holding) => {
+  els.holdingCount.textContent = holdingCountLabel(snapshot.holdings.length, removedCount);
+  const rows = displayHoldings.map((holding) => {
     const tr = document.createElement('tr');
+    if (holding.status === 'removed') tr.className = 'removed-holding';
     const change = Number(holding.weightChangePct || 0);
     tr.innerHTML = `
-      <td><strong>${holding.ticker}</strong></td>
+      <td>
+        <strong>${holding.ticker}</strong>
+        ${holding.status === 'removed' ? '<span>closed</span>' : ''}
+      </td>
       <td>${weightBar(holding)}</td>
       <td class="num ${valueClass(change)}">${formatPctPoints(change, 2)}</td>
       <td class="num">${formatMoney(holding.dollars)}</td>

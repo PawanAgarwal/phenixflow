@@ -317,6 +317,15 @@ tbody tr:last-child td {
   border-bottom: 0;
 }
 
+.removed-holding {
+  background: #fff8f8;
+}
+
+.removed-holding td:first-child,
+.removed-holding .weight-bar strong {
+  color: var(--muted);
+}
+
 td strong {
   font-weight: 850;
 }
