@@ -228,7 +228,12 @@ function createWheelOptionIncomeStrategy(options = {}) {
     return state.report;
   }
 
-  return { state, getMetadata, getReport, recompute };
+  function refreshData() {
+    const { noopRefresh } = require('./refresh-helpers');
+    return noopRefresh(state, recompute);
+  }
+
+  return { state, getMetadata, getReport, recompute, refreshData };
 }
 
 module.exports = {

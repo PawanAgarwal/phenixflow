@@ -139,6 +139,8 @@ function createApp(options = {}) {
         'GET /api/strategies/:strategyId/changes/latest',
         'POST /api/strategies/:strategyId/recompute',
         'POST /api/strategies/:strategyId/refresh-data',
+        'POST /api/refresh-all',
+        'GET /api/refresh-status',
       ],
     });
   });
@@ -200,6 +202,48 @@ function createApp(options = {}) {
       strategy: strategy.getMetadata(),
       refresh: result.status,
     });
+  }));
+
+  // Refresh all registered strategies. Each strategy's refreshData runs
+  // its own sequence of build steps in the background, so this endpoint
+  // returns 202 immediately with a list of accept/reject statuses. Use
+  // GET /api/refresh-status to poll progress.
+  app.post('/api/refresh-all', asyncRoute(async (_req, res) => {
+    const strategies = registry.listStrategies();
+    const triggered = [];
+    strategies.forEach((meta) => {
+      const strategy = registry.getStrategy(meta.id);
+      if (typeof strategy.refreshData !== 'function') {
+        triggered.push({ id: meta.id, accepted: false, reason: 'refresh_not_supported' });
+        return;
+      }
+      const result = strategy.refreshData();
+      triggered.push({ id: meta.id, accepted: result.accepted, status: result.status });
+    });
+    res.status(202).json({ triggered });
+  }));
+
+  app.get('/api/refresh-status', asyncRoute(async (_req, res) => {
+    const strategies = registry.listStrategies();
+    const statuses = strategies.map((meta) => {
+      const strategy = registry.getStrategy(meta.id);
+      const refresh = strategy.state?.refresh || null;
+      return {
+        id: meta.id,
+        loadedAt: strategy.state?.loadedAt || null,
+        refresh: refresh ? {
+          running: refresh.running || false,
+          startedAt: refresh.startedAt || null,
+          finishedAt: refresh.finishedAt || null,
+          exitCode: refresh.exitCode ?? null,
+          currentStep: refresh.currentStep || null,
+          completedSteps: refresh.completedSteps || [],
+          plannedSteps: refresh.plannedSteps || [],
+          error: refresh.error || null,
+        } : null,
+      };
+    });
+    res.status(200).json({ data: statuses });
   }));
 
   app.use((error, _req, res, _next) => {

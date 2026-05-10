@@ -172,10 +172,28 @@ Recompute in memory from mounted runtime data:
 POST /api/strategies/pym-v5/recompute
 ```
 
-Refresh Massive adjusted EOD data, then recompute:
+Refresh data and recompute (every registered strategy supports this; the
+specific build steps depend on the strategy's data dependencies — see
+`docs/per-strategy-data-needs.md`):
 
 ```http
 POST /api/strategies/pym-v5/refresh-data
+POST /api/strategies/pym-v5-cap25-lgbm-blend40-stress/refresh-data
+... (any registered strategyId)
+```
+
+Refresh ALL strategies in the background (returns 202 immediately;
+non-blocking; each strategy's refresh runs in parallel as a background
+sequence of steps):
+
+```http
+POST /api/refresh-all
+```
+
+Poll progress of all in-flight or last-completed refreshes:
+
+```http
+GET /api/refresh-status
 ```
 
 ## Adding Strategies
@@ -185,6 +203,12 @@ Implement an adapter with:
 - `getMetadata()`
 - `getReport()`
 - `recompute()`
-- optional `refreshData()`
+- `refreshData()` — every registered strategy now provides this, even if
+  it's a no-op for static-artifact strategies. Use the helpers in
+  `src/strategies/refresh-helpers.js` (`runRefreshSequence` for live-data
+  strategies, `noopRefresh` for artifact-only).
 
 Then register it in `apps/strategy-service/src/default-registry.js`.
+
+See `docs/per-strategy-data-needs.md` for a complete map of which
+strategies need which data sources and what each refresh sequence does.

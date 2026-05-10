@@ -198,11 +198,17 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
     return state.report;
   }
 
+  function refreshData() {
+    const { noopRefresh } = require('./refresh-helpers');
+    return noopRefresh(state, recompute);
+  }
+
   return {
     state,
     getMetadata,
     getReport,
     recompute,
+    refreshData,
   };
 }
 

@@ -632,11 +632,21 @@ function createArtifactStrategy(options = {}) {
     return state.report;
   }
 
+  // ML/option-overlay strategies are artifact-backed: their underlying
+  // walk-forward predictions and overlay reports are precomputed by separate
+  // out-of-band workflows. Refresh just re-reads the artifact and recomputes
+  // (cheap; no external data fetch).
+  function refreshData() {
+    const { noopRefresh } = require('./refresh-helpers');
+    return noopRefresh(state, recompute);
+  }
+
   return {
     state,
     getMetadata,
     getReport,
     recompute,
+    refreshData,
   };
 }
 

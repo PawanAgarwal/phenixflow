@@ -19,11 +19,34 @@ const {
   strategyCreditSpread,
 } = require('../../../../projects/pym-v5-replication/src/extension-strategies-suite');
 
+const { runRefreshSequence } = require('./refresh-helpers');
+
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const ML_ARTIFACTS_DIR = path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'artifacts');
 const DEFAULT_LGBM_ARTIFACT = 'pym-v5-daily-walkforward-lgbm-tiny-grid-2025-02-01-2026-05-08.json';
 const DEFAULT_LGBM_STRATEGY_ID = 'lgbm_topk_attention_pym_eq_tinyB';
 const STRESS_SIGNAL_PREFIX = 'options-stress-signal';
+
+function eodBarsRefreshStep() {
+  return {
+    label: 'build-massive-eod-bars',
+    command: process.execPath,
+    args: [
+      path.join(REPO_ROOT, 'projects', 'pym-v5-replication', 'scripts', 'build-massive-eod-daily-bars.js'),
+      '--fetch-start', process.env.PYM_V5_EOD_FETCH_START || '2024-01-01',
+    ],
+  };
+}
+
+function stressSignalRefreshStep() {
+  return {
+    label: 'build-stress-signal',
+    command: process.execPath,
+    args: [
+      path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'scripts', 'build-options-stress-signal.js'),
+    ],
+  };
+}
 
 const SLEEVE_META_RULE_SUMMARY = Object.freeze([
   'Evaluate the eight base PYM V5 sub-strategies independently each day.',
@@ -232,7 +255,23 @@ function createExtensionStrategy({
     return state.report;
   }
 
-  return { state, getMetadata, getReport, recompute };
+  function refreshSteps() {
+    const steps = [eodBarsRefreshStep()];
+    if (needsExtraBars) {
+      steps.push({
+        label: 'build-extra-eod-bars',
+        command: process.execPath,
+        args: [path.join(REPO_ROOT, 'projects', 'pym-v5-replication', 'scripts', 'build-extra-eod-daily-bars.js')],
+      });
+    }
+    return steps;
+  }
+
+  function refreshData() {
+    return runRefreshSequence(state, refreshSteps(), recompute);
+  }
+
+  return { state, getMetadata, getReport, recompute, refreshData };
 }
 
 function createPymV5SleeveMetaStrategy(options = {}) {
@@ -362,7 +401,21 @@ function createPymV5Cap25LgbmBlendStrategy(options = {}) {
     return state.report;
   }
 
-  return { state, getMetadata, getReport, recompute };
+  // Refresh fetches new EOD bars only. The LGBM walk-forward artifact is
+  // expensive (~10 min for the production tinyB spec) and is regenerated
+  // out-of-band by `npm run pym-v5:ml-walkforward-lgbm`. So an in-API
+  // refresh updates today's realized close-to-close return on existing
+  // signal dates, but does not produce new ML predictions for new signal
+  // dates — those need the ML walk-forward to be extended manually.
+  function refreshSteps() {
+    return [eodBarsRefreshStep()];
+  }
+
+  function refreshData() {
+    return runRefreshSequence(state, refreshSteps(), recompute);
+  }
+
+  return { state, getMetadata, getReport, recompute, refreshData };
 }
 
 function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
@@ -469,7 +522,20 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
     return state.report;
   }
 
-  return { state, getMetadata, getReport, recompute };
+  // Refresh fetches new EOD bars AND rebuilds the options-stress signal
+  // (~30s for the stress signal: ^VIX fetch + OCC parse). The LGBM
+  // walk-forward artifact is regenerated out-of-band, so this picks up
+  // today's realized close-to-close return + an updated stress overlay
+  // but doesn't produce new ML predictions for new signal dates.
+  function refreshSteps() {
+    return [eodBarsRefreshStep(), stressSignalRefreshStep()];
+  }
+
+  function refreshData() {
+    return runRefreshSequence(state, refreshSteps(), recompute);
+  }
+
+  return { state, getMetadata, getReport, recompute, refreshData };
 }
 
 function createPymV5CreditOverlayStrategy(options = {}) {
