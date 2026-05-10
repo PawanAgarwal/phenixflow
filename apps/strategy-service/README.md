@@ -45,6 +45,7 @@ GET /api/strategies/pym-v5-ml-calm-trend-router
 GET /api/strategies/pym-v5-ml-option-top8-50-50
 GET /api/strategies/pym-v5-two-speed-option-meta21
 GET /api/strategies/pym-v5-spy-put-pressure-bil
+GET /api/strategies/pym-v5-sleeve-meta-21d-cap25
 GET /api/strategies/tsll-seconds-passive-scalper
 ```
 
@@ -121,6 +122,17 @@ GET /api/strategies/tsll-seconds-passive-scalper/portfolio/2026-02-27
   `grid_pym_spy_put_z2p5_to_bil`. It holds the replicated PYM ETF portfolio
   unless SPY option put-pressure z-score is at least `2.5`, then rotates to
   `BIL` at EOD and realizes close-to-close returns into X+1.
+- `pym-v5-sleeve-meta-21d-cap25`: reweights the eight base PYM V5
+  sub-strategies daily by their trailing 21-day annualized Sharpe, with no
+  floor and a `25%` per-sleeve cap so the portfolio always spreads across the
+  strongest 4+ sleeves. Uses the same Composer tree and bars file as `pym-v5`.
+  In-sample 2025-01-02 to 2026-05-08: roughly `+118%` vs base PYM `+81%` at
+  `-11.20%` vs `-12.87%` max drawdown; OOS 2026-only delivers `+44%` vs base
+  `+20%` at essentially equal drawdown (`-5.92%` vs `-5.99%`). A floor-based
+  variant was tested first but the cap variant beat it on every dimension in
+  both windows, so only the cap version is registered. See
+  `projects/pym-v5-replication/docs/extension-strategies-research-notes.md`
+  for the full research log.
 - `tsll-seconds-passive-scalper`: TSLL intraday seconds-bar scalping tracker.
   It buys 3 cents below the prior completed 1-second close, targets +3 cents,
   stops at 5 cents, exits after 10 seconds, and reports daily P/L from the
