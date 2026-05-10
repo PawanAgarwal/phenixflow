@@ -24,6 +24,7 @@ historical tables.
 - `projects/podcast-prediction`: podcast extraction and prediction workflows.
 - `projects/yieldmax`: YieldMax-related screening and analysis outputs.
 - `docs`: shared architecture and operational documentation.
+- `docs/strategies`: live strategy-service documentation for each tracked study.
 - `artifacts`, `data`, `output`: repo-level runtime assets and generated outputs.
 
 ## Common Commands

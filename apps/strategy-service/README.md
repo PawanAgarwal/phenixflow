@@ -109,6 +109,8 @@ GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
   unless SPY option put-pressure z-score is at least `2.5`, then rotates to
   `BIL` at EOD and realizes close-to-close returns into X+1.
 
+Detailed per-strategy architecture docs live under `docs/strategies/`.
+
 Recompute in memory from mounted runtime data:
 
 ```http
