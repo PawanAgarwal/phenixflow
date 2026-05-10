@@ -430,6 +430,15 @@ def make_lgbm_specs(include_options):
         # Tiny + capped 25% for a more conservative version.
         {"id": "lgbm_topk_attention_pym_cap25_tiny", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "capped", "maxWeight": 0.25,
          "nEstimators": 15, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        # Gap-feature variants (test: do overnight-gap features help the LGBM
+        # model? attention/pym only use close-to-close so gap signal is
+        # genuinely new info if present in the dataset).
+        {"id": "lgbm_topk_attention_pym_gap_eq_tinyB", "kind": "lgbm_topk", "featureGroups": ["attention", "pym", "gap"], "topK": 5, "topKMode": "equal",
+         "nEstimators": 20, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        {"id": "lgbm_topk_attention_pym_gap_eq_tinyE", "kind": "lgbm_topk", "featureGroups": ["attention", "pym", "gap"], "topK": 5, "topKMode": "equal",
+         "nEstimators": 15, "learningRate": 0.05, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        {"id": "lgbm_topk_pym_gap_only_eq_tiny", "kind": "lgbm_topk", "featureGroups": ["pym", "gap"], "topK": 5, "topKMode": "equal",
+         "nEstimators": 15, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
     ]
     if include_options:
         specs.extend([

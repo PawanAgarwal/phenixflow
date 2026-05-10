@@ -268,6 +268,98 @@ function softmax(values) {
   return sum > 0 ? expValues.map((value) => value / sum) : values.map(() => 1 / values.length);
 }
 
+// --- Overnight-gap features ---
+//
+// A gap-down day is yesterday-close → today-open negative. The intraday
+// open→close ("body") tells us whether the gap filled, ran, or fully
+// reversed. Combined with the closing strength (where the close sat in
+// today's range), these three features fully characterize a gap session.
+//
+// Hypothesis being tested: do gap-day features add information the LGBM
+// model wouldn't already get from the attention/pym groups (which use
+// close-to-close returns only)?
+
+const GAP_TICKERS = Object.freeze(['SPY', 'QQQ', 'IWM', 'TQQQ', 'SOXL']);
+
+function gapToday(market, ticker, index) {
+  if (index < 1) return 0;
+  const today = marketRow(market, ticker, index);
+  const yesterday = marketRow(market, ticker, index - 1);
+  if (!today || !yesterday) return 0;
+  if (!Number.isFinite(today.open) || !Number.isFinite(yesterday.close) || yesterday.close <= 0) return 0;
+  return today.open / yesterday.close - 1;
+}
+
+function intradayReturn(market, ticker, index) {
+  const today = marketRow(market, ticker, index);
+  if (!today) return 0;
+  if (!Number.isFinite(today.open) || !Number.isFinite(today.close) || today.open <= 0) return 0;
+  return today.close / today.open - 1;
+}
+
+function closeLocation(market, ticker, index) {
+  const today = marketRow(market, ticker, index);
+  if (!today) return 0;
+  if (!Number.isFinite(today.high) || !Number.isFinite(today.low) || !Number.isFinite(today.close)) return 0;
+  if (today.high <= today.low) return 0;
+  return ((today.close - today.low) / (today.high - today.low)) - 0.5;
+}
+
+function gapZ21(market, ticker, index) {
+  if (index < 21) return 0;
+  const current = gapToday(market, ticker, index);
+  const values = [];
+  for (let cursor = Math.max(1, index - 21); cursor < index; cursor += 1) {
+    values.push(gapToday(market, ticker, cursor));
+  }
+  const valid = values.filter(Number.isFinite);
+  if (valid.length < 5) return 0;
+  const avg = mean(valid);
+  const sd = standardDeviation(valid);
+  return sd > 0 ? (current - avg) / sd : 0;
+}
+
+function gapAbsAvg5(market, ticker, index) {
+  if (index < 5) return 0;
+  const values = [];
+  for (let cursor = Math.max(1, index - 4); cursor <= index; cursor += 1) {
+    values.push(Math.abs(gapToday(market, ticker, cursor)));
+  }
+  return mean(values.filter(Number.isFinite));
+}
+
+function gapContinuation5(market, ticker, index) {
+  // Count the last 5 days where intraday return continued the gap direction.
+  // Continuation = sign(gap) == sign(intraday). A high count means trending
+  // gap-day regime; low count means mean-reverting (fade-friendly) regime.
+  if (index < 5) return 0;
+  let cont = 0;
+  for (let cursor = Math.max(1, index - 4); cursor <= index; cursor += 1) {
+    const g = gapToday(market, ticker, cursor);
+    const intra = intradayReturn(market, ticker, cursor);
+    if (Math.abs(g) < 1e-4) continue;
+    if (Math.sign(g) === Math.sign(intra)) cont += 1;
+  }
+  return cont / 5.0;
+}
+
+function appendGapFeatures(out, names, market, index) {
+  GAP_TICKERS.forEach((ticker) => {
+    out.push(gapToday(market, ticker, index));
+    names?.push(`${ticker}_gap_bps`);
+    out.push(gapZ21(market, ticker, index));
+    names?.push(`${ticker}_gap_z21`);
+    out.push(intradayReturn(market, ticker, index));
+    names?.push(`${ticker}_intraday_pct`);
+    out.push(closeLocation(market, ticker, index));
+    names?.push(`${ticker}_close_loc`);
+    out.push(gapAbsAvg5(market, ticker, index));
+    names?.push(`${ticker}_gap_abs_avg5`);
+    out.push(gapContinuation5(market, ticker, index));
+    names?.push(`${ticker}_gap_cont5`);
+  });
+}
+
 function appendPriceFeatures(out, names, market, index, coreTickers) {
   coreTickers.forEach((ticker) => {
     RETURN_HORIZONS.forEach((horizon) => {
@@ -394,6 +486,7 @@ function buildFeatureVector(sample, context, featureSet, includeNames = false) {
   if (featureSet.includes('options')) {
     appendOptionFeatures(out, names, context.optionByDate, sample.date, context.optionRoots, context.optionFields);
   }
+  if (featureSet.includes('gap')) appendGapFeatures(out, names, context.market, sample.index);
   out.push(1);
   names?.push('constant_context');
   return includeNames ? { values: out.map((value) => finite(value)), names } : out.map((value) => finite(value));

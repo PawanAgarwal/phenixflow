@@ -46,6 +46,7 @@ function featureGroupsForSample(sample, context, includeNames = false) {
     micro: buildFeatureVector(sample, context, ['micro'], includeNames),
     pym: buildFeatureVector(sample, context, ['pym'], includeNames),
     attention: buildFeatureVector(sample, context, ['attention'], includeNames),
+    gap: buildFeatureVector(sample, context, ['gap'], includeNames),
   };
   if (context.optionByDate.size) {
     groups.options = buildFeatureVector(sample, context, ['options'], includeNames);
