@@ -16,6 +16,13 @@ const DEFAULT_OPTION_STRATEGY_ID = 'grid_pym_option_rank_top8_zm0p5';
 const DEFAULT_ML_OPTION_BLEND_STRATEGY_ID = 'blend_50_ml_50_option_top8';
 const META_LOOKBACK = 21;
 const SELECTOR_LOOKBACKS = Object.freeze([5, 10, 15, 21, 30, 42, 50, 63, 84, 126]);
+const CALM_TREND_RAW_WEIGHT = 0.35;
+const CALM_TREND_OPTION_WEIGHT = 0.65;
+const CALM_TREND_MIN_PRIOR_SAMPLES = 40;
+const CALM_TREND_STRESS_MAX = 0.25;
+const CALM_TREND_SPY_RET_21_MIN = 0;
+const CALM_TREND_QQQ_RET_21_MIN = 0;
+const CALM_TREND_SPY_VOL_21_MAX = 0.22;
 
 const TWO_SPEED_RULE_SUMMARY = Object.freeze([
   'Train each day using only prior labeled trading days.',
@@ -33,6 +40,12 @@ const ML_OPTION_BLEND_RULE_SUMMARY = Object.freeze([
   'Hold 50% two-speed ML target and 50% option top-8 target.',
   'Use day-X EOD ML holdings and Massive option-flow rankings available through that same day.',
   'Rebalance at EOD close and realize the close-to-close return into X+1.',
+]);
+
+const CALM_TREND_ROUTER_RULE_SUMMARY = Object.freeze([
+  'If prior labeled training days >= 40 and calm-trend conditions hold: hold 35% raw ML and 65% option top-8.',
+  'Calm-trend conditions: stress < 0.25, SPY 21d return > 0, QQQ 21d return > 0, and SPY 21d volatility < 22%.',
+  'Otherwise hold the raw two-speed ML target unchanged.',
 ]);
 
 function resolvePath(filePath) {
@@ -78,11 +91,46 @@ function cleanHoldings(holdings) {
   return out;
 }
 
+function normalizeWeights(weights) {
+  const total = [...weights.values()].reduce((sum, weight) => sum + weight, 0);
+  if (total <= 1e-10) return new Map([['BIL', 1]]);
+  const out = new Map();
+  weights.forEach((weight, ticker) => {
+    const normalized = weight / total;
+    if (normalized > 1e-10) out.set(ticker, normalized);
+  });
+  return out;
+}
+
+function addScaledWeights(target, source, scale) {
+  cleanHoldings(source).forEach((weight, ticker) => {
+    const value = weight * scale;
+    if (Math.abs(value) > 1e-12) target.set(ticker, (target.get(ticker) || 0) + value);
+  });
+  return target;
+}
+
+function blendHoldings(left, right, leftWeight) {
+  const weight = Math.max(0, Math.min(1, finite(leftWeight)));
+  const out = new Map();
+  addScaledWeights(out, left, weight);
+  addScaledWeights(out, right, 1 - weight);
+  return normalizeWeights(out);
+}
+
 function weightTurnover(previous, next) {
   const keys = new Set([...previous.keys(), ...next.keys()]);
   let total = 0;
   keys.forEach((ticker) => {
     total += Math.abs((next.get(ticker) || 0) - (previous.get(ticker) || 0));
+  });
+  return total;
+}
+
+function portfolioReturn(weights, nextReturns) {
+  let total = 0;
+  weights.forEach((weight, ticker) => {
+    total += weight * finite(nextReturns?.[ticker]);
   });
   return total;
 }
@@ -130,14 +178,98 @@ function findLatestRiskOverlayReportPath() {
 }
 
 function loadBenchmarkSamples(datasetPath) {
-  if (!datasetPath || !fs.existsSync(datasetPath)) return new Map();
-  const samples = new Map();
+  return loadDatasetRows(datasetPath).samplesBySignalDate;
+}
+
+function loadDatasetRows(datasetPath) {
+  if (!datasetPath || !fs.existsSync(datasetPath)) {
+    return { metadata: {}, samples: [], samplesBySignalDate: new Map() };
+  }
+  let metadata = {};
+  const samples = [];
   fs.readFileSync(datasetPath, 'utf8').split(/\r?\n/).forEach((line) => {
     if (!line.trim()) return;
     const row = JSON.parse(line);
-    if (row.type === 'sample') samples.set(row.date, row);
+    if (row.type === 'metadata') metadata = row;
+    else if (row.type === 'sample') samples.push(row);
   });
-  return samples;
+  samples.sort((left, right) => left.date.localeCompare(right.date));
+  return {
+    metadata,
+    samples,
+    samplesBySignalDate: new Map(samples.map((sample) => [sample.date, sample])),
+  };
+}
+
+function featureValue(datasetMetadata, sample, group, name) {
+  const names = datasetMetadata?.featureNames?.[group] || [];
+  const index = names.indexOf(name);
+  if (index < 0) return 0;
+  return finite(sample?.featureGroups?.[group]?.[index]);
+}
+
+function clamp(value, min = 0, max = 1) {
+  return Math.max(min, Math.min(max, finite(value)));
+}
+
+function regimeStress(datasetMetadata, sample) {
+  const spyVol21 = featureValue(datasetMetadata, sample, 'price', 'SPY_vol_21');
+  const spyDrawdown21 = featureValue(datasetMetadata, sample, 'price', 'SPY_drawdown_21');
+  const qqqDrawdown21 = featureValue(datasetMetadata, sample, 'price', 'QQQ_drawdown_21');
+  const vixyRet5 = featureValue(datasetMetadata, sample, 'price', 'VIXY_ret_5');
+  const uvxyRet5 = featureValue(datasetMetadata, sample, 'price', 'UVXY_ret_5');
+  const spyPutCall = featureValue(datasetMetadata, sample, 'options', 'option_SPY_putCallPremiumRatio');
+  const spxPutCall = Math.max(
+    featureValue(datasetMetadata, sample, 'options', 'option_SPX_putCallPremiumRatio'),
+    featureValue(datasetMetadata, sample, 'options', 'option_SPXW_putCallPremiumRatio'),
+  );
+  const spyPutPressure = 1 - featureValue(datasetMetadata, sample, 'options', 'option_SPY_callPremiumShare');
+  const spxPutPressure = Math.max(
+    1 - featureValue(datasetMetadata, sample, 'options', 'option_SPX_callPremiumShare'),
+    1 - featureValue(datasetMetadata, sample, 'options', 'option_SPXW_callPremiumShare'),
+  );
+  const liquidityStress = Math.max(
+    featureValue(datasetMetadata, sample, 'liquidity', 'SPY_rangePct_z_21'),
+    featureValue(datasetMetadata, sample, 'liquidity', 'QQQ_rangePct_z_21'),
+  );
+  return clamp([
+    0.18 * clamp((spyVol21 - 0.16) / 0.20),
+    0.25 * clamp(Math.max(-spyDrawdown21, -qqqDrawdown21) / 0.10),
+    0.17 * clamp(vixyRet5 / 0.18),
+    0.13 * clamp(uvxyRet5 / 0.30),
+    0.08 * clamp((Math.max(spyPutCall, spxPutCall) - 1.1) / 2.5),
+    0.08 * clamp((Math.max(spyPutPressure, spxPutPressure) - 0.50) / 0.35),
+    0.11 * clamp(liquidityStress / 3.0),
+  ].reduce((sum, value) => sum + value, 0));
+}
+
+function calmTrendDiagnostics({ datasetMetadata, sample, priorLabeledSamples }) {
+  const stress = regimeStress(datasetMetadata, sample);
+  const spyRet21 = featureValue(datasetMetadata, sample, 'price', 'SPY_ret_21');
+  const qqqRet21 = featureValue(datasetMetadata, sample, 'price', 'QQQ_ret_21');
+  const spyVol21 = featureValue(datasetMetadata, sample, 'price', 'SPY_vol_21');
+  const ready = priorLabeledSamples >= CALM_TREND_MIN_PRIOR_SAMPLES;
+  const calmTrend = ready
+    && stress < CALM_TREND_STRESS_MAX
+    && spyRet21 > CALM_TREND_SPY_RET_21_MIN
+    && qqqRet21 > CALM_TREND_QQQ_RET_21_MIN
+    && spyVol21 < CALM_TREND_SPY_VOL_21_MAX;
+  return {
+    ready,
+    calmTrend,
+    priorLabeledSamples,
+    stress,
+    spyRet21,
+    qqqRet21,
+    spyVol21,
+    thresholds: {
+      minPriorLabeledSamples: CALM_TREND_MIN_PRIOR_SAMPLES,
+      stressMax: CALM_TREND_STRESS_MAX,
+      spyRet21Min: CALM_TREND_SPY_RET_21_MIN,
+      qqqRet21Min: CALM_TREND_QQQ_RET_21_MIN,
+      spyVol21Max: CALM_TREND_SPY_VOL_21_MAX,
+    },
+  };
 }
 
 function loadMlRawPoints(reportPath, strategyId) {
@@ -412,6 +544,7 @@ function reportFromPoints({ metadata, points, samplesBySignalDate, source, setti
         chosenStrategy: point.chosenStrategy || null,
         chosenSelector: point.chosenSelector || null,
         chosenLookback: point.chosenLookback || point.lookback || null,
+        calmTrendRouter: point.routerDiagnostics || null,
       },
       realized: {
         date: point.date,
@@ -694,8 +827,121 @@ function createPymV5MlOptionTop85050Strategy(options = {}) {
   });
 }
 
+function createPymV5MlCalmTrendRouterStrategy(options = {}) {
+  const mlReportPath = resolvePath(options.mlReportPath || process.env.PYM_V5_ML_REPORT_PATH || DEFAULT_ML_REPORT_PATH);
+  const optionReportPath = resolvePath(options.optionReportPath || process.env.PYM_V5_ML_OPTION_REPORT_PATH || DEFAULT_OPTION_REPORT_PATH);
+  const datasetPath = resolvePath(options.datasetPath || process.env.PYM_V5_ML_DATASET_PATH || DEFAULT_DATASET_PATH);
+  const twoSpeedId = options.twoSpeedStrategyId || DEFAULT_TWO_SPEED_STRATEGY_ID;
+  const optionId = options.optionStrategyId || DEFAULT_OPTION_STRATEGY_ID;
+  return createArtifactStrategy({
+    id: options.id || 'pym-v5-ml-calm-trend-router',
+    name: options.name || 'PYM ML Calm-Trend Router',
+    displayName: options.displayName || 'PYM Calm Router',
+    family: options.family || 'pym_ml_option_router',
+    strategySource: 'PYM V5 ML walk-forward artifact plus option top-8 overlay artifact',
+    description: options.description || 'Uses raw PYM two-speed ML in stress/dispersion regimes, but blends toward option top-8 during calm positive-trend tapes.',
+    ruleSummary: options.ruleSummary || CALM_TREND_ROUTER_RULE_SUMMARY,
+    artifactStrategyId: 'calm_trend_router_35_ml_65_option_top8',
+    buildReport: (metadata) => {
+      const { sourceReport, rawPoints: mlRawPoints } = loadMlRawPoints(mlReportPath, twoSpeedId);
+      const { rawPoints: optionRawPoints } = loadOptionRawPoints(optionReportPath, optionId);
+      const dataset = loadDatasetRows(datasetPath);
+      const samplesBySignalDate = dataset.samplesBySignalDate;
+      const commonDates = intersectDates([
+        { rawPoints: mlRawPoints },
+        { rawPoints: optionRawPoints },
+      ]);
+      const mlByDate = new Map(mlRawPoints.map((point) => [point.date, point]));
+      const optionByDate = new Map(optionRawPoints.map((point) => [point.date, point]));
+      const initialCapital = sourceReport.settings?.initialCapital || DEFAULT_INITIAL_CAPITAL;
+      const costBps = sourceReport.settings?.costBps || DEFAULT_COST_BPS;
+      const trainStart = sourceReport.settings?.trainStart || '2025-01-02';
+      let equity = initialCapital;
+      let previousWeights = new Map();
+      let activatedDays = 0;
+      const points = commonDates.map((date) => {
+        const rawMl = mlByDate.get(date);
+        const rawOption = optionByDate.get(date);
+        const sample = samplesBySignalDate.get(rawMl.signalDate);
+        const priorLabeledSamples = dataset.samples
+          .filter((row) => row.date >= trainStart && row.date < rawMl.signalDate)
+          .length;
+        const diagnostics = calmTrendDiagnostics({
+          datasetMetadata: dataset.metadata,
+          sample,
+          priorLabeledSamples,
+        });
+        const weights = diagnostics.calmTrend
+          ? blendHoldings(rawMl.holdings, rawOption.holdings, CALM_TREND_RAW_WEIGHT)
+          : cleanHoldings(rawMl.holdings);
+        if (diagnostics.calmTrend) activatedDays += 1;
+        const turnover = weightTurnover(previousWeights, weights);
+        const costReturn = turnover * costBps / 10000;
+        const grossReturn = sample?.nextReturns
+          ? portfolioReturn(weights, sample.nextReturns)
+          : finite(rawMl.grossReturn);
+        const netReturn = grossReturn - costReturn;
+        const startEquity = equity;
+        equity *= 1 + netReturn;
+        previousWeights = weights;
+        return {
+          id: 'calm_trend_router_35_ml_65_option_top8',
+          signalDate: rawMl.signalDate,
+          date,
+          startEquity,
+          equity,
+          grossReturn,
+          costReturn,
+          netReturn,
+          turnover,
+          holdings: Object.fromEntries(weights),
+          routerDiagnostics: {
+            ...diagnostics,
+            rawMlWeight: diagnostics.calmTrend ? CALM_TREND_RAW_WEIGHT : 1,
+            optionTop8Weight: diagnostics.calmTrend ? CALM_TREND_OPTION_WEIGHT : 0,
+            rawMlStrategy: twoSpeedId,
+            optionTop8Strategy: optionId,
+          },
+        };
+      });
+      return reportFromPoints({
+        metadata,
+        points,
+        samplesBySignalDate,
+        source: {
+          ...metadata,
+          mlReport: fileMetadata(mlReportPath),
+          optionReport: fileMetadata(optionReportPath),
+          dataset: fileMetadata(datasetPath),
+          underlyingStrategies: [twoSpeedId, optionId],
+        },
+        settings: {
+          ...sourceReport.settings,
+          artifactStrategyId: 'calm_trend_router_35_ml_65_option_top8',
+          underlyingStrategies: [twoSpeedId, optionId],
+          timing: 'EOD signal date X; close-to-close realized date X+1. Calm-trend routing uses only signal-date features.',
+          calmTrendRouter: {
+            rawMlWeight: CALM_TREND_RAW_WEIGHT,
+            optionTop8Weight: CALM_TREND_OPTION_WEIGHT,
+            minPriorLabeledSamples: CALM_TREND_MIN_PRIOR_SAMPLES,
+            stressMax: CALM_TREND_STRESS_MAX,
+            spyRet21Min: CALM_TREND_SPY_RET_21_MIN,
+            qqqRet21Min: CALM_TREND_QQQ_RET_21_MIN,
+            spyVol21Max: CALM_TREND_SPY_VOL_21_MAX,
+          },
+        },
+        extraSummary: {
+          routerActivationDays: activatedDays,
+          routerActivationShare: points.length ? activatedDays / points.length : 0,
+        },
+      });
+    },
+  });
+}
+
 module.exports = {
   createPymV5MlTwoSpeedStrategy,
   createPymV5MlOptionTop85050Strategy,
+  createPymV5MlCalmTrendRouterStrategy,
   createPymV5TwoSpeedOptionMeta21Strategy,
 };

@@ -41,6 +41,7 @@ Strategy metadata and summary:
 GET /api/strategies/pym-v5
 GET /api/strategies/pym-v5-option-rank-top8
 GET /api/strategies/pym-v5-ml-two-speed-attention
+GET /api/strategies/pym-v5-ml-calm-trend-router
 GET /api/strategies/pym-v5-ml-option-top8-50-50
 GET /api/strategies/pym-v5-two-speed-option-meta21
 GET /api/strategies/pym-v5-spy-put-pressure-bil
@@ -52,6 +53,7 @@ Chart data for a range:
 GET /api/strategies/pym-v5/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-option-rank-top8/chart?start=2025-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-ml-two-speed-attention/chart?start=2026-01-01&end=2026-05-07
+GET /api/strategies/pym-v5-ml-calm-trend-router/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-ml-option-top8-50-50/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-two-speed-option-meta21/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-spy-put-pressure-bil/chart?start=2025-01-01&end=2026-05-07
@@ -69,6 +71,7 @@ Latest portfolio and change from previous EOD target:
 GET /api/strategies/pym-v5/portfolio/latest
 GET /api/strategies/pym-v5-option-rank-top8/portfolio/latest
 GET /api/strategies/pym-v5-ml-two-speed-attention/portfolio/latest
+GET /api/strategies/pym-v5-ml-calm-trend-router/portfolio/latest
 GET /api/strategies/pym-v5-ml-option-top8-50-50/portfolio/latest
 GET /api/strategies/pym-v5-two-speed-option-meta21/portfolio/latest
 GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/latest
@@ -81,6 +84,7 @@ Portfolio for a specific date:
 GET /api/strategies/pym-v5/portfolio/2026-05-07
 GET /api/strategies/pym-v5-option-rank-top8/portfolio/2026-05-07
 GET /api/strategies/pym-v5-ml-two-speed-attention/portfolio/2026-05-07
+GET /api/strategies/pym-v5-ml-calm-trend-router/portfolio/2026-05-07
 GET /api/strategies/pym-v5-ml-option-top8-50-50/portfolio/2026-05-07
 GET /api/strategies/pym-v5-two-speed-option-meta21/portfolio/2026-05-07
 GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
@@ -95,6 +99,11 @@ GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
   close-to-close returns into X+1.
 - `pym-v5-ml-two-speed-attention`: artifact-backed daily walk-forward ML study
   for `two_speed_attention_pym_light_governed`.
+- `pym-v5-ml-calm-trend-router`: artifact-backed router that holds raw
+  two-speed ML except when prior labeled samples are at least `40`, stress is
+  below `0.25`, SPY/QQQ 21-day returns are positive, and SPY 21-day volatility
+  is below `22%`; in that calm-trend regime it holds `35%` raw ML and `65%`
+  option top-8.
 - `pym-v5-ml-option-top8-50-50`: artifact-backed 50/50 blend of
   `two_speed_attention_pym_light_governed` and option overlay
   `grid_pym_option_rank_top8_zm0p5`. It reads the latest local

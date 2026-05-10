@@ -5,6 +5,7 @@ const {
   createPymV5SpyPutPressureStrategy,
 } = require('./strategies/pym-v5-option-rank');
 const {
+  createPymV5MlCalmTrendRouterStrategy,
   createPymV5MlOptionTop85050Strategy,
   createPymV5MlTwoSpeedStrategy,
   createPymV5TwoSpeedOptionMeta21Strategy,
@@ -15,6 +16,7 @@ function createDefaultRegistry(options = {}) {
     createPymV5Strategy(options.pymV5 || {}),
     createPymV5OptionRankStrategy(options.pymV5OptionRank || {}),
     createPymV5MlTwoSpeedStrategy(options.pymV5MlTwoSpeed || {}),
+    createPymV5MlCalmTrendRouterStrategy(options.pymV5MlCalmTrendRouter || {}),
     createPymV5MlOptionTop85050Strategy(options.pymV5MlOptionTop85050 || {}),
     createPymV5TwoSpeedOptionMeta21Strategy(options.pymV5TwoSpeedOptionMeta21 || {}),
     createPymV5SpyPutPressureStrategy(options.pymV5SpyPutPressure || {}),

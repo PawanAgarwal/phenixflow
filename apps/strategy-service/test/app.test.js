@@ -99,6 +99,7 @@ describe('strategy-service API', () => {
       'pym-v5',
       'pym-v5-option-rank-top8',
       'pym-v5-ml-two-speed-attention',
+      'pym-v5-ml-calm-trend-router',
       'pym-v5-ml-option-top8-50-50',
       'pym-v5-two-speed-option-meta21',
       'pym-v5-spy-put-pressure-bil',
@@ -112,6 +113,7 @@ describe('strategy-service API', () => {
     expect(byId['pym-v5-spy-put-pressure-bil'].ruleSummary).toContain(
       'if SPY option put-pressure z-score >= 2.5: hold 100% BIL',
     );
+    expect(byId['pym-v5-ml-calm-trend-router'].ruleSummary.join(' ')).toContain('Calm-trend conditions');
     expect(byId['pym-v5-ml-option-top8-50-50'].ruleSummary.join(' ')).toContain('50% option top-8');
     expect(byId['pym-v5-two-speed-option-meta21'].ruleSummary.join(' ')).toContain('prior 21-day');
   });
