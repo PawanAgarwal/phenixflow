@@ -9,6 +9,14 @@ from pathlib import Path
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression, Ridge
+from sklearn.multioutput import MultiOutputRegressor
+
+try:
+    from lightgbm import LGBMRegressor
+    LGBM_AVAILABLE = True
+except ImportError:
+    LGBMRegressor = None
+    LGBM_AVAILABLE = False
 
 
 DEFAULT_INITIAL_CAPITAL = 10000.0
@@ -117,6 +125,67 @@ def topk_weights(predictions, output_tickers, teacher_weights, top_k, safe_ticke
     if total <= 1e-10:
         return {safe_ticker: 1.0}
     return {ticker: teacher_weight / total for ticker, _score, teacher_weight in selected}
+
+
+def topk_weights_equal(predictions, output_tickers, teacher_weights, top_k, safe_ticker):
+    """Equal-weight the top-K candidates from the PYM teacher universe.
+
+    For top_k >= 4 this naturally enforces a 25%-or-tighter per-name cap,
+    which is the same diversification discipline that wins for the sleeve-
+    meta strategy. For top_k < 4 the per-name weight exceeds 25%.
+    """
+    candidates = []
+    for ticker, score in zip(output_tickers, predictions):
+        teacher_weight = finite(teacher_weights.get(ticker, 0.0))
+        if ticker == safe_ticker or teacher_weight <= 1e-10:
+            continue
+        candidates.append((ticker, finite(score)))
+    candidates.sort(key=lambda row: row[1], reverse=True)
+    selected = candidates[:top_k]
+    if not selected:
+        return {safe_ticker: 1.0}
+    weight = 1.0 / len(selected)
+    return {ticker: weight for ticker, _score in selected}
+
+
+def topk_weights_capped(predictions, output_tickers, teacher_weights, top_k, safe_ticker, max_weight=0.25):
+    """Top-K with teacher weights, capped per name with iterative redistribution.
+
+    Selects K names by predicted score from the teacher universe, normalizes
+    by teacher weight, then iteratively caps any name above max_weight and
+    redistributes the overflow proportionally to the remaining selected names.
+    """
+    candidates = []
+    for ticker, score in zip(output_tickers, predictions):
+        teacher_weight = finite(teacher_weights.get(ticker, 0.0))
+        if ticker == safe_ticker or teacher_weight <= 1e-10:
+            continue
+        candidates.append((ticker, finite(score), teacher_weight))
+    candidates.sort(key=lambda row: row[1], reverse=True)
+    selected = candidates[:top_k]
+    if not selected:
+        return {safe_ticker: 1.0}
+    tickers = [row[0] for row in selected]
+    weights = np.array([row[2] for row in selected], dtype=np.float64)
+    total = weights.sum()
+    if total <= 1e-10:
+        return {safe_ticker: 1.0}
+    weights = weights / total
+    for _ in range(10):
+        overflow_mask = weights > max_weight + 1e-12
+        if not overflow_mask.any():
+            break
+        overflow = (weights - max_weight)[overflow_mask].sum()
+        weights = np.minimum(weights, max_weight)
+        room_mask = weights < max_weight - 1e-12
+        if not room_mask.any():
+            break
+        room_total = (max_weight - weights[room_mask]).sum()
+        if room_total <= 1e-12:
+            break
+        addition = (max_weight - weights[room_mask]) / room_total * overflow
+        weights[room_mask] = weights[room_mask] + addition
+    return {ticker: float(weights[i]) for i, ticker in enumerate(tickers)}
 
 
 def predicted_portfolio_return(weights, predictions, output_tickers):
@@ -233,6 +302,44 @@ def fit_ridge_return_predictions(spec, train_samples, current_sample, output_tic
     return np.ravel(model.predict(current_x))
 
 
+def fit_lgbm_return_predictions(spec, train_samples, current_sample, output_tickers, half_life=None):
+    """Fit one LightGBM regressor per output ticker via MultiOutputRegressor.
+
+    LightGBM doesn't natively support multi-target regression, so we wrap
+    LGBMRegressor in MultiOutputRegressor (one model per ticker, fit in
+    parallel via n_jobs). Tree boosting handles the nonlinear interactions
+    that the Composer tree encodes natively, where Ridge can only fit a
+    linear approximation.
+    """
+    if not LGBM_AVAILABLE:
+        raise RuntimeError("LightGBM not installed. pip install lightgbm")
+    train_x = feature_matrix(train_samples, spec["featureGroups"])
+    current_x = feature_matrix([current_sample], spec["featureGroups"])
+    weights = sample_weights(len(train_samples), half_life)
+    train_y = target_matrix(train_samples, output_tickers, "nextReturns")
+    base = LGBMRegressor(
+        n_estimators=int(spec.get("nEstimators", 80)),
+        learning_rate=float(spec.get("learningRate", 0.05)),
+        num_leaves=int(spec.get("numLeaves", 15)),
+        min_child_samples=int(spec.get("minChildSamples", 5)),
+        feature_fraction=float(spec.get("featureFraction", 0.8)),
+        bagging_fraction=float(spec.get("baggingFraction", 0.8)),
+        bagging_freq=int(spec.get("baggingFreq", 5)),
+        reg_alpha=float(spec.get("regAlpha", 0.0)),
+        reg_lambda=float(spec.get("regLambda", 0.1)),
+        random_state=42,
+        verbosity=-1,
+        n_jobs=1,
+    )
+    n_jobs = int(spec.get("nJobs", -1))
+    model = MultiOutputRegressor(base, n_jobs=n_jobs)
+    if weights is not None:
+        model.fit(train_x, train_y, sample_weight=weights)
+    else:
+        model.fit(train_x, train_y)
+    return np.ravel(model.predict(current_x))
+
+
 def apply_risk_budget(weights, safe_ticker, risk_budget):
     risk_budget = clamp(risk_budget)
     if risk_budget >= 0.999999:
@@ -270,6 +377,66 @@ def summarize_curve(equity_curve, initial_capital):
         "topAverageWeights": top_average_weights(equity_curve),
         "equityCurve": equity_curve,
     }
+
+
+def make_lgbm_specs(include_options):
+    """LightGBM-based variants. Naming: lgbm_<kind>_<features>[_options][_<topkmode>].
+
+    Conservative hyperparameters by default — small num_leaves, high
+    min_child_samples, tight regularization — because the walk-forward
+    training set is tiny (~22 samples on day 1, growing to ~440). LightGBM
+    with sklearn-defaults overfits hard on this signal-to-noise ratio.
+    """
+    base_groups = ["attention", "pym"]
+    conservative = {
+        "nEstimators": 30,
+        "learningRate": 0.04,
+        "numLeaves": 7,
+        "minChildSamples": 20,
+        "featureFraction": 0.6,
+        "baggingFraction": 0.7,
+        "regLambda": 1.0,
+    }
+    specs = [
+        # Equal-weight (== natural cap-25 for top_k>=4) is the default.
+        {"id": "lgbm_topk_attention_pym_eq", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal", **conservative},
+        {"id": "lgbm_topk_attention_pym_eq_top4", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 4, "topKMode": "equal", **conservative},
+        {"id": "lgbm_topk_attention_pym_eq_top8", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 8, "topKMode": "equal", **conservative},
+        # Capped 25% with teacher weight redistribution.
+        {"id": "lgbm_topk_attention_pym_cap25", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "capped", "maxWeight": 0.25, **conservative},
+        # Teacher-weighted (matches original Ridge contract for direct comparison).
+        {"id": "lgbm_topk_attention_pym_teacher", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "teacher", **conservative},
+        # Price features only — minimum-feature baseline.
+        {"id": "lgbm_topk_price_pym_eq", "kind": "lgbm_topk", "featureGroups": ["price", "pym"], "topK": 5, "topKMode": "equal", **conservative},
+        # Two-speed LightGBM (long-history + recent-history blend).
+        {"id": "lgbm_two_speed_attention_pym_eq", "kind": "two_speed_lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal", "halfLife": 63, "baseRecentWeight": 0.20, "stressRecentWeight": 0.30, "minSwitchEdgeBps": 3, "costMultiplier": 0.75, **conservative},
+        {"id": "lgbm_two_speed_attention_pym_cap25", "kind": "two_speed_lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "capped", "maxWeight": 0.25, "halfLife": 63, "baseRecentWeight": 0.20, "stressRecentWeight": 0.30, "minSwitchEdgeBps": 3, "costMultiplier": 0.75, **conservative},
+        # Even more conservative variants, in case the above still overfits.
+        {"id": "lgbm_topk_attention_pym_eq_tiny", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal",
+         "nEstimators": 15, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        # Robustness grid around the "tiny" hyperparameters that beat cap25.
+        {"id": "lgbm_topk_attention_pym_eq_tinyA", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal",
+         "nEstimators": 10, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        {"id": "lgbm_topk_attention_pym_eq_tinyB", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal",
+         "nEstimators": 20, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        {"id": "lgbm_topk_attention_pym_eq_tinyC", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal",
+         "nEstimators": 15, "learningRate": 0.03, "numLeaves": 4, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        {"id": "lgbm_topk_attention_pym_eq_tinyD", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal",
+         "nEstimators": 15, "learningRate": 0.03, "numLeaves": 2, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        {"id": "lgbm_topk_attention_pym_eq_tinyE", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal",
+         "nEstimators": 15, "learningRate": 0.05, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+        {"id": "lgbm_topk_attention_pym_eq_tinyF", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "equal",
+         "nEstimators": 15, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 20, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 2.0},
+        # Tiny + capped 25% for a more conservative version.
+        {"id": "lgbm_topk_attention_pym_cap25_tiny", "kind": "lgbm_topk", "featureGroups": base_groups, "topK": 5, "topKMode": "capped", "maxWeight": 0.25,
+         "nEstimators": 15, "learningRate": 0.03, "numLeaves": 3, "minChildSamples": 30, "featureFraction": 0.5, "baggingFraction": 0.6, "regLambda": 5.0},
+    ]
+    if include_options:
+        specs.extend([
+            {"id": "lgbm_topk_attention_pym_options_eq", "kind": "lgbm_topk", "featureGroups": ["attention", "pym", "options"], "topK": 5, "topKMode": "equal", **conservative},
+            {"id": "lgbm_two_speed_attention_pym_options_eq", "kind": "two_speed_lgbm_topk", "featureGroups": ["attention", "pym", "options"], "topK": 5, "topKMode": "equal", "halfLife": 63, "baseRecentWeight": 0.20, "stressRecentWeight": 0.30, "minSwitchEdgeBps": 3, "costMultiplier": 0.75, **conservative},
+        ])
+    return specs
 
 
 def make_strategy_specs(include_options):
@@ -313,7 +480,52 @@ def make_strategy_specs(include_options):
     return specs
 
 
+def select_topk_function(spec):
+    mode = spec.get("topKMode", "teacher")
+    if mode == "equal":
+        return topk_weights_equal
+    if mode == "capped":
+        max_weight = float(spec.get("maxWeight", 0.25))
+        return lambda preds, tickers, teacher, k, safe: topk_weights_capped(preds, tickers, teacher, k, safe, max_weight=max_weight)
+    return topk_weights
+
+
 def fit_predict_spec(spec, train_samples, current_sample, output_tickers, safe_ticker, metadata=None, previous_weights=None, cost_bps=2.0):
+    if spec["kind"] == "lgbm_topk":
+        predictions = fit_lgbm_return_predictions(
+            spec, train_samples, current_sample, output_tickers,
+            half_life=spec.get("halfLife"),
+        )
+        topk_fn = select_topk_function(spec)
+        return topk_fn(predictions, output_tickers, current_sample["teacherWeights"], spec["topK"], safe_ticker)
+
+    if spec["kind"] == "two_speed_lgbm_topk":
+        long_predictions = fit_lgbm_return_predictions(
+            spec, train_samples, current_sample, output_tickers, half_life=None,
+        )
+        recent_predictions = fit_lgbm_return_predictions(
+            spec, train_samples, current_sample, output_tickers,
+            half_life=spec.get("halfLife", 63),
+        )
+        stress = regime_stress(metadata or {}, current_sample)
+        recent_weight = clamp(
+            spec.get("baseRecentWeight", 0.20) + spec.get("stressRecentWeight", 0.30) * stress,
+            spec.get("minRecentWeight", 0.05),
+            spec.get("maxRecentWeight", 0.85),
+        )
+        predictions = (1.0 - recent_weight) * long_predictions + recent_weight * recent_predictions
+        topk_fn = select_topk_function(spec)
+        weights = topk_fn(predictions, output_tickers, current_sample["teacherWeights"], spec["topK"], safe_ticker)
+        if previous_weights and spec.get("minSwitchEdgeBps") is not None:
+            predicted_edge = predicted_portfolio_return(weights, predictions, output_tickers)
+            previous_edge = predicted_portfolio_return(previous_weights, predictions, output_tickers)
+            switch_cost = turnover(previous_weights, weights) * cost_bps / 10000.0
+            required_edge = spec.get("minSwitchEdgeBps", 0.0) / 10000.0
+            required_edge += switch_cost * spec.get("costMultiplier", 1.0)
+            if predicted_edge - previous_edge < required_edge:
+                return previous_weights
+        return weights
+
     if spec["kind"] == "two_speed_topk":
         long_predictions = fit_ridge_return_predictions(
             spec,
@@ -377,7 +589,8 @@ def fit_predict_spec(spec, train_samples, current_sample, output_tickers, safe_t
     predictions = np.ravel(model.predict(current_x))
 
     if spec["kind"] == "topk":
-        return topk_weights(predictions, output_tickers, current_sample["teacherWeights"], spec["topK"], safe_ticker)
+        topk_fn = select_topk_function(spec)
+        return topk_fn(predictions, output_tickers, current_sample["teacherWeights"], spec["topK"], safe_ticker)
     return normalize_long_only(predictions, output_tickers, safe_ticker, spec.get("maxWeight", 0.5))
 
 
@@ -426,7 +639,12 @@ def run_walkforward(metadata, samples, args):
     output_tickers = metadata["outputTickers"]
     safe_ticker = metadata["safeTicker"]
     include_options = "options" in metadata.get("featureNames", {})
-    all_specs = make_strategy_specs(include_options)
+    if args.lgbm_only:
+        all_specs = make_lgbm_specs(include_options)
+    elif args.with_lgbm:
+        all_specs = make_strategy_specs(include_options) + make_lgbm_specs(include_options)
+    else:
+        all_specs = make_strategy_specs(include_options)
     selected_ids = set(args.strategies.split(",")) if args.strategies else None
     specs = [spec for spec in all_specs if selected_ids is None or spec["id"] in selected_ids]
     prediction_samples = [sample for sample in samples if sample["date"] >= args.predict_start and (not args.predict_end or sample["date"] <= args.predict_end)]
@@ -546,6 +764,8 @@ def parse_args():
     parser.add_argument("--strategies", default=None)
     parser.add_argument("--progress", type=int, default=25)
     parser.add_argument("--generated-at", default=None)
+    parser.add_argument("--with-lgbm", action="store_true", help="Append LightGBM strategy variants to the default Ridge specs.")
+    parser.add_argument("--lgbm-only", action="store_true", help="Run only LightGBM strategy variants.")
     return parser.parse_args()
 
 

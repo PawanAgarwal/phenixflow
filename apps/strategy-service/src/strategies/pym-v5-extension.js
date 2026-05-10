@@ -13,8 +13,14 @@ const {
   precomputeContext,
   strategySleeveMeta,
   strategySleeveMetaCap,
+  strategyBlendWithExternal,
   strategyCreditSpread,
 } = require('../../../../projects/pym-v5-replication/src/extension-strategies-suite');
+
+const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
+const ML_ARTIFACTS_DIR = path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'artifacts');
+const DEFAULT_LGBM_ARTIFACT = 'pym-v5-daily-walkforward-lgbm-tiny-grid-2025-02-01-2026-05-08.json';
+const DEFAULT_LGBM_STRATEGY_ID = 'lgbm_topk_attention_pym_eq_tinyB';
 
 const SLEEVE_META_RULE_SUMMARY = Object.freeze([
   'Evaluate the eight base PYM V5 sub-strategies independently each day.',
@@ -33,6 +39,44 @@ const CREDIT_OVERLAY_RULE_SUMMARY = Object.freeze([
   'Roll a 21-day mean and standard deviation of the 5-day return; compute a z-score.',
   'When the z-score is below -1, scale base PYM to 50% and add BIL for the rest; otherwise hold base PYM.',
 ]);
+
+const CAP25_LGBM_BLEND_RULE_SUMMARY = Object.freeze([
+  'Each EOD: compute cap25 sleeve-meta target weights from the live Composer tree.',
+  'Read the same-day daily walk-forward LightGBM target weights from the artifact.',
+  'Blend per-ticker at 60% cap25 + 40% LGBM, renormalize, and rebalance into the next session close.',
+  'The LGBM model is a tightly-regularized tree booster (3 leaves, 20 trees, regLambda=5) that picks the top-5 PYM teacher candidates by predicted next-session return and equal-weights them.',
+]);
+
+function loadLgbmHoldingsByDate(artifactPath, strategyId) {
+  if (!fs.existsSync(artifactPath)) {
+    throw new Error(`missing_lgbm_artifact:${artifactPath}`);
+  }
+  const artifact = JSON.parse(fs.readFileSync(artifactPath, 'utf8'));
+  const strategy = artifact.strategies?.[strategyId];
+  if (!strategy) {
+    throw new Error(`missing_lgbm_strategy:${strategyId}:${artifactPath}`);
+  }
+  const map = new Map();
+  (strategy.equityCurve || []).forEach((point) => {
+    if (point.signalDate && point.holdings) map.set(point.signalDate, point.holdings);
+  });
+  return { map, source: artifact.source || {}, settings: artifact.settings || {}, strategyId };
+}
+
+function findLatestLgbmArtifactPath(prefix) {
+  const explicit = process.env.PYM_V5_LGBM_ARTIFACT_PATH;
+  if (explicit) return path.resolve(explicit);
+  if (!fs.existsSync(ML_ARTIFACTS_DIR)) return null;
+  const matches = fs.readdirSync(ML_ARTIFACTS_DIR)
+    .filter((name) => name.startsWith(prefix) && name.endsWith('.json'))
+    .map((name) => {
+      const match = name.match(/-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/);
+      return match ? { name, startDate: match[1], endDate: match[2] } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.endDate.localeCompare(b.endDate) || a.startDate.localeCompare(b.startDate));
+  return matches.length ? path.join(ML_ARTIFACTS_DIR, matches.at(-1).name) : path.join(ML_ARTIFACTS_DIR, DEFAULT_LGBM_ARTIFACT);
+}
 
 function findLatestExtraBarsPath() {
   const explicit = process.env.PYM_V5_EXTRA_BARS_PATH;
@@ -181,6 +225,103 @@ function createPymV5SleeveMetaCapStrategy(options = {}) {
   });
 }
 
+function createPymV5Cap25LgbmBlendStrategy(options = {}) {
+  loadMassiveEnv();
+  const config = loadConfig();
+  const blendWeight = options.blendWeight ?? 0.40;
+  const innerLookback = options.innerLookback ?? 21;
+  const innerCap = options.innerCap ?? 0.25;
+  const lgbmArtifactPath = options.lgbmArtifactPath
+    || findLatestLgbmArtifactPath('pym-v5-daily-walkforward-lgbm-tiny-grid')
+    || path.join(ML_ARTIFACTS_DIR, DEFAULT_LGBM_ARTIFACT);
+  const lgbmStrategyId = options.lgbmStrategyId || DEFAULT_LGBM_STRATEGY_ID;
+  const blendPct = Math.round(blendWeight * 100);
+  const id = options.id || `pym-v5-cap25-lgbm-blend${blendPct}`;
+  const name = options.name || `PYM cap25 + ${blendPct}% LightGBM`;
+  const displayName = options.displayName || `PYM cap25 + ${blendPct}% LightGBM blend`;
+  const description = options.description
+    || `Holds the cap25 sleeve-meta target at ${100 - blendPct}% blended with the daily walk-forward LightGBM top-5 equal-weight ML target at ${blendPct}%. The LGBM model is tightly regularized (3 leaves, 20 trees, regLambda=5) so it can fit small daily training sets without overfitting; the cap25 baseline keeps drawdown controlled.`;
+  const ruleSummary = options.ruleSummary || CAP25_LGBM_BLEND_RULE_SUMMARY;
+  const state = { report: null, loadedAt: null };
+
+  function getMetadata() {
+    return {
+      id,
+      name,
+      displayName,
+      family: options.family || 'pym_cap25_ml_blend',
+      cadence: 'daily_eod',
+      actionType: 'rebalance',
+      dataProvider: 'Massive adjusted EOD plus daily walk-forward LightGBM artifact',
+      strategySource: 'cap25 sleeve-meta target blended with LightGBM walk-forward holdings',
+      description,
+      ruleSummary,
+      composerSymphonyId: config.source.composerSymphonyId,
+      baseStrategyId: 'pym-v5-sleeve-meta-21d-cap25',
+      lgbmArtifactStrategyId: lgbmStrategyId,
+      blendWeight,
+      defaultStartDate: options.startDate || process.env.PYM_V5_REBALANCE_START || '2025-02-03',
+      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+    };
+  }
+
+  function recompute() {
+    const scorePath = process.env.PYM_V5_SCORE_PATH || defaultScorePath(config);
+    const barsPath = process.env.PYM_V5_DAILY_BARS_PATH || findLatestMassiveEodBarsPath();
+    if (!scorePath || !fs.existsSync(scorePath)) throw new Error(`missing_score_snapshot:${scorePath}`);
+    if (!barsPath || !fs.existsSync(barsPath)) throw new Error('missing_massive_eod_bars: mount runtime data or run pym-v5:massive-eod-build');
+    if (!fs.existsSync(lgbmArtifactPath)) throw new Error(`missing_lgbm_artifact:${lgbmArtifactPath}`);
+    const score = JSON.parse(fs.readFileSync(scorePath, 'utf8'));
+    const market = mergeDailyBars(barsPath, null);
+    const ctx = precomputeContext(market, score, 'wilder');
+    const inner = strategySleeveMetaCap({ lookback: innerLookback, maxWeight: innerCap });
+    const lgbm = loadLgbmHoldingsByDate(lgbmArtifactPath, lgbmStrategyId);
+    const blendStrategy = strategyBlendWithExternal({
+      id,
+      name,
+      family: 'pym_cap25_ml_blend',
+      description,
+      innerStrategy: inner,
+      externalWeightsByDate: lgbm.map,
+      blendWeight,
+    });
+    const startDate = options.startDate || process.env.PYM_V5_REBALANCE_START || '2025-02-03';
+    const report = buildExtensionRebalanceReport({
+      market,
+      score,
+      strategy: blendStrategy,
+      startDate,
+      rsiMode: 'wilder',
+      initialCapital: config.execution.initialCapital,
+      transactionCostBps: config.execution.transactionCostBps,
+      slippageBps: config.execution.slippageBps,
+      ctx,
+      source: {
+        ...getMetadata(),
+        scorePath,
+        bars: fileMetadata(barsPath, 'pym-v5-massive-eod-adjusted-daily-bars'),
+        lgbmArtifact: {
+          path: lgbmArtifactPath,
+          name: path.basename(lgbmArtifactPath),
+          strategyId: lgbmStrategyId,
+          settings: lgbm.settings,
+          source: lgbm.source,
+        },
+      },
+    });
+    state.report = report;
+    state.loadedAt = new Date().toISOString();
+    return report;
+  }
+
+  function getReport() {
+    if (!state.report) recompute();
+    return state.report;
+  }
+
+  return { state, getMetadata, getReport, recompute };
+}
+
 function createPymV5CreditOverlayStrategy(options = {}) {
   return createExtensionStrategy({
     id: options.id || 'pym-v5-credit-hyg-lqd-half-bil',
@@ -200,7 +341,9 @@ module.exports = {
   SLEEVE_META_RULE_SUMMARY,
   SLEEVE_META_CAP_RULE_SUMMARY,
   CREDIT_OVERLAY_RULE_SUMMARY,
+  CAP25_LGBM_BLEND_RULE_SUMMARY,
   createPymV5SleeveMetaStrategy,
   createPymV5SleeveMetaCapStrategy,
   createPymV5CreditOverlayStrategy,
+  createPymV5Cap25LgbmBlendStrategy,
 };

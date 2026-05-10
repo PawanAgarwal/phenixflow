@@ -46,6 +46,7 @@ GET /api/strategies/pym-v5-ml-option-top8-50-50
 GET /api/strategies/pym-v5-two-speed-option-meta21
 GET /api/strategies/pym-v5-spy-put-pressure-bil
 GET /api/strategies/pym-v5-sleeve-meta-21d-cap25
+GET /api/strategies/pym-v5-cap25-lgbm-blend40
 GET /api/strategies/tsll-seconds-passive-scalper
 ```
 
@@ -133,6 +134,18 @@ GET /api/strategies/tsll-seconds-passive-scalper/portfolio/2026-02-27
   both windows, so only the cap version is registered. See
   `projects/pym-v5-replication/docs/extension-strategies-research-notes.md`
   for the full research log.
+- `pym-v5-cap25-lgbm-blend40`: blends the cap25 sleeve-meta target at 60%
+  with a tightly-regularized daily walk-forward LightGBM model at 40%. The
+  LGBM picks the top-5 PYM teacher candidates each day by predicted next-
+  session return and equal-weights them; the model uses 20 trees, 3 leaves,
+  `regLambda=5` so it can train on tiny daily samples without overfitting.
+  Full window 2025-02-03 to 2026-05-08: `+154%` ret, `-9.37%` DD, Sharpe
+  `3.35` vs cap25 alone `+107%`, `-11.20%`, Sharpe `2.86`. OOS 2026-only:
+  `+61%`, `-3.27%`, Sharpe `5.66` vs cap25 alone `+44%`, `-5.92%`, Sharpe
+  `4.21`. The LGBM artifact lives at
+  `projects/pym-v5-ml-experiments/artifacts/pym-v5-daily-walkforward-lgbm-tiny-grid-*.json`
+  and is regenerated via the `--lgbm-only` flag of
+  `projects/pym-v5-ml-experiments/python/run_daily_walkforward.py`.
 - `tsll-seconds-passive-scalper`: TSLL intraday seconds-bar scalping tracker.
   It buys 3 cents below the prior completed 1-second close, targets +3 cents,
   stops at 5 cents, exits after 10 seconds, and reports daily P/L from the

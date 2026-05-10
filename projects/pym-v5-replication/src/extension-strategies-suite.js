@@ -815,6 +815,32 @@ function buildExtensionRebalanceReport({
   };
 }
 
+// Blend an inner strategy's daily weights with an external map of holdings
+// keyed by signalDate. Used to mix the cap25 sleeve-meta strategy with an ML
+// model's daily holdings drawn from a precomputed walk-forward artifact.
+function strategyBlendWithExternal({ id, name, family, description, innerStrategy, externalWeightsByDate, blendWeight }) {
+  return {
+    id,
+    name: name || `${innerStrategy.name} blended ${Math.round(blendWeight * 100)}% with external`,
+    family: family || 'blend_with_external',
+    description: description || `${innerStrategy.name} blended ${Math.round((1 - blendWeight) * 100)}% with external daily holdings at ${Math.round(blendWeight * 100)}%.`,
+    fn: (ctx) => {
+      const innerWeights = innerStrategy.fn(ctx);
+      const external = externalWeightsByDate.get(ctx.signalDate);
+      if (!external || !Object.keys(external).length) return innerWeights;
+      const merged = new Map();
+      innerWeights.forEach((weight, ticker) => {
+        merged.set(ticker, weight * (1 - blendWeight));
+      });
+      Object.entries(external).forEach(([ticker, weight]) => {
+        if (!Number.isFinite(weight) || weight <= 0) return;
+        merged.set(ticker, (merged.get(ticker) || 0) + weight * blendWeight);
+      });
+      return cleanWeights(merged);
+    },
+  };
+}
+
 module.exports = {
   SECTOR_TICKERS,
   SAFE_TICKER,
@@ -823,6 +849,7 @@ module.exports = {
   mergeDailyBars,
   precomputeContext,
   runExtensionStrategiesSuite,
+  strategyBlendWithExternal,
   strategySleeveMeta,
   strategySleeveMetaCap,
   strategySleeveMetaDispersion,

@@ -104,6 +104,7 @@ describe('strategy-service API', () => {
       'pym-v5-two-speed-option-meta21',
       'pym-v5-spy-put-pressure-bil',
       'pym-v5-sleeve-meta-21d-cap25',
+      'pym-v5-cap25-lgbm-blend40',
       'option-income-wheel-trend-ivrv',
       'tsll-seconds-passive-scalper',
     ]);
@@ -121,6 +122,8 @@ describe('strategy-service API', () => {
     expect(byId['pym-v5-two-speed-option-meta21'].ruleSummary.join(' ')).toContain('prior 21-day');
     expect(byId['pym-v5-sleeve-meta-21d-cap25'].ruleSummary.join(' ')).toContain('cap any single sleeve');
     expect(byId['pym-v5-sleeve-meta-21d-cap25'].displayName).toContain('25% cap');
+    expect(byId['pym-v5-cap25-lgbm-blend40'].ruleSummary.join(' ')).toContain('60% cap25 + 40% LGBM');
+    expect(byId['pym-v5-cap25-lgbm-blend40'].displayName).toContain('LightGBM');
     expect(byId['option-income-wheel-trend-ivrv'].ruleSummary.join(' ')).toContain('IV/RV >= 1.10');
     expect(byId['tsll-seconds-passive-scalper'].ruleSummary.join(' ')).toContain('buy limit 3c');
   });
