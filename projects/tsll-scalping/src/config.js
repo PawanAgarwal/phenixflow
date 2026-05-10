@@ -25,6 +25,14 @@ function datasetSuccessPath(config, datasetKey, dayIso) {
   return path.join(datasetDateDir(config, datasetKey, dayIso), '_SUCCESS.json');
 }
 
+function runtimePath(...segments) {
+  return path.join(PROJECT_ROOT, 'runtime', ...segments);
+}
+
+function artifactPath(...segments) {
+  return path.join(PROJECT_ROOT, 'artifacts', ...segments);
+}
+
 module.exports = {
   PROJECT_ROOT,
   DEFAULT_CONFIG_PATH,
@@ -33,4 +41,6 @@ module.exports = {
   datasetDateDir,
   datasetCsvPath,
   datasetSuccessPath,
+  runtimePath,
+  artifactPath,
 };

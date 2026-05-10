@@ -10,6 +10,7 @@ const {
   createPymV5MlTwoSpeedStrategy,
   createPymV5TwoSpeedOptionMeta21Strategy,
 } = require('./strategies/pym-v5-ml-artifact');
+const { createTsllSecondsPassiveScalperStrategy } = require('./strategies/tsll-scalping-artifact');
 
 function createDefaultRegistry(options = {}) {
   return new StrategyRegistry([
@@ -20,6 +21,7 @@ function createDefaultRegistry(options = {}) {
     createPymV5MlOptionTop85050Strategy(options.pymV5MlOptionTop85050 || {}),
     createPymV5TwoSpeedOptionMeta21Strategy(options.pymV5TwoSpeedOptionMeta21 || {}),
     createPymV5SpyPutPressureStrategy(options.pymV5SpyPutPressure || {}),
+    createTsllSecondsPassiveScalperStrategy(options.tsllSecondsPassiveScalper || {}),
   ]);
 }
 

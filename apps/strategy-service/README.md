@@ -45,6 +45,7 @@ GET /api/strategies/pym-v5-ml-calm-trend-router
 GET /api/strategies/pym-v5-ml-option-top8-50-50
 GET /api/strategies/pym-v5-two-speed-option-meta21
 GET /api/strategies/pym-v5-spy-put-pressure-bil
+GET /api/strategies/tsll-seconds-passive-scalper
 ```
 
 Chart data for a range:
@@ -57,6 +58,7 @@ GET /api/strategies/pym-v5-ml-calm-trend-router/chart?start=2026-01-01&end=2026-
 GET /api/strategies/pym-v5-ml-option-top8-50-50/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-two-speed-option-meta21/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-spy-put-pressure-bil/chart?start=2025-01-01&end=2026-05-07
+GET /api/strategies/tsll-seconds-passive-scalper/chart?start=2026-02-02&end=2026-02-27
 ```
 
 Daily values for a range:
@@ -75,6 +77,7 @@ GET /api/strategies/pym-v5-ml-calm-trend-router/portfolio/latest
 GET /api/strategies/pym-v5-ml-option-top8-50-50/portfolio/latest
 GET /api/strategies/pym-v5-two-speed-option-meta21/portfolio/latest
 GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/latest
+GET /api/strategies/tsll-seconds-passive-scalper/portfolio/latest
 GET /api/strategies/pym-v5/changes/latest
 ```
 
@@ -88,6 +91,7 @@ GET /api/strategies/pym-v5-ml-calm-trend-router/portfolio/2026-05-07
 GET /api/strategies/pym-v5-ml-option-top8-50-50/portfolio/2026-05-07
 GET /api/strategies/pym-v5-two-speed-option-meta21/portfolio/2026-05-07
 GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
+GET /api/strategies/tsll-seconds-passive-scalper/portfolio/2026-02-27
 ```
 
 ## Current Studies
@@ -117,6 +121,10 @@ GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
   `grid_pym_spy_put_z2p5_to_bil`. It holds the replicated PYM ETF portfolio
   unless SPY option put-pressure z-score is at least `2.5`, then rotates to
   `BIL` at EOD and realizes close-to-close returns into X+1.
+- `tsll-seconds-passive-scalper`: TSLL intraday seconds-bar scalping tracker.
+  It buys 3 cents below the prior completed 1-second close, targets +3 cents,
+  stops at 5 cents, exits after 10 seconds, and reports daily P/L from the
+  committed February 2026 Massive tick-trade artifact.
 
 Detailed per-strategy architecture docs live under `docs/strategies/`.
 

@@ -12,6 +12,7 @@
   "datasets": {
     "stockTrades": "stock_trades_all",
     "stockBars": "stock_quotes_1m",
+    "stockTickQuotes": "stock_quotes_all",
     "optionBars": "option_quotes_1m",
     "optionTrades": "option_trades_all"
   },
@@ -32,5 +33,14 @@
     "cooldownBars": 2,
     "noEntryFirstMinutes": 5,
     "noEntryLastMinutes": 5
+  },
+  "research": {
+    "useOptionFeaturesDefault": false,
+    "dailyWarmupDays": 35,
+    "massiveStockTickQuoteDataset": "us_stocks_sip/quotes_v1",
+    "notes": [
+      "Tick stock quote flat files are not currently cached locally; stock_quotes_1m is Massive 1-minute aggregate bars, not NBBO tick quotes.",
+      "Default strategy grid is no-option and uses prior-day daily context plus intraday TSLL trades."
+    ]
   }
 }

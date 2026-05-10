@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 
 const { datasetCsvPath } = require('./config');
+const { loadOpenDates } = require('./calendar');
 const { parseOpraTicker, daysBetween } = require('./opra');
 const { readGzipCsv, toNumber } = require('./csv');
 const {
@@ -138,8 +139,14 @@ async function readTargetTradesForDay(config, dayIso, symbol = config.target) {
   const trades = [];
   if (!fs.existsSync(filePath)) return trades;
   const wanted = String(symbol || '').toUpperCase();
+  let seenWanted = false;
   await readGzipCsv(filePath, (row) => {
-    if (String(row.ticker || '').toUpperCase() !== wanted) return;
+    const ticker = String(row.ticker || '').toUpperCase();
+    if (ticker !== wanted) {
+      if (seenWanted && ticker > wanted) return false;
+      return undefined;
+    }
+    seenWanted = true;
     if (String(row.correction || '0') !== '0') return;
     const tsMs = nsToMs(row.sip_timestamp);
     if (!Number.isFinite(tsMs) || !isRegularSessionMs(tsMs, config.session)) return;
@@ -183,6 +190,109 @@ async function readStockMinutesForDay(config, dayIso, symbols = config.marketSym
   });
   bySymbol.forEach((rows, symbol) => bySymbol.set(symbol, addStockMinuteFeatures(rows)));
   return bySymbol;
+}
+
+function ema(values, period) {
+  if (!values.length) return null;
+  const alpha = 2 / (period + 1);
+  let out = values[0];
+  for (let index = 1; index < values.length; index += 1) {
+    out = (values[index] * alpha) + (out * (1 - alpha));
+  }
+  return out;
+}
+
+function trueRange(row, previousRow) {
+  if (!row) return 0;
+  const highLow = row.high - row.low;
+  if (!previousRow) return highLow;
+  return Math.max(
+    highLow,
+    Math.abs(row.high - previousRow.close),
+    Math.abs(row.low - previousRow.close),
+  );
+}
+
+function dailyBarFromMinutes(dayIso, rows) {
+  if (!rows?.length) return null;
+  return {
+    date: dayIso,
+    open: rows[0].open,
+    high: Math.max(...rows.map((row) => row.high)),
+    low: Math.min(...rows.map((row) => row.low)),
+    close: rows[rows.length - 1].close,
+    volume: rows.reduce((sum, row) => sum + (row.volume || 0), 0),
+  };
+}
+
+async function readDailyBarsForDates(config, dates, symbols = config.marketSymbols) {
+  const bySymbol = new Map(symbols.map((symbol) => [symbol, []]));
+  for (const dayIso of dates) {
+    const stockMinutes = await readStockMinutesForDay(config, dayIso, symbols);
+    symbols.forEach((symbol) => {
+      const daily = dailyBarFromMinutes(dayIso, stockMinutes.get(symbol));
+      if (daily) bySymbol.get(symbol).push(daily);
+    });
+  }
+  return bySymbol;
+}
+
+function buildSymbolDailyContext(history) {
+  const previous = history[history.length - 1];
+  if (!previous) return { ready: 0 };
+  const previous2 = history[history.length - 2];
+  const closes = history.map((row) => row.close).filter((value) => Number.isFinite(value));
+  const last5 = history.slice(-5);
+  const ranges = history.map((row) => row.high - row.low);
+  const last7Ranges = ranges.slice(-7);
+  const trueRanges = history.map((row, index) => trueRange(row, history[index - 1]));
+  const atrWindow = trueRanges.slice(-14);
+  const atr14 = atrWindow.length
+    ? atrWindow.reduce((sum, value) => sum + value, 0) / atrWindow.length
+    : previous.high - previous.low;
+  const ema8 = ema(closes, 8);
+  const ema21 = ema(closes, 21);
+  const ret5Base = last5[0]?.close;
+  return {
+    ready: history.length >= 5 ? 1 : 0,
+    prevClose: previous.close,
+    prevHigh: previous.high,
+    prevLow: previous.low,
+    prevOpen: previous.open,
+    ret1d: safeReturn(previous.close, previous2?.close),
+    ret5d: safeReturn(previous.close, ret5Base),
+    atr14,
+    atrPct14: safeRatio(atr14, previous.close),
+    ema8,
+    ema21,
+    trendUp: previous.close > ema8 && ema8 > ema21 ? 1 : 0,
+    trendDown: previous.close < ema8 && ema8 < ema21 ? 1 : 0,
+    prevRangePct: safeRatio(previous.high - previous.low, previous.close),
+    nr7: last7Ranges.length >= 7 && last7Ranges[last7Ranges.length - 1] <= Math.min(...last7Ranges) ? 1 : 0,
+  };
+}
+
+async function buildDailyContextByDate(config, selectedDates, settings = {}) {
+  if (!selectedDates.length) return { dailyContextByDate: new Map(), dates: [] };
+  const warmupDays = Math.max(5, Math.trunc(settings.warmupDays || config.research?.dailyWarmupDays || 35));
+  const symbols = settings.symbols || config.marketSymbols || [config.target];
+  const startDate = config.dataPolicy?.firstHistoricalDate || selectedDates[0];
+  const endDate = selectedDates[selectedDates.length - 1];
+  const openDates = loadOpenDates(config, startDate, endDate);
+  const firstIndex = Math.max(0, openDates.indexOf(selectedDates[0]));
+  const lastIndex = Math.max(firstIndex, openDates.indexOf(endDate));
+  const dates = openDates.slice(Math.max(0, firstIndex - warmupDays), lastIndex + 1);
+  const dailyBySymbol = await readDailyBarsForDates(config, dates, symbols);
+  const dailyContextByDate = new Map();
+  selectedDates.forEach((dayIso) => {
+    const context = {};
+    symbols.forEach((symbol) => {
+      const history = (dailyBySymbol.get(symbol) || []).filter((row) => row.date < dayIso);
+      context[symbol] = buildSymbolDailyContext(history);
+    });
+    dailyContextByDate.set(dayIso, context);
+  });
+  return { dailyContextByDate, dates, symbols };
 }
 
 async function readOptionAggsForDay(config, dayIso, { includeOptionTrades = true, includeOptionQuotes = true } = {}) {
@@ -239,7 +349,55 @@ function rowsForRegularSession(dayIso, session, barSeconds) {
   return out;
 }
 
-function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMinute, optionGroups, barSeconds }) {
+function addDailyContextFeatures(row, config, dailyContext, sessionOpen, dayHighSoFar, dayLowSoFar) {
+  const symbols = config.marketSymbols || [];
+  symbols.forEach((symbol) => {
+    const context = dailyContext?.[symbol] || { ready: 0 };
+    const key = symbol.toLowerCase();
+    row[`daily_${key}_ready`] = context.ready || 0;
+    row[`daily_${key}_prev_close`] = context.prevClose ?? null;
+    row[`daily_${key}_ret_1d`] = context.ret1d || 0;
+    row[`daily_${key}_ret_5d`] = context.ret5d || 0;
+    row[`daily_${key}_atr_pct14`] = context.atrPct14 || 0;
+    row[`daily_${key}_trend_up`] = context.trendUp || 0;
+    row[`daily_${key}_trend_down`] = context.trendDown || 0;
+    row[`daily_${key}_prev_range_pct`] = context.prevRangePct || 0;
+    row[`daily_${key}_nr7`] = context.nr7 || 0;
+    row[`daily_${key}_gap_pct`] = safeReturn(sessionOpen, context.prevClose);
+  });
+  const targetContext = dailyContext?.[config.target] || {};
+  row.daily_context_ready = targetContext.ready || 0;
+  row.daily_tsll_from_prev_close_atr = safeRatio(row.close - targetContext.prevClose, targetContext.atr14);
+  row.daily_tsll_open_gap_atr = safeRatio(sessionOpen - targetContext.prevClose, targetContext.atr14);
+  row.daily_tsll_range_so_far_atr = safeRatio(dayHighSoFar - dayLowSoFar, targetContext.atr14);
+  row.daily_macro_trend_up = (
+    (dailyContext?.TSLA?.trendUp || 0)
+    + (dailyContext?.QQQ?.trendUp || 0)
+    + (dailyContext?.SPY?.trendUp || 0)
+  ) >= 2 ? 1 : 0;
+}
+
+function addOpeningRangeFeatures(bars) {
+  const windows = [5, 15, 30];
+  windows.forEach((minutes) => {
+    const openingRows = bars.filter((row) => row.minutes_from_open < minutes);
+    const high = openingRows.length ? Math.max(...openingRows.map((row) => row.high)) : null;
+    const low = openingRows.length ? Math.min(...openingRows.map((row) => row.low)) : null;
+    const close = openingRows[openingRows.length - 1]?.close ?? null;
+    bars.forEach((row) => {
+      const prefix = `orb${minutes}`;
+      row[`${prefix}_complete`] = row.minutes_from_open >= minutes ? 1 : 0;
+      row[`${prefix}_high`] = high;
+      row[`${prefix}_low`] = low;
+      row[`${prefix}_range_cents`] = high && low ? (high - low) * 100 : 0;
+      row[`${prefix}_breakout_cents`] = row[`${prefix}_complete`] && high ? (row.close - high) * 100 : 0;
+      row[`${prefix}_breakdown_cents`] = row[`${prefix}_complete`] && low ? (low - row.close) * 100 : 0;
+      row[`${prefix}_return`] = row[`${prefix}_complete`] ? safeReturn(close, openingRows[0]?.open) : 0;
+    });
+  });
+}
+
+function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMinute, optionGroups, barSeconds, dailyContext }) {
   if (!trades.length) return [];
   const stepMs = Math.max(1, Math.trunc(barSeconds || 5)) * 1000;
   const bucketToTicks = new Map();
@@ -258,6 +416,9 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
   let previousClose = null;
   let cumulativeDollarVolume = 0;
   let cumulativeVolume = 0;
+  let sessionOpen = null;
+  let dayHighSoFar = -Infinity;
+  let dayLowSoFar = Infinity;
 
   rowsForRegularSession(dayIso, config.session, Math.max(1, Math.trunc(barSeconds || 5))).forEach((bucketMs) => {
     const ticks = bucketToTicks.get(bucketMs) || [];
@@ -276,6 +437,9 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
       cumulativeVolume += volume;
     }
     if (!Number.isFinite(close)) return;
+    if (!Number.isFinite(sessionOpen)) sessionOpen = open;
+    dayHighSoFar = Math.max(dayHighSoFar, high);
+    dayLowSoFar = Math.min(dayLowSoFar, low);
     previousClose = close;
 
     const et = getEtParts(bucketMs);
@@ -295,6 +459,7 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
       minutes_from_open: et.minuteOfDayEt - config.session.regularOpenMinuteEt,
       minutes_to_close: config.session.regularCloseMinuteEt - et.minuteOfDayEt - 1,
     };
+    addDailyContextFeatures(row, config, dailyContext, sessionOpen, dayHighSoFar, dayLowSoFar);
 
     (config.marketSymbols || []).forEach((symbol) => {
       const current = completedMinuteAtOrBefore(stockMinutes.get(symbol), states.get(symbol), bucketMs);
@@ -306,13 +471,15 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
       row[`${key}_minute_volume_log`] = Math.log1p(current?.volume || 0);
     });
 
-    const completedMinuteMs = Math.floor((bucketMs - 1) / 60000) * 60000;
-    if (!optionMinutesSeen.has(completedMinuteMs)) {
-      optionWindow.push(optionByMinute.get(completedMinuteMs) || createEmptyOptionAgg(optionGroups));
-      optionMinutesSeen.add(completedMinuteMs);
-      if (optionWindow.length > 5) optionWindow.shift();
+    if (optionGroups.length) {
+      const completedMinuteMs = Math.floor((bucketMs - 1) / 60000) * 60000;
+      if (!optionMinutesSeen.has(completedMinuteMs)) {
+        optionWindow.push(optionByMinute.get(completedMinuteMs) || createEmptyOptionAgg(optionGroups));
+        optionMinutesSeen.add(completedMinuteMs);
+        if (optionWindow.length > 5) optionWindow.shift();
+      }
+      addOptionFeatureRow(row, optionWindow, optionGroups);
     }
-    addOptionFeatureRow(row, optionWindow, optionGroups);
     bars.push(row);
   });
 
@@ -340,16 +507,21 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
     row.market_ok_1m = row.spy_ret_1m > -0.0005 && row.qqq_ret_1m > -0.0007 ? 1 : 0;
     row.tsla_confirm_1m = row.tsla_ret_1m > 0 ? 1 : 0;
   });
+  addOpeningRangeFeatures(bars);
   return bars;
 }
 
 async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
   const barSeconds = settings.barSeconds || config.execution?.barSeconds || 5;
+  const includeOptions = settings.includeOptions === true;
   const [trades, stockMinutes, optionAggs] = await Promise.all([
     readTargetTradesForDay(config, dayIso, config.target),
     readStockMinutesForDay(config, dayIso, config.marketSymbols),
-    readOptionAggsForDay(config, dayIso, settings),
+    includeOptions
+      ? readOptionAggsForDay(config, dayIso, settings)
+      : Promise.resolve({ optionByMinute: new Map(), optionGroups: [] }),
   ]);
+  const dailyContext = settings.dailyContextByDate?.get(dayIso) || {};
   const rows = buildFiveSecondBars({
     config,
     dayIso,
@@ -358,6 +530,7 @@ async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
     optionByMinute: optionAggs.optionByMinute,
     optionGroups: optionAggs.optionGroups,
     barSeconds,
+    dailyContext,
   });
   return {
     dayIso,
@@ -367,6 +540,7 @@ async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
       bars: rows.length,
       stockMinuteSymbols: stockMinutes.size,
       optionMinutes: optionAggs.optionByMinute.size,
+      includeOptions,
     },
   };
 }
@@ -379,6 +553,8 @@ module.exports = {
   mergeOptionAgg,
   readTargetTradesForDay,
   readStockMinutesForDay,
+  readDailyBarsForDates,
+  buildDailyContextByDate,
   readOptionAggsForDay,
   buildFiveSecondBars,
   buildScalpingBarsForDay,

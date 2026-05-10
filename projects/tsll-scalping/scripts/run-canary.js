@@ -4,7 +4,7 @@ const path = require('node:path');
 
 const { PROJECT_ROOT, ensureDir, loadConfig } = require('../src/config');
 const { availableDates } = require('../src/calendar');
-const { buildScalpingBarsForDay } = require('../src/data');
+const { buildDailyContextByDate, buildScalpingBarsForDay } = require('../src/data');
 const { buildStrategyGrid } = require('../src/strategies');
 const { simulateLongScalp, rankResults } = require('../src/backtest');
 
@@ -35,8 +35,16 @@ function asNumber(value, defaultValue) {
   return Number.isFinite(parsed) ? parsed : defaultValue;
 }
 
-function cachePath(dayIso, barSeconds) {
-  return path.join(PROJECT_ROOT, 'runtime', `tsll-scalping-bars-${dayIso}-${barSeconds}s.jsonl`);
+function asBoolean(value, defaultValue = false) {
+  if (value === undefined) return defaultValue;
+  if (typeof value === 'boolean') return value;
+  return ['1', 'true', 'yes', 'y'].includes(String(value).trim().toLowerCase());
+}
+
+function cachePath(dayIso, settings) {
+  const optionTag = settings.includeOptions ? 'opt' : 'noopt';
+  const dailyTag = settings.includeDailyContext ? 'daily' : 'nodaily';
+  return path.join(PROJECT_ROOT, 'runtime', `tsll-scalping-bars-${dayIso}-${settings.barSeconds}s-${dailyTag}-${optionTag}.jsonl`);
 }
 
 function writeJsonl(filePath, rows) {
@@ -53,7 +61,7 @@ function readJsonl(filePath) {
 }
 
 async function loadOrBuildDay(config, dayIso, settings) {
-  const filePath = cachePath(dayIso, settings.barSeconds);
+  const filePath = cachePath(dayIso, settings);
   if (!settings.rebuildCache && fs.existsSync(filePath)) {
     const rows = readJsonl(filePath);
     return {
@@ -62,6 +70,7 @@ async function loadOrBuildDay(config, dayIso, settings) {
       counts: {
         bars: rows.length,
         cacheHit: true,
+        includeOptions: settings.includeOptions,
       },
       cachePath: filePath,
     };
@@ -94,8 +103,9 @@ function renderMarkdown(report) {
   lines.push(`Window: ${report.startDate} to ${report.endDate}`);
   lines.push(`Open dates used: ${report.selectedDates.join(', ')}`);
   lines.push(`Bars: ${report.totalBars.toLocaleString()} (${report.barSeconds}s), cost: ${report.costCentsPerSide} cents per side`);
+  lines.push(`Options: ${report.includeOptions ? 'enabled' : 'disabled'}, daily context: ${report.includeDailyContext ? 'enabled' : 'disabled'}`);
   lines.push('');
-  lines.push(`This is a research backtest on Massive local flat files only. Entry uses the next 5-second bar open after a completed signal bar. If target and stop both touch in one bar, the stop is assumed first.`);
+  lines.push(`This is a research backtest on Massive local flat files only. Entry uses the next 5-second bar open after a completed signal bar. If target and stop both touch in one bar, the stop is assumed first. The default grid excludes option data and uses prior-day daily-chart context.`);
   lines.push('');
   lines.push(`## Top Results`);
   lines.push('');
@@ -121,7 +131,7 @@ function renderMarkdown(report) {
   lines.push(`## Coverage`);
   lines.push('');
   report.dayCounts.forEach((day) => {
-    lines.push(`- ${day.dayIso}: bars=${day.counts.bars || 0}, trades=${day.counts.trades || 'cache'}, optionMinutes=${day.counts.optionMinutes || 'cache'}, cache=${day.counts.cacheHit ? 'hit' : 'built'}`);
+    lines.push(`- ${day.dayIso}: bars=${day.counts.bars || 0}, trades=${day.counts.trades || 'cache'}, optionMinutes=${day.counts.optionMinutes || 0}, options=${day.counts.includeOptions ? 'yes' : 'no'}, cache=${day.counts.cacheHit ? 'hit' : 'built'}`);
   });
   lines.push('');
   lines.push(`## Scale-Up Gate`);
@@ -140,14 +150,24 @@ async function main() {
   const barSeconds = asNumber(args['bar-seconds'], config.execution.barSeconds || 5);
   const minTrades = asNumber(args['min-trades'], 20);
   const costCentsPerSide = asNumber(args['cost-cents-per-side'], config.execution.costCentsPerSide ?? 0.5);
+  const includeOptions = asBoolean(args['include-options'], config.research?.useOptionFeaturesDefault === true);
+  const includeDailyContext = args['daily-context'] !== false;
+  const includeBaselineStrategies = asBoolean(args['include-baseline-strategies'], false);
   const selectedDates = availableDates(config, startDate, endDate)
     .slice(0, maxDays || undefined);
   const outputBase = args.output
     ? path.resolve(args.output).replace(/\.json$/, '')
-    : path.join(PROJECT_ROOT, 'artifacts', `tsll-scalping-canary-${startDate}-${endDate}-${barSeconds}s-cost${String(costCentsPerSide).replace('.', 'p')}`);
+    : path.join(
+      PROJECT_ROOT,
+      'artifacts',
+      `tsll-scalping-canary-${startDate}-${endDate}-${barSeconds}s-${includeDailyContext ? 'daily' : 'nodaily'}-${includeOptions ? 'opt' : 'noopt'}-${includeBaselineStrategies ? 'with-baseline' : 'daily-grid'}-cost${String(costCentsPerSide).replace('.', 'p')}`,
+    );
   const settings = {
     barSeconds,
     costCentsPerSide,
+    includeOptions,
+    includeDailyContext,
+    includeBaselineStrategies,
     cooldownBars: asNumber(args['cooldown-bars'], config.execution.cooldownBars ?? 2),
     noEntryFirstMinutes: asNumber(args['no-entry-first-minutes'], config.execution.noEntryFirstMinutes ?? 5),
     noEntryLastMinutes: asNumber(args['no-entry-last-minutes'], config.execution.noEntryLastMinutes ?? 5),
@@ -157,7 +177,15 @@ async function main() {
   if (!selectedDates.length) throw new Error(`no_available_dates:${startDate}:${endDate}`);
   ensureDir(path.join(PROJECT_ROOT, 'runtime'));
   ensureDir(path.join(PROJECT_ROOT, 'artifacts'));
-  console.error(`[tsll-scalping] dates=${selectedDates.join(', ')} barSeconds=${barSeconds} costCentsPerSide=${costCentsPerSide}`);
+  console.error(`[tsll-scalping] dates=${selectedDates.join(', ')} barSeconds=${barSeconds} costCentsPerSide=${costCentsPerSide} options=${includeOptions ? 'yes' : 'no'} daily=${includeDailyContext ? 'yes' : 'no'}`);
+  if (includeDailyContext) {
+    const startedAt = Date.now();
+    const dailyContext = await buildDailyContextByDate(config, selectedDates, {
+      warmupDays: asNumber(args['daily-warmup-days'], config.research?.dailyWarmupDays || 35),
+    });
+    settings.dailyContextByDate = dailyContext.dailyContextByDate;
+    console.error(`[tsll-scalping] daily context dates=${dailyContext.dates.length} symbols=${dailyContext.symbols.join(',')} elapsed=${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
+  }
 
   const dayCounts = [];
   const allRows = [];
@@ -169,7 +197,10 @@ async function main() {
     console.error(`[tsll-scalping] ${dayIso} bars=${result.rows.length} counts=${JSON.stringify(result.counts)} elapsed=${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
   }
 
-  const grid = buildStrategyGrid();
+  const grid = buildStrategyGrid({
+    includeOptions,
+    includeBaselineStrategies,
+  });
   console.error(`[tsll-scalping] evaluating ${grid.length} strategy variants on ${allRows.length} bars`);
   const results = [];
   const startedAt = Date.now();
@@ -199,6 +230,9 @@ async function main() {
     selectedDates,
     barSeconds,
     costCentsPerSide,
+    includeOptions,
+    includeDailyContext,
+    includeBaselineStrategies,
     minTrades,
     totalBars: allRows.length,
     strategyVariants: grid.length,

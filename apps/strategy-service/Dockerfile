@@ -12,6 +12,7 @@ COPY apps/strategy-service ./apps/strategy-service
 COPY projects/pym-v5-replication/config ./projects/pym-v5-replication/config
 COPY projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js ./projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js
 COPY projects/pym-v5-replication/src ./projects/pym-v5-replication/src
+COPY projects/tsll-scalping/reports ./projects/tsll-scalping/reports
 
 EXPOSE 3120
 

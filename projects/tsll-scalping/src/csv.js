@@ -28,7 +28,9 @@ function parseCsvLine(line) {
 }
 
 async function readGzipCsv(filePath, onRow) {
-  const stream = fs.createReadStream(filePath).pipe(zlib.createGunzip());
+  const fileStream = fs.createReadStream(filePath);
+  const gunzip = zlib.createGunzip();
+  const stream = fileStream.pipe(gunzip);
   const reader = readline.createInterface({ input: stream, crlfDelay: Infinity });
   let headers = null;
   let rowCount = 0;
@@ -44,7 +46,43 @@ async function readGzipCsv(filePath, onRow) {
       row[header] = values[index] ?? '';
     });
     rowCount += 1;
-    await onRow(row, rowCount);
+    const keepGoing = await onRow(row, rowCount);
+    if (keepGoing === false) {
+      reader.close();
+      fileStream.destroy();
+      gunzip.destroy();
+      break;
+    }
+  }
+  return rowCount;
+}
+
+async function readCsvStream(input, onRow, { closeOnStop = true } = {}) {
+  const reader = readline.createInterface({ input, crlfDelay: Infinity });
+  let headers = null;
+  let rowCount = 0;
+  for await (const line of reader) {
+    if (!line) continue;
+    if (!headers) {
+      headers = parseCsvLine(line);
+      const keepGoing = await onRow(null, rowCount, headers, line);
+      if (keepGoing === false) {
+        if (closeOnStop) reader.close();
+        break;
+      }
+      continue;
+    }
+    const values = parseCsvLine(line);
+    const row = {};
+    headers.forEach((header, index) => {
+      row[header] = values[index] ?? '';
+    });
+    rowCount += 1;
+    const keepGoing = await onRow(row, rowCount, headers, line);
+    if (keepGoing === false) {
+      if (closeOnStop) reader.close();
+      break;
+    }
   }
   return rowCount;
 }
@@ -57,5 +95,6 @@ function toNumber(value) {
 module.exports = {
   parseCsvLine,
   readGzipCsv,
+  readCsvStream,
   toNumber,
 };

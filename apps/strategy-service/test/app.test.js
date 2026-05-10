@@ -103,6 +103,7 @@ describe('strategy-service API', () => {
       'pym-v5-ml-option-top8-50-50',
       'pym-v5-two-speed-option-meta21',
       'pym-v5-spy-put-pressure-bil',
+      'tsll-seconds-passive-scalper',
     ]);
     const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
     expect(byId['pym-v5'].sourceLinks.map((link) => link.label)).toEqual([
@@ -116,6 +117,7 @@ describe('strategy-service API', () => {
     expect(byId['pym-v5-ml-calm-trend-router'].ruleSummary.join(' ')).toContain('Calm-trend conditions');
     expect(byId['pym-v5-ml-option-top8-50-50'].ruleSummary.join(' ')).toContain('50% option top-8');
     expect(byId['pym-v5-two-speed-option-meta21'].ruleSummary.join(' ')).toContain('prior 21-day');
+    expect(byId['tsll-seconds-passive-scalper'].ruleSummary.join(' ')).toContain('buy limit 3c');
   });
 
   it('lists strategies and serves chart ranges', async () => {
