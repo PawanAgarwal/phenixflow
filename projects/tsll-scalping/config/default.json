@@ -1,0 +1,36 @@
+{
+  "projectName": "tsll-scalping",
+  "dataPolicy": {
+    "provider": "Massive",
+    "allowLegacyDatabase": false,
+    "firstHistoricalDate": "2025-01-02"
+  },
+  "roots": {
+    "historical": "/Volumes/SEC4TB/massive-data/massive",
+    "calendar": "/Volumes/SEC4TB/massive-data/calendar/us-equities-options-calendar.json"
+  },
+  "datasets": {
+    "stockTrades": "stock_trades_all",
+    "stockBars": "stock_quotes_1m",
+    "optionBars": "option_quotes_1m",
+    "optionTrades": "option_trades_all"
+  },
+  "target": "TSLL",
+  "marketSymbols": ["SPY", "QQQ", "TSLA", "TSLL"],
+  "optionRoots": {
+    "tsll": ["TSL", "TSLL"],
+    "tsla": ["TSLA"]
+  },
+  "session": {
+    "timeZone": "America/New_York",
+    "regularOpenMinuteEt": 570,
+    "regularCloseMinuteEt": 960
+  },
+  "execution": {
+    "barSeconds": 5,
+    "costCentsPerSide": 0.5,
+    "cooldownBars": 2,
+    "noEntryFirstMinutes": 5,
+    "noEntryLastMinutes": 5
+  }
+}
