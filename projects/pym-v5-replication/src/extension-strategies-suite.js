@@ -815,6 +815,42 @@ function buildExtensionRebalanceReport({
   };
 }
 
+// Apply a stress overlay on top of an inner strategy. The overlay scales
+// gross exposure by `scaleFn(stress)` and routes the slack to BIL.
+// `stressByDate` is a Map<signalDate, stressNumber>; days with no stress
+// signal pass through unchanged. `scaleFn(stress)` should return a number
+// in [0, 1.5] (1.0 = full position, <1 = defensive, >1 = leveraged).
+function strategyWithStressOverlay({ id, name, family, description, innerStrategy, stressByDate, scaleFn, safeTicker = SAFE_TICKER }) {
+  return {
+    id,
+    name: name || `${innerStrategy.name} + stress overlay`,
+    family: family || 'stress_overlay',
+    description: description || `${innerStrategy.name} with a stress-derived gross-exposure overlay; slack routed to ${safeTicker}.`,
+    fn: (ctx) => {
+      const innerWeights = innerStrategy.fn(ctx);
+      const stress = stressByDate.get(ctx.signalDate);
+      const scale = (stress != null && Number.isFinite(stress)) ? scaleFn(stress) : 1.0;
+      if (scale >= 0.999) return innerWeights;
+      const out = new Map();
+      innerWeights.forEach((weight, ticker) => out.set(ticker, weight * scale));
+      out.set(safeTicker, (out.get(safeTicker) || 0) + Math.max(0, 1 - scale));
+      return cleanWeights(out);
+    },
+  };
+}
+
+// Default "aggressive" scale function — used by the stress strategy.
+//   stress < 0      → 1.0 (full)
+//   stress in [0,1] → linear 1.0 → 0.6
+//   stress in [1,2] → linear 0.6 → 0.2
+//   stress > 2      → 0.2 (max defensive)
+function aggressiveStressScale(stress) {
+  if (!Number.isFinite(stress) || stress < 0) return 1.0;
+  if (stress < 1) return 1.0 - 0.4 * stress;
+  if (stress < 2) return 0.6 - 0.4 * (stress - 1);
+  return 0.2;
+}
+
 // Blend an inner strategy's daily weights with an external map of holdings
 // keyed by signalDate. Used to mix the cap25 sleeve-meta strategy with an ML
 // model's daily holdings drawn from a precomputed walk-forward artifact.
@@ -844,12 +880,14 @@ function strategyBlendWithExternal({ id, name, family, description, innerStrateg
 module.exports = {
   SECTOR_TICKERS,
   SAFE_TICKER,
+  aggressiveStressScale,
   buildExtensionRebalanceReport,
   defaultStrategies,
   mergeDailyBars,
   precomputeContext,
   runExtensionStrategiesSuite,
   strategyBlendWithExternal,
+  strategyWithStressOverlay,
   strategySleeveMeta,
   strategySleeveMetaCap,
   strategySleeveMetaDispersion,

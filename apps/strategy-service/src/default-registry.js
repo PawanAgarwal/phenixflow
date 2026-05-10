@@ -15,6 +15,7 @@ const { createWheelOptionIncomeStrategy } = require('./strategies/wheel-option-i
 const {
   createPymV5SleeveMetaCapStrategy,
   createPymV5Cap25LgbmBlendStrategy,
+  createPymV5Cap25LgbmBlendStressStrategy,
 } = require('./strategies/pym-v5-extension');
 
 function createDefaultRegistry(options = {}) {
@@ -28,6 +29,7 @@ function createDefaultRegistry(options = {}) {
     createPymV5SpyPutPressureStrategy(options.pymV5SpyPutPressure || {}),
     createPymV5SleeveMetaCapStrategy({ lookback: 21, maxWeight: 0.25, ...(options.pymV5SleeveMetaCap || {}) }),
     createPymV5Cap25LgbmBlendStrategy({ blendWeight: 0.40, ...(options.pymV5Cap25LgbmBlend || {}) }),
+    createPymV5Cap25LgbmBlendStressStrategy({ blendWeight: 0.40, ...(options.pymV5Cap25LgbmBlendStress || {}) }),
     createWheelOptionIncomeStrategy(options.wheelOptionIncome || {}),
     createTsllSecondsPassiveScalperStrategy(options.tsllSecondsPassiveScalper || {}),
   ]);

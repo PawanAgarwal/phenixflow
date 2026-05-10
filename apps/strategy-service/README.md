@@ -47,6 +47,7 @@ GET /api/strategies/pym-v5-two-speed-option-meta21
 GET /api/strategies/pym-v5-spy-put-pressure-bil
 GET /api/strategies/pym-v5-sleeve-meta-21d-cap25
 GET /api/strategies/pym-v5-cap25-lgbm-blend40
+GET /api/strategies/pym-v5-cap25-lgbm-blend40-stress
 GET /api/strategies/tsll-seconds-passive-scalper
 ```
 
@@ -146,6 +147,18 @@ GET /api/strategies/tsll-seconds-passive-scalper/portfolio/2026-02-27
   `projects/pym-v5-ml-experiments/artifacts/pym-v5-daily-walkforward-lgbm-tiny-grid-*.json`
   and is regenerated via the `--lgbm-only` flag of
   `projects/pym-v5-ml-experiments/python/run_daily_walkforward.py`.
+- `pym-v5-cap25-lgbm-blend40-stress`: same blend as
+  `pym-v5-cap25-lgbm-blend40`, with an additional options-derived stress
+  overlay that scales gross exposure down on high-stress days. Stress is a
+  composite of VIXY 5d log-return z-score (always available),
+  ^VIX z-score (when local Massive REST data is present, 2023-02+),
+  and OCC equity put/call ratio z-score (when OCC files are present,
+  2021-01+). When stress > 0 the gross is scaled smoothly; > 2σ caps at 20%
+  gross with the slack in BIL. Over a 10-year backtest 2017-04 → 2026-05
+  (cost 2 bps): cuts max drawdown from -21.2% to -12.2%, cuts vol from 26.0%
+  to 18.8%, lifts Sharpe from 2.45 to 3.08, and modestly trades CAGR from
+  82.7% to 75.3%. See
+  `projects/pym-v5-ml-experiments/docs/options-stress-overlay-research-notes.md`.
 - `tsll-seconds-passive-scalper`: TSLL intraday seconds-bar scalping tracker.
   It buys 3 cents below the prior completed 1-second close, targets +3 cents,
   stops at 5 cents, exits after 10 seconds, and reports daily P/L from the
