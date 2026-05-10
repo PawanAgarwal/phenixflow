@@ -1,9 +1,16 @@
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+
 const { parseOpraTicker, opraRoot, daysBetween } = require('../src/option-symbol');
 const {
   addOptionBarFeature,
   emptyRootFeature,
   finalizeRootFeature,
+  latestOptionBarsDate,
+  optionBarsParquetPath,
   parseOptionBarLine,
+  resolveOptionBarsSource,
   withRollingOptionStats,
 } = require('../src/option-features');
 const { optionMomentumScore } = require('../src/option-overlay-suite');
@@ -79,5 +86,32 @@ describe('daily option feature aggregation', () => {
       },
     }, 'SPY');
     expect(score).toBeGreaterThan(1);
+  });
+
+  it('prefers live parquet option bars and finds the latest available option date', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pym-option-features-'));
+    const historical = path.join(root, 'historical');
+    const liveParquet = path.join(root, 'live-parquet');
+    const config = {
+      roots: { historical, liveParquet },
+      datasets: { optionBars: 'option_quotes_1m' },
+    };
+    const parquetDir = path.join(liveParquet, 'option_quotes_1m', 'date=2026-05-08');
+    const csvDir = path.join(historical, 'option_quotes_1m', 'date=2026-05-07');
+    fs.mkdirSync(parquetDir, { recursive: true });
+    fs.mkdirSync(csvDir, { recursive: true });
+    fs.writeFileSync(path.join(parquetDir, '2026-05-08.live.parquet'), '');
+    fs.writeFileSync(path.join(csvDir, '2026-05-07.csv.gz'), '');
+
+    expect(optionBarsParquetPath(config, '2026-05-08')).toBe(path.join(parquetDir, '2026-05-08.live.parquet'));
+    expect(resolveOptionBarsSource(config, '2026-05-08')).toEqual(expect.objectContaining({
+      format: 'parquet',
+      filePath: path.join(parquetDir, '2026-05-08.live.parquet'),
+    }));
+    expect(resolveOptionBarsSource(config, '2026-05-07')).toEqual(expect.objectContaining({
+      format: 'csv.gz',
+      filePath: path.join(csvDir, '2026-05-07.csv.gz'),
+    }));
+    expect(latestOptionBarsDate(config)).toBe('2026-05-08');
   });
 });

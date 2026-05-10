@@ -1,4 +1,5 @@
 const fs = require('node:fs');
+const { spawn } = require('node:child_process');
 const path = require('node:path');
 const readline = require('node:readline');
 const zlib = require('node:zlib');
@@ -31,6 +32,54 @@ function optionBarsCsvPath(config, dayIso) {
     `date=${dayIso}`,
     `${dayIso}.csv.gz`,
   );
+}
+
+function optionBarsParquetPath(config, dayIso) {
+  if (!config.roots.liveParquet) return null;
+  return path.join(
+    config.roots.liveParquet,
+    config.datasets.optionBars || OPTION_BAR_DATASET,
+    `date=${dayIso}`,
+    `${dayIso}.live.parquet`,
+  );
+}
+
+function resolveOptionBarsSource(config, dayIso) {
+  const parquetPath = optionBarsParquetPath(config, dayIso);
+  if (parquetPath && fs.existsSync(parquetPath)) {
+    return {
+      format: 'parquet',
+      filePath: parquetPath,
+      preferredFilePath: parquetPath,
+    };
+  }
+  const csvPath = optionBarsCsvPath(config, dayIso);
+  if (fs.existsSync(csvPath)) {
+    return {
+      format: 'csv.gz',
+      filePath: csvPath,
+      preferredFilePath: parquetPath || csvPath,
+    };
+  }
+  return {
+    format: 'missing',
+    filePath: parquetPath || csvPath,
+    preferredFilePath: parquetPath || csvPath,
+    fallbackFilePath: csvPath,
+  };
+}
+
+function latestOptionBarsDate(config) {
+  const dataset = config.datasets.optionBars || OPTION_BAR_DATASET;
+  const roots = [config.roots.historical, config.roots.liveParquet].filter(Boolean);
+  const dates = roots.flatMap((root) => {
+    const datasetRoot = path.join(root, dataset);
+    if (!fs.existsSync(datasetRoot)) return [];
+    return fs.readdirSync(datasetRoot)
+      .filter((entry) => entry.startsWith('date='))
+      .map((entry) => entry.slice('date='.length));
+  });
+  return dates.length ? dates.sort().at(-1) : null;
 }
 
 function safeNumber(value) {
@@ -150,6 +199,53 @@ function parseOptionBarLine(line) {
   };
 }
 
+function duckdbString(value) {
+  return `'${String(value).replace(/'/g, "''")}'`;
+}
+
+function optionParquetSql(filePath) {
+  return `COPY (
+    SELECT
+      ticker,
+      volume,
+      open,
+      close,
+      high,
+      low,
+      window_start,
+      COALESCE(CAST(transactions AS VARCHAR), '0') AS transactions
+    FROM read_parquet(${duckdbString(filePath)})
+  ) TO STDOUT WITH (FORMAT CSV, HEADER TRUE);`;
+}
+
+async function streamParquetOptionBarLines(filePath, onLine) {
+  const child = spawn(process.env.DUCKDB_BIN || 'duckdb', ['-c', optionParquetSql(filePath)], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const stderr = [];
+  child.stderr.on('data', (chunk) => {
+    stderr.push(String(chunk));
+  });
+
+  const reader = readline.createInterface({ input: child.stdout, crlfDelay: Infinity });
+  let headerSeen = false;
+  for await (const line of reader) {
+    if (!headerSeen) {
+      headerSeen = true;
+      continue;
+    }
+    if (line) onLine(line);
+  }
+
+  const code = await new Promise((resolve, reject) => {
+    child.on('error', reject);
+    child.on('close', resolve);
+  });
+  if (code !== 0) {
+    throw new Error(`duckdb_parquet_read_failed:${filePath}:${stderr.join('').trim() || code}`);
+  }
+}
+
 function addOptionBarFeature(featuresByRoot, dayIso, row, underlyingCloses, selectedRoots = null) {
   const parsed = parseOpraTicker(row.ticker);
   if (selectedRoots && !selectedRoots.has(parsed?.root)) return false;
@@ -220,7 +316,7 @@ function underlyingClosesForDate(market, date) {
 }
 
 async function readOptionFeaturesForDay({ config, day, market, roots }) {
-  const filePath = optionBarsCsvPath(config, day.date);
+  const source = resolveOptionBarsSource(config, day.date);
   const selectedRoots = new Set(roots.map((root) => root.toUpperCase()));
   const closeMinute = closeMinuteEt(day);
   const featuresByRoot = new Map();
@@ -229,10 +325,11 @@ async function readOptionFeaturesForDay({ config, day, market, roots }) {
   let rowsMatchedRoot = 0;
   let rowsUsed = 0;
 
-  if (!fs.existsSync(filePath)) {
+  if (source.format === 'missing') {
     return {
       date: day.date,
-      filePath,
+      filePath: source.filePath,
+      sourceFormat: source.format,
       missingFile: true,
       rowsRead,
       rowsMatchedRoot,
@@ -241,27 +338,34 @@ async function readOptionFeaturesForDay({ config, day, market, roots }) {
     };
   }
 
-  const stream = fs.createReadStream(filePath).pipe(zlib.createGunzip());
-  const reader = readline.createInterface({ input: stream, crlfDelay: Infinity });
-  let headerSeen = false;
-  for await (const line of reader) {
-    if (!headerSeen) {
-      headerSeen = true;
-      continue;
-    }
-    if (!line) continue;
+  function processOptionBarLine(line) {
     rowsRead += 1;
     const comma = line.indexOf(',');
-    if (comma < 0) continue;
+    if (comma < 0) return;
     const ticker = line.slice(0, comma);
     const root = opraRoot(ticker);
-    if (!root || !selectedRoots.has(root)) continue;
+    if (!root || !selectedRoots.has(root)) return;
     rowsMatchedRoot += 1;
     const row = parseOptionBarLine(line);
-    if (!row) continue;
+    if (!row) return;
     const minuteEt = minuteEtFromNs(row.windowStart);
-    if (minuteEt === null || minuteEt < 570 || minuteEt >= closeMinute) continue;
+    if (minuteEt === null || minuteEt < 570 || minuteEt >= closeMinute) return;
     if (addOptionBarFeature(featuresByRoot, day.date, row, underlyingCloses, selectedRoots)) rowsUsed += 1;
+  }
+
+  if (source.format === 'parquet') {
+    await streamParquetOptionBarLines(source.filePath, processOptionBarLine);
+  } else {
+    const stream = fs.createReadStream(source.filePath).pipe(zlib.createGunzip());
+    const reader = readline.createInterface({ input: stream, crlfDelay: Infinity });
+    let headerSeen = false;
+    for await (const line of reader) {
+      if (!headerSeen) {
+        headerSeen = true;
+        continue;
+      }
+      if (line) processOptionBarLine(line);
+    }
   }
 
   const rootEntries = [...featuresByRoot.entries()]
@@ -269,7 +373,8 @@ async function readOptionFeaturesForDay({ config, day, market, roots }) {
     .sort(([left], [right]) => left.localeCompare(right));
   return {
     date: day.date,
-    filePath,
+    filePath: source.filePath,
+    sourceFormat: source.format,
     missingFile: false,
     rowsRead,
     rowsMatchedRoot,
@@ -336,6 +441,8 @@ async function buildOptionFeatureFile({ config, market, score, days, startDate, 
     coverage.push({
       date: day.date,
       missingFile: result.missingFile,
+      sourceFormat: result.sourceFormat,
+      filePath: result.filePath,
       rowsRead: result.rowsRead,
       rowsMatchedRoot: result.rowsMatchedRoot,
       rowsUsed: result.rowsUsed,
@@ -357,6 +464,9 @@ async function buildOptionFeatureFile({ config, market, score, days, startDate, 
     source: {
       provider: 'Massive',
       dataset: config.datasets.optionBars || OPTION_BAR_DATASET,
+      sourcePreference: 'live parquet when available, historical csv.gz fallback',
+      liveParquetRoot: config.roots.liveParquet || null,
+      historicalRoot: config.roots.historical,
       note: 'Historical option Greeks/open interest were not present in the local Massive cache; gamma-style features are short-dated ATM option-flow proxies derived from aggregate option bars.',
     },
     startDate,
@@ -389,11 +499,14 @@ module.exports = {
   defaultOptionRoots,
   emptyRootFeature,
   finalizeRootFeature,
+  latestOptionBarsDate,
   moneynessBucket,
   optionBarsCsvPath,
+  optionBarsParquetPath,
   parseOptionBarLine,
   readOptionFeatureJsonl,
   readOptionFeaturesForDay,
+  resolveOptionBarsSource,
   safeRatio,
   withRollingOptionStats,
 };

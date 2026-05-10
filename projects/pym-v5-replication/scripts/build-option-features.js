@@ -5,7 +5,7 @@ const { latestDatasetDate, openCalendarDays, resolveEndDate } = require('../src/
 const { loadConfig } = require('../src/config');
 const { readDailyBarsJsonl } = require('../src/backtest');
 const { defaultScorePath, findLatestMassiveEodBarsPath } = require('../src/rebalance-report');
-const { buildOptionFeatureFile, defaultOptionRoots } = require('../src/option-features');
+const { buildOptionFeatureFile, defaultOptionRoots, latestOptionBarsDate } = require('../src/option-features');
 
 function parseArgs(argv) {
   const out = {};
@@ -29,7 +29,7 @@ async function main() {
   const endDate = requestedEnd === 'auto'
     ? [
       resolveEndDate(config, requestedEnd),
-      latestDatasetDate(config.roots.historical, config.datasets.optionBars || 'option_quotes_1m'),
+      latestOptionBarsDate(config) || latestDatasetDate(config.roots.historical, config.datasets.optionBars || 'option_quotes_1m'),
     ].filter(Boolean).sort().at(0)
     : requestedEnd;
   const dailyBarsPath = args.dailyBarsPath || findLatestMassiveEodBarsPath();

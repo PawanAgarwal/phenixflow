@@ -3,6 +3,7 @@ const fs = require('node:fs');
 
 const { artifactPath, ensureDir, loadConfig, runtimePath } = require('../src/config');
 const { latestDatasetDate, resolveEndDate } = require('../src/calendar');
+const { latestOptionBarsDate } = require('../src/option-features');
 const { runOptionOverlaySuite, selectStrategies } = require('../src/option-overlay-suite');
 
 function parseArgs(argv) {
@@ -39,7 +40,7 @@ async function main() {
   const endDate = requestedEnd === 'auto'
     ? [
       resolveEndDate(config, requestedEnd),
-      latestDatasetDate(config.roots.historical, config.datasets.optionBars || 'option_quotes_1m'),
+      latestOptionBarsDate(config) || latestDatasetDate(config.roots.historical, config.datasets.optionBars || 'option_quotes_1m'),
     ].filter(Boolean).sort().at(0)
     : requestedEnd;
   const optionFeaturesPath = args.optionFeaturesPath || defaultOptionFeaturesPath(startDate, endDate);
