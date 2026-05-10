@@ -21,6 +21,8 @@ const els = {
   edgeReturn: document.getElementById('edgeReturn'),
   portfolioValue: document.getElementById('portfolioValue'),
   latestTurnover: document.getElementById('latestTurnover'),
+  lastPortfolioReturn: document.getElementById('lastPortfolioReturn'),
+  lastSpyReturn: document.getElementById('lastSpyReturn'),
   chartTitle: document.getElementById('chartTitle'),
   performanceChart: document.getElementById('performanceChart'),
   portfolioTitle: document.getElementById('portfolioTitle'),
@@ -67,6 +69,8 @@ function clearDashboard() {
     els.edgeReturn,
     els.portfolioValue,
     els.latestTurnover,
+    els.lastPortfolioReturn,
+    els.lastSpyReturn,
     els.portfolioTitle,
     els.holdingCount,
     els.weekRange,
@@ -105,6 +109,21 @@ function selectedStrategy() {
 
 function completedWeekValues() {
   return state.values.slice(-7);
+}
+
+function latestCompletedValue() {
+  return [...state.values].reverse().find((value) => isFiniteNumber(value.netReturn)) || null;
+}
+
+function latestSpySessionReturn(completedValue) {
+  if (!completedValue) return null;
+  const points = state.chart?.data || [];
+  const currentIndex = points.findIndex((point) => point.signalDate === completedValue.date);
+  if (currentIndex <= 0) return null;
+  const previousSpy = points[currentIndex - 1]?.benchmarks?.spy;
+  const currentSpy = points[currentIndex]?.benchmarks?.spy;
+  if (!isFiniteNumber(previousSpy) || !isFiniteNumber(currentSpy)) return null;
+  return ((1 + Number(currentSpy)) / (1 + Number(previousSpy))) - 1;
 }
 
 function renderStrategySelect() {
@@ -221,6 +240,8 @@ function renderSummary(strategy) {
   const summary = state.summary.summary;
   const latest = state.latestPortfolio.snapshot;
   const latestChange = state.latestPortfolio.changeFromPrevious;
+  const latestCompleted = latestCompletedValue();
+  const spySessionReturn = latestSpySessionReturn(latestCompleted);
   const edge = isFiniteNumber(summary.totalReturn) && isFiniteNumber(summary.spyReturn)
     ? summary.totalReturn - summary.spyReturn
     : null;
@@ -233,6 +254,10 @@ function renderSummary(strategy) {
   els.edgeReturn.className = valueClass(edge);
   els.portfolioValue.textContent = formatMoney(latest.equityBeforeNextSession);
   els.latestTurnover.textContent = formatPctPoints(latestChange.turnoverPct);
+  els.lastPortfolioReturn.textContent = latestCompleted ? formatPct(latestCompleted.netReturn) : '-';
+  els.lastPortfolioReturn.className = valueClass(latestCompleted?.netReturn);
+  els.lastSpyReturn.textContent = formatPct(spySessionReturn);
+  els.lastSpyReturn.className = valueClass(spySessionReturn);
   els.chartTitle.textContent = `${strategy?.name || 'Study'} vs SPY`;
 }
 
