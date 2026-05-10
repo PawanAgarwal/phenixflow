@@ -19,6 +19,7 @@ const {
 const { collectTickers } = require('../../../../projects/pym-v5-replication/src/symphony');
 
 const DEFAULT_STRATEGY_ID = 'grid_pym_option_rank_top8_zm0p5';
+const SPY_PUT_PRESSURE_STRATEGY_ID = 'grid_pym_spy_put_z2p5_to_bil';
 
 function pct(value) {
   return Number.isFinite(value) ? value * 100 : null;
@@ -363,10 +364,21 @@ function buildOptionRankReport({
   };
 }
 
-function createPymV5OptionRankStrategy(options = {}) {
+function createPymV5OptionOverlayStrategy(options = {}) {
   loadMassiveEnv();
   const config = options.config || loadConfig();
-  const optionStrategyId = options.optionStrategyId || process.env.PYM_V5_OPTION_STUDY_ID || DEFAULT_STRATEGY_ID;
+  const optionStrategyId = options.optionStrategyId || (
+    options.useOptionStudyEnv === false ? DEFAULT_STRATEGY_ID : process.env.PYM_V5_OPTION_STUDY_ID
+  ) || DEFAULT_STRATEGY_ID;
+  const metadata = {
+    id: options.id || 'pym-v5-option-rank-top8',
+    name: options.name || 'PYM Option-Rank Top 8',
+    displayName: options.displayName || options.name || 'PYM Option-Rank Top 8',
+    family: options.family || 'pym_option_flow',
+    dataProvider: options.dataProvider || 'Massive adjusted EOD + Massive option aggregates',
+    strategySource: options.strategySource || 'PYM V5 Composer tree plus local option-flow ranking overlay',
+    description: options.description || null,
+  };
 
   const state = {
     report: null,
@@ -376,14 +388,15 @@ function createPymV5OptionRankStrategy(options = {}) {
 
   function getMetadata() {
     return {
-      id: 'pym-v5-option-rank-top8',
-      name: 'PYM Option-Rank Top 8',
-      displayName: 'PYM Option-Rank Top 8',
-      family: 'pym_option_flow',
+      id: metadata.id,
+      name: metadata.name,
+      displayName: metadata.displayName,
+      family: metadata.family,
       cadence: 'daily_eod',
       actionType: 'rebalance',
-      dataProvider: 'Massive adjusted EOD + Massive option aggregates',
-      strategySource: 'PYM V5 Composer tree plus local option-flow ranking overlay',
+      dataProvider: metadata.dataProvider,
+      strategySource: metadata.strategySource,
+      description: metadata.description,
       composerSymphonyId: config.source.composerSymphonyId,
       baseStrategyId: 'pym-v5',
       optionOverlayStrategyId: optionStrategyId,
@@ -445,10 +458,31 @@ function createPymV5OptionRankStrategy(options = {}) {
   };
 }
 
+function createPymV5OptionRankStrategy(options = {}) {
+  return createPymV5OptionOverlayStrategy(options);
+}
+
+function createPymV5SpyPutPressureStrategy(options = {}) {
+  return createPymV5OptionOverlayStrategy({
+    ...options,
+    id: options.id || 'pym-v5-spy-put-pressure-bil',
+    name: options.name || 'PYM SPY Put-Pressure to BIL',
+    displayName: options.displayName || 'PYM SPY Put-Pressure',
+    family: options.family || 'pym_option_risk_overlay',
+    strategySource: options.strategySource || 'PYM V5 Composer tree plus SPY option put-pressure risk-off overlay',
+    description: options.description || 'Holds the replicated PYM V5 ETF portfolio unless SPY option put-pressure z-score is at least 2.5, then rotates to BIL at EOD.',
+    optionStrategyId: options.optionStrategyId || SPY_PUT_PRESSURE_STRATEGY_ID,
+    useOptionStudyEnv: false,
+  });
+}
+
 module.exports = {
   DEFAULT_STRATEGY_ID,
+  SPY_PUT_PRESSURE_STRATEGY_ID,
   buildOptionRankReport,
+  createPymV5OptionOverlayStrategy,
   createPymV5OptionRankStrategy,
+  createPymV5SpyPutPressureStrategy,
   findLatestOptionFeaturesPath,
   optionFeaturesMetadata,
 };

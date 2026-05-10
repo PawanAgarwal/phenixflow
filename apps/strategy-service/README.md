@@ -1,8 +1,8 @@
 # PhenixFlow Strategy Service
 
 Generic strategy API service for daily portfolio strategies. It currently serves
-the base PYM V5 study and the PYM option-rank top-8 study as separate strategy
-APIs under one registry.
+the base PYM V5 study, the PYM option-rank top-8 study, and the PYM SPY
+put-pressure risk-off study as separate strategy APIs under one registry.
 
 ## Run Locally
 
@@ -40,6 +40,7 @@ Strategy metadata and summary:
 ```http
 GET /api/strategies/pym-v5
 GET /api/strategies/pym-v5-option-rank-top8
+GET /api/strategies/pym-v5-spy-put-pressure-bil
 ```
 
 Chart data for a range:
@@ -47,6 +48,7 @@ Chart data for a range:
 ```http
 GET /api/strategies/pym-v5/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-option-rank-top8/chart?start=2025-01-01&end=2026-05-07
+GET /api/strategies/pym-v5-spy-put-pressure-bil/chart?start=2025-01-01&end=2026-05-07
 ```
 
 Daily values for a range:
@@ -60,6 +62,7 @@ Latest portfolio and change from previous EOD target:
 ```http
 GET /api/strategies/pym-v5/portfolio/latest
 GET /api/strategies/pym-v5-option-rank-top8/portfolio/latest
+GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/latest
 GET /api/strategies/pym-v5/changes/latest
 ```
 
@@ -68,6 +71,7 @@ Portfolio for a specific date:
 ```http
 GET /api/strategies/pym-v5/portfolio/2026-05-07
 GET /api/strategies/pym-v5-option-rank-top8/portfolio/2026-05-07
+GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
 ```
 
 ## Current Studies
@@ -77,6 +81,10 @@ GET /api/strategies/pym-v5-option-rank-top8/portfolio/2026-05-07
   aggregate flow using option overlay strategy `grid_pym_option_rank_top8_zm0p5`.
   It uses EOD PYM targets and day-X option-flow features, then realizes
   close-to-close returns into X+1.
+- `pym-v5-spy-put-pressure-bil`: PYM V5 with SPY option put-pressure overlay
+  `grid_pym_spy_put_z2p5_to_bil`. It holds the replicated PYM ETF portfolio
+  unless SPY option put-pressure z-score is at least `2.5`, then rotates to
+  `BIL` at EOD and realizes close-to-close returns into X+1.
 
 Recompute in memory from mounted runtime data:
 
