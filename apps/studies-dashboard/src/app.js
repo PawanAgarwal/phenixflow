@@ -83,6 +83,13 @@ function createApp(options = {}) {
 
   app.use('/api/strategies', createProxyHandler({ strategyApiUrl, fetchImpl }));
 
+  app.use((req, res, next) => {
+    if (req.path === '/' || req.path === '/index.html' || req.path.endsWith('.js') || req.path.endsWith('.css')) {
+      res.set('Cache-Control', 'no-store');
+    }
+    next();
+  });
+
   app.use(express.static(publicRoot));
 
   app.get('*', (_req, res) => {

@@ -7,6 +7,7 @@ const state = {
   values: [],
   latestPortfolio: null,
   weekPortfolios: [],
+  loadToken: 0,
 };
 
 const els = {
@@ -58,11 +59,44 @@ function valueClass(value) {
   return Number(value) > 0 ? 'positive' : 'negative';
 }
 
-async function fetchJson(path, options) {
-  const response = await fetch(path, options);
-  const body = await response.json();
-  if (!response.ok) throw new Error(body.error?.message || `request_failed:${response.status}`);
-  return body;
+function clearDashboard() {
+  [
+    els.latestDate,
+    els.studyReturn,
+    els.spyReturn,
+    els.edgeReturn,
+    els.portfolioValue,
+    els.latestTurnover,
+    els.portfolioTitle,
+    els.holdingCount,
+    els.weekRange,
+    els.chartTitle,
+  ].forEach((element) => {
+    element.textContent = '-';
+    element.className = '';
+  });
+  els.portfolioRows.replaceChildren();
+  els.weekRows.replaceChildren();
+  const canvas = els.performanceChart;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+async function fetchJson(path, options = {}) {
+  const { timeoutMs = 12000, ...fetchOptions } = options;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(path, { ...fetchOptions, signal: controller.signal });
+    const body = await response.json();
+    if (!response.ok) throw new Error(body.error?.message || `request_failed:${response.status}`);
+    return body;
+  } catch (error) {
+    if (error.name === 'AbortError') throw new Error(`request_timeout:${path}`);
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 function selectedStrategy() {
@@ -129,26 +163,50 @@ async function loadShell() {
 
 async function loadStudy() {
   if (!state.strategyId) throw new Error('No strategies available from strategy service');
-  els.statusText.textContent = 'Loading';
-  const [summary, chart, values, latestPortfolio] = await Promise.all([
-    fetchJson(`/api/strategies/${state.strategyId}`),
-    fetchJson(`/api/strategies/${state.strategyId}/chart`),
-    fetchJson(`/api/strategies/${state.strategyId}/values?limit=12`),
-    fetchJson(`/api/strategies/${state.strategyId}/portfolio/latest`),
-  ]);
+  const token = state.loadToken + 1;
+  state.loadToken = token;
+  const strategyId = state.strategyId;
+  const strategy = selectedStrategy();
+  els.statusText.textContent = `Loading ${strategy?.name || strategyId}`;
+  state.summary = null;
+  state.chart = null;
+  state.values = [];
+  state.latestPortfolio = null;
+  state.weekPortfolios = [];
+  clearDashboard();
+  let summary;
+  let chart;
+  let values;
+  let latestPortfolio;
+  try {
+    [summary, chart, values, latestPortfolio] = await Promise.all([
+      fetchJson(`/api/strategies/${strategyId}`),
+      fetchJson(`/api/strategies/${strategyId}/chart`),
+      fetchJson(`/api/strategies/${strategyId}/values?limit=12`),
+      fetchJson(`/api/strategies/${strategyId}/portfolio/latest`),
+    ]);
+  } catch (error) {
+    if (token !== state.loadToken || strategyId !== state.strategyId) return;
+    throw error;
+  }
+  if (token !== state.loadToken || strategyId !== state.strategyId) return;
   state.summary = summary;
   state.chart = chart;
   state.values = values.data || [];
   state.latestPortfolio = latestPortfolio.data;
+  state.weekPortfolios = [];
+  renderDashboard();
+  els.statusText.textContent = `Loaded ${summary.summary.latestRebalanceDate || 'latest'}`;
+
   const weekDates = completedWeekValues().map((value) => value.date);
   const weekPortfolios = await Promise.all(weekDates.map((date) => (
-    fetchJson(`/api/strategies/${state.strategyId}/portfolio/${date}`)
+    fetchJson(`/api/strategies/${strategyId}/portfolio/${date}`, { timeoutMs: 6000 })
       .then((payload) => payload.data)
       .catch(() => null)
   )));
+  if (token !== state.loadToken || strategyId !== state.strategyId) return;
   state.weekPortfolios = weekPortfolios.filter(Boolean);
-  renderDashboard();
-  els.statusText.textContent = `Loaded ${summary.summary.latestRebalanceDate || 'latest'}`;
+  renderWeekChanges();
 }
 
 function renderDashboard() {
