@@ -4,11 +4,17 @@ const {
   createPymV5OptionRankStrategy,
   createPymV5SpyPutPressureStrategy,
 } = require('./strategies/pym-v5-option-rank');
+const {
+  createPymV5MlTwoSpeedStrategy,
+  createPymV5TwoSpeedOptionMeta21Strategy,
+} = require('./strategies/pym-v5-ml-artifact');
 
 function createDefaultRegistry(options = {}) {
   return new StrategyRegistry([
     createPymV5Strategy(options.pymV5 || {}),
     createPymV5OptionRankStrategy(options.pymV5OptionRank || {}),
+    createPymV5MlTwoSpeedStrategy(options.pymV5MlTwoSpeed || {}),
+    createPymV5TwoSpeedOptionMeta21Strategy(options.pymV5TwoSpeedOptionMeta21 || {}),
     createPymV5SpyPutPressureStrategy(options.pymV5SpyPutPressure || {}),
   ]);
 }

@@ -92,11 +92,13 @@ function fakeRegistry() {
 }
 
 describe('strategy-service API', () => {
-  it('registers the three PYM studies for dashboard discovery', () => {
+  it('registers the PYM studies for dashboard discovery', () => {
     const registry = createDefaultRegistry();
     expect(registry.listStrategies().map((strategy) => strategy.id)).toEqual([
       'pym-v5',
       'pym-v5-option-rank-top8',
+      'pym-v5-ml-two-speed-attention',
+      'pym-v5-two-speed-option-meta21',
       'pym-v5-spy-put-pressure-bil',
     ]);
   });
