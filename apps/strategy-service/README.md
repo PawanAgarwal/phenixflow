@@ -41,6 +41,7 @@ Strategy metadata and summary:
 GET /api/strategies/pym-v5
 GET /api/strategies/pym-v5-option-rank-top8
 GET /api/strategies/pym-v5-ml-two-speed-attention
+GET /api/strategies/pym-v5-ml-option-top8-50-50
 GET /api/strategies/pym-v5-two-speed-option-meta21
 GET /api/strategies/pym-v5-spy-put-pressure-bil
 ```
@@ -51,6 +52,7 @@ Chart data for a range:
 GET /api/strategies/pym-v5/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-option-rank-top8/chart?start=2025-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-ml-two-speed-attention/chart?start=2026-01-01&end=2026-05-07
+GET /api/strategies/pym-v5-ml-option-top8-50-50/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-two-speed-option-meta21/chart?start=2026-01-01&end=2026-05-07
 GET /api/strategies/pym-v5-spy-put-pressure-bil/chart?start=2025-01-01&end=2026-05-07
 ```
@@ -67,6 +69,7 @@ Latest portfolio and change from previous EOD target:
 GET /api/strategies/pym-v5/portfolio/latest
 GET /api/strategies/pym-v5-option-rank-top8/portfolio/latest
 GET /api/strategies/pym-v5-ml-two-speed-attention/portfolio/latest
+GET /api/strategies/pym-v5-ml-option-top8-50-50/portfolio/latest
 GET /api/strategies/pym-v5-two-speed-option-meta21/portfolio/latest
 GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/latest
 GET /api/strategies/pym-v5/changes/latest
@@ -78,6 +81,7 @@ Portfolio for a specific date:
 GET /api/strategies/pym-v5/portfolio/2026-05-07
 GET /api/strategies/pym-v5-option-rank-top8/portfolio/2026-05-07
 GET /api/strategies/pym-v5-ml-two-speed-attention/portfolio/2026-05-07
+GET /api/strategies/pym-v5-ml-option-top8-50-50/portfolio/2026-05-07
 GET /api/strategies/pym-v5-two-speed-option-meta21/portfolio/2026-05-07
 GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
 ```
@@ -91,6 +95,11 @@ GET /api/strategies/pym-v5-spy-put-pressure-bil/portfolio/2026-05-07
   close-to-close returns into X+1.
 - `pym-v5-ml-two-speed-attention`: artifact-backed daily walk-forward ML study
   for `two_speed_attention_pym_light_governed`.
+- `pym-v5-ml-option-top8-50-50`: artifact-backed 50/50 blend of
+  `two_speed_attention_pym_light_governed` and option overlay
+  `grid_pym_option_rank_top8_zm0p5`. It reads the latest local
+  `pym-v5-two-speed-risk-overlays-*.json` artifact unless
+  `PYM_V5_ML_RISK_OVERLAY_REPORT_PATH` is set.
 - `pym-v5-two-speed-option-meta21`: artifact-backed selector study for
   `walkforward_lookback_best_of_two_speed_or_option_meta21`. It chooses among
   two-speed-vs-option lookback selectors using only prior 21 realized trading

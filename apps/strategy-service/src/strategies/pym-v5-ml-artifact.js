@@ -7,10 +7,13 @@ const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const DEFAULT_ML_REPORT_PATH = 'projects/pym-v5-ml-experiments/artifacts/pym-v5-daily-walkforward-micro-features-2025-02-01-2026-05-08.json';
 const DEFAULT_OPTION_REPORT_PATH = 'projects/pym-v5-replication/artifacts/pym-v5-option-overlay-suite-grid-top8-zm0p5-2025-01-02-2026-05-08.json';
 const DEFAULT_DATASET_PATH = 'projects/pym-v5-ml-experiments/artifacts/pym-v5-walkforward-dataset-micro-features-2025-01-02-2026-05-08.jsonl';
+const DEFAULT_RISK_OVERLAY_REPORT_DIR = 'projects/pym-v5-ml-experiments/artifacts';
+const DEFAULT_RISK_OVERLAY_REPORT_NAME = 'pym-v5-two-speed-risk-overlays-2025-02-01-2026-05-08.json';
 const DEFAULT_INITIAL_CAPITAL = 10000;
 const DEFAULT_COST_BPS = 2;
 const DEFAULT_TWO_SPEED_STRATEGY_ID = 'two_speed_attention_pym_light_governed';
 const DEFAULT_OPTION_STRATEGY_ID = 'grid_pym_option_rank_top8_zm0p5';
+const DEFAULT_ML_OPTION_BLEND_STRATEGY_ID = 'blend_50_ml_50_option_top8';
 const META_LOOKBACK = 21;
 const SELECTOR_LOOKBACKS = Object.freeze([5, 10, 15, 21, 30, 42, 50, 63, 84, 126]);
 
@@ -24,6 +27,12 @@ const META21_RULE_SUMMARY = Object.freeze([
   'Build candidate selectors between ML two-speed and option top-8.',
   'Each day pick the selector with the best prior 21-day realized score.',
   'Hold the chosen underlying strategy portfolio for the next session.',
+]);
+
+const ML_OPTION_BLEND_RULE_SUMMARY = Object.freeze([
+  'Hold 50% two-speed ML target and 50% option top-8 target.',
+  'Use day-X EOD ML holdings and Massive option-flow rankings available through that same day.',
+  'Rebalance at EOD close and realize the close-to-close return into X+1.',
 ]);
 
 function resolvePath(filePath) {
@@ -101,6 +110,25 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
+function findLatestRiskOverlayReportPath() {
+  const explicit = process.env.PYM_V5_ML_RISK_OVERLAY_REPORT_PATH;
+  if (explicit) return resolvePath(explicit);
+  const dir = resolvePath(DEFAULT_RISK_OVERLAY_REPORT_DIR);
+  if (!fs.existsSync(dir)) return resolvePath(path.join(DEFAULT_RISK_OVERLAY_REPORT_DIR, DEFAULT_RISK_OVERLAY_REPORT_NAME));
+  const matches = fs.readdirSync(dir)
+    .map((name) => {
+      const match = name.match(/^pym-v5-two-speed-risk-overlays-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/);
+      return match ? { name, startDate: match[1], endDate: match[2] } : null;
+    })
+    .filter(Boolean)
+    .sort((left, right) => right.endDate.localeCompare(left.endDate)
+      || right.startDate.localeCompare(left.startDate)
+      || right.name.localeCompare(left.name));
+  return matches.length
+    ? path.join(dir, matches[0].name)
+    : resolvePath(path.join(DEFAULT_RISK_OVERLAY_REPORT_DIR, DEFAULT_RISK_OVERLAY_REPORT_NAME));
+}
+
 function loadBenchmarkSamples(datasetPath) {
   if (!datasetPath || !fs.existsSync(datasetPath)) return new Map();
   const samples = new Map();
@@ -144,6 +172,28 @@ function loadOptionRawPoints(reportPath, strategyId) {
       netReturn: finite(point.netReturn),
       turnover: finite(point.turnover),
       holdings: point.holdings || {},
+    })),
+  };
+}
+
+function loadRiskOverlayRawPoints(reportPath, strategyId) {
+  const report = readJson(reportPath);
+  const overlay = report.overlays?.[strategyId];
+  if (!overlay?.points) throw new Error(`missing_risk_overlay_strategy:${strategyId}`);
+  return {
+    sourceReport: report,
+    overlay,
+    rawPoints: overlay.points.map((point) => ({
+      signalDate: point.signalDate,
+      date: point.date,
+      startEquity: finite(point.startEquity),
+      equity: finite(point.equity),
+      grossReturn: finite(point.grossReturn, finite(point.netReturn) + finite(point.costReturn)),
+      costReturn: finite(point.costReturn),
+      netReturn: finite(point.netReturn),
+      turnover: finite(point.turnover),
+      holdings: point.holdings || {},
+      diagnostics: point.diagnostics || null,
     })),
   };
 }
@@ -596,7 +646,56 @@ function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
   });
 }
 
+function createPymV5MlOptionTop85050Strategy(options = {}) {
+  const riskOverlayReportPath = resolvePath(options.riskOverlayReportPath || findLatestRiskOverlayReportPath());
+  const datasetPath = resolvePath(options.datasetPath || process.env.PYM_V5_ML_DATASET_PATH || DEFAULT_DATASET_PATH);
+  const strategyId = options.artifactStrategyId || DEFAULT_ML_OPTION_BLEND_STRATEGY_ID;
+  return createArtifactStrategy({
+    id: options.id || 'pym-v5-ml-option-top8-50-50',
+    name: options.name || 'PYM 50/50 ML + Option Top 8',
+    displayName: options.displayName || 'PYM 50/50 ML+Option',
+    family: options.family || 'pym_ml_option_blend',
+    strategySource: 'PYM V5 two-speed ML risk-overlay artifact',
+    description: options.description || 'Static 50/50 blend of the two-speed ML target and the Massive option-flow top-8 target.',
+    ruleSummary: options.ruleSummary || ML_OPTION_BLEND_RULE_SUMMARY,
+    artifactStrategyId: strategyId,
+    buildReport: (metadata) => {
+      const { sourceReport, overlay, rawPoints } = loadRiskOverlayRawPoints(riskOverlayReportPath, strategyId);
+      const samplesBySignalDate = loadBenchmarkSamples(datasetPath);
+      return reportFromPoints({
+        metadata,
+        points: rawPoints,
+        samplesBySignalDate,
+        source: {
+          ...metadata,
+          riskOverlayReport: fileMetadata(riskOverlayReportPath),
+          dataset: fileMetadata(datasetPath),
+          source: sourceReport.source,
+          underlyingStrategies: [
+            sourceReport.source?.strategy || DEFAULT_TWO_SPEED_STRATEGY_ID,
+            sourceReport.source?.optionOverlayStrategy || DEFAULT_OPTION_STRATEGY_ID,
+          ],
+        },
+        settings: {
+          ...sourceReport.settings,
+          artifactStrategyId: strategyId,
+          timing: sourceReport.settings?.timing || 'EOD signal date X; close-to-close realized date X+1.',
+          blendWeights: {
+            ml: 0.5,
+            optionTop8: 0.5,
+          },
+        },
+        extraSummary: {
+          overlayDescription: overlay.summary?.description || null,
+          sourceSummary: overlay.summary || null,
+        },
+      });
+    },
+  });
+}
+
 module.exports = {
   createPymV5MlTwoSpeedStrategy,
+  createPymV5MlOptionTop85050Strategy,
   createPymV5TwoSpeedOptionMeta21Strategy,
 };
