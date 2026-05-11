@@ -1,0 +1,33 @@
+{
+  "_description": "US macro event calendar for SPY intraday research. Dates are the ET trading day on which the data/decision is released — FOMC dates are decision day (Wed 2:00pm release), CPI is the morning of release (8:30am ET), NFP is first Friday (8:30am ET).",
+  "_sources": "Federal Reserve calendar, BLS release schedule. Verify if extending beyond 2026.",
+  "fomc": [
+    "2026-01-28",
+    "2026-03-18",
+    "2026-04-29"
+  ],
+  "cpi": [
+    "2026-01-13",
+    "2026-02-11",
+    "2026-03-11",
+    "2026-04-14"
+  ],
+  "ppi": [
+    "2026-01-14",
+    "2026-02-12",
+    "2026-03-12",
+    "2026-04-15"
+  ],
+  "nfp": [
+    "2026-01-09",
+    "2026-02-06",
+    "2026-03-06",
+    "2026-04-03"
+  ],
+  "opex": [
+    "2026-01-16",
+    "2026-02-20",
+    "2026-03-20",
+    "2026-04-17"
+  ]
+}
