@@ -21,34 +21,34 @@ const PYM_BACKTEST_SCRIPT_PATH = path.join(
 );
 
 const VARIANTS = {
-  'pym-gated-baseline': {
-    name: 'PYM-Gated SPY Intraday Baseline',
-    displayName: 'PYM-Gated SPY Intraday (1x Baseline)',
-    description: 'PYM v5 daily bias drives SPY direction; enter SPY at 11:30 ET when |bias| >= 0.20; exit at 15:55 ET.',
+  'pym-gated-intraday-baseline': {
+    name: 'PYM-Gated Intraday SPY (Baseline 1x)',
+    displayName: 'PYM-Gated Intraday SPY — 1x Baseline',
+    description: 'PYM v5 daily bias drives SPY direction; enter SPY at 11:30 ET when |bias| >= 0.20; exit at 15:55 ET (intraday only, no overnight).',
     family: 'pym-intraday',
     cadence: 'intraday',
     actionType: 'signal_trade',
   },
-  'pym-gated-lev3x': {
-    name: 'PYM-Gated 3x Intraday (SPXL/SPXU)',
-    displayName: 'PYM-Gated 3x Intraday',
-    description: 'Same PYM bias gate using 3x leveraged ETFs (SPXL long / SPXU short) for amplified intraday exposure.',
+  'pym-gated-intraday-lev3x': {
+    name: 'PYM-Gated Intraday 3x (SPXL/SPXU)',
+    displayName: 'PYM-Gated Intraday 3x — SPXL/SPXU',
+    description: 'Same PYM bias gate using 3x leveraged ETFs (SPXL long / SPXU short) for amplified intraday exposure. Intraday only (11:30 → 15:55 ET); no overnight.',
     family: 'pym-intraday',
     cadence: 'intraday',
     actionType: 'signal_trade',
   },
-  'pym-gated-overnight-1x': {
-    name: 'PYM-Gated SPY 1x + Overnight on Extreme',
-    displayName: 'PYM-Gated 1x SPY + Overnight',
-    description: 'PYM bias gates SPY trades; when |bias| >= 0.40 enter at prior 15:55 and hold through next 15:55 (captures gap).',
+  'pym-gated-intraday-overnight-1x': {
+    name: 'PYM-Gated Intraday + Overnight 1x (SPY)',
+    displayName: 'PYM-Gated Intraday + Overnight — 1x SPY',
+    description: 'PYM bias gates SPY trades; when |bias| >= 0.40 enter at prior 15:55 and hold overnight through next 15:55 (captures gap). Otherwise intraday-only 11:30 → 15:55.',
     family: 'pym-intraday',
     cadence: 'intraday_plus_overnight',
     actionType: 'signal_trade',
   },
-  'pym-gated-best-combo': {
-    name: 'PYM-Gated 3x + Overnight Production',
-    displayName: 'PYM-Gated 3x + Overnight (Production)',
-    description: '3x leverage with overnight-on-extreme: TQQQ/SQQQ overnight when |bias|>=0.30, SPXL/SPXU intraday for moderate bias. Matches PYM\'s 16-month risk-adjusted return.',
+  'pym-gated-intraday-best-combo': {
+    name: 'PYM-Gated Intraday + Overnight 3x (Production)',
+    displayName: 'PYM-Gated Intraday + Overnight 3x — Production',
+    description: '3x leverage with overnight-on-extreme: TQQQ/SQQQ overnight when |bias|>=0.30, SPXL/SPXU intraday (11:30 → 15:55) for moderate bias. Matches PYM\'s 16-month risk-adjusted return.',
     family: 'pym-intraday',
     cadence: 'intraday_plus_overnight',
     actionType: 'signal_trade',

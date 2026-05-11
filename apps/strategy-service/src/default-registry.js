@@ -34,10 +34,10 @@ function createDefaultRegistry(options = {}) {
     createWheelOptionIncomeStrategy(options.wheelOptionIncome || {}),
     createTsllSecondsPassiveScalperStrategy(options.tsllSecondsPassiveScalper || {}),
     // PYM-gated intraday strategies (4 variants)
-    createPymGatedIntradayStrategy({ variantId: 'pym-gated-baseline', ...(options.pymGatedBaseline || {}) }),
-    createPymGatedIntradayStrategy({ variantId: 'pym-gated-lev3x', ...(options.pymGatedLev3x || {}) }),
-    createPymGatedIntradayStrategy({ variantId: 'pym-gated-overnight-1x', ...(options.pymGatedOvernight1x || {}) }),
-    createPymGatedIntradayStrategy({ variantId: 'pym-gated-best-combo', ...(options.pymGatedBestCombo || {}) }),
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-intraday-baseline', ...(options.pymGatedBaseline || {}) }),
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-intraday-lev3x', ...(options.pymGatedLev3x || {}) }),
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-intraday-overnight-1x', ...(options.pymGatedOvernight1x || {}) }),
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-intraday-best-combo', ...(options.pymGatedBestCombo || {}) }),
   ]);
 }
 

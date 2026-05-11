@@ -53,10 +53,10 @@ async function loadFeatures(day) {
 // Strategy variants — each takes a per-day decision context and returns a trade plan (or null).
 const VARIANTS = [
   {
-    id: 'pym-gated-baseline',
-    name: 'PYM-Gated SPY Intraday Baseline',
-    displayName: 'PYM-Gated SPY Intraday (Baseline 1x)',
-    description: 'Use PYM v5 daily bias as direction; enter SPY at 11:30 ET when |bias| >= 0.20; exit at 15:55 ET.',
+    id: 'pym-gated-intraday-baseline',
+    name: 'PYM-Gated Intraday SPY (Baseline 1x)',
+    displayName: 'PYM-Gated Intraday SPY — 1x Baseline',
+    description: 'Use PYM v5 daily bias as direction; enter SPY at 11:30 ET when |bias| >= 0.20; exit at 15:55 ET (intraday only, no overnight).',
     ruleSummary: [
       'Each day: compute PYM v5 directional bias from its EOD portfolio (risk_on − defensive − inverse weights).',
       'If bias ≥ +0.20 at the prior close: LONG SPY at 11:30 ET, exit 15:55 ET.',
@@ -76,10 +76,10 @@ const VARIANTS = [
     overnightShortTicker: null,
   },
   {
-    id: 'pym-gated-lev3x',
-    name: 'PYM-Gated SPXL/SPXU Intraday 3x',
-    displayName: 'PYM-Gated 3x Intraday (SPXL/SPXU)',
-    description: 'Same PYM bias gate but uses 3x leveraged ETFs (SPXL long / SPXU short) for amplified intraday exposure.',
+    id: 'pym-gated-intraday-lev3x',
+    name: 'PYM-Gated Intraday 3x (SPXL/SPXU)',
+    displayName: 'PYM-Gated Intraday 3x — SPXL/SPXU',
+    description: 'Same PYM bias gate but uses 3x leveraged ETFs (SPXL long / SPXU short) for amplified intraday exposure. Intraday only (11:30 → 15:55 ET); no overnight.',
     ruleSummary: [
       'PYM v5 bias direction as in baseline.',
       'If bias ≥ +0.20: buy SPXL (3x SPY long) at 11:30 ET, sell at 15:55 ET.',
@@ -99,10 +99,10 @@ const VARIANTS = [
     overnightShortTicker: null,
   },
   {
-    id: 'pym-gated-overnight-1x',
-    name: 'PYM-Gated SPY Intraday + Overnight',
-    displayName: 'PYM-Gated 1x SPY + Overnight on Extreme',
-    description: 'Adds an overnight-hold variant: when |bias| ≥ 0.40, enter at prior-day 15:55 and hold through next session close. Otherwise intraday 11:30 → 15:55.',
+    id: 'pym-gated-intraday-overnight-1x',
+    name: 'PYM-Gated Intraday + Overnight 1x (SPY)',
+    displayName: 'PYM-Gated Intraday + Overnight — 1x SPY',
+    description: 'PYM bias gates SPY trades; when |bias| ≥ 0.40 enter at prior-day 15:55 and hold overnight through next session close. Otherwise intraday-only 11:30 → 15:55.',
     ruleSummary: [
       'PYM v5 bias direction as in baseline.',
       'If |bias| ≥ 0.40 (extreme conviction): enter SPY (or SH) at PRIOR day 15:55, exit 15:55 next session — captures the overnight gap.',
@@ -122,10 +122,10 @@ const VARIANTS = [
     overnightShortTicker: 'SH',
   },
   {
-    id: 'pym-gated-best-combo',
-    name: 'PYM-Gated 3x + Overnight Combo',
-    displayName: 'PYM-Gated 3x + Overnight (Production)',
-    description: 'Production strategy combining 3x leverage (TQQQ/SQQQ overnight, SPXL/SPXU intraday) with overnight-on-extreme — matches PYM\'s 16-month risk-adjusted return.',
+    id: 'pym-gated-intraday-best-combo',
+    name: 'PYM-Gated Intraday + Overnight 3x (Production)',
+    displayName: 'PYM-Gated Intraday + Overnight 3x — Production',
+    description: 'Production strategy combining 3x leverage (TQQQ/SQQQ overnight, SPXL/SPXU intraday 11:30 → 15:55) with overnight-on-extreme — matches PYM\'s 16-month risk-adjusted return.',
     ruleSummary: [
       'PYM v5 bias direction as in baseline.',
       'If |bias| ≥ 0.30 (extreme conviction): enter TQQQ (long) or SQQQ (short) at PRIOR day 15:55, exit at 15:55 next session — overnight + intraday with 3x leverage.',
