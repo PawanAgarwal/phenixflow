@@ -14,9 +14,10 @@ const fs = require('node:fs');
 const zlib = require('node:zlib');
 const readline = require('node:readline');
 
-const { PROJECT_ROOT } = require('../src/config');
+const { PROJECT_ROOT, loadConfig } = require('../src/config');
 const { loadPymHoldings, pymBias } = require('../src/pym-bias-strategy');
-const { defaultFeaturesPath } = require('../src/build-features-1m');
+const { defaultFeaturesPath, loadStockBars } = require('../src/build-features-1m');
+const { getEtParts } = require('../src/time');
 
 const DEFAULT_PYM_ARTIFACTS_DIR = '/Users/pawanagarwal/github/phenixflow/projects/pym-v5-replication/artifacts';
 const ARTIFACTS_OUT_DIR = path.join(PROJECT_ROOT, 'artifacts');
@@ -37,17 +38,57 @@ function isWeekend(d) {
   return x === 0 || x === 6;
 }
 
+// Cache the loaded universe config so we can fall back to raw stock_quotes_1m for days
+// where features-1m JSONL hasn't been built yet (typically today, before EOD aggregation).
+let cachedUniverseConfig = null;
+function getUniverseConfig() {
+  if (!cachedUniverseConfig) cachedUniverseConfig = loadConfig();
+  return cachedUniverseConfig;
+}
+
+// Build a synthetic per-minute features row set from raw SPY 1m bars. This is the minimum
+// data the PYM-gated variants need (spy_open / spy_close / spy_high / spy_low at the entry
+// and exit minutes), enabling today's signal without rebuilding the full features-1m chain.
+async function loadFeaturesFromRawStockBars(day) {
+  const universe = getUniverseConfig();
+  const byMinute = await loadStockBars(universe, day, 'SPY');
+  if (byMinute.size === 0) return null;
+  const rows = [];
+  for (const [minuteMs, bar] of byMinute.entries()) {
+    const et = getEtParts(minuteMs);
+    if (et.dateEt !== day) continue;
+    if (et.minuteOfDayEt < 570 || et.minuteOfDayEt >= 960) continue;
+    rows.push({
+      minute_ms: minuteMs,
+      date_et: et.dateEt,
+      minute_of_day_et: et.minuteOfDayEt,
+      spy_open: bar.open,
+      spy_high: bar.high,
+      spy_low: bar.low,
+      spy_close: bar.close,
+      spy_volume: bar.volume,
+      __source: 'raw_stock_bars',
+    });
+  }
+  if (rows.length === 0) return null;
+  rows.sort((a, b) => a.minute_ms - b.minute_ms);
+  return rows;
+}
+
 async function loadFeatures(day) {
   const p = defaultFeaturesPath(PROJECT_ROOT, 'SPY', day);
-  if (!fs.existsSync(p)) return null;
-  const stream = fs.createReadStream(p).pipe(zlib.createGunzip());
-  const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
-  const out = [];
-  for await (const line of rl) {
-    if (!line) continue;
-    out.push(JSON.parse(line));
+  if (fs.existsSync(p)) {
+    const stream = fs.createReadStream(p).pipe(zlib.createGunzip());
+    const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
+    const out = [];
+    for await (const line of rl) {
+      if (!line) continue;
+      out.push(JSON.parse(line));
+    }
+    if (out.length > 0) return out;
   }
-  return out;
+  // Fallback: synthesize from raw SPY 1m bars (historical CSV or today's live parquet via DuckDB).
+  return loadFeaturesFromRawStockBars(day);
 }
 
 // Strategy variants — each takes a per-day decision context and returns a trade plan (or null).

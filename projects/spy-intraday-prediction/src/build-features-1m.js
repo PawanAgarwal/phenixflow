@@ -2,19 +2,61 @@ const fs = require('node:fs');
 const path = require('node:path');
 const zlib = require('node:zlib');
 const readline = require('node:readline');
+const { spawn } = require('node:child_process');
 
-const { datasetCsvPath, PROJECT_ROOT } = require('./config');
+const { datasetCsvPath, datasetParquetPath, resolveDatasetSource, PROJECT_ROOT } = require('./config');
 const { readGzipCsv, toNumber } = require('./csv');
 const { nsToMinuteMs, getEtParts } = require('./time');
 
 const REGULAR_OPEN_ET = 570;
 const REGULAR_CLOSE_ET = 960;
 
+// DuckDB-based parquet streamer — same approach pym-v5-replication/src/market-data.js uses
+// so today's live parquet ({date}.live.parquet under config.roots.liveParquet) can be read.
+function duckdbString(value) { return `'${String(value).replace(/'/g, "''")}'`; }
+
+function buildParquetSql(filePath, columns) {
+  const cols = columns.join(', ');
+  return `COPY (SELECT ${cols} FROM read_parquet(${duckdbString(filePath)})) TO STDOUT WITH (FORMAT CSV, HEADER TRUE);`;
+}
+
+async function streamParquetRows(filePath, columns, onRow) {
+  const sql = buildParquetSql(filePath, columns);
+  const child = spawn(process.env.DUCKDB_BIN || 'duckdb', ['-c', sql], { stdio: ['ignore', 'pipe', 'pipe'] });
+  const stderr = [];
+  child.stderr.on('data', (chunk) => stderr.push(String(chunk)));
+  const reader = readline.createInterface({ input: child.stdout, crlfDelay: Infinity });
+  let headers = null;
+  for await (const line of reader) {
+    if (!line) continue;
+    if (!headers) { headers = String(line).split(','); continue; }
+    const values = String(line).split(',');
+    const row = {};
+    headers.forEach((header, index) => { row[header] = values[index] ?? ''; });
+    await onRow(row);
+  }
+  const code = await new Promise((resolve, reject) => {
+    child.on('error', reject);
+    child.on('close', resolve);
+  });
+  if (code !== 0) {
+    throw new Error(`duckdb_parquet_read_failed:${filePath}:${stderr.join('').trim() || code}`);
+  }
+}
+
+async function streamRows(source, columns, onRow) {
+  if (source.format === 'csv.gz') {
+    await readGzipCsv(source.filePath, onRow);
+  } else if (source.format === 'parquet') {
+    await streamParquetRows(source.filePath, columns, onRow);
+  }
+}
+
 async function loadStockBars(config, dayIso, symbol) {
-  const csvPath = datasetCsvPath({ ...config, datasets: config.datasets }, config.datasets.stockBars, dayIso);
-  if (!fs.existsSync(csvPath)) return new Map();
+  const source = resolveDatasetSource(config, config.datasets.stockBars, dayIso);
+  if (source.format === 'missing') return new Map();
   const byMinute = new Map();
-  await readGzipCsv(csvPath, async (row) => {
+  await streamRows(source, ['ticker', 'volume', 'open', 'close', 'high', 'low', 'window_start'], async (row) => {
     if (row.ticker !== symbol) return;
     const minuteMs = nsToMinuteMs(row.window_start);
     if (minuteMs === null) return;
@@ -30,10 +72,10 @@ async function loadStockBars(config, dayIso, symbol) {
 }
 
 async function loadIndexBars(config, dayIso, symbol) {
-  const csvPath = datasetCsvPath({ ...config, datasets: config.datasets }, config.datasets.indexBars, dayIso);
-  if (!fs.existsSync(csvPath)) return new Map();
+  const source = resolveDatasetSource(config, config.datasets.indexBars, dayIso);
+  if (source.format === 'missing') return new Map();
   const byMinute = new Map();
-  await readGzipCsv(csvPath, async (row) => {
+  await streamRows(source, ['ticker', 'open', 'close', 'high', 'low', 'window_start'], async (row) => {
     if (row.ticker !== symbol) return;
     const minuteMs = nsToMinuteMs(row.window_start);
     if (minuteMs === null) return;
