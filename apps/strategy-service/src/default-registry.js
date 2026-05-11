@@ -17,6 +17,7 @@ const {
   createPymV5Cap25LgbmBlendStrategy,
   createPymV5Cap25LgbmBlendStressStrategy,
 } = require('./strategies/pym-v5-extension');
+const { createPymGatedIntradayStrategy } = require('./strategies/pym-gated-intraday');
 
 function createDefaultRegistry(options = {}) {
   return new StrategyRegistry([
@@ -32,6 +33,11 @@ function createDefaultRegistry(options = {}) {
     createPymV5Cap25LgbmBlendStressStrategy({ blendWeight: 0.40, ...(options.pymV5Cap25LgbmBlendStress || {}) }),
     createWheelOptionIncomeStrategy(options.wheelOptionIncome || {}),
     createTsllSecondsPassiveScalperStrategy(options.tsllSecondsPassiveScalper || {}),
+    // PYM-gated intraday strategies (4 variants)
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-baseline', ...(options.pymGatedBaseline || {}) }),
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-lev3x', ...(options.pymGatedLev3x || {}) }),
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-overnight-1x', ...(options.pymGatedOvernight1x || {}) }),
+    createPymGatedIntradayStrategy({ variantId: 'pym-gated-best-combo', ...(options.pymGatedBestCombo || {}) }),
   ]);
 }
 

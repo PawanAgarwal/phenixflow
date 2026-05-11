@@ -2,9 +2,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
+const DEFAULT_REPORT_DIR = 'projects/spy-intraday-prediction/artifacts';
 const DEFAULT_REPORT_PATH = 'projects/spy-intraday-prediction/artifacts/wheel-expanded-backtest-2026-01-02-2026-04-27.json';
 const DEFAULT_ARTIFACT_STRATEGY_ID = 'wheel_weekly_10otm_trend_ivrv_profit50';
 const DEFAULT_INITIAL_CAPITAL = 1_000_000;
+const DEFAULT_REFRESH_START = '2025-01-02';
 
 const RULE_SUMMARY = Object.freeze([
   'Sell weekly 5-10 DTE puts roughly 10% OTM across the liquid local universe.',
@@ -28,6 +30,23 @@ function pct(value) {
 function readJson(filePath) {
   if (!filePath || !fs.existsSync(filePath)) throw new Error(`missing_wheel_option_income_artifact:${filePath}`);
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function findLatestWheelReportPath() {
+  const explicit = process.env.WHEEL_OPTION_INCOME_REPORT_PATH;
+  if (explicit) return resolvePath(explicit);
+  const dir = resolvePath(DEFAULT_REPORT_DIR);
+  if (!fs.existsSync(dir)) return resolvePath(DEFAULT_REPORT_PATH);
+  const matches = fs.readdirSync(dir)
+    .map((name) => {
+      const match = name.match(/^wheel-(?:expanded-)?backtest-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/);
+      return match ? { name, startDate: match[1], endDate: match[2] } : null;
+    })
+    .filter((item) => item && item.startDate <= DEFAULT_REFRESH_START)
+    .sort((left, right) => right.endDate.localeCompare(left.endDate)
+      || left.startDate.localeCompare(right.startDate)
+      || right.name.localeCompare(left.name));
+  return matches.length ? path.join(dir, matches[0].name) : resolvePath(DEFAULT_REPORT_PATH);
 }
 
 function maxDrawdown(points) {
@@ -181,7 +200,7 @@ function buildWheelReport({ metadata, sourceReport, artifactStrategyId }) {
 }
 
 function createWheelOptionIncomeStrategy(options = {}) {
-  const reportPath = resolvePath(options.reportPath || process.env.WHEEL_OPTION_INCOME_REPORT_PATH || DEFAULT_REPORT_PATH);
+  const configuredReportPath = options.reportPath ? resolvePath(options.reportPath) : null;
   const artifactStrategyId = options.artifactStrategyId || DEFAULT_ARTIFACT_STRATEGY_ID;
   const metadata = {
     id: options.id || 'option-income-wheel-trend-ivrv',
@@ -199,12 +218,13 @@ function createWheelOptionIncomeStrategy(options = {}) {
       { label: 'Cboe PutWrite VRP', href: 'https://www.cboe.com/insights/posts/white-paper-shows-volatility-risk-premium-facilitated-higher-risk-adjusted-returns-for-put-index/' },
     ],
     artifactStrategyId,
-    defaultStartDate: '2026-01-02',
-    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+    defaultStartDate: DEFAULT_REFRESH_START,
+    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
   };
   const state = { report: null, loadedAt: null, refresh: null };
 
   function loadReport() {
+    const reportPath = configuredReportPath || findLatestWheelReportPath();
     const sourceReport = readJson(reportPath);
     sourceReport.sourcePath = reportPath;
     return buildWheelReport({ metadata, sourceReport, artifactStrategyId });
@@ -229,8 +249,17 @@ function createWheelOptionIncomeStrategy(options = {}) {
   }
 
   function refreshData() {
-    const { noopRefresh } = require('./refresh-helpers');
-    return noopRefresh(state, recompute);
+    const { runRefreshSequence } = require('./refresh-helpers');
+    return runRefreshSequence(state, [{
+      label: 'refresh-wheel-option-income',
+      command: process.execPath,
+      args: [
+        path.join(REPO_ROOT, 'projects', 'spy-intraday-prediction', 'scripts', 'refresh-wheel-option-income.js'),
+        '--start-date', process.env.WHEEL_OPTION_INCOME_START || DEFAULT_REFRESH_START,
+        '--end-date', process.env.WHEEL_OPTION_INCOME_END || 'auto',
+        '--strategies', artifactStrategyId,
+      ],
+    }], recompute);
   }
 
   return { state, getMetadata, getReport, recompute, refreshData };

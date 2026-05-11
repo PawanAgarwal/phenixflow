@@ -643,7 +643,7 @@ function createArtifactStrategy(options = {}) {
     sourceLinks: options.sourceLinks || [],
     artifactStrategyId: options.artifactStrategyId || null,
     defaultStartDate: options.defaultStartDate || '2025-02-03',
-    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
   };
   const state = {
     report: null,

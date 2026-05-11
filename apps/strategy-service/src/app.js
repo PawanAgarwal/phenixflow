@@ -12,6 +12,69 @@ function strategyFromReq(registry, req) {
   return registry.getStrategy(req.params.strategyId);
 }
 
+function deriveDailyReturns(equitySeries) {
+  if (!Array.isArray(equitySeries) || equitySeries.length < 2) return [];
+  const out = [];
+  for (let i = 1; i < equitySeries.length; i += 1) {
+    const prev = equitySeries[i - 1]?.equity;
+    const curr = equitySeries[i]?.equity;
+    if (!Number.isFinite(prev) || prev <= 0 || !Number.isFinite(curr)) continue;
+    out.push(curr / prev - 1);
+  }
+  return out;
+}
+
+function computeSharpe(dailyReturns) {
+  if (!dailyReturns.length) return null;
+  const mean = dailyReturns.reduce((a, x) => a + x, 0) / dailyReturns.length;
+  const variance = dailyReturns.reduce((a, x) => a + ((x - mean) ** 2), 0) / dailyReturns.length;
+  const sd = Math.sqrt(variance);
+  if (!Number.isFinite(sd) || sd === 0) return null;
+  return (mean / sd) * Math.sqrt(252);
+}
+
+function computeHitRate(snapshots) {
+  if (!Array.isArray(snapshots) || snapshots.length === 0) return null;
+  let active = 0; let wins = 0;
+  for (const s of snapshots) {
+    const r = s.realized?.netReturn;
+    if (!Number.isFinite(r)) continue;
+    if (r === 0) continue; // skip flat days
+    active += 1;
+    if (r > 0) wins += 1;
+  }
+  if (active === 0) return null;
+  return wins / active;
+}
+
+function enrichSummary(report) {
+  // Add Sharpe and hitRate to every strategy's summary by computing from equity / snapshots
+  // when the strategy didn't precompute them. Never overwrite values the strategy already set.
+  const summary = { ...(report.summary || {}) };
+  if (!Number.isFinite(summary.sharpe)) {
+    const sharpe = computeSharpe(deriveDailyReturns(report.equitySeries));
+    if (Number.isFinite(sharpe)) summary.sharpe = sharpe;
+  }
+  if (!Number.isFinite(summary.hitRate)) {
+    const hr = computeHitRate(report.snapshots);
+    if (Number.isFinite(hr)) {
+      summary.hitRate = hr;
+      summary.hitRatePct = hr * 100;
+    }
+  }
+  // Derive activeDays / tradingDays for the UI's Trades/Days metric when missing
+  if (!Number.isFinite(summary.tradingDays) && Array.isArray(report.snapshots)) {
+    summary.tradingDays = report.snapshots.length;
+  }
+  if (!Number.isFinite(summary.activeDays) && Array.isArray(report.snapshots)) {
+    summary.activeDays = report.snapshots.filter((s) => {
+      const r = s.realized?.netReturn;
+      return Number.isFinite(r) && r !== 0;
+    }).length;
+  }
+  return summary;
+}
+
 function publicStrategySummary(strategy) {
   const report = strategy.getReport();
   return {
@@ -20,7 +83,7 @@ function publicStrategySummary(strategy) {
     generatedAt: report.generatedAt,
     source: report.source,
     settings: report.settings,
-    summary: report.summary,
+    summary: enrichSummary(report),
     refresh: strategy.state?.refresh || null,
   };
 }
@@ -104,6 +167,32 @@ function valuesPayload(strategy, query) {
   };
 }
 
+function tradesPayload(strategy, query) {
+  const report = strategy.getReport();
+  const trades = Array.isArray(report.trades) ? report.trades : [];
+  const start = normalizeDate(query.start);
+  const end = normalizeDate(query.end);
+  const limit = parseLimit(query.limit, trades.length);
+  const filtered = trades.filter((trade) => {
+    const date = trade.date;
+    if (start && date < start) return false;
+    if (end && date > end) return false;
+    return true;
+  });
+  // Trades are already sorted by date in the artifact; preserve order and apply limit to most recent.
+  const data = filtered.slice(-limit);
+  return {
+    strategy: strategy.getMetadata(),
+    range: {
+      requestedStart: start,
+      requestedEnd: end,
+      count: data.length,
+      total: trades.length,
+    },
+    data,
+  };
+}
+
 function portfolioPayload(strategy, date = 'latest') {
   const report = strategy.getReport();
   const snapshot = snapshotByDate(report, date);
@@ -134,6 +223,7 @@ function createApp(options = {}) {
         'GET /api/strategies/:strategyId',
         'GET /api/strategies/:strategyId/chart?start=YYYY-MM-DD&end=YYYY-MM-DD',
         'GET /api/strategies/:strategyId/values?start=YYYY-MM-DD&end=YYYY-MM-DD',
+        'GET /api/strategies/:strategyId/trades?start=YYYY-MM-DD&end=YYYY-MM-DD&limit=N',
         'GET /api/strategies/:strategyId/portfolio/latest',
         'GET /api/strategies/:strategyId/portfolio/:date',
         'GET /api/strategies/:strategyId/changes/latest',
@@ -163,6 +253,10 @@ function createApp(options = {}) {
 
   app.get('/api/strategies/:strategyId/values', asyncRoute(async (req, res) => {
     res.status(200).json(valuesPayload(strategyFromReq(registry, req), req.query));
+  }));
+
+  app.get('/api/strategies/:strategyId/trades', asyncRoute(async (req, res) => {
+    res.status(200).json(tradesPayload(strategyFromReq(registry, req), req.query));
   }));
 
   app.get('/api/strategies/:strategyId/portfolio/latest', asyncRoute(async (req, res) => {

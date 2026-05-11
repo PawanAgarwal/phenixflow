@@ -500,3 +500,61 @@ td span {
     height: 260px;
   }
 }
+
+.trades-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem 1.5rem;
+  margin-top: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.trades-panel[hidden] {
+  display: none;
+}
+
+.trades-table-wrap {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.trades-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.trades-table-wrap th,
+.trades-table-wrap td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  font-size: 0.85rem;
+}
+
+.trades-table-wrap th:first-child,
+.trades-table-wrap td:first-child,
+.trades-table-wrap th:nth-child(2),
+.trades-table-wrap td:nth-child(2),
+.trades-table-wrap th:nth-child(3),
+.trades-table-wrap td:nth-child(3),
+.trades-table-wrap th:nth-child(4),
+.trades-table-wrap td:nth-child(4) {
+  text-align: left;
+}
+
+.trades-table-wrap th {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--surface-soft);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.trades-table-wrap tbody tr:hover {
+  background: var(--surface-soft);
+}

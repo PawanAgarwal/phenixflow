@@ -7,6 +7,7 @@ const state = {
   values: [],
   latestPortfolio: null,
   weekPortfolios: [],
+  trades: [],
   loadToken: 0,
 };
 
@@ -23,10 +24,17 @@ const els = {
   studyReturn: document.getElementById('studyReturn'),
   spyReturn: document.getElementById('spyReturn'),
   edgeReturn: document.getElementById('edgeReturn'),
+  sharpeMetric: document.getElementById('sharpeMetric'),
+  maxDrawdown: document.getElementById('maxDrawdown'),
+  hitRate: document.getElementById('hitRate'),
+  tradeCount: document.getElementById('tradeCount'),
   portfolioValue: document.getElementById('portfolioValue'),
   latestTurnover: document.getElementById('latestTurnover'),
   lastPortfolioReturn: document.getElementById('lastPortfolioReturn'),
   lastSpyReturn: document.getElementById('lastSpyReturn'),
+  tradesPanel: document.getElementById('tradesPanel'),
+  tradesBadge: document.getElementById('tradesBadge'),
+  tradesRows: document.getElementById('tradesRows'),
   chartTitle: document.getElementById('chartTitle'),
   performanceChart: document.getElementById('performanceChart'),
   portfolioTitle: document.getElementById('portfolioTitle'),
@@ -71,6 +79,10 @@ function clearDashboard() {
     els.studyReturn,
     els.spyReturn,
     els.edgeReturn,
+    els.sharpeMetric,
+    els.maxDrawdown,
+    els.hitRate,
+    els.tradeCount,
     els.portfolioValue,
     els.latestTurnover,
     els.lastPortfolioReturn,
@@ -79,12 +91,16 @@ function clearDashboard() {
     els.holdingCount,
     els.weekRange,
     els.chartTitle,
+    els.tradesBadge,
   ].forEach((element) => {
+    if (!element) return;
     element.textContent = '-';
     element.className = '';
   });
   els.portfolioRows.replaceChildren();
   els.weekRows.replaceChildren();
+  if (els.tradesRows) els.tradesRows.replaceChildren();
+  if (els.tradesPanel) els.tradesPanel.hidden = true;
   const canvas = els.performanceChart;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -248,6 +264,19 @@ async function loadStudy() {
   state.values = values.data || [];
   state.latestPortfolio = latestPortfolio.data;
   state.weekPortfolios = [];
+  // Optional: fetch trades if strategy advertises support. Don't block dashboard render on it.
+  state.trades = [];
+  const supports = Array.isArray(summary?.metadata?.supports) ? summary.metadata.supports : [];
+  const supportsTrades = supports.includes('trade_log');
+  if (supportsTrades) {
+    fetchJson(`/api/strategies/${strategyId}/trades?limit=30`, { timeoutMs: 6000 })
+      .then((payload) => {
+        if (token !== state.loadToken || strategyId !== state.strategyId) return;
+        state.trades = payload.data || [];
+        renderTrades();
+      })
+      .catch(() => { /* trades are optional */ });
+  }
   renderDashboard();
   els.statusText.textContent = `Loaded ${summary.summary.latestRebalanceDate || 'latest'}`;
 
@@ -268,7 +297,45 @@ function renderDashboard() {
   renderSummary(strategy);
   renderPortfolio();
   renderWeekChanges();
+  renderTrades();
   renderChart();
+}
+
+function renderTrades() {
+  if (!els.tradesPanel) return;
+  const trades = Array.isArray(state.trades) ? state.trades : [];
+  if (trades.length === 0) {
+    els.tradesPanel.hidden = true;
+    return;
+  }
+  els.tradesPanel.hidden = false;
+  els.tradesBadge.textContent = `${trades.length} most recent`;
+  // Show most recent first
+  const rows = trades.slice().reverse().map((trade) => {
+    const tr = document.createElement('tr');
+    const sideClass = trade.side === 'LONG' ? 'positive' : 'negative';
+    const netClass = valueClass(trade.netReturn);
+    const grossClass = valueClass(trade.grossReturn);
+    const cells = [
+      trade.date,
+      `<span class="${sideClass}">${trade.side}</span>`,
+      trade.ticker || '-',
+      trade.entryMode || '-',
+      isFiniteNumber(trade.bias) ? Number(trade.bias).toFixed(2) : '-',
+      isFiniteNumber(trade.entryPrice) ? `$${Number(trade.entryPrice).toFixed(2)}` : '-',
+      isFiniteNumber(trade.exitPrice) ? `$${Number(trade.exitPrice).toFixed(2)}` : '-',
+      `<span class="${grossClass}">${formatPct(trade.grossReturn)}</span>`,
+      `<span class="${netClass}">${formatPct(trade.netReturn)}</span>`,
+    ];
+    tr.innerHTML = cells.map((c) => `<td>${c}</td>`).join('');
+    return tr;
+  });
+  els.tradesRows.replaceChildren(...rows);
+}
+
+function formatNumber(value, digits = 2) {
+  if (!isFiniteNumber(value)) return '-';
+  return Number(value).toFixed(digits);
 }
 
 function renderSummary(strategy) {
@@ -280,13 +347,36 @@ function renderSummary(strategy) {
   const edge = isFiniteNumber(summary.totalReturn) && isFiniteNumber(summary.spyReturn)
     ? summary.totalReturn - summary.spyReturn
     : null;
-  els.latestDate.textContent = summary.latestRebalanceDate || '-';
+  els.latestDate.textContent = summary.latestRebalanceDate || summary.endDate || summary.todayDate || '-';
   els.studyReturn.textContent = formatPct(summary.totalReturn);
   els.studyReturn.className = valueClass(summary.totalReturn);
   els.spyReturn.textContent = formatPct(summary.spyReturn);
   els.spyReturn.className = valueClass(summary.spyReturn);
   els.edgeReturn.textContent = formatPct(edge);
   els.edgeReturn.className = valueClass(edge);
+
+  // Universal metrics — preferred field names with fallbacks for legacy summary shapes
+  const sharpe = summary.sharpe ?? summary.sharpePerDay ?? summary.sharpePerTrade ?? null;
+  els.sharpeMetric.textContent = formatNumber(sharpe);
+  els.sharpeMetric.className = valueClass(sharpe);
+
+  const maxDd = summary.maxDrawdown ?? null;
+  els.maxDrawdown.textContent = isFiniteNumber(maxDd) ? formatPct(maxDd) : '-';
+  els.maxDrawdown.className = isFiniteNumber(maxDd) && Number(maxDd) < 0 ? 'negative' : '';
+
+  const hr = summary.hitRate ?? null;
+  els.hitRate.textContent = isFiniteNumber(hr) ? formatPct(hr) : '-';
+
+  const activeDays = summary.activeDays ?? summary.tradeCount ?? null;
+  const tradingDays = summary.tradingDays ?? null;
+  if (isFiniteNumber(activeDays) && isFiniteNumber(tradingDays)) {
+    els.tradeCount.textContent = `${activeDays} / ${tradingDays}`;
+  } else if (isFiniteNumber(activeDays)) {
+    els.tradeCount.textContent = `${activeDays}`;
+  } else {
+    els.tradeCount.textContent = '-';
+  }
+
   els.portfolioValue.textContent = formatMoney(latest.equityBeforeNextSession);
   els.latestTurnover.textContent = formatPctPoints(latestChange.turnoverPct);
   els.lastPortfolioReturn.textContent = latestCompleted ? formatPct(latestCompleted.netReturn) : '-';

@@ -52,6 +52,22 @@
           <strong id="edgeReturn">-</strong>
         </article>
         <article class="metric">
+          <span>Sharpe (ann.)</span>
+          <strong id="sharpeMetric" title="Annualized Sharpe ratio from daily returns">-</strong>
+        </article>
+        <article class="metric">
+          <span>Max Drawdown</span>
+          <strong id="maxDrawdown">-</strong>
+        </article>
+        <article class="metric">
+          <span>Hit Rate</span>
+          <strong id="hitRate" title="Fraction of trades or sessions with positive net return">-</strong>
+        </article>
+        <article class="metric">
+          <span>Trades / Days</span>
+          <strong id="tradeCount" title="Active days with a position vs total sessions">-</strong>
+        </article>
+        <article class="metric">
           <span>Portfolio Value</span>
           <strong id="portfolioValue">-</strong>
         </article>
@@ -129,6 +145,34 @@
             </table>
           </div>
         </article>
+      </section>
+
+      <section class="trades-panel" id="tradesPanel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Intraday trade log</p>
+            <h2>Recent Trades</h2>
+          </div>
+          <span class="panel-badge" id="tradesBadge">-</span>
+        </div>
+        <div class="table-wrap trades-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Side</th>
+                <th>Ticker</th>
+                <th>Mode</th>
+                <th>Bias</th>
+                <th>Entry</th>
+                <th>Exit</th>
+                <th>Gross</th>
+                <th>Net</th>
+              </tr>
+            </thead>
+            <tbody id="tradesRows"></tbody>
+          </table>
+        </div>
       </section>
     </main>
     <script src="/app.js?v=20260510-blurbs"></script>

@@ -417,7 +417,7 @@ function createPymV5OptionOverlayStrategy(options = {}) {
       baseStrategyId: 'pym-v5',
       optionOverlayStrategyId: optionStrategyId,
       defaultStartDate: options.startDate || process.env.PYM_V5_REBALANCE_START || '2025-01-01',
-      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
     };
   }
 

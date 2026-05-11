@@ -4,6 +4,8 @@
 *.log
 .playwright-cli/
 node_modules/
+.claude/
+runtime/
 apps/*/node_modules/
 apps/artifacts/
 apps/*/artifacts/**

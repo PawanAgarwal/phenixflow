@@ -108,6 +108,10 @@ describe('strategy-service API', () => {
       'pym-v5-cap25-lgbm-blend40-stress',
       'option-income-wheel-trend-ivrv',
       'tsll-seconds-passive-scalper',
+      'pym-gated-baseline',
+      'pym-gated-lev3x',
+      'pym-gated-overnight-1x',
+      'pym-gated-best-combo',
     ]);
     const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
     expect(byId['pym-v5'].sourceLinks.map((link) => link.label)).toEqual([
@@ -129,6 +133,7 @@ describe('strategy-service API', () => {
     expect(byId['pym-v5-cap25-lgbm-blend40-stress'].displayName).toContain('Options Stress');
     expect(byId['option-income-wheel-trend-ivrv'].ruleSummary.join(' ')).toContain('IV/RV >= 1.10');
     expect(byId['tsll-seconds-passive-scalper'].ruleSummary.join(' ')).toContain('buy limit 3c');
+    expect(byId['pym-gated-baseline'].supports).toContain('trade_log');
   });
 
   it('lists strategies and serves chart ranges', async () => {
@@ -141,6 +146,12 @@ describe('strategy-service API', () => {
       .expect(200);
     expect(chart.body.range.points).toBe(1);
     expect(chart.body.data[0]).toEqual(expect.objectContaining({ date: '2026-05-07', equity: 110 }));
+
+    const trades = await request(app)
+      .get('/api/strategies/fake-strategy/trades?limit=3')
+      .expect(200);
+    expect(trades.body.range.count).toBe(0);
+    expect(trades.body.data).toEqual([]);
   });
 
   it('returns latest portfolio change from the previous rebalance', async () => {

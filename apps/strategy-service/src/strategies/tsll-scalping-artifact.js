@@ -2,7 +2,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
+const DEFAULT_REPORT_DIR = 'projects/tsll-scalping/reports';
 const DEFAULT_REPORT_PATH = 'projects/tsll-scalping/reports/tsll-seconds-passive-fixed-feb2026.json';
+const DEFAULT_REFRESH_START = '2025-01-02';
 
 function resolvePath(filePath) {
   if (!filePath) return null;
@@ -31,6 +33,23 @@ function fileMetadata(filePath) {
 function readJson(filePath) {
   if (!filePath || !fs.existsSync(filePath)) throw new Error(`missing_tsll_scalping_report:${filePath}`);
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function findLatestTsllReportPath() {
+  const explicit = process.env.TSLL_SECONDS_PASSIVE_REPORT_PATH;
+  if (explicit) return resolvePath(explicit);
+  const dir = resolvePath(DEFAULT_REPORT_DIR);
+  if (!fs.existsSync(dir)) return resolvePath(DEFAULT_REPORT_PATH);
+  const matches = fs.readdirSync(dir)
+    .map((name) => {
+      const match = name.match(/^tsll-seconds-passive-fixed-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/);
+      return match ? { name, startDate: match[1], endDate: match[2] } : null;
+    })
+    .filter((item) => item && item.startDate <= DEFAULT_REFRESH_START)
+    .sort((left, right) => right.endDate.localeCompare(left.endDate)
+      || left.startDate.localeCompare(right.startDate)
+      || right.name.localeCompare(left.name));
+  return matches.length ? path.join(dir, matches[0].name) : resolvePath(DEFAULT_REPORT_PATH);
 }
 
 function maxDrawdown(equitySeries) {
@@ -141,11 +160,7 @@ function buildReportFromTsllArtifact({ metadata, reportPath, initialCapital }) {
 }
 
 function createTsllSecondsPassiveScalperStrategy(options = {}) {
-  const reportPath = resolvePath(
-    options.reportPath
-    || process.env.TSLL_SECONDS_PASSIVE_REPORT_PATH
-    || DEFAULT_REPORT_PATH,
-  );
+  const configuredReportPath = options.reportPath ? resolvePath(options.reportPath) : null;
   const metadata = {
     id: options.id || 'tsll-seconds-passive-scalper',
     name: options.name || 'TSLL Seconds Passive Scalper',
@@ -153,18 +168,18 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
     family: 'tsll_scalping',
     cadence: 'intraday_daily_report',
     actionType: 'intraday_scalp',
-    dataProvider: 'Massive tick trades converted to 1-second bars',
+    dataProvider: 'Massive historical/live bars plus Massive REST 1-second aggregates when stock-trade files are unavailable',
     strategySource: 'TSLL seconds passive limit scalping artifact',
     description: options.description || 'Tracks the TSLL passive limit scalp candidate: buy 3 cents below the prior completed 1-second close, target +3 cents, stop 5 cents, max hold 10 seconds.',
     ruleSummary: [
-      'Use only completed 1-second TSLL trade bars and causal 1-minute SPY/QQQ/TSLA context.',
+      'Use only completed 1-second TSLL bars and causal 1-minute SPY/QQQ/TSLA context.',
       'Place buy limit 3c below the prior completed second close when 60s range and market filters pass.',
       'Exit at +3c target, 5c stop, or after 10 seconds; same-second target/stop assumes stop first.',
       'Dashboard report is a seconds-bar proxy; quote/NBBO queue priority still needs validation.',
     ],
     sourceLinks: [],
-    defaultStartDate: options.defaultStartDate || '2026-02-02',
-    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+    defaultStartDate: options.defaultStartDate || DEFAULT_REFRESH_START,
+    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
   };
   const state = {
     report: null,
@@ -180,7 +195,7 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
     if (!state.report) {
       state.report = buildReportFromTsllArtifact({
         metadata,
-        reportPath,
+        reportPath: configuredReportPath || findLatestTsllReportPath(),
         initialCapital: options.initialCapital,
       });
       state.loadedAt = new Date().toISOString();
@@ -191,7 +206,7 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
   function recompute() {
     state.report = buildReportFromTsllArtifact({
       metadata,
-      reportPath,
+      reportPath: configuredReportPath || findLatestTsllReportPath(),
       initialCapital: options.initialCapital,
     });
     state.loadedAt = new Date().toISOString();
@@ -199,8 +214,16 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
   }
 
   function refreshData() {
-    const { noopRefresh } = require('./refresh-helpers');
-    return noopRefresh(state, recompute);
+    const { runRefreshSequence } = require('./refresh-helpers');
+    return runRefreshSequence(state, [{
+      label: 'refresh-tsll-second-passive-report',
+      command: process.execPath,
+      args: [
+        path.join(REPO_ROOT, 'projects', 'tsll-scalping', 'scripts', 'refresh-second-passive-report.js'),
+        '--start-date', process.env.TSLL_SECONDS_PASSIVE_START || DEFAULT_REFRESH_START,
+        '--end-date', process.env.TSLL_SECONDS_PASSIVE_END || 'auto',
+      ],
+    }], recompute);
   }
 
   return {

@@ -192,7 +192,7 @@ function createExtensionStrategy({
       composerSymphonyId: config.source.composerSymphonyId,
       baseStrategyId,
       defaultStartDate: defaultStartDate || process.env.PYM_V5_REBALANCE_START || '2025-01-01',
-      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
     };
   }
 
@@ -335,7 +335,7 @@ function createPymV5Cap25LgbmBlendStrategy(options = {}) {
       lgbmArtifactStrategyId: lgbmStrategyId,
       blendWeight,
       defaultStartDate: options.startDate || process.env.PYM_V5_REBALANCE_START || '2025-02-03',
-      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
     };
   }
 
@@ -452,7 +452,7 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
       blendWeight,
       stressOverlayMode: 'aggressive',
       defaultStartDate: options.startDate || process.env.PYM_V5_REBALANCE_START || '2025-02-03',
-      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change'],
+      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
     };
   }
 
