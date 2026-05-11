@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { PROJECT_ROOT, ensureDir, loadConfig } = require('../src/config');
+const { PROJECT_ROOT, ensureDir, loadConfig, resolveEndDate } = require('../src/config');
 const { parseArgs, asNumber } = require('../src/cli');
 const {
   DEFAULT_EXECUTION,
@@ -143,7 +143,7 @@ async function main() {
   const args = parseArgs();
   const config = loadConfig(args.config);
   const startDate = args['start-date'] || config.windows.train.startDate;
-  const endDate = args['end-date'] || config.dataPolicy.historicalCutoffDate;
+  const endDate = resolveEndDate(config, args['end-date'] || config.dataPolicy.historicalCutoffDate);
   const limit = Math.max(1, Math.floor(asNumber(args.limit, 100)));
   const symbols = loadSymbols(args).slice(0, limit);
   const initialCapital = asNumber(args.capital, DEFAULT_INITIAL_CAPITAL);

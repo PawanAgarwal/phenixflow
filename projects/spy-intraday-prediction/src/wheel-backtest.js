@@ -1,6 +1,8 @@
 const fs = require('node:fs');
+const { spawn } = require('node:child_process');
+const readline = require('node:readline');
 
-const { datasetCsvPath } = require('./config');
+const { resolveDatasetSource } = require('./config');
 const { readGzipCsv, toNumber } = require('./csv');
 const { openCalendarDays } = require('./coverage');
 const { parseOpraTicker, daysBetween } = require('./opra');
@@ -412,13 +414,66 @@ function stockEodClose(stockDay, state, symbol) {
   return state?.lastClose?.get(symbol) ?? null;
 }
 
+function duckdbString(value) {
+  return `'${String(value).replace(/'/g, "''")}'`;
+}
+
+function parquetSql(filePath) {
+  return `COPY (
+    SELECT
+      ticker,
+      volume,
+      open,
+      close,
+      high,
+      low,
+      window_start,
+      COALESCE(CAST(transactions AS VARCHAR), '0') AS transactions
+    FROM read_parquet(${duckdbString(filePath)})
+  ) TO STDOUT WITH (FORMAT CSV, HEADER TRUE);`;
+}
+
+function splitCsvLine(line) {
+  return String(line || '').split(',');
+}
+
+async function streamParquetRows(filePath, onRow) {
+  const child = spawn(process.env.DUCKDB_BIN || 'duckdb', ['-c', parquetSql(filePath)], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const stderr = [];
+  child.stderr.on('data', (chunk) => stderr.push(String(chunk)));
+  const reader = readline.createInterface({ input: child.stdout, crlfDelay: Infinity });
+  let headers = null;
+  for await (const line of reader) {
+    if (!line) continue;
+    if (!headers) {
+      headers = splitCsvLine(line);
+      continue;
+    }
+    const values = splitCsvLine(line);
+    const row = {};
+    headers.forEach((header, index) => {
+      row[header] = values[index] ?? '';
+    });
+    await onRow(row);
+  }
+  const code = await new Promise((resolve, reject) => {
+    child.on('error', reject);
+    child.on('close', resolve);
+  });
+  if (code !== 0) {
+    throw new Error(`duckdb_parquet_read_failed:${filePath}:${stderr.join('').trim() || code}`);
+  }
+}
+
 async function readStockDay(config, dayIso, symbols) {
-  const filePath = datasetCsvPath(config, 'stockBars', dayIso);
+  const source = resolveDatasetSource(config, 'stockBars', dayIso);
   const stockDay = createStockDay();
-  if (!fs.existsSync(filePath)) return { stockDay, filePath, available: false };
+  if (source.format === 'missing') return { stockDay, filePath: source.filePath, available: false };
 
   const selected = new Set(symbols.map((symbol) => symbol.toUpperCase()));
-  await readGzipCsv(filePath, (row) => {
+  function onRow(row) {
     const symbol = String(row.ticker || '').toUpperCase();
     if (!selected.has(symbol)) return;
     const minuteMs = nsToMinuteMs(row.window_start);
@@ -441,12 +496,15 @@ async function readStockDay(config, dayIso, symbols) {
     stockDay.bySymbol.get(symbol).set(minuteMs, close);
     stockDay.rowsBySymbol.get(symbol).push(bar);
     stockDay.eodClose.set(symbol, close);
-  });
+  }
+
+  if (source.format === 'parquet') await streamParquetRows(source.filePath, onRow);
+  else await readGzipCsv(source.filePath, onRow);
 
   stockDay.rowsBySymbol.forEach((rows) => {
     rows.sort((left, right) => left.minuteMs - right.minuteMs);
   });
-  return { stockDay, filePath, available: true };
+  return { stockDay, filePath: source.filePath, available: true, sourceFormat: source.format };
 }
 
 function intrinsicValue(option, underlyingClose) {
@@ -749,16 +807,16 @@ async function scanOptionDay({
   openDateSet,
   marketHistory,
 }) {
-  const filePath = datasetCsvPath(config, 'optionBars', dayIso);
+  const source = resolveDatasetSource(config, 'optionBars', dayIso);
   const openTickers = new Set(states.flatMap((state) => state.openShorts.map((option) => option.ticker)));
   const demandByRoot = buildDemandsForDay(states, stockDay, symbols, endDate, openDateSet, marketHistory);
   const bestCandidates = new Map();
   const refsByTicker = new Map();
   const marks = new Map();
 
-  if (!fs.existsSync(filePath)) {
+  if (source.format === 'missing') {
     return {
-      filePath,
+      filePath: source.filePath,
       available: false,
       candidates: bestCandidates,
       marks,
@@ -767,7 +825,7 @@ async function scanOptionDay({
   }
 
   let selectedRowCount = 0;
-  await readGzipCsv(filePath, (row) => {
+  function onRow(row) {
     const parsed = parseOpraTicker(row.ticker);
     if (!parsed) return;
     const minuteMs = nsToMinuteMs(row.window_start);
@@ -808,10 +866,13 @@ async function scanOptionDay({
         underlyingClose,
       });
     });
-  });
+  }
+
+  if (source.format === 'parquet') await streamParquetRows(source.filePath, onRow);
+  else await readGzipCsv(source.filePath, onRow);
 
   return {
-    filePath,
+    filePath: source.filePath,
     available: true,
     candidates: bestCandidates,
     marks,
@@ -1365,6 +1426,7 @@ async function runWheelBacktest({
       'Open short options are marked daily from the last available 1-minute option mark; missing marks fall back to max(intrinsic value, prior mark).',
       'Implied volatility and delta filters are Black-Scholes estimates from Massive minute aggregate option prices, not provider Greeks.',
       'Trend and realized-volatility filters use prior daily closes only.',
+      'Historical Massive CSV flat files are preferred; live Massive parquet is used only when the historical file is not available for a requested day.',
       'Assignment is modeled at expiration only; early assignment, dividends, borrow constraints, taxes, and margin interest are not modeled.',
       'Cash-put variants liquidate assigned shares at expiration close; wheel variants keep assigned shares and sell covered calls when eligible.',
       'The universe is a liquid local proxy unless a complete holdings file is explicitly supplied.',

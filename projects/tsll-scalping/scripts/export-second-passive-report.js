@@ -104,6 +104,9 @@ function exportReport({ sourcePath, outputPath }) {
   const best = source.bestWithTrades;
   if (!best?.trades?.length) throw new Error(`missing_best_trades:${sourcePath}`);
   const days = groupTradesByDay(best.trades);
+  const targetData = source.useRestSeconds
+    ? 'Massive REST 1-second TSLL aggregates expanded to OHLCV bars plus 1-minute SPY/QQQ/TSLA/TSLL market context.'
+    : 'TSLL Massive tick trades converted to 1-second OHLCV bars plus 1-minute SPY/QQQ/TSLA/TSLL market context.';
   const payload = {
     generatedAt: new Date().toISOString(),
     sourceArtifact: path.relative(path.resolve(PROJECT_ROOT, '..', '..'), sourcePath),
@@ -120,7 +123,7 @@ function exportReport({ sourcePath, outputPath }) {
     },
     assumptions: {
       explicitCostCentsPerSide: source.costCentsPerSide || 0,
-      data: 'TSLL Massive tick trades converted to 1-second OHLCV bars plus 1-minute SPY/QQQ/TSLA market context.',
+      data: targetData,
       caveat: 'Seconds bars show traded prices, not actual bid/ask queue priority; validate with quote data before live use.',
     },
     totals: summarize(days, best.trades),

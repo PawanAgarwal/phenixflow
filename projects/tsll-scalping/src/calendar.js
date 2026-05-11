@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 
-const { datasetCsvPath } = require('./config');
+const { resolveDatasetSource } = require('./config');
 const { listDates } = require('./time');
 
 function loadOpenDates(config, startDate, endDate) {
@@ -20,7 +20,7 @@ function loadOpenDates(config, startDate, endDate) {
 
 function availableDates(config, startDate, endDate, requiredDatasets = ['stockTrades', 'stockBars']) {
   return loadOpenDates(config, startDate, endDate).filter((dayIso) => (
-    requiredDatasets.every((datasetKey) => fs.existsSync(datasetCsvPath(config, datasetKey, dayIso)))
+    requiredDatasets.every((datasetKey) => resolveDatasetSource(config, datasetKey, dayIso).format !== 'missing')
   ));
 }
 

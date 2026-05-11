@@ -5,7 +5,7 @@ const path = require('node:path');
 const { PROJECT_ROOT, artifactPath, ensureDir, loadConfig } = require('../src/config');
 const { availableDates } = require('../src/calendar');
 const { buildDailyContextByDate, buildScalpingBarsForDay } = require('../src/data');
-const { simulateSecondPassiveScalp } = require('../src/second-passive');
+const { simulateSecondPassiveScalp, summarizeSecondScalps } = require('../src/second-passive');
 
 function parseArgs(argv = process.argv.slice(2)) {
   const out = {};
@@ -183,7 +183,10 @@ function renderMarkdown(report) {
   lines.push(`Open dates used: ${report.selectedDates.join(', ')}`);
   lines.push(`Bars: ${report.totalBars.toLocaleString()} (${report.barSeconds}s), cost: ${report.costCentsPerSide} cents per side`);
   lines.push('');
-  lines.push('This uses TSLL tick trades converted into 1-second OHLCV bars. It is a proxy for passive bid-to-ask market making: buy limits are placed below the last completed second close, then exits try for a fixed cent target. Without top-of-book quotes, this cannot model the actual bid, ask, queue position, or maker/taker rebates.');
+  const targetData = report.useRestSeconds
+    ? 'Massive REST 1-second TSLL aggregates expanded into 1-second OHLCV bars'
+    : 'TSLL tick trades converted into 1-second OHLCV bars';
+  lines.push(`This uses ${targetData}. It is a proxy for passive bid-to-ask market making: buy limits are placed below the last completed second close, then exits try for a fixed cent target. Without top-of-book quotes, this cannot model the actual bid, ask, queue position, or maker/taker rebates.`);
   lines.push('');
   lines.push('## Top Results');
   lines.push('');
@@ -229,13 +232,16 @@ async function main() {
   const minTrades = asNumber(args['min-trades'], 20);
   const costCentsPerSide = asNumber(args['cost-cents-per-side'], config.execution?.costCentsPerSide ?? 0.5);
   const includeDailyContext = args['daily-context'] !== false;
-  const selectedDates = availableDates(config, startDate, endDate).slice(0, maxDays || undefined);
+  const useRestSeconds = asBoolean(args['rest-seconds'], false);
+  const requiredDatasets = useRestSeconds ? ['stockBars'] : ['stockTrades', 'stockBars'];
+  const selectedDates = availableDates(config, startDate, endDate, requiredDatasets).slice(0, maxDays || undefined);
   if (!selectedDates.length) throw new Error(`no_available_dates:${startDate}:${endDate}`);
   const settings = {
     barSeconds: 1,
     includeOptions: false,
     includeDailyContext,
     costCentsPerSide,
+    useRestSeconds,
     rebuildCache: asBoolean(args['rebuild-cache'], false),
   };
   if (includeDailyContext) {
@@ -247,16 +253,6 @@ async function main() {
     console.error(`[tsll-seconds-mm] daily context dates=${dailyContext.dates.length} elapsed=${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
   }
 
-  const allRows = [];
-  const dayCounts = [];
-  for (const dayIso of selectedDates) {
-    const startedAt = Date.now();
-    const result = await loadOrBuildDay(config, dayIso, settings);
-    allRows.push(...result.rows);
-    dayCounts.push({ dayIso, counts: result.counts, cachePath: result.cachePath });
-    console.error(`[tsll-seconds-mm] ${dayIso} bars=${result.rows.length} counts=${JSON.stringify(result.counts)} elapsed=${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
-  }
-
   const gridOptions = {
     costCentsPerSide,
     noEntryFirstMinutes: asNumber(args['no-entry-first-minutes'], 5),
@@ -264,12 +260,45 @@ async function main() {
   };
   const fixedCandidate = asBoolean(args['fixed-candidate'], false);
   const grid = fixedCandidate ? buildFixedCandidate(gridOptions) : buildGrid(gridOptions);
-  console.error(`[tsll-seconds-mm] evaluating ${grid.length} variants on ${allRows.length} one-second bars`);
-  const results = grid.map((strategy) => compactResult(simulateSecondPassiveScalp(allRows, strategy), false));
-  const ranked = rankResults(results, minTrades);
-  const bestWithTrades = ranked.length
-    ? compactResult(simulateSecondPassiveScalp(allRows, ranked[0].settings), true)
-    : null;
+  const streamedTrades = fixedCandidate ? [] : null;
+  let totalBars = 0;
+  const allRows = fixedCandidate ? null : [];
+  const dayCounts = [];
+  for (const dayIso of selectedDates) {
+    const startedAt = Date.now();
+    const result = await loadOrBuildDay(config, dayIso, settings);
+    totalBars += result.rows.length;
+    if (fixedCandidate) {
+      const dayResult = simulateSecondPassiveScalp(result.rows, grid[0]);
+      streamedTrades.push(...dayResult.trades);
+    } else {
+      allRows.push(...result.rows);
+    }
+    dayCounts.push({ dayIso, counts: result.counts, cachePath: result.cachePath });
+    console.error(`[tsll-seconds-mm] ${dayIso} bars=${result.rows.length} counts=${JSON.stringify(result.counts)} elapsed=${((Date.now() - startedAt) / 1000).toFixed(1)}s`);
+  }
+
+  console.error(`[tsll-seconds-mm] evaluating ${grid.length} variants on ${totalBars} one-second bars`);
+  let results;
+  let ranked;
+  let bestWithTrades;
+  if (fixedCandidate) {
+    const streamedResult = {
+      strategy: grid[0].name,
+      settings: grid[0],
+      summary: summarizeSecondScalps(streamedTrades, totalBars),
+      trades: streamedTrades,
+    };
+    results = [compactResult(streamedResult, false)];
+    ranked = rankResults(results, minTrades);
+    bestWithTrades = ranked.length ? compactResult(streamedResult, true) : null;
+  } else {
+    results = grid.map((strategy) => compactResult(simulateSecondPassiveScalp(allRows, strategy), false));
+    ranked = rankResults(results, minTrades);
+    bestWithTrades = ranked.length
+      ? compactResult(simulateSecondPassiveScalp(allRows, ranked[0].settings), true)
+      : null;
+  }
   const report = {
     generatedAt: new Date().toISOString(),
     project: config.projectName,
@@ -280,9 +309,11 @@ async function main() {
     barSeconds: 1,
     costCentsPerSide,
     includeDailyContext,
+    useRestSeconds,
     minTrades,
     fixedCandidate,
-    totalBars: allRows.length,
+    streamedByDay: fixedCandidate,
+    totalBars,
     strategyVariants: grid.length,
     keptResults: ranked.length,
     dayCounts,
@@ -301,7 +332,7 @@ async function main() {
     jsonPath,
     mdPath,
     selectedDates,
-    totalBars: allRows.length,
+    totalBars,
     strategyVariants: grid.length,
     top: report.topResults.slice(0, 5),
   }, null, 2));

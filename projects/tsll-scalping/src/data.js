@@ -1,6 +1,15 @@
 const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const { spawn } = require('node:child_process');
+const readline = require('node:readline');
 
-const { datasetCsvPath } = require('./config');
+const {
+  datasetCsvPath,
+  ensureDir,
+  resolveDatasetSource,
+  runtimePath,
+} = require('./config');
 const { loadOpenDates } = require('./calendar');
 const { parseOpraTicker, daysBetween } = require('./opra');
 const { readGzipCsv, toNumber } = require('./csv');
@@ -134,10 +143,117 @@ function addStockMinuteFeatures(rows) {
   return rows;
 }
 
-async function readTargetTradesForDay(config, dayIso, symbol = config.target) {
+function parseEnvFileLine(rawLine) {
+  const line = String(rawLine || '').trim();
+  if (!line || line.startsWith('#')) return null;
+  const splitIndex = line.indexOf('=');
+  if (splitIndex <= 0) return null;
+  const key = line.slice(0, splitIndex).replace(/^export\s+/, '').trim();
+  let value = line.slice(splitIndex + 1).trim();
+  if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) value = value.slice(1, -1);
+  return key ? { key, value } : null;
+}
+
+function loadDotEnv(envPath) {
+  if (!envPath || !fs.existsSync(envPath)) return;
+  fs.readFileSync(envPath, 'utf8').split(/\r?\n/).forEach((line) => {
+    const parsed = parseEnvFileLine(line);
+    if (parsed && process.env[parsed.key] === undefined) process.env[parsed.key] = parsed.value;
+  });
+}
+
+function loadRestApiKey() {
+  [
+    path.resolve(__dirname, '..', '..', '..', '.env.local'),
+    path.join(os.homedir(), 'config', 'massive', '.env.local'),
+  ].forEach(loadDotEnv);
+  return String(process.env.MASSIVE_API_KEY || process.env.POLYGON_API_KEY || '').trim();
+}
+
+function restSecondAggCachePath(symbol, dayIso) {
+  return runtimePath('rest-second-aggs', `${String(symbol).toUpperCase()}-${dayIso}-1s-unadjusted.json`);
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchJsonWithRetry(url, maxAttempts = 6) {
+  let delay = 750;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const response = await fetch(url);
+    if (response.ok) return response.json();
+    const body = await response.text().catch(() => '');
+    const retryable = response.status === 408 || response.status === 425 || response.status === 429 || response.status >= 500;
+    if (!retryable || attempt === maxAttempts) throw new Error(`rest_second_aggs_failed:${response.status}:${body.slice(0, 160)}`);
+    await sleep(delay);
+    delay = Math.min(delay * 1.8, 8000);
+  }
+  throw new Error('rest_second_aggs_failed:unknown');
+}
+
+async function fetchRestSecondAggs(symbol, dayIso) {
+  const cachePath = restSecondAggCachePath(symbol, dayIso);
+  if (fs.existsSync(cachePath)) {
+    const payload = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+    return Array.isArray(payload.results) ? payload.results : [];
+  }
+  const apiKey = loadRestApiKey();
+  if (!apiKey) throw new Error('missing_massive_api_key_for_rest_seconds');
+  const results = [];
+  let url = new URL(`https://api.massive.com/v2/aggs/ticker/${encodeURIComponent(symbol)}/range/1/second/${dayIso}/${dayIso}`);
+  url.searchParams.set('adjusted', 'false');
+  url.searchParams.set('sort', 'asc');
+  url.searchParams.set('limit', '50000');
+  url.searchParams.set('apiKey', apiKey);
+  for (let page = 0; page < 10 && url; page += 1) {
+    const payload = await fetchJsonWithRetry(url);
+    if (Array.isArray(payload.results)) results.push(...payload.results);
+    if (!payload.next_url) break;
+    url = new URL(payload.next_url);
+    url.searchParams.set('apiKey', apiKey);
+  }
+  ensureDir(path.dirname(cachePath));
+  fs.writeFileSync(cachePath, `${JSON.stringify({
+    ticker: symbol,
+    queryDate: dayIso,
+    adjusted: false,
+    resultsCount: results.length,
+    results,
+  })}\n`, 'utf8');
+  return results;
+}
+
+async function readRestSecondAggTradesForDay(config, dayIso, symbol = config.target) {
+  const rows = await fetchRestSecondAggs(String(symbol || '').toUpperCase(), dayIso);
+  const trades = [];
+  rows.forEach((row) => {
+    const tsMs = Number(row.t);
+    if (!Number.isFinite(tsMs) || !isRegularSessionMs(tsMs, config.session)) return;
+    [
+      { offset: 0, price: Number(row.o), size: 1 },
+      { offset: 250, price: Number(row.h), size: 1 },
+      { offset: 500, price: Number(row.l), size: 1 },
+      { offset: 750, price: Number(row.c), size: Number(row.v) || 1 },
+    ].filter((point) => point.price > 0).forEach((point) => {
+      trades.push({
+        tsMs: tsMs + point.offset,
+        price: point.price,
+        size: point.size,
+        exchange: 'REST_1S',
+        conditions: 'synthetic_ohlc',
+      });
+    });
+  });
+  trades.sort((left, right) => left.tsMs - right.tsMs);
+  return trades;
+}
+
+async function readTargetTradesForDay(config, dayIso, symbol = config.target, settings = {}) {
+  if (settings.useRestSeconds) return readRestSecondAggTradesForDay(config, dayIso, symbol);
   const filePath = datasetCsvPath(config, 'stockTrades', dayIso);
   const trades = [];
-  if (!fs.existsSync(filePath)) return trades;
+  if (!fs.existsSync(filePath)) return readRestSecondAggTradesForDay(config, dayIso, symbol);
   const wanted = String(symbol || '').toUpperCase();
   let seenWanted = false;
   await readGzipCsv(filePath, (row) => {
@@ -165,12 +281,51 @@ async function readTargetTradesForDay(config, dayIso, symbol = config.target) {
   return trades;
 }
 
+function duckdbString(value) {
+  return `'${String(value).replace(/'/g, "''")}'`;
+}
+
+function stockParquetSql(filePath) {
+  return `COPY (
+    SELECT ticker, volume, open, close, high, low, window_start, COALESCE(CAST(transactions AS VARCHAR), '0') AS transactions
+    FROM read_parquet(${duckdbString(filePath)})
+  ) TO STDOUT WITH (FORMAT CSV, HEADER TRUE);`;
+}
+
+async function streamParquetRows(filePath, onRow) {
+  const child = spawn(process.env.DUCKDB_BIN || 'duckdb', ['-c', stockParquetSql(filePath)], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const stderr = [];
+  child.stderr.on('data', (chunk) => stderr.push(String(chunk)));
+  const reader = readline.createInterface({ input: child.stdout, crlfDelay: Infinity });
+  let headers = null;
+  for await (const line of reader) {
+    if (!line) continue;
+    if (!headers) {
+      headers = String(line).split(',');
+      continue;
+    }
+    const values = String(line).split(',');
+    const row = {};
+    headers.forEach((header, index) => {
+      row[header] = values[index] ?? '';
+    });
+    await onRow(row);
+  }
+  const code = await new Promise((resolve, reject) => {
+    child.on('error', reject);
+    child.on('close', resolve);
+  });
+  if (code !== 0) throw new Error(`duckdb_stock_parquet_read_failed:${filePath}:${stderr.join('').trim() || code}`);
+}
+
 async function readStockMinutesForDay(config, dayIso, symbols = config.marketSymbols) {
-  const filePath = datasetCsvPath(config, 'stockBars', dayIso);
+  const source = resolveDatasetSource(config, 'stockBars', dayIso);
   const wanted = new Set(symbols.map((symbol) => String(symbol).toUpperCase()));
   const bySymbol = new Map();
-  if (!fs.existsSync(filePath)) return bySymbol;
-  await readGzipCsv(filePath, (row) => {
+  if (source.format === 'missing') return bySymbol;
+  function onRow(row) {
     const symbol = String(row.ticker || '').toUpperCase();
     if (!wanted.has(symbol)) return;
     const minuteMs = nsToMinuteMs(row.window_start);
@@ -187,7 +342,9 @@ async function readStockMinutesForDay(config, dayIso, symbols = config.marketSym
       transactions: toNumber(row.transactions) || 0,
     });
     bySymbol.set(symbol, list);
-  });
+  }
+  if (source.format === 'parquet') await streamParquetRows(source.filePath, onRow);
+  else await readGzipCsv(source.filePath, onRow);
   bySymbol.forEach((rows, symbol) => bySymbol.set(symbol, addStockMinuteFeatures(rows)));
   return bySymbol;
 }
@@ -515,7 +672,7 @@ async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
   const barSeconds = settings.barSeconds || config.execution?.barSeconds || 5;
   const includeOptions = settings.includeOptions === true;
   const [trades, stockMinutes, optionAggs] = await Promise.all([
-    readTargetTradesForDay(config, dayIso, config.target),
+    readTargetTradesForDay(config, dayIso, config.target, settings),
     readStockMinutesForDay(config, dayIso, config.marketSymbols),
     includeOptions
       ? readOptionAggsForDay(config, dayIso, settings)
@@ -541,6 +698,7 @@ async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
       stockMinuteSymbols: stockMinutes.size,
       optionMinutes: optionAggs.optionByMinute.size,
       includeOptions,
+      targetTradeSource: settings.useRestSeconds ? 'massive_rest_1s_aggs' : 'massive_stock_trades_or_rest_1s_fallback',
     },
   };
 }

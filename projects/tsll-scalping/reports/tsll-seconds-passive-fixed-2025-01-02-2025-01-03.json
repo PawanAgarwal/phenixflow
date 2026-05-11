@@ -1,0 +1,84 @@
+{
+  "generatedAt": "2026-05-11T22:48:10.112Z",
+  "sourceArtifact": "projects/tsll-scalping/artifacts/tsll-seconds-passive-mm-fixed-2025-01-02-2025-01-03-cost0.json",
+  "project": "tsll-scalping",
+  "provider": "Massive",
+  "symbol": "TSLL",
+  "startDate": "2025-01-02",
+  "endDate": "2025-01-03",
+  "strategy": {
+    "id": "tsll-seconds-passive-b3-t3-s5-h10",
+    "name": "TSLL Seconds Passive Limit Scalper",
+    "description": "Buy TSLL 3 cents below the prior completed 1-second close, target +3 cents, stop 5 cents, and exit after 10 seconds.",
+    "settings": {
+      "name": "sec_passive_b3_t3_s5_h10_r3_thr0_fixed",
+      "costCentsPerSide": 0,
+      "buyBelowCloseCents": 3,
+      "targetCents": 3,
+      "stopCents": 5,
+      "maxHoldBars": 10,
+      "cooldownBars": 2,
+      "throughCents": 0,
+      "noEntryFirstMinutes": 5,
+      "noEntryLastMinutes": 10,
+      "minTradeCount": 1,
+      "minRange60sCents": 3,
+      "minRet60sCents": -20,
+      "maxLastBarUpCents": 12,
+      "requireMarketOk": true,
+      "minSpyRet1m": -0.001,
+      "minQqqRet1m": -0.0012,
+      "minTslaRet1m": -0.002,
+      "requireDailyContext": false,
+      "requireDailyMacroTrend": false,
+      "maxAbsFromPrevCloseAtr": null,
+      "maxRangeSoFarAtr": null
+    }
+  },
+  "assumptions": {
+    "explicitCostCentsPerSide": 0,
+    "data": "TSLL Massive tick trades converted to 1-second OHLCV bars plus 1-minute SPY/QQQ/TSLA market context.",
+    "caveat": "Seconds bars show traded prices, not actual bid/ask queue priority; validate with quote data before live use."
+  },
+  "totals": {
+    "days": 2,
+    "winningDays": 2,
+    "trades": 407,
+    "winRate": 0.692875,
+    "netCents": 372.33,
+    "avgNetCents": 0.914816,
+    "pnlPer1000Shares": 3723.3,
+    "buyCapitalPer1000Shares": 10128178.9,
+    "avgEntry": 24.884961,
+    "returnOnBuyTurnover": 0.00036762,
+    "returnOnRecycledCapital": 0.14962049
+  },
+  "days": [
+    {
+      "date": "2025-01-02",
+      "trades": 305,
+      "winRate": 0.714754,
+      "netCents": 330.37,
+      "grossCents": 330.37,
+      "pnlDollarsPerShareUnit": 3.3037,
+      "pnlPer1000Shares": 3303.7,
+      "buyCapitalPer1000Shares": 7528333.8,
+      "avgEntry": 24.683062,
+      "returnOnBuyTurnover": 0.00043884,
+      "returnOnRecycledCapital": 0.13384482
+    },
+    {
+      "date": "2025-01-03",
+      "trades": 102,
+      "winRate": 0.627451,
+      "netCents": 41.96,
+      "grossCents": 41.96,
+      "pnlDollarsPerShareUnit": 0.4196,
+      "pnlPer1000Shares": 419.6,
+      "buyCapitalPer1000Shares": 2599845.1,
+      "avgEntry": 25.488677,
+      "returnOnBuyTurnover": 0.00016139,
+      "returnOnRecycledCapital": 0.01646221
+    }
+  ]
+}
