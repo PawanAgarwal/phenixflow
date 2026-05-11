@@ -66,6 +66,7 @@
     "pym-v5:build-extra-eod": "node projects/pym-v5-replication/scripts/build-extra-eod-daily-bars.js",
     "pym-v5:extension-strategies": "node projects/pym-v5-replication/scripts/run-extension-strategies-suite.js",
     "pym-v5:ml-export-dataset": "node projects/pym-v5-ml-experiments/scripts/export-walkforward-dataset.js",
+    "pym-v5:ml-refresh-artifacts": "node projects/pym-v5-ml-experiments/scripts/refresh-daily-artifacts.js",
     "pym-v5:ml-walkforward-lgbm": "projects/pym-v5-ml-experiments/.venv/bin/python projects/pym-v5-ml-experiments/python/run_daily_walkforward.py --dataset projects/pym-v5-ml-experiments/artifacts/pym-v5-walkforward-dataset-2025-01-02-2026-05-08.jsonl --out projects/pym-v5-ml-experiments/artifacts/pym-v5-daily-walkforward-lgbm-tiny-grid-2025-02-01-2026-05-08.json --train-start 2025-01-02 --predict-start 2025-02-01 --lgbm-only --strategies lgbm_topk_attention_pym_eq_tinyB --progress 50",
     "pym-v5:build-stress-signal": "node projects/pym-v5-ml-experiments/scripts/build-options-stress-signal.js",
     "pym-v5:backtest": "node projects/pym-v5-replication/scripts/run-backtest.js",

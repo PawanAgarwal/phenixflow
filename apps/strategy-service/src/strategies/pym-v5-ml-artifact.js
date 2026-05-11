@@ -4,6 +4,8 @@ const path = require('node:path');
 const { weightsToHoldings } = require('../../../../projects/pym-v5-replication/src/rebalance-report');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
+const DEFAULT_ML_ARTIFACT_DIR = 'projects/pym-v5-ml-experiments/artifacts';
+const DEFAULT_OPTION_ARTIFACT_DIR = 'projects/pym-v5-replication/artifacts';
 const DEFAULT_ML_REPORT_PATH = 'projects/pym-v5-ml-experiments/artifacts/pym-v5-daily-walkforward-micro-features-2025-02-01-2026-05-08.json';
 const DEFAULT_OPTION_REPORT_PATH = 'projects/pym-v5-replication/artifacts/pym-v5-option-overlay-suite-grid-top8-zm0p5-2025-01-02-2026-05-08.json';
 const DEFAULT_DATASET_PATH = 'projects/pym-v5-ml-experiments/artifacts/pym-v5-walkforward-dataset-micro-features-2025-01-02-2026-05-08.jsonl';
@@ -158,14 +160,13 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function findLatestRiskOverlayReportPath() {
-  const explicit = process.env.PYM_V5_ML_RISK_OVERLAY_REPORT_PATH;
+function findLatestDatedArtifactPath({ explicit, dir, fallback, pattern }) {
   if (explicit) return resolvePath(explicit);
-  const dir = resolvePath(DEFAULT_RISK_OVERLAY_REPORT_DIR);
-  if (!fs.existsSync(dir)) return resolvePath(path.join(DEFAULT_RISK_OVERLAY_REPORT_DIR, DEFAULT_RISK_OVERLAY_REPORT_NAME));
-  const matches = fs.readdirSync(dir)
+  const absoluteDir = resolvePath(dir);
+  if (!fs.existsSync(absoluteDir)) return resolvePath(fallback);
+  const matches = fs.readdirSync(absoluteDir)
     .map((name) => {
-      const match = name.match(/^pym-v5-two-speed-risk-overlays-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/);
+      const match = name.match(pattern);
       return match ? { name, startDate: match[1], endDate: match[2] } : null;
     })
     .filter(Boolean)
@@ -173,8 +174,44 @@ function findLatestRiskOverlayReportPath() {
       || right.startDate.localeCompare(left.startDate)
       || right.name.localeCompare(left.name));
   return matches.length
-    ? path.join(dir, matches[0].name)
-    : resolvePath(path.join(DEFAULT_RISK_OVERLAY_REPORT_DIR, DEFAULT_RISK_OVERLAY_REPORT_NAME));
+    ? path.join(absoluteDir, matches[0].name)
+    : resolvePath(fallback);
+}
+
+function findLatestMlReportPath() {
+  return findLatestDatedArtifactPath({
+    explicit: process.env.PYM_V5_ML_REPORT_PATH,
+    dir: DEFAULT_ML_ARTIFACT_DIR,
+    fallback: DEFAULT_ML_REPORT_PATH,
+    pattern: /^pym-v5-daily-walkforward-micro-features-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/,
+  });
+}
+
+function findLatestOptionReportPath() {
+  return findLatestDatedArtifactPath({
+    explicit: process.env.PYM_V5_ML_OPTION_REPORT_PATH,
+    dir: DEFAULT_OPTION_ARTIFACT_DIR,
+    fallback: DEFAULT_OPTION_REPORT_PATH,
+    pattern: /^pym-v5-option-overlay-suite-grid-top8-zm0p5-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/,
+  });
+}
+
+function findLatestMlDatasetPath() {
+  return findLatestDatedArtifactPath({
+    explicit: process.env.PYM_V5_ML_DATASET_PATH,
+    dir: DEFAULT_ML_ARTIFACT_DIR,
+    fallback: DEFAULT_DATASET_PATH,
+    pattern: /^pym-v5-walkforward-dataset-micro-features-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.jsonl$/,
+  });
+}
+
+function findLatestRiskOverlayReportPath() {
+  return findLatestDatedArtifactPath({
+    explicit: process.env.PYM_V5_ML_RISK_OVERLAY_REPORT_PATH,
+    dir: DEFAULT_RISK_OVERLAY_REPORT_DIR,
+    fallback: path.join(DEFAULT_RISK_OVERLAY_REPORT_DIR, DEFAULT_RISK_OVERLAY_REPORT_NAME),
+    pattern: /^pym-v5-two-speed-risk-overlays-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/,
+  });
 }
 
 function loadBenchmarkSamples(datasetPath) {
@@ -651,8 +688,8 @@ function createArtifactStrategy(options = {}) {
 }
 
 function createPymV5MlTwoSpeedStrategy(options = {}) {
-  const mlReportPath = resolvePath(options.mlReportPath || process.env.PYM_V5_ML_REPORT_PATH || DEFAULT_ML_REPORT_PATH);
-  const datasetPath = resolvePath(options.datasetPath || process.env.PYM_V5_ML_DATASET_PATH || DEFAULT_DATASET_PATH);
+  const mlReportPath = resolvePath(options.mlReportPath || findLatestMlReportPath());
+  const datasetPath = resolvePath(options.datasetPath || findLatestMlDatasetPath());
   const strategyId = options.artifactStrategyId || DEFAULT_TWO_SPEED_STRATEGY_ID;
   return createArtifactStrategy({
     id: options.id || 'pym-v5-ml-two-speed-attention',
@@ -696,9 +733,9 @@ function createPymV5MlTwoSpeedStrategy(options = {}) {
 }
 
 function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
-  const mlReportPath = resolvePath(options.mlReportPath || process.env.PYM_V5_ML_REPORT_PATH || DEFAULT_ML_REPORT_PATH);
-  const optionReportPath = resolvePath(options.optionReportPath || process.env.PYM_V5_ML_OPTION_REPORT_PATH || DEFAULT_OPTION_REPORT_PATH);
-  const datasetPath = resolvePath(options.datasetPath || process.env.PYM_V5_ML_DATASET_PATH || DEFAULT_DATASET_PATH);
+  const mlReportPath = resolvePath(options.mlReportPath || findLatestMlReportPath());
+  const optionReportPath = resolvePath(options.optionReportPath || findLatestOptionReportPath());
+  const datasetPath = resolvePath(options.datasetPath || findLatestMlDatasetPath());
   const twoSpeedId = options.twoSpeedStrategyId || DEFAULT_TWO_SPEED_STRATEGY_ID;
   const optionId = options.optionStrategyId || DEFAULT_OPTION_STRATEGY_ID;
   return createArtifactStrategy({
@@ -791,7 +828,7 @@ function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
 
 function createPymV5MlOptionTop85050Strategy(options = {}) {
   const riskOverlayReportPath = resolvePath(options.riskOverlayReportPath || findLatestRiskOverlayReportPath());
-  const datasetPath = resolvePath(options.datasetPath || process.env.PYM_V5_ML_DATASET_PATH || DEFAULT_DATASET_PATH);
+  const datasetPath = resolvePath(options.datasetPath || findLatestMlDatasetPath());
   const strategyId = options.artifactStrategyId || DEFAULT_ML_OPTION_BLEND_STRATEGY_ID;
   return createArtifactStrategy({
     id: options.id || 'pym-v5-ml-option-top8-50-50',
@@ -838,9 +875,9 @@ function createPymV5MlOptionTop85050Strategy(options = {}) {
 }
 
 function createPymV5MlCalmTrendRouterStrategy(options = {}) {
-  const mlReportPath = resolvePath(options.mlReportPath || process.env.PYM_V5_ML_REPORT_PATH || DEFAULT_ML_REPORT_PATH);
-  const optionReportPath = resolvePath(options.optionReportPath || process.env.PYM_V5_ML_OPTION_REPORT_PATH || DEFAULT_OPTION_REPORT_PATH);
-  const datasetPath = resolvePath(options.datasetPath || process.env.PYM_V5_ML_DATASET_PATH || DEFAULT_DATASET_PATH);
+  const mlReportPath = resolvePath(options.mlReportPath || findLatestMlReportPath());
+  const optionReportPath = resolvePath(options.optionReportPath || findLatestOptionReportPath());
+  const datasetPath = resolvePath(options.datasetPath || findLatestMlDatasetPath());
   const twoSpeedId = options.twoSpeedStrategyId || DEFAULT_TWO_SPEED_STRATEGY_ID;
   const optionId = options.optionStrategyId || DEFAULT_OPTION_STRATEGY_ID;
   return createArtifactStrategy({
