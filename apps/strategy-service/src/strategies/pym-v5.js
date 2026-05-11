@@ -1,10 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { spawn } = require('node:child_process');
 
 const { loadConfig } = require('../../../../projects/pym-v5-replication/src/config');
 const { readDailyBarsJsonl } = require('../../../../projects/pym-v5-replication/src/backtest');
 const { loadMassiveEnv } = require('../../../../projects/pym-v5-replication/src/env');
+const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
 const {
   buildDailyRebalanceReport,
   defaultScorePath,
@@ -111,51 +111,8 @@ function createPymV5Strategy(options = {}) {
     return state.report;
   }
 
-  function appendRefreshLog(chunk) {
-    const lines = String(chunk || '').split(/\r?\n/).filter(Boolean);
-    state.refresh.log.push(...lines);
-    state.refresh.log = state.refresh.log.slice(-100);
-  }
-
   function refreshData() {
-    if (state.refresh.running) return { accepted: false, status: state.refresh };
-    state.refresh = {
-      running: true,
-      startedAt: new Date().toISOString(),
-      finishedAt: null,
-      exitCode: null,
-      log: [],
-      error: null,
-    };
-    const repoRoot = path.resolve(__dirname, '..', '..', '..', '..');
-    const scriptPath = path.join(repoRoot, 'projects', 'pym-v5-replication', 'scripts', 'build-massive-eod-daily-bars.js');
-    const args = [scriptPath, '--fetch-start', process.env.PYM_V5_EOD_FETCH_START || '2024-01-01'];
-    if (process.env.PYM_V5_REFRESH_END) args.push('--end', process.env.PYM_V5_REFRESH_END);
-    const child = spawn(process.execPath, args, {
-      cwd: repoRoot,
-      env: process.env,
-      stdio: ['ignore', 'pipe', 'pipe'],
-    });
-    child.stdout.on('data', appendRefreshLog);
-    child.stderr.on('data', appendRefreshLog);
-    child.on('error', (error) => {
-      state.refresh.error = error.message;
-    });
-    child.on('close', (code) => {
-      state.refresh.running = false;
-      state.refresh.finishedAt = new Date().toISOString();
-      state.refresh.exitCode = code;
-      if (code === 0) {
-        try {
-          recompute();
-        } catch (error) {
-          state.refresh.error = error.message;
-        }
-      } else if (!state.refresh.error) {
-        state.refresh.error = `refresh_failed:${code}`;
-      }
-    });
-    return { accepted: true, status: state.refresh };
+    return runRefreshSequence(state, [refreshEodInputsStep()], recompute);
   }
 
   return {

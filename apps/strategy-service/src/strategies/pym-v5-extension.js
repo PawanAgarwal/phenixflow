@@ -19,7 +19,7 @@ const {
   strategyCreditSpread,
 } = require('../../../../projects/pym-v5-replication/src/extension-strategies-suite');
 
-const { runRefreshSequence } = require('./refresh-helpers');
+const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const ML_ARTIFACTS_DIR = path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'artifacts');
@@ -28,24 +28,7 @@ const DEFAULT_LGBM_STRATEGY_ID = 'lgbm_topk_attention_pym_eq_tinyB';
 const STRESS_SIGNAL_PREFIX = 'options-stress-signal';
 
 function eodBarsRefreshStep() {
-  return {
-    label: 'build-massive-eod-bars',
-    command: process.execPath,
-    args: [
-      path.join(REPO_ROOT, 'projects', 'pym-v5-replication', 'scripts', 'build-massive-eod-daily-bars.js'),
-      '--fetch-start', process.env.PYM_V5_EOD_FETCH_START || '2024-01-01',
-    ],
-  };
-}
-
-function stressSignalRefreshStep() {
-  return {
-    label: 'build-stress-signal',
-    command: process.execPath,
-    args: [
-      path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'scripts', 'build-options-stress-signal.js'),
-    ],
-  };
+  return refreshEodInputsStep({ label: 'refresh-eod-inputs' });
 }
 
 const SLEEVE_META_RULE_SUMMARY = Object.freeze([
@@ -528,7 +511,7 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
   // today's realized close-to-close return + an updated stress overlay
   // but doesn't produce new ML predictions for new signal dates.
   function refreshSteps() {
-    return [eodBarsRefreshStep(), stressSignalRefreshStep()];
+    return [refreshEodInputsStep({ label: 'refresh-eod-stress-inputs', withStressSignal: true })];
   }
 
   function refreshData() {

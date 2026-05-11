@@ -467,26 +467,10 @@ function createPymV5OptionOverlayStrategy(options = {}) {
   }
 
   function refreshData() {
-    const { runRefreshSequence } = require('./refresh-helpers');
-    const refreshSteps = [
-      {
-        label: 'build-massive-eod-bars',
-        command: process.execPath,
-        args: [
-          path.join(__dirname, '..', '..', '..', '..', 'projects', 'pym-v5-replication', 'scripts', 'build-massive-eod-daily-bars.js'),
-          '--fetch-start', process.env.PYM_V5_EOD_FETCH_START || '2024-01-01',
-        ],
-      },
-      {
-        label: 'build-option-features',
-        command: process.execPath,
-        args: [
-          path.join(__dirname, '..', '..', '..', '..', 'projects', 'pym-v5-replication', 'scripts', 'build-option-features.js'),
-          '--start', process.env.PYM_V5_OPTION_FEATURES_START || '2025-01-02',
-        ],
-      },
-    ];
-    return runRefreshSequence(state, refreshSteps, recompute);
+    const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
+    return runRefreshSequence(state, [
+      refreshEodInputsStep({ label: 'refresh-eod-option-inputs', withOptionFeatures: true }),
+    ], recompute);
   }
 
   return {

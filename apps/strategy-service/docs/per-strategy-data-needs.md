@@ -15,10 +15,27 @@ refresh is triggered.
 
 | Category | Strategies | What refresh does | Wall time |
 |---|---|---|---|
-| **EOD-bars only** | `pym-v5`, `pym-v5-sleeve-meta-21d-cap25`, `pym-v5-cap25-lgbm-blend40` | Fetch latest Massive EOD bars, then recompute | ~30-60s |
-| **EOD-bars + stress** | `pym-v5-cap25-lgbm-blend40-stress` | Above + rebuild VIX/OCC stress signal | ~60-90s |
-| **EOD-bars + option features** | `pym-v5-option-rank-top8`, `pym-v5-spy-put-pressure-bil` | Fetch EOD bars + rebuild Massive option features for all PYM roots | ~5-10 min |
+| **EOD-bars only** | `pym-v5`, `pym-v5-sleeve-meta-21d-cap25`, `pym-v5-cap25-lgbm-blend40` | Coverage-aware EOD input refresh, then recompute | Usually seconds when current; ~30-60s if bars are behind |
+| **EOD-bars + stress** | `pym-v5-cap25-lgbm-blend40-stress` | Coverage-aware EOD refresh + rebuild VIX/OCC stress only if stale | Usually seconds when current; ~30-90s if stale |
+| **EOD-bars + option features** | `pym-v5-option-rank-top8`, `pym-v5-spy-put-pressure-bil` | Coverage-aware EOD refresh + append only missing Massive option-feature days | Usually seconds when current; about one trading day of OPRA scan per missing day |
 | **Artifact-only (noop)** | All `pym-v5-ml-*`, `option-income-wheel-trend-ivrv`, `tsll-seconds-passive-scalper` | Re-read pre-computed artifact + recompute (no external fetch) | <1s |
+
+All live-data strategy refreshes go through
+`projects/pym-v5-replication/scripts/refresh-eod-inputs.js`. That script
+checks existing manifests first, resolves `auto` end dates against both the
+historical Massive cache and live Massive parquet, and only builds what is
+missing. This is the preferred operator path for dashboard refreshes:
+
+```bash
+# EOD bars only
+npm run pym-v5:refresh-eod-inputs
+
+# EOD bars plus option-flow feature append
+npm run pym-v5:refresh-eod-inputs -- --with-option-features
+
+# EOD bars plus stress signal if stale
+npm run pym-v5:refresh-eod-inputs -- --with-stress-signal
+```
 
 ## Per-strategy detail
 
@@ -34,7 +51,7 @@ refresh is triggered.
   File: `runtime/pym-v5-massive-eod-adjusted-daily-bars-{start}-{end}.jsonl`.
 
 **Refresh sequence:**
-1. `node projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js --fetch-start 2024-01-01`
+1. `node projects/pym-v5-replication/scripts/refresh-eod-inputs.js --fetch-start 2024-01-01`
 2. Recompute: re-evaluate Composer tree on new bars, rebuild snapshots
    and equity series.
 
@@ -57,7 +74,7 @@ on the same bars file.
   artifact has fixed start/end dates (no incremental extension yet).
 
 **Refresh sequence:**
-1. Build EOD bars (as for `pym-v5`).
+1. Coverage-aware EOD input refresh (as for `pym-v5`).
 2. Recompute: re-blend cap25 weights with the existing LGBM holdings
    from the artifact.
 
@@ -85,9 +102,9 @@ predictions.
     available 2021-01-04+)
 
 **Refresh sequence:**
-1. Build EOD bars.
-2. Build stress signal (`npm run pym-v5:build-stress-signal` —
-   re-fetches latest ^VIX, re-parses local OCC files, ~30s).
+1. Coverage-aware EOD input refresh.
+2. Build stress signal only if the latest stress artifact is behind the
+   requested end date.
 3. Recompute: re-blend cap25 + LGBM with the latest stress overlay.
 
 **Same caveat as blend40** for LGBM artifact extension.
@@ -104,10 +121,10 @@ predictions.
   universe.
 
 **Refresh sequence:**
-1. Build EOD bars.
-2. Build option features (`build-option-features.js --start 2025-01-02`).
-   This processes all OPRA option_quotes_1m files in the window — slower
-   than EOD bars (~5-10 min for the full window).
+1. Coverage-aware EOD input refresh.
+2. Append option features only for missing trading days. The full-window
+   rebuild path is used only when no compatible base feature file exists
+   or when `PYM_V5_REFRESH_FORCE=1` is set.
 3. Recompute: re-rank PYM holdings by option-flow momentum, keep top 8.
 
 ### `pym-v5-spy-put-pressure-bil` — PYM + SPY Put-Pressure Risk-Off
@@ -220,9 +237,9 @@ The `GET /api/refresh-status` response shape:
 - `POST /api/refresh-all` is **non-blocking** — it triggers all refreshes
   and returns immediately. Each refresh runs in a background process. The
   ordering is "parallel" in the sense that they're all started together,
-  but several share work (multiple strategies need EOD bars, etc.).
-  Currently each strategy spawns its own bars-build subprocess, so
-  there's redundant work — this can be deduplicated in a Phase 2 pass.
+  but several share work (multiple strategies need EOD bars, etc.). The
+  shared refresh script is coverage-aware, so repeated subprocesses should
+  skip quickly once files are current.
 - The OCC OI Docker container (`openinterest-occ-eod-oi`) keeps OCC EOD
   files fresh on its own schedule. The stress-signal refresh just reads
   what's there.

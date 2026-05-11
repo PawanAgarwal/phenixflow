@@ -66,6 +66,23 @@ function spawnStep(state, step) {
   });
 }
 
+function refreshEodInputsStep(options = {}) {
+  const args = [
+    path.join(REPO_ROOT, 'projects', 'pym-v5-replication', 'scripts', 'refresh-eod-inputs.js'),
+    '--fetch-start', process.env.PYM_V5_EOD_FETCH_START || '2024-01-01',
+  ];
+  if (process.env.PYM_V5_REFRESH_END) args.push('--end', process.env.PYM_V5_REFRESH_END);
+  if (process.env.PYM_V5_OPTION_FEATURES_START) args.push('--option-start', process.env.PYM_V5_OPTION_FEATURES_START);
+  if (options.withOptionFeatures) args.push('--with-option-features');
+  if (options.withStressSignal) args.push('--with-stress-signal');
+  if (process.env.PYM_V5_REFRESH_FORCE === '1') args.push('--force');
+  return {
+    label: options.label || 'refresh-eod-inputs',
+    command: process.execPath,
+    args,
+  };
+}
+
 // Run a sequence of steps. Each step is a single child process.
 // On all-success, calls onSuccess() (typically the strategy's recompute()).
 // state must have a `state.refresh` field (created via createRefreshState).
@@ -134,5 +151,6 @@ module.exports = {
   appendLog,
   createRefreshState,
   noopRefresh,
+  refreshEodInputsStep,
   runRefreshSequence,
 };
