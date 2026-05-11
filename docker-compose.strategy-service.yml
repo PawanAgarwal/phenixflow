@@ -6,9 +6,9 @@ services:
     image: phenixflow-strategy-service:local
     container_name: phenixflow-strategy-service
     restart: unless-stopped
-    cpus: "0.50"
-    mem_limit: 512m
-    memswap_limit: 768m
+    cpus: "2.00"
+    mem_limit: 2g
+    memswap_limit: 3g
     pids_limit: 128
     ports:
       - "3120:3120"
@@ -20,11 +20,17 @@ services:
       PYM_V5_REBALANCE_START: "2025-01-01"
       PYM_V5_EOD_FETCH_START: "2024-01-01"
       PYM_V5_OPTION_STUDY_ID: "grid_pym_option_rank_top8_zm0p5"
+      PYM_V5_LGBM_N_JOBS: "1"
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
     volumes:
       - ./projects/pym-v5-replication/runtime:/app/projects/pym-v5-replication/runtime
       - ./projects/pym-v5-replication/artifacts:/app/projects/pym-v5-replication/artifacts
       - ./projects/pym-v5-ml-experiments/artifacts:/app/projects/pym-v5-ml-experiments/artifacts
       - ./projects/spy-intraday-prediction/artifacts:/app/projects/spy-intraday-prediction/artifacts
+      - ./projects/tsll-scalping/artifacts:/app/projects/tsll-scalping/artifacts
+      - ./projects/tsll-scalping/reports:/app/projects/tsll-scalping/reports
+      - ./projects/tsll-scalping/runtime:/app/projects/tsll-scalping/runtime
       - /Volumes/SEC4TB/massive-data/massive:/Volumes/SEC4TB/massive-data/massive:ro
       - /Volumes/SEC4TB/massive-data/massive-live/parquet/massive:/Volumes/SEC4TB/massive-data/massive-live/parquet/massive:ro
       - /Volumes/SEC4TB/massive-data/calendar:/Volumes/SEC4TB/massive-data/calendar:ro

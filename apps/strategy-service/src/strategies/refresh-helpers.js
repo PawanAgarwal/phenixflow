@@ -83,6 +83,20 @@ function refreshEodInputsStep(options = {}) {
   };
 }
 
+function refreshLgbmArtifactStep(options = {}) {
+  const args = [
+    path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'scripts', 'refresh-lgbm-artifact.js'),
+  ];
+  if (process.env.PYM_V5_REFRESH_END) args.push('--end', process.env.PYM_V5_REFRESH_END);
+  if (options.withStressSignal) args.push('--with-stress-signal');
+  if (process.env.PYM_V5_REFRESH_FORCE === '1') args.push('--force');
+  return {
+    label: options.label || 'refresh-lgbm-artifact',
+    command: process.execPath,
+    args,
+  };
+}
+
 // Run a sequence of steps. Each step is a single child process.
 // On all-success, calls onSuccess() (typically the strategy's recompute()).
 // state must have a `state.refresh` field (created via createRefreshState).
@@ -152,5 +166,6 @@ module.exports = {
   createRefreshState,
   noopRefresh,
   refreshEodInputsStep,
+  refreshLgbmArtifactStep,
   runRefreshSequence,
 };

@@ -19,7 +19,7 @@ const {
   strategyCreditSpread,
 } = require('../../../../projects/pym-v5-replication/src/extension-strategies-suite');
 
-const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
+const { refreshEodInputsStep, refreshLgbmArtifactStep, runRefreshSequence } = require('./refresh-helpers');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const ML_ARTIFACTS_DIR = path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'artifacts');
@@ -29,6 +29,11 @@ const STRESS_SIGNAL_PREFIX = 'options-stress-signal';
 
 function eodBarsRefreshStep() {
   return refreshEodInputsStep({ label: 'refresh-eod-inputs' });
+}
+
+function resolveRepoPath(filePath) {
+  if (!filePath) return null;
+  return path.isAbsolute(filePath) ? filePath : path.join(REPO_ROOT, filePath);
 }
 
 const SLEEVE_META_RULE_SUMMARY = Object.freeze([
@@ -296,9 +301,7 @@ function createPymV5Cap25LgbmBlendStrategy(options = {}) {
   const blendWeight = options.blendWeight ?? 0.40;
   const innerLookback = options.innerLookback ?? 21;
   const innerCap = options.innerCap ?? 0.25;
-  const lgbmArtifactPath = options.lgbmArtifactPath
-    || findLatestLgbmArtifactPath('pym-v5-daily-walkforward-lgbm-tiny-grid')
-    || path.join(ML_ARTIFACTS_DIR, DEFAULT_LGBM_ARTIFACT);
+  const explicitLgbmArtifactPath = resolveRepoPath(options.lgbmArtifactPath || process.env.PYM_V5_LGBM_ARTIFACT_PATH);
   const lgbmStrategyId = options.lgbmStrategyId || DEFAULT_LGBM_STRATEGY_ID;
   const blendPct = Math.round(blendWeight * 100);
   const id = options.id || `pym-v5-cap25-lgbm-blend${blendPct}`;
@@ -308,6 +311,12 @@ function createPymV5Cap25LgbmBlendStrategy(options = {}) {
     || `Holds the cap25 sleeve-meta target at ${100 - blendPct}% blended with the daily walk-forward LightGBM top-5 equal-weight ML target at ${blendPct}%. The LGBM model is tightly regularized (3 leaves, 20 trees, regLambda=5) so it can fit small daily training sets without overfitting; the cap25 baseline keeps drawdown controlled.`;
   const ruleSummary = options.ruleSummary || CAP25_LGBM_BLEND_RULE_SUMMARY;
   const state = { report: null, loadedAt: null };
+
+  function currentLgbmArtifactPath() {
+    return explicitLgbmArtifactPath
+      || findLatestLgbmArtifactPath('pym-v5-daily-walkforward-lgbm-tiny-grid')
+      || path.join(ML_ARTIFACTS_DIR, DEFAULT_LGBM_ARTIFACT);
+  }
 
   function getMetadata() {
     return {
@@ -333,6 +342,7 @@ function createPymV5Cap25LgbmBlendStrategy(options = {}) {
   function recompute() {
     const scorePath = process.env.PYM_V5_SCORE_PATH || defaultScorePath(config);
     const barsPath = process.env.PYM_V5_DAILY_BARS_PATH || findLatestMassiveEodBarsPath();
+    const lgbmArtifactPath = currentLgbmArtifactPath();
     if (!scorePath || !fs.existsSync(scorePath)) throw new Error(`missing_score_snapshot:${scorePath}`);
     if (!barsPath || !fs.existsSync(barsPath)) throw new Error('missing_massive_eod_bars: mount runtime data or run pym-v5:massive-eod-build');
     if (!fs.existsSync(lgbmArtifactPath)) throw new Error(`missing_lgbm_artifact:${lgbmArtifactPath}`);
@@ -384,14 +394,8 @@ function createPymV5Cap25LgbmBlendStrategy(options = {}) {
     return state.report;
   }
 
-  // Refresh fetches new EOD bars only. The LGBM walk-forward artifact is
-  // expensive (~10 min for the production tinyB spec) and is regenerated
-  // out-of-band by `npm run pym-v5:ml-walkforward-lgbm`. So an in-API
-  // refresh updates today's realized close-to-close return on existing
-  // signal dates, but does not produce new ML predictions for new signal
-  // dates — those need the ML walk-forward to be extended manually.
   function refreshSteps() {
-    return [eodBarsRefreshStep()];
+    return [refreshLgbmArtifactStep({ label: 'refresh-lgbm-inputs-and-artifact' })];
   }
 
   function refreshData() {
@@ -407,12 +411,9 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
   const blendWeight = options.blendWeight ?? 0.40;
   const innerLookback = options.innerLookback ?? 21;
   const innerCap = options.innerCap ?? 0.25;
-  const lgbmArtifactPath = options.lgbmArtifactPath
-    || findLatestLgbmArtifactPath('pym-v5-daily-walkforward-lgbm-tiny-grid')
-    || path.join(ML_ARTIFACTS_DIR, DEFAULT_LGBM_ARTIFACT);
+  const explicitLgbmArtifactPath = resolveRepoPath(options.lgbmArtifactPath || process.env.PYM_V5_LGBM_ARTIFACT_PATH);
   const lgbmStrategyId = options.lgbmStrategyId || DEFAULT_LGBM_STRATEGY_ID;
-  const stressArtifactPath = options.stressArtifactPath || findLatestStressArtifactPath();
-  if (!stressArtifactPath) throw new Error('missing_stress_signal: run pym-v5:build-stress-signal first');
+  const explicitStressArtifactPath = resolveRepoPath(options.stressArtifactPath || process.env.PYM_V5_STRESS_SIGNAL_PATH);
   const blendPct = Math.round(blendWeight * 100);
   const id = options.id || `pym-v5-cap25-lgbm-blend${blendPct}-stress`;
   const name = options.name || `PYM cap25 + ${blendPct}% LightGBM + stress overlay`;
@@ -421,6 +422,16 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
     || `Holds the cap25 + ${blendPct}% LightGBM blend, then applies an aggressive options-derived stress overlay (composite of VIXY 5d log-return, ^VIX, and OCC equity put/call ratio z-scores) that scales gross exposure down on stressed days and routes the slack to BIL. Over a 10-year backtest this overlay cut max drawdown from -21% to -12%, cut volatility from 26% to 19%, and lifted Sharpe from 2.45 to 3.08 with only modest return cost.`;
   const ruleSummary = options.ruleSummary || CAP25_LGBM_BLEND_STRESS_RULE_SUMMARY;
   const state = { report: null, loadedAt: null };
+
+  function currentLgbmArtifactPath() {
+    return explicitLgbmArtifactPath
+      || findLatestLgbmArtifactPath('pym-v5-daily-walkforward-lgbm-tiny-grid')
+      || path.join(ML_ARTIFACTS_DIR, DEFAULT_LGBM_ARTIFACT);
+  }
+
+  function currentStressArtifactPath() {
+    return explicitStressArtifactPath || findLatestStressArtifactPath();
+  }
 
   function getMetadata() {
     return {
@@ -437,7 +448,7 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
       composerSymphonyId: config.source.composerSymphonyId,
       baseStrategyId: 'pym-v5-cap25-lgbm-blend40',
       lgbmArtifactStrategyId: lgbmStrategyId,
-      stressArtifactPath: path.basename(stressArtifactPath),
+      stressArtifactPath: currentStressArtifactPath() ? path.basename(currentStressArtifactPath()) : null,
       blendWeight,
       stressOverlayMode: 'aggressive',
       defaultStartDate: options.startDate || process.env.PYM_V5_REBALANCE_START || '2025-02-03',
@@ -448,10 +459,12 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
   function recompute() {
     const scorePath = process.env.PYM_V5_SCORE_PATH || defaultScorePath(config);
     const barsPath = process.env.PYM_V5_DAILY_BARS_PATH || findLatestMassiveEodBarsPath();
+    const lgbmArtifactPath = currentLgbmArtifactPath();
+    const stressArtifactPath = currentStressArtifactPath();
     if (!scorePath || !fs.existsSync(scorePath)) throw new Error(`missing_score_snapshot:${scorePath}`);
     if (!barsPath || !fs.existsSync(barsPath)) throw new Error('missing_massive_eod_bars: mount runtime data or run pym-v5:massive-eod-build');
     if (!fs.existsSync(lgbmArtifactPath)) throw new Error(`missing_lgbm_artifact:${lgbmArtifactPath}`);
-    if (!fs.existsSync(stressArtifactPath)) throw new Error(`missing_stress_artifact:${stressArtifactPath}`);
+    if (!stressArtifactPath || !fs.existsSync(stressArtifactPath)) throw new Error(`missing_stress_artifact:${stressArtifactPath}`);
 
     const score = JSON.parse(fs.readFileSync(scorePath, 'utf8'));
     const market = mergeDailyBars(barsPath, null);
@@ -505,13 +518,8 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
     return state.report;
   }
 
-  // Refresh fetches new EOD bars AND rebuilds the options-stress signal
-  // (~30s for the stress signal: ^VIX fetch + OCC parse). The LGBM
-  // walk-forward artifact is regenerated out-of-band, so this picks up
-  // today's realized close-to-close return + an updated stress overlay
-  // but doesn't produce new ML predictions for new signal dates.
   function refreshSteps() {
-    return [refreshEodInputsStep({ label: 'refresh-eod-stress-inputs', withStressSignal: true })];
+    return [refreshLgbmArtifactStep({ label: 'refresh-lgbm-stress-inputs-and-artifact', withStressSignal: true })];
   }
 
   function refreshData() {

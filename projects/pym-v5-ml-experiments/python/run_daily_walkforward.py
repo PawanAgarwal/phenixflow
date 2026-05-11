@@ -4,12 +4,20 @@ import argparse
 import datetime as dt
 import json
 import math
+import os
+import warnings
 from collections import defaultdict
 from pathlib import Path
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression, Ridge
 from sklearn.multioutput import MultiOutputRegressor
+
+warnings.filterwarnings(
+    "ignore",
+    message="X does not have valid feature names, but LGBMRegressor was fitted with feature names",
+    category=UserWarning,
+)
 
 try:
     from lightgbm import LGBMRegressor
@@ -331,7 +339,7 @@ def fit_lgbm_return_predictions(spec, train_samples, current_sample, output_tick
         verbosity=-1,
         n_jobs=1,
     )
-    n_jobs = int(spec.get("nJobs", -1))
+    n_jobs = int(spec.get("nJobs", os.environ.get("PYM_V5_LGBM_N_JOBS", "1")))
     model = MultiOutputRegressor(base, n_jobs=n_jobs)
     if weights is not None:
         model.fit(train_x, train_y, sample_weight=weights)

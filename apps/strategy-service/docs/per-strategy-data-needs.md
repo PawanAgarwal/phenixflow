@@ -15,8 +15,9 @@ refresh is triggered.
 
 | Category | Strategies | What refresh does | Wall time |
 |---|---|---|---|
-| **EOD-bars only** | `pym-v5`, `pym-v5-sleeve-meta-21d-cap25`, `pym-v5-cap25-lgbm-blend40` | Coverage-aware EOD input refresh, then recompute | Usually seconds when current; ~30-60s if bars are behind |
-| **EOD-bars + stress** | `pym-v5-cap25-lgbm-blend40-stress` | Coverage-aware EOD refresh + rebuild VIX/OCC stress only if stale | Usually seconds when current; ~30-90s if stale |
+| **EOD-bars only** | `pym-v5`, `pym-v5-sleeve-meta-21d-cap25` | Coverage-aware EOD input refresh, then recompute | Usually seconds when current; ~30-60s if bars are behind |
+| **EOD-bars + LGBM** | `pym-v5-cap25-lgbm-blend40` | Coverage-aware EOD/option-feature refresh + extend the tinyB LGBM walk-forward artifact, then recompute | Usually minutes; skips already-current EOD/option inputs |
+| **EOD-bars + LGBM + stress** | `pym-v5-cap25-lgbm-blend40-stress` | Above + rebuild VIX/OCC stress only if stale | Usually minutes; stress adds ~30-90s if stale |
 | **EOD-bars + option features** | `pym-v5-option-rank-top8`, `pym-v5-spy-put-pressure-bil` | Coverage-aware EOD refresh + append only missing Massive option-feature days | Usually seconds when current; about one trading day of OPRA scan per missing day |
 | **Artifact-only (noop)** | All `pym-v5-ml-*`, `option-income-wheel-trend-ivrv`, `tsll-seconds-passive-scalper` | Re-read pre-computed artifact + recompute (no external fetch) | <1s |
 
@@ -74,17 +75,14 @@ on the same bars file.
   artifact has fixed start/end dates (no incremental extension yet).
 
 **Refresh sequence:**
-1. Coverage-aware EOD input refresh (as for `pym-v5`).
-2. Recompute: re-blend cap25 weights with the existing LGBM holdings
-   from the artifact.
+1. `node projects/pym-v5-ml-experiments/scripts/refresh-lgbm-artifact.js`
+   refreshes EOD/option-feature inputs, exports the walk-forward dataset,
+   and extends the tinyB LGBM artifact to the requested end date.
+2. Recompute: reload the latest LGBM artifact and re-blend cap25 weights
+   with the refreshed LGBM holdings.
 
-**Important caveat:** in-API refresh updates today's realized
-close-to-close return on signal dates the LGBM artifact already covers,
-but it does NOT produce new ML predictions for new signal dates. To
-extend the LGBM coverage to a fresh date, run
-`npm run pym-v5:ml-walkforward-lgbm` manually (slow). The strategy
-gracefully falls back to cap25-only weights on dates without LGBM
-predictions.
+If the LGBM step fails or is skipped, the strategy still gracefully falls
+back to cap25-only weights on dates without LGBM predictions.
 
 ### `pym-v5-cap25-lgbm-blend40-stress` — Above + Options Stress Overlay
 
@@ -102,12 +100,10 @@ predictions.
     available 2021-01-04+)
 
 **Refresh sequence:**
-1. Coverage-aware EOD input refresh.
-2. Build stress signal only if the latest stress artifact is behind the
-   requested end date.
-3. Recompute: re-blend cap25 + LGBM with the latest stress overlay.
-
-**Same caveat as blend40** for LGBM artifact extension.
+1. `refresh-lgbm-artifact.js --with-stress-signal` refreshes EOD/option
+   inputs, extends the tinyB LGBM artifact, and builds stress only if stale.
+2. Recompute: reload the latest LGBM and stress artifacts before applying
+   the stress overlay.
 
 ### `pym-v5-option-rank-top8` — PYM + Option-Flow Top-8 Overlay
 
@@ -245,11 +241,9 @@ The `GET /api/refresh-status` response shape:
   what's there.
 - The Composer score JSON is currently NOT auto-refreshed. Run
   `npm run pym-v5:fetch-sources` if upstream changes the symphony tree.
-- LGBM walk-forward artifact extension (~10 min per spec) is also
-  manual. Future work: incremental walk-forward that only computes new
-  signal dates would let `cap25-lgbm-blend40` and
-  `cap25-lgbm-blend40-stress` truly pick up new ML predictions on each
-  refresh.
+- LGBM walk-forward artifact extension runs inside the two LGBM strategy
+  refreshes. It is intentionally scoped to the production tinyB strategy
+  rather than the full research grid.
 
 ## Daily auto-refresh (Phase 2 — not yet built)
 
