@@ -13,6 +13,7 @@ const {
   resolveOptionBarsSource,
   withRollingOptionStats,
 } = require('../src/option-features');
+const { resolveStockBarsSource } = require('../src/market-data');
 const { optionMomentumScore } = require('../src/option-overlay-suite');
 
 describe('option symbol parsing', () => {
@@ -113,5 +114,24 @@ describe('daily option feature aggregation', () => {
       filePath: path.join(csvDir, '2026-05-07.csv.gz'),
     }));
     expect(latestOptionBarsDate(config)).toBe('2026-05-08');
+  });
+
+  it('prefers live parquet stock bars when historical csv is absent', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pym-stock-live-'));
+    const historical = path.join(root, 'historical');
+    const liveParquet = path.join(root, 'live-parquet');
+    const parquetDir = path.join(liveParquet, 'stock_quotes_1m', 'date=2026-05-11');
+    fs.mkdirSync(parquetDir, { recursive: true });
+    fs.writeFileSync(path.join(parquetDir, '2026-05-11.live.parquet'), '');
+
+    const config = {
+      roots: { historical, liveParquet },
+      datasets: { stockBars: 'stock_quotes_1m' },
+    };
+
+    expect(resolveStockBarsSource(config, '2026-05-11')).toEqual(expect.objectContaining({
+      format: 'parquet',
+      filePath: path.join(parquetDir, '2026-05-11.live.parquet'),
+    }));
   });
 });

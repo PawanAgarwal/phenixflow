@@ -1,8 +1,10 @@
 const fs = require('node:fs');
+const { spawn } = require('node:child_process');
+const readline = require('node:readline');
 
 const { closeMinuteEt } = require('./calendar');
 const { readGzipCsv, toNumber } = require('./csv');
-const { stockCsvPath, stockSuccessPath } = require('./config');
+const { stockCsvPath, stockParquetPath, stockSuccessPath } = require('./config');
 
 const etFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/New_York',
@@ -49,14 +51,92 @@ function updateAgg(agg, row) {
   agg.regularMinuteCount += 1;
 }
 
+function resolveStockBarsSource(config, dayIso) {
+  const parquetPath = stockParquetPath(config, dayIso);
+  if (parquetPath && fs.existsSync(parquetPath)) {
+    return {
+      format: 'parquet',
+      filePath: parquetPath,
+      preferredFilePath: parquetPath,
+    };
+  }
+  const csvPath = stockCsvPath(config, dayIso);
+  if (fs.existsSync(csvPath)) {
+    return {
+      format: 'csv.gz',
+      filePath: csvPath,
+      preferredFilePath: parquetPath || csvPath,
+    };
+  }
+  return {
+    format: 'missing',
+    filePath: parquetPath || csvPath,
+    preferredFilePath: parquetPath || csvPath,
+    fallbackFilePath: csvPath,
+  };
+}
+
+function duckdbString(value) {
+  return `'${String(value).replace(/'/g, "''")}'`;
+}
+
+function stockParquetSql(filePath) {
+  return `COPY (
+    SELECT
+      ticker,
+      volume,
+      open,
+      close,
+      high,
+      low,
+      window_start,
+      COALESCE(CAST(transactions AS VARCHAR), '0') AS transactions
+    FROM read_parquet(${duckdbString(filePath)})
+  ) TO STDOUT WITH (FORMAT CSV, HEADER TRUE);`;
+}
+
+async function streamParquetStockRows(filePath, onRow) {
+  const child = spawn(process.env.DUCKDB_BIN || 'duckdb', ['-c', stockParquetSql(filePath)], {
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  const stderr = [];
+  child.stderr.on('data', (chunk) => {
+    stderr.push(String(chunk));
+  });
+
+  const reader = readline.createInterface({ input: child.stdout, crlfDelay: Infinity });
+  let headers = null;
+  for await (const line of reader) {
+    if (!line) continue;
+    if (!headers) {
+      headers = String(line).split(',');
+      continue;
+    }
+    const values = String(line).split(',');
+    const row = {};
+    headers.forEach((header, index) => {
+      row[header] = values[index] ?? '';
+    });
+    await onRow(row);
+  }
+
+  const code = await new Promise((resolve, reject) => {
+    child.on('error', reject);
+    child.on('close', resolve);
+  });
+  if (code !== 0) {
+    throw new Error(`duckdb_stock_parquet_read_failed:${filePath}:${stderr.join('').trim() || code}`);
+  }
+}
+
 async function readDailyBarsForDay(config, day, tickers) {
-  const filePath = stockCsvPath(config, day.date);
+  const source = resolveStockBarsSource(config, day.date);
   const selected = new Set([...tickers].map((ticker) => ticker.toUpperCase()));
   const closeMinute = closeMinuteEt(day);
   const bars = new Map();
-  if (!fs.existsSync(filePath)) return bars;
+  if (source.format === 'missing') return bars;
 
-  await readGzipCsv(filePath, (row) => {
+  function onRow(row) {
     const ticker = String(row.ticker || '').toUpperCase();
     if (!selected.has(ticker)) return;
     const minuteEt = minuteEtFromNs(row.window_start);
@@ -67,25 +147,32 @@ async function readDailyBarsForDay(config, day, tickers) {
       bars.set(ticker, agg);
     }
     updateAgg(agg, row);
-  });
+  }
+
+  if (source.format === 'parquet') await streamParquetStockRows(source.filePath, onRow);
+  else await readGzipCsv(source.filePath, onRow);
 
   return bars;
 }
 
 function fileCoverageForDay(config, day) {
   const csvPath = stockCsvPath(config, day.date);
+  const parquetPath = stockParquetPath(config, day.date);
   const successPath = stockSuccessPath(config, day.date);
   const csvExists = fs.existsSync(csvPath);
+  const parquetExists = parquetPath ? fs.existsSync(parquetPath) : false;
   const successExists = fs.existsSync(successPath);
   let status = 'ready';
-  if (!csvExists && !successExists) status = 'unattempted';
-  else if (!csvExists || !successExists) status = 'attempted_missing';
+  if (!csvExists && !parquetExists && !successExists) status = 'unattempted';
+  else if (!csvExists && !parquetExists) status = 'attempted_missing';
   return {
     date: day.date,
     status,
     csvExists,
+    parquetExists,
     successExists,
     csvPath,
+    parquetPath,
     successPath,
   };
 }
@@ -94,4 +181,6 @@ module.exports = {
   readDailyBarsForDay,
   fileCoverageForDay,
   minuteEtFromNs,
+  resolveStockBarsSource,
+  stockParquetSql,
 };

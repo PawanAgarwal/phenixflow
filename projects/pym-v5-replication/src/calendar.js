@@ -26,9 +26,21 @@ function latestDatasetDate(root, datasetId) {
   return dates.at(-1) || null;
 }
 
+function latestDatasetDateAcrossRoots(roots, datasetId) {
+  const dates = roots
+    .filter(Boolean)
+    .map((root) => latestDatasetDate(root, datasetId))
+    .filter(Boolean)
+    .sort();
+  return dates.at(-1) || null;
+}
+
 function resolveEndDate(config, requestedEndDate = config.windows.endDate) {
   if (requestedEndDate && requestedEndDate !== 'auto') return requestedEndDate;
-  const latest = latestDatasetDate(config.roots.historical, config.datasets.stockBars);
+  const latest = latestDatasetDateAcrossRoots(
+    [config.roots.historical, config.roots.liveParquet],
+    config.datasets.stockBars,
+  );
   if (!latest) throw new Error('No local Massive stock bar dates were found.');
   return latest;
 }
@@ -42,6 +54,7 @@ module.exports = {
   loadCalendar,
   openCalendarDays,
   latestDatasetDate,
+  latestDatasetDateAcrossRoots,
   resolveEndDate,
   closeMinuteEt,
 };

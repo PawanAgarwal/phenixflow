@@ -29,6 +29,16 @@ function stockCsvPath(config, dayIso) {
   );
 }
 
+function stockParquetPath(config, dayIso) {
+  if (!config.roots.liveParquet) return null;
+  return path.join(
+    config.roots.liveParquet,
+    config.datasets.stockBars,
+    `date=${dayIso}`,
+    `${dayIso}.live.parquet`,
+  );
+}
+
 function stockSuccessPath(config, dayIso) {
   return path.join(
     config.roots.historical,
@@ -46,5 +56,6 @@ module.exports = {
   runtimePath,
   artifactPath,
   stockCsvPath,
+  stockParquetPath,
   stockSuccessPath,
 };

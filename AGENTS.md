@@ -34,6 +34,9 @@ Expected Massive datasets:
 
 ## Coverage Rules
 - Coverage checks must inspect Massive files/manifests only.
+- For EOD tasks, resolve `auto` end dates against both historical Massive cache and live Massive
+  parquet. If historical/S3 files are not present for the latest open day but live parquet exists,
+  use the live parquet day instead of stopping or launching a broad historical backfill.
 - Skip weekends and market holidays explicitly using the cached exchange calendar when available.
 - Distinguish:
   - `unattempted` dates/files,
@@ -54,6 +57,10 @@ Expected Massive datasets:
 
 ## Massive Download Rules
 - Prefer existing local Massive caches over network downloads.
+- Before refreshing strategy-service EOD inputs, run/trigger the coverage-aware
+  `projects/pym-v5-replication/scripts/refresh-eod-inputs.js` path. It skips already-current EOD
+  bars, appends only missing option-feature days, and rebuilds stress only when its artifact is
+  behind the requested end date.
 - If refreshing flat files, use the Massive flat-file downloader and S3 credentials from the
   environment.
 - Retry only transient failures such as timeouts, connection resets, 429, and 5xx responses.
