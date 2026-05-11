@@ -52,20 +52,20 @@ function updateAgg(agg, row) {
 }
 
 function resolveStockBarsSource(config, dayIso) {
+  const csvPath = stockCsvPath(config, dayIso);
+  if (fs.existsSync(csvPath)) {
+    return {
+      format: 'csv.gz',
+      filePath: csvPath,
+      preferredFilePath: csvPath,
+    };
+  }
   const parquetPath = stockParquetPath(config, dayIso);
   if (parquetPath && fs.existsSync(parquetPath)) {
     return {
       format: 'parquet',
       filePath: parquetPath,
       preferredFilePath: parquetPath,
-    };
-  }
-  const csvPath = stockCsvPath(config, dayIso);
-  if (fs.existsSync(csvPath)) {
-    return {
-      format: 'csv.gz',
-      filePath: csvPath,
-      preferredFilePath: parquetPath || csvPath,
     };
   }
   return {

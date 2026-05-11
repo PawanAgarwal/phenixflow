@@ -89,7 +89,7 @@ describe('daily option feature aggregation', () => {
     expect(score).toBeGreaterThan(1);
   });
 
-  it('prefers live parquet option bars and finds the latest available option date', () => {
+  it('falls back to live parquet option bars and finds the latest available option date', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pym-option-features-'));
     const historical = path.join(root, 'historical');
     const liveParquet = path.join(root, 'live-parquet');
@@ -116,7 +116,29 @@ describe('daily option feature aggregation', () => {
     expect(latestOptionBarsDate(config)).toBe('2026-05-08');
   });
 
-  it('prefers live parquet stock bars when historical csv is absent', () => {
+  it('prefers historical option bars when both historical and live files exist', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pym-option-prefer-historical-'));
+    const historical = path.join(root, 'historical');
+    const liveParquet = path.join(root, 'live-parquet');
+    const csvDir = path.join(historical, 'option_quotes_1m', 'date=2026-05-11');
+    const parquetDir = path.join(liveParquet, 'option_quotes_1m', 'date=2026-05-11');
+    fs.mkdirSync(csvDir, { recursive: true });
+    fs.mkdirSync(parquetDir, { recursive: true });
+    fs.writeFileSync(path.join(csvDir, '2026-05-11.csv.gz'), '');
+    fs.writeFileSync(path.join(parquetDir, '2026-05-11.live.parquet'), '');
+
+    const config = {
+      roots: { historical, liveParquet },
+      datasets: { optionBars: 'option_quotes_1m' },
+    };
+
+    expect(resolveOptionBarsSource(config, '2026-05-11')).toEqual(expect.objectContaining({
+      format: 'csv.gz',
+      filePath: path.join(csvDir, '2026-05-11.csv.gz'),
+    }));
+  });
+
+  it('falls back to live parquet stock bars when historical csv is absent', () => {
     const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pym-stock-live-'));
     const historical = path.join(root, 'historical');
     const liveParquet = path.join(root, 'live-parquet');
@@ -132,6 +154,28 @@ describe('daily option feature aggregation', () => {
     expect(resolveStockBarsSource(config, '2026-05-11')).toEqual(expect.objectContaining({
       format: 'parquet',
       filePath: path.join(parquetDir, '2026-05-11.live.parquet'),
+    }));
+  });
+
+  it('prefers historical stock bars when both historical and live files exist', () => {
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'pym-stock-prefer-historical-'));
+    const historical = path.join(root, 'historical');
+    const liveParquet = path.join(root, 'live-parquet');
+    const csvDir = path.join(historical, 'stock_quotes_1m', 'date=2026-05-11');
+    const parquetDir = path.join(liveParquet, 'stock_quotes_1m', 'date=2026-05-11');
+    fs.mkdirSync(csvDir, { recursive: true });
+    fs.mkdirSync(parquetDir, { recursive: true });
+    fs.writeFileSync(path.join(csvDir, '2026-05-11.csv.gz'), '');
+    fs.writeFileSync(path.join(parquetDir, '2026-05-11.live.parquet'), '');
+
+    const config = {
+      roots: { historical, liveParquet },
+      datasets: { stockBars: 'stock_quotes_1m' },
+    };
+
+    expect(resolveStockBarsSource(config, '2026-05-11')).toEqual(expect.objectContaining({
+      format: 'csv.gz',
+      filePath: path.join(csvDir, '2026-05-11.csv.gz'),
     }));
   });
 });
