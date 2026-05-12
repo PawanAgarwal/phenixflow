@@ -384,6 +384,228 @@ const VARIANTS = [
     biasSizeDenom: 0.30,
     biasSizeCap: 1.5,
   },
+  // Phase 30 — per-leg exit: intraday 15:00, overnight 15:55. Preserves overnight
+  // train edge (which needs full hold) while cutting intraday late-day noise.
+  {
+    id: 'pym-gated-intraday-overnight-1x-splitexit',
+    name: 'PYM-Gated Intraday + Overnight 1x SPY (Intra 15:00 / ON 15:55)',
+    displayName: 'PYM-Gated Intraday + Overnight 1x SPY — Split Exit',
+    description: 'overnight-1x with separate exit times: intraday exits 15:00, overnight exits 15:55 (preserves overnight hold). Tests whether the 15:00-intraday finding stacks cleanly with the existing overnight engine.',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.40: enter SPY/SH at prior 15:55, exit next 15:55 (overnight, full hold).',
+      'Else 0.20≤|bias|<0.40: enter SPY/SH at 11:30, exit 15:00 (intraday only).',
+      'Flat 1× sizing.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955, // kept for backwards compat / open-position display
+    intradayExitMinuteEt: 900,
+    overnightEntryMinuteEt: 955,
+    overnightExitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: 0.40,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: 'SPY',
+    overnightShortTicker: 'SH',
+  },
+  // 1× split exit + intraday-only biasprop sizing.
+  {
+    id: 'pym-gated-intraday-overnight-1x-splitexit-intra-biasprop',
+    name: 'PYM-Gated Intraday + Overnight 1x SPY (Split Exit, Intra Bias-Prop)',
+    displayName: 'PYM-Gated Intraday + Overnight 1x SPY — Split Exit + Intra Bias-Prop',
+    description: 'overnight-1x with intraday exit 15:00, overnight exit 15:55, and biasprop sizing applied only on the intraday band.',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.40: enter SPY/SH at prior 15:55, exit next 15:55. Flat 1× sizing.',
+      'Else 0.20≤|bias|<0.40: enter SPY/SH at 11:30, exit 15:00. Size = min(|bias|/0.30, 1.5).',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    intradayExitMinuteEt: 900,
+    overnightEntryMinuteEt: 955,
+    overnightExitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: 0.40,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: 'SPY',
+    overnightShortTicker: 'SH',
+    biasProportionalSize: true,
+    biasProportionalSizeMode: 'intraday',
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // 3× best-combo with split exit: intraday 15:00, overnight 15:55.
+  {
+    id: 'pym-gated-intraday-best-combo-splitexit',
+    name: 'PYM-Gated Intraday + Overnight 3x (Intra 15:00 / ON 15:55)',
+    displayName: 'PYM-Gated Intraday + Overnight 3x — Split Exit',
+    description: 'best-combo with separate exit times: intraday exits 15:00, overnight exits 15:55 (preserves best-combo train edge on overnight leg).',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.30: enter TQQQ/SQQQ at prior 15:55, exit next 15:55 (overnight, full hold).',
+      'Else 0.20≤|bias|<0.30: enter SPXL/SPXU at 11:30, exit 15:00.',
+      'Flat 1× sizing inside each leg; 3× via leveraged ETF.',
+    ],
+    costBpsRoundTrip: 3,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    intradayExitMinuteEt: 900,
+    overnightEntryMinuteEt: 955,
+    overnightExitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 3.0,
+    overnightExtremeBias: 0.30,
+    longTicker: 'SPXL',
+    shortTicker: 'SPXU',
+    overnightLongTicker: 'TQQQ',
+    overnightShortTicker: 'SQQQ',
+  },
+  // 3× best-combo split-exit + intraday-only biasprop sizing.
+  {
+    id: 'pym-gated-intraday-best-combo-splitexit-intra-biasprop',
+    name: 'PYM-Gated Intraday + Overnight 3x (Split Exit, Intra Bias-Prop)',
+    displayName: 'PYM-Gated Intraday + Overnight 3x — Split Exit + Intra Bias-Prop',
+    description: 'best-combo + intraday exit 15:00 + biasprop sizing on the intraday 0.20-0.30 band. Overnight leg untouched (full hold, flat 1× sizing).',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.30: enter TQQQ/SQQQ at prior 15:55, exit next 15:55. Flat 1× sizing.',
+      'Else 0.20≤|bias|<0.30: enter SPXL/SPXU at 11:30, exit 15:00. Size = min(|bias|/0.30, 1.5).',
+      '3× leverage via ETF.',
+    ],
+    costBpsRoundTrip: 3,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    intradayExitMinuteEt: 900,
+    overnightEntryMinuteEt: 955,
+    overnightExitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 3.0,
+    overnightExtremeBias: 0.30,
+    longTicker: 'SPXL',
+    shortTicker: 'SPXU',
+    overnightLongTicker: 'TQQQ',
+    overnightShortTicker: 'SQQQ',
+    biasProportionalSize: true,
+    biasProportionalSizeMode: 'intraday',
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // Phase 29 — surgical best-combo improvements. Each variant changes ONE thing
+  // vs the production overnight-1x / best-combo to isolate where the gain comes from.
+
+  // 1× base: overnight-1x + 15:00 exit (single change vs registered overnight-1x).
+  {
+    id: 'pym-gated-intraday-overnight-1x-1500exit',
+    name: 'PYM-Gated Intraday + Overnight 1x SPY (15:00 Exit)',
+    displayName: 'PYM-Gated Intraday + Overnight 1x SPY — 15:00 Exit',
+    description: 'Same as overnight-1x but exits at 15:00 ET instead of 15:55. Tests whether the exit-time finding generalizes to the overnight stack.',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.40: enter SPY/SH at prior 15:55, exit next 15:00 (overnight).',
+      'Else 0.20≤|bias|<0.40: enter SPY/SH at 11:30, exit 15:00 (intraday).',
+      'Flat 1× sizing.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 900,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: 0.40,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: 'SPY',
+    overnightShortTicker: 'SH',
+  },
+  // 1× base: overnight-1x + 15:00 exit + intraday-only biasprop. Overnight stays flat 1×.
+  {
+    id: 'pym-gated-intraday-overnight-1x-1500exit-intra-biasprop',
+    name: 'PYM-Gated Intraday + Overnight 1x SPY (15:00 Exit, Intra Bias-Prop)',
+    displayName: 'PYM-Gated Intraday + Overnight 1x SPY — 15:00 + Intra Bias-Prop',
+    description: 'overnight-1x + 15:00 exit + biasprop sizing on the intraday band only (size = min(|bias|/0.30, 1.5)). Overnight leg stays flat 1×. Tests if conviction-sizing helps intraday without hurting overnight.',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.40: enter SPY/SH at prior 15:55, exit next 15:00 (overnight). Flat 1× sizing.',
+      'Else 0.20≤|bias|<0.40: enter SPY/SH at 11:30, exit 15:00. Size = min(|bias|/0.30, 1.5).',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 900,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: 0.40,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: 'SPY',
+    overnightShortTicker: 'SH',
+    biasProportionalSize: true,
+    biasProportionalSizeMode: 'intraday',
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // 3× production: best-combo + 15:00 exit (single change).
+  {
+    id: 'pym-gated-intraday-best-combo-1500exit',
+    name: 'PYM-Gated Intraday + Overnight 3x (15:00 Exit)',
+    displayName: 'PYM-Gated Intraday + Overnight 3x — 15:00 Exit',
+    description: 'best-combo architecture (3× SPXL/SPXU intraday + 3× TQQQ/SQQQ overnight on |bias|≥0.30) with exit moved from 15:55 to 15:00. Single-variable improvement vs registered best-combo.',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.30: enter TQQQ/SQQQ at prior 15:55, exit next 15:00.',
+      'Else 0.20≤|bias|<0.30: enter SPXL/SPXU at 11:30, exit 15:00.',
+      'Flat 1× sizing inside each leg (3× via the leveraged ETF).',
+    ],
+    costBpsRoundTrip: 3,
+    entryMinuteEt: 690,
+    exitMinuteEt: 900,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 3.0,
+    overnightExtremeBias: 0.30,
+    longTicker: 'SPXL',
+    shortTicker: 'SPXU',
+    overnightLongTicker: 'TQQQ',
+    overnightShortTicker: 'SQQQ',
+  },
+  // 3× production: best-combo + 15:00 exit + intraday-only biasprop. Preserves overnight leg.
+  {
+    id: 'pym-gated-intraday-best-combo-1500exit-intra-biasprop',
+    name: 'PYM-Gated Intraday + Overnight 3x (15:00 Exit, Intra Bias-Prop)',
+    displayName: 'PYM-Gated Intraday + Overnight 3x — 15:00 + Intra Bias-Prop',
+    description: 'best-combo + 15:00 exit + biasprop sizing on the 0.20–0.30 intraday band only. Overnight leg stays flat 1× to preserve best-combo train edge.',
+    ruleSummary: [
+      'PYM bias gate ±0.20.',
+      'If |bias|≥0.30: enter TQQQ/SQQQ at prior 15:55, exit next 15:00. Flat 1× sizing.',
+      'Else 0.20≤|bias|<0.30: enter SPXL/SPXU at 11:30, exit 15:00. Size = min(|bias|/0.30, 1.5).',
+      '3× leverage via ETF.',
+    ],
+    costBpsRoundTrip: 3,
+    entryMinuteEt: 690,
+    exitMinuteEt: 900,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 3.0,
+    overnightExtremeBias: 0.30,
+    longTicker: 'SPXL',
+    shortTicker: 'SPXU',
+    overnightLongTicker: 'TQQQ',
+    overnightShortTicker: 'SQQQ',
+    biasProportionalSize: true,
+    biasProportionalSizeMode: 'intraday',
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
   // Phase 28 — stacking the dead-zone-biasprop-1500exit research signal with
   // production architectural variants (3× leverage, overnight on extreme bias).
   {
@@ -989,11 +1211,16 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       if (ab >= lo && ab < hi) continue;
     }
     const isExtreme = variant.overnightExtremeBias != null && Math.abs(signal) >= variant.overnightExtremeBias;
+    // Per-leg exit minutes (fall back to the legacy single exitMinuteEt).
+    // intradayExitMinuteEt: when entryMode === 'intraday' the exit is today at this minute.
+    // overnightExitMinuteEt: when entryMode === 'overnight' the exit is today at this minute.
+    // overnightEntryMinuteEt: when entryMode === 'overnight' the entry comes from prior day at this minute.
+    const intradayExitMin = variant.intradayExitMinuteEt ?? variant.exitMinuteEt;
+    const overnightExitMin = variant.overnightExitMinuteEt ?? variant.exitMinuteEt;
+    const overnightEntryMin = variant.overnightEntryMinuteEt ?? variant.exitMinuteEt;
     // eslint-disable-next-line no-await-in-loop
     const todayRows = await getFeatures(day);
     if (!todayRows || todayRows.length === 0) continue;
-    // Strict match: only treat the exit as final when we actually have the 15:55 ET bar.
-    const exactExitRow = todayRows.find((r) => r.minute_of_day_et === variant.exitMinuteEt);
     let entryRow = null; let entryDay = day; let entryMode = 'intraday'; let ticker = side === 'LONG' ? variant.longTicker : variant.shortTicker;
     if (isExtreme && variant.overnightLongTicker) {
       const prev = days[i - 1];
@@ -1001,7 +1228,7 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       // eslint-disable-next-line no-await-in-loop
       const prevRows = await getFeatures(prev);
       if (!prevRows || prevRows.length === 0) continue;
-      const prevExit = prevRows.find((r) => r.minute_of_day_et === variant.exitMinuteEt) || prevRows[prevRows.length - 1];
+      const prevExit = prevRows.find((r) => r.minute_of_day_et === overnightEntryMin) || prevRows[prevRows.length - 1];
       if (!Number.isFinite(prevExit.spy_close)) continue;
       entryRow = prevExit; entryDay = prev; entryMode = 'overnight';
       ticker = side === 'LONG' ? variant.overnightLongTicker : variant.overnightShortTicker;
@@ -1009,15 +1236,18 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       entryRow = todayRows.find((r) => r.minute_of_day_et === variant.entryMinuteEt);
       if (!entryRow || !Number.isFinite(entryRow.spy_open)) continue;
     }
-    // No 15:55 bar yet → position is currently OPEN (entry done, exit pending).
+    // Strict match: only treat the exit as final when we actually have the appropriate bar.
+    const exitMinForMode = entryMode === 'overnight' ? overnightExitMin : intradayExitMin;
+    const exactExitRow = todayRows.find((r) => r.minute_of_day_et === exitMinForMode);
+    // No exit bar yet → position is currently OPEN (entry done, exit pending).
     if (!exactExitRow || !Number.isFinite(exactExitRow.spy_close)) {
       const entryPriceOpen = entryMode === 'overnight' ? entryRow.spy_close : entryRow.spy_open;
       openPositions.push({
         signalDate: day,
         entryDate: entryDay,
-        entryMinuteEt: entryMode === 'overnight' ? variant.exitMinuteEt : variant.entryMinuteEt,
+        entryMinuteEt: entryMode === 'overnight' ? overnightEntryMin : variant.entryMinuteEt,
         expectedExitDate: day,
-        expectedExitMinuteEt: variant.exitMinuteEt,
+        expectedExitMinuteEt: exitMinForMode,
         side,
         ticker,
         leverage: variant.leverage,
@@ -1072,11 +1302,19 @@ async function runVariantForRange({ variant, pymByDate, days }) {
     // Bias-proportional sizing: size = min(|bias| / denom, cap). Conviction-aware
     // without adding new signals — extreme convictions get full size, moderate ones scaled down.
     // Floor at biasSizeFloor (default 0) so a tiny non-zero size still trades (no thresholding).
+    //
+    // biasProportionalSizeMode: 'both' (default) | 'intraday' | 'overnight' — apply selectively.
+    // Used to preserve flat 1× sizing on one leg while scaling the other (e.g. keep best-combo's
+    // overnight leg flat 1× to avoid amplifying 2025 train-window overnight losers).
     if (variant.biasProportionalSize) {
-      const denom = variant.biasSizeDenom ?? 0.5;
-      const cap = variant.biasSizeCap ?? 1.0;
-      const floor = variant.biasSizeFloor ?? 0.0;
-      size = Math.min(Math.max(Math.abs(signal) / denom, floor), cap);
+      const mode = variant.biasProportionalSizeMode || 'both';
+      const appliesHere = mode === 'both' || mode === entryMode;
+      if (appliesHere) {
+        const denom = variant.biasSizeDenom ?? 0.5;
+        const cap = variant.biasSizeCap ?? 1.0;
+        const floor = variant.biasSizeFloor ?? 0.0;
+        size = Math.min(Math.max(Math.abs(signal) / denom, floor), cap);
+      }
     }
 
     const sign = side === 'LONG' ? +1 : -1;
@@ -1089,8 +1327,8 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       entryDate: entryDay, // alias for UI consistency with wheel
       exitDate: day,
       entryMode,
-      entryMinuteEt: entryMode === 'overnight' ? variant.exitMinuteEt : variant.entryMinuteEt,
-      exitMinuteEt: variant.exitMinuteEt,
+      entryMinuteEt: entryMode === 'overnight' ? overnightEntryMin : variant.entryMinuteEt,
+      exitMinuteEt: exitMinForMode,
       ticker,
       side,
       leverage: variant.leverage,
