@@ -323,6 +323,337 @@ const VARIANTS = [
     flowDisagreeMultiplier: 1.0,
     flowAgreementThreshold: 5_000_000,
   },
+  // Phase 25 — V3 flow-signal ablation. Same ±0.10 gate and 10:00 ET entry as
+  // flow-weighted, but flat 1× sizing regardless of flow direction. If returns
+  // match V3, the flow-agreement check adds nothing; if they collapse toward
+  // baseline, the flow check is genuinely picking conviction.
+  // Phase 25b — bias-proportional sizing on the baseline gate. Same ±0.20 gate
+  // and 11:30 ET entry as baseline, but size = min(|bias|/0.5, 1.0). Tests whether
+  // PYM bias magnitude carries usable conviction information without adding new signals.
+  {
+    id: 'pym-gated-intraday-baseline-biasprop',
+    name: 'PYM-Gated Intraday Baseline Bias-Proportional (1x SPY)',
+    displayName: 'PYM-Gated Intraday — Baseline Bias-Proportional',
+    description: 'Baseline ±0.20 gate, 11:30 ET entry, but position size scales with bias magnitude: size = min(|bias|/0.5, 1.0). Tests whether PYM bias conviction adds value over flat 1x sizing.',
+    ruleSummary: [
+      'PYM v5 directional bias as in baseline.',
+      'If |bias| ≥ 0.20: trade SPY at 11:30 ET, exit 15:55 ET.',
+      'Position size = min(|bias|/0.5, 1.0) — bias 0.20 → size 0.40×, bias 0.50+ → size 1.00×.',
+      'Cost scales with size (2 bps × size on SPY notional).',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasProportionalSize: true,
+    biasSizeDenom: 0.5,
+    biasSizeCap: 1.0,
+  },
+  // Phase 27 — high-conviction-only variant. Trade ONLY when |bias| ≥ 0.40.
+  // The per-bucket sweep showed all of dead-zone-biasprop's test return comes
+  // from the 13 high-bias trades; low-bucket contributes ~0 to test.
+  {
+    id: 'pym-gated-intraday-high-only',
+    name: 'PYM-Gated Intraday High-Conviction Only (1x SPY)',
+    displayName: 'PYM-Gated Intraday — |bias| ≥ 0.40 Only',
+    description: 'Trade only when |PYM bias| ≥ 0.40. Bias-prop sizing (cap 1.5). Captures the test-window edge in concentrated form.',
+    ruleSummary: [
+      'Skip unless |bias| ≥ 0.40 (high conviction only).',
+      'Position size = min(|bias|/0.30, 1.5).',
+      'Enter 11:30 ET, exit 15:55 ET.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.40,
+    biasShort: -0.40,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasProportionalSize: true,
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // Phase 27c — best discovered so far: high-conviction-only with 15:00 exit.
+  // Strict Pareto improvement vs baseline on every test metric.
+  {
+    id: 'pym-gated-intraday-high-only-1500exit',
+    name: 'PYM-Gated Intraday High-Conviction 15:00 Exit',
+    displayName: 'PYM-Gated Intraday — |bias|≥0.40, Exit 15:00',
+    description: 'High-conviction-only with exit at 15:00 ET (avoids close-rebalancing noise). Discovered as global-best by Phase 25/27 sweep.',
+    ruleSummary: [
+      'Skip unless |bias| ≥ 0.40 (high conviction only).',
+      'Position size = min(|bias|/0.30, 1.5).',
+      'Enter 11:30 ET, exit 15:00 ET (NOT 15:55 — last hour adds noise on high-conviction trades).',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 900,
+    biasLong: 0.40,
+    biasShort: -0.40,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasProportionalSize: true,
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // Phase 27d — dead-zone-biasprop with 15:00 exit. Higher-volume variant with same exit improvement.
+  {
+    id: 'pym-gated-intraday-deadzone-biasprop-1500exit',
+    name: 'PYM-Gated Intraday Dead-Zone + Bias-Prop, 15:00 Exit',
+    displayName: 'PYM-Gated Intraday — Dead-Zone + Bias-Prop, Exit 15:00',
+    description: 'Dead-zone-biasprop with exit moved to 15:00 ET. Higher trade count than high-only variants; modest but consistent Sharpe lift.',
+    ruleSummary: [
+      'PYM v5 directional bias. If |bias| < 0.20: flat.',
+      'If 0.30 ≤ |bias| < 0.40: SKIP (dead zone).',
+      'Position size = min(|bias|/0.30, 1.5).',
+      'Enter 11:30 ET, exit 15:00 ET.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 900,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasSkipBand: [0.30, 0.40],
+    biasProportionalSize: true,
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // Phase 27b — high-conviction-only at 13:00 entry (per-bucket optimum from sweep).
+  {
+    id: 'pym-gated-intraday-high-only-1300',
+    name: 'PYM-Gated Intraday High-Conviction 13:00 Entry',
+    displayName: 'PYM-Gated Intraday — |bias| ≥ 0.40, Entry 13:00',
+    description: 'Same as high-only but entry at 13:00 ET (per-bucket optimum). Lower volatility, slightly lower absolute return.',
+    ruleSummary: [
+      'Skip unless |bias| ≥ 0.40.',
+      'Position size = min(|bias|/0.30, 1.5).',
+      'Enter 13:00 ET, exit 15:55 ET.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 780,
+    exitMinuteEt: 955,
+    biasLong: 0.40,
+    biasShort: -0.40,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasProportionalSize: true,
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // Phase 26 — PYM × flow double gate. Both must agree for trade to fire.
+  //   V2a: enter at 10:00, observe flow at 10:00 (entry minute itself).
+  //   V2b: observe flow at 10:00 but enter at 11:30 (keeps baseline timing edge).
+  {
+    id: 'pym-gated-intraday-double-gate-1000',
+    name: 'PYM-Gated Intraday Double Gate (entry 10:00)',
+    displayName: 'PYM-Gated Intraday — Double Gate (entry 10:00)',
+    description: 'Baseline ±0.20 PYM gate AND cumulative option flow at 10:00 ET must agree with bias direction. Enter 10:00 ET, exit 15:55. Flat 1×.',
+    ruleSummary: [
+      'PYM v5 bias as in baseline. If |bias| < 0.20: flat.',
+      'At 10:00 ET measure cum_call_net − cum_put_net.',
+      'Trade only if flow direction agrees with PYM direction.',
+      'Enter 10:00 ET, exit 15:55 ET. Flat 1× sizing.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 600,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    flowFilter: true,
+    flowFilterMinuteEt: 600,
+    flowAgreementThreshold: 5_000_000,
+  },
+  {
+    id: 'pym-gated-intraday-double-gate-1130',
+    name: 'PYM-Gated Intraday Double Gate (entry 11:30)',
+    displayName: 'PYM-Gated Intraday — Double Gate (flow @ 10:00, entry 11:30)',
+    description: 'Baseline ±0.20 PYM gate AND cumulative option flow at 10:00 ET must agree with bias direction. Then enter at 11:30 ET (baseline timing), exit 15:55. Flat 1×.',
+    ruleSummary: [
+      'PYM v5 bias as in baseline. If |bias| < 0.20: flat.',
+      'At 10:00 ET measure cum_call_net − cum_put_net; require flow agrees with PYM.',
+      'Enter 11:30 ET (baseline timing), exit 15:55 ET. Flat 1× sizing.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    flowFilter: true,
+    flowFilterMinuteEt: 600,
+    flowAgreementThreshold: 5_000_000,
+  },
+  // Phase 25e — dead-zone exclusion. Baseline gate ±0.20 with the mid-conviction band
+  // |bias| ∈ [0.30, 0.40) excluded (loses money in train, ~zero in test). Tests whether
+  // PYM's mid-conviction signal is informational vs. noise.
+  {
+    id: 'pym-gated-intraday-deadzone-flat',
+    name: 'PYM-Gated Intraday Dead-Zone Skip (Flat 1x)',
+    displayName: 'PYM-Gated Intraday — Skip |bias| 0.30–0.40',
+    description: 'Baseline ±0.20 gate, 11:30 ET entry, flat 1× sizing — but skip trades when |bias| is in the [0.30, 0.40) dead zone (loses in train, ~zero in test).',
+    ruleSummary: [
+      'PYM v5 directional bias as in baseline.',
+      'If 0.20 ≤ |bias| < 0.30 OR |bias| ≥ 0.40: trade SPY at 11:30 ET, exit 15:55 ET, flat 1× sizing.',
+      'If 0.30 ≤ |bias| < 0.40: SKIP (dead zone — non-monotonic in train, flat in test).',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasSkipBand: [0.30, 0.40],
+  },
+  // Phase 25f — dead-zone exclusion + bias-prop cap 1.5 sizing. Combines both
+  // structural improvements: skip the dead band AND size by conviction.
+  {
+    id: 'pym-gated-intraday-deadzone-biasprop',
+    name: 'PYM-Gated Intraday Dead-Zone + Bias-Prop Cap 1.5',
+    displayName: 'PYM-Gated Intraday — Dead-Zone + Bias-Prop Cap 1.5',
+    description: 'Baseline ±0.20 gate, skip |bias| ∈ [0.30, 0.40), size = min(|bias|/0.30, 1.5). Combines the dead-zone skip with conviction-proportional sizing.',
+    ruleSummary: [
+      'PYM v5 directional bias as in baseline.',
+      'If 0.20 ≤ |bias| < 0.30: trade SPY, size = min(|bias|/0.30, 1.5) ≈ 0.67×–1.00×.',
+      'If |bias| ≥ 0.40: trade SPY, size = min(|bias|/0.30, 1.5) ≈ 1.33×–1.50×.',
+      'If 0.30 ≤ |bias| < 0.40: SKIP. Entry 11:30 ET, exit 15:55 ET.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasSkipBand: [0.30, 0.40],
+    biasProportionalSize: true,
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  // Phase 25c — bias-proportional with higher steepness (denom 0.3) and avg-size
+  // roughly matching baseline. Tests whether the conviction signal is the same shape
+  // baseline already deploys, just allocated more aggressively per trade.
+  {
+    id: 'pym-gated-intraday-biasprop-denom30',
+    name: 'PYM-Gated Intraday Bias-Proportional Denom 0.30 (1x cap)',
+    displayName: 'PYM-Gated Intraday — Bias-Prop Denom 0.30 (1x cap)',
+    description: 'Baseline ±0.20 gate, 11:30 ET entry, size = min(|bias|/0.30, 1.0). Steeper conviction curve (bias 0.30 → 1.0× instead of 0.50 → 1.0×). Avg size closer to baseline 1×.',
+    ruleSummary: [
+      'PYM v5 directional bias as in baseline.',
+      'If |bias| ≥ 0.20: trade SPY at 11:30 ET, exit 15:55 ET.',
+      'Position size = min(|bias|/0.30, 1.0) — bias 0.20 → 0.67×, bias 0.30+ → 1.00×.',
+      'Cost scales with size (2 bps × size on SPY notional).',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasProportionalSize: true,
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.0,
+  },
+  // Phase 25d — same shape but cap raised to 1.5x. Tests whether conviction
+  // signal extends ABOVE 1× — high-bias trades sized up to 1.5× standard exposure.
+  {
+    id: 'pym-gated-intraday-biasprop-cap15',
+    name: 'PYM-Gated Intraday Bias-Proportional Denom 0.30 (1.5x cap)',
+    displayName: 'PYM-Gated Intraday — Bias-Prop Denom 0.30 (1.5x cap)',
+    description: 'Same shape as biasprop-denom30 but cap raised to 1.5×. High-conviction trades (|bias| ≥ 0.45) sized up to 1.5× standard exposure.',
+    ruleSummary: [
+      'PYM v5 directional bias as in baseline.',
+      'If |bias| ≥ 0.20: trade SPY at 11:30 ET, exit 15:55 ET.',
+      'Position size = min(|bias|/0.30, 1.5) — bias 0.20 → 0.67×, bias 0.30 → 1.0×, bias 0.45+ → 1.5×.',
+      'Cost scales with size (2 bps × size on SPY notional).',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -0.20,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    biasProportionalSize: true,
+    biasSizeDenom: 0.30,
+    biasSizeCap: 1.5,
+  },
+  {
+    id: 'pym-gated-intraday-loose-10am-flat',
+    name: 'PYM-Gated Intraday Loose-Bias 10:00 (Flat 1x, V3 ablation)',
+    displayName: 'PYM-Gated Intraday — Loose Bias ±0.10, 10:00 Flat',
+    description: 'Diagnostic variant for V3 flow-weighted: same loose bias ±0.10 gate and 10:00 ET entry, but flat 1× sizing (no flow-agreement multiplier). Isolates the contribution of the flow signal.',
+    ruleSummary: [
+      'PYM v5 directional bias as in baseline.',
+      'If bias ≥ +0.10: LONG SPY at 10:00 ET, exit 15:55 ET.',
+      'If bias ≤ -0.10: SHORT SPY (via SH) at 10:00 ET, exit 15:55 ET.',
+      'Flat 1× sizing — NO flow check, NO multiplier.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 600,
+    exitMinuteEt: 955,
+    biasLong: 0.10,
+    biasShort: -0.10,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+  },
   {
     id: 'pym-gated-spxw-vanna-swing',
     name: 'SPXW Vanna Trend Swing (1x SPY)',
@@ -489,6 +820,13 @@ async function runVariantForRange({ variant, pymByDate, days }) {
     else if (signal <= variant.biasShort) side = 'SHORT';
     if (!side) continue;
     if (variant.longOnly && side === 'SHORT') continue;
+    // Optional skip band: drop trades whose |bias| falls inside [lo, hi).
+    // Used to test the "dead zone" finding where mid-conviction buckets underperform.
+    if (Array.isArray(variant.biasSkipBand) && variant.biasSkipBand.length === 2) {
+      const [lo, hi] = variant.biasSkipBand;
+      const ab = Math.abs(signal);
+      if (ab >= lo && ab < hi) continue;
+    }
     const isExtreme = variant.overnightExtremeBias != null && Math.abs(signal) >= variant.overnightExtremeBias;
     // eslint-disable-next-line no-await-in-loop
     const todayRows = await getFeatures(day);
@@ -549,6 +887,35 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       flowAgrees = (side === 'LONG' && flowCumNet > threshold)
         || (side === 'SHORT' && flowCumNet < -threshold);
       size = flowAgrees ? (variant.flowAgreeMultiplier ?? 1.5) : (variant.flowDisagreeMultiplier ?? 1.0);
+    }
+
+    // Flow-as-filter (hard gate): only trade if option flow agrees with PYM direction.
+    // Observation minute is variant.flowFilterMinuteEt (default = entry minute, no look-ahead).
+    // If entry is after the observation minute we use that observation row to decide.
+    if (variant.flowFilter && entryMode === 'intraday') {
+      const obsMinute = variant.flowFilterMinuteEt ?? variant.entryMinuteEt;
+      const obsRow = todayRows.find((r) => r.minute_of_day_et === obsMinute);
+      if (!obsRow) continue;
+      const cumNet = (obsRow.cum_call_buy_premium || 0)
+        - (obsRow.cum_call_sell_premium || 0)
+        - (obsRow.cum_put_buy_premium || 0)
+        + (obsRow.cum_put_sell_premium || 0);
+      const threshold = variant.flowAgreementThreshold ?? 0;
+      const agrees = (side === 'LONG' && cumNet > threshold)
+        || (side === 'SHORT' && cumNet < -threshold);
+      if (!agrees) continue; // skip the trade entirely
+      flowAgrees = true;
+      flowCumNet = cumNet;
+    }
+
+    // Bias-proportional sizing: size = min(|bias| / denom, cap). Conviction-aware
+    // without adding new signals — extreme convictions get full size, moderate ones scaled down.
+    // Floor at biasSizeFloor (default 0) so a tiny non-zero size still trades (no thresholding).
+    if (variant.biasProportionalSize) {
+      const denom = variant.biasSizeDenom ?? 0.5;
+      const cap = variant.biasSizeCap ?? 1.0;
+      const floor = variant.biasSizeFloor ?? 0.0;
+      size = Math.min(Math.max(Math.abs(signal) / denom, floor), cap);
     }
 
     const sign = side === 'LONG' ? +1 : -1;
