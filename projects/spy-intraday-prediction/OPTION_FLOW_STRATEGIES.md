@@ -421,33 +421,41 @@ non-PYM SPXW vanna swing. Each was built with the same artifact builder
 (`scripts/build-pym-gated-artifacts.js`) and validated by `scripts/stress-test-pym-gated-phase24.js`
 against the standard train (Jan 2025 – Dec 2025) / test (Jan – Apr 2026) split.
 
-**Stress checks (all four must pass to register):**
+**Stress checks (all four must pass for further consideration):**
 1. Train AND test both positive
 2. ≥ 2 of 4 test months positive
 3. Still profitable at +50% cost (3 bps RT for 1× SPY)
 4. Max drawdown < 25%
 
+**Note:** none of these variants are registered in the strategy service.
+After comparing against the baseline (`pym-gated-intraday-baseline`, |bias| ≥ 0.20,
+1× SPY intraday) the incremental edge was judged insufficient — V2's train return
+collapses below baseline, and V3's test gain is largely a drawdown-for-return swap.
+Artifacts are kept on disk for follow-on research.
+
 | Variant | Train net | Test net | Test Sharpe | Test months + | DD (test) | +50%-cost test | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---|
-| **V2 tight-bias** (\|bias\| ≥ 0.30) | +0.64% | **+3.16%** | 3.42 | 2/3 | 2.1% | +2.89% | ✅ **REGISTERED** |
-| **V3 flow-weighted** (bias ±0.10, entry 10:00, 1.5× on flow agree) | +12.62% | **+5.26%** | 1.68 | 3/4 | 5.4% | +4.48% | ✅ **REGISTERED** |
-| V1 long-only (bias ≥ +0.20, never short) | +13.35% | +0.75% | — | 1/1 | 0.7% | +0.73% | ❌ DROPPED (only 2 test trades — PYM rarely positive-biased in test window) |
-| V4 SPXW vanna swing (cum dealer-vanna quintile, T-1 close → T close) | +9.60% | **-3.34%** | -2.54 | 1/4 | 4.7% | -3.64% | ❌ DROPPED (walk-forward fails — replicates earlier Phase 15 result) |
+| Baseline (\|bias\| ≥ 0.20, ref.) | +10.44% | +2.79% | 2.32 | — | 2.1% | — | — |
+| V2 tight-bias (\|bias\| ≥ 0.30) | +0.64% | +3.16% | 3.42 | 2/3 | 2.1% | +2.89% | passes checks, not registered |
+| V3 flow-weighted (bias ±0.10, entry 10:00, 1.5× on flow agree) | +12.62% | +5.26% | 1.68 | 3/4 | 5.4% | +4.48% | passes checks, not registered |
+| V1 long-only (bias ≥ +0.20, never short) | +13.35% | +0.75% | — | 1/1 | 0.7% | +0.73% | dropped (only 2 test trades — PYM rarely positive-biased in test window) |
+| V4 SPXW vanna swing (cum dealer-vanna quintile, T-1 close → T close) | +9.60% | -3.34% | -2.54 | 1/4 | 4.7% | -3.64% | dropped (walk-forward fails — replicates Phase 15) |
 
-### V2 Tight-bias — registered
+### V2 Tight-bias
 Hypothesis: trades with \|bias\| ≥ 0.30 (extreme convictions) are higher quality than the baseline
 ±0.20 band. Result: **train was effectively flat** (+0.64% on 28 trades, Sharpe 0.49) but test
 delivered +3.16% on 27 trades at Sharpe 3.42 with 2 of 3 active test months positive. The strategy
-passes all four stress checks. The thin train number is the concerning datapoint — register it,
-monitor it, do not size it heavily until forward returns confirm.
+passes all four stress checks but its train return is well below baseline's +10.44%; the test
+out-performance vs baseline (+0.37 pp) is plausibly a sample-size artifact rather than a quality
+filter. Useful as a low-frequency confirmation overlay, not a primary strategy.
 
-### V3 Flow-weighted — registered
+### V3 Flow-weighted
 Hypothesis: at 10:00 ET we can read 30 min of intraday option flow; sizing 1.5× when flow agrees
 with PYM direction captures real conviction. Look-ahead is avoided by reading cum_call/put
 premiums **at the same minute as the entry fill** (the same row a trader sees in real time).
 Result: **+12.62% train / +5.26% test** on 262 trades (198/64 split). 3 of 4 test months positive,
-robust to +50% cost. Drawdown 14% is the steepest of the survivors but well under the 25%
-threshold. This is the strongest Phase 24 candidate.
+robust to +50% cost. Drawdown 14% full-window vs baseline's 3.6% — most of the +2.47 pp test gain
+is paid back in volatility. Net of risk scaling, the incremental edge over baseline is ~0 pp.
 
 ### V1 Long-only — DROPPED
 The strategy fires only when PYM bias ≥ +0.20. PYM is short-biased a majority of days in this
@@ -466,17 +474,15 @@ two-condition) on a much smaller sample; the daily-quintile generalization does 
 **Confirms the Phase 15 caution about vanna swing being a tiny, near-noise effect.**
 
 ### Phase 24 takeaways
-- The orthogonal variant search yielded **2 survivors out of 4**, both PYM-bias-derived.
+- The orthogonal variant search yielded **2 candidates that passed the formal stress checks**
+  (V2, V3) and 2 outright failures (V1, V4). None were registered.
 - The non-PYM signal (V4 vanna) failed in this generalized form — consistent with the Phase
   17 conclusion that the SPXW vanna effect is real but tiny and easily lost when widened.
-- V3 (flow-weighted) is the most promising: it adds independent information (option flow at
-  10:00 ET) on top of PYM direction without changing the underlying gate. Effect persists with
-  +50% cost.
-- V2 (tight-bias) is a borderline pass. Its train return is weak and only 27 trades land in test.
-  Useful as a low-frequency confirmation overlay, not as a standalone strategy.
-- The registered surface now has **6 PYM-gated intraday variants** — 4 leverage variants
-  (baseline 1×, lev3x, overnight-1x, best-combo) plus the 2 Phase 24 survivors (tight-bias,
-  flow-weighted).
+- V2 (tight-bias) and V3 (flow-weighted) clear the stress thresholds but **do not strictly
+  dominate the baseline** when you control for drawdown: V2's train collapses to noise, and
+  V3 trades volatility for return at roughly a 1-for-1 rate.
+- The registered surface remains the **4 leverage variants** (baseline 1×, lev3x, overnight-1x,
+  best-combo). V2 and V3 artifacts are kept on disk for follow-on research only.
 
 ## Updated bottom line
 
