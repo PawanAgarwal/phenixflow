@@ -247,6 +247,109 @@ const VARIANTS = [
     overnightLongTicker: 'TQQQ',
     overnightShortTicker: 'SQQQ',
   },
+  // ---- Phase 24 orthogonal variants ----
+  {
+    id: 'pym-gated-intraday-long-only',
+    name: 'PYM-Gated Intraday Long-Only (1x SPY)',
+    displayName: 'PYM-Gated Intraday — Long-Only 1x SPY',
+    description: 'Long-only variant: PYM bias ≥ +0.20 → LONG SPY at 11:30 ET, exit 15:55. Negative bias = flat (never short). Removes the weaker short-side hit rate.',
+    ruleSummary: [
+      'Each day: compute PYM v5 directional bias.',
+      'If bias ≥ +0.20: LONG SPY at 11:30 ET, exit 15:55 ET.',
+      'Otherwise: flat (NEVER short).',
+      'Hypothesis: PYM short days have weaker hit rate; long-only retains most edge with less risk.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.20,
+    biasShort: -Infinity,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: null,
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    longOnly: true,
+  },
+  {
+    id: 'pym-gated-intraday-tight-bias',
+    name: 'PYM-Gated Intraday Tight-Bias (1x SPY)',
+    displayName: 'PYM-Gated Intraday — Tight Bias ±0.30',
+    description: 'Tight-bias variant: trade only when |bias| ≥ 0.30 (extreme convictions). Fewer trades, higher per-trade conviction.',
+    ruleSummary: [
+      'Each day: compute PYM v5 directional bias.',
+      'If bias ≥ +0.30: LONG SPY at 11:30 ET, exit 15:55.',
+      'If bias ≤ -0.30: SHORT SPY (via SH) at 11:30 ET, exit 15:55.',
+      'Otherwise: flat. Hypothesis: extreme convictions are higher quality than the moderate band.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 690,
+    exitMinuteEt: 955,
+    biasLong: 0.30,
+    biasShort: -0.30,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+  },
+  {
+    id: 'pym-gated-intraday-flow-weighted',
+    name: 'PYM-Gated Intraday Flow-Weighted (1x SPY)',
+    displayName: 'PYM-Gated Intraday — Flow-Weighted ±0.10',
+    description: 'Looser bias gate (±0.10) but entry shifts to 10:00 ET so cumulative option flow is observable. Position size 1.5× when flow agrees with PYM direction, else 1.0×.',
+    ruleSummary: [
+      'Each day: compute PYM v5 directional bias.',
+      'If bias ≥ +0.10: LONG. If bias ≤ -0.10: SHORT. Else: flat.',
+      'At entry (10:00 ET) measure cumulative call+put net premium = (call_buy − call_sell) − (put_buy − put_sell).',
+      'Size 1.5× when flow agrees with PYM direction; size 1.0× when flow disagrees (still trade).',
+      'Cost = 2 bps × size on SPY notional. Entry 10:00 ET → exit 15:55 ET.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 600, // 10:00 ET — gives 30m of flow observation since open
+    exitMinuteEt: 955,
+    biasLong: 0.10,
+    biasShort: -0.10,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: null,
+    overnightShortTicker: null,
+    flowWeighted: true,
+    flowAgreeMultiplier: 1.5,
+    flowDisagreeMultiplier: 1.0,
+    flowAgreementThreshold: 5_000_000,
+  },
+  {
+    id: 'pym-gated-spxw-vanna-swing',
+    name: 'SPXW Vanna Trend Swing (1x SPY)',
+    displayName: 'SPXW Vanna Trend Swing — 1x SPY',
+    description: 'Orthogonal signal: SPXW cumulative dealer-vanna at EOD. Extreme-high quintile → LONG SPY overnight; extreme-low → SHORT; else flat. Walk-forward survivor in Phase 17.',
+    ruleSummary: [
+      'Each day T-1 EOD: sum SPXW dealer-vanna flow across the session (cum_dealer_vanna).',
+      'Rank against trailing 60-day distribution.',
+      'If today is in the top 20% (extreme high): LONG SPY at T-1 close, exit at T close.',
+      'If in the bottom 20% (extreme low): SHORT SPY (via SH) at T-1 close, exit at T close.',
+      'Otherwise: flat. Sample is small (~4 trades/month); this is an overlay signal.',
+    ],
+    costBpsRoundTrip: 2,
+    entryMinuteEt: 955, // prior-day close
+    exitMinuteEt: 955,
+    biasLong: null, // unused — PYM bias not gating
+    biasShort: null,
+    leverage: 1.0,
+    overnightExtremeBias: null,
+    longTicker: 'SPY',
+    shortTicker: 'SH',
+    overnightLongTicker: 'SPY',
+    overnightShortTicker: 'SH',
+    vannaSwing: true,
+    vannaLookbackDays: 60,
+    vannaQuintile: 0.20, // top/bottom 20%
+  },
 ];
 
 function listTradingDays(pymByDate, startDate, endDate) {
@@ -261,19 +364,117 @@ function listTradingDays(pymByDate, startDate, endDate) {
   return out;
 }
 
+// Load EOD cum_dealer_vanna from the SPXW features file for a given day.
+// Returns the last finite cum_dealer_vanna in the session, or null if missing.
+async function loadSpxwVannaEod(day) {
+  const p = defaultFeaturesPath(PROJECT_ROOT, 'SPXW', day);
+  if (!fs.existsSync(p)) return null;
+  const stream = fs.createReadStream(p).pipe(zlib.createGunzip());
+  const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
+  let lastVanna = null;
+  for await (const line of rl) {
+    if (!line) continue;
+    const r = JSON.parse(line);
+    if (Number.isFinite(r.cum_dealer_vanna)) lastVanna = r.cum_dealer_vanna;
+  }
+  return lastVanna;
+}
+
 async function runVariantForRange({ variant, pymByDate, days }) {
-  // Run the strategy day-by-day. Return:
-  //   trades: per-trade detail with entry/exit
-  //   dailyEquity: cumulative equity time series
-  //   snapshots: per-day snapshot for the strategy-service contract
+  // Run the strategy day-by-day. Three execution paths:
+  //   - default: PYM bias → intraday/overnight SPY trade.
+  //   - longOnly: same as default but never take the short side.
+  //   - flowWeighted: PYM direction, but check option flow at entry minute and
+  //     size 1.5× when flow agrees; entry minute is later (e.g. 10:00 ET) so
+  //     cumulative flow has had time to develop. No look-ahead — flow is
+  //     measured at the entry minute itself.
+  //   - vannaSwing: signal sourced from SPXW EOD cum_dealer_vanna, ranked over
+  //     a trailing N-day window. Top quintile → LONG overnight; bottom → SHORT.
+  //     PYM bias is not used.
   const tradesByDay = new Map();
   const featuresCache = new Map();
   async function getFeatures(day) {
     if (!featuresCache.has(day)) featuresCache.set(day, await loadFeatures(day));
     return featuresCache.get(day);
   }
+
+  // Pre-compute SPXW vanna signal series once for the vanna-swing variant.
+  let vannaByDay = null;
+  let vannaRankedDays = null;
+  if (variant.vannaSwing) {
+    vannaByDay = new Map();
+    for (const day of days) {
+      // eslint-disable-next-line no-await-in-loop
+      const v = await loadSpxwVannaEod(day);
+      if (v != null) vannaByDay.set(day, v);
+    }
+    vannaRankedDays = Array.from(vannaByDay.keys()).sort();
+    process.stdout.write(`  vanna signal coverage: ${vannaByDay.size} days\n`);
+  }
+
   for (let i = 0; i < days.length; i += 1) {
     const day = days[i];
+
+    // === Vanna swing path (signal NOT from PYM) ============================
+    if (variant.vannaSwing) {
+      if (i === 0) continue; // need prior-day close for entry
+      const prevDay = days[i - 1];
+      const signalVanna = vannaByDay.get(prevDay);
+      if (!Number.isFinite(signalVanna)) continue;
+      // Build the trailing window strictly BEFORE prevDay (no look-ahead).
+      const window = [];
+      for (const d of vannaRankedDays) {
+        if (d >= prevDay) break;
+        const v = vannaByDay.get(d);
+        if (Number.isFinite(v)) window.push(v);
+      }
+      const lb = variant.vannaLookbackDays || 60;
+      const recent = window.slice(-lb);
+      if (recent.length < Math.max(20, Math.floor(lb / 2))) continue;
+      const sorted = [...recent].sort((a, b) => a - b);
+      const qLo = sorted[Math.floor(sorted.length * variant.vannaQuintile)];
+      const qHi = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * (1 - variant.vannaQuintile)))];
+      let side = null;
+      if (signalVanna >= qHi) side = 'LONG';
+      else if (signalVanna <= qLo) side = 'SHORT';
+      if (!side) continue;
+      // eslint-disable-next-line no-await-in-loop
+      const prevRows = await getFeatures(prevDay);
+      // eslint-disable-next-line no-await-in-loop
+      const todayRows = await getFeatures(day);
+      if (!prevRows || !todayRows || prevRows.length === 0 || todayRows.length === 0) continue;
+      const entryRow = prevRows.find((r) => r.minute_of_day_et === variant.entryMinuteEt) || prevRows[prevRows.length - 1];
+      const exitRow = todayRows.find((r) => r.minute_of_day_et === variant.exitMinuteEt) || todayRows[todayRows.length - 1];
+      if (!Number.isFinite(entryRow.spy_close) || !Number.isFinite(exitRow.spy_close)) continue;
+      const entryPrice = entryRow.spy_close;
+      const exitPrice = exitRow.spy_close;
+      const sign = side === 'LONG' ? +1 : -1;
+      const gross = sign * variant.leverage * (exitPrice / entryPrice - 1);
+      const cost = variant.costBpsRoundTrip / 10_000;
+      const net = gross - cost;
+      tradesByDay.set(day, {
+        date: day,
+        entryDay: prevDay,
+        entryMode: 'overnight',
+        entryMinuteEt: variant.entryMinuteEt,
+        exitMinuteEt: variant.exitMinuteEt,
+        ticker: side === 'LONG' ? variant.longTicker : variant.shortTicker,
+        side,
+        leverage: variant.leverage,
+        bias: signalVanna,
+        entryPrice,
+        exitPrice,
+        grossReturn: gross,
+        cost,
+        netReturn: net,
+        isWin: net > 0,
+        isExtreme: false,
+        notes: { vannaQuintile: variant.vannaQuintile, qLo, qHi, signal: signalVanna },
+      });
+      continue;
+    }
+
+    // === PYM-driven paths ===================================================
     const pe = pymByDate.get(day);
     if (!pe || !Number.isFinite(pe.bias)) continue;
     const signal = pe.bias;
@@ -281,6 +482,7 @@ async function runVariantForRange({ variant, pymByDate, days }) {
     if (signal >= variant.biasLong) side = 'LONG';
     else if (signal <= variant.biasShort) side = 'SHORT';
     if (!side) continue;
+    if (variant.longOnly && side === 'SHORT') continue;
     const isExtreme = variant.overnightExtremeBias != null && Math.abs(signal) >= variant.overnightExtremeBias;
     // eslint-disable-next-line no-await-in-loop
     const todayRows = await getFeatures(day);
@@ -304,9 +506,28 @@ async function runVariantForRange({ variant, pymByDate, days }) {
     }
     const entryPrice = entryMode === 'overnight' ? entryRow.spy_close : entryRow.spy_open;
     const exitPrice = exitRow.spy_close;
+
+    // Flow-weighted sizing: check cumulative call/put net premium at entry minute.
+    // Entry minute is the observation minute — no look-ahead because the feature row
+    // is the cumulative state AT that minute (which is precisely what a trader sees).
+    let size = 1.0;
+    let flowAgrees = null;
+    let flowCumNet = null;
+    if (variant.flowWeighted && entryMode === 'intraday') {
+      const flowRow = entryRow; // observe at entry minute itself
+      flowCumNet = (flowRow.cum_call_buy_premium || 0)
+        - (flowRow.cum_call_sell_premium || 0)
+        - (flowRow.cum_put_buy_premium || 0)
+        + (flowRow.cum_put_sell_premium || 0);
+      const threshold = variant.flowAgreementThreshold ?? 0;
+      flowAgrees = (side === 'LONG' && flowCumNet > threshold)
+        || (side === 'SHORT' && flowCumNet < -threshold);
+      size = flowAgrees ? (variant.flowAgreeMultiplier ?? 1.5) : (variant.flowDisagreeMultiplier ?? 1.0);
+    }
+
     const sign = side === 'LONG' ? +1 : -1;
-    const gross = sign * variant.leverage * (exitPrice / entryPrice - 1);
-    const cost = variant.costBpsRoundTrip / 10_000;
+    const gross = sign * variant.leverage * size * (exitPrice / entryPrice - 1);
+    const cost = (variant.costBpsRoundTrip / 10_000) * size;
     const net = gross - cost;
     tradesByDay.set(day, {
       date: day,
@@ -317,6 +538,7 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       ticker,
       side,
       leverage: variant.leverage,
+      size,
       bias: pe.bias,
       entryPrice,
       exitPrice,
@@ -325,6 +547,7 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       netReturn: net,
       isWin: net > 0,
       isExtreme,
+      ...(variant.flowWeighted ? { flowAgrees, flowCumNet } : {}),
     });
   }
   return tradesByDay;
@@ -373,12 +596,13 @@ function buildReportForVariant({ variant, tradesByDay, days, spyByDay, qqqByDay,
     qqqEquity *= (1 + qqqReturn);
     priorSpyClose = todaySpy ?? priorSpyClose;
     priorQqqClose = todayQqq ?? priorQqqClose;
+    const effectiveLev = t ? variant.leverage * (t.size ?? 1) : 0;
     const holdings = t
       ? [{
         ticker: t.ticker,
-        weight: t.side === 'LONG' ? +variant.leverage : -variant.leverage,
-        weightPct: (t.side === 'LONG' ? +variant.leverage : -variant.leverage) * 100,
-        dollars: equity * variant.leverage * (t.side === 'LONG' ? 1 : -1),
+        weight: t.side === 'LONG' ? +effectiveLev : -effectiveLev,
+        weightPct: (t.side === 'LONG' ? +effectiveLev : -effectiveLev) * 100,
+        dollars: equity * effectiveLev * (t.side === 'LONG' ? 1 : -1),
       }]
       : [{ ticker: 'CASH', weight: 1, weightPct: 100, dollars: equity }];
     // Turnover: change of weights vs previous

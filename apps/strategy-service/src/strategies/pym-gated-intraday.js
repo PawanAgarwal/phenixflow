@@ -49,6 +49,25 @@ const VARIANTS = {
     cadence: 'intraday_plus_overnight',
     actionType: 'signal_trade',
   },
+  // Phase 24 — orthogonal variants. Only walk-forward survivors are listed
+  // here; the long-only and SPXW vanna-swing variants are built by the same
+  // builder but did NOT pass the Phase 24 stress checks and are not registered.
+  'pym-gated-intraday-tight-bias': {
+    name: 'PYM-Gated Intraday Tight-Bias (1x SPY)',
+    displayName: 'PYM-Gated Intraday — Tight Bias ±0.30',
+    description: 'Trade only when |PYM bias| ≥ 0.30 (extreme convictions). 1x SPY at 11:30 ET, exit 15:55 ET. Fewer trades than the baseline ±0.20; train weak but test out-of-sample positive across 2 of 3 months.',
+    family: 'pym-intraday',
+    cadence: 'intraday',
+    actionType: 'signal_trade',
+  },
+  'pym-gated-intraday-flow-weighted': {
+    name: 'PYM-Gated Intraday Flow-Weighted (1x SPY)',
+    displayName: 'PYM-Gated Intraday — Flow-Weighted ±0.10',
+    description: 'Looser bias gate ±0.10 with entry at 10:00 ET so 30 min of option flow is observable. Position size 1.5× when cumulative net call/put premium agrees with PYM direction, 1.0× otherwise.',
+    family: 'pym-intraday',
+    cadence: 'intraday',
+    actionType: 'signal_trade',
+  },
 };
 
 function resolveArtifactPath(variantId) {

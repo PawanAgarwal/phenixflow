@@ -108,10 +108,12 @@ describe('strategy-service API', () => {
       'pym-v5-cap25-lgbm-blend40-stress',
       'option-income-wheel-trend-ivrv',
       'tsll-seconds-passive-scalper',
-      'pym-gated-baseline',
-      'pym-gated-lev3x',
-      'pym-gated-overnight-1x',
-      'pym-gated-best-combo',
+      'pym-gated-intraday-baseline',
+      'pym-gated-intraday-lev3x',
+      'pym-gated-intraday-overnight-1x',
+      'pym-gated-intraday-best-combo',
+      'pym-gated-intraday-tight-bias',
+      'pym-gated-intraday-flow-weighted',
     ]);
     const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
     expect(byId['pym-v5'].sourceLinks.map((link) => link.label)).toEqual([
@@ -133,7 +135,7 @@ describe('strategy-service API', () => {
     expect(byId['pym-v5-cap25-lgbm-blend40-stress'].displayName).toContain('Options Stress');
     expect(byId['option-income-wheel-trend-ivrv'].ruleSummary.join(' ')).toContain('IV/RV >= 1.10');
     expect(byId['tsll-seconds-passive-scalper'].ruleSummary.join(' ')).toContain('buy limit 3c');
-    expect(byId['pym-gated-baseline'].supports).toContain('trade_log');
+    expect(byId['pym-gated-intraday-baseline'].supports).toContain('trade_log');
   });
 
   it('lists strategies and serves chart ranges', async () => {
