@@ -167,6 +167,17 @@ function valuesPayload(strategy, query) {
   };
 }
 
+function openPositionsPayload(strategy) {
+  const report = strategy.getReport();
+  const data = Array.isArray(report.openPositions) ? report.openPositions : [];
+  return {
+    strategy: strategy.getMetadata(),
+    asOf: report.summary?.endDate || report.summary?.latestRebalanceDate || null,
+    count: data.length,
+    data,
+  };
+}
+
 function tradesPayload(strategy, query) {
   const report = strategy.getReport();
   const trades = Array.isArray(report.trades) ? report.trades : [];
@@ -224,6 +235,7 @@ function createApp(options = {}) {
         'GET /api/strategies/:strategyId/chart?start=YYYY-MM-DD&end=YYYY-MM-DD',
         'GET /api/strategies/:strategyId/values?start=YYYY-MM-DD&end=YYYY-MM-DD',
         'GET /api/strategies/:strategyId/trades?start=YYYY-MM-DD&end=YYYY-MM-DD&limit=N',
+        'GET /api/strategies/:strategyId/open-positions',
         'GET /api/strategies/:strategyId/portfolio/latest',
         'GET /api/strategies/:strategyId/portfolio/:date',
         'GET /api/strategies/:strategyId/changes/latest',
@@ -257,6 +269,10 @@ function createApp(options = {}) {
 
   app.get('/api/strategies/:strategyId/trades', asyncRoute(async (req, res) => {
     res.status(200).json(tradesPayload(strategyFromReq(registry, req), req.query));
+  }));
+
+  app.get('/api/strategies/:strategyId/open-positions', asyncRoute(async (req, res) => {
+    res.status(200).json(openPositionsPayload(strategyFromReq(registry, req)));
   }));
 
   app.get('/api/strategies/:strategyId/portfolio/latest', asyncRoute(async (req, res) => {

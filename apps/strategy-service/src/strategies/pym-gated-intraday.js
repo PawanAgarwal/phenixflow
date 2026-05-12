@@ -93,7 +93,7 @@ function createPymGatedIntradayStrategy({ variantId, ...options } = {}) {
       ],
       defaultStartDate: report?.settings ? report.summary.startDate : '2025-01-02',
       artifactPath,
-      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data', 'trade_log', 'sharpe'],
+      supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data', 'trade_log', 'open_positions', 'sharpe'],
     };
   }
 

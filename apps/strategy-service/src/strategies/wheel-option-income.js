@@ -98,6 +98,68 @@ function topHoldingsLabel(holdings) {
   return holdings.slice(0, 3).map((holding) => holding.ticker).join(', ');
 }
 
+// Pair sell_put / sell_call (opens) with their close events (buy_to_close, expired_worthless,
+// put_assignment, call_assignment, put_assignment_liquidation) into trade records keyed by
+// contract ticker. Anything still open at the source report's end date becomes an open position.
+function buildTradesAndOpenPositions({ sourceReport, artifactStrategyId }) {
+  const raw = (sourceReport.tradesByStrategy?.[artifactStrategyId]) || [];
+  const opensByTicker = new Map();
+  const closedTrades = [];
+  for (const ev of raw) {
+    if (!ev || !ev.type || !ev.date) continue;
+    if (ev.type === 'sell_put' || ev.type === 'sell_call') {
+      opensByTicker.set(ev.ticker, ev);
+      continue;
+    }
+    const opener = opensByTicker.get(ev.ticker);
+    if (!opener) continue; // close without matching open (shouldn't happen, but skip safely)
+    opensByTicker.delete(ev.ticker);
+    closedTrades.push({
+      ticker: ev.ticker,
+      symbol: opener.symbol,
+      right: opener.right,
+      strike: opener.strike,
+      contracts: opener.contracts,
+      type: opener.type === 'sell_put' ? 'cash_secured_put' : 'covered_call',
+      side: 'SHORT', // selling premium
+      entryDate: opener.date,
+      exitDate: ev.date,
+      exitType: ev.type,
+      // Carry-over: trade crosses overnight (entry on a prior calendar day) — true for ~all wheel
+      // trades, which is exactly why distinguishing today's activity matters in the UI.
+      carryOver: opener.date !== ev.date,
+      entryMode: opener.date === ev.date ? 'intraday' : 'overnight',
+      bias: null,
+      entryPrice: finite(opener.entryPrice),
+      exitPrice: finite(ev.exitPrice ?? ev.intrinsic),
+      grossReturn: finite(ev.profit) / Math.max(1, Math.abs(finite(opener.grossPremium) || 1)),
+      cost: finite(opener.commission) + finite(ev.commission),
+      netReturn: null, // wheel P&L tracked at portfolio level; this is informational per-trade
+      // Raw event payloads for the UI to render contract details
+      open: opener,
+      close: ev,
+    });
+  }
+  // Whatever is still in opensByTicker at the end is an open position as of endDate.
+  const openPositions = Array.from(opensByTicker.values()).map((opener) => ({
+    ticker: opener.ticker,
+    symbol: opener.symbol,
+    right: opener.right,
+    strike: opener.strike,
+    expiration: opener.expiration,
+    contracts: opener.contracts,
+    type: opener.type === 'sell_put' ? 'cash_secured_put' : 'covered_call',
+    side: 'SHORT',
+    entryDate: opener.date,
+    entryPrice: finite(opener.entryPrice),
+    grossPremium: finite(opener.grossPremium),
+    impliedVol: finite(opener.impliedVol),
+    delta: finite(opener.delta),
+    dte: opener.dte,
+  }));
+  return { trades: closedTrades, openPositions };
+}
+
 function buildWheelReport({ metadata, sourceReport, artifactStrategyId }) {
   const summary = sourceReport.strategies.find((entry) => entry.id === artifactStrategyId);
   const daily = sourceReport.dailyByStrategy?.[artifactStrategyId] || [];
@@ -194,6 +256,8 @@ function buildWheelReport({ metadata, sourceReport, artifactStrategyId }) {
     latest: snapshots.at(-1) || null,
     snapshots,
     equitySeries,
+    trades: buildTradesAndOpenPositions({ sourceReport, artifactStrategyId }).trades,
+    openPositions: buildTradesAndOpenPositions({ sourceReport, artifactStrategyId }).openPositions,
     skippedDays: [],
     metadata,
   };
@@ -204,14 +268,14 @@ function createWheelOptionIncomeStrategy(options = {}) {
   const artifactStrategyId = options.artifactStrategyId || DEFAULT_ARTIFACT_STRATEGY_ID;
   const metadata = {
     id: options.id || 'option-income-wheel-trend-ivrv',
-    name: options.name || 'Option Income Wheel IV/RV Trend',
-    displayName: options.displayName || 'Option Income Wheel',
-    family: 'option_income_research',
-    cadence: 'daily_eod',
+    name: options.name || 'Intraday Option Income Wheel (IV/RV Trend)',
+    displayName: options.displayName || 'Intraday Option Income Wheel',
+    family: 'intraday_option_income',
+    cadence: 'intraday_plus_overnight',
     actionType: 'short_option_income',
     dataProvider: 'Massive stock and OPRA option 1m aggregates',
     strategySource: 'SPY intraday Massive-only wheel backtest artifact',
-    description: 'Low-drawdown weekly wheel candidate: sell far OTM puts only when prior trend and IV/RV filters agree, then close winners at 50% profit.',
+    description: 'Sells weekly cash-secured puts at intraday entry windows (5–10 DTE, ~10% OTM) when prior trend and IV/RV filters agree; closes winners at 50% profit; assigned shares roll into covered calls. Positions carry over multiple sessions.',
     ruleSummary: options.ruleSummary || RULE_SUMMARY,
     sourceLinks: [
       { label: 'OIC Cash-Secured Put', href: 'https://www.optionseducation.org/strategies/all-strategies/cash-secured-put' },
@@ -219,7 +283,7 @@ function createWheelOptionIncomeStrategy(options = {}) {
     ],
     artifactStrategyId,
     defaultStartDate: DEFAULT_REFRESH_START,
-    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
+    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data', 'trade_log', 'open_positions'],
   };
   const state = { report: null, loadedAt: null, refresh: null };
 

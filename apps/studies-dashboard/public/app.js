@@ -35,6 +35,9 @@ const els = {
   tradesPanel: document.getElementById('tradesPanel'),
   tradesBadge: document.getElementById('tradesBadge'),
   tradesRows: document.getElementById('tradesRows'),
+  openPositionsPanel: document.getElementById('openPositionsPanel'),
+  openPositionsBadge: document.getElementById('openPositionsBadge'),
+  openPositionsRows: document.getElementById('openPositionsRows'),
   chartTitle: document.getElementById('chartTitle'),
   performanceChart: document.getElementById('performanceChart'),
   portfolioTitle: document.getElementById('portfolioTitle'),
@@ -101,6 +104,8 @@ function clearDashboard() {
   els.weekRows.replaceChildren();
   if (els.tradesRows) els.tradesRows.replaceChildren();
   if (els.tradesPanel) els.tradesPanel.hidden = true;
+  if (els.openPositionsRows) els.openPositionsRows.replaceChildren();
+  if (els.openPositionsPanel) els.openPositionsPanel.hidden = true;
   const canvas = els.performanceChart;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -266,8 +271,10 @@ async function loadStudy() {
   state.weekPortfolios = [];
   // Optional: fetch trades if strategy advertises support. Don't block dashboard render on it.
   state.trades = [];
+  state.openPositions = [];
   const supports = Array.isArray(summary?.metadata?.supports) ? summary.metadata.supports : [];
   const supportsTrades = supports.includes('trade_log');
+  const supportsOpen = supports.includes('open_positions');
   if (supportsTrades) {
     fetchJson(`/api/strategies/${strategyId}/trades?limit=30`, { timeoutMs: 6000 })
       .then((payload) => {
@@ -276,6 +283,15 @@ async function loadStudy() {
         renderTrades();
       })
       .catch(() => { /* trades are optional */ });
+  }
+  if (supportsOpen) {
+    fetchJson(`/api/strategies/${strategyId}/open-positions`, { timeoutMs: 6000 })
+      .then((payload) => {
+        if (token !== state.loadToken || strategyId !== state.strategyId) return;
+        state.openPositions = payload.data || [];
+        renderOpenPositions();
+      })
+      .catch(() => { /* open positions are optional */ });
   }
   renderDashboard();
   els.statusText.textContent = `Loaded ${summary.summary.latestRebalanceDate || 'latest'}`;
@@ -297,6 +313,7 @@ function renderDashboard() {
   renderSummary(strategy);
   renderPortfolio();
   renderWeekChanges();
+  renderOpenPositions();
   renderTrades();
   renderChart();
 }
@@ -310,20 +327,32 @@ function renderTrades() {
   }
   els.tradesPanel.hidden = false;
   els.tradesBadge.textContent = `${trades.length} most recent`;
-  // Show most recent first
+  // Most recent first
   const rows = trades.slice().reverse().map((trade) => {
     const tr = document.createElement('tr');
-    const sideClass = trade.side === 'LONG' ? 'positive' : 'negative';
+    const sideClass = trade.side === 'LONG' ? 'positive' : trade.side === 'SHORT' ? 'negative' : '';
     const netClass = valueClass(trade.netReturn);
     const grossClass = valueClass(trade.grossReturn);
+    // Carry-over: entry was on a different (prior) date — flagged explicitly by the strategy.
+    const carryOver = trade.carryOver === true
+      || (trade.entryDate && trade.date && trade.entryDate !== trade.date)
+      || trade.entryMode === 'overnight';
+    const carryCell = carryOver
+      ? `<span class="carry-flag" title="Position carried over from ${trade.entryDate || 'prior session'}">↻ carry</span>`
+      : '<span class="intraday-flag">same-day</span>';
+    const exitDate = trade.exitDate || trade.date || '-';
+    const entryDate = trade.entryDate || trade.entryDay || trade.date || '-';
+    const entryToExit = (isFiniteNumber(trade.entryPrice) && isFiniteNumber(trade.exitPrice))
+      ? `$${Number(trade.entryPrice).toFixed(2)} <span class="muted">${entryDate !== exitDate ? `(${entryDate})` : ''}</span> → $${Number(trade.exitPrice).toFixed(2)}`
+      : '-';
     const cells = [
-      trade.date,
-      `<span class="${sideClass}">${trade.side}</span>`,
-      trade.ticker || '-',
-      trade.entryMode || '-',
-      isFiniteNumber(trade.bias) ? Number(trade.bias).toFixed(2) : '-',
-      isFiniteNumber(trade.entryPrice) ? `$${Number(trade.entryPrice).toFixed(2)}` : '-',
-      isFiniteNumber(trade.exitPrice) ? `$${Number(trade.exitPrice).toFixed(2)}` : '-',
+      exitDate,
+      carryCell,
+      `<span class="${sideClass}">${trade.side || '-'}</span>`,
+      trade.ticker || trade.symbol || '-',
+      trade.entryMode || trade.type || '-',
+      isFiniteNumber(trade.bias) ? Number(trade.bias).toFixed(2) : (isFiniteNumber(trade.strike) ? `K=${trade.strike}` : '-'),
+      entryToExit,
       `<span class="${grossClass}">${formatPct(trade.grossReturn)}</span>`,
       `<span class="${netClass}">${formatPct(trade.netReturn)}</span>`,
     ];
@@ -331,6 +360,47 @@ function renderTrades() {
     return tr;
   });
   els.tradesRows.replaceChildren(...rows);
+}
+
+function renderOpenPositions() {
+  if (!els.openPositionsPanel) return;
+  const positions = Array.isArray(state.openPositions) ? state.openPositions : [];
+  if (positions.length === 0) {
+    els.openPositionsPanel.hidden = true;
+    return;
+  }
+  els.openPositionsPanel.hidden = false;
+  els.openPositionsBadge.textContent = `${positions.length} held`;
+  const rows = positions.map((pos) => {
+    const tr = document.createElement('tr');
+    const sideClass = pos.side === 'LONG' ? 'positive' : pos.side === 'SHORT' ? 'negative' : '';
+    const mode = pos.entryMode || pos.type || (pos.carryOver ? 'overnight' : 'intraday');
+    const conv = (isFiniteNumber(pos.bias)
+      ? `bias ${Number(pos.bias).toFixed(2)}`
+      : (isFiniteNumber(pos.strike)
+        ? `K=${pos.strike} ${pos.right || ''}`.trim()
+        : '-'));
+    const sizeCell = isFiniteNumber(pos.contracts)
+      ? `${pos.contracts} contracts`
+      : (isFiniteNumber(pos.leverage) ? `${pos.leverage}× ${pos.ticker || ''}` : '-');
+    const entryPxCell = isFiniteNumber(pos.entryPrice)
+      ? `$${Number(pos.entryPrice).toFixed(2)}`
+      : (isFiniteNumber(pos.grossPremium) ? `$${Number(pos.grossPremium).toFixed(2)} premium` : '-');
+    const expectedExit = pos.expectedExitDate || pos.expiration || '-';
+    const cells = [
+      pos.entryDate || '-',
+      `<span class="${sideClass}">${pos.side || 'SHORT'}</span>`,
+      pos.ticker || pos.symbol || '-',
+      mode,
+      conv,
+      sizeCell,
+      entryPxCell,
+      expectedExit,
+    ];
+    tr.innerHTML = cells.map((c) => `<td>${c}</td>`).join('');
+    return tr;
+  });
+  els.openPositionsRows.replaceChildren(...rows);
 }
 
 function formatNumber(value, digits = 2) {

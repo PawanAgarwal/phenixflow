@@ -558,3 +558,26 @@ td span {
 .trades-table-wrap tbody tr:hover {
   background: var(--surface-soft);
 }
+
+.carry-flag {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 10px;
+  background: var(--gold);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.intraday-flag {
+  display: inline-block;
+  padding: 0.1rem 0.45rem;
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+
+.muted { color: var(--muted); font-size: 0.78rem; }

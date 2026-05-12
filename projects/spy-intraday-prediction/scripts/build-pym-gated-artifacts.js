@@ -381,7 +381,7 @@ async function loadSpxwVannaEod(day) {
 }
 
 async function runVariantForRange({ variant, pymByDate, days }) {
-  // Run the strategy day-by-day. Three execution paths:
+  // Run the strategy day-by-day. Four execution paths:
   //   - default: PYM bias → intraday/overnight SPY trade.
   //   - longOnly: same as default but never take the short side.
   //   - flowWeighted: PYM direction, but check option flow at entry minute and
@@ -391,7 +391,13 @@ async function runVariantForRange({ variant, pymByDate, days }) {
   //   - vannaSwing: signal sourced from SPXW EOD cum_dealer_vanna, ranked over
   //     a trailing N-day window. Top quintile → LONG overnight; bottom → SHORT.
   //     PYM bias is not used.
+  // Returns:
+  //   tradesByDay: per-trade detail with entry/exit (only fully-closed trades)
+  //   openPositions: positions that have an entry but the exit minute hasn't been observed yet
+  //                  (typically because the session is still in progress or just ended without
+  //                   a 15:55 bar in the data — refresh will pick up the close in a later run)
   const tradesByDay = new Map();
+  const openPositions = [];
   const featuresCache = new Map();
   async function getFeatures(day) {
     if (!featuresCache.has(day)) featuresCache.set(day, await loadFeatures(day));
@@ -487,8 +493,8 @@ async function runVariantForRange({ variant, pymByDate, days }) {
     // eslint-disable-next-line no-await-in-loop
     const todayRows = await getFeatures(day);
     if (!todayRows || todayRows.length === 0) continue;
-    const exitRow = todayRows.find((r) => r.minute_of_day_et === variant.exitMinuteEt) || todayRows[todayRows.length - 1];
-    if (!Number.isFinite(exitRow.spy_close)) continue;
+    // Strict match: only treat the exit as final when we actually have the 15:55 ET bar.
+    const exactExitRow = todayRows.find((r) => r.minute_of_day_et === variant.exitMinuteEt);
     let entryRow = null; let entryDay = day; let entryMode = 'intraday'; let ticker = side === 'LONG' ? variant.longTicker : variant.shortTicker;
     if (isExtreme && variant.overnightLongTicker) {
       const prev = days[i - 1];
@@ -504,6 +510,26 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       entryRow = todayRows.find((r) => r.minute_of_day_et === variant.entryMinuteEt);
       if (!entryRow || !Number.isFinite(entryRow.spy_open)) continue;
     }
+    // No 15:55 bar yet → position is currently OPEN (entry done, exit pending).
+    if (!exactExitRow || !Number.isFinite(exactExitRow.spy_close)) {
+      const entryPriceOpen = entryMode === 'overnight' ? entryRow.spy_close : entryRow.spy_open;
+      openPositions.push({
+        signalDate: day,
+        entryDate: entryDay,
+        entryMinuteEt: entryMode === 'overnight' ? variant.exitMinuteEt : variant.entryMinuteEt,
+        expectedExitDate: day,
+        expectedExitMinuteEt: variant.exitMinuteEt,
+        side,
+        ticker,
+        leverage: variant.leverage,
+        bias: pe.bias,
+        entryPrice: entryPriceOpen,
+        entryMode,
+        carryOver: entryMode === 'overnight',
+      });
+      continue;
+    }
+    const exitRow = exactExitRow;
     const entryPrice = entryMode === 'overnight' ? entryRow.spy_close : entryRow.spy_open;
     const exitPrice = exitRow.spy_close;
 
@@ -532,6 +558,8 @@ async function runVariantForRange({ variant, pymByDate, days }) {
     tradesByDay.set(day, {
       date: day,
       entryDay,
+      entryDate: entryDay, // alias for UI consistency with wheel
+      exitDate: day,
       entryMode,
       entryMinuteEt: entryMode === 'overnight' ? variant.exitMinuteEt : variant.entryMinuteEt,
       exitMinuteEt: variant.exitMinuteEt,
@@ -547,10 +575,11 @@ async function runVariantForRange({ variant, pymByDate, days }) {
       netReturn: net,
       isWin: net > 0,
       isExtreme,
+      carryOver: entryMode === 'overnight', // explicit flag for the UI
       ...(variant.flowWeighted ? { flowAgrees, flowCumNet } : {}),
     });
   }
-  return tradesByDay;
+  return { tradesByDay, openPositions };
 }
 
 function maxDrawdown(equityPoints) {
@@ -824,10 +853,11 @@ async function main() {
     process.stdout.write(`\n=== ${variant.id} ===\n`);
     process.stdout.write(`  ${variant.description}\n`);
     // eslint-disable-next-line no-await-in-loop
-    const tradesByDay = await runVariantForRange({ variant, pymByDate, days });
+    const { tradesByDay, openPositions } = await runVariantForRange({ variant, pymByDate, days });
     const report = buildReportForVariant({
       variant, tradesByDay, days, spyByDay, qqqByDay, pymByDate, sourceMeta,
     });
+    report.openPositions = openPositions;
     report.metadata = {
       id: variant.id,
       name: variant.name,
@@ -837,7 +867,7 @@ async function main() {
     };
     const outPath = path.join(ARTIFACTS_OUT_DIR, `${variant.id}-report.json`);
     fs.writeFileSync(outPath, JSON.stringify(report, null, 2));
-    process.stdout.write(`  trades=${report.summary.tradeCount} net=${report.summary.totalReturnPct.toFixed(2)}% Sharpe(day)=${report.summary.sharpe.toFixed(2)} maxDD=${report.summary.maxDrawdownPct.toFixed(2)}% hit=${report.summary.hitRatePct.toFixed(1)}% → ${outPath}\n`);
+    process.stdout.write(`  trades=${report.summary.tradeCount} open=${openPositions.length} net=${report.summary.totalReturnPct.toFixed(2)}% Sharpe(day)=${report.summary.sharpe.toFixed(2)} maxDD=${report.summary.maxDrawdownPct.toFixed(2)}% hit=${report.summary.hitRatePct.toFixed(1)}% → ${outPath}\n`);
   }
 
   process.stdout.write('\nDone.\n');

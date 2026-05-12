@@ -163,8 +163,8 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
   const configuredReportPath = options.reportPath ? resolvePath(options.reportPath) : null;
   const metadata = {
     id: options.id || 'tsll-seconds-passive-scalper',
-    name: options.name || 'TSLL Seconds Passive Scalper',
-    displayName: options.displayName || 'TSLL Seconds Scalp',
+    name: options.name || 'TSLL Intraday Seconds Passive Scalper',
+    displayName: options.displayName || 'TSLL Intraday Seconds Scalp',
     family: 'tsll_scalping',
     cadence: 'intraday_daily_report',
     actionType: 'intraday_scalp',
