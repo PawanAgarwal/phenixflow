@@ -15,10 +15,6 @@ const ARTIFACTS_DIR = path.join(REPO_ROOT, 'projects', 'spy-intraday-prediction'
 const BUILD_SCRIPT_PATH = path.join(
   REPO_ROOT, 'projects', 'spy-intraday-prediction', 'scripts', 'build-pym-gated-artifacts.js',
 );
-// Also re-run the PYM v5 backtest so the artifact incorporates the latest EOD bar.
-const PYM_BACKTEST_SCRIPT_PATH = path.join(
-  REPO_ROOT, 'projects', 'pym-v5-replication', 'scripts', 'run-backtest.js',
-);
 
 const VARIANTS = {
   'pym-gated-intraday-baseline': {
@@ -113,18 +109,15 @@ function createPymGatedIntradayStrategy({ variantId, ...options } = {}) {
   }
 
   function refreshData() {
-    // Three-step pipeline:
-    //   1. Refresh upstream PYM EOD inputs (stock bars).
-    //   2. Re-run PYM v5 backtest so its artifact reflects today's signal.
-    //   3. Rebuild all 4 PYM-gated artifacts (we run the builder once; it does all variants).
-    // The third step writes the variant artifact we'll read in recompute().
+    // Two-step pipeline (mirrors how pym-v5 itself refreshes):
+    //   1. refresh-eod-inputs — keeps the Massive EOD daily-bars JSONL current through today
+    //      (uses the Massive REST aggregates endpoint, so today's bar arrives in minutes after
+    //      market close).
+    //   2. build-pym-gated-artifacts — recomputes PYM v5 holdings in-memory from those bars,
+    //      then runs the gated backtest. Falls back to live parquet stock_quotes_1m for any
+    //      day where features-1m JSONL hasn't been built yet (typically today).
     return runRefreshSequence(state, [
       refreshEodInputsStep(),
-      {
-        label: 'rerun-pym-v5-backtest',
-        command: process.execPath,
-        args: [PYM_BACKTEST_SCRIPT_PATH, '--start', '2025-01-02'],
-      },
       {
         label: 'build-pym-gated-artifacts',
         command: process.execPath,
