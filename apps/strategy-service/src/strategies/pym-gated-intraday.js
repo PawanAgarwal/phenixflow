@@ -49,6 +49,14 @@ const VARIANTS = {
     cadence: 'intraday_plus_overnight',
     actionType: 'signal_trade',
   },
+  'pym-gated-intraday-deadzone-biasprop-1500exit-3x': {
+    name: 'PYM-Gated Intraday Dead-Zone Bias-Prop 3x (15:00 Exit)',
+    displayName: 'PYM-Gated Intraday — Dead-Zone Bias-Prop 3x SPXL/SPXU, 15:00 Exit',
+    description: '3x SPXL/SPXU intraday with PYM bias gate ±0.20, skip |bias| in [0.30, 0.40), size = min(|bias|/0.30, 1.5), enter 11:30 ET, exit 15:00 ET. Strict Pareto improvement over lev3x on every test-window metric.',
+    family: 'pym-intraday',
+    cadence: 'intraday',
+    actionType: 'signal_trade',
+  },
 };
 
 function resolveArtifactPath(variantId) {
