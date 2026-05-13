@@ -3,6 +3,7 @@ const express = require('express');
 const { createDefaultRegistry } = require('./default-registry');
 const { filterByRange, lastOrNull, normalizeDate, parseLimit } = require('./range');
 const { snapshotResponse } = require('./portfolio');
+const { getExecutionManifest, listExecutionManifests } = require('./strategies/execution');
 
 function asyncRoute(handler) {
   return (req, res, next) => Promise.resolve(handler(req, res, next)).catch(next);
@@ -10,6 +11,101 @@ function asyncRoute(handler) {
 
 function strategyFromReq(registry, req) {
   return registry.getStrategy(req.params.strategyId);
+}
+
+function finiteOrNull(value) {
+  return Number.isFinite(value) ? value : null;
+}
+
+function uniqueStrings(values) {
+  return [...new Set(values.filter((value) => typeof value === 'string' && value.trim()))];
+}
+
+function reportPathHints(report) {
+  return uniqueStrings([
+    report?.source?.reportPath,
+    report?.source?.report?.path,
+    report?.source?.sourceArtifact,
+    report?.source?.mlReport?.path,
+    report?.source?.optionReport?.path,
+    report?.source?.riskOverlayReport?.path,
+    report?.source?.dataset?.path,
+  ]);
+}
+
+function manifestWithReportContext(manifest, report, reportError = null) {
+  const next = JSON.parse(JSON.stringify(manifest));
+  const summary = report?.summary || {};
+  const latest = report?.latest || {};
+
+  next.theoreticalPerformance = {
+    ...next.theoreticalPerformance,
+    summaryStats: {
+      ...next.theoreticalPerformance.summaryStats,
+      totalReturnPct: finiteOrNull(summary.totalReturnPct),
+      maxDrawdownPct: finiteOrNull(summary.maxDrawdownPct),
+      sharpe: finiteOrNull(summary.sharpe),
+      hitRatePct: finiteOrNull(summary.hitRatePct),
+      winRate: finiteOrNull(summary.winRate),
+      trades: finiteOrNull(summary.trades),
+      pnlPer1000Shares: finiteOrNull(summary.pnlPer1000Shares),
+      snapshots: finiteOrNull(summary.snapshots),
+    },
+    latestExpectedSignalDate: latest.date || summary.latestRebalanceDate || summary.latestCompletedDate || null,
+    latestExpectedTargetDate: latest.nextDate || summary.latestCompletedDate || summary.latestRebalanceDate || null,
+  };
+
+  next.provenance = {
+    ...next.provenance,
+    sourceArtifactPaths: uniqueStrings([
+      ...(next.provenance.sourceArtifactPaths || []),
+      ...reportPathHints(report),
+    ]),
+    generatedAt: report?.generatedAt || next.provenance.generatedAt || null,
+    backtestWindow: {
+      startDate: report?.settings?.startDate || summary.startDate || next.provenance.backtestWindow?.startDate || null,
+      endDate: report?.settings?.endDate || summary.endDate || summary.latestCompletedDate
+        || next.provenance.backtestWindow?.endDate || null,
+    },
+    commit: process.env.GIT_COMMIT || process.env.GITHUB_SHA || process.env.VERCEL_GIT_COMMIT_SHA
+      || next.provenance.commit || null,
+  };
+  if (reportError) next.provenance.reportLoadError = reportError.message;
+  return next;
+}
+
+function reportForManifest(strategy) {
+  try {
+    return { report: strategy.getReport(), error: null };
+  } catch (error) {
+    return { report: null, error };
+  }
+}
+
+function executionManifestFromReq(registry, req) {
+  const strategy = registry.getStrategy(req.params.strategyId);
+  const manifest = getExecutionManifest(strategy.getMetadata().id);
+  if (!manifest) {
+    const error = new Error(`execution_manifest_not_found:${req.params.strategyId}`);
+    error.statusCode = 404;
+    error.code = 'execution_manifest_not_found';
+    throw error;
+  }
+  const { report, error } = reportForManifest(strategy);
+  return manifestWithReportContext(manifest, report, error);
+}
+
+function executionManifestList(registry) {
+  const strategyIds = registry.listStrategies().map((strategy) => strategy.id);
+  return listExecutionManifests({ strategyIds }).map((manifest) => {
+    try {
+      const strategy = registry.getStrategy(manifest.strategyId);
+      const { report, error } = reportForManifest(strategy);
+      return manifestWithReportContext(manifest, report, error);
+    } catch {
+      return manifest;
+    }
+  });
 }
 
 function deriveDailyReturns(equitySeries) {
@@ -231,6 +327,8 @@ function createApp(options = {}) {
       version: '0.1.0',
       endpoints: [
         'GET /api/strategies',
+        'GET /api/execution-manifests',
+        'GET /api/execution-manifests/:strategyId',
         'GET /api/strategies/:strategyId',
         'GET /api/strategies/:strategyId/chart?start=YYYY-MM-DD&end=YYYY-MM-DD',
         'GET /api/strategies/:strategyId/values?start=YYYY-MM-DD&end=YYYY-MM-DD',
@@ -254,6 +352,14 @@ function createApp(options = {}) {
   app.get('/api/strategies', (_req, res) => {
     res.status(200).json({ data: registry.listStrategies() });
   });
+
+  app.get('/api/execution-manifests', (_req, res) => {
+    res.status(200).json({ data: executionManifestList(registry) });
+  });
+
+  app.get('/api/execution-manifests/:strategyId', asyncRoute(async (req, res) => {
+    res.status(200).json({ data: executionManifestFromReq(registry, req) });
+  }));
 
   app.get('/api/strategies/:strategyId', asyncRoute(async (req, res) => {
     res.status(200).json(publicStrategySummary(strategyFromReq(registry, req)));

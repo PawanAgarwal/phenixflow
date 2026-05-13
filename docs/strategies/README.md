@@ -70,12 +70,26 @@ large market data or generated reports into git.
 ## Shared Timing Convention
 
 Every strategy-service `getMetadata()` response includes an `execution` object
-that is the source of truth for downstream runtime scheduling.
+for timing discoverability. For promoted strategies, that summary is generated
+from the same execution manifest source that powers:
 
-Daily EOD strategies use:
+```http
+GET /api/execution-manifests
+GET /api/execution-manifests/{strategyId}
+```
+
+Promoted EOD strategies use a summary like:
 
 ```json
 {
+  "manifestVersion": "execution-manifest.v1",
+  "strategyVersion": "pym-v5.execution.v1",
+  "status": "paper_enabled",
+  "promotion": {
+    "authorized": true,
+    "domain": "production_candidate",
+    "authorizedStatuses": ["paper_enabled", "live_enabled"]
+  },
   "timingClass": "EOD",
   "timezone": "America/New_York",
   "session": "REGULAR",
@@ -84,9 +98,18 @@ Daily EOD strategies use:
     "time": "16:05"
   },
   "signalCadence": "daily_eod",
-  "idempotencyKeyFields": ["strategyId", "signalDate"]
+  "idempotencyKeyFields": ["strategyId", "strategyVersion", "signalDate"]
 }
 ```
+
+Full manifests add symbols, signal endpoint, execution defaults, risk defaults,
+theoretical performance references, and provenance. PhenixFlow remains the
+research/provenance source of truth; broker execution belongs to an external
+runtime that consumes the manifest contract.
+
+Only `pym-v5` and `tsll-seconds-passive-scalper` are authorized for production
+promotion today. All other strategies must advertise `status: "research_only"`
+and `promotion.authorized = false` until explicitly promoted.
 
 Their causal interpretation is:
 

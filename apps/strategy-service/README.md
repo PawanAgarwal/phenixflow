@@ -35,12 +35,21 @@ List strategies:
 GET /api/strategies
 ```
 
-Every strategy metadata payload includes an `execution` contract so trading
-runtimes can schedule strategy evaluation without hardcoding times:
+Every strategy metadata payload includes a compact `execution` summary so
+runtime schedulers can discover timing without hardcoding strategy-specific
+times:
 
 ```json
 {
   "execution": {
+    "manifestVersion": "execution-manifest.v1",
+    "strategyVersion": "pym-v5.execution.v1",
+    "status": "paper_enabled",
+    "promotion": {
+      "authorized": true,
+      "domain": "production_candidate",
+      "authorizedStatuses": ["paper_enabled", "live_enabled"]
+    },
     "timingClass": "EOD",
     "timezone": "America/New_York",
     "session": "REGULAR",
@@ -49,17 +58,31 @@ runtimes can schedule strategy evaluation without hardcoding times:
       "time": "16:05"
     },
     "signalCadence": "daily_eod",
-    "idempotencyKeyFields": ["strategyId", "signalDate"]
+    "idempotencyKeyFields": ["strategyId", "strategyVersion", "signalDate"]
   }
 }
 ```
 
-`EOD` strategies activate after the regular close at `16:05` ET and use one
-signal per strategy/date. `INTRADAY` and `SCALP` strategies use
-`activation.type = "regular_session_window"` with `startTime`/`endTime`, emit
-`continuous_intraday` decisions, and include `signalTimestamp` in their
-idempotency key fields. Shared defaults live in
-`apps/strategy-service/src/strategies/execution.js`.
+Promoted strategies also expose an authoritative, validated execution manifest:
+
+```http
+GET /api/execution-manifests
+GET /api/execution-manifests/pym-v5
+GET /api/execution-manifests/tsll-seconds-passive-scalper
+```
+
+The metadata summary and manifest API are generated from the same definitions
+in `apps/strategy-service/src/strategies/execution.js`, so they cannot drift.
+PhenixFlow does not execute broker logic; the manifest is a stable handoff
+contract for external paper/live trading runtimes.
+
+Manifest fields include `strategyId`, `strategyVersion`, `status`, timing,
+`promotion`, `symbols`, `signalEndpoint`, `idempotencyKeyFields`,
+`executionDefaults`, `riskDefaults`, `theoreticalPerformance`, and
+`provenance`. Only `pym-v5` and `tsll-seconds-passive-scalper` are currently
+authorized for production promotion and may use `paper_enabled` or
+`live_enabled`; all other strategy metadata remains explicitly
+`research_only` with `promotion.authorized = false`.
 
 Strategy metadata and summary:
 
@@ -238,6 +261,11 @@ Implement an adapter with:
 `dailyEodExecution()` for daily EOD rebalances and `regularSessionExecution()`
 for intraday/scalping strategies so the field stays consistent across the
 registry.
+
+For promoted paper/live strategies, add or update the manifest definition in
+`src/strategies/execution.js` and call `executionSummaryForStrategy(strategyId)`
+from `getMetadata()`. Do not duplicate timing/status/idempotency literals in the
+adapter.
 
 Then register it in `apps/strategy-service/src/default-registry.js`.
 

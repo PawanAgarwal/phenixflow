@@ -4,7 +4,7 @@ const path = require('node:path');
 const { loadConfig } = require('../../../../projects/pym-v5-replication/src/config');
 const { readDailyBarsJsonl } = require('../../../../projects/pym-v5-replication/src/backtest');
 const { loadMassiveEnv } = require('../../../../projects/pym-v5-replication/src/env');
-const { dailyEodExecution } = require('./execution');
+const { executionSummaryForStrategy } = require('./execution');
 const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
 const {
   buildDailyRebalanceReport,
@@ -61,7 +61,7 @@ function createPymV5Strategy(options = {}) {
       family: 'composer',
       cadence: 'daily_eod',
       actionType: 'rebalance',
-      execution: dailyEodExecution(),
+      execution: executionSummaryForStrategy('pym-v5'),
       dataProvider: 'Massive adjusted EOD',
       strategySource: 'Composer public tree',
       description: 'Replicates the Composer PYM V5 daily ETF strategy from the public symphony tree using Massive adjusted EOD data.',

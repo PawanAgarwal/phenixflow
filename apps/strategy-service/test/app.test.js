@@ -2,8 +2,23 @@ const request = require('supertest');
 
 const { createApp } = require('../src/app');
 const { createDefaultRegistry } = require('../src/default-registry');
+const {
+  ACTIONABLE_STATUSES,
+  executionSummaryFromManifest,
+  getExecutionManifest,
+  getExecutionManifestDefinition,
+  validateExecutionManifestDefinition,
+} = require('../src/strategies/execution');
 
 const PYM_EOD_EXECUTION = {
+  manifestVersion: 'execution-manifest.v1',
+  strategyVersion: 'pym-v5.execution.v1',
+  status: 'paper_enabled',
+  promotion: {
+    authorized: true,
+    domain: 'production_candidate',
+    authorizedStatuses: ['paper_enabled', 'live_enabled'],
+  },
   timingClass: 'EOD',
   timezone: 'America/New_York',
   session: 'REGULAR',
@@ -12,10 +27,18 @@ const PYM_EOD_EXECUTION = {
     time: '16:05',
   },
   signalCadence: 'daily_eod',
-  idempotencyKeyFields: ['strategyId', 'signalDate'],
+  idempotencyKeyFields: ['strategyId', 'strategyVersion', 'signalDate'],
 };
 
 const TSLL_SCALP_EXECUTION = {
+  manifestVersion: 'execution-manifest.v1',
+  strategyVersion: 'tsll-seconds-passive-scalper.execution.v1',
+  status: 'paper_enabled',
+  promotion: {
+    authorized: true,
+    domain: 'production_candidate',
+    authorizedStatuses: ['paper_enabled', 'live_enabled'],
+  },
   timingClass: 'SCALP',
   timezone: 'America/New_York',
   session: 'REGULAR',
@@ -25,7 +48,7 @@ const TSLL_SCALP_EXECUTION = {
     endTime: '15:50',
   },
   signalCadence: 'continuous_intraday',
-  idempotencyKeyFields: ['strategyId', 'signalDate', 'signalTimestamp'],
+  idempotencyKeyFields: ['strategyId', 'strategyVersion', 'signalTimestamp'],
 };
 
 function fakeStrategy() {
@@ -148,6 +171,24 @@ describe('strategy-service API', () => {
     expect(strategies.every((strategy) => strategy.execution)).toBe(true);
     expect(byId['pym-v5'].execution).toEqual(PYM_EOD_EXECUTION);
     expect(byId['tsll-seconds-passive-scalper'].execution).toEqual(TSLL_SCALP_EXECUTION);
+    expect(byId['pym-v5'].execution).toEqual(executionSummaryFromManifest(getExecutionManifest('pym-v5')));
+    expect(byId['tsll-seconds-passive-scalper'].execution).toEqual(
+      executionSummaryFromManifest(getExecutionManifest('tsll-seconds-passive-scalper')),
+    );
+    const productionAuthorized = strategies
+      .filter((strategy) => strategy.execution.promotion.authorized)
+      .map((strategy) => strategy.id);
+    expect(productionAuthorized).toEqual(['pym-v5', 'tsll-seconds-passive-scalper']);
+    strategies
+      .filter((strategy) => !productionAuthorized.includes(strategy.id))
+      .forEach((strategy) => {
+        expect(strategy.execution.status).toBe('research_only');
+        expect(strategy.execution.promotion).toEqual({
+          authorized: false,
+          domain: 'research',
+          authorizedStatuses: ['research_only'],
+        });
+      });
     expect(byId['pym-v5'].sourceLinks.map((link) => link.label)).toEqual([
       'Original Study / Notion',
       'Composer Factsheet',
@@ -194,5 +235,112 @@ describe('strategy-service API', () => {
     expect(response.body.data.snapshot.date).toBe('2026-05-07');
     expect(response.body.data.changeFromPrevious.added[0]).toEqual(expect.objectContaining({ ticker: 'BBB' }));
     expect(response.body.data.changeFromPrevious.removed[0]).toEqual(expect.objectContaining({ ticker: 'AAA' }));
+  });
+
+  it('serves execution manifest list and details for promoted strategies', async () => {
+    const app = createApp();
+    const list = await request(app).get('/api/execution-manifests').expect(200);
+    expect(list.body.data.map((manifest) => manifest.strategyId)).toEqual([
+      'pym-v5',
+      'tsll-seconds-passive-scalper',
+    ]);
+    expect(list.body.data.every((manifest) => manifest.promoted === undefined)).toBe(true);
+
+    const pym = await request(app).get('/api/execution-manifests/pym-v5').expect(200);
+    expect(pym.body.data).toEqual(expect.objectContaining({
+      manifestVersion: 'execution-manifest.v1',
+      strategyId: 'pym-v5',
+      strategyVersion: 'pym-v5.execution.v1',
+      status: 'paper_enabled',
+      promotion: {
+        authorized: true,
+        domain: 'production_candidate',
+        authorizedStatuses: ['paper_enabled', 'live_enabled'],
+      },
+      timingClass: 'EOD',
+      signalEndpoint: '/api/strategies/pym-v5/portfolio/latest',
+      idempotencyKeyFields: ['strategyId', 'strategyVersion', 'signalDate'],
+    }));
+    expect(pym.body.data.activation).toEqual({ type: 'after_market_close', time: '16:05' });
+    expect(pym.body.data.executionDefaults.orderType).toBe('market');
+    expect(pym.body.data.riskDefaults.allowedSymbols).toContain('SPY');
+    expect(pym.body.data.provenance.sourceArtifactPaths).toContain(
+      'projects/pym-v5-replication/artifacts/pym-v5-rebalance-report.json',
+    );
+
+    const tsll = await request(app).get('/api/execution-manifests/tsll-seconds-passive-scalper').expect(200);
+    expect(tsll.body.data).toEqual(expect.objectContaining({
+      strategyId: 'tsll-seconds-passive-scalper',
+      strategyVersion: 'tsll-seconds-passive-scalper.execution.v1',
+      status: 'paper_enabled',
+      promotion: {
+        authorized: true,
+        domain: 'production_candidate',
+        authorizedStatuses: ['paper_enabled', 'live_enabled'],
+      },
+      timingClass: 'SCALP',
+      symbols: ['TSLL'],
+      idempotencyKeyFields: ['strategyId', 'strategyVersion', 'signalTimestamp'],
+    }));
+    expect(tsll.body.data.activation).toEqual({
+      type: 'regular_session_window',
+      startTime: '09:35',
+      endTime: '15:50',
+    });
+    expect(tsll.body.data.executionDefaults).toEqual(expect.objectContaining({
+      orderType: 'limit',
+      buyBelowCloseCents: 3,
+      targetCents: 3,
+      stopCents: 5,
+      maxHoldSeconds: 10,
+      maxQuoteAgeSeconds: 2,
+    }));
+  });
+
+  it('keeps metadata execution summaries in sync with manifest definitions', async () => {
+    const app = createApp();
+    const strategies = await request(app).get('/api/strategies').expect(200);
+    const byId = Object.fromEntries(strategies.body.data.map((strategy) => [strategy.id, strategy]));
+    for (const strategyId of ['pym-v5', 'tsll-seconds-passive-scalper']) {
+      const manifest = await request(app).get(`/api/execution-manifests/${strategyId}`).expect(200);
+      expect(byId[strategyId].execution).toEqual(executionSummaryFromManifest(manifest.body.data));
+    }
+  });
+
+  it('does not expose paper/live manifests for non-promoted strategies', async () => {
+    const app = createApp();
+    await request(app).get('/api/execution-manifests/pym-v5-option-rank-top8').expect(404);
+
+    const list = await request(app).get('/api/execution-manifests').expect(200);
+    const actionable = list.body.data.filter((manifest) => ACTIONABLE_STATUSES.includes(manifest.status));
+    expect(actionable.map((manifest) => manifest.strategyId)).toEqual([
+      'pym-v5',
+      'tsll-seconds-passive-scalper',
+    ]);
+  });
+
+  it('rejects invalid execution manifest definitions', () => {
+    const base = getExecutionManifestDefinition('pym-v5');
+    expect(() => validateExecutionManifestDefinition({
+      ...base,
+      strategyId: 'not-promoted',
+      promoted: false,
+      status: 'paper_enabled',
+    })).toThrow(/actionable_status_requires_promoted_strategy/);
+
+    expect(() => validateExecutionManifestDefinition({
+      ...base,
+      timingClass: 'NOT_A_TIMING_CLASS',
+    })).toThrow(/timing_class_unknown/);
+
+    expect(() => validateExecutionManifestDefinition({
+      ...base,
+      promotion: { authorized: false, domain: 'research', authorizedStatuses: ['research_only'] },
+    })).toThrow(/actionable_status_requires_promotion_authorization/);
+
+    expect(() => validateExecutionManifestDefinition({
+      ...base,
+      activation: { type: 'after_market_close' },
+    })).toThrow(/activation\.time_must_be_non_empty_string/);
   });
 });

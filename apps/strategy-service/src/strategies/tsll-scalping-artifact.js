@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const { regularSessionExecution } = require('./execution');
+const { executionSummaryForStrategy } = require('./execution');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const DEFAULT_REPORT_DIR = 'projects/tsll-scalping/reports';
@@ -170,7 +170,7 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
     family: 'tsll_scalping',
     cadence: 'intraday_daily_report',
     actionType: 'intraday_scalp',
-    execution: regularSessionExecution({ timingClass: 'SCALP', startTime: '09:35', endTime: '15:50' }),
+    execution: executionSummaryForStrategy('tsll-seconds-passive-scalper'),
     dataProvider: 'Massive historical/live bars plus Massive REST 1-second aggregates when stock-trade files are unavailable',
     strategySource: 'TSLL seconds passive limit scalping artifact',
     description: options.description || 'Tracks the TSLL passive limit scalp candidate: buy 3 cents below the prior completed 1-second close, target +3 cents, stop 5 cents, max hold 10 seconds.',
