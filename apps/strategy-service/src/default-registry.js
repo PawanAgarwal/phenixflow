@@ -18,6 +18,8 @@ const {
   createPymV5Cap25LgbmBlendStressStrategy,
 } = require('./strategies/pym-v5-extension');
 const { createPymGatedIntradayStrategy } = require('./strategies/pym-gated-intraday');
+const { createOccPcContrarianStrategy } = require('./strategies/occ-pc-contrarian');
+const { createVixTermContrarianStrategy } = require('./strategies/vix-term-contrarian');
 
 function createDefaultRegistry(options = {}) {
   return new StrategyRegistry([
@@ -39,6 +41,12 @@ function createDefaultRegistry(options = {}) {
     createPymGatedIntradayStrategy({ variantId: 'pym-gated-intraday-overnight-1x', ...(options.pymGatedOvernight1x || {}) }),
     createPymGatedIntradayStrategy({ variantId: 'pym-gated-intraday-best-combo', ...(options.pymGatedBestCombo || {}) }),
     createPymGatedIntradayStrategy({ variantId: 'pym-gated-intraday-deadzone-biasprop-1500exit-3x', ...(options.pymGatedDeadzoneBiaspropLev3x || {}) }),
+    // OCC put/call extreme-contrarian intraday strategies (walk-forward survivors)
+    createOccPcContrarianStrategy({ variantId: 'occ-pc-contrarian-intraday-1x-long-only', ...(options.occPcContrarianLongOnly || {}) }),
+    createOccPcContrarianStrategy({ variantId: 'occ-pc-contrarian-intraday-3x', ...(options.occPcContrarian3x || {}) }),
+    // VIX term-structure contrarian intraday strategies (walk-forward survivors)
+    createVixTermContrarianStrategy({ variantId: 'vix-term-contrarian-intraday-vix3m-1x', ...(options.vixTermContrarian1x || {}) }),
+    createVixTermContrarianStrategy({ variantId: 'vix-term-contrarian-intraday-inv-long-3x-overnight', ...(options.vixTermContrarian3xOvernight || {}) }),
   ]);
 }
 

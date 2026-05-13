@@ -113,6 +113,10 @@ describe('strategy-service API', () => {
       'pym-gated-intraday-overnight-1x',
       'pym-gated-intraday-best-combo',
       'pym-gated-intraday-deadzone-biasprop-1500exit-3x',
+      'occ-pc-contrarian-intraday-1x-long-only',
+      'occ-pc-contrarian-intraday-3x',
+      'vix-term-contrarian-intraday-vix3m-1x',
+      'vix-term-contrarian-intraday-inv-long-3x-overnight',
     ]);
     const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
     expect(byId['pym-v5'].sourceLinks.map((link) => link.label)).toEqual([
