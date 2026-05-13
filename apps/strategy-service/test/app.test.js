@@ -166,6 +166,12 @@ describe('strategy-service API', () => {
       'occ-pc-contrarian-intraday-3x',
       'vix-term-contrarian-intraday-vix3m-1x',
       'vix-term-contrarian-intraday-inv-long-3x-overnight',
+      'vvix-spike-contrarian-overnight-3x',
+      'gap-down-fade-intraday-3x',
+      'fear-extreme-portfolio-equalweight-4x',
+      'fear-basket-vvix-occ3x-vix3xon-3x',
+      'fear-basket-vvix-vix3xon-3x',
+      'gap-fade-vix3xon-hedge-3x',
     ]);
     const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
     expect(strategies.every((strategy) => strategy.execution)).toBe(true);
@@ -209,6 +215,12 @@ describe('strategy-service API', () => {
     expect(byId['option-income-wheel-trend-ivrv'].ruleSummary.join(' ')).toContain('IV/RV >= 1.10');
     expect(byId['tsll-seconds-passive-scalper'].ruleSummary.join(' ')).toContain('buy limit 3c');
     expect(byId['pym-gated-intraday-baseline'].supports).toContain('trade_log');
+    expect(byId['vvix-spike-contrarian-overnight-3x'].ruleSummary.join(' ')).toContain('VVIX');
+    expect(byId['gap-down-fade-intraday-3x'].ruleSummary.join(' ')).toContain('gap');
+    expect(byId['fear-extreme-portfolio-equalweight-4x'].ruleSummary.join(' ')).toContain('Equal');
+    expect(byId['fear-basket-vvix-occ3x-vix3xon-3x'].displayName).toContain('VVIX');
+    expect(byId['fear-basket-vvix-vix3xon-3x'].components).toHaveLength(2);
+    expect(byId['gap-fade-vix3xon-hedge-3x'].components).toHaveLength(2);
   });
 
   it('lists strategies and serves chart ranges', async () => {

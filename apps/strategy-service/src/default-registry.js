@@ -20,6 +20,9 @@ const {
 const { createPymGatedIntradayStrategy } = require('./strategies/pym-gated-intraday');
 const { createOccPcContrarianStrategy } = require('./strategies/occ-pc-contrarian');
 const { createVixTermContrarianStrategy } = require('./strategies/vix-term-contrarian');
+const { createVvixSpikeContrarianStrategy } = require('./strategies/vvix-spike-contrarian');
+const { createGapDownFadeStrategy } = require('./strategies/gap-down-fade');
+const { createCompositePortfolioStrategy } = require('./strategies/composite-portfolio');
 
 function createDefaultRegistry(options = {}) {
   return new StrategyRegistry([
@@ -47,6 +50,13 @@ function createDefaultRegistry(options = {}) {
     // VIX term-structure contrarian intraday strategies (walk-forward survivors)
     createVixTermContrarianStrategy({ variantId: 'vix-term-contrarian-intraday-vix3m-1x', ...(options.vixTermContrarian1x || {}) }),
     createVixTermContrarianStrategy({ variantId: 'vix-term-contrarian-intraday-inv-long-3x-overnight', ...(options.vixTermContrarian3xOvernight || {}) }),
+    // Phase 31 research promotions (Jan 2025+ walk-forward survivors)
+    createVvixSpikeContrarianStrategy(options.vvixSpikeContrarian || {}),
+    createGapDownFadeStrategy(options.gapDownFade || {}),
+    createCompositePortfolioStrategy({ variantId: 'fear-extreme-portfolio-equalweight-4x', ...(options.fearExtremePortfolioEw4x || {}) }),
+    createCompositePortfolioStrategy({ variantId: 'fear-basket-vvix-occ3x-vix3xon-3x', ...(options.fearBasketVvixOcc3xVix3xOn || {}) }),
+    createCompositePortfolioStrategy({ variantId: 'fear-basket-vvix-vix3xon-3x', ...(options.fearBasketVvixVix3xOn || {}) }),
+    createCompositePortfolioStrategy({ variantId: 'gap-fade-vix3xon-hedge-3x', ...(options.gapFadeVix3xOnHedge || {}) }),
   ]);
 }
 
