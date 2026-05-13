@@ -1,6 +1,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+const { regularSessionExecution } = require('./execution');
+
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const DEFAULT_REPORT_DIR = 'projects/spy-intraday-prediction/artifacts';
 const DEFAULT_REPORT_PATH = 'projects/spy-intraday-prediction/artifacts/wheel-expanded-backtest-2026-01-02-2026-04-27.json';
@@ -273,6 +275,7 @@ function createWheelOptionIncomeStrategy(options = {}) {
     family: 'intraday_option_income',
     cadence: 'intraday_plus_overnight',
     actionType: 'short_option_income',
+    execution: regularSessionExecution({ startTime: '10:00', endTime: '15:50' }),
     dataProvider: 'Massive stock and OPRA option 1m aggregates',
     strategySource: 'SPY intraday Massive-only wheel backtest artifact',
     description: 'Sells weekly cash-secured puts at intraday entry windows (5–10 DTE, ~10% OTM) when prior trend and IV/RV filters agree; closes winners at 50% profit; assigned shares roll into covered calls. Positions carry over multiple sessions.',

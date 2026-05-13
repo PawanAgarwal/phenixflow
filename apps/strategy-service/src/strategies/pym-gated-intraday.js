@@ -8,6 +8,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+const { regularSessionExecution } = require('./execution');
 const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
@@ -24,6 +25,7 @@ const VARIANTS = {
     family: 'pym-intraday',
     cadence: 'intraday',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '11:30', endTime: '15:55' }),
   },
   'pym-gated-intraday-lev3x': {
     name: 'PYM-Gated Intraday 3x (SPXL/SPXU)',
@@ -32,6 +34,7 @@ const VARIANTS = {
     family: 'pym-intraday',
     cadence: 'intraday',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '11:30', endTime: '15:55' }),
   },
   'pym-gated-intraday-overnight-1x': {
     name: 'PYM-Gated Intraday + Overnight 1x (SPY)',
@@ -40,6 +43,7 @@ const VARIANTS = {
     family: 'pym-intraday',
     cadence: 'intraday_plus_overnight',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '11:30', endTime: '15:55' }),
   },
   'pym-gated-intraday-best-combo': {
     name: 'PYM-Gated Intraday + Overnight 3x (Production)',
@@ -48,6 +52,7 @@ const VARIANTS = {
     family: 'pym-intraday',
     cadence: 'intraday_plus_overnight',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '11:30', endTime: '15:55' }),
   },
   'pym-gated-intraday-deadzone-biasprop-1500exit-3x': {
     name: 'PYM-Gated Intraday Dead-Zone Bias-Prop 3x (15:00 Exit)',
@@ -56,6 +61,7 @@ const VARIANTS = {
     family: 'pym-intraday',
     cadence: 'intraday',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '11:30', endTime: '15:00' }),
   },
 };
 
@@ -89,6 +95,7 @@ function createPymGatedIntradayStrategy({ variantId, ...options } = {}) {
       family: spec.family,
       cadence: spec.cadence,
       actionType: spec.actionType,
+      execution: spec.execution,
       dataProvider: 'Massive stock_quotes_1m + PYM v5 EOD signal',
       strategySource: 'PYM v5 bias as directional gate; deterministic intraday rule',
       description: spec.description,

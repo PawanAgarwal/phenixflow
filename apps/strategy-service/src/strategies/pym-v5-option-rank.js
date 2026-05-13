@@ -17,6 +17,7 @@ const {
   weightsToHoldings,
 } = require('../../../../projects/pym-v5-replication/src/rebalance-report');
 const { collectTickers } = require('../../../../projects/pym-v5-replication/src/symphony');
+const { dailyEodExecution } = require('./execution');
 
 const DEFAULT_STRATEGY_ID = 'grid_pym_option_rank_top8_zm0p5';
 const SPY_PUT_PRESSURE_STRATEGY_ID = 'grid_pym_spy_put_z2p5_to_bil';
@@ -408,6 +409,7 @@ function createPymV5OptionOverlayStrategy(options = {}) {
       family: metadata.family,
       cadence: 'daily_eod',
       actionType: 'rebalance',
+      execution: dailyEodExecution(),
       dataProvider: metadata.dataProvider,
       strategySource: metadata.strategySource,
       description: metadata.description,

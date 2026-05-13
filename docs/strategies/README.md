@@ -69,15 +69,38 @@ large market data or generated reports into git.
 
 ## Shared Timing Convention
 
-All current tracked strategies are daily EOD strategies.
+Every strategy-service `getMetadata()` response includes an `execution` object
+that is the source of truth for downstream runtime scheduling.
 
-The default causal interpretation is:
+Daily EOD strategies use:
+
+```json
+{
+  "timingClass": "EOD",
+  "timezone": "America/New_York",
+  "session": "REGULAR",
+  "activation": {
+    "type": "after_market_close",
+    "time": "16:05"
+  },
+  "signalCadence": "daily_eod",
+  "idempotencyKeyFields": ["strategyId", "signalDate"]
+}
+```
+
+Their causal interpretation is:
 
 ```text
 day X close: calculate signal and target weights using data available through X
 day X close: rebalance target is considered an EOD close target
 day X+1 close: realize close-to-close return for the held target
 ```
+
+Intraday and scalp strategies use `timingClass` values `INTRADAY` or `SCALP`
+with `activation.type = "regular_session_window"` and explicit ET
+`startTime`/`endTime` values. They use
+`signalCadence = "continuous_intraday"` and add `signalTimestamp` to
+idempotency key fields.
 
 API snapshots use the signal/rebalance date as `date`. The realized return, when
 present, points to the next trading day in `realized.date` or `nextDate`.

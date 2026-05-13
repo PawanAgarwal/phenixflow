@@ -3,11 +3,37 @@ const request = require('supertest');
 const { createApp } = require('../src/app');
 const { createDefaultRegistry } = require('../src/default-registry');
 
+const PYM_EOD_EXECUTION = {
+  timingClass: 'EOD',
+  timezone: 'America/New_York',
+  session: 'REGULAR',
+  activation: {
+    type: 'after_market_close',
+    time: '16:05',
+  },
+  signalCadence: 'daily_eod',
+  idempotencyKeyFields: ['strategyId', 'signalDate'],
+};
+
+const TSLL_SCALP_EXECUTION = {
+  timingClass: 'SCALP',
+  timezone: 'America/New_York',
+  session: 'REGULAR',
+  activation: {
+    type: 'regular_session_window',
+    startTime: '09:35',
+    endTime: '15:50',
+  },
+  signalCadence: 'continuous_intraday',
+  idempotencyKeyFields: ['strategyId', 'signalDate', 'signalTimestamp'],
+};
+
 function fakeStrategy() {
   const metadata = {
     id: 'fake-strategy',
     name: 'Fake Strategy',
     cadence: 'daily_eod',
+    execution: PYM_EOD_EXECUTION,
     supports: ['chart', 'latest_portfolio'],
   };
   const report = {
@@ -119,6 +145,9 @@ describe('strategy-service API', () => {
       'vix-term-contrarian-intraday-inv-long-3x-overnight',
     ]);
     const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
+    expect(strategies.every((strategy) => strategy.execution)).toBe(true);
+    expect(byId['pym-v5'].execution).toEqual(PYM_EOD_EXECUTION);
+    expect(byId['tsll-seconds-passive-scalper'].execution).toEqual(TSLL_SCALP_EXECUTION);
     expect(byId['pym-v5'].sourceLinks.map((link) => link.label)).toEqual([
       'Original Study / Notion',
       'Composer Factsheet',

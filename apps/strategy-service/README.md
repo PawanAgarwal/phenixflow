@@ -35,6 +35,32 @@ List strategies:
 GET /api/strategies
 ```
 
+Every strategy metadata payload includes an `execution` contract so trading
+runtimes can schedule strategy evaluation without hardcoding times:
+
+```json
+{
+  "execution": {
+    "timingClass": "EOD",
+    "timezone": "America/New_York",
+    "session": "REGULAR",
+    "activation": {
+      "type": "after_market_close",
+      "time": "16:05"
+    },
+    "signalCadence": "daily_eod",
+    "idempotencyKeyFields": ["strategyId", "signalDate"]
+  }
+}
+```
+
+`EOD` strategies activate after the regular close at `16:05` ET and use one
+signal per strategy/date. `INTRADAY` and `SCALP` strategies use
+`activation.type = "regular_session_window"` with `startTime`/`endTime`, emit
+`continuous_intraday` decisions, and include `signalTimestamp` in their
+idempotency key fields. Shared defaults live in
+`apps/strategy-service/src/strategies/execution.js`.
+
 Strategy metadata and summary:
 
 ```http
@@ -207,6 +233,11 @@ Implement an adapter with:
   it's a no-op for static-artifact strategies. Use the helpers in
   `src/strategies/refresh-helpers.js` (`runRefreshSequence` for live-data
   strategies, `noopRefresh` for artifact-only).
+
+`getMetadata()` must include an `execution` object. Use
+`dailyEodExecution()` for daily EOD rebalances and `regularSessionExecution()`
+for intraday/scalping strategies so the field stays consistent across the
+registry.
 
 Then register it in `apps/strategy-service/src/default-registry.js`.
 

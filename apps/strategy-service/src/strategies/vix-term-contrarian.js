@@ -3,6 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+const { regularSessionExecution } = require('./execution');
 const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
@@ -19,6 +20,7 @@ const VARIANTS = {
     family: 'volatility-contrarian',
     cadence: 'intraday',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '09:35', endTime: '15:55' }),
   },
   'vix-term-contrarian-intraday-inv-long-3x-overnight': {
     name: 'VIX Term Contrarian Overnight (Inv-Long 3x)',
@@ -27,6 +29,7 @@ const VARIANTS = {
     family: 'volatility-contrarian',
     cadence: 'intraday_plus_overnight',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '15:50', endTime: '15:55' }),
   },
 };
 
@@ -56,6 +59,7 @@ function createVixTermContrarianStrategy({ variantId, ...options } = {}) {
       family: spec.family,
       cadence: spec.cadence,
       actionType: spec.actionType,
+      execution: spec.execution,
       dataProvider: 'Massive indices_1m (VIX1D / VIX / VIX3M) + SPY 1m bars',
       strategySource: 'VIX term-structure z-score contrarian',
       description: spec.description,

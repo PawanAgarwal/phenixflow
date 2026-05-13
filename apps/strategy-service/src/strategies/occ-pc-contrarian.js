@@ -9,6 +9,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
+const { regularSessionExecution } = require('./execution');
 const { refreshEodInputsStep, runRefreshSequence } = require('./refresh-helpers');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
@@ -25,6 +26,7 @@ const VARIANTS = {
     family: 'sentiment-contrarian',
     cadence: 'intraday',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '09:35', endTime: '15:55' }),
   },
   'occ-pc-contrarian-intraday-3x': {
     name: 'OCC Put/Call Intraday Contrarian (3x SPXL/SPXU)',
@@ -33,6 +35,7 @@ const VARIANTS = {
     family: 'sentiment-contrarian',
     cadence: 'intraday',
     actionType: 'signal_trade',
+    execution: regularSessionExecution({ startTime: '09:35', endTime: '15:55' }),
   },
 };
 
@@ -66,6 +69,7 @@ function createOccPcContrarianStrategy({ variantId, ...options } = {}) {
       family: spec.family,
       cadence: spec.cadence,
       actionType: spec.actionType,
+      execution: spec.execution,
       dataProvider: 'OCC EOD equity put/call ratio + Massive SPY 1m bars',
       strategySource: 'Contrarian z-score on rolling 20-day OCC equity P/C ratio',
       description: spec.description,

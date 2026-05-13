@@ -2,6 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const { weightsToHoldings } = require('../../../../projects/pym-v5-replication/src/rebalance-report');
+const { dailyEodExecution } = require('./execution');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const DEFAULT_ML_ARTIFACT_DIR = 'projects/pym-v5-ml-experiments/artifacts';
@@ -636,6 +637,7 @@ function createArtifactStrategy(options = {}) {
     family: options.family || 'pym_ml_research',
     cadence: 'daily_eod',
     actionType: 'rebalance',
+    execution: options.execution || dailyEodExecution(),
     dataProvider: 'Massive adjusted EOD + Massive option aggregates',
     strategySource: options.strategySource || 'PYM V5 ML walk-forward artifact',
     description: options.description || null,

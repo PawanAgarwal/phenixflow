@@ -21,6 +21,17 @@ refresh is triggered.
 | **EOD-bars + option features** | `pym-v5-option-rank-top8`, `pym-v5-spy-put-pressure-bil` | Coverage-aware EOD refresh + append only missing Massive option-feature days | Usually seconds when current; about one trading day of OPRA scan per missing day |
 | **Artifact-only (noop)** | All `pym-v5-ml-*`, `option-income-wheel-trend-ivrv`, `tsll-seconds-passive-scalper` | Re-read pre-computed artifact + recompute (no external fetch) | <1s |
 
+## Execution timing metadata
+
+Every registered strategy metadata payload includes `execution`, which is the
+runtime scheduling contract. Daily EOD strategies use
+`timingClass: "EOD"`, `activation.type: "after_market_close"`, and
+`time: "16:05"` in `America/New_York`. Intraday strategies use
+`timingClass: "INTRADAY"` with a `regular_session_window`. The TSLL seconds
+scalper uses `timingClass: "SCALP"` from `09:35` to `15:50` ET. Intraday and
+scalp idempotency keys include `signalTimestamp`; EOD keys are
+`strategyId + signalDate`.
+
 All live-data strategy refreshes go through
 `projects/pym-v5-replication/scripts/refresh-eod-inputs.js`. That script
 checks existing manifests first, resolves `auto` end dates against both the

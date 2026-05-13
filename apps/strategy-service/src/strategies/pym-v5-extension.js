@@ -19,6 +19,7 @@ const {
   strategyCreditSpread,
 } = require('../../../../projects/pym-v5-replication/src/extension-strategies-suite');
 
+const { dailyEodExecution } = require('./execution');
 const { refreshEodInputsStep, refreshLgbmArtifactStep, runRefreshSequence } = require('./refresh-helpers');
 
 const REPO_ROOT = path.resolve(__dirname, '..', '..', '..', '..');
@@ -185,6 +186,7 @@ function createExtensionStrategy({
       family,
       cadence: 'daily_eod',
       actionType: 'rebalance',
+      execution: dailyEodExecution(),
       dataProvider: needsExtraBars ? 'Massive adjusted EOD (PYM universe + credit/sector ETFs)' : 'Massive adjusted EOD',
       strategySource: 'PYM V5 Composer tree plus extension overlay computed locally',
       description,
@@ -326,6 +328,7 @@ function createPymV5Cap25LgbmBlendStrategy(options = {}) {
       family: options.family || 'pym_cap25_ml_blend',
       cadence: 'daily_eod',
       actionType: 'rebalance',
+      execution: dailyEodExecution(),
       dataProvider: 'Massive adjusted EOD plus daily walk-forward LightGBM artifact',
       strategySource: 'cap25 sleeve-meta target blended with LightGBM walk-forward holdings',
       description,
@@ -441,6 +444,7 @@ function createPymV5Cap25LgbmBlendStressStrategy(options = {}) {
       family: options.family || 'pym_cap25_ml_stress',
       cadence: 'daily_eod',
       actionType: 'rebalance',
+      execution: dailyEodExecution(),
       dataProvider: 'Massive adjusted EOD + Massive REST ^VIX + OCC EOD aggregate OI + walk-forward LightGBM artifact',
       strategySource: 'cap25 sleeve-meta blended with LightGBM walk-forward holdings, gated by an options-stress overlay',
       description,
