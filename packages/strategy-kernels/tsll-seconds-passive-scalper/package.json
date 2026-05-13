@@ -1,0 +1,32 @@
+{
+  "name": "@phenixflow/tsll-seconds-passive-scalper-kernel",
+  "version": "2026.5.13",
+  "private": true,
+  "description": "Executable TSLL seconds passive scalper strategy kernel for PhenixFlow",
+  "type": "commonjs",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./features": "./src/features.js",
+    "./settings/default.json": "./settings/default.json"
+  },
+  "files": [
+    "index.js",
+    "src",
+    "dist",
+    "schemas",
+    "settings",
+    "fixtures",
+    "kernel.manifest.json",
+    "checksums.sha256.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build-artifact.js",
+    "fixtures": "node scripts/generate-fixtures.js",
+    "replay": "node scripts/replay-fixtures.js"
+  }
+}

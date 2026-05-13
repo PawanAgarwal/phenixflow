@@ -1,9 +1,16 @@
+const crypto = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
 const express = require('express');
 
 const { createDefaultRegistry } = require('./default-registry');
 const { filterByRange, lastOrNull, normalizeDate, parseLimit } = require('./range');
 const { snapshotResponse } = require('./portfolio');
 const { getExecutionManifest, listExecutionManifests } = require('./strategies/execution');
+
+const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
+const TSLL_KERNEL_ID = 'tsll-seconds-passive-scalper.execution.v1';
+const TSLL_KERNEL_ROOT = path.join(REPO_ROOT, 'packages', 'strategy-kernels', 'tsll-seconds-passive-scalper');
 
 function asyncRoute(handler) {
   return (req, res, next) => Promise.resolve(handler(req, res, next)).catch(next);
@@ -19,6 +26,45 @@ function finiteOrNull(value) {
 
 function uniqueStrings(values) {
   return [...new Set(values.filter((value) => typeof value === 'string' && value.trim()))];
+}
+
+function canonicalize(value) {
+  if (value === undefined) return undefined;
+  if (value === null || typeof value !== 'object') return value;
+  if (Array.isArray(value)) return value.map(canonicalize).filter((item) => item !== undefined);
+  return Object.keys(value).sort().reduce((out, key) => {
+    const next = canonicalize(value[key]);
+    if (next !== undefined) out[key] = next;
+    return out;
+  }, {});
+}
+
+function sha256Canonical(value) {
+  return crypto.createHash('sha256').update(JSON.stringify(canonicalize(value))).digest('hex');
+}
+
+function readKernelJson(fileName) {
+  return JSON.parse(fs.readFileSync(path.join(TSLL_KERNEL_ROOT, fileName), 'utf8'));
+}
+
+function kernelManifestPayload(kernelId) {
+  if (kernelId !== TSLL_KERNEL_ID) {
+    const error = new Error(`kernel_not_found:${kernelId}`);
+    error.statusCode = 404;
+    error.code = 'kernel_not_found';
+    throw error;
+  }
+  const manifest = readKernelJson('kernel.manifest.json');
+  const checksums = readKernelJson('checksums.sha256.json');
+  return {
+    manifest,
+    checksums,
+    artifact: {
+      id: kernelId,
+      sha256: sha256Canonical(checksums),
+      files: Object.keys(checksums.files || {}).sort(),
+    },
+  };
 }
 
 function reportPathHints(report) {
@@ -315,6 +361,63 @@ function portfolioPayload(strategy, date = 'latest') {
   };
 }
 
+function portfolioTargetPayload(strategy, date = 'latest') {
+  const metadata = strategy.getMetadata();
+  if (metadata.id !== 'pym-v5') {
+    const error = new Error(`portfolio_target_not_supported:${metadata.id}`);
+    error.statusCode = 404;
+    error.code = 'portfolio_target_not_supported';
+    throw error;
+  }
+  const report = strategy.getReport();
+  const snapshot = snapshotByDate(report, date);
+  if (!snapshot) {
+    const error = new Error(`portfolio_target_date_not_found:${date}`);
+    error.statusCode = 404;
+    error.code = 'portfolio_target_date_not_found';
+    throw error;
+  }
+  const previous = previousSnapshot(report, snapshot.date);
+  const targetWeights = (snapshot.holdings || []).map((holding) => ({
+    symbol: holding.ticker,
+    weight: holding.weight,
+  }));
+  const previousWeights = (previous?.holdings || []).map((holding) => ({
+    symbol: holding.ticker,
+    weight: holding.weight,
+  }));
+  const target = {
+    schemaVersion: 'phenixflow.portfolioTarget.v1',
+    strategyId: 'pym-v5',
+    strategyVersion: 'pym-v5.execution.v1',
+    signalDate: snapshot.date,
+    asOf: `${snapshot.date}T16:00:00-04:00`,
+    validAfter: `${snapshot.date}T16:05:00-04:00`,
+    validUntil: snapshot.nextDate ? `${snapshot.nextDate}T09:30:00-04:00` : null,
+    targetType: 'portfolio_weights',
+    targetWeights,
+    previousWeights,
+    theoretical: {
+      pricingReference: 'eod_close',
+      expectedExecution: 'after_market_close_policy',
+      equityBeforeNextSession: snapshot.equityBeforeNextSession,
+    },
+    provenance: {
+      generatedAt: report.generatedAt,
+      source: report.source,
+      phenixFlowGitSha: process.env.GIT_COMMIT || process.env.GITHUB_SHA || process.env.VERCEL_GIT_COMMIT_SHA || null,
+    },
+  };
+  return {
+    ...target,
+    hashes: {
+      snapshotSha256: sha256Canonical(target),
+      sourceDataSha256: sha256Canonical(report.source || {}),
+      settingsSha256: sha256Canonical(report.settings || {}),
+    },
+  };
+}
+
 function createApp(options = {}) {
   const app = express();
   const registry = options.registry || createDefaultRegistry(options);
@@ -329,6 +432,8 @@ function createApp(options = {}) {
         'GET /api/strategies',
         'GET /api/execution-manifests',
         'GET /api/execution-manifests/:strategyId',
+        'GET /api/kernels/:kernelId/manifest',
+        'GET /api/portfolio-targets/pym-v5/latest',
         'GET /api/strategies/:strategyId',
         'GET /api/strategies/:strategyId/chart?start=YYYY-MM-DD&end=YYYY-MM-DD',
         'GET /api/strategies/:strategyId/values?start=YYYY-MM-DD&end=YYYY-MM-DD',
@@ -361,6 +466,14 @@ function createApp(options = {}) {
     res.status(200).json({ data: executionManifestFromReq(registry, req) });
   }));
 
+  app.get('/api/kernels/:kernelId/manifest', asyncRoute(async (req, res) => {
+    res.status(200).json({ data: kernelManifestPayload(req.params.kernelId) });
+  }));
+
+  app.get('/api/portfolio-targets/:strategyId/latest', asyncRoute(async (req, res) => {
+    res.status(200).json({ data: portfolioTargetPayload(strategyFromReq(registry, req), 'latest') });
+  }));
+
   app.get('/api/strategies/:strategyId', asyncRoute(async (req, res) => {
     res.status(200).json(publicStrategySummary(strategyFromReq(registry, req)));
   }));
@@ -387,6 +500,10 @@ function createApp(options = {}) {
 
   app.get('/api/strategies/:strategyId/portfolio/:date', asyncRoute(async (req, res) => {
     res.status(200).json(portfolioPayload(strategyFromReq(registry, req), req.params.date));
+  }));
+
+  app.get('/api/strategies/:strategyId/targets/latest', asyncRoute(async (req, res) => {
+    res.status(200).json({ data: portfolioTargetPayload(strategyFromReq(registry, req), 'latest') });
   }));
 
   app.get('/api/strategies/:strategyId/changes/latest', asyncRoute(async (req, res) => {
@@ -480,4 +597,5 @@ module.exports = {
   chartPayload,
   valuesPayload,
   portfolioPayload,
+  portfolioTargetPayload,
 };

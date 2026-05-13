@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phenixflow.kernelDecision.v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "decisionId",
+    "decisionType",
+    "strategyId",
+    "strategyVersion",
+    "kernelVersion",
+    "symbol",
+    "eventId",
+    "decisionTime",
+    "idempotencyKey",
+    "payload"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "phenixflow.kernelDecision.v1" },
+    "decisionId": { "type": "string" },
+    "decisionType": {
+      "type": "string",
+      "enum": [
+        "NOOP",
+        "PLACE_ENTRY_LIMIT",
+        "CANCEL_ENTRY",
+        "REGISTER_POSITION_RULES",
+        "PLACE_EXIT_LIMIT",
+        "PLACE_EXIT_STOP",
+        "EXIT_TIMEOUT",
+        "FLATTEN_POSITION"
+      ]
+    },
+    "strategyId": { "const": "tsll-seconds-passive-scalper" },
+    "strategyVersion": { "type": "string" },
+    "kernelVersion": { "const": "tsll-seconds-passive-scalper.execution.v1" },
+    "symbol": { "type": "string" },
+    "eventId": { "type": "string" },
+    "decisionTime": { "type": ["string", "null"] },
+    "expiresAt": { "type": "string" },
+    "idempotencyKey": { "type": "string" },
+    "payload": { "type": "object" },
+    "traceId": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

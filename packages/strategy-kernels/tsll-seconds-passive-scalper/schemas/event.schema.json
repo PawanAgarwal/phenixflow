@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phenixflow.kernelEvent.v1",
+  "type": "object",
+  "required": [
+    "eventType",
+    "sequence",
+    "eventTime",
+    "payload"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "phenixflow.kernelEvent.v1" },
+    "eventId": { "type": "string" },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "SESSION_STARTED",
+        "BAR_1S_CLOSED",
+        "BAR_1M_CLOSED",
+        "QUOTE_UPDATED",
+        "TIMER",
+        "ORDER_REQUESTED",
+        "ORDER_ACKED",
+        "ORDER_REJECTED",
+        "ORDER_FILLED",
+        "ORDER_CANCELLED",
+        "SESSION_ENDED"
+      ]
+    },
+    "strategyId": { "const": "tsll-seconds-passive-scalper" },
+    "strategyVersion": { "type": "string" },
+    "kernelVersion": { "const": "tsll-seconds-passive-scalper.execution.v1" },
+    "symbol": { "type": "string" },
+    "sequence": { "type": "number" },
+    "eventTime": { "type": "string" },
+    "observedAt": { "type": "string" },
+    "source": { "type": "string" },
+    "quality": { "type": "object" },
+    "payload": { "type": "object" }
+  },
+  "additionalProperties": true
+}

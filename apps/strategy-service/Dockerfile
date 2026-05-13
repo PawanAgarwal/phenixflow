@@ -23,6 +23,7 @@ RUN apt-get update \
   && /opt/pym-v5-ml/bin/pip install --no-cache-dir numpy scikit-learn lightgbm
 
 COPY apps/strategy-service ./apps/strategy-service
+COPY packages/strategy-kernels ./packages/strategy-kernels
 COPY projects/pym-v5-replication/config ./projects/pym-v5-replication/config
 COPY projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js ./projects/pym-v5-replication/scripts/build-massive-eod-daily-bars.js
 COPY projects/pym-v5-replication/scripts/build-option-features.js ./projects/pym-v5-replication/scripts/build-option-features.js

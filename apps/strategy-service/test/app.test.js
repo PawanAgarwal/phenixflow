@@ -270,7 +270,7 @@ describe('strategy-service API', () => {
         authorizedStatuses: ['paper_enabled', 'live_enabled'],
       },
       timingClass: 'EOD',
-      signalEndpoint: '/api/strategies/pym-v5/portfolio/latest',
+      signalEndpoint: '/api/portfolio-targets/pym-v5/latest',
       idempotencyKeyFields: ['strategyId', 'strategyVersion', 'signalDate'],
     }));
     expect(pym.body.data.activation).toEqual({ type: 'after_market_close', time: '16:05' });
@@ -305,8 +305,39 @@ describe('strategy-service API', () => {
       targetCents: 3,
       stopCents: 5,
       maxHoldSeconds: 10,
+      maxHoldBars: 10,
+      barSeconds: 1,
       maxQuoteAgeSeconds: 2,
     }));
+    expect(tsll.body.data.signalEndpoint).toBe('/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest');
+    expect(tsll.body.data.kernel).toEqual(expect.objectContaining({
+      schemaVersion: 'phenixflow.strategyKernel.v1',
+      artifactUri: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest',
+      settingsSha256: '624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1',
+      fixtureSuiteSha256: '19403ba6fe5bb6486d08fb50d78e241ac0b4fbc6a5e48ddc91098823104d9bfd',
+    }));
+    expect(tsll.body.data.provenance.baseline).toEqual(expect.objectContaining({
+      datasetId: 'tsll-1s-2025-01-02-2026-05-12-massive-rest-1s-barSeconds1-nodaily',
+      expectedSummarySha256: '3c4de269eb8d5014ae8585b93d2998f4925acb38749ad1e9e42e27f4c50669dd',
+    }));
+  });
+
+  it('serves kernel bundle metadata and versioned PYM target snapshots', async () => {
+    const app = createApp();
+    const kernel = await request(app).get('/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest').expect(200);
+    expect(kernel.body.data.manifest.strategy.id).toBe('tsll-seconds-passive-scalper');
+    expect(kernel.body.data.manifest.settings.sha256).toBe('624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1');
+    expect(kernel.body.data.artifact.files).toContain('dist/kernel.mjs');
+
+    const target = await request(app).get('/api/portfolio-targets/pym-v5/latest').expect(200);
+    expect(target.body.data).toEqual(expect.objectContaining({
+      schemaVersion: 'phenixflow.portfolioTarget.v1',
+      strategyId: 'pym-v5',
+      strategyVersion: 'pym-v5.execution.v1',
+      targetType: 'portfolio_weights',
+    }));
+    expect(target.body.data.targetWeights.length).toBeGreaterThan(0);
+    expect(target.body.data.hashes.snapshotSha256).toMatch(/^[a-f0-9]{64}$/);
   });
 
   it('keeps metadata execution summaries in sync with manifest definitions', async () => {

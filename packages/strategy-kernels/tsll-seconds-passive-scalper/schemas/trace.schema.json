@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phenixflow.kernelTrace.v1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "traceId",
+    "strategyId",
+    "strategyVersion",
+    "kernelVersion",
+    "settingsSha256",
+    "eventId",
+    "eventSha256",
+    "stateBeforeSha256",
+    "stateAfterSha256",
+    "decisionSha256",
+    "filters",
+    "features",
+    "reason"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "phenixflow.kernelTrace.v1" },
+    "traceId": { "type": "string" },
+    "strategyId": { "const": "tsll-seconds-passive-scalper" },
+    "strategyVersion": { "type": "string" },
+    "kernelVersion": { "const": "tsll-seconds-passive-scalper.execution.v1" },
+    "kernelArtifactSha256": { "type": ["string", "null"] },
+    "settingsSha256": { "type": "string" },
+    "eventId": { "type": ["string", "null"] },
+    "eventSha256": { "type": ["string", "null"] },
+    "stateBeforeSha256": { "type": ["string", "null"] },
+    "stateAfterSha256": { "type": "string" },
+    "decisionSha256": { "type": "string" },
+    "filters": { "type": "array" },
+    "features": { "type": "object" },
+    "reason": { "type": "string" }
+  },
+  "additionalProperties": true
+}

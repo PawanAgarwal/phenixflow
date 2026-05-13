@@ -169,4 +169,56 @@ describe('TSLL scalping utilities', () => {
     expect(result.trades[0].exitReason).toBe('target');
     expect(result.trades[0].netCents).toBe(2);
   });
+
+  it('preserves raw JS limit-comparison parity for promoted second bars', () => {
+    const rows = [
+      row({
+        tsUtc: '2025-01-02T14:42:52.000Z',
+        tsMs: Date.parse('2025-01-02T14:42:52.000Z'),
+        close: 24.88,
+        high: 24.89,
+        low: 24.8785,
+        trade_count: 4,
+        range_60s_cents: 16.9,
+        minutes_from_open: 12,
+        minutes_to_close: 350,
+      }),
+      row({
+        tsUtc: '2025-01-02T14:42:53.000Z',
+        tsMs: Date.parse('2025-01-02T14:42:53.000Z'),
+        open: 24.88,
+        close: 24.87,
+        high: 24.8803,
+        low: 24.85,
+        trade_count: 4,
+        range_60s_cents: 16.9,
+        minutes_from_open: 12,
+        minutes_to_close: 350,
+      }),
+      row({
+        tsUtc: '2025-01-02T14:42:54.000Z',
+        tsMs: Date.parse('2025-01-02T14:42:54.000Z'),
+        open: 24.87,
+        close: 24.87,
+        high: 24.8788,
+        low: 24.8557,
+        trade_count: 4,
+        range_60s_cents: 16.9,
+        minutes_from_open: 12,
+        minutes_to_close: 350,
+      }),
+    ];
+    const result = simulateSecondPassiveScalp(rows, {
+      costCentsPerSide: 0,
+      buyBelowCloseCents: 3,
+      targetCents: 3,
+      stopCents: 5,
+      maxHoldBars: 10,
+      noEntryFirstMinutes: 5,
+      noEntryLastMinutes: 10,
+      minRange60sCents: 3,
+      maxLastBarUpCents: 12,
+    });
+    expect(result.summary.trades).toBe(0);
+  });
 });

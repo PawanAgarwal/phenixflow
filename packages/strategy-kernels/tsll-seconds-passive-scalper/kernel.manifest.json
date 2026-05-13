@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "phenixflow.strategyKernel.v1",
+  "strategy": {
+    "id": "tsll-seconds-passive-scalper",
+    "name": "TSLL Seconds Passive Scalper",
+    "version": "2026.05.13",
+    "timingClass": "SCALP",
+    "timezone": "America/New_York"
+  },
+  "artifact": {
+    "id": "tsll-seconds-passive-scalper.execution.v1",
+    "createdAt": "2026-05-13T00:00:00.000Z"
+  },
+  "runtime": {
+    "type": "node",
+    "entrypoint": "dist/kernel.mjs",
+    "moduleApi": "phenixflow.kernel.module.v1",
+    "sidecarApi": "phenixflow.kernel.sidecar.v1",
+    "nodeRange": ">=20"
+  },
+  "module": {
+    "schemaVersion": "phenixflow.strategyKernel.v1",
+    "strategyId": "tsll-seconds-passive-scalper",
+    "strategyVersion": "2026.05.13",
+    "kernelId": "tsll-seconds-passive-scalper.execution.v1",
+    "kernelApi": "phenixflow.kernel.module.v1",
+    "timingClass": "SCALP",
+    "timezone": "America/New_York",
+    "deterministic": true
+  },
+  "settings": {
+    "path": "settings/default.json",
+    "sha256": "624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1",
+    "frozen": true
+  },
+  "inputs": {
+    "requiredEventTypes": [
+      "SESSION_STARTED",
+      "BAR_1S_CLOSED",
+      "BAR_1M_CLOSED",
+      "QUOTE_UPDATED",
+      "ORDER_ACKED",
+      "ORDER_FILLED",
+      "ORDER_CANCELLED",
+      "TIMER",
+      "SESSION_ENDED"
+    ],
+    "symbols": [
+      "TSLL"
+    ],
+    "contextSymbols": [
+      "SPY",
+      "QQQ",
+      "TSLA"
+    ],
+    "barRequirements": {
+      "primary": "1s",
+      "context": "1m",
+      "regularSessionOnly": true
+    },
+    "quoteRequirements": {
+      "maxQuoteAgeMs": 2000
+    }
+  },
+  "activation": {
+    "type": "regular_session_window",
+    "startTime": "09:35",
+    "endTime": "15:50"
+  },
+  "execution": {
+    "orderType": "limit",
+    "entryReference": "prior_completed_1s_close",
+    "entryLifetimeSeconds": 1,
+    "barSeconds": 1,
+    "maxConcurrentPositions": 1,
+    "maxPositionShares": 1000,
+    "paperFillModel": "quote_conservative.v1",
+    "backtestFillModel": "ohlc_1s_proxy.v1"
+  },
+  "fixtures": {
+    "input": "fixtures/replay-input.jsonl",
+    "expectedDecisions": "fixtures/expected-decisions.jsonl",
+    "expectedTraces": "fixtures/expected-traces.jsonl",
+    "decisionSha256": "5eaec50cf633c37e1c87460670580bfe4d5af726404c7762ecd8e620d4a474a1",
+    "traceSha256": "d4e18572edf8256e437f37854f3996e9814ba277c70d25df558965e01f4de5f4",
+    "suiteSha256": "19403ba6fe5bb6486d08fb50d78e241ac0b4fbc6a5e48ddc91098823104d9bfd"
+  },
+  "adapterFixtures": {
+    "backtestFillModel": "ohlc_1s_proxy.v1",
+    "expectedTrades": "fixtures/backtest-adapter/expected-trades.jsonl",
+    "suiteSha256": "d7bce6356947429def9a9d71c2a7a2de9b0feb6f600f7d26d48f72d110db301d"
+  },
+  "provenance": {
+    "phenixFlowGitSha": "c573cb91a87edde7d1be68e2756d79ab3033876c",
+    "researchReportPath": "projects/tsll-scalping/reports/tsll-seconds-passive-fixed-2025-01-02-2026-05-12.json",
+    "researchReportSha256": "782b34105bedf663b3a8fb0d386a565b1372abb67370af7c8315c8a9db65659c",
+    "researchArtifactId": "projects/tsll-scalping/artifacts/tsll-seconds-passive-mm-fixed-2025-01-02-2026-05-12-cost0.json",
+    "researchDatasetId": "tsll-1s-2025-01-02-2026-05-12-massive-rest-1s-barSeconds1-nodaily",
+    "researchSourceArtifactSha256": "20af96b4b6f3bab8fcec55bf4669c546ec23eab4138d97b7b032037cb96338d9",
+    "researchDateRange": {
+      "startDate": "2025-01-02",
+      "endDate": "2026-05-12"
+    },
+    "costSetting": {
+      "costCentsPerSide": 0
+    },
+    "promotedSettingsSha256": "624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1",
+    "expectedSummarySha256": "3c4de269eb8d5014ae8585b93d2998f4925acb38749ad1e9e42e27f4c50669dd",
+    "theoreticalPerformanceSha256": "16912859ba1acb068410540e06dcaf5d20fdbe9d6ce6c0b3ac2bb43518a77979"
+  }
+}

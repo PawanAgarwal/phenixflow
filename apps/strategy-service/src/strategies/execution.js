@@ -1,6 +1,10 @@
+const crypto = require('node:crypto');
+
 const MANIFEST_VERSION = 'execution-manifest.v1';
 const MARKET_TIMEZONE = 'America/New_York';
 const REGULAR_SESSION = 'REGULAR';
+const TSLL_KERNEL_MANIFEST = require('../../../../packages/strategy-kernels/tsll-seconds-passive-scalper/kernel.manifest.json');
+const TSLL_KERNEL_CHECKSUMS = require('../../../../packages/strategy-kernels/tsll-seconds-passive-scalper/checksums.sha256.json');
 
 const STATUSES = Object.freeze(['research_only', 'paper_enabled', 'live_enabled']);
 const ACTIONABLE_STATUSES = Object.freeze(['paper_enabled', 'live_enabled']);
@@ -21,6 +25,23 @@ const DAILY_IDEMPOTENCY_FIELDS = Object.freeze(['strategyId', 'signalDate']);
 const INTRADAY_IDEMPOTENCY_FIELDS = Object.freeze(['strategyId', 'signalDate', 'signalTimestamp']);
 const PROMOTED_DAILY_IDEMPOTENCY_FIELDS = Object.freeze(['strategyId', 'strategyVersion', 'signalDate']);
 const PROMOTED_SCALP_IDEMPOTENCY_FIELDS = Object.freeze(['strategyId', 'strategyVersion', 'signalTimestamp']);
+
+function canonicalize(value) {
+  if (value === undefined) return undefined;
+  if (value === null || typeof value !== 'object') return value;
+  if (Array.isArray(value)) return value.map(canonicalize).filter((item) => item !== undefined);
+  return Object.keys(value).sort().reduce((out, key) => {
+    const next = canonicalize(value[key]);
+    if (next !== undefined) out[key] = next;
+    return out;
+  }, {});
+}
+
+function sha256Canonical(value) {
+  return crypto.createHash('sha256').update(JSON.stringify(canonicalize(value))).digest('hex');
+}
+
+const TSLL_KERNEL_BUNDLE_SHA256 = sha256Canonical(TSLL_KERNEL_CHECKSUMS);
 
 const PYM_V5_SYMBOLS = Object.freeze([
   'AGG', 'BIL', 'BND', 'BSV', 'CURE', 'EDC', 'EDV', 'EDZ', 'EEM', 'GLD',
@@ -47,7 +68,7 @@ const MANIFEST_DEFINITIONS = Object.freeze({
     activation: Object.freeze({ type: 'after_market_close', time: '16:05' }),
     signalCadence: 'daily_eod',
     symbols: PYM_V5_SYMBOLS,
-    signalEndpoint: '/api/strategies/pym-v5/portfolio/latest',
+    signalEndpoint: '/api/portfolio-targets/pym-v5/latest',
     idempotencyKeyFields: PROMOTED_DAILY_IDEMPOTENCY_FIELDS,
     executionDefaults: Object.freeze({
       orderType: 'market',
@@ -98,7 +119,7 @@ const MANIFEST_DEFINITIONS = Object.freeze({
     activation: Object.freeze({ type: 'regular_session_window', startTime: '09:35', endTime: '15:50' }),
     signalCadence: 'continuous_intraday',
     symbols: Object.freeze(['TSLL']),
-    signalEndpoint: '/api/strategies/tsll-seconds-passive-scalper/portfolio/latest',
+    signalEndpoint: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest',
     idempotencyKeyFields: PROMOTED_SCALP_IDEMPOTENCY_FIELDS,
     executionDefaults: Object.freeze({
       orderType: 'limit',
@@ -107,10 +128,26 @@ const MANIFEST_DEFINITIONS = Object.freeze({
       targetCents: 3,
       stopCents: 5,
       maxHoldSeconds: 10,
+      maxHoldBars: 10,
+      barSeconds: 1,
       cooldownSeconds: 2,
       maxQuoteAgeSeconds: 2,
       sameSecondTargetStopPriority: 'stop_first',
+      sameBarTargetStopPriority: 'stop_first',
       brokerLogic: 'external_runtime',
+    }),
+    kernel: Object.freeze({
+      schemaVersion: 'phenixflow.strategyKernel.v1',
+      runtime: Object.freeze({
+        type: 'node',
+        entrypoint: 'dist/kernel.mjs',
+        moduleApi: 'phenixflow.kernel.module.v1',
+      }),
+      sidecarApi: 'phenixflow.kernel.sidecar.v1',
+      artifactUri: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest',
+      artifactSha256: TSLL_KERNEL_BUNDLE_SHA256,
+      settingsSha256: TSLL_KERNEL_MANIFEST.settings.sha256,
+      fixtureSuiteSha256: TSLL_KERNEL_MANIFEST.fixtures.suiteSha256,
     }),
     riskDefaults: Object.freeze({
       allowedSymbols: Object.freeze(['TSLL']),
@@ -132,12 +169,29 @@ const MANIFEST_DEFINITIONS = Object.freeze({
     }),
     provenance: Object.freeze({
       sourceArtifactPaths: Object.freeze([
-        'projects/tsll-scalping/reports/tsll-seconds-passive-fixed-feb2026.json',
-        'projects/tsll-scalping/artifacts/tsll-seconds-passive-mm-fixed-feb2026-cost0.json',
+        TSLL_KERNEL_MANIFEST.provenance.researchReportPath,
+        TSLL_KERNEL_MANIFEST.provenance.researchArtifactId,
       ]),
       generatedAt: null,
-      backtestWindow: Object.freeze({ startDate: '2026-02-01', endDate: '2026-02-28' }),
-      commit: null,
+      backtestWindow: Object.freeze(TSLL_KERNEL_MANIFEST.provenance.researchDateRange),
+      commit: TSLL_KERNEL_MANIFEST.provenance.phenixFlowGitSha,
+      baseline: Object.freeze({
+        reportPath: TSLL_KERNEL_MANIFEST.provenance.researchReportPath,
+        reportSha256: TSLL_KERNEL_MANIFEST.provenance.researchReportSha256,
+        artifactId: TSLL_KERNEL_MANIFEST.provenance.researchArtifactId,
+        sourceArtifactSha256: TSLL_KERNEL_MANIFEST.provenance.researchSourceArtifactSha256,
+        datasetId: TSLL_KERNEL_MANIFEST.provenance.researchDatasetId,
+        expectedSummarySha256: TSLL_KERNEL_MANIFEST.provenance.expectedSummarySha256,
+        theoreticalPerformanceSha256: TSLL_KERNEL_MANIFEST.provenance.theoreticalPerformanceSha256,
+        costSetting: Object.freeze(TSLL_KERNEL_MANIFEST.provenance.costSetting),
+      }),
+      kernel: Object.freeze({
+        kernelId: TSLL_KERNEL_MANIFEST.artifact.id,
+        strategyVersion: TSLL_KERNEL_MANIFEST.strategy.version,
+        settingsSha256: TSLL_KERNEL_MANIFEST.settings.sha256,
+        fixtureSuiteSha256: TSLL_KERNEL_MANIFEST.fixtures.suiteSha256,
+        artifactSha256: TSLL_KERNEL_BUNDLE_SHA256,
+      }),
     }),
   }),
 });
