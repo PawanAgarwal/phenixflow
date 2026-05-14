@@ -187,7 +187,7 @@ function buildManifest() {
 function writeChecksums() {
   const excluded = new Set(['checksums.sha256.json']);
   const files = listFiles(ROOT)
-    .filter((relative) => !relative.startsWith('scripts/'))
+    .filter((relative) => relative === 'scripts/replay-fixtures.js' || !relative.startsWith('scripts/'))
     .filter((relative) => !relative.startsWith('node_modules/'))
     .filter((relative) => !excluded.has(relative))
     .sort();

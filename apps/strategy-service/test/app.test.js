@@ -1,3 +1,5 @@
+const { execFileSync } = require('node:child_process');
+const crypto = require('node:crypto');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
@@ -55,6 +57,27 @@ const TSLL_SCALP_EXECUTION = {
   signalCadence: 'continuous_intraday',
   idempotencyKeyFields: ['strategyId', 'strategyVersion', 'signalTimestamp'],
 };
+
+function binaryParser(res, callback) {
+  const chunks = [];
+  res.on('data', (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
+  res.on('end', () => callback(null, Buffer.concat(chunks)));
+}
+
+function sha256Buffer(buffer) {
+  return crypto.createHash('sha256').update(buffer).digest('hex');
+}
+
+function sha256File(filePath) {
+  return sha256Buffer(fs.readFileSync(filePath));
+}
+
+function verifyArtifactChecksums(rootDir) {
+  const checksums = JSON.parse(fs.readFileSync(path.join(rootDir, 'checksums.sha256.json'), 'utf8'));
+  for (const [relativePath, expectedSha256] of Object.entries(checksums.files || {})) {
+    expect(sha256File(path.join(rootDir, relativePath))).toBe(expectedSha256);
+  }
+}
 
 function fakeStrategy() {
   const metadata = {
@@ -351,9 +374,13 @@ describe('strategy-service API', () => {
     expect(tsll.body.data.kernel).toEqual(expect.objectContaining({
       schemaVersion: 'phenixflow.strategyKernel.v1',
       artifactUri: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest',
+      downloadUri: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/download',
       settingsSha256: '624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1',
       fixtureSuiteSha256: '19403ba6fe5bb6486d08fb50d78e241ac0b4fbc6a5e48ddc91098823104d9bfd',
     }));
+    expect(tsll.body.data.kernel.artifactSha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(tsll.body.data.kernel.downloadSha256).toBe(tsll.body.data.kernel.artifactSha256);
+    expect(tsll.body.data.kernel.checksumsSha256).toMatch(/^[a-f0-9]{64}$/);
     expect(tsll.body.data.provenance.baseline).toEqual(expect.objectContaining({
       datasetId: 'tsll-1s-2025-01-02-2026-05-12-massive-rest-1s-barSeconds1-nodaily',
       expectedSummarySha256: '3c4de269eb8d5014ae8585b93d2998f4925acb38749ad1e9e42e27f4c50669dd',
@@ -366,6 +393,16 @@ describe('strategy-service API', () => {
     expect(kernel.body.data.manifest.strategy.id).toBe('tsll-seconds-passive-scalper');
     expect(kernel.body.data.manifest.settings.sha256).toBe('624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1');
     expect(kernel.body.data.artifact.files).toContain('dist/kernel.mjs');
+    expect(kernel.body.data.artifact.downloadUri).toBe('/api/kernels/tsll-seconds-passive-scalper.execution.v1/download');
+    expect(kernel.body.data.artifact.artifactSha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(kernel.body.data.artifact.downloadSha256).toBe(kernel.body.data.artifact.artifactSha256);
+    expect(kernel.body.data.artifact.checksumsSha256).toMatch(/^[a-f0-9]{64}$/);
+    expect(kernel.body.data.artifact.packageFiles).toEqual(expect.arrayContaining([
+      'package.json',
+      'checksums.sha256.json',
+      'dist/kernel.mjs',
+      'scripts/replay-fixtures.js',
+    ]));
 
     const target = await request(app).get('/api/portfolio-targets/pym-v5/latest').expect(200);
     expect(target.body.data).toEqual(expect.objectContaining({
@@ -376,6 +413,98 @@ describe('strategy-service API', () => {
     }));
     expect(target.body.data.targetWeights.length).toBeGreaterThan(0);
     expect(target.body.data.hashes.snapshotSha256).toMatch(/^[a-f0-9]{64}$/);
+  });
+
+  it('serves a self-contained TSLL kernel artifact that replays and imports outside the repo', async () => {
+    const app = createApp();
+    const execution = await request(app).get('/api/execution-manifests/tsll-seconds-passive-scalper').expect(200);
+    const artifact = await request(app)
+      .get('/api/kernels/tsll-seconds-passive-scalper.execution.v1/download')
+      .buffer(true)
+      .parse(binaryParser)
+      .expect(200);
+
+    expect(artifact.headers['content-type']).toMatch(/application\/zip/);
+    expect(artifact.headers['content-disposition']).toContain('tsll-seconds-passive-scalper.execution.v1.zip');
+
+    const artifactSha256 = sha256Buffer(artifact.body);
+    expect(artifactSha256).toBe(execution.body.data.kernel.artifactSha256);
+    expect(artifactSha256).toBe(execution.body.data.kernel.downloadSha256);
+    expect(artifact.headers['x-artifact-sha256']).toBe(artifactSha256);
+
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'tsll-kernel-artifact-'));
+    const zipPath = path.join(tmpDir, 'kernel.zip');
+    const unpackDir = path.join(tmpDir, 'unpacked');
+    fs.mkdirSync(unpackDir);
+    fs.writeFileSync(zipPath, artifact.body);
+    execFileSync('unzip', ['-q', zipPath, '-d', unpackDir]);
+
+    for (const relativePath of [
+      'package.json',
+      'kernel.manifest.json',
+      'checksums.sha256.json',
+      'dist/kernel.mjs',
+      'dist/features.mjs',
+      'settings/default.json',
+      'fixtures/replay-input.jsonl',
+      'fixtures/expected-decisions.jsonl',
+      'fixtures/expected-traces.jsonl',
+      'scripts/replay-fixtures.js',
+      'src/kernel.js',
+    ]) {
+      expect(fs.existsSync(path.join(unpackDir, relativePath))).toBe(true);
+    }
+
+    verifyArtifactChecksums(unpackDir);
+
+    const replayOutput = execFileSync('npm', ['run', 'replay', '--silent'], {
+      cwd: unpackDir,
+      encoding: 'utf8',
+    });
+    expect(JSON.parse(replayOutput).passed).toBe(true);
+
+    const importOutput = execFileSync(process.execPath, ['-e', `
+      const fs = require('node:fs');
+      const path = require('node:path');
+      const { pathToFileURL } = require('node:url');
+      (async () => {
+        const mod = await import(pathToFileURL(path.resolve('dist/kernel.mjs')).href);
+        const settings = JSON.parse(fs.readFileSync('settings/default.json', 'utf8'));
+        const created = mod.createKernel({
+          settings,
+          mode: 'paper',
+          clock: { timezone: 'America/New_York', sessionDate: '2026-05-13' },
+        });
+        const result = mod.onEvent(created.state, {
+          eventTime: '2026-05-13T13:35:00.000Z',
+          eventType: 'SESSION_STARTED',
+          observedAt: '2026-05-13T13:35:00.000Z',
+          payload: { tradeDate: '2026-05-13' },
+          quality: { complete: true, delayed: false, stale: false },
+          sequence: 0,
+          source: 'artifact-test',
+          symbol: 'TSLL',
+        });
+        console.log(JSON.stringify({
+          kernelId: mod.describe().kernelId,
+          created: Boolean(created.state),
+          decisions: Array.isArray(result.decisions),
+          traces: Array.isArray(result.traces),
+        }));
+      })().catch((error) => {
+        console.error(error);
+        process.exit(1);
+      });
+    `], {
+      cwd: unpackDir,
+      encoding: 'utf8',
+    });
+    expect(JSON.parse(importOutput)).toEqual({
+      kernelId: 'tsll-seconds-passive-scalper.execution.v1',
+      created: true,
+      decisions: true,
+      traces: true,
+    });
   });
 
   it('keeps metadata execution summaries in sync with manifest definitions', async () => {

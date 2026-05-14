@@ -1,16 +1,11 @@
 const crypto = require('node:crypto');
-const fs = require('node:fs');
-const path = require('node:path');
 const express = require('express');
 
 const { createDefaultRegistry } = require('./default-registry');
 const { filterByRange, lastOrNull, normalizeDate, parseLimit } = require('./range');
 const { snapshotResponse } = require('./portfolio');
 const { getExecutionManifest, listExecutionManifests } = require('./strategies/execution');
-
-const REPO_ROOT = path.resolve(__dirname, '..', '..', '..');
-const TSLL_KERNEL_ID = 'tsll-seconds-passive-scalper.execution.v1';
-const TSLL_KERNEL_ROOT = path.join(REPO_ROOT, 'packages', 'strategy-kernels', 'tsll-seconds-passive-scalper');
+const { kernelDownloadPayload, kernelManifestPayload } = require('./kernel-artifact');
 
 function asyncRoute(handler) {
   return (req, res, next) => Promise.resolve(handler(req, res, next)).catch(next);
@@ -41,30 +36,6 @@ function canonicalize(value) {
 
 function sha256Canonical(value) {
   return crypto.createHash('sha256').update(JSON.stringify(canonicalize(value))).digest('hex');
-}
-
-function readKernelJson(fileName) {
-  return JSON.parse(fs.readFileSync(path.join(TSLL_KERNEL_ROOT, fileName), 'utf8'));
-}
-
-function kernelManifestPayload(kernelId) {
-  if (kernelId !== TSLL_KERNEL_ID) {
-    const error = new Error(`kernel_not_found:${kernelId}`);
-    error.statusCode = 404;
-    error.code = 'kernel_not_found';
-    throw error;
-  }
-  const manifest = readKernelJson('kernel.manifest.json');
-  const checksums = readKernelJson('checksums.sha256.json');
-  return {
-    manifest,
-    checksums,
-    artifact: {
-      id: kernelId,
-      sha256: sha256Canonical(checksums),
-      files: Object.keys(checksums.files || {}).sort(),
-    },
-  };
 }
 
 function reportPathHints(report) {
@@ -433,6 +404,7 @@ function createApp(options = {}) {
         'GET /api/execution-manifests',
         'GET /api/execution-manifests/:strategyId',
         'GET /api/kernels/:kernelId/manifest',
+        'GET /api/kernels/:kernelId/download',
         'GET /api/portfolio-targets/pym-v5/latest',
         'GET /api/strategies/:strategyId',
         'GET /api/strategies/:strategyId/chart?start=YYYY-MM-DD&end=YYYY-MM-DD',
@@ -468,6 +440,21 @@ function createApp(options = {}) {
 
   app.get('/api/kernels/:kernelId/manifest', asyncRoute(async (req, res) => {
     res.status(200).json({ data: kernelManifestPayload(req.params.kernelId) });
+  }));
+
+  app.get('/api/kernels/:kernelId/download', asyncRoute(async (req, res) => {
+    const artifact = kernelDownloadPayload(req.params.kernelId);
+    res.status(200)
+      .set({
+        'Cache-Control': 'public, max-age=300',
+        'Content-Disposition': `attachment; filename="${artifact.filename}"`,
+        'Content-Length': String(artifact.buffer.length),
+        'Content-Type': artifact.mediaType,
+        ETag: `"sha256-${artifact.artifactSha256}"`,
+        'X-Artifact-Sha256': artifact.artifactSha256,
+        'X-Checksums-Sha256': artifact.checksumsSha256,
+      })
+      .send(artifact.buffer);
   }));
 
   app.get('/api/portfolio-targets/:strategyId/latest', asyncRoute(async (req, res) => {

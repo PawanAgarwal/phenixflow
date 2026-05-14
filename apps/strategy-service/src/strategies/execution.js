@@ -1,10 +1,14 @@
 const crypto = require('node:crypto');
+const {
+  getTsllKernelArtifactMetadata,
+} = require('../kernel-artifact');
 
 const MANIFEST_VERSION = 'execution-manifest.v1';
 const MARKET_TIMEZONE = 'America/New_York';
 const REGULAR_SESSION = 'REGULAR';
 const TSLL_KERNEL_MANIFEST = require('../../../../packages/strategy-kernels/tsll-seconds-passive-scalper/kernel.manifest.json');
 const TSLL_KERNEL_CHECKSUMS = require('../../../../packages/strategy-kernels/tsll-seconds-passive-scalper/checksums.sha256.json');
+const TSLL_KERNEL_ARTIFACT = getTsllKernelArtifactMetadata();
 
 const STATUSES = Object.freeze(['research_only', 'paper_enabled', 'live_enabled']);
 const ACTIONABLE_STATUSES = Object.freeze(['paper_enabled', 'live_enabled']);
@@ -41,7 +45,7 @@ function sha256Canonical(value) {
   return crypto.createHash('sha256').update(JSON.stringify(canonicalize(value))).digest('hex');
 }
 
-const TSLL_KERNEL_BUNDLE_SHA256 = sha256Canonical(TSLL_KERNEL_CHECKSUMS);
+const TSLL_KERNEL_CHECKSUMS_SHA256 = sha256Canonical(TSLL_KERNEL_CHECKSUMS);
 
 const PYM_V5_SYMBOLS = Object.freeze([
   'AGG', 'BIL', 'BND', 'BSV', 'CURE', 'EDC', 'EDV', 'EDZ', 'EEM', 'GLD',
@@ -145,7 +149,10 @@ const MANIFEST_DEFINITIONS = Object.freeze({
       }),
       sidecarApi: 'phenixflow.kernel.sidecar.v1',
       artifactUri: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest',
-      artifactSha256: TSLL_KERNEL_BUNDLE_SHA256,
+      downloadUri: TSLL_KERNEL_ARTIFACT.downloadUri,
+      artifactSha256: TSLL_KERNEL_ARTIFACT.artifactSha256,
+      downloadSha256: TSLL_KERNEL_ARTIFACT.downloadSha256,
+      checksumsSha256: TSLL_KERNEL_CHECKSUMS_SHA256,
       settingsSha256: TSLL_KERNEL_MANIFEST.settings.sha256,
       fixtureSuiteSha256: TSLL_KERNEL_MANIFEST.fixtures.suiteSha256,
     }),
@@ -190,7 +197,9 @@ const MANIFEST_DEFINITIONS = Object.freeze({
         strategyVersion: TSLL_KERNEL_MANIFEST.strategy.version,
         settingsSha256: TSLL_KERNEL_MANIFEST.settings.sha256,
         fixtureSuiteSha256: TSLL_KERNEL_MANIFEST.fixtures.suiteSha256,
-        artifactSha256: TSLL_KERNEL_BUNDLE_SHA256,
+        artifactSha256: TSLL_KERNEL_ARTIFACT.artifactSha256,
+        downloadSha256: TSLL_KERNEL_ARTIFACT.downloadSha256,
+        checksumsSha256: TSLL_KERNEL_CHECKSUMS_SHA256,
       }),
     }),
   }),

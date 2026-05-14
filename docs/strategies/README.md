@@ -111,6 +111,19 @@ theoretical performance references, and provenance. PhenixFlow remains the
 research/provenance source of truth; broker execution belongs to an external
 runtime that consumes the manifest contract.
 
+For `tsll-seconds-passive-scalper`, the manifest also advertises a `kernel`
+handoff with a runnable Node artifact:
+
+```http
+GET /api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest
+GET /api/kernels/tsll-seconds-passive-scalper.execution.v1/download
+```
+
+Automation should verify the downloaded ZIP against `kernel.artifactSha256`,
+unpack it outside the PhenixFlow checkout, verify `checksums.sha256.json`, run
+the fixture replay, and then import `dist/kernel.mjs` for `describe()`,
+`createKernel()`, and `onEvent()` execution.
+
 Only `pym-v5` and `tsll-seconds-passive-scalper` are authorized for production
 promotion today. All other strategies must advertise `status: "research_only"`
 and `promotion.authorized = false` until explicitly promoted.

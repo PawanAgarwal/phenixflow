@@ -84,6 +84,21 @@ authorized for production promotion and may use `paper_enabled` or
 `live_enabled`; all other strategy metadata remains explicitly
 `research_only` with `promotion.authorized = false`.
 
+The TSLL seconds scalper also exposes a downloadable executable kernel artifact:
+
+```http
+GET /api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest
+GET /api/kernels/tsll-seconds-passive-scalper.execution.v1/download
+```
+
+The execution manifest `kernel` object keeps `artifactUri` pointed at the
+manifest/checksum endpoint and adds `downloadUri`, `artifactSha256`,
+`downloadSha256`, `checksumsSha256`, `settingsSha256`, `fixtureSuiteSha256`,
+`runtime`, and `sidecarApi`. External automation should download the ZIP,
+verify the package SHA against `artifactSha256`, unpack it in a clean directory,
+verify `checksums.sha256.json`, run `npm run replay`, and then import
+`dist/kernel.mjs`.
+
 Strategy metadata and summary:
 
 ```http

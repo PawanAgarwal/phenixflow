@@ -20,6 +20,20 @@ Promoted baseline:
 The complete executable default settings are pinned in `settings/default.json`.
 Artifact builds and fixture replay use that file as the only default.
 
+Strategy service handoff:
+
+```http
+GET /api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest
+GET /api/kernels/tsll-seconds-passive-scalper.execution.v1/download
+```
+
+The download endpoint returns a self-contained ZIP with `package.json`,
+`kernel.manifest.json`, `checksums.sha256.json`, `dist/kernel.mjs`,
+`dist/features.mjs`, `settings/default.json`, replay fixtures, schemas, replay
+script, and runtime source files. A trading runtime can unpack it in a clean
+directory, verify the package SHA and internal checksums, run `npm run replay`,
+then import `dist/kernel.mjs`.
+
 Useful commands:
 
 ```bash
