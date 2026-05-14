@@ -1,7 +1,12 @@
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 const request = require('supertest');
 
 const { createApp } = require('../src/app');
 const { createDefaultRegistry } = require('../src/default-registry');
+const { ensureStrategyResultContract } = require('../src/strategy-contract');
+const { openStrategyResultStore, persistStrategyReport } = require('../src/result-store');
 const {
   ACTIONABLE_STATUSES,
   executionSummaryFromManifest,
@@ -247,6 +252,39 @@ describe('strategy-service API', () => {
     expect(response.body.data.snapshot.date).toBe('2026-05-07');
     expect(response.body.data.changeFromPrevious.added[0]).toEqual(expect.objectContaining({ ticker: 'BBB' }));
     expect(response.body.data.changeFromPrevious.removed[0]).toEqual(expect.objectContaining({ ticker: 'AAA' }));
+  });
+
+  it('emits and stores explicit daily result contracts without equity-series derivation', () => {
+    const strategy = fakeStrategy();
+    const metadata = strategy.getMetadata();
+    const report = ensureStrategyResultContract(strategy.getReport(), metadata);
+    expect(report.latestDailyResult).toEqual(expect.objectContaining({
+      strategyId: 'fake-strategy',
+      date: '2026-05-07',
+      signalDate: '2026-05-06',
+      basis: 'eod_prior_holdings_next_close',
+      netReturnPct: 10,
+      startEquity: 100,
+      endEquity: 110,
+    }));
+
+    const dbPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'strategy-results-')), 'results.sqlite');
+    const db = openStrategyResultStore(dbPath);
+    const persisted = persistStrategyReport(db, { metadata, report, importedAt: '2026-05-08T00:02:00.000Z' });
+    expect(persisted).toEqual(expect.objectContaining({
+      strategyId: 'fake-strategy',
+      dailyResultCount: 1,
+      holdingCount: 2,
+      tradeCount: 0,
+    }));
+    expect(db.prepare('select net_return_pct, basis from strategy_daily_results where strategy_id=? and date=?')
+      .get('fake-strategy', '2026-05-07')).toEqual({
+      net_return_pct: 10,
+      basis: 'eod_prior_holdings_next_close',
+    });
+    expect(db.prepare('select count(*) as count from strategy_holdings where strategy_id=?').get('fake-strategy').count)
+      .toBe(2);
+    db.close();
   });
 
   it('serves execution manifest list and details for promoted strategies', async () => {

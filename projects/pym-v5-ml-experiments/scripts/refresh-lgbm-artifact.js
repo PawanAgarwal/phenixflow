@@ -59,6 +59,7 @@ function usage() {
 
 function run(label, command, args) {
   console.log(JSON.stringify({ step: label, command, args }));
+  const startedAt = Date.now();
   const result = spawnSync(command, args, {
     cwd: REPO_ROOT,
     env: process.env,
@@ -66,6 +67,23 @@ function run(label, command, args) {
     shell: false,
   });
   if (result.status !== 0) throw new Error(`step_failed:${label}:exit_${result.status}`);
+  console.log(JSON.stringify({ step: label, status: 'ok', elapsedMs: Date.now() - startedAt }));
+}
+
+function latestPriorReport({ predictStart, end }) {
+  const dir = path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'artifacts');
+  if (!fs.existsSync(dir)) return null;
+  const prefix = `pym-v5-daily-walkforward-lgbm-tiny-grid-${predictStart}-`;
+  return fs.readdirSync(dir)
+    .map((name) => {
+      if (!name.startsWith(prefix) || !name.endsWith('.json')) return null;
+      const reportEnd = name.slice(prefix.length, -'.json'.length);
+      if (reportEnd >= end) return null;
+      return { name, end: reportEnd, path: path.join('projects', 'pym-v5-ml-experiments', 'artifacts', name) };
+    })
+    .filter(Boolean)
+    .sort((left, right) => right.end.localeCompare(left.end))
+    .at(0)?.path || null;
 }
 
 function main() {
@@ -81,6 +99,16 @@ function main() {
   const optionFeatures = `projects/pym-v5-replication/runtime/pym-v5-option-bar-features-${args.start}-${end}.jsonl`;
   const dataset = `projects/pym-v5-ml-experiments/artifacts/pym-v5-walkforward-dataset-${args.start}-${end}.jsonl`;
   const lgbmReport = `projects/pym-v5-ml-experiments/artifacts/pym-v5-daily-walkforward-lgbm-tiny-grid-${args.predictStart}-${end}.json`;
+
+  if (!args.force && fs.existsSync(path.join(REPO_ROOT, lgbmReport))) {
+    console.log(JSON.stringify({
+      status: 'current',
+      end,
+      artifacts: { dataset, lgbmReport },
+      reason: 'existing_lgbm_report_covers_resolved_end_date',
+    }, null, 2));
+    return;
+  }
 
   if (!args.skipInputRefresh) {
     const refreshArgs = [
@@ -104,7 +132,8 @@ function main() {
     '--out', dataset,
   ]);
 
-  run('lgbm_walkforward', process.env.PYM_V5_ML_PYTHON || DEFAULT_PYTHON, [
+  const appendFrom = args.force ? null : latestPriorReport({ predictStart: args.predictStart, end });
+  const walkforwardArgs = [
     'projects/pym-v5-ml-experiments/python/run_daily_walkforward.py',
     '--dataset', dataset,
     '--out', lgbmReport,
@@ -113,11 +142,14 @@ function main() {
     '--lgbm-only',
     '--strategies', args.strategy,
     '--progress', '50',
-  ]);
+  ];
+  if (appendFrom) walkforwardArgs.push('--append-from', appendFrom);
+  run('lgbm_walkforward', process.env.PYM_V5_ML_PYTHON || DEFAULT_PYTHON, walkforwardArgs);
 
   console.log(JSON.stringify({
     status: 'ok',
     end,
+    appendFrom,
     artifacts: {
       dataset,
       lgbmReport,

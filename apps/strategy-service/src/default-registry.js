@@ -1,4 +1,5 @@
 const { StrategyRegistry } = require('./registry');
+const { withStrategyResultContract } = require('./strategy-contract');
 const { createPymV5Strategy } = require('./strategies/pym-v5');
 const {
   createPymV5OptionRankStrategy,
@@ -57,7 +58,7 @@ function createDefaultRegistry(options = {}) {
     createCompositePortfolioStrategy({ variantId: 'fear-basket-vvix-occ3x-vix3xon-3x', ...(options.fearBasketVvixOcc3xVix3xOn || {}) }),
     createCompositePortfolioStrategy({ variantId: 'fear-basket-vvix-vix3xon-3x', ...(options.fearBasketVvixVix3xOn || {}) }),
     createCompositePortfolioStrategy({ variantId: 'gap-fade-vix3xon-hedge-3x', ...(options.gapFadeVix3xOnHedge || {}) }),
-  ]);
+  ].map(withStrategyResultContract));
 }
 
 module.exports = {

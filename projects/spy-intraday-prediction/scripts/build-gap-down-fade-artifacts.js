@@ -8,9 +8,10 @@
 const path = require('node:path');
 const fs = require('node:fs');
 
+const { loadConfig, resolveEndDate } = require('../src/config');
 const {
   loadDailyBars, stockTradingDaysInRange, executeTrade,
-  SENSITIVITY_WINDOWS, PROJECT_ROOT,
+  PROJECT_ROOT,
 } = require('../src/research-utils');
 
 const INITIAL_CAPITAL = 10_000;
@@ -46,6 +47,16 @@ function annualizedSharpe(dailyReturns) {
   const sd = Math.sqrt(dailyReturns.reduce((a, x) => a + ((x - m) ** 2), 0) / dailyReturns.length);
   if (sd === 0) return 0;
   return (m / sd) * Math.sqrt(252);
+}
+
+function parseArgs(argv = process.argv.slice(2)) {
+  const out = {};
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === '--start') out.startDate = argv[++i];
+    else if (arg === '--end') out.endDate = argv[++i];
+  }
+  return out;
 }
 
 async function runBacktest(startDate, endDate) {
@@ -164,8 +175,10 @@ async function buildReport({ trades, openPositions, days, spyByDay }) {
 }
 
 async function main() {
-  const startDate = '2025-01-02';
-  const endDate = SENSITIVITY_WINDOWS.full.endDate;
+  const args = parseArgs();
+  const config = loadConfig();
+  const startDate = args.startDate || '2025-01-02';
+  const endDate = resolveEndDate(config, args.endDate || 'auto');
   process.stdout.write(`Building ${VARIANT.id} (${startDate} → ${endDate})...\n`);
   const { trades, openPositions } = await runBacktest(startDate, endDate);
   const days = stockTradingDaysInRange(startDate, endDate);

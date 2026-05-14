@@ -245,6 +245,33 @@ Poll progress of all in-flight or last-completed refreshes:
 GET /api/refresh-status
 ```
 
+## Daily Fast Refresh
+
+Use the fast refresh command for the normal after-EOD daily strategy run:
+
+```bash
+npm run strategy-service:refresh-daily-fast
+```
+
+This is the default operational path for daily updates. It is not a full
+historical backtest; it refreshes only missing Massive-derived inputs, appends
+ML and TSLL days from prior same-code artifacts when possible, rebuilds the
+registered strategy snapshot, and persists normalized daily P/L, holdings, and
+intraday trades to SQLite for later analysis.
+
+Main local outputs:
+
+- `artifacts/strategy-service/strategy-service-refresh-YYYY-MM-DD.json`
+- `artifacts/strategy-service/strategy-service-refresh-YYYY-MM-DD.md`
+- `apps/strategy-service/runtime/strategy-results.sqlite`
+- Updated project artifacts under the relevant `projects/**/artifacts` or
+  `projects/**/reports` folder.
+
+Run a full backtest or force the underlying refresh script instead when
+strategy code, costs/slippage, model settings, or historical Massive inputs
+changed. The fast path is intended to make the next EOD run quick while
+preserving the same result as a full replay for unchanged prior artifacts.
+
 ## Adding Strategies
 
 Implement an adapter with:

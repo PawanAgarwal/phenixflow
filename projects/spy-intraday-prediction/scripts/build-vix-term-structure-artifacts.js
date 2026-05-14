@@ -4,11 +4,9 @@
 const path = require('node:path');
 const fs = require('node:fs');
 
-const { PROJECT_ROOT } = require('../src/config');
+const { PROJECT_ROOT, loadConfig, resolveEndDate } = require('../src/config');
+const { stockTradingDaysInRange, loadDailyBars } = require('../src/research-utils');
 const { runBacktest } = require('../src/vix-term-structure');
-const { defaultFeaturesPath } = require('../src/build-features-1m');
-const zlib = require('node:zlib');
-const readline = require('node:readline');
 
 const INITIAL_CAPITAL = 10_000;
 const ARTIFACTS_OUT_DIR = path.join(PROJECT_ROOT, 'artifacts');
@@ -44,24 +42,6 @@ const VARIANTS = [
   },
 ];
 
-async function loadFeatures(day) {
-  const p = defaultFeaturesPath(PROJECT_ROOT, 'SPY', day);
-  if (!fs.existsSync(p)) return null;
-  const stream = fs.createReadStream(p).pipe(zlib.createGunzip());
-  const rl = readline.createInterface({ input: stream, crlfDelay: Infinity });
-  const out = [];
-  for await (const line of rl) {
-    if (!line) continue;
-    out.push(JSON.parse(line));
-  }
-  return out;
-}
-
-function isWeekend(d) {
-  const x = new Date(`${d}T00:00:00.000Z`).getUTCDay();
-  return x === 0 || x === 6;
-}
-
 function maxDrawdown(equityPoints) {
   let peak = equityPoints[0]?.equity || INITIAL_CAPITAL;
   let dd = 0;
@@ -78,6 +58,16 @@ function annualizedSharpe(dailyReturns) {
   const sd = Math.sqrt(dailyReturns.reduce((a, x) => a + ((x - m) ** 2), 0) / dailyReturns.length);
   if (sd === 0) return 0;
   return (m / sd) * Math.sqrt(252);
+}
+
+function parseArgs(argv = process.argv.slice(2)) {
+  const out = {};
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === '--start') out.startDate = argv[++i];
+    else if (arg === '--end') out.endDate = argv[++i];
+  }
+  return out;
 }
 
 async function buildReport({ variant, trades, openPositions, days, spyByDay }) {
@@ -202,24 +192,18 @@ async function buildReport({ variant, trades, openPositions, days, spyByDay }) {
 }
 
 async function main() {
-  const startDate = '2025-01-02';
-  const endDate = '2026-05-11';
+  const args = parseArgs();
+  const config = loadConfig();
+  const startDate = args.startDate || '2025-01-02';
+  const endDate = resolveEndDate(config, args.endDate || 'auto');
 
-  const featuresRoot = path.join(PROJECT_ROOT, 'runtime', 'features-1m', 'SPY');
-  const allDays = fs.existsSync(featuresRoot)
-    ? fs.readdirSync(featuresRoot).filter((d) => d.startsWith('date=')).map((d) => d.slice('date='.length)).sort()
-    : [];
-  const days = allDays.filter((d) => d >= startDate && d <= endDate && !isWeekend(d));
+  const days = stockTradingDaysInRange(startDate, endDate);
   process.stdout.write(`Trading days in window: ${days.length}\n`);
 
+  const spyBars = await loadDailyBars('SPY', startDate, endDate);
   const spyByDay = new Map();
-  for (const day of days) {
-    // eslint-disable-next-line no-await-in-loop
-    const rows = await loadFeatures(day);
-    if (rows && rows.length > 0) {
-      const last = rows[rows.length - 1];
-      if (Number.isFinite(last.spy_close)) spyByDay.set(day, last.spy_close);
-    }
+  for (const [day, bar] of spyBars.entries()) {
+    if (Number.isFinite(bar.close)) spyByDay.set(day, bar.close);
   }
 
   fs.mkdirSync(ARTIFACTS_OUT_DIR, { recursive: true });

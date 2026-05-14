@@ -41,6 +41,7 @@ function appendLog(state, chunk) {
 function spawnStep(state, step) {
   return new Promise((resolve) => {
     state.refresh.currentStep = step.label;
+    const startedAt = Date.now();
     appendLog(state, `\n[step ${step.label}] starting: ${step.command} ${(step.args || []).join(' ')}`);
     const child = spawn(step.command, step.args || [], {
       cwd: step.cwd || REPO_ROOT,
@@ -54,12 +55,13 @@ function spawnStep(state, step) {
       resolve(1);
     });
     child.on('close', (code) => {
+      const elapsedMs = Date.now() - startedAt;
       if (code === 0) {
         state.refresh.completedSteps.push(step.label);
-        appendLog(state, `[step ${step.label}] OK`);
+        appendLog(state, `[step ${step.label}] OK elapsedMs=${elapsedMs}`);
       } else {
         state.refresh.error = state.refresh.error || `${step.label}: exit ${code}`;
-        appendLog(state, `[step ${step.label}] FAILED exit=${code}`);
+        appendLog(state, `[step ${step.label}] FAILED exit=${code} elapsedMs=${elapsedMs}`);
       }
       resolve(code);
     });

@@ -227,12 +227,13 @@ async function loadVixTermZSeries(startDate, endDate, lookback = 20) {
   return out;
 }
 
-let vixWidePromise = null;
-async function loadVixTermZSeriesWide(lookback = 20) {
-  if (!vixWidePromise) {
-    vixWidePromise = loadVixTermZSeries('2024-11-01', SENSITIVITY_WINDOWS.full.endDate, lookback);
+const vixWidePromises = new Map();
+async function loadVixTermZSeriesWide(lookback = 20, endDate = SENSITIVITY_WINDOWS.full.endDate) {
+  const cacheKey = `${lookback}|${endDate}`;
+  if (!vixWidePromises.has(cacheKey)) {
+    vixWidePromises.set(cacheKey, loadVixTermZSeries('2024-11-01', endDate, lookback));
   }
-  return vixWidePromise;
+  return vixWidePromises.get(cacheKey);
 }
 
 function filterMapByRange(map, startDate, endDate) {

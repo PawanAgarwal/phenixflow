@@ -76,9 +76,33 @@ function holding(equity) {
 function buildReportFromTsllArtifact({ metadata, reportPath, initialCapital }) {
   const artifact = readJson(reportPath);
   const seedCapital = finite(initialCapital, finite(artifact.totals?.avgEntry) * 1000 || 10000);
+  const shareBlock = 1000;
   let equity = seedCapital;
   const snapshots = [];
   const equitySeries = [];
+  const trades = (artifact.trades || []).map((trade) => ({
+    date: trade.tradeDate,
+    signalDate: trade.tradeDate,
+    entryDate: trade.tradeDate,
+    exitDate: trade.tradeDate,
+    signalTsUtc: trade.signalTsUtc || null,
+    entryTsUtc: trade.entryTsUtc || null,
+    exitTsUtc: trade.exitTsUtc || null,
+    side: 'LONG',
+    ticker: artifact.symbol || 'TSLL',
+    entryPrice: finite(trade.entryPrice, null),
+    exitPrice: finite(trade.exitPrice, null),
+    grossReturn: finite(trade.entryPrice, 0) > 0 ? (finite(trade.grossCents) / 100) / finite(trade.entryPrice) : null,
+    grossReturnPct: finite(trade.entryPrice, 0) > 0 ? ((finite(trade.grossCents) / 100) / finite(trade.entryPrice)) * 100 : null,
+    netReturn: finite(trade.entryPrice, 0) > 0 ? (finite(trade.netCents) / 100) / finite(trade.entryPrice) : null,
+    netReturnPct: finite(trade.entryPrice, 0) > 0 ? ((finite(trade.netCents) / 100) / finite(trade.entryPrice)) * 100 : null,
+    pnlDollars: (finite(trade.netCents) / 100) * shareBlock,
+    grossCents: finite(trade.grossCents),
+    netCents: finite(trade.netCents),
+    holdBars: finite(trade.holdBars),
+    reason: trade.exitReason || null,
+    raw: trade,
+  }));
 
   (artifact.days || []).forEach((day, index, days) => {
     const startEquity = equity;
@@ -131,7 +155,7 @@ function buildReportFromTsllArtifact({ metadata, reportPath, initialCapital }) {
       ...artifact.strategy?.settings,
       explicitCostCentsPerSide: artifact.assumptions?.explicitCostCentsPerSide ?? 0,
       initialCapital: seedCapital,
-      shareBlock: 1000,
+      shareBlock,
     },
     summary: {
       latestRebalanceDate: snapshots.at(-1)?.date || null,
@@ -156,6 +180,7 @@ function buildReportFromTsllArtifact({ metadata, reportPath, initialCapital }) {
     latest: snapshots.at(-1) || null,
     snapshots,
     equitySeries,
+    trades,
     skippedDays: [],
     metadata,
   };

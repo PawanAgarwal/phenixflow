@@ -45,6 +45,12 @@ artifacts/reports/sigscore-swing-calibration-smoke.json
 artifacts/reports/sqlite-clickhouse-*
 artifacts/reports/theta-concurrency-benchmark-*.json
 
+# Local strategy-service daily refresh snapshots
+artifacts/strategy-service/
+
+# Local rolling TSLL full-trade reports; regenerate from Massive/runtime inputs.
+projects/tsll-scalping/reports/tsll-seconds-passive-fixed-2025-01-02-2026-*.json
+
 # Local generated datasets
 artifacts/thetadata/
 artifacts/podcast_claims/

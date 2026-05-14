@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import copy
 import datetime as dt
 import json
 import math
@@ -652,7 +653,34 @@ def recent_strategy_score(points, lookback):
     return total + 0.5 * drawdown
 
 
-def run_walkforward(metadata, samples, args):
+def load_append_report(path):
+    if not path:
+        return None
+    with open(path, "r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def state_from_prior(prior_report, strategy_id, initial_capital):
+    curve = copy.deepcopy(prior_report.get("strategies", {}).get(strategy_id, {}).get("equityCurve", []))
+    last = curve[-1] if curve else None
+    return {
+        "equity": finite(last.get("equity"), initial_capital) if last else initial_capital,
+        "previousWeights": dict(last.get("holdings", {})) if last else {},
+        "equityCurve": curve,
+    }
+
+
+def last_processed_signal_date(prior_report):
+    dates = []
+    for report in prior_report.get("strategies", {}).values():
+        for point in report.get("equityCurve", []):
+            signal_date = point.get("signalDate")
+            if signal_date:
+                dates.append(signal_date)
+    return max(dates) if dates else None
+
+
+def run_walkforward(metadata, samples, args, prior_report=None):
     output_tickers = metadata["outputTickers"]
     safe_ticker = metadata["safeTicker"]
     include_options = "options" in metadata.get("featureNames", {})
@@ -664,21 +692,39 @@ def run_walkforward(metadata, samples, args):
         all_specs = make_strategy_specs(include_options)
     selected_ids = set(args.strategies.split(",")) if args.strategies else None
     specs = [spec for spec in all_specs if selected_ids is None or spec["id"] in selected_ids]
-    prediction_samples = [sample for sample in samples if sample["date"] >= args.predict_start and (not args.predict_end or sample["date"] <= args.predict_end)]
-    if not prediction_samples:
+    all_prediction_samples = [sample for sample in samples if sample["date"] >= args.predict_start and (not args.predict_end or sample["date"] <= args.predict_end)]
+    if not all_prediction_samples:
         raise ValueError("no prediction samples in requested window")
 
-    states = {spec["id"]: {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []} for spec in specs}
-    states["pym_v5_base"] = {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []}
-    states["daily_best_recent_21"] = {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []}
-    states["daily_best_recent_63"] = {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []}
-    chooser_history = {"daily_best_recent_21": [], "daily_best_recent_63": []}
+    if prior_report:
+        prior_ids = set(prior_report.get("strategies", {}).keys())
+        required_ids = {spec["id"] for spec in specs} | {"pym_v5_base", "daily_best_recent_21", "daily_best_recent_63"}
+        missing_ids = sorted(required_ids - prior_ids)
+        if missing_ids:
+            raise ValueError(f"append report missing strategies: {','.join(missing_ids)}")
+        states = {spec["id"]: state_from_prior(prior_report, spec["id"], args.initial_capital) for spec in specs}
+        states["pym_v5_base"] = state_from_prior(prior_report, "pym_v5_base", args.initial_capital)
+        states["daily_best_recent_21"] = state_from_prior(prior_report, "daily_best_recent_21", args.initial_capital)
+        states["daily_best_recent_63"] = state_from_prior(prior_report, "daily_best_recent_63", args.initial_capital)
+        chooser_history = {
+            "daily_best_recent_21": copy.deepcopy(prior_report.get("strategies", {}).get("daily_best_recent_21", {}).get("selections", [])),
+            "daily_best_recent_63": copy.deepcopy(prior_report.get("strategies", {}).get("daily_best_recent_63", {}).get("selections", [])),
+        }
+        append_after = last_processed_signal_date(prior_report)
+        prediction_samples = [sample for sample in all_prediction_samples if not append_after or sample["date"] > append_after]
+    else:
+        states = {spec["id"]: {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []} for spec in specs}
+        states["pym_v5_base"] = {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []}
+        states["daily_best_recent_21"] = {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []}
+        states["daily_best_recent_63"] = {"equity": args.initial_capital, "previousWeights": {}, "equityCurve": []}
+        chooser_history = {"daily_best_recent_21": [], "daily_best_recent_63": []}
+        prediction_samples = all_prediction_samples
 
     by_date = {sample["date"]: sample for sample in samples}
     training_start = args.train_start
-    first_signal_date = prediction_samples[0]["date"]
-    last_signal_date = prediction_samples[-1]["date"]
-    skipped = []
+    first_signal_date = all_prediction_samples[0]["date"]
+    last_signal_date = all_prediction_samples[-1]["date"]
+    skipped = list(prior_report.get("data", {}).get("skippedSignals", [])) if prior_report else []
 
     for current_index, sample in enumerate(prediction_samples, start=1):
         train_samples = [row for row in samples if training_start <= row["date"] < sample["date"]]
@@ -753,6 +799,8 @@ def run_walkforward(metadata, samples, args):
             "costBps": args.cost_bps,
             "timing": "train_on_prior_labeled_days_signal_eod_close_then_next_close",
             "note": "Each ML strategy is refit daily using only samples with signal dates before the current signal date.",
+            "appendFrom": args.append_from,
+            "appendedSignals": len(prediction_samples),
         },
         "data": {
             "samples": len(samples),
@@ -781,6 +829,7 @@ def parse_args():
     parser.add_argument("--strategies", default=None)
     parser.add_argument("--progress", type=int, default=25)
     parser.add_argument("--generated-at", default=None)
+    parser.add_argument("--append-from", default=None, help="Append only signals after the latest signal in an existing report.")
     parser.add_argument("--with-lgbm", action="store_true", help="Append LightGBM strategy variants to the default Ridge specs.")
     parser.add_argument("--lgbm-only", action="store_true", help="Run only LightGBM strategy variants.")
     return parser.parse_args()
@@ -790,7 +839,8 @@ def main():
     args = parse_args()
     args.generated_at = args.generated_at or dt.datetime.now(dt.UTC).isoformat()
     metadata, samples = load_dataset(args.dataset)
-    report = run_walkforward(metadata, samples, args)
+    prior_report = load_append_report(args.append_from)
+    report = run_walkforward(metadata, samples, args, prior_report=prior_report)
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, indent=2), encoding="utf-8")

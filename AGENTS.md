@@ -57,6 +57,12 @@ Expected Massive datasets:
 
 ## Massive Download Rules
 - Prefer existing local Massive caches over network downloads.
+- For daily strategy-service refreshes after EOD, use
+  `npm run strategy-service:refresh-daily-fast` as the default path. It reuses
+  prior same-code artifacts, appends missing ML/TSLL days where possible, writes
+  the normalized strategy result contract to SQLite, and should avoid a full
+  historical replay unless strategy logic, costs/slippage, or historical inputs
+  changed.
 - Before refreshing strategy-service EOD inputs, run/trigger the coverage-aware
   `projects/pym-v5-replication/scripts/refresh-eod-inputs.js` path. It skips already-current EOD
   bars, appends only missing option-feature days, and rebuilds stress only when its artifact is

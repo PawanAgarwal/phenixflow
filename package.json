@@ -55,6 +55,8 @@
     "tsll-scalping:seconds-mm": "node projects/tsll-scalping/scripts/run-second-passive-mm.js",
     "tsll-scalping:export-seconds-report": "node projects/tsll-scalping/scripts/export-second-passive-report.js",
     "strategy-service:start": "node apps/strategy-service/server.js",
+    "strategy-service:refresh-daily-fast": "node apps/strategy-service/scripts/refresh-daily-fast.js",
+    "strategy-service:profile": "node apps/strategy-service/scripts/profile-strategies.js",
     "pym-v5:fetch-sources": "node projects/pym-v5-replication/scripts/fetch-sources.js",
     "pym-v5:coverage": "node projects/pym-v5-replication/scripts/check-coverage.js",
     "pym-v5:build-daily": "node projects/pym-v5-replication/scripts/build-daily-bars.js",

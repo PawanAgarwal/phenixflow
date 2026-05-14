@@ -128,6 +128,7 @@ function exportReport({ sourcePath, outputPath }) {
     },
     totals: summarize(days, best.trades),
     days,
+    trades: best.trades,
   };
   ensureDir(path.dirname(outputPath));
   fs.writeFileSync(outputPath, `${JSON.stringify(payload, null, 2)}\n`);
