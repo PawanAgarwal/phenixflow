@@ -67,6 +67,10 @@ The Docker setup for the strategy service is:
 The container mounts local runtime and artifact folders rather than committing
 large market data or generated reports into git.
 
+## Daily Refresh Reports
+
+- [2026-05-13 strategy refresh results](daily-refresh-2026-05-13.md)
+
 ## Shared Timing Convention
 
 Every strategy-service `getMetadata()` response includes an `execution` object
