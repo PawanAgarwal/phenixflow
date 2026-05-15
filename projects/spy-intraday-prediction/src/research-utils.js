@@ -287,14 +287,32 @@ async function loadPymBiasByDay() {
 
 // --------------------------- Daily bars (multi-ticker) -------------------
 
-const PYM_DAILY_BARS_PATH = '/Users/pawanagarwal/github/phenixflow/projects/pym-v5-replication/runtime/pym-v5-massive-eod-adjusted-daily-bars-2024-01-01-2026-05-11.jsonl';
+function findLatestPymDailyBarsPath() {
+  if (process.env.PYM_V5_DAILY_BARS_PATH && fs.existsSync(process.env.PYM_V5_DAILY_BARS_PATH)) {
+    return process.env.PYM_V5_DAILY_BARS_PATH;
+  }
+  const runtimeDir = path.resolve(__dirname, '..', '..', 'pym-v5-replication', 'runtime');
+  if (!fs.existsSync(runtimeDir)) return null;
+  return fs.readdirSync(runtimeDir)
+    .map((name) => {
+      const match = name.match(/^pym-v5-massive-eod-adjusted-daily-bars-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.jsonl$/);
+      if (!match) return null;
+      return { endDate: match[2], filePath: path.join(runtimeDir, name) };
+    })
+    .filter(Boolean)
+    .sort((left, right) => right.endDate.localeCompare(left.endDate))
+    .at(0)?.filePath || null;
+}
+
+let loadedDailyBarsPath = null;
 
 let dailyBarsAll = null; // Map<ticker, Map<date, {open, high, low, close, volume}>>
 async function loadAllDailyBars() {
-  if (dailyBarsAll) return dailyBarsAll;
-  if (!fs.existsSync(PYM_DAILY_BARS_PATH)) { dailyBarsAll = new Map(); return dailyBarsAll; }
+  const barsPath = findLatestPymDailyBarsPath();
+  if (dailyBarsAll && loadedDailyBarsPath === barsPath) return dailyBarsAll;
+  if (!barsPath || !fs.existsSync(barsPath)) { dailyBarsAll = new Map(); loadedDailyBarsPath = barsPath; return dailyBarsAll; }
   const map = new Map();
-  const reader = readline.createInterface({ input: fs.createReadStream(PYM_DAILY_BARS_PATH), crlfDelay: Infinity });
+  const reader = readline.createInterface({ input: fs.createReadStream(barsPath), crlfDelay: Infinity });
   for await (const line of reader) {
     if (!line) continue;
     let obj;
@@ -305,6 +323,7 @@ async function loadAllDailyBars() {
     map.get(t).set(d, { open: obj.open, high: obj.high, low: obj.low, close: obj.close, volume: obj.volume });
   }
   dailyBarsAll = map;
+  loadedDailyBarsPath = barsPath;
   return map;
 }
 

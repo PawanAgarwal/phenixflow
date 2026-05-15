@@ -270,9 +270,9 @@ npm run strategy-service:refresh-daily-fast
 
 This is the default operational path for daily updates. It is not a full
 historical backtest; it refreshes only missing Massive-derived inputs, appends
-ML and TSLL days from prior same-code artifacts when possible, rebuilds the
-registered strategy snapshot, and persists normalized daily P/L, holdings, and
-intraday trades to SQLite for later analysis.
+ML, TSLL, and wheel days from prior same-code artifacts when checkpoints are
+available, rebuilds the registered strategy snapshot, and persists normalized
+daily P/L, holdings, and intraday trades to SQLite for later analysis.
 
 Main local outputs:
 
@@ -285,7 +285,10 @@ Main local outputs:
 Run a full backtest or force the underlying refresh script instead when
 strategy code, costs/slippage, model settings, or historical Massive inputs
 changed. The fast path is intended to make the next EOD run quick while
-preserving the same result as a full replay for unchanged prior artifacts.
+preserving the same result as a full replay for unchanged prior artifacts. The
+wheel artifact stores `wheel-backtest-checkpoint.v1`; the fast path passes
+`--no-full-rebuild` so a missing checkpoint is reported instead of accidentally
+launching the slow replay.
 
 ## Adding Strategies
 

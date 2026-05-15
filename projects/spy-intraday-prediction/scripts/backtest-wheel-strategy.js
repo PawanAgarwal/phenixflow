@@ -179,6 +179,7 @@ async function main() {
     strategyConfigs,
     initialCapital,
     execution,
+    resumeFromReport: args['resume-from'] ? readJson(path.resolve(args['resume-from'])) : null,
     onProgress: progress
       ? ({ dayIso, processedDays, totalDays, elapsedMs }) => {
         console.error(`[wheel] ${processedDays}/${totalDays} ${dayIso} ${elapsedMs}ms`);

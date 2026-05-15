@@ -169,7 +169,123 @@ function changesFrom(previous, latest) {
       latestWeightPct: round(afterWeight * 100, 2),
       changePct: round((afterWeight - beforeWeight) * 100, 2),
     };
-  }).filter((change) => change.changePct !== 0);
+  }).filter((change) => Math.abs(change.changePct || 0) >= 0.01);
+}
+
+function isoDate(value) {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
+}
+
+function dateToMs(value) {
+  const iso = isoDate(value);
+  return iso ? Date.parse(`${iso}T00:00:00Z`) : NaN;
+}
+
+function minusDaysIso(value, days) {
+  const ms = dateToMs(value);
+  if (!Number.isFinite(ms)) return null;
+  const date = new Date(ms);
+  date.setUTCDate(date.getUTCDate() - days);
+  return date.toISOString().slice(0, 10);
+}
+
+function minusMonthsIso(value, months) {
+  const ms = dateToMs(value);
+  if (!Number.isFinite(ms)) return null;
+  const date = new Date(ms);
+  date.setUTCMonth(date.getUTCMonth() - months);
+  return date.toISOString().slice(0, 10);
+}
+
+function snapshotDate(snapshot) {
+  return snapshot?.date || snapshot?.rebalanceDate || snapshot?.signalDate || null;
+}
+
+function findSnapshotByDate(snapshots, date) {
+  if (!date) return null;
+  return snapshots.find((snapshot) => snapshotDate(snapshot) === date) || null;
+}
+
+function findPreviousSnapshot(snapshots, date) {
+  if (!date) return null;
+  return [...snapshots]
+    .filter((snapshot) => snapshotDate(snapshot) && snapshotDate(snapshot) < date)
+    .sort((left, right) => snapshotDate(right).localeCompare(snapshotDate(left)))
+    .at(0) || null;
+}
+
+function holdingsForSnapshot(snapshot, fallbackEquity) {
+  return holdingsFrom(snapshot, finite(snapshot?.equityBeforeNextSession) ?? fallbackEquity);
+}
+
+function dailyNetReturn(daily) {
+  if (Number.isFinite(daily?.netReturn)) return daily.netReturn;
+  if (Number.isFinite(daily?.netReturnPct)) return daily.netReturnPct / 100;
+  return null;
+}
+
+function dailyResultsThrough(report, asOf) {
+  const byDate = new Map();
+  (Array.isArray(report?.dailyResults) ? report.dailyResults : []).forEach((daily) => {
+    if (!daily?.date) return;
+    if (asOf && daily.date > asOf) return;
+    byDate.set(daily.date, daily);
+  });
+  return [...byDate.values()].sort((left, right) => left.date.localeCompare(right.date));
+}
+
+function performanceForWindow(dailyResults, startAfterDate = null) {
+  const rows = dailyResults.filter((daily) => !startAfterDate || daily.date > startAfterDate);
+  const returns = rows.map(dailyNetReturn).filter(Number.isFinite);
+  if (!returns.length) return {
+    tradingDays: 0,
+    returnPct: null,
+    sharpe: null,
+  };
+  const totalReturn = returns.reduce((acc, value) => acc * (1 + value), 1) - 1;
+  const mean = returns.reduce((acc, value) => acc + value, 0) / returns.length;
+  const variance = returns.length > 1
+    ? returns.reduce((acc, value) => acc + ((value - mean) ** 2), 0) / (returns.length - 1)
+    : 0;
+  const stdev = Math.sqrt(variance);
+  return {
+    tradingDays: returns.length,
+    returnPct: round(totalReturn * 100, 2),
+    sharpe: stdev > 0 ? round((mean / stdev) * Math.sqrt(252), 3) : null,
+  };
+}
+
+function trailingPerformance(dailyResults, asOf) {
+  return {
+    sinceStart: performanceForWindow(dailyResults),
+    oneYear: performanceForWindow(dailyResults, minusMonthsIso(asOf, 12)),
+    threeMonth: performanceForWindow(dailyResults, minusMonthsIso(asOf, 3)),
+    oneMonth: performanceForWindow(dailyResults, minusMonthsIso(asOf, 1)),
+    oneWeek: performanceForWindow(dailyResults, minusDaysIso(asOf, 7)),
+  };
+}
+
+function performanceText(window) {
+  if (!window || !Number.isFinite(window.returnPct)) return '';
+  const sharpe = Number.isFinite(window.sharpe) ? ` / ${window.sharpe.toFixed(2)}` : '';
+  return `${window.returnPct.toFixed(2)}%${sharpe}`;
+}
+
+function changesText(changes, limit = 6) {
+  return changes
+    .slice()
+    .sort((left, right) => Math.abs(right.changePct || 0) - Math.abs(left.changePct || 0))
+    .slice(0, limit)
+    .map((change) => `${change.ticker} ${change.changePct > 0 ? '+' : ''}${change.changePct.toFixed(2)}%`)
+    .join(', ');
+}
+
+function tradeSummaryText(trades, limit = 4) {
+  return trades.slice(-limit).map((trade) => {
+    const bits = [trade.ticker, trade.side].filter(Boolean);
+    const pnl = Number.isFinite(trade.netReturnPct) ? `${trade.netReturnPct.toFixed(2)}%` : '';
+    return [...bits, pnl].filter(Boolean).join(' ');
+  }).join('; ');
 }
 
 function pnlStatus({ dailyResult, pnl, latestTradeCount, holdings }) {
@@ -204,18 +320,27 @@ function money(value) {
     : '';
 }
 
-function buildRows(registry, { db = null, importedAt = new Date().toISOString() } = {}) {
+function buildRows(registry, { db = null, importedAt = new Date().toISOString(), asOf = null } = {}) {
   const persisted = [];
   const rows = registry.listStrategies().map((listedMetadata) => {
     const strategy = registry.getStrategy(listedMetadata.id);
     const metadata = strategy.getMetadata();
     const report = strategy.getReport();
     if (db) persisted.push(persistStrategyReport(db, { metadata, report, importedAt }));
-    const latest = latestSnapshot(report);
     const snapshots = Array.isArray(report.snapshots) ? report.snapshots : [];
-    const previousSnapshot = snapshots.length > 1 ? snapshots[snapshots.length - 2] : null;
+    const dailyResults = dailyResultsThrough(report, asOf);
+    const latestDailyResult = dailyResults.at(-1) || report.latestDailyResult || null;
+    const latestDate = latestDailyResult?.date || null;
+    const isEodMark = latestDailyResult?.basis === 'eod_prior_holdings_next_close';
+    const pnlSourceDate = isEodMark
+      ? (latestDailyResult?.targetDate || latestDailyResult?.signalDate || null)
+      : (latestDailyResult?.targetDate || latestDate);
+    const pnlSourceSnapshot = findSnapshotByDate(snapshots, pnlSourceDate);
+    const nextTargetSnapshot = findSnapshotByDate(snapshots, latestDate);
+    const previousTargetSnapshot = nextTargetSnapshot ? findPreviousSnapshot(snapshots, snapshotDate(nextTargetSnapshot)) : null;
+    const latest = nextTargetSnapshot || pnlSourceSnapshot || latestSnapshot(report);
     const startEquity = initialEquity(report, latest);
-    const endEquity = finalEquity(report, latest);
+    const endEquity = finite(latestDailyResult?.endEquity) ?? finalEquity(report, latest);
     const hasContractTrades = Array.isArray(report.normalizedTrades);
     const rawTrades = hasContractTrades ? report.normalizedTrades : (Array.isArray(report.trades) ? report.trades : []);
     const trades = rawTrades.map((trade) => (hasContractTrades ? formatContractTrade(trade) : normalizeTrade(trade)));
@@ -225,12 +350,32 @@ function buildRows(registry, { db = null, importedAt = new Date().toISOString() 
       || finite(report.summary?.sellTradeCount)
       || null;
     const recentTrades = trades.slice(-20);
-    const latestDailyResult = report.latestDailyResult || null;
-    const latestDate = latestDailyResult?.date || null;
     const latestTrades = trades.filter((trade) => tradeDate(trade) === latestDate);
-    const holdings = holdingsFrom(latest, endEquity);
-    const pnl = latestPnl(report);
+    const pnlSourceHoldings = pnlSourceSnapshot
+      ? holdingsForSnapshot(pnlSourceSnapshot, latestDailyResult?.startEquity)
+      : [];
+    const nextTargetHoldings = nextTargetSnapshot
+      ? holdingsForSnapshot(nextTargetSnapshot, endEquity)
+      : [];
+    const holdings = nextTargetHoldings.length ? nextTargetHoldings : pnlSourceHoldings;
+    const pnl = latestDailyResult
+      ? {
+        pct: round(latestDailyResult.netReturnPct, 2),
+        dollars: dollars(latestDailyResult.pnlDollars),
+        source: latestDailyResult.source || latestDailyResult.basis,
+      }
+      : latestPnl(report);
     const status = pnlStatus({ dailyResult: latestDailyResult, pnl, latestTradeCount: latestTrades.length, holdings });
+    const holdingChanges = nextTargetSnapshot
+      ? changesFrom(previousTargetSnapshot, nextTargetSnapshot)
+      : [];
+    const targetVsPnlSourceChanges = nextTargetSnapshot && pnlSourceSnapshot
+      ? changesFrom(pnlSourceSnapshot, nextTargetSnapshot)
+      : holdingChanges;
+    const performance = trailingPerformance(dailyResults, latestDate);
+    const pnlSourceSummary = isEodMark
+      ? `${pnlSourceDate || ''} target held into ${latestDate || ''}`.trim()
+      : (latestTrades.length ? tradeSummaryText(latestTrades) : `${latestDate || ''} strategy-reported/flat`.trim());
 
     return {
       id: metadata.id,
@@ -243,14 +388,43 @@ function buildRows(registry, { db = null, importedAt = new Date().toISOString() 
         provider: metadata.dataProvider || null,
         strategySource: metadata.strategySource || null,
       },
-      latestTargetDate: latest?.date || report.summary?.latestRebalanceDate || latestDate,
+      reportDate: latestDate,
+      latestTargetDate: nextTargetSnapshot?.date || latest?.date || report.summary?.latestRebalanceDate || latestDate,
       latestRealizedDate: latestDate,
       nextDate: latest?.nextDate || null,
-      totalReturnPct: totalReturnPct(report, startEquity, endEquity),
+      totalReturnPct: performance.sinceStart.returnPct ?? totalReturnPct(report, startEquity, endEquity),
       latestPnlPct: pnl.pct,
       latestPnlDollars: pnl.dollars,
       latestPnlSource: pnl.source,
       latestPnlStatus: status,
+      dailyPnl: {
+        date: latestDate,
+        basis: latestDailyResult?.basis || null,
+        source: pnl.source,
+        sourceType: isEodMark ? 'prior_eod_target_holdings' : 'intraday_trades_or_strategy_report',
+        sourceDate: pnlSourceDate,
+        sourceSummary: pnlSourceSummary,
+        startEquity: dollars(latestDailyResult?.startEquity),
+        endEquity: dollars(latestDailyResult?.endEquity),
+        pnlDollars: pnl.dollars,
+        netReturnPct: pnl.pct,
+        tradeCount: latestTrades.length,
+      },
+      pnlSourceHoldingsDate: pnlSourceDate,
+      pnlSourceHoldings,
+      pnlSourceHoldingsText: topHoldingsText(pnlSourceHoldings),
+      nextTarget: {
+        status: nextTargetSnapshot ? 'available' : 'not_available',
+        targetDate: nextTargetSnapshot?.date || null,
+        expectedPnlDate: nextTargetSnapshot?.nextDate || null,
+        holdings: nextTargetHoldings,
+        holdingsText: topHoldingsText(nextTargetHoldings),
+      },
+      holdingChanges,
+      holdingChangesText: changesText(holdingChanges),
+      targetVsPnlSourceChanges,
+      targetVsPnlSourceChangesText: changesText(targetVsPnlSourceChanges),
+      performance,
       startEquity: dollars(startEquity),
       endEquity: dollars(endEquity),
       finalEquity: dollars(report.summary?.finalEquity),
@@ -262,7 +436,7 @@ function buildRows(registry, { db = null, importedAt = new Date().toISOString() 
       holdingCount: holdings.length,
       holdings,
       topHoldings: topHoldingsText(holdings),
-      changesFromPrevious: changesFrom(previousSnapshot, latest),
+      changesFromPrevious: holdingChanges,
       totalTrades,
       latestTradeCount: latestTrades.length,
       recentTrades,
@@ -283,24 +457,49 @@ function buildMarkdown(payload) {
     '',
     payload.note,
     '',
-    '| # | Strategy | Target | Realized | Latest P/L | P/L status | Total return | Max DD | Sharpe | Equity | Trades | Open | Holdings |',
-    '|---:|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---|',
+    '## Daily Timing Report',
+    '',
+    'For EOD strategies, the P/L on day **D** comes from the target holdings set after the close on **D-1** and marked to the close on **D**. The **D target for next P/L** column is the holding set after the close on D that should drive the next realized EOD P/L. Intraday strategies use same-day emitted trades or explicit flat-day records as the P/L source.',
+    '',
+    '| # | Strategy | P/L date D | P/L basis | P/L source holdings/trades | Latest P/L | P/L status | D target for next P/L | Holding changes into D target | Equity | Trades |',
+    '|---:|---|---:|---|---|---:|---|---|---|---:|---:|',
   ];
+  payload.rows.forEach((row, index) => {
+    const sourceText = row.dailyPnl?.sourceType === 'prior_eod_target_holdings'
+      ? `${row.pnlSourceHoldingsDate || ''}: ${row.pnlSourceHoldingsText || ''}`.trim()
+      : (row.dailyPnl?.sourceSummary || '');
+    const nextTargetText = row.nextTarget?.status === 'available'
+      ? `${row.nextTarget.targetDate || ''}: ${row.nextTarget.holdingsText || ''}`.trim()
+      : 'not available from current artifact';
+    lines.push([
+      `| ${index + 1}`,
+      row.name,
+      row.latestRealizedDate || '',
+      row.dailyPnl?.basis || '',
+      sourceText,
+      markdownValue(row.latestPnlPct, '%'),
+      statusLabel(row.latestPnlStatus),
+      nextTargetText,
+      row.targetVsPnlSourceChangesText || row.holdingChangesText || '',
+      money(row.endEquity ?? row.finalEquity),
+      row.totalTrades ?? '',
+    ].join(' | ') + ' |');
+  });
+
+  lines.push('', '## Trailing Performance', '');
+  lines.push('Each cell is `return / Sharpe` for daily net returns in that window. Blank Sharpe means there were not enough non-zero observations.');
+  lines.push('');
+  lines.push('| # | Strategy | Since start | 1Y | 3M | 1M | 1W |');
+  lines.push('|---:|---|---:|---:|---:|---:|---:|');
   payload.rows.forEach((row, index) => {
     lines.push([
       `| ${index + 1}`,
       row.name,
-      row.latestTargetDate || '',
-      row.latestRealizedDate || '',
-      markdownValue(row.latestPnlPct, '%'),
-      statusLabel(row.latestPnlStatus),
-      markdownValue(row.totalReturnPct, '%'),
-      markdownValue(row.maxDrawdownPct, '%'),
-      Number.isFinite(row.sharpe) ? row.sharpe.toFixed(3) : '',
-      money(row.endEquity ?? row.finalEquity),
-      row.totalTrades ?? '',
-      row.openPositionCount ?? 0,
-      row.topHoldings || '',
+      performanceText(row.performance?.sinceStart),
+      performanceText(row.performance?.oneYear),
+      performanceText(row.performance?.threeMonth),
+      performanceText(row.performance?.oneMonth),
+      performanceText(row.performance?.oneWeek),
     ].join(' | ') + ' |');
   });
 
@@ -331,15 +530,15 @@ async function main() {
   const registry = createDefaultRegistry();
   const db = args.persistDb ? openStrategyResultStore(args.dbPath) : null;
   const importedAt = new Date().toISOString();
-  const { rows, persisted } = buildRows(registry, { db, importedAt });
+  const { rows, persisted } = buildRows(registry, { db, importedAt, asOf: args.asOf });
   if (db) db.close();
   const asOf = args.asOf || rows.map((row) => row.latestRealizedDate).filter(Boolean).sort().at(-1);
   const generatedAt = new Date().toISOString();
   const payload = {
-    schemaVersion: 'phenixflow.strategyServiceRefresh.v3',
+    schemaVersion: 'phenixflow.strategyServiceRefresh.v4',
     generatedAt,
     asOf,
-    note: 'Rows after 2026-04-27 are provisional per the project runbook. Latest P/L is read from each strategy result contract; EOD rows use prior target holdings marked to the next EOD close, and intraday rows use emitted trade/flat-day realized records.',
+    note: 'Rows after 2026-04-27 are provisional per the project runbook. The daily timing report separates P/L source holdings/trades from the target holdings set after the P/L date. EOD rows use prior target holdings marked to the next EOD close; intraday rows use emitted trades or explicit flat-day realized records.',
     registeredStrategyCount: rows.length,
     persisted,
     rows,

@@ -36,6 +36,22 @@ function run(args) {
   if (result.status !== 0) throw new Error(`step_failed:backtest_wheel_option_income:exit_${result.status}`);
 }
 
+function latestPriorArtifact({ startDate, endDate }) {
+  const dir = path.join(REPO_ROOT, 'projects', 'spy-intraday-prediction', 'artifacts');
+  if (!fs.existsSync(dir)) return null;
+  const prefix = `wheel-expanded-backtest-${startDate}-`;
+  return fs.readdirSync(dir)
+    .map((name) => {
+      if (!name.startsWith(prefix) || !name.endsWith('.json')) return null;
+      const reportEnd = name.slice(prefix.length, -'.json'.length);
+      if (reportEnd >= endDate) return null;
+      return { name, endDate: reportEnd, path: path.join('projects', 'spy-intraday-prediction', 'artifacts', name) };
+    })
+    .filter(Boolean)
+    .sort((left, right) => right.endDate.localeCompare(left.endDate))
+    .at(0) || null;
+}
+
 function main() {
   const args = parseArgs();
   const config = loadConfig(args.config);
@@ -56,6 +72,43 @@ function main() {
       endDate,
       output,
       reason: 'existing_artifact_covers_resolved_end_date',
+    }, null, 2));
+    return;
+  }
+
+  const prior = args.force === true ? null : latestPriorArtifact({ startDate, endDate });
+  if (prior) {
+    const priorReport = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, prior.path), 'utf8'));
+    if (priorReport.checkpoint?.schemaVersion === 'wheel-backtest-checkpoint.v1') {
+      run([
+        'projects/spy-intraday-prediction/scripts/backtest-wheel-strategy.js',
+        '--start-date', startDate,
+        '--end-date', endDate,
+        '--suite', 'expanded',
+        '--strategies', strategy,
+        '--output', output,
+        '--resume-from', prior.path,
+      ]);
+      console.log(JSON.stringify({
+        status: 'ok',
+        mode: 'incremental',
+        startDate,
+        endDate,
+        appendFrom: prior.path,
+        output,
+      }, null, 2));
+      return;
+    }
+  }
+
+  if (args['no-full-rebuild'] === true && args.force !== true) {
+    console.log(JSON.stringify({
+      status: 'needs_full_rebuild',
+      startDate,
+      endDate,
+      output,
+      prior,
+      reason: 'wheel_incremental_resume_checkpoint_not_available',
     }, null, 2));
     return;
   }

@@ -91,7 +91,8 @@ function groupTradesByDate(trades) {
 function dailyResultFromSnapshot({ snapshot, metadata, tradesByDate }) {
   if (!snapshot?.realized) return null;
   const realized = snapshot.realized;
-  const date = realized.date || snapshot.nextDate || snapshot.date;
+  const intraday = isIntraday(metadata);
+  const date = realized.date || (intraday ? snapshot.date : (snapshot.nextDate || snapshot.date));
   const trades = tradesByDate.get(date) || [];
   const startEquity = finite(realized.startEquity) ?? finite(snapshot.equityBeforeNextSession);
   const endEquity = finite(realized.endEquity);
@@ -112,8 +113,8 @@ function dailyResultFromSnapshot({ snapshot, metadata, tradesByDate }) {
     targetDate: snapshot.date,
     nextDate: snapshot.nextDate || date,
     cadence: metadata.cadence || null,
-    basis: isIntraday(metadata) ? 'intraday_trades' : 'eod_prior_holdings_next_close',
-    source: isIntraday(metadata) ? 'strategy_report_realized_trade_pnl' : 'strategy_report_realized_eod_holdings_pnl',
+    basis: intraday ? 'intraday_trades' : 'eod_prior_holdings_next_close',
+    source: intraday ? 'strategy_report_realized_trade_pnl' : 'strategy_report_realized_eod_holdings_pnl',
     startEquity,
     endEquity,
     pnlDollars,

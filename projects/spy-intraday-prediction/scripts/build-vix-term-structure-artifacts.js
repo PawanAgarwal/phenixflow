@@ -5,8 +5,13 @@ const path = require('node:path');
 const fs = require('node:fs');
 
 const { PROJECT_ROOT, loadConfig, resolveEndDate } = require('../src/config');
-const { stockTradingDaysInRange, loadDailyBars } = require('../src/research-utils');
-const { runBacktest } = require('../src/vix-term-structure');
+const {
+  stockTradingDaysInRange,
+  loadDailyBars,
+  loadVixTermZSeries,
+  loadVixTermZSeriesWide,
+  executeTrade,
+} = require('../src/research-utils');
 
 const INITIAL_CAPITAL = 10_000;
 const ARTIFACTS_OUT_DIR = path.join(PROJECT_ROOT, 'artifacts');
@@ -66,29 +71,124 @@ function parseArgs(argv = process.argv.slice(2)) {
     const arg = argv[i];
     if (arg === '--start') out.startDate = argv[++i];
     else if (arg === '--end') out.endDate = argv[++i];
+    else if (arg === '--force') out.force = true;
   }
   return out;
 }
 
-async function buildReport({ variant, trades, openPositions, days, spyByDay }) {
+function previousTradingDay(allDays, day) {
+  const index = allDays.indexOf(day);
+  return index > 0 ? allDays[index - 1] : null;
+}
+
+function vixSignalForVariant(variant, vixRow) {
+  if (!vixRow) return null;
+  if (variant.params.metric === 'vix_over_vix3m') {
+    return { z: vixRow.z_vix_3m, ratio: vixRow.ratio_vix_3m };
+  }
+  return { z: vixRow.z_1d_3m, ratio: vixRow.ratio_1d_3m };
+}
+
+function minusCalendarDays(dayIso, count) {
+  const date = new Date(`${dayIso}T00:00:00.000Z`);
+  date.setUTCDate(date.getUTCDate() - count);
+  return date.toISOString().slice(0, 10);
+}
+
+async function buildTradesForVariant({ variant, allDays, targetDays, endDate }) {
+  const lookback = variant.params.lookback || 20;
+  const vixStart = targetDays?.length ? minusCalendarDays(targetDays[0], 90) : null;
+  const vixByDay = vixStart
+    ? await loadVixTermZSeries(vixStart, endDate, lookback)
+    : await loadVixTermZSeriesWide(lookback, endDate);
+  const targetSet = new Set(targetDays);
+  const trades = [];
+  const openPositions = [];
+  for (let i = 0; i < allDays.length - 1; i += 1) {
+    const signalDay = allDays[i];
+    const tradeDay = allDays[i + 1];
+    if (!targetSet.has(tradeDay)) continue;
+    const signal = vixSignalForVariant(variant, vixByDay.get(signalDay));
+    if (!signal || !Number.isFinite(signal.z) || !Number.isFinite(signal.ratio)) continue;
+    const { ratio, z } = signal;
+    if (Math.abs(z) < variant.params.zEnter) continue;
+    let side = null;
+    if (z >= variant.params.zEnter && !variant.params.contangoShortOnly) side = 'LONG';
+    else if (z <= -variant.params.zEnter && !variant.params.inversionLongOnly) side = 'SHORT';
+    if (!side) continue;
+    const entryDay = variant.params.overnight ? signalDay : tradeDay;
+    const entryMinuteEt = variant.params.overnight ? 955 : 575;
+    const exitMinuteEt = 955;
+    const ticker = side === 'LONG'
+      ? (variant.params.overnight && variant.params.leverage > 1 ? 'TQQQ' : (variant.params.leverage > 1 ? 'SPXL' : 'SPY'))
+      : (variant.params.overnight && variant.params.leverage > 1 ? 'SQQQ' : (variant.params.leverage > 1 ? 'SPXU' : 'SH'));
+    // eslint-disable-next-line no-await-in-loop
+    const tr = await executeTrade({
+      side,
+      leverage: variant.params.leverage,
+      signalDay,
+      entryDay,
+      exitDay: tradeDay,
+      entryMinuteEt,
+      exitMinuteEt,
+      costBpsRoundTrip: variant.params.costBpsRoundTrip,
+    });
+    if (!tr) {
+      openPositions.push({
+        signalDate: signalDay,
+        signalZ: z,
+        signalRatio: ratio,
+        entryDate: entryDay,
+        expectedExitDate: tradeDay,
+        side,
+        ticker,
+        leverage: variant.params.leverage,
+        entryMode: variant.params.overnight ? 'overnight' : 'intraday',
+        carryOver: Boolean(variant.params.overnight),
+      });
+      continue;
+    }
+    trades.push({
+      date: tradeDay,
+      entryDate: entryDay,
+      exitDate: tradeDay,
+      signalDate: signalDay,
+      signalZ: z,
+      signalRatio: ratio,
+      side,
+      ticker,
+      leverage: variant.params.leverage,
+      entryPrice: tr.entryPrice,
+      exitPrice: tr.exitPrice,
+      grossReturn: tr.grossReturn,
+      cost: tr.cost,
+      netReturn: tr.netReturn,
+      isWin: tr.netReturn > 0,
+      entryMode: variant.params.overnight ? 'overnight' : 'intraday',
+      carryOver: Boolean(variant.params.overnight),
+    });
+  }
+  return { trades, openPositions };
+}
+
+async function buildReport({ variant, trades, openPositions, days, allDays, spyByDay, baseReport = null }) {
   const tradesByDate = new Map(trades.map((t) => [t.date, t]));
-  const snapshots = [];
-  const equitySeries = [];
-  let equity = INITIAL_CAPITAL;
-  let spyEquity = INITIAL_CAPITAL;
-  let priorSpyClose = null;
-  const dailyReturns = [];
+  const snapshots = baseReport ? [...(baseReport.snapshots || [])] : [];
+  const equitySeries = baseReport ? [...(baseReport.equitySeries || [])] : [];
+  const combinedTrades = [...(baseReport?.trades || []), ...trades];
+  const combinedOpenPositions = [...(baseReport?.openPositions || []), ...openPositions];
+  let equity = Number.isFinite(baseReport?.summary?.finalEquity) ? baseReport.summary.finalEquity : INITIAL_CAPITAL;
+  let spyEquity = INITIAL_CAPITAL * (1 + (equitySeries.at(-1)?.spyReturn || 0));
 
   for (let i = 0; i < days.length; i += 1) {
     const day = days[i];
     const t = tradesByDate.get(day);
     const dailyReturn = t ? t.netReturn : 0;
     equity *= (1 + dailyReturn);
-    dailyReturns.push(dailyReturn);
     const todaySpy = spyByDay.get(day);
+    const priorSpyClose = spyByDay.get(previousTradingDay(allDays, day));
     const spyRet = todaySpy && priorSpyClose ? (todaySpy / priorSpyClose - 1) : 0;
     spyEquity *= (1 + spyRet);
-    priorSpyClose = todaySpy ?? priorSpyClose;
 
     const holdings = t
       ? [{
@@ -139,9 +239,10 @@ async function buildReport({ variant, trades, openPositions, days, spyByDay }) {
     });
   }
 
+  const dailyReturns = equitySeries.map((point) => point.dailyReturn || 0);
   const summary = {
-    startDate: days[0] || null,
-    endDate: days[days.length - 1] || null,
+    startDate: equitySeries[0]?.date || null,
+    endDate: equitySeries.at(-1)?.date || null,
     initialCapital: INITIAL_CAPITAL,
     finalEquity: equity,
     totalReturn: equity / INITIAL_CAPITAL - 1,
@@ -150,15 +251,15 @@ async function buildReport({ variant, trades, openPositions, days, spyByDay }) {
     maxDrawdown: maxDrawdown(equitySeries),
     maxDrawdownPct: maxDrawdown(equitySeries) * 100,
     sharpe: annualizedSharpe(dailyReturns),
-    tradingDays: days.length,
-    activeDays: trades.length,
-    tradeCount: trades.length,
-    longCount: trades.filter((t) => t.side === 'LONG').length,
-    shortCount: trades.filter((t) => t.side === 'SHORT').length,
-    winCount: trades.filter((t) => t.isWin).length,
-    hitRate: trades.length ? trades.filter((t) => t.isWin).length / trades.length : 0,
-    hitRatePct: trades.length ? (trades.filter((t) => t.isWin).length / trades.length) * 100 : 0,
-    avgNetReturnBps: trades.length ? (trades.reduce((a, t) => a + t.netReturn, 0) / trades.length) * 10_000 : 0,
+    tradingDays: equitySeries.length,
+    activeDays: combinedTrades.length,
+    tradeCount: combinedTrades.length,
+    longCount: combinedTrades.filter((t) => t.side === 'LONG').length,
+    shortCount: combinedTrades.filter((t) => t.side === 'SHORT').length,
+    winCount: combinedTrades.filter((t) => t.isWin).length,
+    hitRate: combinedTrades.length ? combinedTrades.filter((t) => t.isWin).length / combinedTrades.length : 0,
+    hitRatePct: combinedTrades.length ? (combinedTrades.filter((t) => t.isWin).length / combinedTrades.length) * 100 : 0,
+    avgNetReturnBps: combinedTrades.length ? (combinedTrades.reduce((a, t) => a + t.netReturn, 0) / combinedTrades.length) * 10_000 : 0,
     spyReturn: spyEquity / INITIAL_CAPITAL - 1,
     qqqReturn: 0,
     todayReturn: equitySeries.at(-1)?.dailyReturn ?? 0,
@@ -178,8 +279,8 @@ async function buildReport({ variant, trades, openPositions, days, spyByDay }) {
     latest: snapshots.at(-1) || null,
     snapshots,
     equitySeries,
-    trades,
-    openPositions,
+    trades: combinedTrades,
+    openPositions: combinedOpenPositions,
     skippedDays: [],
     metadata: {
       id: variant.id,
@@ -209,11 +310,22 @@ async function main() {
   fs.mkdirSync(ARTIFACTS_OUT_DIR, { recursive: true });
   for (const variant of VARIANTS) {
     process.stdout.write(`\n=== ${variant.id} ===\n`);
-    // eslint-disable-next-line no-await-in-loop
-    const r = await runBacktest({ startDate, endDate, params: variant.params });
-    // eslint-disable-next-line no-await-in-loop
-    const report = await buildReport({ variant, trades: r.trades, openPositions: r.openPositions, days, spyByDay });
     const outPath = path.join(ARTIFACTS_OUT_DIR, `${variant.id}-report.json`);
+    let baseReport = null;
+    if (!args.force && fs.existsSync(outPath)) {
+      const prior = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+      if (prior.summary?.startDate === startDate && prior.summary?.endDate >= endDate) {
+        process.stdout.write(`  current through ${endDate} → ${outPath}\n`);
+        continue;
+      }
+      if (prior.summary?.startDate === startDate && prior.summary?.endDate) baseReport = prior;
+    }
+    const targetDays = baseReport ? days.filter((day) => day > baseReport.summary.endDate) : days;
+    process.stdout.write(`  mode=${baseReport ? 'incremental' : 'full'} targetDays=${targetDays.length}\n`);
+    // eslint-disable-next-line no-await-in-loop
+    const r = await buildTradesForVariant({ variant, allDays: days, targetDays, endDate });
+    // eslint-disable-next-line no-await-in-loop
+    const report = await buildReport({ variant, trades: r.trades, openPositions: r.openPositions, days: targetDays, allDays: days, spyByDay, baseReport });
     fs.writeFileSync(outPath, JSON.stringify(report, null, 2));
     process.stdout.write(`  trades=${report.summary.tradeCount} open=${r.openPositions.length} net=${report.summary.totalReturnPct.toFixed(2)}% Sharpe=${report.summary.sharpe.toFixed(2)} maxDD=${report.summary.maxDrawdownPct.toFixed(2)}% hit=${report.summary.hitRatePct.toFixed(1)}% → ${outPath}\n`);
   }

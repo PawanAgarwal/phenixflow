@@ -72,6 +72,7 @@ function buildSteps(args) {
   if (!args.skipWheel) {
     steps.push(step('refresh_wheel_option_income', withEndDate([
       'projects/spy-intraday-prediction/scripts/refresh-wheel-option-income.js',
+      '--no-full-rebuild',
     ], args.end)));
   }
   if (!args.skipTsll) {

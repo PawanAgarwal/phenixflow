@@ -55,19 +55,22 @@ function parseArgs(argv = process.argv.slice(2)) {
     const arg = argv[i];
     if (arg === '--start') out.startDate = argv[++i];
     else if (arg === '--end') out.endDate = argv[++i];
+    else if (arg === '--force') out.force = true;
   }
   return out;
 }
 
-async function runBacktest(startDate, endDate) {
+async function runBacktest(startDate, endDate, targetDays = null) {
   const spyBars = await loadDailyBars('SPY', '2024-11-01', endDate);
   const buffer = '2024-11-01';
   const fullStart = buffer < startDate ? buffer : startDate;
   const days = stockTradingDaysInRange(fullStart, endDate);
+  const targetSet = targetDays ? new Set(targetDays) : null;
   const trades = [];
   for (let i = 1; i < days.length; i += 1) {
     const d = days[i];
     if (d < startDate || d > endDate) continue;
+    if (targetSet && !targetSet.has(d)) continue;
     const a = spyBars.get(days[i - 1]); const b = spyBars.get(d);
     if (!a || !b || !Number.isFinite(a.close) || !Number.isFinite(b.open)) continue;
     const gap = b.open / a.close - 1;
@@ -93,24 +96,27 @@ async function runBacktest(startDate, endDate) {
   return { trades, openPositions: [] };
 }
 
-async function buildReport({ trades, openPositions, days, spyByDay }) {
+function previousTradingDay(allDays, day) {
+  const index = allDays.indexOf(day);
+  return index > 0 ? allDays[index - 1] : null;
+}
+
+async function buildReport({ trades, openPositions, days, allDays, spyByDay, baseReport = null }) {
   const tradesByDate = new Map(trades.map((t) => [t.date, t]));
-  const snapshots = [];
-  const equitySeries = [];
-  let equity = INITIAL_CAPITAL;
-  let spyEquity = INITIAL_CAPITAL;
-  let priorSpyClose = null;
-  const dailyReturns = [];
+  const snapshots = baseReport ? [...(baseReport.snapshots || [])] : [];
+  const equitySeries = baseReport ? [...(baseReport.equitySeries || [])] : [];
+  const combinedTrades = [...(baseReport?.trades || []), ...trades];
+  let equity = Number.isFinite(baseReport?.summary?.finalEquity) ? baseReport.summary.finalEquity : INITIAL_CAPITAL;
+  let spyEquity = INITIAL_CAPITAL * (1 + (equitySeries.at(-1)?.spyReturn || 0));
   for (let i = 0; i < days.length; i += 1) {
     const day = days[i];
     const t = tradesByDate.get(day);
     const dailyReturn = t ? t.netReturn : 0;
     equity *= (1 + dailyReturn);
-    dailyReturns.push(dailyReturn);
     const todaySpy = spyByDay.get(day);
+    const priorSpyClose = spyByDay.get(previousTradingDay(allDays, day));
     const spyRet = todaySpy && priorSpyClose ? (todaySpy / priorSpyClose - 1) : 0;
     spyEquity *= (1 + spyRet);
-    priorSpyClose = todaySpy ?? priorSpyClose;
     const holdings = t
       ? [{ ticker: t.ticker, weight: VARIANT.params.leverage, weightPct: VARIANT.params.leverage * 100, dollars: equity * VARIANT.params.leverage }]
       : [{ ticker: 'CASH', weight: 1, weightPct: 100, dollars: equity }];
@@ -140,8 +146,9 @@ async function buildReport({ trades, openPositions, days, spyByDay }) {
       qqqReturn: 0,
     });
   }
+  const dailyReturns = equitySeries.map((point) => point.dailyReturn || 0);
   const summary = {
-    startDate: days[0] || null, endDate: days[days.length - 1] || null,
+    startDate: equitySeries[0]?.date || null, endDate: equitySeries.at(-1)?.date || null,
     initialCapital: INITIAL_CAPITAL, finalEquity: equity,
     totalReturn: equity / INITIAL_CAPITAL - 1,
     totalReturnPct: (equity / INITIAL_CAPITAL - 1) * 100,
@@ -149,12 +156,12 @@ async function buildReport({ trades, openPositions, days, spyByDay }) {
     maxDrawdown: maxDrawdown(equitySeries),
     maxDrawdownPct: maxDrawdown(equitySeries) * 100,
     sharpe: annualizedSharpe(dailyReturns),
-    tradingDays: days.length, activeDays: trades.length, tradeCount: trades.length,
-    longCount: trades.filter((t) => t.side === 'LONG').length, shortCount: 0,
-    winCount: trades.filter((t) => t.isWin).length,
-    hitRate: trades.length ? trades.filter((t) => t.isWin).length / trades.length : 0,
-    hitRatePct: trades.length ? (trades.filter((t) => t.isWin).length / trades.length) * 100 : 0,
-    avgNetReturnBps: trades.length ? (trades.reduce((a, t) => a + t.netReturn, 0) / trades.length) * 10_000 : 0,
+    tradingDays: equitySeries.length, activeDays: combinedTrades.length, tradeCount: combinedTrades.length,
+    longCount: combinedTrades.filter((t) => t.side === 'LONG').length, shortCount: 0,
+    winCount: combinedTrades.filter((t) => t.isWin).length,
+    hitRate: combinedTrades.length ? combinedTrades.filter((t) => t.isWin).length / combinedTrades.length : 0,
+    hitRatePct: combinedTrades.length ? (combinedTrades.filter((t) => t.isWin).length / combinedTrades.length) * 100 : 0,
+    avgNetReturnBps: combinedTrades.length ? (combinedTrades.reduce((a, t) => a + t.netReturn, 0) / combinedTrades.length) * 10_000 : 0,
     spyReturn: spyEquity / INITIAL_CAPITAL - 1, qqqReturn: 0,
     todayReturn: equitySeries.at(-1)?.dailyReturn ?? 0,
     todayReturnPct: (equitySeries.at(-1)?.dailyReturn ?? 0) * 100,
@@ -169,7 +176,7 @@ async function buildReport({ trades, openPositions, days, spyByDay }) {
     },
     settings: VARIANT.params,
     summary, latest: snapshots.at(-1) || null,
-    snapshots, equitySeries, trades, openPositions, skippedDays: [],
+    snapshots, equitySeries, trades: combinedTrades, openPositions, skippedDays: [],
     metadata: { id: VARIANT.id, name: VARIANT.name, displayName: VARIANT.displayName, description: VARIANT.description, ruleSummary: VARIANT.ruleSummary },
   };
 }
@@ -179,15 +186,26 @@ async function main() {
   const config = loadConfig();
   const startDate = args.startDate || '2025-01-02';
   const endDate = resolveEndDate(config, args.endDate || 'auto');
-  process.stdout.write(`Building ${VARIANT.id} (${startDate} → ${endDate})...\n`);
-  const { trades, openPositions } = await runBacktest(startDate, endDate);
+  const outPath = path.join(ARTIFACTS_DIR, `${VARIANT.id}-report.json`);
+  let baseReport = null;
   const days = stockTradingDaysInRange(startDate, endDate);
+  if (!args.force && fs.existsSync(outPath)) {
+    const prior = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    if (prior.summary?.startDate === startDate && prior.summary?.endDate >= endDate) {
+      process.stdout.write(JSON.stringify({ status: 'current', id: VARIANT.id, endDate, outPath }, null, 2));
+      process.stdout.write('\n');
+      return;
+    }
+    if (prior.summary?.startDate === startDate && prior.summary?.endDate) baseReport = prior;
+  }
+  const targetDays = baseReport ? days.filter((day) => day > baseReport.summary.endDate) : days;
+  process.stdout.write(`Building ${VARIANT.id} (${startDate} → ${endDate}) ${baseReport ? `incremental days=${targetDays.length}` : 'full'}...\n`);
+  const { trades, openPositions } = await runBacktest(startDate, endDate, targetDays);
   const spyBars = await loadDailyBars('SPY', startDate, endDate);
   const spyByDay = new Map();
   for (const [d, b] of spyBars.entries()) if (Number.isFinite(b.close)) spyByDay.set(d, b.close);
-  const report = await buildReport({ trades, openPositions, days, spyByDay });
+  const report = await buildReport({ trades, openPositions, days: targetDays, allDays: days, spyByDay, baseReport });
   fs.mkdirSync(ARTIFACTS_DIR, { recursive: true });
-  const outPath = path.join(ARTIFACTS_DIR, `${VARIANT.id}-report.json`);
   fs.writeFileSync(outPath, JSON.stringify(report, null, 2));
   process.stdout.write(`  trades=${report.summary.tradeCount} net=${report.summary.totalReturnPct.toFixed(2)}% Sharpe=${report.summary.sharpe.toFixed(2)} maxDD=${report.summary.maxDrawdownPct.toFixed(2)}% hit=${report.summary.hitRatePct.toFixed(1)}% → ${outPath}\n`);
 }

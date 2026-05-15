@@ -38,6 +38,10 @@ COPY projects/spy-intraday-prediction/config ./projects/spy-intraday-prediction/
 COPY projects/spy-intraday-prediction/scripts/backtest-wheel-strategy.js ./projects/spy-intraday-prediction/scripts/backtest-wheel-strategy.js
 COPY projects/spy-intraday-prediction/scripts/refresh-wheel-option-income.js ./projects/spy-intraday-prediction/scripts/refresh-wheel-option-income.js
 COPY projects/spy-intraday-prediction/scripts/build-pym-gated-artifacts.js ./projects/spy-intraday-prediction/scripts/build-pym-gated-artifacts.js
+COPY projects/spy-intraday-prediction/scripts/build-occ-pc-contrarian-artifacts.js ./projects/spy-intraday-prediction/scripts/build-occ-pc-contrarian-artifacts.js
+COPY projects/spy-intraday-prediction/scripts/build-vix-term-structure-artifacts.js ./projects/spy-intraday-prediction/scripts/build-vix-term-structure-artifacts.js
+COPY projects/spy-intraday-prediction/scripts/build-vvix-spike-artifacts.js ./projects/spy-intraday-prediction/scripts/build-vvix-spike-artifacts.js
+COPY projects/spy-intraday-prediction/scripts/build-gap-down-fade-artifacts.js ./projects/spy-intraday-prediction/scripts/build-gap-down-fade-artifacts.js
 COPY projects/spy-intraday-prediction/scripts/build-features-1m.js ./projects/spy-intraday-prediction/scripts/build-features-1m.js
 COPY projects/spy-intraday-prediction/scripts/build-greeks-1m.js ./projects/spy-intraday-prediction/scripts/build-greeks-1m.js
 COPY projects/spy-intraday-prediction/scripts/build-trade-flow-1m.js ./projects/spy-intraday-prediction/scripts/build-trade-flow-1m.js

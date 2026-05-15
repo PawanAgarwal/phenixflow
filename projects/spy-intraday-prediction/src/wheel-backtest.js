@@ -9,6 +9,7 @@ const { parseOpraTicker, daysBetween } = require('./opra');
 const { nsToMinuteMs, minuteMsToIso, getEtParts, isRegularSessionMinute } = require('./time');
 
 const DEFAULT_INITIAL_CAPITAL = 1_000_000;
+const CHECKPOINT_SCHEMA_VERSION = 'wheel-backtest-checkpoint.v1';
 
 const DEFAULT_STRATEGY_CONFIGS = Object.freeze([
   {
@@ -575,7 +576,7 @@ function stockPassesConfigFilters(cfg, features) {
   return true;
 }
 
-function buildDemandsForDay(states, stockDay, symbols, endDate, openDateSet, marketHistory) {
+function buildDemandsForDay(states, stockDay, symbols, marketHistory) {
   const byRoot = new Map();
   states.forEach((state) => {
     const cfg = state.config;
@@ -596,8 +597,6 @@ function buildDemandsForDay(states, stockDay, symbols, endDate, openDateSet, mar
           targetMoneyness: cfg.callTargetMoneyness || 1.05,
           minStrike: state.costBasis.get(symbol) || 0,
           maxContracts: contractsAvailable,
-          endDate,
-          openDateSet,
           features,
         };
       } else {
@@ -608,8 +607,6 @@ function buildDemandsForDay(states, stockDay, symbols, endDate, openDateSet, mar
           targetMoneyness: cfg.putTargetMoneyness || 0.95,
           minStrike: 0,
           maxContracts: cfg.maxContractsPerSymbol,
-          endDate,
-          openDateSet,
           features,
         };
       }
@@ -706,8 +703,6 @@ function maybeUpdateCandidate({
   if (parsed.right !== demand.right) return;
   const dte = daysBetween(dayIso, parsed.expiration);
   if (!Number.isFinite(dte) || dte < cfg.minDte || dte > cfg.maxDte) return;
-  if (parsed.expiration > demand.endDate) return;
-  if (!demand.openDateSet.has(parsed.expiration)) return;
   if (minuteOfDayEt < cfg.entryMinuteEt || minuteOfDayEt >= cfg.entryMinuteEt + cfg.entryWindowMinutes) return;
 
   const close = toNumber(row.close);
@@ -803,13 +798,11 @@ async function scanOptionDay({
   stockDay,
   states,
   symbols,
-  endDate,
-  openDateSet,
   marketHistory,
 }) {
   const source = resolveDatasetSource(config, 'optionBars', dayIso);
   const openTickers = new Set(states.flatMap((state) => state.openShorts.map((option) => option.ticker)));
-  const demandByRoot = buildDemandsForDay(states, stockDay, symbols, endDate, openDateSet, marketHistory);
+  const demandByRoot = buildDemandsForDay(states, stockDay, symbols, marketHistory);
   const bestCandidates = new Map();
   const refsByTicker = new Map();
   const marks = new Map();
@@ -1320,6 +1313,103 @@ function createCoverage() {
   };
 }
 
+function serializeMap(map) {
+  return [...(map || new Map()).entries()];
+}
+
+function deserializeMap(entries) {
+  return new Map(Array.isArray(entries) ? entries : []);
+}
+
+function clonePlain(value, fallback) {
+  if (value === undefined) return fallback;
+  return JSON.parse(JSON.stringify(value));
+}
+
+function sameJson(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function serializeStrategyState(state) {
+  return {
+    id: state.id,
+    config: state.config,
+    cash: state.cash,
+    openShorts: clonePlain(state.openShorts, []),
+    shares: serializeMap(state.shares),
+    costBasis: serializeMap(state.costBasis),
+    lastClose: serializeMap(state.lastClose),
+    candidateHistory: serializeMap(state.candidateHistory),
+    trades: clonePlain(state.trades, []),
+    daily: clonePlain(state.daily, []),
+    totals: clonePlain(state.totals, {}),
+  };
+}
+
+function restoreStrategyState(serialized, config, initialCapital) {
+  const state = makeStrategyState(config, initialCapital);
+  state.cash = Number.isFinite(serialized.cash) ? serialized.cash : state.cash;
+  state.openShorts = clonePlain(serialized.openShorts, []);
+  state.shares = deserializeMap(serialized.shares);
+  state.costBasis = deserializeMap(serialized.costBasis);
+  state.lastClose = deserializeMap(serialized.lastClose);
+  state.candidateHistory = deserializeMap(serialized.candidateHistory);
+  state.trades = clonePlain(serialized.trades, []);
+  state.daily = clonePlain(serialized.daily, []);
+  state.totals = { ...state.totals, ...clonePlain(serialized.totals, {}) };
+  return state;
+}
+
+function serializeCheckpoint({ startDate, endDate, symbols, initialCapital, execution, states, marketHistory, benchmarks, coverage }) {
+  return {
+    schemaVersion: CHECKPOINT_SCHEMA_VERSION,
+    generatedAt: new Date().toISOString(),
+    startDate,
+    endDate,
+    symbols,
+    initialCapital,
+    execution,
+    strategyIds: states.map((state) => state.id),
+    states: states.map(serializeStrategyState),
+    marketHistory: serializeMap(marketHistory),
+    benchmarks: clonePlain(benchmarks, {}),
+    coverage: clonePlain(coverage, createCoverage()),
+  };
+}
+
+function restoreCheckpointContext({ checkpoint, strategies, symbols, initialCapital, execution }) {
+  if (!checkpoint || checkpoint.schemaVersion !== CHECKPOINT_SCHEMA_VERSION) {
+    throw new Error('missing_or_unsupported_wheel_checkpoint');
+  }
+  const strategyIds = strategies.map((strategy) => strategy.id);
+  if (!sameJson(checkpoint.symbols || [], symbols)) {
+    throw new Error('wheel_checkpoint_symbols_mismatch');
+  }
+  if (!sameJson(checkpoint.strategyIds || [], strategyIds)) {
+    throw new Error('wheel_checkpoint_strategy_ids_mismatch');
+  }
+  if (!sameJson(checkpoint.execution || {}, execution)) {
+    throw new Error('wheel_checkpoint_execution_mismatch');
+  }
+  if (checkpoint.initialCapital !== initialCapital) {
+    throw new Error('wheel_checkpoint_initial_capital_mismatch');
+  }
+  const statesById = new Map((checkpoint.states || []).map((state) => [state.id, state]));
+  const states = strategies.map((strategy) => {
+    const serialized = statesById.get(strategy.id);
+    if (!serialized) throw new Error(`checkpoint_missing_strategy:${strategy.id}`);
+    return restoreStrategyState(serialized, strategy, initialCapital);
+  });
+  return {
+    startDate: checkpoint.startDate,
+    endDate: checkpoint.endDate,
+    states,
+    marketHistory: deserializeMap(checkpoint.marketHistory),
+    benchmarks: clonePlain(checkpoint.benchmarks, makeBenchmarkTrackers()),
+    coverage: { ...createCoverage(), ...clonePlain(checkpoint.coverage, {}) },
+  };
+}
+
 async function runWheelBacktest({
   config,
   startDate,
@@ -1329,21 +1419,55 @@ async function runWheelBacktest({
   initialCapital = DEFAULT_INITIAL_CAPITAL,
   execution = {},
   onProgress = null,
+  resumeFromReport = null,
 }) {
   const cleanSymbols = normalizeSymbols(symbols);
   const allStockSymbols = normalizeSymbols([...cleanSymbols, 'SPY', 'QQQ']);
-  const calendarDays = openCalendarDays(config.roots.calendar, startDate, endDate);
-  const openDateSet = new Set(calendarDays);
+  const reportStartDate = resumeFromReport?.checkpoint?.startDate || startDate;
+  const calendarDays = openCalendarDays(config.roots.calendar, reportStartDate, endDate);
+  const resolvedExecution = {
+    ...DEFAULT_EXECUTION,
+    ...execution,
+  };
   const strategies = strategyConfigs.map((strategyConfig) => mergeStrategyConfig(strategyConfig, {
     ...execution,
     initialCapital,
   }));
-  const states = strategies.map((strategy) => makeStrategyState(strategy, initialCapital));
-  const coverage = createCoverage();
-  const benchmarks = makeBenchmarkTrackers();
-  const marketHistory = createMarketHistory();
+  const resumeContext = resumeFromReport
+    ? restoreCheckpointContext({
+      checkpoint: resumeFromReport.checkpoint,
+      strategies,
+      symbols: cleanSymbols,
+      initialCapital,
+      execution: resolvedExecution,
+    })
+    : null;
+  if (resumeContext && resumeContext.endDate >= endDate) {
+    return {
+      ...resumeFromReport,
+      generatedAt: new Date().toISOString(),
+      checkpoint: serializeCheckpoint({
+        startDate: resumeContext.startDate,
+        endDate: resumeContext.endDate,
+        symbols: cleanSymbols,
+        initialCapital,
+        execution: resolvedExecution,
+        states: resumeContext.states,
+        marketHistory: resumeContext.marketHistory,
+        benchmarks: resumeContext.benchmarks,
+        coverage: resumeContext.coverage,
+      }),
+    };
+  }
+  const states = resumeContext?.states || strategies.map((strategy) => makeStrategyState(strategy, initialCapital));
+  const coverage = resumeContext?.coverage || createCoverage();
+  const benchmarks = resumeContext?.benchmarks || makeBenchmarkTrackers();
+  const marketHistory = resumeContext?.marketHistory || createMarketHistory();
+  const processDays = resumeContext
+    ? calendarDays.filter((dayIso) => dayIso > resumeContext.endDate)
+    : calendarDays;
 
-  for (const dayIso of calendarDays) {
+  for (const dayIso of processDays) {
     coverage.attemptedOpenDays += 1;
     const startedAt = Date.now();
     const stockResult = await readStockDay(config, dayIso, allStockSymbols);
@@ -1361,8 +1485,6 @@ async function runWheelBacktest({
       stockDay: stockResult.stockDay,
       states,
       symbols: cleanSymbols,
-      endDate,
-      openDateSet,
       marketHistory,
     });
 
@@ -1412,20 +1534,18 @@ async function runWheelBacktest({
       intradayProvisionalDate: config.dataPolicy?.intradayProvisionalDate,
       note: 'Uses Massive stock_quotes_1m and option_quotes_1m flat-file CSVs only.',
     },
-    startDate,
+    startDate: reportStartDate,
     endDate,
     calendarDayCount: calendarDays.length,
     symbols: cleanSymbols,
     initialCapital,
-    execution: {
-      ...DEFAULT_EXECUTION,
-      ...execution,
-    },
+    execution: resolvedExecution,
     assumptions: [
       'Option entries use Massive OPRA 1-minute aggregate close inside the entry window, with a premium haircut applied to short-option proceeds.',
       'Open short options are marked daily from the last available 1-minute option mark; missing marks fall back to max(intrinsic value, prior mark).',
       'Implied volatility and delta filters are Black-Scholes estimates from Massive minute aggregate option prices, not provider Greeks.',
       'Trend and realized-volatility filters use prior daily closes only.',
+      'Entries may expire after the report end date; those positions remain open and are marked through the final processed day.',
       'Historical Massive CSV flat files are preferred; live Massive parquet is used only when the historical file is not available for a requested day.',
       'Assignment is modeled at expiration only; early assignment, dividends, borrow constraints, taxes, and margin interest are not modeled.',
       'Cash-put variants liquidate assigned shares at expiration close; wheel variants keep assigned shares and sell covered calls when eligible.',
@@ -1436,6 +1556,17 @@ async function runWheelBacktest({
     strategies: summaries,
     dailyByStrategy: Object.fromEntries(states.map((state) => [state.id, state.daily])),
     tradesByStrategy: Object.fromEntries(states.map((state) => [state.id, state.trades])),
+    checkpoint: serializeCheckpoint({
+      startDate: reportStartDate,
+      endDate,
+      symbols: cleanSymbols,
+      initialCapital,
+      execution: resolvedExecution,
+      states,
+      marketHistory,
+      benchmarks,
+      coverage,
+    }),
   };
 }
 

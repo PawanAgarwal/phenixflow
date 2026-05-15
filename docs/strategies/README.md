@@ -69,7 +69,22 @@ large market data or generated reports into git.
 
 ## Daily Refresh Reports
 
+- [2026-05-14 strategy refresh results](daily-refresh-2026-05-14.md)
 - [2026-05-13 strategy refresh results](daily-refresh-2026-05-13.md)
+
+## Daily Refresh Workflow
+
+Use the fast path for normal after-EOD refreshes:
+
+```bash
+npm run strategy-service:refresh-daily-fast
+```
+
+This refresh path reuses same-code artifacts, appends missing ML/TSLL/wheel days
+where checkpoints are available, rebuilds the strategy-service snapshot, and
+persists normalized daily P/L, holdings, and intraday trades to SQLite. Use a
+full rebuild only when strategy logic, execution assumptions, costs/slippage, or
+historical Massive inputs changed.
 
 ## Shared Timing Convention
 
