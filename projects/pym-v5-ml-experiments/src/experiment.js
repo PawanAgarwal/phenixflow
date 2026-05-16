@@ -558,11 +558,29 @@ function readOptionFeatureMap(filePath, roots = OPTION_ROOTS, fields = OPTION_FI
   return byDate;
 }
 
-function buildSamples({ market, score, rsiMode = DEFAULT_RSI_MODE, lookback = DEFAULT_LOOKBACK, startDate = DEFAULT_START_DATE, endDate = null }) {
+function lastEligibleIndex(dates, endDate) {
+  if (!endDate) return dates.length - 1;
+  for (let index = dates.length - 1; index >= 0; index -= 1) {
+    if (dates[index] <= endDate) return index;
+  }
+  return -1;
+}
+
+function buildSamples({
+  market,
+  score,
+  rsiMode = DEFAULT_RSI_MODE,
+  lookback = DEFAULT_LOOKBACK,
+  startDate = DEFAULT_START_DATE,
+  endDate = null,
+  includeLatestPrediction = false,
+}) {
   const samples = [];
   const outputSet = new Set();
   const teacherByIndex = new Map();
-  for (let index = 0; index < market.dates.length - 1; index += 1) {
+  const latestIndex = lastEligibleIndex(market.dates, endDate);
+  const finalTeacherIndex = includeLatestPrediction ? latestIndex : Math.min(latestIndex, market.dates.length - 2);
+  for (let index = 0; index <= finalTeacherIndex; index += 1) {
     const weights = mapToWeightsObject(evaluateSymphony(score, market, index, { rsiMode }));
     teacherByIndex.set(index, weights);
     Object.keys(weights).forEach((ticker) => outputSet.add(ticker));
@@ -589,7 +607,20 @@ function buildSamples({ market, score, rsiMode = DEFAULT_RSI_MODE, lookback = DE
       teacherReturn: portfolioReturnForIndex(teacherWeights, market, index + 1),
     });
   }
-  return { samples, outputTickers };
+  let latestPredictionSample = null;
+  if (includeLatestPrediction && latestIndex >= Math.max(lookback, 1) && latestIndex === market.dates.length - 1) {
+    const date = market.dates[latestIndex];
+    if (date >= startDate && (!endDate || date <= endDate)) {
+      latestPredictionSample = {
+        index: latestIndex,
+        date,
+        nextDate: null,
+        teacherWeights: teacherByIndex.get(latestIndex) || {},
+        predictionOnly: true,
+      };
+    }
+  }
+  return { samples, outputTickers, latestPredictionSample };
 }
 
 function splitSamples(samples, {

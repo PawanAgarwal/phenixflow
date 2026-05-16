@@ -82,9 +82,11 @@ npm run strategy-service:refresh-daily-fast
 
 This refresh path reuses same-code artifacts, appends missing ML/TSLL/wheel days
 where checkpoints are available, rebuilds the strategy-service snapshot, and
-persists normalized daily P/L, holdings, and intraday trades to SQLite. Use a
-full rebuild only when strategy logic, execution assumptions, costs/slippage, or
-historical Massive inputs changed.
+persists normalized daily P/L, holdings, and intraday trades to SQLite. ML daily
+artifacts also emit a prediction-only latest EOD target so next-day holdings do
+not require knowing the next day's return. Use a full rebuild only when strategy
+logic, execution assumptions, costs/slippage, or historical Massive inputs
+changed.
 
 ## Shared Timing Convention
 

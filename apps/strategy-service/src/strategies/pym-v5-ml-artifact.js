@@ -316,6 +316,7 @@ function loadMlRawPoints(reportPath, strategyId) {
   if (!strategy?.equityCurve) throw new Error(`missing_ml_strategy:${strategyId}`);
   return {
     sourceReport: report,
+    latestPrediction: report.latestPredictions?.[strategyId] || null,
     rawPoints: strategy.equityCurve.map((point) => ({
       signalDate: point.signalDate,
       date: point.date,
@@ -543,7 +544,15 @@ function summaryFromPoints(points, initialCapital, extra = {}) {
   };
 }
 
-function reportFromPoints({ metadata, points, samplesBySignalDate, source, settings, extraSummary = {} }) {
+function reportFromPoints({
+  metadata,
+  points,
+  samplesBySignalDate,
+  source,
+  settings,
+  extraSummary = {},
+  provisionalPredictions = [],
+}) {
   const initialCapital = settings.initialCapital || DEFAULT_INITIAL_CAPITAL;
   let previousWeights = new Map();
   let spyEquity = 1;
@@ -614,6 +623,49 @@ function reportFromPoints({ metadata, points, samplesBySignalDate, source, setti
     spyReturn: equitySeries.at(-1)?.spyReturn ?? null,
     qqqReturn: equitySeries.at(-1)?.qqqReturn ?? null,
     ...extraSummary,
+  });
+
+  provisionalPredictions.forEach((prediction) => {
+    if (!prediction?.signalDate) return;
+    const lastRealizedSignalDate = points.at(-1)?.signalDate || null;
+    if (lastRealizedSignalDate && prediction.signalDate <= lastRealizedSignalDate) return;
+    const weights = cleanHoldings(prediction.holdings);
+    const equityBeforeNextSession = finite(prediction.startEquity, points.at(-1)?.equity || initialCapital);
+    const turnoverValue = Number.isFinite(prediction.turnover)
+      ? prediction.turnover
+      : weightTurnover(previousWeights, weights);
+    const costReturn = Number.isFinite(prediction.costReturn)
+      ? prediction.costReturn
+      : turnoverValue * (settings.costBps || DEFAULT_COST_BPS) / 10000;
+    const holdings = weightsToHoldings(weights, equityBeforeNextSession, previousWeights);
+    const snapshot = {
+      date: prediction.signalDate,
+      rebalanceDate: prediction.signalDate,
+      execution: 'eod_close',
+      nextDate: prediction.nextDate || null,
+      predictionOnly: true,
+      equityBeforeNextSession,
+      grossExposure: grossExposure(weights),
+      turnover: turnoverValue,
+      turnoverPct: pct(turnoverValue),
+      estimatedRebalanceCost: equityBeforeNextSession * costReturn,
+      estimatedRebalanceCostPct: pct(costReturn),
+      holdings,
+      topHoldings: topHoldingsLabel(holdings),
+      benchmarkReturns: {
+        spy: equitySeries.at(-1)?.spyReturn ?? null,
+        qqq: equitySeries.at(-1)?.qqqReturn ?? null,
+      },
+      selectorDiagnostics: {
+        chosenStrategy: prediction.chosenStrategy || null,
+        chosenSelector: prediction.chosenSelector || null,
+        chosenLookback: prediction.chosenLookback || prediction.lookback || null,
+        calmTrendRouter: prediction.routerDiagnostics || null,
+      },
+      realized: null,
+    };
+    snapshots.push(snapshot);
+    previousWeights = weights;
   });
 
   return {
@@ -703,7 +755,7 @@ function createPymV5MlTwoSpeedStrategy(options = {}) {
     ruleSummary: options.ruleSummary || TWO_SPEED_RULE_SUMMARY,
     artifactStrategyId: strategyId,
     buildReport: (metadata) => {
-      const { sourceReport, rawPoints } = loadMlRawPoints(mlReportPath, strategyId);
+      const { sourceReport, rawPoints, latestPrediction } = loadMlRawPoints(mlReportPath, strategyId);
       const samplesBySignalDate = loadBenchmarkSamples(datasetPath);
       const initialCapital = sourceReport.settings?.initialCapital || DEFAULT_INITIAL_CAPITAL;
       const costBps = sourceReport.settings?.costBps || DEFAULT_COST_BPS;
@@ -729,6 +781,7 @@ function createPymV5MlTwoSpeedStrategy(options = {}) {
           artifactStrategyId: strategyId,
           timing: sourceReport.settings?.timing || 'train_on_prior_labeled_days_signal_eod_close_then_next_close',
         },
+        provisionalPredictions: latestPrediction ? [latestPrediction] : [],
       });
     },
   });

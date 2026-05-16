@@ -46,6 +46,7 @@ def pct(value):
 def load_dataset(path):
     metadata = None
     samples = []
+    latest_prediction_sample = None
     with open(path, "r", encoding="utf-8") as handle:
         for line in handle:
             if not line.strip():
@@ -55,11 +56,13 @@ def load_dataset(path):
                 metadata = row
             elif row.get("type") == "sample":
                 samples.append(row)
+            elif row.get("type") == "prediction_sample":
+                latest_prediction_sample = row
     if metadata is None:
         raise ValueError("dataset metadata missing")
     if not samples:
         raise ValueError("dataset has no samples")
-    return metadata, samples
+    return metadata, samples, latest_prediction_sample
 
 
 def feature_matrix(samples, feature_groups):
@@ -680,7 +683,132 @@ def last_processed_signal_date(prior_report):
     return max(dates) if dates else None
 
 
-def run_walkforward(metadata, samples, args, prior_report=None):
+def clean_weights(weights):
+    return {
+        ticker: finite(weight)
+        for ticker, weight in (weights or {}).items()
+        if finite(weight) > 1e-10
+    }
+
+
+def prediction_payload(strategy_id, sample, weights, state, cost_bps, train_samples, generated_at, extra=None):
+    previous = state.get("previousWeights", {}) or {}
+    cleaned = clean_weights(weights)
+    day_turnover = turnover(previous, cleaned)
+    cost_return = day_turnover * cost_bps / 10000.0
+    last_point = state.get("equityCurve", [])[-1] if state.get("equityCurve") else None
+    start_equity = finite(state.get("equity"), DEFAULT_INITIAL_CAPITAL)
+    payload = {
+        "strategyId": strategy_id,
+        "signalDate": sample["date"],
+        "nextDate": sample.get("nextDate"),
+        "predictionOnly": True,
+        "generatedAt": generated_at,
+        "startEquity": start_equity,
+        "turnover": day_turnover,
+        "costReturn": cost_return,
+        "estimatedCostDollars": start_equity * cost_return,
+        "holdings": cleaned,
+        "trainingSamples": len(train_samples),
+        "previousSignalDate": last_point.get("signalDate") if last_point else None,
+        "previousRealizedDate": last_point.get("date") if last_point else None,
+    }
+    if extra:
+        payload.update(extra)
+    return payload
+
+
+def latest_realized_signal_date(states):
+    dates = []
+    for state in states.values():
+        for point in state.get("equityCurve", []):
+            signal_date = point.get("signalDate")
+            if signal_date:
+                dates.append(signal_date)
+    return max(dates) if dates else None
+
+
+def build_latest_predictions(metadata, samples, latest_prediction_sample, args, specs, states, training_start, output_tickers, safe_ticker):
+    if not latest_prediction_sample:
+        return {}
+    signal_date = latest_prediction_sample.get("date")
+    if not signal_date:
+        return {}
+    if signal_date < args.predict_start:
+        return {}
+    if args.predict_end and signal_date > args.predict_end:
+        return {}
+    last_realized = latest_realized_signal_date(states)
+    if last_realized and signal_date <= last_realized:
+        return {}
+
+    train_samples = [row for row in samples if training_start <= row["date"] < signal_date]
+    if len(train_samples) < args.min_train_samples:
+        return {}
+
+    predictions = {}
+    base_weights = latest_prediction_sample.get("teacherWeights", {})
+    predictions["pym_v5_base"] = prediction_payload(
+        "pym_v5_base",
+        latest_prediction_sample,
+        base_weights,
+        states["pym_v5_base"],
+        args.cost_bps,
+        train_samples,
+        args.generated_at,
+        {"model": "deterministic_pym_teacher"},
+    )
+
+    day_predictions = {}
+    for spec in specs:
+        weights = fit_predict_spec(
+            spec,
+            train_samples,
+            latest_prediction_sample,
+            output_tickers,
+            safe_ticker,
+            metadata=metadata,
+            previous_weights=states[spec["id"]].get("previousWeights", {}),
+            cost_bps=args.cost_bps,
+        )
+        day_predictions[spec["id"]] = weights
+        predictions[spec["id"]] = prediction_payload(
+            spec["id"],
+            latest_prediction_sample,
+            weights,
+            states[spec["id"]],
+            args.cost_bps,
+            train_samples,
+            args.generated_at,
+            {"model": spec["kind"]},
+        )
+
+    for chooser_id, lookback in [("daily_best_recent_21", 21), ("daily_best_recent_63", 63)]:
+        candidates = []
+        for spec in specs:
+            prior_points = states[spec["id"]]["equityCurve"]
+            candidates.append((recent_strategy_score(prior_points, lookback), spec["id"]))
+        candidates.sort(reverse=True)
+        chosen_id = candidates[0][1] if candidates else specs[0]["id"]
+        predictions[chooser_id] = prediction_payload(
+            chooser_id,
+            latest_prediction_sample,
+            day_predictions[chosen_id],
+            states[chooser_id],
+            args.cost_bps,
+            train_samples,
+            args.generated_at,
+            {
+                "chosenStrategy": chosen_id,
+                "lookback": lookback,
+                "model": "prior_realized_best_selector",
+            },
+        )
+
+    return predictions
+
+
+def run_walkforward(metadata, samples, args, prior_report=None, latest_prediction_sample=None):
     output_tickers = metadata["outputTickers"]
     safe_ticker = metadata["safeTicker"]
     include_options = "options" in metadata.get("featureNames", {})
@@ -761,6 +889,18 @@ def run_walkforward(metadata, samples, args, prior_report=None):
         if args.progress and current_index % args.progress == 0:
             print(json.dumps({"processed": current_index, "signalDate": sample["date"]}), flush=True)
 
+    latest_predictions = build_latest_predictions(
+        metadata,
+        samples,
+        latest_prediction_sample,
+        args,
+        specs,
+        states,
+        training_start,
+        output_tickers,
+        safe_ticker,
+    )
+
     strategy_reports = {}
     for strategy_id, state in states.items():
         strategy_reports[strategy_id] = summarize_curve(state["equityCurve"], args.initial_capital)
@@ -801,10 +941,13 @@ def run_walkforward(metadata, samples, args, prior_report=None):
             "note": "Each ML strategy is refit daily using only samples with signal dates before the current signal date.",
             "appendFrom": args.append_from,
             "appendedSignals": len(prediction_samples),
+            "latestPredictionSignalDate": latest_prediction_sample.get("date") if latest_prediction_sample else None,
+            "latestPredictionStrategies": len(latest_predictions),
         },
         "data": {
             "samples": len(samples),
             "predictionSamples": len(prediction_samples),
+            "latestPredictionSample": latest_prediction_sample.get("date") if latest_prediction_sample else None,
             "skippedSignals": skipped,
             "outputTickers": output_tickers,
             "safeTicker": safe_ticker,
@@ -812,6 +955,7 @@ def run_walkforward(metadata, samples, args, prior_report=None):
         },
         "strategySpecs": specs,
         "strategies": strategy_reports,
+        "latestPredictions": latest_predictions,
         "rankings": rankings,
     }
 
@@ -838,9 +982,9 @@ def parse_args():
 def main():
     args = parse_args()
     args.generated_at = args.generated_at or dt.datetime.now(dt.UTC).isoformat()
-    metadata, samples = load_dataset(args.dataset)
+    metadata, samples, latest_prediction_sample = load_dataset(args.dataset)
     prior_report = load_append_report(args.append_from)
-    report = run_walkforward(metadata, samples, args, prior_report=prior_report)
+    report = run_walkforward(metadata, samples, args, prior_report=prior_report, latest_prediction_sample=latest_prediction_sample)
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
@@ -848,6 +992,8 @@ def main():
         "outputPath": str(out_path),
         "firstSignalDate": report["settings"]["firstSignalDate"],
         "lastSignalDate": report["settings"]["lastSignalDate"],
+        "latestPredictionSignalDate": report["settings"].get("latestPredictionSignalDate"),
+        "latestPredictionStrategies": report["settings"].get("latestPredictionStrategies"),
         "rankings": [
             {
                 "id": row["id"],

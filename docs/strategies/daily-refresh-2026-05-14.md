@@ -1,6 +1,6 @@
 # Strategy Service Daily Refresh - 2026-05-14
 
-Generated locally: `2026-05-15T20:58:32.419Z`
+Generated locally: `2026-05-16T00:04:43.945Z`
 
 Full generated report:
 [strategy-service-refresh-2026-05-14.md](/Users/pawanagarwal/github/phenixflow/artifacts/strategy-service/strategy-service-refresh-2026-05-14.md)
@@ -29,7 +29,7 @@ same-day emitted trades or explicit flat-day records.
 - Registered strategies refreshed: `27/27`
 - Stale strategy count: `0`
 - SQLite latest daily result date: `2026-05-14`
-- SQLite rows: `9,073` daily results, `50,809` holdings, `12,034` trades
+- SQLite rows: `9,073` daily results, `50,814` holdings, `12,034` trades
 - P/L basis on `2026-05-14`: `14` EOD mark-to-market rows, `13` intraday rows
 - P/L statuses: `14` EOD mark, `7` traded, `6` flat/cash
 - Wheel checkpoint: `wheel-backtest-checkpoint.v1` stored in
@@ -40,7 +40,7 @@ same-day emitted trades or explicit flat-day records.
 | Strategy | P/L date D | P/L source holdings/trades | Latest P/L | D target for next P/L | Holding changes into D target |
 |---|---:|---|---:|---|---|
 | `pym-v5` | 2026-05-14 | 2026-05-13 target: VIXY 27.46%, BIL 14.29%, EDZ 12.50%, UGL 12.50%, TLT 6.25%, UTSL 6.25% | -1.08% | 2026-05-14 target: VIXY 27.46%, BIL 14.29%, EDZ 12.50%, UGL 12.50%, TLT 6.25%, TMF 6.25% | TMF +6.25%, UTSL -6.25% |
-| `pym-v5-ml-two-speed-attention` | 2026-05-14 | 2026-05-13 target: VIXY 65.78%, UVXY 14.97%, SHV 7.49%, TMV 7.49%, QQQ 4.28% | -2.13% | not available from current artifact |  |
+| `pym-v5-ml-two-speed-attention` | 2026-05-14 | 2026-05-13 target: VIXY 65.78%, UVXY 14.97%, SHV 7.49%, TMV 7.49%, QQQ 4.28% | -2.13% | 2026-05-14 target: VIXY 65.78%, UVXY 14.97%, SHV 7.49%, TMV 7.49%, QQQ 4.28% | no rebalance |
 | `option-income-wheel-trend-ivrv` | 2026-05-14 | O:AVGO260522P00300000 SHORT; O:AFRM260522P00053000 SHORT; O:INTC260522P00072000 SHORT; O:CAT260522P00390000 SHORT | 0.06% | 2026-05-14 target: CASH 88.64%, ASSIGNED_STOCK 11.40%, SHORT_OPTION_MARK 0.04% | CASH -0.05%, ASSIGNED_STOCK +0.04%, SHORT_OPTION_MARK -0.01% |
 | `tsll-seconds-passive-scalper` | 2026-05-14 | TSLL trades: 7 same-day scalps | 0.11% | 2026-05-14 target: TSLL 100.00% |  |
 | `pym-gated-intraday-best-combo` | 2026-05-14 | SQQQ SHORT -2.29% | -2.29% | 2026-05-14 target: SQQQ -300.00% |  |

@@ -24,6 +24,7 @@ function parseArgs(argv) {
     startDate: DEFAULT_START_DATE,
     lookback: DEFAULT_LOOKBACK,
     useOptions: true,
+    includeLatestPrediction: true,
   };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
@@ -31,6 +32,7 @@ function parseArgs(argv) {
     else if (arg === '--score') out.scorePath = argv[++index];
     else if (arg === '--option-features') out.optionFeaturesPath = argv[++index];
     else if (arg === '--no-options') out.useOptions = false;
+    else if (arg === '--no-latest-prediction') out.includeLatestPrediction = false;
     else if (arg === '--lookback') out.lookback = Number(argv[++index]);
     else if (arg === '--start') out.startDate = argv[++index];
     else if (arg === '--end') out.endDate = argv[++index];
@@ -59,12 +61,13 @@ function runCli(argv) {
   const inputs = loadInputs(options);
   const optionFeaturesPath = options.useOptions === false ? null : (options.optionFeaturesPath || findLatestOptionFeaturesPath());
   const optionByDate = optionFeaturesPath ? readOptionFeatureMap(optionFeaturesPath) : new Map();
-  const { samples, outputTickers } = buildSamples({
+  const { samples, outputTickers, latestPredictionSample } = buildSamples({
     market: inputs.market,
     score: inputs.score,
     lookback: options.lookback,
     startDate: options.startDate,
     endDate: options.endDate || null,
+    includeLatestPrediction: options.includeLatestPrediction,
   });
   if (!samples.length) throw new Error('No samples available for export');
   const coreTickers = CORE_TICKERS.filter((ticker) => inputs.market.closes.has(ticker));
@@ -99,6 +102,7 @@ function runCli(argv) {
       endDate: options.endDate || null,
       lookback: options.lookback,
       timing: 'signal_eod_close_then_next_close',
+      includeLatestPrediction: options.includeLatestPrediction,
     },
     marketStartDate: inputs.market.dates[0],
     marketEndDate: inputs.market.dates.at(-1),
@@ -123,12 +127,28 @@ function runCli(argv) {
       featureGroups: groups,
     })}\n`);
   });
+  if (latestPredictionSample) {
+    const groups = Object.fromEntries(
+      Object.entries(featureGroupsForSample(latestPredictionSample, context, false))
+        .map(([name, values]) => [name, values]),
+    );
+    stream.write(`${JSON.stringify({
+      type: 'prediction_sample',
+      date: latestPredictionSample.date,
+      nextDate: null,
+      index: latestPredictionSample.index,
+      teacherWeights: latestPredictionSample.teacherWeights,
+      predictionOnly: true,
+      featureGroups: groups,
+    })}\n`);
+  }
   stream.end(() => {
     console.log(JSON.stringify({
       outputPath: outPath,
       samples: samples.length,
       firstSampleDate: samples[0].date,
       lastSampleDate: samples.at(-1).date,
+      latestPredictionDate: latestPredictionSample?.date || null,
       optionFeatureDates: optionByDate.size,
       outputTickers: outputTickers.length,
       featureGroups: Object.fromEntries(Object.entries(featureNames).map(([name, values]) => [name, values.length])),

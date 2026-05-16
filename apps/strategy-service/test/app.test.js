@@ -9,6 +9,7 @@ const { createApp } = require('../src/app');
 const { createDefaultRegistry } = require('../src/default-registry');
 const { ensureStrategyResultContract } = require('../src/strategy-contract');
 const { openStrategyResultStore, persistStrategyReport } = require('../src/result-store');
+const { createPymV5MlTwoSpeedStrategy } = require('../src/strategies/pym-v5-ml-artifact');
 const {
   ACTIONABLE_STATUSES,
   executionSummaryFromManifest,
@@ -505,6 +506,62 @@ describe('strategy-service API', () => {
       decisions: true,
       traces: true,
     });
+  });
+
+  it('surfaces ML prediction-only latest targets without creating realized P/L', () => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'phenixflow-ml-artifact-'));
+    const mlReportPath = path.join(tmpDir, 'ml-report.json');
+    const datasetPath = path.join(tmpDir, 'dataset.jsonl');
+    fs.writeFileSync(mlReportPath, JSON.stringify({
+      settings: { initialCapital: 100, costBps: 2 },
+      source: { provider: 'test' },
+      strategies: {
+        two_speed_attention_pym_light_governed: {
+          equityCurve: [{
+            signalDate: '2026-05-13',
+            date: '2026-05-14',
+            startEquity: 100,
+            equity: 110,
+            grossReturn: 0.1,
+            costReturn: 0,
+            netReturn: 0.1,
+            turnover: 1,
+            holdings: { AAA: 1 },
+          }],
+        },
+      },
+      latestPredictions: {
+        two_speed_attention_pym_light_governed: {
+          signalDate: '2026-05-14',
+          predictionOnly: true,
+          startEquity: 110,
+          turnover: 2,
+          costReturn: 0.0004,
+          holdings: { BBB: 1 },
+        },
+      },
+    }));
+    fs.writeFileSync(datasetPath, [
+      JSON.stringify({ type: 'metadata', safeTicker: 'BIL', outputTickers: ['AAA', 'BBB'], featureNames: {} }),
+      JSON.stringify({ type: 'sample', date: '2026-05-13', nextReturns: { SPY: 0.01, QQQ: 0.02 } }),
+    ].join('\n'));
+
+    const strategy = createPymV5MlTwoSpeedStrategy({ mlReportPath, datasetPath });
+    const report = strategy.getReport();
+    const realized = report.snapshots[0];
+    const latest = report.latest;
+
+    expect(report.snapshots).toHaveLength(2);
+    expect(realized.date).toBe('2026-05-13');
+    expect(realized.realized.date).toBe('2026-05-14');
+    expect(latest.date).toBe('2026-05-14');
+    expect(latest.predictionOnly).toBe(true);
+    expect(latest.realized).toBeNull();
+    expect(latest.holdings.map((holding) => holding.ticker)).toEqual(['BBB']);
+
+    const contracted = ensureStrategyResultContract(report, strategy.getMetadata());
+    expect(contracted.dailyResults).toHaveLength(1);
+    expect(contracted.dailyResults[0].date).toBe('2026-05-14');
   });
 
   it('keeps metadata execution summaries in sync with manifest definitions', async () => {
