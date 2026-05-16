@@ -221,21 +221,32 @@ function loadBenchmarkSamples(datasetPath) {
 
 function loadDatasetRows(datasetPath) {
   if (!datasetPath || !fs.existsSync(datasetPath)) {
-    return { metadata: {}, samples: [], samplesBySignalDate: new Map() };
+    return {
+      metadata: {},
+      samples: [],
+      predictionSamples: [],
+      samplesBySignalDate: new Map(),
+      predictionSamplesBySignalDate: new Map(),
+    };
   }
   let metadata = {};
   const samples = [];
+  const predictionSamples = [];
   fs.readFileSync(datasetPath, 'utf8').split(/\r?\n/).forEach((line) => {
     if (!line.trim()) return;
     const row = JSON.parse(line);
     if (row.type === 'metadata') metadata = row;
     else if (row.type === 'sample') samples.push(row);
+    else if (row.type === 'prediction_sample') predictionSamples.push(row);
   });
   samples.sort((left, right) => left.date.localeCompare(right.date));
+  predictionSamples.sort((left, right) => left.date.localeCompare(right.date));
   return {
     metadata,
     samples,
+    predictionSamples,
     samplesBySignalDate: new Map(samples.map((sample) => [sample.date, sample])),
+    predictionSamplesBySignalDate: new Map(predictionSamples.map((sample) => [sample.date, sample])),
   };
 }
 
@@ -347,6 +358,45 @@ function loadOptionRawPoints(reportPath, strategyId) {
   };
 }
 
+function weightsObjectFromHoldings(holdings = []) {
+  const out = {};
+  holdings.forEach((holding) => {
+    const ticker = holding.ticker || holding.symbol;
+    const weight = finite(holding.weight);
+    if (ticker && weight > 1e-10) out[ticker] = weight;
+  });
+  return out;
+}
+
+function predictionFromSnapshot(snapshot, strategyId) {
+  if (!snapshot?.date) return null;
+  return {
+    strategyId,
+    signalDate: snapshot.date,
+    nextDate: snapshot.nextDate || null,
+    predictionOnly: true,
+    startEquity: finite(snapshot.equityBeforeNextSession),
+    turnover: finite(snapshot.turnover),
+    holdings: weightsObjectFromHoldings(snapshot.holdings),
+  };
+}
+
+function loadLatestOptionTargetPrediction(optionStrategyId = DEFAULT_OPTION_STRATEGY_ID) {
+  try {
+    const { createPymV5OptionOverlayStrategy } = require('./pym-v5-option-rank');
+    const strategy = createPymV5OptionOverlayStrategy({
+      optionStrategyId,
+      useOptionStudyEnv: false,
+    });
+    const report = strategy.getReport();
+    const latest = report.latest || report.snapshots?.at(-1) || null;
+    if (!latest || latest.realized) return null;
+    return predictionFromSnapshot(latest, optionStrategyId);
+  } catch {
+    return null;
+  }
+}
+
 function loadRiskOverlayRawPoints(reportPath, strategyId) {
   const report = readJson(reportPath);
   const overlay = report.overlays?.[strategyId];
@@ -422,20 +472,43 @@ function recentStrategyScore(points, currentIndex, lookback) {
   return logReturn + (0.5 * drawdown);
 }
 
+function selectBestCandidateId({ candidateSeries, candidateIds, currentIndex, lookback, seedId }) {
+  if (currentIndex <= 0) return seedId;
+  return candidateIds
+    .map((candidateId) => ({
+      candidateId,
+      score: recentStrategyScore(candidateSeries[candidateId], currentIndex, lookback),
+    }))
+    .sort((left, right) => right.score - left.score || left.candidateId.localeCompare(right.candidateId))[0].candidateId;
+}
+
+function selectBestSelectorId({ candidateSelectors, selectorIds, currentIndex, lookback, seedId }) {
+  if (currentIndex <= 0) return seedId;
+  return selectorIds
+    .map((selectorId) => ({
+      selectorId,
+      score: recentStrategyScore(candidateSelectors[selectorId].points, currentIndex, lookback),
+    }))
+    .sort((left, right) => right.score - left.score || left.selectorId.localeCompare(right.selectorId))[0].selectorId;
+}
+
+function lookbackFromSelectorId(selectorId) {
+  const match = String(selectorId || '').match(/recent(\d+)$/);
+  return match ? Number(match[1]) : null;
+}
+
 function buildTwoStrategySelector({ id, candidateSeries, candidateIds, commonDates, lookback, initialCapital, costBps, seedId }) {
   let equity = initialCapital;
   let previousWeights = new Map();
   const selectionCounts = {};
   const points = commonDates.map((date, index) => {
-    let chosenId = seedId;
-    if (index > 0) {
-      chosenId = candidateIds
-        .map((candidateId) => ({
-          candidateId,
-          score: recentStrategyScore(candidateSeries[candidateId], index, lookback),
-        }))
-        .sort((left, right) => right.score - left.score || left.candidateId.localeCompare(right.candidateId))[0].candidateId;
-    }
+    const chosenId = selectBestCandidateId({
+      candidateSeries,
+      candidateIds,
+      currentIndex: index,
+      lookback,
+      seedId,
+    });
     const raw = candidateSeries[chosenId][index];
     const weights = cleanHoldings(raw.holdings);
     const turnover = weightTurnover(previousWeights, weights);
@@ -470,15 +543,13 @@ function buildMeta21Selector({ candidateSelectors, selectorIds, commonDates, ini
   const selectionCounts = {};
   const selectedLookbackCounts = {};
   const points = commonDates.map((date, index) => {
-    let chosenSelectorId = seedId;
-    if (index > 0) {
-      chosenSelectorId = selectorIds
-        .map((selectorId) => ({
-          selectorId,
-          score: recentStrategyScore(candidateSelectors[selectorId].points, index, META_LOOKBACK),
-        }))
-        .sort((left, right) => right.score - left.score || left.selectorId.localeCompare(right.selectorId))[0].selectorId;
-    }
+    const chosenSelectorId = selectBestSelectorId({
+      candidateSelectors,
+      selectorIds,
+      currentIndex: index,
+      lookback: META_LOOKBACK,
+      seedId,
+    });
     const raw = candidateSelectors[chosenSelectorId].points[index];
     const weights = cleanHoldings(raw.holdings);
     const turnover = weightTurnover(previousWeights, weights);
@@ -507,6 +578,101 @@ function buildMeta21Selector({ candidateSelectors, selectorIds, commonDates, ini
     };
   });
   return { points, selectionCounts, selectedLookbackCounts };
+}
+
+function sameSignalDate(...predictions) {
+  const dates = predictions.map((prediction) => prediction?.signalDate).filter(Boolean);
+  return dates.length && dates.every((date) => date === dates[0]) ? dates[0] : null;
+}
+
+function latestBlendedPrediction({ strategyId, left, right, leftWeight, startEquity, extra = {} }) {
+  const signalDate = sameSignalDate(left, right);
+  if (!signalDate) return null;
+  return {
+    strategyId,
+    signalDate,
+    nextDate: left.nextDate || right.nextDate || null,
+    predictionOnly: true,
+    startEquity,
+    holdings: Object.fromEntries(blendHoldings(left.holdings, right.holdings, leftWeight)),
+    ...extra,
+  };
+}
+
+function latestCalmRouterPrediction({ mlPrediction, optionPrediction, dataset, trainStart, startEquity, twoSpeedId, optionId }) {
+  const signalDate = sameSignalDate(mlPrediction, optionPrediction);
+  if (!signalDate) return null;
+  const sample = dataset.predictionSamplesBySignalDate?.get(signalDate)
+    || dataset.samplesBySignalDate?.get(signalDate);
+  const priorLabeledSamples = dataset.samples
+    .filter((row) => row.date >= trainStart && row.date < signalDate)
+    .length;
+  const diagnostics = calmTrendDiagnostics({
+    datasetMetadata: dataset.metadata,
+    sample,
+    priorLabeledSamples,
+  });
+  const weights = diagnostics.calmTrend
+    ? blendHoldings(mlPrediction.holdings, optionPrediction.holdings, CALM_TREND_RAW_WEIGHT)
+    : cleanHoldings(mlPrediction.holdings);
+  return {
+    strategyId: 'calm_trend_router_35_ml_65_option_top8',
+    signalDate,
+    nextDate: mlPrediction.nextDate || optionPrediction.nextDate || null,
+    predictionOnly: true,
+    startEquity,
+    holdings: Object.fromEntries(weights),
+    routerDiagnostics: {
+      ...diagnostics,
+      rawMlWeight: diagnostics.calmTrend ? CALM_TREND_RAW_WEIGHT : 1,
+      optionTop8Weight: diagnostics.calmTrend ? CALM_TREND_OPTION_WEIGHT : 0,
+      rawMlStrategy: twoSpeedId,
+      optionTop8Strategy: optionId,
+    },
+  };
+}
+
+function latestMeta21Prediction({
+  mlPrediction,
+  optionPrediction,
+  candidateSeries,
+  candidateSelectors,
+  selectorIds,
+  currentIndex,
+  startEquity,
+  twoSpeedId,
+  optionId,
+}) {
+  const signalDate = sameSignalDate(mlPrediction, optionPrediction);
+  if (!signalDate) return null;
+  const seedSelectorId = 'best_of_two_speed_or_option_recent21';
+  const chosenSelectorId = selectBestSelectorId({
+    candidateSelectors,
+    selectorIds,
+    currentIndex,
+    lookback: META_LOOKBACK,
+    seedId: seedSelectorId,
+  });
+  const chosenLookback = lookbackFromSelectorId(chosenSelectorId) || 21;
+  const chosenStrategy = selectBestCandidateId({
+    candidateSeries,
+    candidateIds: [twoSpeedId, optionId],
+    currentIndex,
+    lookback: chosenLookback,
+    seedId: twoSpeedId,
+  });
+  const selectedPrediction = chosenStrategy === optionId ? optionPrediction : mlPrediction;
+  return {
+    strategyId: 'walkforward_lookback_best_of_two_speed_or_option_meta21',
+    signalDate,
+    nextDate: selectedPrediction.nextDate || null,
+    predictionOnly: true,
+    startEquity,
+    holdings: Object.fromEntries(cleanHoldings(selectedPrediction.holdings)),
+    chosenSelector: chosenSelectorId,
+    chosenStrategy,
+    chosenLookback,
+  };
 }
 
 function summaryFromPoints(points, initialCapital, extra = {}) {
@@ -803,7 +969,7 @@ function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
     ruleSummary: options.ruleSummary || META21_RULE_SUMMARY,
     artifactStrategyId: 'walkforward_lookback_best_of_two_speed_or_option_meta21',
     buildReport: (metadata) => {
-      const { sourceReport, rawPoints: twoRawPoints } = loadMlRawPoints(mlReportPath, twoSpeedId);
+      const { sourceReport, rawPoints: twoRawPoints, latestPrediction: mlLatestPrediction } = loadMlRawPoints(mlReportPath, twoSpeedId);
       const { rawPoints: optionRawPoints } = loadOptionRawPoints(optionReportPath, optionId);
       const samplesBySignalDate = loadBenchmarkSamples(datasetPath);
       const commonDates = intersectDates([
@@ -852,6 +1018,18 @@ function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
         costBps,
         seedId: 'best_of_two_speed_or_option_recent21',
       });
+      const optionLatestPrediction = loadLatestOptionTargetPrediction(optionId);
+      const latestPrediction = latestMeta21Prediction({
+        mlPrediction: mlLatestPrediction,
+        optionPrediction: optionLatestPrediction,
+        candidateSeries,
+        candidateSelectors,
+        selectorIds,
+        currentIndex: commonDates.length,
+        startEquity: meta.points.at(-1)?.equity || initialCapital,
+        twoSpeedId,
+        optionId,
+      });
       return reportFromPoints({
         metadata,
         points: meta.points,
@@ -876,6 +1054,7 @@ function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
           selectionCounts: meta.selectionCounts,
           selectedLookbackCounts: meta.selectedLookbackCounts,
         },
+        provisionalPredictions: latestPrediction ? [latestPrediction] : [],
       });
     },
   });
@@ -883,6 +1062,7 @@ function createPymV5TwoSpeedOptionMeta21Strategy(options = {}) {
 
 function createPymV5MlOptionTop85050Strategy(options = {}) {
   const riskOverlayReportPath = resolvePath(options.riskOverlayReportPath || findLatestRiskOverlayReportPath());
+  const mlReportPath = resolvePath(options.mlReportPath || findLatestMlReportPath());
   const datasetPath = resolvePath(options.datasetPath || findLatestMlDatasetPath());
   const strategyId = options.artifactStrategyId || DEFAULT_ML_OPTION_BLEND_STRATEGY_ID;
   return createArtifactStrategy({
@@ -896,6 +1076,19 @@ function createPymV5MlOptionTop85050Strategy(options = {}) {
     artifactStrategyId: strategyId,
     buildReport: (metadata) => {
       const { sourceReport, overlay, rawPoints } = loadRiskOverlayRawPoints(riskOverlayReportPath, strategyId);
+      const sourceMlReportPath = resolvePath(options.mlReportPath || sourceReport.source?.mlReport) || mlReportPath;
+      const mlSourceReport = readJson(sourceMlReportPath);
+      const twoSpeedId = sourceReport.source?.strategy || DEFAULT_TWO_SPEED_STRATEGY_ID;
+      const optionId = sourceReport.source?.optionOverlayStrategy || DEFAULT_OPTION_STRATEGY_ID;
+      const mlLatestPrediction = mlSourceReport.latestPredictions?.[twoSpeedId] || null;
+      const optionLatestPrediction = loadLatestOptionTargetPrediction(optionId);
+      const latestPrediction = latestBlendedPrediction({
+        strategyId,
+        left: mlLatestPrediction,
+        right: optionLatestPrediction,
+        leftWeight: 0.5,
+        startEquity: rawPoints.at(-1)?.equity || overlay.summary?.finalEquity || DEFAULT_INITIAL_CAPITAL,
+      });
       const samplesBySignalDate = loadBenchmarkSamples(datasetPath);
       return reportFromPoints({
         metadata,
@@ -924,6 +1117,7 @@ function createPymV5MlOptionTop85050Strategy(options = {}) {
           overlayDescription: overlay.summary?.description || null,
           sourceSummary: overlay.summary || null,
         },
+        provisionalPredictions: latestPrediction ? [latestPrediction] : [],
       });
     },
   });
@@ -945,7 +1139,7 @@ function createPymV5MlCalmTrendRouterStrategy(options = {}) {
     ruleSummary: options.ruleSummary || CALM_TREND_ROUTER_RULE_SUMMARY,
     artifactStrategyId: 'calm_trend_router_35_ml_65_option_top8',
     buildReport: (metadata) => {
-      const { sourceReport, rawPoints: mlRawPoints } = loadMlRawPoints(mlReportPath, twoSpeedId);
+      const { sourceReport, rawPoints: mlRawPoints, latestPrediction: mlLatestPrediction } = loadMlRawPoints(mlReportPath, twoSpeedId);
       const { rawPoints: optionRawPoints } = loadOptionRawPoints(optionReportPath, optionId);
       const dataset = loadDatasetRows(datasetPath);
       const samplesBySignalDate = dataset.samplesBySignalDate;
@@ -1006,6 +1200,16 @@ function createPymV5MlCalmTrendRouterStrategy(options = {}) {
           },
         };
       });
+      const optionLatestPrediction = loadLatestOptionTargetPrediction(optionId);
+      const latestPrediction = latestCalmRouterPrediction({
+        mlPrediction: mlLatestPrediction,
+        optionPrediction: optionLatestPrediction,
+        dataset,
+        trainStart,
+        startEquity: points.at(-1)?.equity || initialCapital,
+        twoSpeedId,
+        optionId,
+      });
       return reportFromPoints({
         metadata,
         points,
@@ -1036,6 +1240,7 @@ function createPymV5MlCalmTrendRouterStrategy(options = {}) {
           routerActivationDays: activatedDays,
           routerActivationShare: points.length ? activatedDays / points.length : 0,
         },
+        provisionalPredictions: latestPrediction ? [latestPrediction] : [],
       });
     },
   });

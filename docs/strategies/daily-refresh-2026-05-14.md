@@ -1,6 +1,6 @@
 # Strategy Service Daily Refresh - 2026-05-14
 
-Generated locally: `2026-05-16T00:04:43.945Z`
+Generated locally: `2026-05-16T00:15:01.175Z`
 
 Full generated report:
 [strategy-service-refresh-2026-05-14.md](/Users/pawanagarwal/github/phenixflow/artifacts/strategy-service/strategy-service-refresh-2026-05-14.md)
@@ -29,9 +29,13 @@ same-day emitted trades or explicit flat-day records.
 - Registered strategies refreshed: `27/27`
 - Stale strategy count: `0`
 - SQLite latest daily result date: `2026-05-14`
-- SQLite rows: `9,073` daily results, `50,814` holdings, `12,034` trades
+- SQLite rows: `9,073` daily results, `50,839` holdings, `12,034` trades
 - P/L basis on `2026-05-14`: `14` EOD mark-to-market rows, `13` intraday rows
 - P/L statuses: `14` EOD mark, `7` traded, `6` flat/cash
+- D target coverage for next P/L: `27/27` strategies available
+- Same missing-target issue fixed for derived ML adapters:
+  `pym-v5-ml-calm-trend-router`, `pym-v5-ml-option-top8-50-50`, and
+  `pym-v5-two-speed-option-meta21`
 - Wheel checkpoint: `wheel-backtest-checkpoint.v1` stored in
   `projects/spy-intraday-prediction/artifacts/wheel-expanded-backtest-2025-01-02-2026-05-14.json`
 
@@ -41,6 +45,9 @@ same-day emitted trades or explicit flat-day records.
 |---|---:|---|---:|---|---|
 | `pym-v5` | 2026-05-14 | 2026-05-13 target: VIXY 27.46%, BIL 14.29%, EDZ 12.50%, UGL 12.50%, TLT 6.25%, UTSL 6.25% | -1.08% | 2026-05-14 target: VIXY 27.46%, BIL 14.29%, EDZ 12.50%, UGL 12.50%, TLT 6.25%, TMF 6.25% | TMF +6.25%, UTSL -6.25% |
 | `pym-v5-ml-two-speed-attention` | 2026-05-14 | 2026-05-13 target: VIXY 65.78%, UVXY 14.97%, SHV 7.49%, TMV 7.49%, QQQ 4.28% | -2.13% | 2026-05-14 target: VIXY 65.78%, UVXY 14.97%, SHV 7.49%, TMV 7.49%, QQQ 4.28% | no rebalance |
+| `pym-v5-ml-calm-trend-router` | 2026-05-14 | 2026-05-13 target: UGL 28.66%, VIXY 23.02%, UVXY 19.57%, TLT 14.33%, QQQ 5.59%, IAU 3.58% | -1.67% | 2026-05-14 target: VIXY 53.31%, UGL 13.79%, TLT 6.89%, TMF 6.89%, TMV 6.07%, UVXY 5.24% | VIXY +30.28%, UGL -14.87%, UVXY -14.33%, TLT -7.44%, TMF +6.89%, TMV +3.45% |
+| `pym-v5-ml-option-top8-50-50` | 2026-05-14 | 2026-05-13 target: VIXY 32.89%, UGL 22.05%, UVXY 18.51%, TLT 11.02%, QQQ 5.29%, SHV 3.74% | -1.78% | 2026-05-14 target: VIXY 56.18%, UGL 10.61%, UVXY 7.49%, TMV 6.39%, TLT 5.30%, TMF 5.30% | VIXY +23.30%, UGL -11.44%, UVXY -11.02%, TLT -5.72%, TMF +5.30%, TMV +2.65% |
+| `pym-v5-two-speed-option-meta21` | 2026-05-14 | 2026-05-13 target: UGL 44.09%, TLT 22.05%, UVXY 22.05%, QQQ 6.30%, IAU 5.51% | -1.45% | 2026-05-14 target: VIXY 46.59%, UGL 21.21%, TLT 10.61%, TMF 10.61%, TMV 5.30%, QQQ 3.03% | VIXY +46.59%, UGL -22.88%, UVXY -22.05%, TLT -11.44%, TMF +10.61%, TMV +5.30% |
 | `option-income-wheel-trend-ivrv` | 2026-05-14 | O:AVGO260522P00300000 SHORT; O:AFRM260522P00053000 SHORT; O:INTC260522P00072000 SHORT; O:CAT260522P00390000 SHORT | 0.06% | 2026-05-14 target: CASH 88.64%, ASSIGNED_STOCK 11.40%, SHORT_OPTION_MARK 0.04% | CASH -0.05%, ASSIGNED_STOCK +0.04%, SHORT_OPTION_MARK -0.01% |
 | `tsll-seconds-passive-scalper` | 2026-05-14 | TSLL trades: 7 same-day scalps | 0.11% | 2026-05-14 target: TSLL 100.00% |  |
 | `pym-gated-intraday-best-combo` | 2026-05-14 | SQQQ SHORT -2.29% | -2.29% | 2026-05-14 target: SQQQ -300.00% |  |
