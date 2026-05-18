@@ -69,6 +69,7 @@ large market data or generated reports into git.
 
 ## Daily Refresh Reports
 
+- [2026-05-15 strategy refresh results](daily-refresh-2026-05-15.md)
 - [2026-05-14 strategy refresh results](daily-refresh-2026-05-14.md)
 - [2026-05-13 strategy refresh results](daily-refresh-2026-05-13.md)
 
