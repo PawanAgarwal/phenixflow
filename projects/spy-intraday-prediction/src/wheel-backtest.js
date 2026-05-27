@@ -250,6 +250,69 @@ const EXPERIMENT_STRATEGY_CONFIGS = Object.freeze([
   },
 ]);
 
+const CROSS_SECTIONAL_PREMIUM_STRATEGY_CONFIGS = Object.freeze([
+  {
+    id: 'wheel_cs_vix_overlay_rsi21',
+    mode: 'wheel',
+    label: 'Cross-sectional RSI wheel, VIX overlay puts, ITM calls',
+    minDte: 25,
+    maxDte: 35,
+    putTargetMoneyness: 0.95,
+    putCalmMoneyness: 0.95,
+    putHighVixMoneyness: 1.05,
+    minPutMoneyness: 0.88,
+    maxPutMoneyness: 1.12,
+    vixOverlayThreshold: 22,
+    callTargetMoneyness: 0.95,
+    minCallMoneyness: 0.88,
+    maxCallMoneyness: 1.02,
+    allowCoveredCallBelowCostBasis: true,
+    minStockHistoryDays: 20,
+    putRsiMax: 30,
+    callRsiMin: 70,
+    maxCommittedSymbols: 5,
+    scoreMode: 'rsi_ascending',
+  },
+  {
+    id: 'wheel_cs_static_otm_itm_rsi21',
+    mode: 'wheel',
+    label: 'Cross-sectional RSI wheel, static 0.95 OTM puts, ITM calls',
+    minDte: 25,
+    maxDte: 35,
+    putTargetMoneyness: 0.95,
+    minPutMoneyness: 0.88,
+    maxPutMoneyness: 1.00,
+    callTargetMoneyness: 0.95,
+    minCallMoneyness: 0.88,
+    maxCallMoneyness: 1.02,
+    allowCoveredCallBelowCostBasis: true,
+    minStockHistoryDays: 20,
+    putRsiMax: 30,
+    callRsiMin: 70,
+    maxCommittedSymbols: 5,
+    scoreMode: 'rsi_ascending',
+  },
+  {
+    id: 'wheel_cs_static_atm_rsi21',
+    mode: 'wheel',
+    label: 'Cross-sectional RSI wheel, static ATM puts and calls',
+    minDte: 25,
+    maxDte: 35,
+    putTargetMoneyness: 1.00,
+    minPutMoneyness: 0.93,
+    maxPutMoneyness: 1.07,
+    callTargetMoneyness: 1.00,
+    minCallMoneyness: 0.93,
+    maxCallMoneyness: 1.07,
+    allowCoveredCallBelowCostBasis: true,
+    minStockHistoryDays: 20,
+    putRsiMax: 30,
+    callRsiMin: 70,
+    maxCommittedSymbols: 5,
+    scoreMode: 'rsi_ascending',
+  },
+]);
+
 function round(value, digits = 6) {
   return Number.isFinite(value) ? Number(value.toFixed(digits)) : value;
 }
@@ -298,7 +361,7 @@ function createMarketHistory() {
   return new Map();
 }
 
-function updateMarketHistory(history, stockDay, symbols, maxDays = 80) {
+function updateMarketHistory(history, stockDay, symbols, maxDays = 260) {
   symbols.forEach((symbol) => {
     const close = stockDay.eodClose.get(symbol);
     if (!(close > 0)) return;
@@ -322,11 +385,40 @@ function realizedVolatilityFromCloses(closes, lookback = 20) {
   return Math.sqrt(variance) * Math.sqrt(252);
 }
 
+function simpleMovingAverage(closes, lookback) {
+  if (!closes || closes.length < lookback) return null;
+  const slice = closes.slice(-lookback);
+  return slice.reduce((sum, value) => sum + value, 0) / slice.length;
+}
+
+function wilderRsi(closes, period = 14) {
+  if (!closes || closes.length < period + 1) return null;
+  let averageGain = 0;
+  let averageLoss = 0;
+  for (let index = 1; index <= period; index += 1) {
+    const change = closes[index] - closes[index - 1];
+    if (change >= 0) averageGain += change;
+    else averageLoss -= change;
+  }
+  averageGain /= period;
+  averageLoss /= period;
+  for (let index = period + 1; index < closes.length; index += 1) {
+    const change = closes[index] - closes[index - 1];
+    const gain = change > 0 ? change : 0;
+    const loss = change < 0 ? -change : 0;
+    averageGain = ((averageGain * (period - 1)) + gain) / period;
+    averageLoss = ((averageLoss * (period - 1)) + loss) / period;
+  }
+  if (averageLoss === 0) return 100;
+  const rs = averageGain / averageLoss;
+  return 100 - (100 / (1 + rs));
+}
+
 function stockFeatures(history, symbol) {
   const closes = history.get(symbol) || [];
   const lastClose = closes[closes.length - 1] ?? null;
-  const last20 = closes.slice(-20);
-  const sma20 = last20.length ? last20.reduce((sum, value) => sum + value, 0) / last20.length : null;
+  const sma20 = simpleMovingAverage(closes, 20);
+  const sma200 = simpleMovingAverage(closes, 200);
   const prior20 = closes.length >= 21 && closes[closes.length - 21] > 0 && lastClose > 0
     ? (lastClose / closes[closes.length - 21]) - 1
     : null;
@@ -334,9 +426,12 @@ function stockFeatures(history, symbol) {
     historyDays: closes.length,
     lastClose,
     sma20,
+    sma200,
     priceVsSma20: lastClose > 0 && sma20 > 0 ? (lastClose / sma20) - 1 : null,
+    priceVsSma200: lastClose > 0 && sma200 > 0 ? (lastClose / sma200) - 1 : null,
     priorReturn20: prior20,
     realizedVol20: realizedVolatilityFromCloses(closes, 20),
+    rsi14: wilderRsi(closes, 14),
   };
 }
 
@@ -419,6 +514,24 @@ function duckdbString(value) {
   return `'${String(value).replace(/'/g, "''")}'`;
 }
 
+function shellQuote(value) {
+  return `'${String(value).replace(/'/g, "'\\''")}'`;
+}
+
+async function commandOutput(command, args) {
+  const child = spawn(command, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+  const stdout = [];
+  const stderr = [];
+  child.stdout.on('data', (chunk) => stdout.push(String(chunk)));
+  child.stderr.on('data', (chunk) => stderr.push(String(chunk)));
+  const code = await new Promise((resolve, reject) => {
+    child.on('error', reject);
+    child.on('close', resolve);
+  });
+  if (code !== 0) throw new Error(`command_failed:${command}:${stderr.join('').trim() || code}`);
+  return stdout.join('');
+}
+
 function parquetSql(filePath) {
   return `COPY (
     SELECT
@@ -434,12 +547,22 @@ function parquetSql(filePath) {
   ) TO STDOUT WITH (FORMAT CSV, HEADER TRUE);`;
 }
 
+function indexParquetSql(filePath) {
+  return `COPY (
+    SELECT
+      ticker,
+      close,
+      window_start
+    FROM read_parquet(${duckdbString(filePath)})
+  ) TO STDOUT WITH (FORMAT CSV, HEADER TRUE);`;
+}
+
 function splitCsvLine(line) {
   return String(line || '').split(',');
 }
 
-async function streamParquetRows(filePath, onRow) {
-  const child = spawn(process.env.DUCKDB_BIN || 'duckdb', ['-c', parquetSql(filePath)], {
+async function streamParquetRows(filePath, onRow, sql = parquetSql(filePath)) {
+  const child = spawn(process.env.DUCKDB_BIN || 'duckdb', ['-c', sql], {
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   const stderr = [];
@@ -466,6 +589,49 @@ async function streamParquetRows(filePath, onRow) {
   if (code !== 0) {
     throw new Error(`duckdb_parquet_read_failed:${filePath}:${stderr.join('').trim() || code}`);
   }
+}
+
+async function readVixClose(config, dayIso) {
+  if (!config.datasets?.indexBars) return null;
+  const source = resolveDatasetSource(config, 'indexBars', dayIso);
+  if (source.format === 'missing') return null;
+  if (source.format === 'csv.gz') {
+    const output = await commandOutput('sh', [
+      '-lc',
+      `gzip -cd ${shellQuote(source.filePath)} | awk -F, '$1=="I:VIX"{v=$3} END{if(v!="") print v}'`,
+    ]);
+    const close = Number(output.trim());
+    return Number.isFinite(close) && close > 0 ? close : null;
+  }
+  if (source.format === 'parquet') {
+    const sql = `COPY (
+      SELECT close
+      FROM read_parquet(${duckdbString(source.filePath)})
+      WHERE ticker = 'I:VIX'
+      ORDER BY window_start DESC
+      LIMIT 1
+    ) TO STDOUT WITH (FORMAT CSV, HEADER FALSE);`;
+    const output = await commandOutput(process.env.DUCKDB_BIN || 'duckdb', ['-c', sql]);
+    const close = Number(output.trim());
+    return Number.isFinite(close) && close > 0 ? close : null;
+  }
+  let latest = null;
+
+  function onRow(row) {
+    const ticker = String(row.ticker || '').toUpperCase();
+    if (ticker !== 'I:VIX') return;
+    const minuteMs = nsToMinuteMs(row.window_start);
+    if (minuteMs === null || !isRegularSessionMinute(minuteMs, config.session)) return;
+    const close = toNumber(row.close);
+    if (!(close > 0)) return;
+    if (!latest || minuteMs >= latest.minuteMs) {
+      latest = { date: dayIso, minuteMs, close };
+    }
+  }
+
+  if (source.format === 'parquet') await streamParquetRows(source.filePath, onRow, indexParquetSql(source.filePath));
+  else await readGzipCsv(source.filePath, onRow);
+  return latest?.close ?? null;
 }
 
 async function readStockDay(config, dayIso, symbols) {
@@ -558,6 +724,19 @@ function hasOpenOptionForSymbol(state, symbol) {
   return state.openShorts.some((option) => option.symbol === symbol);
 }
 
+function isCommittedSymbol(state, symbol) {
+  return sharesFor(state, symbol) > 0 || hasOpenOptionForSymbol(state, symbol);
+}
+
+function committedSymbolCount(state) {
+  const committed = new Set();
+  state.shares.forEach((shares, symbol) => {
+    if (shares > 0) committed.add(symbol);
+  });
+  state.openShorts.forEach((option) => committed.add(option.symbol));
+  return committed.size;
+}
+
 function coveredCallContractsAvailable(state, symbol, maxContracts) {
   const shares = sharesFor(state, symbol);
   const openCalls = state.openShorts
@@ -569,6 +748,7 @@ function coveredCallContractsAvailable(state, symbol, maxContracts) {
 function stockPassesConfigFilters(cfg, features) {
   if (features.historyDays < (cfg.minStockHistoryDays || 0)) return false;
   if (cfg.requireAboveSma20 && !(features.priceVsSma20 > 0)) return false;
+  if (cfg.requireAboveSma200 && !(features.priceVsSma200 > 0)) return false;
   if (Number.isFinite(cfg.minPriorReturn20) && !(features.priorReturn20 >= cfg.minPriorReturn20)) return false;
   if (Number.isFinite(cfg.maxPriorReturn20) && !(features.priorReturn20 <= cfg.maxPriorReturn20)) return false;
   if (Number.isFinite(cfg.maxRealizedVol20) && !(features.realizedVol20 <= cfg.maxRealizedVol20)) return false;
@@ -576,7 +756,23 @@ function stockPassesConfigFilters(cfg, features) {
   return true;
 }
 
-function buildDemandsForDay(states, stockDay, symbols, marketHistory) {
+function putTargetMoneynessForConfig(cfg, marketContext = {}) {
+  if (Number.isFinite(cfg.vixOverlayThreshold)) {
+    if (Number.isFinite(marketContext.priorVixClose) && marketContext.priorVixClose > cfg.vixOverlayThreshold) {
+      return cfg.putHighVixMoneyness || cfg.putTargetMoneyness || 1.05;
+    }
+    return cfg.putCalmMoneyness || cfg.putTargetMoneyness || 0.95;
+  }
+  return cfg.putTargetMoneyness || 0.95;
+}
+
+function passesRsiGate(cfg, right, features) {
+  if (right === 'PUT' && Number.isFinite(cfg.putRsiMax) && !(features.rsi14 < cfg.putRsiMax)) return false;
+  if (right === 'CALL' && Number.isFinite(cfg.callRsiMin) && !(features.rsi14 > cfg.callRsiMin)) return false;
+  return true;
+}
+
+function buildDemandsForDay(states, stockDay, symbols, marketHistory, marketContext = {}) {
   const byRoot = new Map();
   states.forEach((state) => {
     const cfg = state.config;
@@ -588,6 +784,7 @@ function buildDemandsForDay(states, stockDay, symbols, marketHistory) {
 
       let demand = null;
       if (cfg.mode === 'wheel' && sharesFor(state, symbol) >= 100) {
+        if (!passesRsiGate(cfg, 'CALL', features)) return;
         const contractsAvailable = coveredCallContractsAvailable(state, symbol, cfg.maxContractsPerSymbol);
         if (contractsAvailable <= 0) return;
         demand = {
@@ -595,19 +792,21 @@ function buildDemandsForDay(states, stockDay, symbols, marketHistory) {
           symbol,
           right: 'CALL',
           targetMoneyness: cfg.callTargetMoneyness || 1.05,
-          minStrike: state.costBasis.get(symbol) || 0,
+          minStrike: cfg.allowCoveredCallBelowCostBasis ? 0 : (state.costBasis.get(symbol) || 0),
           maxContracts: contractsAvailable,
           features,
         };
       } else {
+        if (!passesRsiGate(cfg, 'PUT', features)) return;
         demand = {
           state,
           symbol,
           right: 'PUT',
-          targetMoneyness: cfg.putTargetMoneyness || 0.95,
+          targetMoneyness: putTargetMoneynessForConfig(cfg, marketContext),
           minStrike: 0,
           maxContracts: cfg.maxContractsPerSymbol,
           features,
+          marketContext,
         };
       }
 
@@ -646,16 +845,24 @@ function updateCandidateMark(candidate, minuteMs, close) {
   }
 }
 
-function putCandidateAllowed(parsed, underlyingClose, cfg) {
-  const maxMoneyness = Number.isFinite(cfg.maxPutMoneyness) ? cfg.maxPutMoneyness : 0.995;
-  const minMoneyness = Number.isFinite(cfg.minPutMoneyness) ? cfg.minPutMoneyness : 0;
+function putCandidateAllowed(parsed, underlyingClose, cfg, targetMoneyness = cfg.putTargetMoneyness || 0.95) {
+  const maxMoneyness = Number.isFinite(cfg.maxPutMoneyness)
+    ? cfg.maxPutMoneyness
+    : (targetMoneyness > 1 ? targetMoneyness + 0.08 : 0.995);
+  const minMoneyness = Number.isFinite(cfg.minPutMoneyness)
+    ? cfg.minPutMoneyness
+    : (targetMoneyness > 1 ? Math.max(0, targetMoneyness - 0.12) : 0);
   const moneyness = parsed.strike / underlyingClose;
   return moneyness <= maxMoneyness && moneyness >= minMoneyness;
 }
 
-function callCandidateAllowed(parsed, underlyingClose, minStrike, cfg) {
-  const minMoneyness = Number.isFinite(cfg.minCallMoneyness) ? cfg.minCallMoneyness : 1.005;
-  const maxMoneyness = Number.isFinite(cfg.maxCallMoneyness) ? cfg.maxCallMoneyness : Infinity;
+function callCandidateAllowed(parsed, underlyingClose, minStrike, cfg, targetMoneyness = cfg.callTargetMoneyness || 1.05) {
+  const minMoneyness = Number.isFinite(cfg.minCallMoneyness)
+    ? cfg.minCallMoneyness
+    : (targetMoneyness < 1 ? Math.max(0, targetMoneyness - 0.08) : 1.005);
+  const maxMoneyness = Number.isFinite(cfg.maxCallMoneyness)
+    ? cfg.maxCallMoneyness
+    : (targetMoneyness < 1 ? targetMoneyness + 0.08 : Infinity);
   const moneyness = parsed.strike / underlyingClose;
   return moneyness >= minMoneyness && moneyness <= maxMoneyness && parsed.strike >= minStrike;
 }
@@ -681,6 +888,7 @@ function passesCandidateFilters(cfg, candidate) {
 function candidateScore(cfg, metrics) {
   const moneynessError = metrics.moneynessError;
   const liquidityBoost = Math.log1p(metrics.volume + metrics.transactions) / 10_000;
+  if (cfg.scoreMode === 'rsi_ascending') return (metrics.rsi14 ?? 100) + (moneynessError / 100) - liquidityBoost;
   if (cfg.scoreMode === 'annualized_premium') return -metrics.annualizedPremiumYield + (moneynessError / 10) - liquidityBoost;
   if (cfg.scoreMode === 'iv_rank') return -(metrics.ivRank ?? -1) + (moneynessError / 10) - liquidityBoost;
   if (cfg.scoreMode === 'iv_rv') return -(metrics.ivToRealizedVol ?? -1) + (moneynessError / 10) - liquidityBoost;
@@ -710,8 +918,8 @@ function maybeUpdateCandidate({
   const transactions = toNumber(row.transactions) || 0;
   if (!(close >= cfg.minPremium) || volume < cfg.minVolume || transactions < cfg.minTransactions) return;
   if (!(underlyingClose > 0)) return;
-  if (parsed.right === 'PUT' && !putCandidateAllowed(parsed, underlyingClose, cfg)) return;
-  if (parsed.right === 'CALL' && !callCandidateAllowed(parsed, underlyingClose, demand.minStrike, cfg)) return;
+  if (parsed.right === 'PUT' && !putCandidateAllowed(parsed, underlyingClose, cfg, demand.targetMoneyness)) return;
+  if (parsed.right === 'CALL' && !callCandidateAllowed(parsed, underlyingClose, demand.minStrike, cfg, demand.targetMoneyness)) return;
 
   const targetStrike = underlyingClose * demand.targetMoneyness;
   const moneynessError = Math.abs((parsed.strike / underlyingClose) - demand.targetMoneyness);
@@ -749,6 +957,7 @@ function maybeUpdateCandidate({
     ivRank,
     ivToRealizedVol,
     deltaAbs: Math.abs(delta ?? 0),
+    rsi14: demand.features.rsi14,
   });
   const candidate = {
     strategyId: demand.state.id,
@@ -778,7 +987,10 @@ function maybeUpdateCandidate({
     realizedVol20: demand.features.realizedVol20,
     ivToRealizedVol,
     priceVsSma20: demand.features.priceVsSma20,
+    priceVsSma200: demand.features.priceVsSma200,
     priorReturn20: demand.features.priorReturn20,
+    rsi14: demand.features.rsi14,
+    priorVixClose: demand.marketContext?.priorVixClose ?? null,
     maxContracts: demand.maxContracts,
     dayLastMinuteMs: minuteMs,
     dayLastPrice: close,
@@ -799,10 +1011,12 @@ async function scanOptionDay({
   states,
   symbols,
   marketHistory,
+  marketContext = {},
 }) {
   const source = resolveDatasetSource(config, 'optionBars', dayIso);
   const openTickers = new Set(states.flatMap((state) => state.openShorts.map((option) => option.ticker)));
-  const demandByRoot = buildDemandsForDay(states, stockDay, symbols, marketHistory);
+  const selectedRoots = new Set(symbols.map((symbol) => symbol.toUpperCase()));
+  const demandByRoot = buildDemandsForDay(states, stockDay, symbols, marketHistory, marketContext);
   const bestCandidates = new Map();
   const refsByTicker = new Map();
   const marks = new Map();
@@ -841,9 +1055,9 @@ async function scanOptionDay({
     const refs = refsByTicker.get(parsed.ticker);
     if (refs) refs.forEach((candidate) => updateCandidateMark(candidate, minuteMs, close));
 
+    if (selectedRoots.has(parsed.root)) selectedRowCount += 1;
     const demands = demandByRoot.get(parsed.root);
     if (!demands) return;
-    selectedRowCount += 1;
     const minuteOfDayEt = getEtParts(minuteMs).minuteOfDayEt;
     demands.forEach((demand) => {
       const underlyingClose = stockMinuteClose(stockDay, demand.symbol, minuteMs);
@@ -1066,9 +1280,17 @@ function openEntries(state, candidates, stockDay, dayIso) {
 
   byState.forEach((candidate) => {
     if (hasOpenOptionForSymbol(state, candidate.symbol)) return;
-    if (openShortOptionCount(state) >= cfg.maxOpenShortOptions) {
+    if (candidate.right === 'PUT' && Number.isFinite(cfg.maxCommittedSymbols)
+      && !isCommittedSymbol(state, candidate.symbol)
+      && committedSymbolCount(state) >= cfg.maxCommittedSymbols) {
       state.totals.skippedEntries += 1;
       return;
+    }
+    if (openShortOptionCount(state) >= cfg.maxOpenShortOptions) {
+      if (!(Number.isFinite(cfg.maxCommittedSymbols) && candidate.right === 'CALL')) {
+        state.totals.skippedEntries += 1;
+        return;
+      }
     }
 
     const equitySnapshot = computeEquity(state, stockDay);
@@ -1124,6 +1346,8 @@ function openEntries(state, candidates, stockDay, dayIso) {
       annualizedPremiumYield: candidate.annualizedPremiumYield,
       ivRank: candidate.ivRank,
       ivToRealizedVol: candidate.ivToRealizedVol,
+      rsi14: candidate.rsi14,
+      priorVixClose: candidate.priorVixClose,
     };
     state.openShorts.push(option);
 
@@ -1151,7 +1375,10 @@ function openEntries(state, candidates, stockDay, dayIso) {
       realizedVol20: candidate.realizedVol20,
       ivToRealizedVol: candidate.ivToRealizedVol,
       priceVsSma20: candidate.priceVsSma20,
+      priceVsSma200: candidate.priceVsSma200,
       priorReturn20: candidate.priorReturn20,
+      rsi14: candidate.rsi14,
+      priorVixClose: candidate.priorVixClose,
     };
     state.trades.push(event);
     entries.push(event);
@@ -1180,6 +1407,7 @@ function recordDaily(state, dayIso, stockDay, entries, expirations, closures = [
     openPutContracts: state.openShorts.filter((option) => option.right === 'PUT').reduce((sum, option) => sum + option.contracts, 0),
     openCallContracts: state.openShorts.filter((option) => option.right === 'CALL').reduce((sum, option) => sum + option.contracts, 0),
     shareSymbols: [...state.shares.entries()].filter(([, shares]) => shares > 0).length,
+    committedSymbols: committedSymbolCount(state),
     entries: entries.length,
     closures: closures.length,
     expirations: expirations.length,
@@ -1196,6 +1424,40 @@ function maxDrawdownFromSeries(values) {
     if (peak > 0) maxDrawdown = Math.min(maxDrawdown, (value / peak) - 1);
   });
   return maxDrawdown;
+}
+
+function mean(values) {
+  return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
+}
+
+function standardDeviation(values) {
+  if (values.length < 2) return null;
+  const avg = mean(values);
+  const variance = values.reduce((sum, value) => sum + ((value - avg) ** 2), 0) / (values.length - 1);
+  return Math.sqrt(variance);
+}
+
+function quantile(values, probability) {
+  const sorted = values.filter(Number.isFinite).sort((left, right) => left - right);
+  if (!sorted.length) return null;
+  const index = Math.max(0, Math.min(sorted.length - 1, Math.floor(probability * (sorted.length - 1))));
+  return sorted[index];
+}
+
+function skewness(values) {
+  if (values.length < 3) return null;
+  const avg = mean(values);
+  const sd = standardDeviation(values);
+  if (!(sd > 0)) return null;
+  return values.reduce((sum, value) => sum + (((value - avg) / sd) ** 3), 0) / values.length;
+}
+
+function excessKurtosis(values) {
+  if (values.length < 4) return null;
+  const avg = mean(values);
+  const sd = standardDeviation(values);
+  if (!(sd > 0)) return null;
+  return values.reduce((sum, value) => sum + (((value - avg) / sd) ** 4), 0) / values.length - 3;
 }
 
 function summarizeMonthly(daily) {
@@ -1241,6 +1503,15 @@ function summarizeStrategy(state) {
   const initialCapital = state.config.initialCapital;
   const finalEquity = daily[daily.length - 1]?.equity ?? initialCapital;
   const dailyReturns = daily.map((row) => row.dailyReturn || 0);
+  const dailyReturnSd = standardDeviation(dailyReturns) || 0;
+  const years = daily.length ? daily.length / 252 : 0;
+  const totalReturn = (finalEquity / initialCapital) - 1;
+  const cagr = years > 0 ? ((finalEquity / initialCapital) ** (1 / years)) - 1 : null;
+  const annualizedVolatility = dailyReturnSd * Math.sqrt(252);
+  const maxDrawdown = maxDrawdownFromSeries(daily.map((row) => row.equity));
+  const cvarCutoff = quantile(dailyReturns, 0.05);
+  const cvarSample = Number.isFinite(cvarCutoff) ? dailyReturns.filter((value) => value <= cvarCutoff) : [];
+  const monthly = summarizeMonthly(daily);
   const positiveDays = dailyReturns.filter((value) => value > 0).length;
   const negativeDays = dailyReturns.filter((value) => value < 0).length;
   const sellTrades = state.trades.filter((trade) => trade.type === 'sell_put' || trade.type === 'sell_call');
@@ -1258,17 +1529,32 @@ function summarizeStrategy(state) {
     mode: state.config.mode,
     dteRange: [state.config.minDte, state.config.maxDte],
     putTargetMoneyness: state.config.putTargetMoneyness,
+    putCalmMoneyness: state.config.putCalmMoneyness || null,
+    putHighVixMoneyness: state.config.putHighVixMoneyness || null,
+    vixOverlayThreshold: state.config.vixOverlayThreshold || null,
     callTargetMoneyness: state.config.callTargetMoneyness || null,
     initialCapital,
     finalEquity: round(finalEquity, 2),
-    totalReturn: round((finalEquity / initialCapital) - 1, 6),
-    maxDrawdown: round(maxDrawdownFromSeries(daily.map((row) => row.equity)), 6),
+    totalReturn: round(totalReturn, 6),
+    cagr: round(cagr, 6),
+    annualizedVolatility: round(annualizedVolatility, 6),
+    sharpe: annualizedVolatility > 0 && Number.isFinite(cagr) ? round(cagr / annualizedVolatility, 6) : null,
+    calmar: maxDrawdown < 0 && Number.isFinite(cagr) ? round(cagr / Math.abs(maxDrawdown), 6) : null,
+    maxDrawdown: round(maxDrawdown, 6),
+    skew: round(skewness(dailyReturns), 6),
+    excessKurtosis: round(excessKurtosis(dailyReturns), 6),
+    cvar5: cvarSample.length ? round(mean(cvarSample), 6) : null,
+    worst10DailyReturns: dailyReturns
+      .map((dailyReturn, index) => ({ date: daily[index].date, dailyReturn: round(dailyReturn, 8) }))
+      .sort((left, right) => left.dailyReturn - right.dailyReturn)
+      .slice(0, 10),
     dailyWinRate: daily.length ? round(positiveDays / daily.length, 4) : 0,
     negativeDayShare: daily.length ? round(negativeDays / daily.length, 4) : 0,
     sellTradeCount: sellTrades.length,
     expirationEventCount: expirations.length,
     buyToCloseCount: buyToCloseTrades.length,
     premiumCollected: round(state.totals.premiumCollected, 2),
+    premiumCollectedAnnualizedPct: years > 0 ? round((state.totals.premiumCollected / initialCapital) / years, 6) : null,
     buybackCost: round(state.totals.buybackCost, 2),
     commissionPaid: round(state.totals.commissionPaid, 2),
     putAssignments: state.totals.putAssignments,
@@ -1283,10 +1569,14 @@ function summarizeStrategy(state) {
     averageOpenOptions: daily.length
       ? round(daily.reduce((sum, row) => sum + row.openShorts, 0) / daily.length, 3)
       : 0,
+    averageCommittedNames: daily.length
+      ? round(daily.reduce((sum, row) => sum + (row.committedSymbols || Math.max(row.openShorts, row.shareSymbols || 0)), 0) / daily.length, 3)
+      : 0,
     averageReservedCollateral: daily.length
       ? round(daily.reduce((sum, row) => sum + row.reservedCollateral, 0) / daily.length, 2)
       : 0,
-    monthly: summarizeMonthly(daily),
+    worstMonth: monthly.slice().sort((left, right) => left.return - right.return)[0] || null,
+    monthly,
   };
 }
 
@@ -1415,6 +1705,8 @@ async function runWheelBacktest({
   startDate,
   endDate,
   symbols,
+  warmupStartDate = null,
+  vixByDate = null,
   strategyConfigs = DEFAULT_STRATEGY_CONFIGS,
   initialCapital = DEFAULT_INITIAL_CAPITAL,
   execution = {},
@@ -1424,7 +1716,9 @@ async function runWheelBacktest({
   const cleanSymbols = normalizeSymbols(symbols);
   const allStockSymbols = normalizeSymbols([...cleanSymbols, 'SPY', 'QQQ']);
   const reportStartDate = resumeFromReport?.checkpoint?.startDate || startDate;
-  const calendarDays = openCalendarDays(config.roots.calendar, reportStartDate, endDate);
+  const warmupDate = warmupStartDate && warmupStartDate < reportStartDate ? warmupStartDate : reportStartDate;
+  const calendarDays = openCalendarDays(config.roots.calendar, warmupDate, endDate);
+  const reportCalendarDays = calendarDays.filter((dayIso) => dayIso >= reportStartDate);
   const resolvedExecution = {
     ...DEFAULT_EXECUTION,
     ...execution,
@@ -1463,19 +1757,32 @@ async function runWheelBacktest({
   const coverage = resumeContext?.coverage || createCoverage();
   const benchmarks = resumeContext?.benchmarks || makeBenchmarkTrackers();
   const marketHistory = resumeContext?.marketHistory || createMarketHistory();
+  const vixSeries = [];
+  let priorVixClose = null;
+  const vixLookup = vixByDate instanceof Map
+    ? vixByDate
+    : new Map(Object.entries(vixByDate || {}));
   const processDays = resumeContext
     ? calendarDays.filter((dayIso) => dayIso > resumeContext.endDate)
     : calendarDays;
 
   for (const dayIso of processDays) {
-    coverage.attemptedOpenDays += 1;
     const startedAt = Date.now();
     const stockResult = await readStockDay(config, dayIso, allStockSymbols);
     if (!stockResult.available) {
-      coverage.attemptedMissing.push({ date: dayIso, dataset: 'stock_quotes_1m', path: stockResult.filePath });
+      if (dayIso >= reportStartDate) {
+        coverage.attemptedOpenDays += 1;
+        coverage.attemptedMissing.push({ date: dayIso, dataset: 'stock_quotes_1m', path: stockResult.filePath });
+      }
       continue;
     }
 
+    if (dayIso < reportStartDate) {
+      updateMarketHistory(marketHistory, stockResult.stockDay, allStockSymbols);
+      continue;
+    }
+
+    coverage.attemptedOpenDays += 1;
     states.forEach((state) => updateLastCloses(state, stockResult.stockDay));
     updateBenchmarks(benchmarks, dayIso, stockResult.stockDay);
 
@@ -1486,6 +1793,7 @@ async function runWheelBacktest({
       states,
       symbols: cleanSymbols,
       marketHistory,
+      marketContext: { priorVixClose },
     });
 
     if (!optionResult.available) {
@@ -1507,13 +1815,21 @@ async function runWheelBacktest({
       recordDaily(state, dayIso, stockResult.stockDay, entries, expirations, closures);
     });
     updateMarketHistory(marketHistory, stockResult.stockDay, allStockSymbols);
+    const mappedVixClose = vixLookup.has(dayIso) ? Number(vixLookup.get(dayIso)) : null;
+    const vixClose = Number.isFinite(mappedVixClose) && mappedVixClose > 0
+      ? mappedVixClose
+      : await readVixClose(config, dayIso);
+    if (Number.isFinite(vixClose)) {
+      vixSeries.push({ date: dayIso, close: round(vixClose, 4) });
+      priorVixClose = vixClose;
+    }
 
     coverage.processedDays += 1;
     if (onProgress) {
       onProgress({
         dayIso,
         processedDays: coverage.processedDays,
-        totalDays: calendarDays.length,
+        totalDays: reportCalendarDays.length,
         elapsedMs: Date.now() - startedAt,
       });
     }
@@ -1532,11 +1848,12 @@ async function runWheelBacktest({
     dataPolicy: {
       historicalCutoffDate: config.dataPolicy?.historicalCutoffDate,
       intradayProvisionalDate: config.dataPolicy?.intradayProvisionalDate,
-      note: 'Uses Massive stock_quotes_1m and option_quotes_1m flat-file CSVs only.',
+      note: 'Uses Massive stock_quotes_1m and option_quotes_1m flat-file CSVs, plus Massive-derived daily VIX closes when supplied for the VIX overlay.',
     },
     startDate: reportStartDate,
     endDate,
-    calendarDayCount: calendarDays.length,
+    warmupStartDate: warmupDate,
+    calendarDayCount: reportCalendarDays.length,
     symbols: cleanSymbols,
     initialCapital,
     execution: resolvedExecution,
@@ -1547,11 +1864,14 @@ async function runWheelBacktest({
       'Trend and realized-volatility filters use prior daily closes only.',
       'Entries may expire after the report end date; those positions remain open and are marked through the final processed day.',
       'Historical Massive CSV flat files are preferred; live Massive parquet is used only when the historical file is not available for a requested day.',
+      'VIX-overlay variants use the prior trading day VIX close to keep intraday option entries causal.',
       'Assignment is modeled at expiration only; early assignment, dividends, borrow constraints, taxes, and margin interest are not modeled.',
+      'Idle cash interest is not accrued in this backtester; positive T-bill interest would improve cash-heavy variants modestly but was not needed to reject this run.',
       'Cash-put variants liquidate assigned shares at expiration close; wheel variants keep assigned shares and sell covered calls when eligible.',
       'The universe is a liquid local proxy unless a complete holdings file is explicitly supplied.',
     ],
     coverage,
+    vixSeries,
     benchmarks: Object.fromEntries(Object.entries(benchmarks).map(([symbol, points]) => [symbol, summarizeBenchmark(points)])),
     strategies: summaries,
     dailyByStrategy: Object.fromEntries(states.map((state) => [state.id, state.daily])),
@@ -1574,6 +1894,7 @@ module.exports = {
   DEFAULT_INITIAL_CAPITAL,
   DEFAULT_STRATEGY_CONFIGS,
   EXPERIMENT_STRATEGY_CONFIGS,
+  CROSS_SECTIONAL_PREMIUM_STRATEGY_CONFIGS,
   DEFAULT_EXECUTION,
   blackScholesPrice,
   blackScholesDelta,

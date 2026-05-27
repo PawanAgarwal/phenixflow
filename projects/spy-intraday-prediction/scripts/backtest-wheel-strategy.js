@@ -7,6 +7,7 @@ const { parseArgs, asNumber } = require('../src/cli');
 const {
   DEFAULT_EXECUTION,
   DEFAULT_INITIAL_CAPITAL,
+  CROSS_SECTIONAL_PREMIUM_STRATEGY_CONFIGS,
   DEFAULT_STRATEGY_CONFIGS,
   EXPERIMENT_STRATEGY_CONFIGS,
   normalizeSymbols,
@@ -15,9 +16,22 @@ const {
 
 const REPO_ROOT = path.resolve(PROJECT_ROOT, '..', '..');
 const DEFAULT_UNIVERSE_PATH = path.join(REPO_ROOT, 'apps', 'flow-api', 'config', 'top100-universe.json');
+const DEFAULT_VIX_DAILY_PATH = path.join(REPO_ROOT, 'projects', 'pym-v5-ml-experiments', 'artifacts', 'vix-and-occ-stress-2016-2026.jsonl');
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function loadVixByDate(filePath) {
+  const resolved = path.resolve(filePath || DEFAULT_VIX_DAILY_PATH);
+  if (!fs.existsSync(resolved)) return null;
+  const rows = fs.readFileSync(resolved, 'utf8')
+    .split(/\n+/)
+    .filter(Boolean)
+    .map((line) => JSON.parse(line));
+  return new Map(rows
+    .filter((row) => row.date && Number.isFinite(Number(row.vixClose)))
+    .map((row) => [row.date, Number(row.vixClose)]));
 }
 
 function loadSymbols(args) {
@@ -31,6 +45,7 @@ function loadSymbols(args) {
 }
 
 function strategySuite(name) {
+  if (name === 'cross-sectional-premium' || name === 'cs-premium') return CROSS_SECTIONAL_PREMIUM_STRATEGY_CONFIGS;
   if (name === 'expanded' || name === 'experiments') return EXPERIMENT_STRATEGY_CONFIGS;
   return DEFAULT_STRATEGY_CONFIGS;
 }
@@ -51,7 +66,10 @@ function markdownReport(report) {
   lines.push('');
   lines.push(`Generated: ${report.generatedAt}`);
   lines.push(`Window: ${report.startDate} through ${report.endDate}`);
-  lines.push(`Provider: ${report.provider} flat files only`);
+  if (report.warmupStartDate && report.warmupStartDate < report.startDate) {
+    lines.push(`Indicator warmup: ${report.warmupStartDate} through ${report.startDate}`);
+  }
+  lines.push(`Provider: ${report.provider} local data`);
   lines.push(`Universe size: ${report.symbols.length}`);
   lines.push(`Initial capital: $${report.initialCapital.toLocaleString('en-US')}`);
   lines.push('');
@@ -88,11 +106,22 @@ function markdownReport(report) {
   lines.push('');
   lines.push(`## Results`);
   lines.push('');
-  lines.push('| Strategy | Return | Max DD | STO | BTC | Assignments | Premium | Buybacks | Ending open |');
-  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |');
+  lines.push('| Strategy | Return | CAGR | Vol | Sharpe | Calmar | Max DD | STO | Assignments | Premium/yr | Ending open |');
+  lines.push('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |');
   report.strategies.forEach((strategy) => {
     const assignments = strategy.putAssignments + strategy.putAssignmentLiquidations + strategy.callAssignments;
-    lines.push(`| ${strategy.id} | ${pct(strategy.totalReturn)} | ${pct(strategy.maxDrawdown)} | ${strategy.sellTradeCount} | ${strategy.buyToCloseCount || 0} | ${assignments} | $${strategy.premiumCollected.toLocaleString('en-US')} | $${(strategy.buybackCost || 0).toLocaleString('en-US')} | ${strategy.endingOpenOptions} |`);
+    lines.push(`| ${strategy.id} | ${pct(strategy.totalReturn)} | ${pct(strategy.cagr)} | ${pct(strategy.annualizedVolatility)} | ${Number.isFinite(strategy.sharpe) ? strategy.sharpe.toFixed(2) : 'n/a'} | ${Number.isFinite(strategy.calmar) ? strategy.calmar.toFixed(2) : 'n/a'} | ${pct(strategy.maxDrawdown)} | ${strategy.sellTradeCount} | ${assignments} | ${pct(strategy.premiumCollectedAnnualizedPct)} | ${strategy.endingOpenOptions} |`);
+  });
+  lines.push('');
+  lines.push(`## Tail Diagnostics`);
+  report.strategies.forEach((strategy) => {
+    lines.push('');
+    lines.push(`### ${strategy.id}`);
+    lines.push('');
+    lines.push(`- Skew: ${Number.isFinite(strategy.skew) ? strategy.skew.toFixed(3) : 'n/a'}`);
+    lines.push(`- Excess kurtosis: ${Number.isFinite(strategy.excessKurtosis) ? strategy.excessKurtosis.toFixed(3) : 'n/a'}`);
+    lines.push(`- CVaR(5% daily): ${pct(strategy.cvar5)}`);
+    lines.push(`- Worst month: ${strategy.worstMonth ? `${strategy.worstMonth.month} ${pct(strategy.worstMonth.return)}` : 'n/a'}`);
   });
   lines.push('');
   lines.push(`## Monthly Returns`);
@@ -131,6 +160,9 @@ function compactConsole(report) {
     topStrategies: report.strategies.slice(0, 6).map((strategy) => ({
       id: strategy.id,
       totalReturn: strategy.totalReturn,
+      cagr: strategy.cagr,
+      sharpe: strategy.sharpe,
+      calmar: strategy.calmar,
       maxDrawdown: strategy.maxDrawdown,
       sellTradeCount: strategy.sellTradeCount,
       assignments: strategy.putAssignments + strategy.putAssignmentLiquidations + strategy.callAssignments,
@@ -148,6 +180,7 @@ async function main() {
   const symbols = loadSymbols(args).slice(0, limit);
   const initialCapital = asNumber(args.capital, DEFAULT_INITIAL_CAPITAL);
   const strategyConfigs = filterStrategies(args.strategies, strategySuite(args.suite));
+  const vixByDate = args['disable-vix-cache'] ? null : loadVixByDate(args['vix-daily-path']);
   const outputPath = path.resolve(
     args.output || path.join(PROJECT_ROOT, 'artifacts', `wheel-strategy-backtest-${startDate}-${endDate}.json`),
   );
@@ -175,6 +208,8 @@ async function main() {
     config,
     startDate,
     endDate,
+    warmupStartDate: args['warmup-start-date'] || args.warmup || null,
+    vixByDate,
     symbols,
     strategyConfigs,
     initialCapital,

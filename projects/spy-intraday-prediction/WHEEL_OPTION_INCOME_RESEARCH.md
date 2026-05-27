@@ -168,3 +168,51 @@ Caution:
 8. Test put spreads as defined-risk variants for high-IV names.
 9. Stress fills with larger premium haircuts and higher commissions.
 10. Run monthly walk-forward selection between the simple monthly wheel and the low-drawdown weekly IV/RV wheel.
+
+## Strict Cross-Sectional Wheel Spec — 2026-05-27
+
+The clean base strategy prompt now has a fail-loud preflight entrypoint:
+
+- `projects/spy-intraday-prediction/src/cross-sectional-wheel-strict.js`
+- `projects/spy-intraday-prediction/scripts/backtest-cross-sectional-wheel-strict.js`
+- `projects/spy-intraday-prediction/test/cross-sectional-wheel-strict.test.js`
+
+Command used against local Massive data:
+
+```bash
+node projects/spy-intraday-prediction/scripts/backtest-cross-sectional-wheel-strict.js \
+  --start-date 2025-01-02 \
+  --end-date 2026-04-27 \
+  --commission 0.65 \
+  --slippage-bps 1
+```
+
+Initial result: **FAIL**, by design. The local cache can support a non-compliant proxy diagnostic, but not the honest baseline requested in the prompt.
+
+Initial blocking inputs:
+
+- Full point-in-time S&P 500 membership, including removed/delisted constituents.
+- Executable historical option pricing with bid/ask, or a per-name IV surface plus explicit spread/slippage/commission costs.
+- Dividend source for held assigned shares.
+- Daily risk-free/T-bill rate source for idle cash.
+
+After searching public/vendor sources, the following runtime inputs were added:
+
+- Point-in-time S&P 500 proxy: `runtime/cross-sectional-wheel-sources/sp500-historical-components-fja05680-2026-01-17.csv`.
+- Risk-free rate: `runtime/cross-sectional-wheel-sources/risk-free-dgs3mo-fred.csv`.
+- Dividends: `runtime/cross-sectional-wheel-sources/massive-dividends-sp500pit-2025-01-02-2026-05-26.csv`.
+
+The S&P 500 file is a public research proxy, not an exchange/vendor-certified constituent feed. It is useful for a guarded research run, but the most defensible production-grade sources remain CRSP/Compustat/S&P/Norgate-style licensed histories.
+
+The local Massive account can fetch dividends, option trades, option minute aggregates, and option day aggregates. It is **not entitled** to historical option quotes: REST `/v3/quotes/{optionsTicker}` returned `NOT_AUTHORIZED`, and S3 quote-prefix probes returned `403`. Therefore the strict preflight with web/runtime sources now fails only on:
+
+- `missing_executable_option_pricing_source`
+
+Local Massive coverage for `2025-01-02` through `2026-04-27` has 329 open days and common stock/option aggregate data through `2026-05-26`, but the history is still short of the 5-year target. The strict preflight therefore refuses to headline any profitability result and writes the current blocker report to:
+
+- `projects/spy-intraday-prediction/artifacts/cross-sectional-wheel-strict-preflight-2025-01-02-2026-04-27.json`
+- `projects/spy-intraday-prediction/artifacts/cross-sectional-wheel-strict-preflight-2025-01-02-2026-04-27.md`
+- `projects/spy-intraday-prediction/artifacts/cross-sectional-wheel-strict-preflight-with-web-sources-2025-01-02-2026-05-26.json`
+- `projects/spy-intraday-prediction/artifacts/cross-sectional-wheel-strict-preflight-with-web-sources-2025-01-02-2026-05-26.md`
+
+Profitability work should wait until the strict gate passes. The first honest comparisons should be base vs prior-day VIX overlay, then walk-forward sweeps over put/call moneyness, RSI gates, expiry, max positions, and per-position cap. Any profitable variant must be compared against the older current-members/aggregate-price proxy to quantify how much edge disappears after survivorship bias and real costs.
