@@ -57,10 +57,10 @@ Securitized Credit,CMBS,Commercial MBS,Conduit/SASB,CMBS senior,Domestic,CMBS*,5
 Securitized Credit,ABS,Consumer ABS,Auto/card/student,Consumer ABS,Domestic,-,5-6%,3,Daily,Consumer credit cycle,—,N/A,N/A,N/A,no liquid proxy
 Securitized Credit,ABS,Esoteric ABS,Aircraft/royalty/data,Esoteric ABS,Domestic,-,6-8%,4,Periodic,Niche collateral risk,—,N/A,N/A,N/A,no liquid proxy
 Securitized Credit,ABS,SBA loans,Govt-guaranteed,SBA pools,Domestic,-,5-6%,2,Daily,"Small-business, govt-backed",—,N/A,N/A,N/A,no liquid proxy
-Securitized Credit,CLO,CLO debt,AAA tranche,Top tranche,Domestic,"JAAA,AAA,CLOA",5-6%,1,Daily,Spread normalize; near-zero default,JAAA,N/A,N/A,N/A,not retrieved
+Securitized Credit,CLO,CLO debt,AAA tranche,Top tranche,Domestic,"JAAA,AAA,CLOA",5-6%,1,Daily,Spread normalize; near-zero default,JAAA,5.20%,N/A,4.7%,aggregators ~May 2026
 Securitized Credit,CLO,CLO debt,AA tranche,Senior mezz,Domestic,-,6%,2,Daily,"Slightly subordinated, floating",—,N/A,N/A,N/A,no liquid proxy
 Securitized Credit,CLO,CLO debt,A tranche,Mezz,Domestic,-,6-7%,2,Daily,Floating-rate mezzanine,—,N/A,N/A,N/A,no liquid proxy
-Securitized Credit,CLO,CLO debt,BBB tranche,Mezz,Domestic,"JBBB,CLOZ",6-7%,2,Daily,Spread tightening + floating rate,JBBB,N/A,N/A,N/A,not retrieved
+Securitized Credit,CLO,CLO debt,BBB tranche,Mezz,Domestic,"JBBB,CLOZ",6-7%,2,Daily,Spread tightening + floating rate,JBBB,6.00%,N/A,N/A,aggregators ~May 2026 (fund <5y)
 Securitized Credit,CLO,CLO debt,BB tranche,Lower mezz,Domestic,CLOZ,8-9%,4,Daily,First-loss-adjacent; higher beta,CLOZ,N/A,N/A,N/A,not retrieved
 Securitized Credit,CLO,CLO equity,Residual/equity,First-loss,Domestic,"ECC,OXLC",15-20%+,6,Daily,Everything-goes-right residual,ECC,N/A,N/A,N/A,not retrieved
 Securitized Credit,CDO/other,Synthetic/other structured,CDO/CRT/CFO,Structured tranches,Domestic,-,varies,5,Periodic,Tranche-specific risk,—,N/A,N/A,N/A,no liquid proxy
@@ -77,8 +77,8 @@ Preferred & Hybrid,Baby bonds,Exchange-traded debt,$25 baby bonds,Senior to pfd,
 Preferred & Hybrid,Trust preferreds,TruPS,Bank trust pfd,Hybrid capital,Domestic,-,6-8%,3,Daily,Deferrable hybrid,—,N/A,N/A,N/A,no liquid proxy
 Preferred & Hybrid,CoCos,Contingent convertibles,AT1 bank capital,CoCo bonds,Developed ex-US,-,7-9%,5,Daily,Write-down/conversion trigger risk,—,N/A,N/A,N/A,no liquid proxy
 Preferred & Hybrid,Convertible pfd,Convertible preferreds,Equity-linked pfd,Convert pfd,Domestic,-,5-7%,4,Daily,Hybrid equity upside,—,N/A,N/A,N/A,no liquid proxy
-Private Credit,BDC,Listed BDC,Top-tier direct lender,Senior direct lending,Domestic,"ARCC,MAIN,OBDC",9-10%,5,Daily,Direct-lending equity; soft marks,ARCC,N/A,N/A,N/A,not retrieved
-Private Credit,BDC,BDC basket,Diversified BDC,BDC index,Domestic,"BIZD,PBDC",9-11%,5,Daily,Private-credit beta,BIZD,N/A,N/A,N/A,not retrieved
+Private Credit,BDC,Listed BDC,Top-tier direct lender,Senior direct lending,Domestic,"ARCC,MAIN,OBDC",9-10%,5,Daily,Direct-lending equity; soft marks,ARCC,10.16%,N/A,N/A,aggregators ~May 2026
+Private Credit,BDC,BDC basket,Diversified BDC,BDC index,Domestic,"BIZD,PBDC",9-11%,5,Daily,Private-credit beta,BIZD,12.51%,N/A,5.2%,aggregators ~May 2026
 Private Credit,BDC,Venture/specialty BDC,Venture debt,Tech lending BDC,Domestic,"HTGC,TRIN",10-12%,5,Daily,Higher-risk borrowers,HTGC,N/A,N/A,N/A,not retrieved
 Private Credit,Interval funds,Private credit interval,Non-traded,Direct lending interval,Domestic,-,8-10%,5,Periodic,Quarterly liquidity gates,—,N/A,N/A,N/A,no liquid proxy
 Private Credit,Private debt funds,LP direct lending,Drawdown funds,Senior/unitranche,Domestic,-,9-12%,5,Illiquid,Lockup; J-curve,—,N/A,N/A,N/A,no liquid proxy
@@ -93,8 +93,8 @@ Equity Size/Style/Factor,Broad market,Mid cap,S&P 400,Mid blend,Domestic,"IJH,VO
 Equity Size/Style/Factor,Broad market,Small cap,Russell 2000,Small blend,Domestic,"IWM,VB,IJR",1%,5,Intraday,Small-cap/economic beta,IWM,0.96%,N/A,3.7%,aggregators ~May 2026
 Equity Size/Style/Factor,Broad market,Micro cap,Micro-cap index,Micro,Domestic,IWC,1%,5,Daily,Illiquidity premium,IWC,N/A,N/A,N/A,not retrieved
 Equity Size/Style/Factor,Broad market,Equal weight,S&P 500 EW,Equal-weight,Domestic,RSP,1-2%,4,Intraday,De-concentrated beta,RSP,N/A,N/A,N/A,not retrieved
-Equity Size/Style/Factor,Style,Growth,Large growth,Growth tilt,Domestic,"VUG,IWF,QQQ",0-1%,4,Intraday,Duration/long-growth bet,VUG,N/A,N/A,N/A,not retrieved
-Equity Size/Style/Factor,Style,Value,Large value,Value tilt,Domestic,"VTV,IWD",2-3%,4,Intraday,Cheapness factor,VTV,N/A,N/A,N/A,not retrieved
+Equity Size/Style/Factor,Style,Growth,Large growth,Growth tilt,Domestic,"VUG,IWF,QQQ",0-1%,4,Intraday,Duration/long-growth bet,VUG,0.41%,N/A,15.0%,aggregators ~May 2026
+Equity Size/Style/Factor,Style,Value,Large value,Value tilt,Domestic,"VTV,IWD",2-3%,4,Intraday,Cheapness factor,VTV,2.05%,N/A,11.3%,aggregators ~May 2026
 Equity Size/Style/Factor,Style,Small value,Small-cap value,SCV,Domestic,"VBR,AVUV",1-2%,5,Intraday,Classic value+size premium,VBR,N/A,N/A,N/A,not retrieved
 Equity Size/Style/Factor,Style,Dividend growth,Quality dividends,Div growers,Domestic,"SCHD,VIG,DGRO",2-3%,3,Intraday,Quality income compounding,SCHD,3.25%,N/A,9.4%,aggregators ~May 2026
 Equity Size/Style/Factor,Style,High dividend,Yield tilt,High div,Domestic,"HDV,SPYD,VYM",3-4%,3,Intraday,Income-tilted equity,HDV,N/A,N/A,N/A,not retrieved
@@ -111,14 +111,14 @@ Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Co
 Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Oil & Gas Refining & Marketing,Global,CRAK,varies,4,Intraday,GICS sub-industry; pure-play ETF,CRAK,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Oil & Gas Storage & Transportation,Global,"AMLP,MLPX",varies,4,Intraday,GICS sub-industry; pure-play ETF,AMLP,7.56%,N/A,18.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Coal & Consumable Fuels,Global,~XLE,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLE,2.70%,N/A,21.3%,aggregators ~May 2026
-Global Equity Sectors (GICS),Materials,Materials,Chemicals,Commodity Chemicals,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Chemicals,Diversified Chemicals,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Chemicals,Fertilizers & Agricultural Chemicals,Global,"MOO,VEGI",varies,4,Intraday,GICS sub-industry; pure-play ETF,MOO,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Chemicals,Industrial Gases,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Chemicals,Specialty Chemicals,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Materials,Materials,Chemicals,Commodity Chemicals,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
+Global Equity Sectors (GICS),Materials,Materials,Chemicals,Diversified Chemicals,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
+Global Equity Sectors (GICS),Materials,Materials,Chemicals,Fertilizers & Agricultural Chemicals,Global,"MOO,VEGI",varies,4,Intraday,GICS sub-industry; pure-play ETF,MOO,2.12%,N/A,N/A,aggregators ~May 2026
+Global Equity Sectors (GICS),Materials,Materials,Chemicals,Industrial Gases,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
+Global Equity Sectors (GICS),Materials,Materials,Chemicals,Specialty Chemicals,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Construction Materials,Construction Materials,Global,PKB,varies,4,Intraday,GICS sub-industry; pure-play ETF,PKB,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Containers & Packaging,"Metal, Glass & Plastic Containers",Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Containers & Packaging,Paper & Plastic Packaging Products & Materials,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Materials,Materials,Containers & Packaging,"Metal, Glass & Plastic Containers",Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
+Global Equity Sectors (GICS),Materials,Materials,Containers & Packaging,Paper & Plastic Packaging Products & Materials,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Aluminum,Global,~PICK,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),PICK,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Diversified Metals & Mining,Global,"XME,PICK",varies,4,Intraday,GICS sub-industry; pure-play ETF,XME,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Copper,Global,COPX,varies,4,Intraday,GICS sub-industry; pure-play ETF,COPX,N/A,N/A,N/A,not retrieved
@@ -128,14 +128,14 @@ Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Silver,Global,S
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Steel,Global,SLX,varies,4,Intraday,GICS sub-industry; pure-play ETF,SLX,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Materials,Materials,Paper & Forest Products,Forest Products,Global,"WOOD,CUT",varies,4,Intraday,GICS sub-industry; pure-play ETF,WOOD,2.75%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Paper & Forest Products,Paper Products,Global,WOOD,varies,4,Intraday,GICS sub-industry; pure-play ETF,WOOD,2.75%,N/A,N/A,aggregators ~May 2026
-Global Equity Sectors (GICS),Industrials,Capital Goods,Aerospace & Defense,Aerospace & Defense,Global,"ITA,PPA,XAR",varies,4,Intraday,GICS sub-industry; pure-play ETF,ITA,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Industrials,Capital Goods,Aerospace & Defense,Aerospace & Defense,Global,"ITA,PPA,XAR",varies,4,Intraday,GICS sub-industry; pure-play ETF,ITA,1.29%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Capital Goods,Building Products,Building Products,Global,PKB,varies,4,Intraday,GICS sub-industry; pure-play ETF,PKB,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Industrials,Capital Goods,Construction & Engineering,Construction & Engineering,Global,PAVE,varies,4,Intraday,GICS sub-industry; pure-play ETF,PAVE,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Industrials,Capital Goods,Electrical Equipment,Electrical Components & Equipment,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Capital Goods,Electrical Equipment,Heavy Electrical Equipment,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Capital Goods,Industrial Conglomerates,Industrial Conglomerates,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Capital Goods,Machinery,Construction Machinery & Heavy Transportation Equipment,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
-Global Equity Sectors (GICS),Industrials,Capital Goods,Machinery,Agricultural & Farm Machinery,Global,MOO,varies,4,Intraday,GICS sub-industry; pure-play ETF,MOO,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Industrials,Capital Goods,Machinery,Agricultural & Farm Machinery,Global,MOO,varies,4,Intraday,GICS sub-industry; pure-play ETF,MOO,2.12%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Capital Goods,Machinery,Industrial Machinery & Supplies & Components,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Capital Goods,Trading Companies & Distributors,Trading Companies & Distributors,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Commercial & Professional Services,Commercial Services & Supplies,Commercial Printing,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
@@ -146,15 +146,15 @@ Global Equity Sectors (GICS),Industrials,Commercial & Professional Services,Comm
 Global Equity Sectors (GICS),Industrials,Commercial & Professional Services,Professional Services,Human Resource & Employment Services,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Commercial & Professional Services,Professional Services,Research & Consulting Services,Global,~XLI,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLI,1.06%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Commercial & Professional Services,Professional Services,Data Processing & Outsourced Services,Global,"IPAY,FINX",varies,4,Intraday,GICS sub-industry; pure-play ETF,IPAY,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Air Freight & Logistics,Air Freight & Logistics,Global,IYT,varies,4,Intraday,GICS sub-industry; pure-play ETF,IYT,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Passenger Airlines,Passenger Airlines,Global,JETS,varies,4,Intraday,GICS sub-industry; pure-play ETF,JETS,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Industrials,Transportation,Air Freight & Logistics,Air Freight & Logistics,Global,IYT,varies,4,Intraday,GICS sub-industry; pure-play ETF,IYT,0.99%,N/A,7.7%,aggregators ~May 2026
+Global Equity Sectors (GICS),Industrials,Transportation,Passenger Airlines,Passenger Airlines,Global,JETS,varies,4,Intraday,GICS sub-industry; pure-play ETF,JETS,0.86%,N/A,1.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Industrials,Transportation,Marine Transportation,Marine Transportation,Global,"BOAT,SEA",varies,4,Intraday,GICS sub-industry; pure-play ETF,BOAT,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Ground Transportation,Rail Transportation,Global,IYT,varies,4,Intraday,GICS sub-industry; pure-play ETF,IYT,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Ground Transportation,Cargo Ground Transportation,Global,IYT,varies,4,Intraday,GICS sub-industry; pure-play ETF,IYT,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Ground Transportation,Passenger Ground Transportation,Global,~IYT,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IYT,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Transportation Infrastructure,Airport Services,Global,~IGF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGF,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Transportation Infrastructure,Highways & Railtracks,Global,~IGF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGF,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Industrials,Transportation,Transportation Infrastructure,Marine Ports & Services,Global,~IGF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGF,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Industrials,Transportation,Ground Transportation,Rail Transportation,Global,IYT,varies,4,Intraday,GICS sub-industry; pure-play ETF,IYT,0.99%,N/A,7.7%,aggregators ~May 2026
+Global Equity Sectors (GICS),Industrials,Transportation,Ground Transportation,Cargo Ground Transportation,Global,IYT,varies,4,Intraday,GICS sub-industry; pure-play ETF,IYT,0.99%,N/A,7.7%,aggregators ~May 2026
+Global Equity Sectors (GICS),Industrials,Transportation,Ground Transportation,Passenger Ground Transportation,Global,~IYT,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IYT,0.99%,N/A,7.7%,aggregators ~May 2026
+Global Equity Sectors (GICS),Industrials,Transportation,Transportation Infrastructure,Airport Services,Global,~IGF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGF,2.89%,N/A,N/A,aggregators ~May 2026
+Global Equity Sectors (GICS),Industrials,Transportation,Transportation Infrastructure,Highways & Railtracks,Global,~IGF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGF,2.89%,N/A,N/A,aggregators ~May 2026
+Global Equity Sectors (GICS),Industrials,Transportation,Transportation Infrastructure,Marine Ports & Services,Global,~IGF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGF,2.89%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Automobiles & Components,Automobile Components,Automotive Parts & Equipment,Global,CARZ,varies,4,Intraday,GICS sub-industry; pure-play ETF,CARZ,0.40%,N/A,12.8%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Automobiles & Components,Automobile Components,Tires & Rubber,Global,~CARZ,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),CARZ,0.40%,N/A,12.8%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Automobiles & Components,Automobiles,Automobile Manufacturers,Global,"CARZ,DRIV",varies,4,Intraday,GICS sub-industry; pure-play ETF,CARZ,0.40%,N/A,12.8%,aggregators ~May 2026
@@ -175,11 +175,11 @@ Global Equity Sectors (GICS),Consumer Discretionary,Consumer Services,"Hotels, R
 Global Equity Sectors (GICS),Consumer Discretionary,Consumer Services,Diversified Consumer Services,Education Services,Global,~XLY,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLY,0.72%,N/A,7.0%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Consumer Services,Diversified Consumer Services,Specialized Consumer Services,Global,~XLY,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLY,0.72%,N/A,7.0%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Distributors,Distributors,Global,~XLY,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLY,0.72%,N/A,7.0%,aggregators ~May 2026
-Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Broadline Retail,Broadline Retail,Global,"XRT,RTH",varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Apparel Retail,Global,XRT,varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Computer & Electronics Retail,Global,XRT,varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Broadline Retail,Broadline Retail,Global,"XRT,RTH",varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,1.01%,N/A,-0.8%,aggregators ~May 2026
+Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Apparel Retail,Global,XRT,varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,1.01%,N/A,-0.8%,aggregators ~May 2026
+Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Computer & Electronics Retail,Global,XRT,varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,1.01%,N/A,-0.8%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Home Improvement Retail,Global,XHB,varies,4,Intraday,GICS sub-industry; pure-play ETF,XHB,0.87%,N/A,13.9%,aggregators ~May 2026
-Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Specialty Stores,Global,XRT,varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Specialty Stores,Global,XRT,varies,4,Intraday,GICS sub-industry; pure-play ETF,XRT,1.01%,N/A,-0.8%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Automotive Retail,Global,~CARZ,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),CARZ,0.40%,N/A,12.8%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Discretionary,Consumer Discretionary Distribution & Retail,Specialty Retail,Homefurnishing Retail,Global,XHB,varies,4,Intraday,GICS sub-industry; pure-play ETF,XHB,0.87%,N/A,13.9%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Staples,Consumer Staples Distribution & Retail,Consumer Staples Distribution & Retail,Drug Retail,Global,~XLP,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLP,2.16%,N/A,6.4%,aggregators ~May 2026
@@ -189,13 +189,13 @@ Global Equity Sectors (GICS),Consumer Staples,Consumer Staples Distribution & Re
 Global Equity Sectors (GICS),Consumer Staples,"Food, Beverage & Tobacco",Beverages,Brewers,Global,PBJ,varies,4,Intraday,GICS sub-industry; pure-play ETF,PBJ,1.50%,N/A,6.9%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Staples,"Food, Beverage & Tobacco",Beverages,Distillers & Vintners,Global,PBJ,varies,4,Intraday,GICS sub-industry; pure-play ETF,PBJ,1.50%,N/A,6.9%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Staples,"Food, Beverage & Tobacco",Beverages,Soft Drinks & Non-alcoholic Beverages,Global,PBJ,varies,4,Intraday,GICS sub-industry; pure-play ETF,PBJ,1.50%,N/A,6.9%,aggregators ~May 2026
-Global Equity Sectors (GICS),Consumer Staples,"Food, Beverage & Tobacco",Food Products,Agricultural Products & Services,Global,"MOO,PBJ",varies,4,Intraday,GICS sub-industry; pure-play ETF,MOO,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Consumer Staples,"Food, Beverage & Tobacco",Food Products,Agricultural Products & Services,Global,"MOO,PBJ",varies,4,Intraday,GICS sub-industry; pure-play ETF,MOO,2.12%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Staples,"Food, Beverage & Tobacco",Food Products,Packaged Foods & Meats,Global,PBJ,varies,4,Intraday,GICS sub-industry; pure-play ETF,PBJ,1.50%,N/A,6.9%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Staples,"Food, Beverage & Tobacco",Tobacco,Tobacco,Global,~XLP,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLP,2.16%,N/A,6.4%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Staples,Household & Personal Products,Household Products,Household Products,Global,~XLP,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLP,2.16%,N/A,6.4%,aggregators ~May 2026
 Global Equity Sectors (GICS),Consumer Staples,Household & Personal Products,Personal Care Products,Personal Care Products,Global,~XLP,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLP,2.16%,N/A,6.4%,aggregators ~May 2026
-Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health Care Equipment & Supplies,Health Care Equipment,Global,"IHI,XHE",varies,4,Intraday,GICS sub-industry; pure-play ETF,IHI,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health Care Equipment & Supplies,Health Care Supplies,Global,IHI,varies,4,Intraday,GICS sub-industry; pure-play ETF,IHI,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health Care Equipment & Supplies,Health Care Equipment,Global,"IHI,XHE",varies,4,Intraday,GICS sub-industry; pure-play ETF,IHI,0.44%,N/A,N/A,aggregators ~May 2026
+Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health Care Equipment & Supplies,Health Care Supplies,Global,IHI,varies,4,Intraday,GICS sub-industry; pure-play ETF,IHI,0.44%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health Care Providers & Services,Health Care Distributors,Global,IHF,varies,4,Intraday,GICS sub-industry; pure-play ETF,IHF,1.11%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health Care Providers & Services,Health Care Services,Global,IHF,varies,4,Intraday,GICS sub-industry; pure-play ETF,IHF,1.11%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health Care Providers & Services,Health Care Facilities,Global,IHF,varies,4,Intraday,GICS sub-industry; pure-play ETF,IHF,1.11%,N/A,N/A,aggregators ~May 2026
@@ -204,12 +204,12 @@ Global Equity Sectors (GICS),Health Care,Health Care Equipment & Services,Health
 Global Equity Sectors (GICS),Health Care,"Pharmaceuticals, Biotechnology & Life Sciences",Biotechnology,Biotechnology,Global,"XBI,IBB",varies,4,Intraday,GICS sub-industry; pure-play ETF,XBI,1.20%,N/A,1.1%,aggregators ~May 2026
 Global Equity Sectors (GICS),Health Care,"Pharmaceuticals, Biotechnology & Life Sciences",Pharmaceuticals,Pharmaceuticals,Global,"PJP,IHE",varies,4,Intraday,GICS sub-industry; pure-play ETF,PJP,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Health Care,"Pharmaceuticals, Biotechnology & Life Sciences",Life Sciences Tools & Services,Life Sciences Tools & Services,Global,~XLV,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLV,1.60%,N/A,5.1%,aggregators ~May 2026
-Global Equity Sectors (GICS),Financials,Banks,Banks,Diversified Banks,Global,KBE,varies,4,Intraday,GICS sub-industry; pure-play ETF,KBE,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Financials,Banks,Banks,Diversified Banks,Global,KBE,varies,4,Intraday,GICS sub-industry; pure-play ETF,KBE,2.50%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Financials,Banks,Banks,Regional Banks,Global,KRE,varies,4,Intraday,GICS sub-industry; pure-play ETF,KRE,2.07%,N/A,4.6%,aggregators ~May 2026
 Global Equity Sectors (GICS),Financials,Financial Services,Financial Services,Diversified Financial Services,Global,~XLF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLF,1.38%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Financials,Financial Services,Financial Services,Multi-Sector Holdings,Global,~XLF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLF,1.38%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Financials,Financial Services,Financial Services,Specialized Finance,Global,~XLF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLF,1.38%,N/A,N/A,aggregators ~May 2026
-Global Equity Sectors (GICS),Financials,Financial Services,Financial Services,Commercial & Residential Mortgage Finance,Global,REM,varies,4,Intraday,GICS sub-industry; pure-play ETF,REM,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Financials,Financial Services,Financial Services,Commercial & Residential Mortgage Finance,Global,REM,varies,4,Intraday,GICS sub-industry; pure-play ETF,REM,9.35%,N/A,-1.8%,aggregators ~May 2026
 Global Equity Sectors (GICS),Financials,Financial Services,Financial Services,Transaction & Payment Processing Services,Global,"IPAY,FINX",varies,4,Intraday,GICS sub-industry; pure-play ETF,IPAY,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Financials,Financial Services,Consumer Finance,Consumer Finance,Global,~XLF,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLF,1.38%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Financials,Insurance,Insurance,Insurance Brokers,Global,"KIE,IAK",varies,4,Intraday,GICS sub-industry; pure-play ETF,KIE,1.94%,N/A,9.9%,aggregators ~May 2026
@@ -217,10 +217,10 @@ Global Equity Sectors (GICS),Financials,Insurance,Insurance,Life & Health Insura
 Global Equity Sectors (GICS),Financials,Insurance,Insurance,Multi-line Insurance,Global,KIE,varies,4,Intraday,GICS sub-industry; pure-play ETF,KIE,1.94%,N/A,9.9%,aggregators ~May 2026
 Global Equity Sectors (GICS),Financials,Insurance,Insurance,Property & Casualty Insurance,Global,"KBWP,KIE",varies,4,Intraday,GICS sub-industry; pure-play ETF,KBWP,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Financials,Insurance,Insurance,Reinsurance,Global,~KIE,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),KIE,1.94%,N/A,9.9%,aggregators ~May 2026
-Global Equity Sectors (GICS),Information Technology,Software & Services,IT Services,IT Consulting & Other Services,Global,~IGV,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGV,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Information Technology,Software & Services,IT Services,IT Consulting & Other Services,Global,~IGV,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),IGV,0.03%,N/A,5.3%,aggregators ~May 2026
 Global Equity Sectors (GICS),Information Technology,Software & Services,IT Services,Internet Services & Infrastructure,Global,FDN,varies,4,Intraday,GICS sub-industry; pure-play ETF,FDN,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Information Technology,Software & Services,Software,Application Software,Global,IGV,varies,4,Intraday,GICS sub-industry; pure-play ETF,IGV,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Information Technology,Software & Services,Software,Systems Software,Global,IGV,varies,4,Intraday,GICS sub-industry; pure-play ETF,IGV,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Information Technology,Software & Services,Software,Application Software,Global,IGV,varies,4,Intraday,GICS sub-industry; pure-play ETF,IGV,0.03%,N/A,5.3%,aggregators ~May 2026
+Global Equity Sectors (GICS),Information Technology,Software & Services,Software,Systems Software,Global,IGV,varies,4,Intraday,GICS sub-industry; pure-play ETF,IGV,0.03%,N/A,5.3%,aggregators ~May 2026
 Global Equity Sectors (GICS),Information Technology,Technology Hardware & Equipment,Communications Equipment,Communications Equipment,Global,IYZ,varies,4,Intraday,GICS sub-industry; pure-play ETF,IYZ,1.59%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Information Technology,Technology Hardware & Equipment,"Technology Hardware, Storage & Peripherals","Technology Hardware, Storage & Peripherals",Global,~XLK,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLK,0.42%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Information Technology,Technology Hardware & Equipment,"Electronic Equipment, Instruments & Components",Electronic Equipment & Instruments,Global,~XLK,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLK,0.42%,N/A,N/A,aggregators ~May 2026
@@ -244,7 +244,7 @@ Global Equity Sectors (GICS),Utilities,Utilities,Gas Utilities,Gas Utilities,Glo
 Global Equity Sectors (GICS),Utilities,Utilities,Multi-Utilities,Multi-Utilities,Global,~XLU,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLU,2.80%,N/A,9.4%,aggregators ~May 2026
 Global Equity Sectors (GICS),Utilities,Utilities,Water Utilities,Water Utilities,Global,"PHO,FIW",varies,4,Intraday,GICS sub-industry; pure-play ETF,PHO,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Utilities,Utilities,Independent Power & Renewable Electricity Producers,Independent Power Producers & Energy Traders,Global,~XLU,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLU,2.80%,N/A,9.4%,aggregators ~May 2026
-Global Equity Sectors (GICS),Utilities,Utilities,Independent Power & Renewable Electricity Producers,Renewable Electricity,Global,"ICLN,TAN",varies,4,Intraday,GICS sub-industry; pure-play ETF,ICLN,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Utilities,Utilities,Independent Power & Renewable Electricity Producers,Renewable Electricity,Global,"ICLN,TAN",varies,4,Intraday,GICS sub-industry; pure-play ETF,ICLN,1.20%,N/A,1.1%,aggregators ~May 2026
 Global Equity Sectors (GICS),Real Estate,Equity Real Estate Investment Trusts (REITs),Equity REITs,Diversified REITs,Global,VNQ,varies,4,Intraday,GICS sub-industry; pure-play ETF,VNQ,3.64%,N/A,N/A,aggregators ~May 2026
 Global Equity Sectors (GICS),Real Estate,Equity Real Estate Investment Trusts (REITs),Equity REITs,Industrial REITs,Global,INDS,varies,4,Intraday,GICS sub-industry; pure-play ETF,INDS,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Real Estate,Equity Real Estate Investment Trusts (REITs),Equity REITs,Hotel & Resort REITs,Global,~VNQ,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),VNQ,3.64%,N/A,N/A,aggregators ~May 2026
@@ -265,19 +265,19 @@ Global Equity Sectors (GICS),Real Estate,Real Estate Management & Development,Re
 Country/Regional Equity,Region/aggregate,Developed ex-US,EAFE,-,Developed ex-US,"VEA,IEFA,EFA",2-4%,4,Intraday,Regional equity beta,VEA,2.66%,N/A,9.6%,aggregators ~May 2026
 Country/Regional Equity,Region/aggregate,Developed ex-US,DM small cap,-,Developed ex-US,"SCZ,GWX",2-4%,5,Intraday,Regional equity beta,SCZ,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Developed ex-US,DM FX-hedged,-,Developed ex-US,"HEFA,HEDJ",2-4%,4,Intraday,Regional equity beta,HEFA,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Region/aggregate,Europe,Europe broad,-,Developed ex-US,"VGK,FEZ",2-4%,4,Intraday,Regional equity beta,VGK,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Region/aggregate,Europe,Europe broad,-,Developed ex-US,"VGK,FEZ",2-4%,4,Intraday,Regional equity beta,VGK,2.85%,N/A,N/A,aggregators ~May 2026
 Country/Regional Equity,Region/aggregate,Asia-Pacific,Asia ex-Japan,-,Global,"AAXJ,VPL",2-4%,5,Intraday,Regional equity beta,AAXJ,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Emerging markets,EM broad,-,EM,"VWO,IEMG,EEM",2-4%,5,Intraday,Regional equity beta,VWO,2.42%,N/A,5.7%,aggregators ~May 2026
 Country/Regional Equity,Region/aggregate,Emerging markets,EM ex-China,-,EM,EMXC,2-4%,5,Intraday,Regional equity beta,EMXC,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Emerging markets,EM small cap,-,EM,"EWX,DGS",2-4%,5,Intraday,Regional equity beta,EWX,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Frontier markets,Frontier broad,-,Frontier,"FM,FRN",2-4%,6,Intraday,Regional equity beta,FM,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Region/aggregate,Global,All-world,-,Global,"ACWI,VT",2-4%,4,Intraday,Regional equity beta,ACWI,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Region/aggregate,Global,All-world,-,Global,"ACWI,VT",2-4%,4,Intraday,Regional equity beta,ACWI,1.45%,N/A,10.9%,aggregators ~May 2026
 Country/Regional Equity,Region/aggregate,Global,Global ex-US,-,Global,"VXUS,CWI",2-4%,4,Intraday,Regional equity beta,VXUS,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Global,Global dividend,-,Global,"IDV,VIGI,VYMI",2-4%,3,Intraday,Regional equity beta,IDV,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,United States,Country equity,-,Domestic,"SPY,VTI",1-5%,4,Intraday,Country-specific macro/FX/political risk,SPY,1.07%,N/A,13.8%,aggregators ~May 2026
 Country/Regional Equity,Single country,Canada,Country equity,-,Developed ex-US,EWC,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWC,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,United Kingdom,Country equity,-,Developed ex-US,"EWU,FLGB",1-5%,4,Intraday,Country-specific macro/FX/political risk,EWU,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Germany,Country equity,-,Developed ex-US,EWG,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWG,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Germany,Country equity,-,Developed ex-US,EWG,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWG,1.61%,N/A,5.3%,aggregators ~May 2026
 Country/Regional Equity,Single country,France,Country equity,-,Developed ex-US,EWQ,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWQ,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Italy,Country equity,-,Developed ex-US,EWI,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWI,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Spain,Country equity,-,Developed ex-US,EWP,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWP,N/A,N/A,N/A,not retrieved
@@ -291,17 +291,17 @@ Country/Regional Equity,Single country,Belgium,Country equity,-,Developed ex-US,
 Country/Regional Equity,Single country,Austria,Country equity,-,Developed ex-US,EWO,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWO,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Ireland,Country equity,-,Developed ex-US,EIRL,1-5%,4,Intraday,Country-specific macro/FX/political risk,EIRL,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Portugal,Country equity,-,Developed ex-US,PGAL,1-5%,4,Intraday,Country-specific macro/FX/political risk,PGAL,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Japan,Country equity,-,Developed ex-US,"EWJ,DXJ,BBJP",1-5%,4,Intraday,Country-specific macro/FX/political risk,EWJ,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Japan,Country equity,-,Developed ex-US,"EWJ,DXJ,BBJP",1-5%,4,Intraday,Country-specific macro/FX/political risk,EWJ,4.04%,N/A,7.5%,aggregators ~May 2026
 Country/Regional Equity,Single country,Australia,Country equity,-,Developed ex-US,EWA,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWA,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,New Zealand,Country equity,-,Developed ex-US,ENZL,1-5%,4,Intraday,Country-specific macro/FX/political risk,ENZL,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Hong Kong,Country equity,-,Developed ex-US,EWH,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWH,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Singapore,Country equity,-,Developed ex-US,EWS,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWS,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Israel,Country equity,-,Developed ex-US,EIS,1-5%,4,Intraday,Country-specific macro/FX/political risk,EIS,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,China,Country equity,-,EM,"MCHI,FXI,KWEB,ASHR",1-5%,5,Intraday,Country-specific macro/FX/political risk,MCHI,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,India,Country equity,-,EM,"INDA,EPI,SMIN",1-5%,5,Intraday,Country-specific macro/FX/political risk,INDA,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,China,Country equity,-,EM,"MCHI,FXI,KWEB,ASHR",1-5%,5,Intraday,Country-specific macro/FX/political risk,MCHI,2.21%,N/A,N/A,aggregators ~May 2026
+Country/Regional Equity,Single country,India,Country equity,-,EM,"INDA,EPI,SMIN",1-5%,5,Intraday,Country-specific macro/FX/political risk,INDA,0.45%,N/A,4.7%,aggregators ~May 2026
 Country/Regional Equity,Single country,Taiwan,Country equity,-,EM,EWT,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWT,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,South Korea,Country equity,-,EM,EWY,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWY,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Brazil,Country equity,-,EM,"EWZ,EWZS",1-5%,5,Intraday,Country-specific macro/FX/political risk,EWZ,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Brazil,Country equity,-,EM,"EWZ,EWZS",1-5%,5,Intraday,Country-specific macro/FX/political risk,EWZ,4.99%,N/A,12.0%,aggregators ~May 2026
 Country/Regional Equity,Single country,Mexico,Country equity,-,EM,EWW,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWW,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Chile,Country equity,-,EM,ECH,1-5%,5,Intraday,Country-specific macro/FX/political risk,ECH,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Colombia,Country equity,-,EM,GXG,1-5%,5,Intraday,Country-specific macro/FX/political risk,GXG,N/A,N/A,N/A,not retrieved
@@ -336,10 +336,10 @@ Thematic Equities,Disruptive,Space economy,Thematic ETF,-,Global,"UFO,ROKT,ARKX"
 Thematic Equities,Disruptive,Robotics & automation,Thematic ETF,-,Global,"BOTZ,ROBO",0-2%,6,Intraday,Theme-adoption bet; concentration risk,BOTZ,N/A,N/A,N/A,not retrieved
 Thematic Equities,Demographics,Aging/longevity,Thematic ETF,-,Global,-,0-2%,4,Intraday,Theme-adoption bet; concentration risk,—,N/A,N/A,N/A,no liquid proxy
 Thematic Equities,Demographics,Millennials/Gen-Z,Thematic ETF,-,Global,-,0-2%,5,Intraday,Theme-adoption bet; concentration risk,—,N/A,N/A,N/A,no liquid proxy
-Thematic Equities,Energy transition,Clean energy,Thematic ETF,-,Global,"ICLN,TAN,FAN",0-2%,6,Intraday,Theme-adoption bet; concentration risk,ICLN,N/A,N/A,N/A,not retrieved
-Thematic Equities,Energy transition,Lithium/battery,Thematic ETF,-,Global,"LIT,BATT",0-2%,6,Intraday,Theme-adoption bet; concentration risk,LIT,N/A,N/A,N/A,not retrieved
+Thematic Equities,Energy transition,Clean energy,Thematic ETF,-,Global,"ICLN,TAN,FAN",0-2%,6,Intraday,Theme-adoption bet; concentration risk,ICLN,1.20%,N/A,1.1%,aggregators ~May 2026
+Thematic Equities,Energy transition,Lithium/battery,Thematic ETF,-,Global,"LIT,BATT",0-2%,6,Intraday,Theme-adoption bet; concentration risk,LIT,0.42%,N/A,6.8%,aggregators ~May 2026
 Thematic Equities,Energy transition,Hydrogen,Thematic ETF,-,Global,"HYDR,HJEN",0-2%,6,Intraday,Theme-adoption bet; concentration risk,HYDR,N/A,N/A,N/A,not retrieved
-Thematic Equities,Energy transition,Uranium/nuclear,Thematic ETF,-,Global,"URA,URNM,NLR",0-2%,6,Intraday,Theme-adoption bet; concentration risk,URA,N/A,N/A,N/A,not retrieved
+Thematic Equities,Energy transition,Uranium/nuclear,Thematic ETF,-,Global,"URA,URNM,NLR",0-2%,6,Intraday,Theme-adoption bet; concentration risk,URA,3.58%,N/A,25.4%,aggregators ~May 2026
 Thematic Equities,Energy transition,EV/autonomous,Thematic ETF,-,Global,"DRIV,IDRV,KARS",0-2%,6,Intraday,Theme-adoption bet; concentration risk,DRIV,N/A,N/A,N/A,not retrieved
 Thematic Equities,Infrastructure theme,Reshoring/industrials,Thematic ETF,-,Global,-,0-2%,5,Intraday,Theme-adoption bet; concentration risk,—,N/A,N/A,N/A,no liquid proxy
 Thematic Equities,Infrastructure theme,Water,Thematic ETF,-,Global,"PHO,FIW,CGW",0-2%,3,Intraday,Theme-adoption bet; concentration risk,PHO,N/A,N/A,N/A,not retrieved
@@ -348,16 +348,16 @@ Thematic Equities,ESG/values,ESG-screened,Thematic ETF,-,Global,"ESGU,SUSA",0-2%
 Thematic Equities,ESG/values,Faith-based,Thematic ETF,-,Global,-,0-2%,4,Intraday,Theme-adoption bet; concentration risk,—,N/A,N/A,N/A,no liquid proxy
 Thematic Equities,ESG/values,Gender diversity,Thematic ETF,-,Global,SHE,0-2%,4,Intraday,Theme-adoption bet; concentration risk,SHE,N/A,N/A,N/A,not retrieved
 Thematic Equities,Commodity-linked equity,Gold miners,Thematic ETF,-,Global,"GDX,GDXJ",0-2%,6,Intraday,Theme-adoption bet; concentration risk,GDX,0.74%,N/A,18.7%,aggregators ~May 2026
-Thematic Equities,Commodity-linked equity,Agriculture/agribusiness,Thematic ETF,-,Global,"MOO,VEGI",0-2%,5,Intraday,Theme-adoption bet; concentration risk,MOO,N/A,N/A,N/A,not retrieved
+Thematic Equities,Commodity-linked equity,Agriculture/agribusiness,Thematic ETF,-,Global,"MOO,VEGI",0-2%,5,Intraday,Theme-adoption bet; concentration risk,MOO,2.12%,N/A,N/A,aggregators ~May 2026
 Thematic Equities,Commodity-linked equity,Timber/forestry,Thematic ETF,-,Global,"WOOD,CUT",0-2%,4,Intraday,Theme-adoption bet; concentration risk,WOOD,2.75%,N/A,N/A,aggregators ~May 2026
-Thematic Equities,Defense/security,Defense,Thematic ETF,-,Global,"ITA,PPA,XAR",0-2%,3,Intraday,Theme-adoption bet; concentration risk,ITA,N/A,N/A,N/A,not retrieved
+Thematic Equities,Defense/security,Defense,Thematic ETF,-,Global,"ITA,PPA,XAR",0-2%,3,Intraday,Theme-adoption bet; concentration risk,ITA,1.29%,N/A,N/A,aggregators ~May 2026
 Thematic Equities,Cannabis,Cannabis,Thematic ETF,-,Global,"MSOS,MJ",0-2%,6,Intraday,Theme-adoption bet; concentration risk,MSOS,N/A,N/A,N/A,not retrieved
 Thematic Equities,Gaming/esports,Video games/esports,Thematic ETF,-,Global,"ESPO,HERO",0-2%,6,Intraday,Theme-adoption bet; concentration risk,ESPO,N/A,N/A,N/A,not retrieved
 Real Estate Vehicles,Listed REITs,Broad REIT,Diversified,US REIT index,Domestic,"VNQ,SCHH,IYR",3-4%,4,Intraday,Property cycle + rates,VNQ,3.64%,N/A,N/A,aggregators ~May 2026
 Real Estate Vehicles,Listed REITs,Net lease,Triple-net,Net-lease REIT,Domestic,NETL,4-5%,3,Intraday,Bond-like lease income,NETL,N/A,N/A,N/A,not retrieved
-Real Estate Vehicles,Mortgage REITs,Agency mREIT,Agency MBS levered,Agency mREIT,Domestic,"REM,MORT",9-13%,6,Intraday,Levered MBS carry; rate risk,REM,N/A,N/A,N/A,not retrieved
+Real Estate Vehicles,Mortgage REITs,Agency mREIT,Agency MBS levered,Agency mREIT,Domestic,"REM,MORT",9-13%,6,Intraday,Levered MBS carry; rate risk,REM,9.35%,N/A,-1.8%,aggregators ~May 2026
 Real Estate Vehicles,Mortgage REITs,Commercial mREIT,CRE debt,Commercial mREIT,Domestic,-,8-11%,6,Intraday,CRE credit + leverage,—,N/A,N/A,N/A,no liquid proxy
-Real Estate Vehicles,International RE,Global REIT,Ex-US property,Global REIT,Global,"VNQI,RWX",3-4%,4,Intraday,Foreign property + FX,VNQI,N/A,N/A,N/A,not retrieved
+Real Estate Vehicles,International RE,Global REIT,Ex-US property,Global REIT,Global,"VNQI,RWX",3-4%,4,Intraday,Foreign property + FX,VNQI,4.50%,N/A,0.7%,aggregators ~May 2026
 Real Estate Vehicles,Private RE,Non-traded REIT,Core/core-plus,Private real estate,Domestic,-,4-6%,5,Periodic,Appraisal NAV; gates,—,N/A,N/A,N/A,no liquid proxy
 Real Estate Vehicles,Private RE,Value-add/opportunistic,LP funds,Private RE equity,Global,-,-,6,Illiquid,Development/repositioning risk,—,N/A,N/A,N/A,no liquid proxy
 Real Estate Vehicles,Direct property,Residential,Rental/SFR/multifamily,Direct ownership,Domestic,-,4-8%,5,Illiquid,Leverage + concentration,—,N/A,N/A,N/A,no liquid proxy
@@ -366,20 +366,20 @@ Real Estate Vehicles,Direct property,Crowdfunding,Fractional RE,Platforms,Domest
 Real Estate Vehicles,Land,Farmland,Agricultural land,Farmland,Domestic,"FPI,LAND",2-4%,4,Daily,Crop income + appreciation,FPI,N/A,N/A,N/A,not retrieved
 Real Estate Vehicles,Land,Timberland,Forest land,Timber,Domestic,"WY,PCH",2-4%,4,Daily,Biological growth + lumber price,WY,N/A,N/A,N/A,not retrieved
 Real Estate Vehicles,Land,Raw/development land,Undeveloped,Land banking,Domestic,-,0%,5,Illiquid,No income; entitlement risk,—,N/A,N/A,N/A,no liquid proxy
-Infrastructure,Listed infra,Core infrastructure,Global infra,Listed infra,Global,"IGF,NFRA",2-4%,3,Intraday,"Regulated, inflation-linked",IGF,N/A,N/A,N/A,not retrieved
+Infrastructure,Listed infra,Core infrastructure,Global infra,Listed infra,Global,"IGF,NFRA",2-4%,3,Intraday,"Regulated, inflation-linked",IGF,2.89%,N/A,N/A,aggregators ~May 2026
 Infrastructure,MLPs,Midstream MLP,Pipelines/storage,Energy MLP,Domestic,"AMLP,MLPA,MLPX",6-8%,4,Intraday,K-1; toll-road cash flow,AMLP,7.56%,N/A,18.2%,aggregators ~May 2026
 Infrastructure,Digital infra,Towers/data/fiber,Communications infra,Digital infra,Global,"SRVR,DTCR",2-3%,4,Intraday,Data growth,SRVR,N/A,N/A,N/A,not retrieved
 Infrastructure,Renewable infra,Yieldcos,Wind/solar assets,Renewable infra,Global,-,4-6%,4,Daily,Contracted power; rate sensitive,—,N/A,N/A,N/A,no liquid proxy
 Infrastructure,Transport infra,Toll roads/airports/ports,Concessions,Transport infra,Global,-,3-5%,3,Daily,Traffic/usage volumes,—,N/A,N/A,N/A,no liquid proxy
 Infrastructure,Social infra,Schools/hospitals/PPP,Availability-based,Social infra,Global,-,4-6%,3,Periodic,Government counterparty,—,N/A,N/A,N/A,no liquid proxy
 Infrastructure,Private infra,Unlisted infra,Brownfield/greenfield,Private infra,Global,-,5-8%,5,Illiquid,"Long-dated, illiquid",—,N/A,N/A,N/A,no liquid proxy
-Commodities,Broad,Diversified basket,Multi-commodity,Broad commodity,Global,"DBC,PDBC,GSG,BCI",0%,4,Intraday,Inflation/real-asset hedge,DBC,N/A,N/A,N/A,not retrieved
+Commodities,Broad,Diversified basket,Multi-commodity,Broad commodity,Global,"DBC,PDBC,GSG,BCI",0%,4,Intraday,Inflation/real-asset hedge,DBC,2.44%,N/A,10.4%,aggregators ~May 2026
 Commodities,Precious metals,Gold,Futures/physical,-,Global,"GLD,IAU,GLDM",0%,3,Intraday,Spot price + roll yield; storage,GLD,0.00%,N/A,19.8%,aggregators ~May 2026
-Commodities,Precious metals,Silver,Futures/physical,-,Global,"SLV,SIVR",0%,4,Intraday,Spot price + roll yield; storage,SLV,N/A,N/A,N/A,not retrieved
+Commodities,Precious metals,Silver,Futures/physical,-,Global,"SLV,SIVR",0%,4,Intraday,Spot price + roll yield; storage,SLV,0.00%,N/A,22.7%,aggregators ~May 2026
 Commodities,Precious metals,Platinum,Futures/physical,-,Global,PPLT,0%,5,Intraday,Spot price + roll yield; storage,PPLT,N/A,N/A,N/A,not retrieved
 Commodities,Precious metals,Palladium,Futures/physical,-,Global,PALL,0%,5,Intraday,Spot price + roll yield; storage,PALL,N/A,N/A,N/A,not retrieved
 Commodities,Precious metals,Rhodium,Futures/physical,-,Global,-,0%,6,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
-Commodities,Energy,WTI crude oil,Futures/physical,-,Global,"USO,CL",0%,5,Intraday,Spot price + roll yield; storage,USO,N/A,N/A,N/A,not retrieved
+Commodities,Energy,WTI crude oil,Futures/physical,-,Global,"USO,CL",0%,5,Intraday,Spot price + roll yield; storage,USO,0.00%,N/A,27.0%,aggregators ~May 2026
 Commodities,Energy,Brent crude oil,Futures/physical,-,Global,BNO,0%,5,Intraday,Spot price + roll yield; storage,BNO,N/A,N/A,N/A,not retrieved
 Commodities,Energy,Natural gas,Futures/physical,-,Global,"UNG,BOIL",0%,6,Intraday,Spot price + roll yield; storage,UNG,N/A,N/A,N/A,not retrieved
 Commodities,Energy,Heating oil,Futures/physical,-,Global,UHN,0%,5,Intraday,Spot price + roll yield; storage,UHN,N/A,N/A,N/A,not retrieved
@@ -387,7 +387,7 @@ Commodities,Energy,Gasoline (RBOB),Futures/physical,-,Global,UGA,0%,5,Intraday,S
 Commodities,Energy,Gasoil,Futures/physical,-,Global,-,0%,5,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Energy,Ethanol,Futures/physical,-,Global,-,0%,5,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Energy,Coal,Futures/physical,-,Global,-,0%,5,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
-Commodities,Energy,Uranium,Futures/physical,-,Global,"URA,SRUUF",0%,6,Intraday,Spot price + roll yield; storage,URA,N/A,N/A,N/A,not retrieved
+Commodities,Energy,Uranium,Futures/physical,-,Global,"URA,SRUUF",0%,6,Intraday,Spot price + roll yield; storage,URA,3.58%,N/A,25.4%,aggregators ~May 2026
 Commodities,Energy,Electricity,Futures/physical,-,Global,-,0%,6,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Energy,Carbon allowances,Futures/physical,-,Global,"KRBN,GRN",0%,5,Intraday,Spot price + roll yield; storage,KRBN,N/A,N/A,N/A,not retrieved
 Commodities,Base/industrial metals,Copper,Futures/physical,-,Global,"CPER,COPX",0%,5,Intraday,Spot price + roll yield; storage,CPER,N/A,N/A,N/A,not retrieved
@@ -398,7 +398,7 @@ Commodities,Base/industrial metals,Lead,Futures/physical,-,Global,-,0%,5,Intrada
 Commodities,Base/industrial metals,Tin,Futures/physical,-,Global,-,0%,5,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Base/industrial metals,Iron ore,Futures/physical,-,Global,-,0%,5,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Base/industrial metals,Cobalt,Futures/physical,-,Global,-,0%,6,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
-Commodities,Base/industrial metals,Lithium,Futures/physical,-,Global,LIT,0%,6,Intraday,Spot price + roll yield; storage,LIT,N/A,N/A,N/A,not retrieved
+Commodities,Base/industrial metals,Lithium,Futures/physical,-,Global,LIT,0%,6,Intraday,Spot price + roll yield; storage,LIT,0.42%,N/A,6.8%,aggregators ~May 2026
 Commodities,Base/industrial metals,Molybdenum,Futures/physical,-,Global,-,0%,6,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Base/industrial metals,Steel/rebar,Futures/physical,-,Global,SLX,0%,5,Intraday,Spot price + roll yield; storage,SLX,N/A,N/A,N/A,not retrieved
 Commodities,Grains & oilseeds,Corn,Futures/physical,-,Global,CORN,0%,5,Intraday,Spot price + roll yield; storage,CORN,N/A,N/A,N/A,not retrieved
@@ -425,7 +425,7 @@ Commodities,Livestock,Lean hogs,Futures/physical,-,Global,-,0%,5,Intraday,Spot p
 Commodities,Livestock,Class III milk,Futures/physical,-,Global,-,0%,5,Intraday,Spot price + roll yield; storage,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Physical,Allocated metals,Vaulted bullion,Physical holdings,Global,-,0%,3,Periodic,Storage/insurance cost,—,N/A,N/A,N/A,no liquid proxy
 Commodities,Physical,Numismatic/bullion coins,Coins/bars,Physical coins,Global,-,0%,4,Periodic,Premium over spot,—,N/A,N/A,N/A,no liquid proxy
-Alternatives,Liquid alts,Managed futures,Trend following,CTA,Global,"DBMF,KMLM,CTA",0%,4,Daily,Crisis-alpha; trend diversifier,DBMF,N/A,N/A,N/A,not retrieved
+Alternatives,Liquid alts,Managed futures,Trend following,CTA,Global,"DBMF,KMLM,CTA",0%,4,Daily,Crisis-alpha; trend diversifier,DBMF,5.29%,N/A,7.2%,aggregators ~May 2026
 Alternatives,Liquid alts,Global macro,Discretionary/systematic,Macro,Global,-,0%,4,Daily,Top-down cross-asset bets,—,N/A,N/A,N/A,no liquid proxy
 Alternatives,Liquid alts,Market neutral,Equity long/short,Market neutral,Global,BTAL,2-4%,3,Daily,Low beta; spread capture,BTAL,N/A,N/A,N/A,not retrieved
 Alternatives,Liquid alts,Merger arbitrage,Event-driven,Merger arb,Global,"MNA,MERFX",3-5%,3,Daily,Deal-spread capture,MNA,N/A,N/A,N/A,not retrieved
@@ -471,7 +471,7 @@ Derivatives & Structured,Structured notes,Principal-protected,PPN/market-linked 
 Derivatives & Structured,Structured notes,Reverse convertibles,Yield notes,Rev converts,Global,-,8-15%,5,Periodic,Downside equity risk,—,N/A,N/A,N/A,no liquid proxy
 Derivatives & Structured,Warrants/rights,Warrants,Long-dated calls,Warrants,Global,-,0%,6,Intraday,Dilution; expiry,—,N/A,N/A,N/A,no liquid proxy
 Derivatives & Structured,Leveraged/inverse,Geared ETFs,2x/3x/-1x,L&I ETPs,Domestic,"TQQQ,SQQQ,UPRO",0%,6,Intraday,Daily reset decay,TQQQ,N/A,N/A,N/A,not retrieved
-Digital Assets,Crypto,Bitcoin,Spot BTC,Store of value,Global,"IBIT,FBTC,GBTC",0%,6,Intraday,Digital gold thesis; high vol,IBIT,N/A,N/A,N/A,not retrieved
+Digital Assets,Crypto,Bitcoin,Spot BTC,Store of value,Global,"IBIT,FBTC,GBTC",0%,6,Intraday,Digital gold thesis; high vol,IBIT,0.00%,N/A,N/A,aggregators ~May 2026 (fund <5y)
 Digital Assets,Crypto,Ethereum,Spot ETH,Smart-contract L1,Global,"ETHA,ETHE",0-4%*,6,Intraday,Platform bet; *staking yield,ETHA,N/A,N/A,N/A,not retrieved
 Digital Assets,Crypto,Large-cap L1,SOL/ADA/AVAX/DOT,Layer-1 alts,Global,-,0%,6,Intraday,High beta to BTC,—,N/A,N/A,N/A,no liquid proxy
 Digital Assets,Crypto,Layer-2/scaling,Rollups/sidechains,Layer-2,Global,-,0%,6,Intraday,Scaling adoption bet,—,N/A,N/A,N/A,no liquid proxy
