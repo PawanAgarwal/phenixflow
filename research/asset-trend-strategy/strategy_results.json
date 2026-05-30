@@ -1,0 +1,237 @@
+{
+  "rule": {
+    "lookbacks": [
+      252
+    ],
+    "top_k": 20,
+    "weighting": "invvol",
+    "ma_filter": true,
+    "ma_window": 200,
+    "max_weight": 0.3,
+    "target_vol": null,
+    "name": "FINAL_top20_12m_invvol_trend"
+  },
+  "full_sample": {
+    "window": [
+      "2017-07-31",
+      "2026-05-29"
+    ],
+    "strategy": {
+      "months": 107,
+      "cagr": 0.15480615995921965,
+      "vol": 0.15663059151364062,
+      "sharpe": 0.8490288882162319,
+      "sortino": 1.287356396548818,
+      "max_dd": -0.20711024686691681,
+      "hit_rate": 0.6448598130841121
+    },
+    "spy": {
+      "months": 107,
+      "cagr": 0.15414077686767547,
+      "vol": 0.1611647271257397,
+      "sharpe": 0.8267722757747309,
+      "sortino": 1.2644514979412573,
+      "max_dd": -0.2392717197111237,
+      "hit_rate": 0.6915887850467289
+    }
+  },
+  "walk_forward": {
+    "window": [
+      "2019-07-31",
+      "2026-05-29"
+    ],
+    "strategy": {
+      "months": 83,
+      "cagr": 0.18906133530539426,
+      "vol": 0.18132211789861716,
+      "sharpe": 0.9065079259986205,
+      "sortino": 1.5276611414024326,
+      "max_dd": -0.20024911828390157,
+      "hit_rate": 0.6144578313253012
+    },
+    "spy": {
+      "months": 83,
+      "cagr": 0.16361356922895487,
+      "vol": 0.16666681619033927,
+      "sharpe": 0.8409993607351749,
+      "sortino": 1.3067020626712842,
+      "max_dd": -0.2392717197111237,
+      "hit_rate": 0.6626506024096386
+    }
+  },
+  "yearly": [
+    {
+      "year": 2017,
+      "strategy_sharpe": 6.409290796484858,
+      "spy_sharpe": 6.353041668444964,
+      "strategy_cagr": 0.23961246875896336,
+      "spy_cagr": 0.2427468418397558
+    },
+    {
+      "year": 2018,
+      "strategy_sharpe": -0.6973979937772253,
+      "spy_sharpe": -0.3501369438716802,
+      "strategy_cagr": -0.10488902145973278,
+      "spy_cagr": -0.04568989492283004
+    },
+    {
+      "year": 2019,
+      "strategy_sharpe": 1.0649427678503138,
+      "spy_sharpe": 2.033698941853347,
+      "strategy_cagr": 0.076574224815398,
+      "spy_cagr": 0.31223890562266354
+    },
+    {
+      "year": 2020,
+      "strategy_sharpe": 1.4258236160763202,
+      "spy_sharpe": 0.761329022043889,
+      "strategy_cagr": 0.3381758139692148,
+      "spy_cagr": 0.18331599451645864
+    },
+    {
+      "year": 2021,
+      "strategy_sharpe": 1.711983913933752,
+      "spy_sharpe": 2.348722988425996,
+      "strategy_cagr": 0.1760665239516892,
+      "spy_cagr": 0.2872876474848951
+    },
+    {
+      "year": 2022,
+      "strategy_sharpe": -0.33920617101225403,
+      "spy_sharpe": -0.8175655113452911,
+      "strategy_cagr": -0.043075234068601254,
+      "spy_cagr": -0.1817536240669516
+    },
+    {
+      "year": 2023,
+      "strategy_sharpe": 0.6700296244041353,
+      "spy_sharpe": 1.3302378706032583,
+      "strategy_cagr": 0.15912542958543496,
+      "spy_cagr": 0.2617579280754525
+    },
+    {
+      "year": 2024,
+      "strategy_sharpe": 0.3870103907465717,
+      "spy_sharpe": 1.6753451902146639,
+      "strategy_cagr": 0.1048491969111418,
+      "spy_cagr": 0.24886446409414642
+    },
+    {
+      "year": 2025,
+      "strategy_sharpe": 3.0223147242911015,
+      "spy_sharpe": 1.1757863295870803,
+      "strategy_cagr": 0.42320291944141397,
+      "spy_cagr": 0.1771907374428312
+    },
+    {
+      "year": 2026,
+      "strategy_sharpe": 1.5063497489364144,
+      "spy_sharpe": 1.172485781157946,
+      "strategy_cagr": 0.6288679524226553,
+      "spy_cagr": 0.2912082546831205
+    }
+  ],
+  "current_holdings": {
+    "WGMI": {
+      "weight": 0.02846681165027305,
+      "mom_12m": 2.404499816894531,
+      "asset_class": "Crypto"
+    },
+    "HYDR": {
+      "weight": 0.0333553396486601,
+      "mom_12m": 2.2512644148581504,
+      "asset_class": "Energy transition"
+    },
+    "EWY": {
+      "weight": 0.03138603168954163,
+      "mom_12m": 2.1415586974383625,
+      "asset_class": "Single country"
+    },
+    "SOXX": {
+      "weight": 0.04743931476120408,
+      "mom_12m": 1.5278782016827122,
+      "asset_class": "Information Technology"
+    },
+    "UFO": {
+      "weight": 0.04608271468023072,
+      "mom_12m": 1.5221492465722046,
+      "asset_class": "Disruptive"
+    },
+    "LIT": {
+      "weight": 0.06460137705001422,
+      "mom_12m": 1.3096313350870847,
+      "asset_class": "Energy transition"
+    },
+    "TQQQ": {
+      "weight": 0.0357139255178837,
+      "mom_12m": 1.2646600828060137,
+      "asset_class": "Leveraged/inverse"
+    },
+    "MSOS": {
+      "weight": 0.02173407944097872,
+      "mom_12m": 1.1866667005750866,
+      "asset_class": "Cannabis"
+    },
+    "COPX": {
+      "weight": 0.03830164603038761,
+      "mom_12m": 1.1006035149017714,
+      "asset_class": "Materials"
+    },
+    "SLV": {
+      "weight": 0.038511925818565426,
+      "mom_12m": 1.0737481107408327,
+      "asset_class": "Precious metals"
+    },
+    "CARZ": {
+      "weight": 0.060114206883340474,
+      "mom_12m": 1.0103104254788726,
+      "asset_class": "Consumer Discretionary"
+    },
+    "SIL": {
+      "weight": 0.03709605057293408,
+      "mom_12m": 0.9790526518084699,
+      "asset_class": "Materials"
+    },
+    "XME": {
+      "weight": 0.05578387406267755,
+      "mom_12m": 0.9536197114173046,
+      "asset_class": "Materials"
+    },
+    "EWT": {
+      "weight": 0.05942131939639944,
+      "mom_12m": 0.925523291060881,
+      "asset_class": "Single country"
+    },
+    "DRIV": {
+      "weight": 0.06616886344716182,
+      "mom_12m": 0.8234791793881977,
+      "asset_class": "Energy transition"
+    },
+    "ICLN": {
+      "weight": 0.0668643428852498,
+      "mom_12m": 0.8131476618367779,
+      "asset_class": "Utilities"
+    },
+    "EPU": {
+      "weight": 0.053804307423979,
+      "mom_12m": 0.8115481786174197,
+      "asset_class": "Single country"
+    },
+    "PICK": {
+      "weight": 0.05624132269411356,
+      "mom_12m": 0.803277794419768,
+      "asset_class": "Materials"
+    },
+    "DTCR": {
+      "weight": 0.08116592370514872,
+      "mom_12m": 0.7551478642942762,
+      "asset_class": "Real Estate"
+    },
+    "OIH": {
+      "weight": 0.07774662264125631,
+      "mom_12m": 0.740538945167474,
+      "asset_class": "Energy"
+    }
+  },
+  "current_cash_weight": 1.1102230246251565e-16
+}
