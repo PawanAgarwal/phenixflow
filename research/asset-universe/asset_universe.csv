@@ -1,0 +1,212 @@
+Tier,Asset Class,Sub-Class,Sector/Strategy,Sub-Sector,Geography,Examples,Typ. Yield,Risk Tier,Liquidity,Notes
+Cash & Equivalents,Cash,Bank deposits,Checking/Savings,FDIC savings,Domestic,HYSA,4-5%,1,Daily,Insured to limits; reinvestment risk
+Cash & Equivalents,Cash,Bank deposits,Certificates of deposit,Brokered CDs,Domestic,-,4-5%,1,Periodic,Term lockup; FDIC insured
+Cash & Equivalents,Cash,Money market,Govt money market funds,T-bill/repo MMF,Domestic,"SGOV,BIL,SPAXX",4-5%,1,Daily,Near-zero credit risk; rate-sensitive income
+Cash & Equivalents,Cash,Money market,Prime money market funds,CP/CD MMF,Domestic,-,4-5%,1,Daily,Slight credit spread over govt
+Cash & Equivalents,Cash,T-bills,Ultra-short Treasuries,0-3m bills,Domestic,"BIL,SGOV",4-5%,1,Intraday,Risk-free rate proxy
+Cash & Equivalents,Cash,Stablecoins,Fiat-backed,USD stablecoins,Global,"USDC,USDT",0-5%*,2,Intraday,Peg/issuer risk; *yield via lending
+Govt Fixed Income,US Treasuries,Nominal,Short duration,1-3y,Domestic,"SHY,VGSH",4-5%,1,Intraday,Duration/rate risk only
+Govt Fixed Income,US Treasuries,Nominal,Intermediate,3-10y,Domestic,"IEF,VGIT",4%,2,Intraday,Belly of the curve
+Govt Fixed Income,US Treasuries,Nominal,Long duration,10-30y,Domestic,"TLT,VGLT,EDV",4-5%,3,Intraday,High rate convexity; big drawdowns
+Govt Fixed Income,US Treasuries,Inflation-linked,TIPS,Short/Long TIPS,Domestic,"TIP,VTIP,SCHP,LTPZ",2%+CPI,2,Intraday,Bets on realized inflation
+Govt Fixed Income,US Treasuries,Floating rate,FRN,2y FRN,Domestic,"USFR,TFLO",4-5%,1,Intraday,Minimal duration; tracks bills
+Govt Fixed Income,US Treasuries,STRIPS,Zero coupon,Long zeros,Domestic,"GOVZ,EDV",4-5%,4,Intraday,Max duration convexity
+Govt Fixed Income,Agency,GSE debt,Agency debentures,FNMA/FHLB,Domestic,-,4-5%,1,Daily,Implicit govt backing
+Govt Fixed Income,Sovereign ex-US,Developed,DM govt bonds,Bunds/JGBs/Gilts,Developed ex-US,"BWX,IGOV",1-4%,2,Daily,FX + foreign rate risk
+Govt Fixed Income,Sovereign ex-US,Developed FX-hedged,Hedged DM govt,Hedged global agg,Developed ex-US,BNDX,2-3%,2,Daily,"Strips FX, keeps rate diversification"
+Govt Fixed Income,Sovereign ex-US,EM hard ccy,USD sovereign,EM USD bonds,EM,"EMB,PCY",6-8%,4,Daily,"Spread + default risk, no FX"
+Govt Fixed Income,Sovereign ex-US,EM local ccy,Local sovereign,EM local bonds,EM,"EMLC,LEMB",6-8%,4,Daily,FX + local rate + default
+Govt Fixed Income,Sovereign ex-US,Frontier,Frontier sovereign,Frontier USD bonds,Frontier,FMB*,8-12%,5,Periodic,"Illiquid, high default/political risk"
+Municipal,Munis,General obligation,Investment-grade GO,National GO,Domestic,"MUB,VTEB",3-4%TE,2,Daily,Tax-exempt; state credit risk
+Municipal,Munis,Revenue,IG revenue,Toll/utility/hospital,Domestic,-,3-4%TE,2,Daily,Project cash-flow backed
+Municipal,Munis,High yield,HY munis,Non-rated/spec muni,Domestic,"HYD,HYMB",4-5%TE,3,Daily,Lower-rated issuers; default risk
+Municipal,Munis,State-specific,Single-state,CA/NY munis,Domestic,-,3-4%TE,2,Daily,Double tax-exempt for residents
+Municipal,Munis,Taxable munis,BABs,Build America Bonds,Domestic,BAB,4-5%,2,Daily,Taxable; for non-taxable accounts
+Municipal,Munis,Pre-refunded,Escrowed,Pre-re munis,Domestic,-,3%TE,1,Daily,Treasury-collateralized; very safe
+Corporate Credit,Investment grade,Broad IG,Aggregate corp,US IG corp,Domestic,"LQD,VCIT",4-5%,2,Intraday,Spread + rate risk
+Corporate Credit,Investment grade,Short IG,1-5y IG,Short corp,Domestic,"IGSB,VCSH",4-5%,2,Intraday,Low duration credit
+Corporate Credit,Investment grade,Long IG,10y+ IG,Long corp,Domestic,"IGLB,VCLT",5%,3,Intraday,Duration + spread
+Corporate Credit,Investment grade,Crossover,BBB,BBB-tilt,Domestic,-,5%,3,Intraday,Fallen-angel risk
+Corporate Credit,High yield,Broad HY,BB/B/CCC,US HY,Domestic,"HYG,JNK,USHY",6-8%,4,Intraday,Default + spread risk
+Corporate Credit,High yield,Fallen angels,Ex-IG downgrades,Fallen angel HY,Domestic,FALN,6-7%,4,Daily,Higher quality HY tilt
+Corporate Credit,High yield,Short HY,0-5y HY,Short HY,Domestic,"SHYG,SJNK",6-7%,4,Intraday,Lower duration HY
+Corporate Credit,High yield,Distressed,CCC/defaulted,Distressed debt,Domestic,-,10%+,6,Illiquid,Workout/recovery bet
+Corporate Credit,Convertibles,Convertible bonds,Balanced converts,US converts,Domestic,"CWB,ICVT",2-4%,4,Daily,Equity upside + bond floor
+Corporate Credit,International corp,DM corporate,IG/HY foreign,Euro/UK corp,Developed ex-US,"IBND,HYXU",3-6%,3,Daily,FX + foreign credit
+Corporate Credit,International corp,EM corporate,EM USD corp,EM corp bonds,EM,"CEMB,EMCB",6-8%,4,Daily,EM corporate credit
+Securitized Credit,Agency MBS,Pass-throughs,30y/15y MBS,Agency RMBS,Domestic,"MBB,VMBS",4-5%,2,Intraday,Prepayment/convexity risk
+Securitized Credit,Non-agency MBS,RMBS,Prime/Alt-A/legacy,Non-agency RMBS,Domestic,-,5-7%,4,Periodic,Housing credit risk
+Securitized Credit,CMBS,Commercial MBS,Conduit/SASB,CMBS senior,Domestic,CMBS*,5-7%,4,Daily,CRE credit risk
+Securitized Credit,ABS,Consumer ABS,Auto/card/student,Consumer ABS,Domestic,-,5-6%,3,Daily,Consumer credit cycle
+Securitized Credit,ABS,Esoteric ABS,Aircraft/royalty/data,Esoteric ABS,Domestic,-,6-8%,4,Periodic,Niche collateral risk
+Securitized Credit,CLO,CLO debt,AAA tranche,Top tranche,Domestic,"JAAA,AAA,CLOA",5-6%,1,Daily,Spread normalize; near-zero default
+Securitized Credit,CLO,CLO debt,AA/A tranche,Senior mezz,Domestic,JAAA-adj*,6%,2,Daily,"Slightly subordinated, floating"
+Securitized Credit,CLO,CLO debt,BBB tranche,Mezz,Domestic,"JBBB,CLOZ",6-7%,2,Daily,Spread tightening + floating rate
+Securitized Credit,CLO,CLO debt,BB tranche,Lower mezz,Domestic,"CLOZ,BBB*",8-9%,4,Daily,First-loss-adjacent; higher beta
+Securitized Credit,CLO,CLO equity,Residual/equity,First-loss,Domestic,"ECC,OXLC",15-20%+,6,Daily,Everything-goes-right residual
+Securitized Credit,Multi-sector,Active securitized,Go-anywhere structured,Multi-sector credit,Domestic,-,6-8%,4,Daily,Manager rotates structured sleeves
+Loans,Senior loans,Leveraged loans,Broadly syndicated,Senior secured,Domestic,"BKLN,SRLN",8%,4,Daily,Floating; single-name default risk
+Loans,Senior loans,Active loans,CLO-style mgmt,Bank loan funds,Domestic,"FFRHX,SRLN",8%,4,Daily,No structural leverage
+Loans,Senior loans,Middle-market loans,Direct loans,MM senior,Domestic,-,9-11%,5,Periodic,"Smaller borrowers, less liquid"
+Preferred & Hybrid,Preferreds,Traditional preferreds,$25 par perpetual,Bank/utility pfd,Domestic,"PFF,PGX",6-7%,3,Daily,Rate + credit; below senior debt
+Preferred & Hybrid,Preferreds,Institutional preferreds,$1000 par,Inst'l pfd,Domestic,"PFFA,PFFD",6-7%,3,Daily,Higher quality issuers
+Preferred & Hybrid,Preferreds,CLO-CEF preferreds,Term preferred,Senior to CEF common,Domestic,"OXLCN,OXLCI,OXLCZ,ECC-D",7-8.5%,3,Daily,Redeemed at $25 ahead of equity
+Preferred & Hybrid,Baby bonds,Exchange-traded debt,$25 baby bonds,Senior to pfd,Domestic,-,7-8%,3,Daily,"Bond claim, exchange-traded"
+Preferred & Hybrid,CoCos,Contingent convertibles,AT1 bank capital,CoCo bonds,Developed ex-US,-,7-9%,5,Daily,Write-down/conversion trigger risk
+Preferred & Hybrid,Convertible pfd,Convertible preferreds,Equity-linked pfd,Convert pfd,Domestic,-,5-7%,4,Daily,Hybrid equity upside
+Private Credit,BDC,Listed BDC,Top-tier direct lender,Senior direct lending,Domestic,"ARCC,MAIN,OBDC",9-10%,5,Daily,Direct-lending equity; soft marks
+Private Credit,BDC,BDC basket,Diversified BDC,BDC index,Domestic,"BIZD,PBDC",9-11%,5,Daily,Private-credit beta
+Private Credit,BDC,Venture/specialty BDC,Venture debt,Tech lending BDC,Domestic,"HTGC,TRIN",10-12%,5,Daily,Higher-risk borrowers
+Private Credit,Interval funds,Private credit interval,Non-traded,Direct lending interval,Domestic,CCLFX*,8-10%,5,Periodic,Quarterly liquidity gates
+Private Credit,Private debt funds,LP direct lending,Drawdown funds,Senior/unitranche,Domestic,-,9-12%,5,Illiquid,Lockup; J-curve
+Private Credit,Mezzanine,Mezz/PIK debt,Subordinated,Mezzanine,Domestic,-,11-14%,6,Illiquid,Below senior; equity kickers
+US Equities,Broad market,Total market,Cap-weighted,US total,Domestic,"VTI,ITOT",1-2%,4,Intraday,US equity beta
+US Equities,Broad market,Large cap,S&P 500,Large blend,Domestic,"SPY,VOO,IVV",1-2%,4,Intraday,Mega/large cap beta
+US Equities,Broad market,Mid cap,S&P 400,Mid blend,Domestic,"IJH,VO",1-2%,4,Intraday,Mid-cap premium
+US Equities,Broad market,Small cap,Russell 2000,Small blend,Domestic,"IWM,VB,IJR",1%,5,Intraday,Small-cap/economic beta
+US Equities,Broad market,Micro cap,Micro-cap index,Micro,Domestic,IWC,1%,5,Daily,Illiquidity premium
+US Equities,Style,Growth,Large growth,Growth tilt,Domestic,"VUG,IWF,QQQ",0-1%,4,Intraday,Duration/long-growth bet
+US Equities,Style,Value,Large value,Value tilt,Domestic,"VTV,IWD",2-3%,4,Intraday,Cheapness factor
+US Equities,Style,Dividend growth,Quality dividends,Div growers,Domestic,"SCHD,VIG,DGRO",2-3%,3,Intraday,Quality income compounding
+US Equities,Style,High dividend,Yield tilt,High div,Domestic,"HDV,SPYD,VYM",3-4%,3,Intraday,Income-tilted equity
+US Equities,Factor,Quality,High ROE/low debt,Quality factor,Domestic,QUAL,1-2%,4,Intraday,Profitability factor
+US Equities,Factor,Momentum,Trend,Momentum factor,Domestic,MTUM,1%,4,Intraday,Price persistence
+US Equities,Factor,Low volatility,Min vol,Low-vol factor,Domestic,"USMV,SPLV",2%,3,Intraday,Defensive factor
+US Equities,Factor,Multi-factor,Combined,Multi-factor,Domestic,"LRGF,GSLC",1-2%,4,Intraday,Diversified factor exposure
+US Equities,Sector,Information Technology,Software,Application/system SW,Domestic,"XLK,VGT,IGV",0-1%,5,Intraday,Secular growth + rate sensitivity
+US Equities,Sector,Information Technology,Semiconductors,Chips/equipment,Domestic,"SOXX,SMH",0-1%,5,Intraday,Cyclical + AI capex bet
+US Equities,Sector,Information Technology,Hardware/IT services,Devices/services,Domestic,-,1%,4,Intraday,Enterprise IT spend
+US Equities,Sector,Communication Services,Interactive media,Internet/social,Domestic,"XLC,FCOM",0-1%,5,Intraday,Ad cycle + platform moats
+US Equities,Sector,Communication Services,Telecom,Carriers,Domestic,VOX,4-6%,3,Intraday,Income; capex heavy
+US Equities,Sector,Communication Services,Media/entertainment,Streaming/content,Domestic,PBS*,1%,5,Intraday,Content/ad spend
+US Equities,Sector,Consumer Discretionary,Retail,E-comm/specialty,Domestic,"XLY,VCR,XRT",0-1%,5,Intraday,Consumer spending cycle
+US Equities,Sector,Consumer Discretionary,Autos,OEM/EV,Domestic,"CARZ,DRIV",1%,5,Intraday,Big-ticket cyclical
+US Equities,Sector,Consumer Discretionary,Homebuilders,Housing,Domestic,"XHB,ITB",1%,5,Intraday,Rate-sensitive housing
+US Equities,Sector,Consumer Discretionary,Leisure/travel,Hotels/airlines/cruise,Domestic,"JETS,AWAY",0-1%,5,Intraday,Discretionary travel demand
+US Equities,Sector,Consumer Staples,Food/beverage,Packaged food,Domestic,"XLP,VDC",2-3%,3,Intraday,Defensive; pricing power
+US Equities,Sector,Consumer Staples,Household/personal,HPC,Domestic,-,2-3%,3,Intraday,Defensive staples
+US Equities,Sector,Health Care,Pharma,Big pharma,Domestic,"XLV,VHT,PJP",1-2%,3,Intraday,Patent cliffs + pipelines
+US Equities,Sector,Health Care,Biotech,Clinical/commercial,Domestic,"XBI,IBB",0%,5,Intraday,Binary trial risk
+US Equities,Sector,Health Care,Med devices/tools,Equipment,Domestic,"IHI,XHE",0-1%,4,Intraday,Procedure volumes
+US Equities,Sector,Health Care,Providers/managed care,Insurers/hospitals,Domestic,IHF,1%,4,Intraday,Policy/reimbursement risk
+US Equities,Sector,Financials,Banks,Money-center/regional,Domestic,"XLF,KBE,KRE",2-3%,4,Intraday,Credit + rate cycle
+US Equities,Sector,Financials,Insurance,P&C/life,Domestic,"KIE,IAK",2%,3,Intraday,Underwriting + float
+US Equities,Sector,Financials,Capital markets,Brokers/exchanges/AM,Domestic,IAI,1-2%,4,Intraday,Market activity beta
+US Equities,Sector,Financials,Fintech/payments,Networks/processors,Domestic,"FINX,IPAY",0-1%,5,Intraday,Payments growth
+US Equities,Sector,Industrials,Capital goods,Machinery/aerospace,Domestic,"XLI,VIS",1-2%,4,Intraday,Industrial cycle/capex
+US Equities,Sector,Industrials,Transportation,Rail/truck/air freight,Domestic,"IYT,XTN",1-2%,4,Intraday,Economic activity proxy
+US Equities,Sector,Industrials,Defense/aerospace,Primes,Domestic,"ITA,PPA,XAR",1%,3,Intraday,Defense budgets
+US Equities,Sector,Materials,Chemicals,Commodity/specialty,Domestic,"XLB,VAW",1-2%,4,Intraday,Input price cycle
+US Equities,Sector,Materials,Metals & mining,Diversified miners,Domestic,"XME,PICK",2-3%,5,Intraday,Commodity demand
+US Equities,Sector,Materials,Gold/silver miners,Precious miners,Domestic,"GDX,GDXJ,SIL",0-1%,6,Intraday,Leveraged metal price bet
+US Equities,Sector,Energy,Integrated/E&P,Oil & gas,Domestic,"XLE,VDE,XOP",3-4%,5,Intraday,Crude/gas price cycle
+US Equities,Sector,Energy,Midstream,Pipelines,Domestic,"AMLP,MLPX",6-8%,4,Intraday,Toll-road cash flows
+US Equities,Sector,Energy,Oil services,Equipment/services,Domestic,OIH,1-2%,6,Intraday,Drilling capex beta
+US Equities,Sector,Energy,Clean energy,Solar/wind/hydrogen,Domestic,"ICLN,TAN,FAN",0-1%,6,Intraday,Policy + rate sensitive
+US Equities,Sector,Energy,Uranium/nuclear,Miners/fuel,Domestic,"URA,URNM,NLR",0-1%,6,Intraday,Nuclear demand thesis
+US Equities,Sector,Utilities,Regulated utilities,Electric/gas/water,Domestic,"XLU,VPU",3%,3,Intraday,Rate-sensitive income
+US Equities,Sector,Utilities,Water,Water utilities/infra,Domestic,"PHO,FIW",1-2%,3,Intraday,Scarcity/infra thesis
+Intl Equities,Developed ex-US,Broad DM,EAFE,Developed intl,Developed ex-US,"VEA,IEFA,EFA",2-3%,4,Intraday,Foreign DM + FX
+Intl Equities,Developed ex-US,DM FX-hedged,Hedged EAFE,Currency-hedged,Developed ex-US,"HEFA,HEDJ",2-3%,4,Intraday,Strips FX
+Intl Equities,Developed ex-US,DM small cap,Intl small,Small DM,Developed ex-US,"SCZ,GWX",2%,5,Intraday,Foreign small-cap
+Intl Equities,Developed ex-US,Europe,Eurozone/UK,Regional Europe,Developed ex-US,"VGK,FEZ,EWU",3%,4,Intraday,Europe macro
+Intl Equities,Developed ex-US,Japan,Japan equity,Single-country,Developed ex-US,"EWJ,DXJ,BBJP",2%,4,Intraday,Japan reflation/governance
+Intl Equities,Developed ex-US,Canada/Australia,Resource DM,Single-country,Developed ex-US,"EWC,EWA",3-4%,4,Intraday,Commodity-linked DM
+Intl Equities,Emerging markets,Broad EM,EM core,EM equity,EM,"VWO,IEMG,EEM",2-3%,5,Intraday,EM growth + FX + political
+Intl Equities,Emerging markets,EM ex-China,De-China'd EM,EM ex-China,EM,EMXC,2-3%,5,Intraday,EM minus China weight
+Intl Equities,Emerging markets,China,China equity,A/H/ADR,EM,"MCHI,FXI,KWEB,ASHR",1-2%,5,Intraday,China policy/regulatory risk
+Intl Equities,Emerging markets,India,India equity,Single-country,EM,"INDA,EPI,SMIN",1%,5,Intraday,India growth story
+Intl Equities,Emerging markets,Latin America,LatAm,Brazil/Mexico,EM,"ILF,EWZ,EWW",3-5%,5,Intraday,Commodity + politics
+Intl Equities,Emerging markets,EM Asia ex-China,Taiwan/Korea/SEA,Regional,EM,"EWT,EWY,ASEA",2%,5,Intraday,Tech supply chain
+Intl Equities,Frontier,Frontier markets,Frontier equity,Frontier,Frontier,"FM,FRN",2-4%,6,Daily,"Illiquid, high political risk"
+Intl Equities,Global,All-world,ACWI,Global equity,Global,"ACWI,VT",2%,4,Intraday,One-ticket global beta
+Intl Equities,Global,Intl dividend,Foreign dividend,Global div,Global,"IDV,VIGI,VYMI",4-6%,3,Intraday,Foreign income
+Thematic Equities,Technology themes,Artificial intelligence,AI/robotics,AI thematic,Global,"BOTZ,ROBO,IRBO,AIQ",0%,6,Intraday,AI adoption bet
+Thematic Equities,Technology themes,Cybersecurity,Cyber,Security thematic,Global,"CIBR,HACK,BUG",0%,6,Intraday,Security spend growth
+Thematic Equities,Technology themes,Cloud/SaaS,Cloud,Cloud thematic,Global,"SKYY,WCLD",0%,6,Intraday,Cloud migration
+Thematic Equities,Technology themes,Fintech/blockchain,Fintech,Disruptive finance,Global,"ARKF,BLOK",0%,6,Intraday,Digital finance
+Thematic Equities,Disruptive,Innovation,High-growth disruptors,Active thematic,Global,"ARKK,ARKW",0%,6,Intraday,Long-duration moonshots
+Thematic Equities,Disruptive,Genomics,Gene editing,Genomics thematic,Global,"ARKG,IDNA",0%,6,Intraday,Biotech innovation
+Thematic Equities,Disruptive,Space,Space economy,Space thematic,Global,"UFO,ROKT",0%,6,Intraday,Aerospace/space buildout
+Thematic Equities,Demographics,Aging/longevity,Healthcare aging,Thematic,Global,-,1%,4,Intraday,Demographic tailwind
+Thematic Equities,ESG/values,ESG,Sustainability,ESG-screened,Global,"ESGU,SUSA",1-2%,4,Intraday,Values-screened beta
+Thematic Equities,ESG/values,Clean transition,Battery/EV/clean,Energy transition,Global,"LIT,BATT,DRIV",0-1%,6,Intraday,Electrification bet
+Real Estate,Listed REITs,Broad REIT,Diversified,US REIT index,Domestic,"VNQ,SCHH,IYR",3-4%,4,Intraday,Property cycle + rates
+Real Estate,Listed REITs,Residential,Apartments/SFR,Residential REIT,Domestic,REZ,3-4%,4,Intraday,Rent growth
+Real Estate,Listed REITs,Industrial/logistics,Warehouse,Industrial REIT,Domestic,INDS,3%,4,Intraday,E-comm logistics
+Real Estate,Listed REITs,Data centers,Digital infra,DC REIT,Domestic,"DTCR,SRVR",2-3%,4,Intraday,Cloud/AI compute demand
+Real Estate,Listed REITs,Cell towers,Communications,Tower REIT,Domestic,-,3%,4,Intraday,Mobile data growth
+Real Estate,Listed REITs,Retail,Malls/strip,Retail REIT,Domestic,RTL*,4-6%,4,Intraday,Brick-and-mortar risk
+Real Estate,Listed REITs,Office,Office REIT,Office,Domestic,-,5-8%,5,Intraday,WFH/vacancy risk
+Real Estate,Listed REITs,Healthcare,Senior/medical,Healthcare REIT,Domestic,-,4-5%,4,Intraday,Demographics + occupancy
+Real Estate,Listed REITs,Self-storage,Storage,Storage REIT,Domestic,-,3-4%,4,Intraday,Consumer storage demand
+Real Estate,Listed REITs,Net lease,Triple-net,Net-lease REIT,Domestic,NETL,4-5%,3,Intraday,Bond-like lease income
+Real Estate,Mortgage REITs,Agency mREIT,Agency MBS levered,Agency mREIT,Domestic,"REM,MORT",9-13%,6,Intraday,Levered MBS carry; rate risk
+Real Estate,Mortgage REITs,Commercial mREIT,CRE debt,Commercial mREIT,Domestic,-,8-11%,6,Intraday,CRE credit + leverage
+Real Estate,International RE,Global REIT,Ex-US property,Global REIT,Global,"VNQI,RWX",3-4%,4,Intraday,Foreign property + FX
+Real Estate,Private RE,Non-traded REIT,Core/core-plus,Private real estate,Domestic,-,4-6%,5,Periodic,Appraisal NAV; gates
+Real Estate,Direct property,Physical RE,Residential/commercial,Direct ownership,Domestic,-,4-8%,5,Illiquid,Leverage + concentration
+Real Estate,Land,Raw/farmland,Agricultural land,Farmland,Domestic,"FPI,LAND",2-4%,4,Daily,Crop income + appreciation
+Infrastructure,Listed infra,Core infrastructure,Global infra,Listed infra,Global,"IGF,NFRA",2-4%,3,Intraday,"Regulated, inflation-linked"
+Infrastructure,MLPs,Midstream MLP,Pipelines/storage,Energy MLP,Domestic,"AMLP,MLPA",6-8%,4,Intraday,K-1; toll-road cash flow
+Infrastructure,Digital infra,Towers/data/fiber,Communications infra,Digital infra,Global,-,2-3%,4,Intraday,Data growth
+Infrastructure,Renewable infra,Yieldcos,Wind/solar assets,Renewable infra,Global,-,4-6%,4,Daily,Contracted power; rate sensitive
+Infrastructure,Private infra,Unlisted infra,Brownfield/greenfield,Private infra,Global,-,5-8%,5,Illiquid,"Long-dated, illiquid"
+Commodities,Broad,Diversified basket,Multi-commodity,Broad commodity,Global,"DBC,PDBC,GSG,BCI",0%,4,Intraday,Inflation/real-asset hedge
+Commodities,Precious metals,Gold,Bullion,Physical gold,Global,"GLD,IAU,GLDM",0%,3,Intraday,Monetary/safe-haven hedge
+Commodities,Precious metals,Silver,Bullion,Physical silver,Global,"SLV,SIVR",0%,4,Intraday,Monetary + industrial
+Commodities,Precious metals,Platinum/palladium,PGM,Physical PGM,Global,"PPLT,PALL",0%,5,Intraday,Auto/industrial demand
+Commodities,Energy,Crude oil,WTI/Brent,Oil futures,Global,"USO,BNO",0%,5,Intraday,Crude price; roll yield
+Commodities,Energy,Natural gas,Henry Hub,Gas futures,Global,"UNG,BOIL",0%,6,Intraday,High vol; contango decay
+Commodities,Energy,Carbon,Carbon allowances,Emissions,Global,KRBN,0%,5,Intraday,Climate-policy bet
+Commodities,Base metals,Copper,Copper,Copper futures/eq,Global,"CPER,COPX",0%,5,Intraday,Electrification/China demand
+Commodities,Base metals,Aluminum/nickel/zinc,Industrial metals,Base metals,Global,DBB,0%,5,Intraday,Industrial cycle
+Commodities,Base metals,Battery metals,Lithium/cobalt,Battery materials,Global,"LIT,REMX",0%,6,Intraday,EV supply chain
+Commodities,Agriculture,Grains,Corn/wheat/soy,Grains,Global,"DBA,CORN,WEAT,SOYB",0%,5,Intraday,Weather/supply shocks
+Commodities,Agriculture,Softs,Coffee/sugar/cocoa,Softs,Global,"NIB,CANE,JO",0%,6,Intraday,Weather/geopolitics
+Commodities,Agriculture,Livestock,Cattle/hogs,Livestock,Global,COW*,0%,5,Intraday,Herd cycles
+Commodities,Physical,Allocated metals,Vaulted bullion,Physical holdings,Global,-,0%,3,Periodic,Storage/insurance cost
+Alternatives,Liquid alts,Managed futures,Trend following,CTA,Global,"DBMF,KMLM,CTA",0%,4,Daily,Crisis-alpha; trend diversifier
+Alternatives,Liquid alts,Global macro,Discretionary/systematic,Macro,Global,-,0%,4,Daily,Top-down cross-asset bets
+Alternatives,Liquid alts,Market neutral,Equity long/short,Market neutral,Global,"BTAL,MNA*",2-4%,3,Daily,Low beta; spread capture
+Alternatives,Liquid alts,Merger arbitrage,Event-driven,Merger arb,Global,"MNA,MERFX",3-5%,3,Daily,Deal-spread capture
+Alternatives,Liquid alts,Long/short equity,Hedged equity,L/S equity,Global,-,0-2%,4,Daily,Net long with hedges
+Alternatives,Liquid alts,Multi-strategy,Diversified alts,Multi-strat,Global,QAI,2-4%,3,Daily,Blended alt sleeves
+Alternatives,Liquid alts,Risk parity,Levered diversified,Risk parity,Global,"RPAR,UPAR",2-3%,4,Daily,Vol-balanced multi-asset
+Alternatives,Liquid alts,Return stacking,Capital efficient,Stacked beta+alt,Global,"RSST,RSBT",1-3%,4,Daily,Overlay alts on core beta
+Alternatives,Hedge funds,Private hedge funds,LP structures,HF strategies,Global,-,varies,5,Periodic,Lockups; 2/20; manager risk
+Alternatives,Insurance-linked,Catastrophe bonds,Reinsurance risk,Cat bonds,Global,-,8-12%,5,Periodic,Uncorrelated; tail event loss
+Alternatives,Royalties,Music/pharma/mineral,Income royalties,Royalty streams,Global,-,6-10%,4,Periodic,Cash-flow streams
+Alternatives,Litigation finance,Legal funding,Case portfolios,Litigation finance,Global,-,high,6,Illiquid,Binary case outcomes
+Private Equity,Listed PE,PE proxies,Listed sponsors,PE-linked equity,Domestic,"PSP,KKR,BX,APO",2-4%,5,Intraday,Public proxy for PE
+Private Equity,Buyout,LBO funds,Large/mid buyout,Buyout,Global,-,-,6,Illiquid,Leverage + operational alpha
+Private Equity,Growth equity,Growth funds,Pre-IPO growth,Growth equity,Global,-,-,6,Illiquid,Late-stage scaling
+Private Equity,Venture capital,VC funds,Seed/early/late,Venture,Global,-,-,6,Illiquid,Power-law return; J-curve
+Private Equity,Secondaries,PE secondaries,LP stakes,Secondaries,Global,-,-,5,Illiquid,Discounted NAV entry
+Private Equity,Co-investment,Direct co-invest,Deal-by-deal,Co-investment,Global,-,-,6,Illiquid,Concentrated single-deal
+Private Equity,Interval/evergreen,Evergreen PE,Retail-access PE,Evergreen,Global,-,-,5,Periodic,Quarterly gates; NAV marks
+Volatility & Options,Long vol,VIX futures,Short-term VIX,Long volatility,Domestic,"VIXY,VXX,UVXY",0%,6,Intraday,Hedge; severe roll decay
+Volatility & Options,Tail risk,Tail hedge,Convexity,Tail risk,Domestic,TAIL,0%,5,Intraday,Crash insurance; bleeds
+Volatility & Options,Income,Covered call,Buy-write,Option income,Domestic,"JEPI,JEPQ,QYLD,XYLD",7-12%,4,Intraday,Caps upside for income
+Volatility & Options,Income,Put-write,Cash-secured puts,Put income,Domestic,PUTW,5-8%,4,Intraday,Sells downside insurance
+Volatility & Options,Defined outcome,Buffered/defined,Structured ETF,Buffer/floor,Domestic,"BUFR,PBP",varies,3,Intraday,Caps gains for downside buffer
+Volatility & Options,Short vol,Inverse VIX,Short volatility,Short vol,Domestic,"SVIX,SVXY",0%,6,Intraday,Sells vol; blow-up risk
+Digital Assets,Crypto,Bitcoin,Spot BTC,Store of value,Global,"IBIT,FBTC,GBTC",0%,6,Intraday,Digital gold thesis; high vol
+Digital Assets,Crypto,Ethereum,Spot ETH,Smart-contract L1,Global,"ETHA,ETHE",0-4%*,6,Intraday,Platform bet; *staking yield
+Digital Assets,Crypto,Large-cap alts,L1/L2,Altcoins,Global,-,0%,6,Intraday,High beta to BTC
+Digital Assets,Crypto,Stablecoin yield,Lending/staking,DeFi yield,Global,-,4-10%,5,Intraday,Smart-contract/counterparty risk
+Digital Assets,Crypto,Crypto equity,Miners/exchanges,Crypto-linked stocks,Global,"COIN,MSTR,WGMI",0%,6,Intraday,Levered crypto proxy
+Digital Assets,Tokenized,RWA tokens,Tokenized T-bills/credit,Tokenized RWA,Global,-,4-8%,4,Intraday,On-chain real assets
+Currencies / FX,FX,USD,Dollar index,Long/short USD,Global,"UUP,UDN",0-4%,3,Intraday,Dollar direction
+Currencies / FX,FX,DM currencies,EUR/JPY/GBP/CHF,DM FX,Developed ex-US,"FXE,FXY,FXB,FXF",0-2%,3,Intraday,Rate differentials
+Currencies / FX,FX,EM currencies,EM FX basket,EM FX,EM,CEW,2-5%,4,Intraday,Carry + EM risk
+Currencies / FX,FX,Carry trade,High-yield FX,Carry,Global,DBV*,3-6%,4,Daily,Carry; crash risk
+Currencies / FX,FX,Gold as currency,Monetary metal,Anti-fiat,Global,"GLD,IAU",0%,3,Intraday,Currency-debasement hedge
+Collectibles / Esoteric,Collectibles,Fine art,Blue-chip art,Art,Global,Masterworks*,0%,6,Illiquid,Taste-driven; illiquid
+Collectibles / Esoteric,Collectibles,Fine wine/spirits,Vintage wine,Wine,Global,Vinovest*,0%,5,Illiquid,Storage; provenance
+Collectibles / Esoteric,Collectibles,Watches/jewelry,Luxury timepieces,Watches,Global,-,0%,6,Illiquid,Brand/condition dependent
+Collectibles / Esoteric,Collectibles,Cars,Classic/collector autos,Cars,Global,-,0%,6,Illiquid,Maintenance; taste
+Collectibles / Esoteric,Collectibles,Trading cards/memorabilia,Cards/sports,Collectibles,Global,-,0%,6,Illiquid,Fad risk
+Collectibles / Esoteric,IP/royalties,Music catalogs,Royalty income,Music IP,Global,SONG*,5-8%,4,Periodic,Streaming income streams
+Collectibles / Esoteric,Esoteric,Whiskey casks,Maturing spirits,Casks,Global,-,0%,5,Illiquid,Maturation/storage
+Collectibles / Esoteric,Esoteric,Diamonds/gems,Hard assets,Gems,Global,-,0%,6,Illiquid,Opaque pricing
