@@ -330,11 +330,86 @@ GICS = {
    },
  },
 }
+# Sector-level SPDR fallbacks
+SECTOR_ETF = {
+ "Energy":"XLE","Materials":"XLB","Industrials":"XLI","Consumer Discretionary":"XLY",
+ "Consumer Staples":"XLP","Health Care":"XLV","Financials":"XLF","Information Technology":"XLK",
+ "Communication Services":"XLC","Utilities":"XLU","Real Estate":"XLRE",
+}
+# Best pure-play / closest-fit liquid ETF per GICS sub-industry (else sector SPDR).
+# "~" prefix = sector/thematic proxy, not a pure play.
+GICS_TICKER = {
+ "Oil & Gas Drilling":"OIH","Oil & Gas Equipment & Services":"OIH,XES",
+ "Integrated Oil & Gas":"IXC","Oil & Gas Exploration & Production":"XOP",
+ "Oil & Gas Refining & Marketing":"CRAK","Oil & Gas Storage & Transportation":"AMLP,MLPX",
+ "Coal & Consumable Fuels":"~XLE",
+ "Commodity Chemicals":"~XLB","Diversified Chemicals":"~XLB","Fertilizers & Agricultural Chemicals":"MOO,VEGI",
+ "Industrial Gases":"~XLB","Specialty Chemicals":"~XLB","Construction Materials":"PKB",
+ "Metal, Glass & Plastic Containers":"~XLB","Paper & Plastic Packaging Products & Materials":"~XLB",
+ "Aluminum":"~PICK","Diversified Metals & Mining":"XME,PICK","Copper":"COPX","Gold":"GDX,GDXJ",
+ "Precious Metals & Minerals":"GDX","Silver":"SIL","Steel":"SLX",
+ "Forest Products":"WOOD,CUT","Paper Products":"WOOD",
+ "Aerospace & Defense":"ITA,PPA,XAR","Building Products":"PKB","Construction & Engineering":"PAVE",
+ "Electrical Components & Equipment":"~XLI","Heavy Electrical Equipment":"~XLI","Industrial Conglomerates":"~XLI",
+ "Construction Machinery & Heavy Transportation Equipment":"~XLI","Agricultural & Farm Machinery":"MOO",
+ "Industrial Machinery & Supplies & Components":"~XLI","Trading Companies & Distributors":"~XLI",
+ "Commercial Printing":"~XLI","Environmental & Facilities Services":"EVX","Office Services & Supplies":"~XLI",
+ "Diversified Support Services":"~XLI","Security & Alarm Services":"~XLI",
+ "Human Resource & Employment Services":"~XLI","Research & Consulting Services":"~XLI",
+ "Data Processing & Outsourced Services":"IPAY,FINX",
+ "Air Freight & Logistics":"IYT","Passenger Airlines":"JETS","Marine Transportation":"BOAT,SEA",
+ "Rail Transportation":"IYT","Cargo Ground Transportation":"IYT","Passenger Ground Transportation":"~IYT",
+ "Airport Services":"~IGF","Highways & Railtracks":"~IGF","Marine Ports & Services":"~IGF",
+ "Automotive Parts & Equipment":"CARZ","Tires & Rubber":"~CARZ","Automobile Manufacturers":"CARZ,DRIV",
+ "Motorcycle Manufacturers":"~CARZ","Consumer Electronics":"~XLY","Home Furnishings":"XHB",
+ "Homebuilding":"ITB,XHB","Household Appliances":"~XHB","Housewares & Specialties":"~XLY",
+ "Leisure Products":"PEJ","Apparel, Accessories & Luxury Goods":"~XLY","Footwear":"~XLY","Textiles":"~XLY",
+ "Casinos & Gaming":"BJK,BETZ","Hotels, Resorts & Cruise Lines":"AWAY,PEJ","Leisure Facilities":"PEJ",
+ "Restaurants":"EATZ","Education Services":"~XLY","Specialized Consumer Services":"~XLY",
+ "Distributors":"~XLY","Broadline Retail":"XRT,RTH","Apparel Retail":"XRT",
+ "Computer & Electronics Retail":"XRT","Home Improvement Retail":"XHB","Specialty Stores":"XRT",
+ "Automotive Retail":"~CARZ","Homefurnishing Retail":"XHB",
+ "Drug Retail":"~XLP","Food Distributors":"PBJ","Food Retail":"PBJ","Consumer Staples Merchandise Retail":"~XLP",
+ "Brewers":"PBJ","Distillers & Vintners":"PBJ","Soft Drinks & Non-alcoholic Beverages":"PBJ",
+ "Agricultural Products & Services":"MOO,PBJ","Packaged Foods & Meats":"PBJ","Tobacco":"~XLP",
+ "Household Products":"~XLP","Personal Care Products":"~XLP",
+ "Health Care Equipment":"IHI,XHE","Health Care Supplies":"IHI","Health Care Distributors":"IHF",
+ "Health Care Services":"IHF","Health Care Facilities":"IHF","Managed Health Care":"IHF",
+ "Health Care Technology":"EDOC,IHF","Biotechnology":"XBI,IBB","Pharmaceuticals":"PJP,IHE",
+ "Life Sciences Tools & Services":"~XLV",
+ "Diversified Banks":"KBE","Regional Banks":"KRE","Diversified Financial Services":"~XLF",
+ "Multi-Sector Holdings":"~XLF","Specialized Finance":"~XLF","Commercial & Residential Mortgage Finance":"REM",
+ "Transaction & Payment Processing Services":"IPAY,FINX","Consumer Finance":"~XLF",
+ "Asset Management & Custody Banks":"IAI","Investment Banking & Brokerage":"IAI",
+ "Diversified Capital Markets":"IAI","Financial Exchanges & Data":"IAI",
+ "Insurance Brokers":"KIE,IAK","Life & Health Insurance":"KIE","Multi-line Insurance":"KIE",
+ "Property & Casualty Insurance":"KBWP,KIE","Reinsurance":"~KIE",
+ "IT Consulting & Other Services":"~IGV","Internet Services & Infrastructure":"FDN",
+ "Application Software":"IGV","Systems Software":"IGV","Communications Equipment":"IYZ",
+ "Technology Hardware, Storage & Peripherals":"~XLK","Electronic Equipment & Instruments":"~XLK",
+ "Electronic Components":"~XLK","Electronic Manufacturing Services":"~XLK","Technology Distributors":"~XLK",
+ "Semiconductor Materials & Equipment":"SOXX,SMH","Semiconductors":"SOXX,SMH",
+ "Alternative Carriers":"IYZ","Integrated Telecommunication Services":"IYZ,VOX",
+ "Wireless Telecommunication Services":"IYZ,VOX","Advertising":"~XLC","Broadcasting":"~XLC",
+ "Cable & Satellite":"~XLC","Publishing":"~XLC","Movies & Entertainment":"PEJ",
+ "Interactive Home Entertainment":"ESPO,HERO","Interactive Media & Services":"FCOM,XLC",
+ "Electric Utilities":"XLU,IDU","Gas Utilities":"~XLU","Multi-Utilities":"~XLU",
+ "Water Utilities":"PHO,FIW","Independent Power Producers & Energy Traders":"~XLU",
+ "Renewable Electricity":"ICLN,TAN",
+ "Diversified REITs":"VNQ","Industrial REITs":"INDS","Hotel & Resort REITs":"~VNQ","Office REITs":"~VNQ",
+ "Health Care REITs":"~VNQ","Multi-Family Residential REITs":"REZ","Single-Family Residential REITs":"REZ",
+ "Retail REITs":"~VNQ","Other Specialized REITs":"~VNQ","Self-Storage REITs":"~VNQ",
+ "Telecom Tower REITs":"~VNQ","Timber REITs":"WOOD,CUT","Data Center REITs":"DTCR,SRVR",
+ "Diversified Real Estate Activities":"~VNQ","Real Estate Operating Companies":"~VNQ",
+ "Real Estate Development":"~VNQ","Real Estate Services":"~VNQ",
+}
 for sector, groups in GICS.items():
     for group, industries in groups.items():
         for industry, subs in industries.items():
             for sub in subs:
-                R(T, sector, group, industry, sub, "Global", "-", "varies", 4, "Intraday", "GICS sub-industry; global classification")
+                ex = GICS_TICKER.get(sub) or ("~" + SECTOR_ETF.get(sector, "-"))
+                note = "GICS sub-industry; pure-play ETF" if not ex.startswith("~") else "GICS sub-industry; sector/thematic proxy (no pure-play ETF)"
+                R(T, sector, group, industry, sub, "Global", ex, "varies", 4, "Intraday", note)
 
 # =====================================================================
 # TIER 10 — SINGLE-COUNTRY & REGIONAL EQUITY
@@ -649,6 +724,44 @@ for sub, sec, subsec, ex, risk, liq, note in ESOTERIC:
     R(T,sub,sec,subsec,"-","Global",ex,"varies",risk,liq,note)
 
 # =====================================================================
+# ENRICH: primary ticker + real 5Y metrics (yield / Sharpe / return)
+# Metrics are loaded from metrics.json (populated from public aggregators
+# via web search; figures are dated and provider-sourced, NOT computed here
+# and NOT advice). Sleeves with no liquid proxy show N/A.
+# =====================================================================
+import json
+metrics_path = os.path.join(OUT_DIR, "metrics.json")
+try:
+    with open(metrics_path) as f:
+        METRICS = {k.upper(): v for k, v in json.load(f).items()}
+except FileNotFoundError:
+    METRICS = {}
+
+def get_primary(ex):
+    if not ex or ex == "-":
+        return ""
+    first = ex.split(",")[0].strip().lstrip("~").rstrip("*").strip()
+    first = first.split()[0] if first else ""
+    return first
+
+ENRICHED = []
+for row in ROWS:
+    pt = get_primary(row[6])
+    m = METRICS.get(pt.upper()) if pt else None
+    if m:
+        y = m.get("yield", "N/A"); s = m.get("sharpe", "N/A")
+        c = m.get("cagr", "N/A"); src = m.get("src", "")
+    else:
+        y = s = c = "N/A"; src = ("no liquid proxy" if not pt else "not retrieved")
+    ENRICHED.append(tuple(list(row) + [pt or "—", y, s, c, src]))
+
+COLUMNS = COLUMNS + ["Primary Ticker", "5Y Yield", "5Y Sharpe", "5Y Return (CAGR)", "Metric Source"]
+ROWS = ENRICHED
+_metrics_filled = sum(1 for r in ROWS if r[12] != "N/A")
+print(f"Metrics filled (real): {_metrics_filled} of {len(ROWS)} sleeves; "
+      f"unique tickers in metrics.json: {len(METRICS)}")
+
+# =====================================================================
 # WRITE CSV
 # =====================================================================
 csv_path = os.path.join(OUT_DIR, "asset_universe.csv")
@@ -669,7 +782,8 @@ border = Border(left=thin, right=thin, top=thin, bottom=thin)
 center = Alignment(horizontal="center", vertical="center")
 wrap = Alignment(vertical="top", wrap_text=True)
 risk_colors = {1:"C6EFCE",2:"D9EAD3",3:"FFF2CC",4:"FCE5CD",5:"F4CCCC",6:"EA9999"}
-WIDTHS = [26, 24, 26, 30, 32, 16, 26, 12, 9, 12, 44]
+WIDTHS = [26, 24, 26, 30, 32, 16, 26, 12, 9, 12, 44, 13, 11, 10, 14, 26]
+CENTER_COLS = {8, 9, 10, 12, 13, 14, 15}
 
 def style_sheet(ws, rows, with_tracking=False):
     headers = COLUMNS + (["Hold?","Position $","Target %","Notes/Action"] if with_tracking else [])
@@ -687,7 +801,7 @@ def style_sheet(ws, rows, with_tracking=False):
         for c in range(1, len(headers) + 1):
             cell = ws.cell(row=r, column=c)
             cell.border = border
-            cell.alignment = center if c in (8,9,10) else wrap
+            cell.alignment = center if c in CENTER_COLS else wrap
         rt = ws.cell(row=r, column=9).value
         try:
             rt = int(rt)
