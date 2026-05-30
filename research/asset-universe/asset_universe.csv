@@ -2,7 +2,7 @@ Tier,Asset Class,Sub-Class,Sector/Strategy,Sub-Sector,Geography,Examples,Typ. Yi
 Cash & Equivalents,Cash,Bank deposits,Checking/Savings,FDIC savings,Domestic,HYSA,4-5%,1,Daily,Insured to limits; reinvestment risk,HYSA,N/A,N/A,N/A,not retrieved
 Cash & Equivalents,Cash,Bank deposits,Certificates of deposit,Brokered CDs,Domestic,-,4-5%,1,Periodic,Term lockup; FDIC insured,—,N/A,N/A,N/A,no liquid proxy
 Cash & Equivalents,Cash,Bank deposits,Sweep/cash management,Bank sweep,Domestic,-,3-5%,1,Daily,Brokerage sweep accounts,—,N/A,N/A,N/A,no liquid proxy
-Cash & Equivalents,Cash,Money market,Govt money market funds,T-bill/repo MMF,Domestic,"SGOV,BIL,SPAXX",4-5%,1,Daily,Near-zero credit risk; rate-sensitive,SGOV,N/A,N/A,N/A,not retrieved
+Cash & Equivalents,Cash,Money market,Govt money market funds,T-bill/repo MMF,Domestic,"SGOV,BIL,SPAXX",4-5%,1,Daily,Near-zero credit risk; rate-sensitive,SGOV,3.53%,N/A,N/A,aggregators ~May 2026
 Cash & Equivalents,Cash,Money market,Prime money market funds,CP/CD MMF,Domestic,-,4-5%,1,Daily,Slight credit spread over govt,—,N/A,N/A,N/A,no liquid proxy
 Cash & Equivalents,Cash,Money market,Tax-exempt MMF,Muni MMF,Domestic,-,3%TE,1,Daily,Tax-exempt cash,—,N/A,N/A,N/A,no liquid proxy
 Cash & Equivalents,Cash,T-bills,Ultra-short Treasuries,0-3m bills,Domestic,"BIL,SGOV",4-5%,1,Intraday,Risk-free rate proxy,BIL,N/A,N/A,N/A,not retrieved
@@ -27,14 +27,14 @@ Govt Fixed Income,Sovereign ex-US,EM local ccy,Local sovereign,EM local bonds,EM
 Govt Fixed Income,Sovereign ex-US,Frontier,Frontier sovereign,Frontier USD bonds,Frontier,-,8-12%,5,Periodic,"Illiquid, high default/political risk",—,N/A,N/A,N/A,no liquid proxy
 Municipal,Munis,General obligation,Investment-grade GO,National GO,Domestic,"MUB,VTEB",3-4%TE,2,Daily,Tax-exempt; state credit risk,MUB,3.17%,N/A,N/A,aggregators ~May 2026
 Municipal,Munis,Revenue,IG revenue,Toll/utility/hospital,Domestic,-,3-4%TE,2,Daily,Project cash-flow backed,—,N/A,N/A,N/A,no liquid proxy
-Municipal,Munis,High yield,HY munis,Non-rated/spec muni,Domestic,"HYD,HYMB",4-5%TE,3,Daily,Lower-rated issuers; default risk,HYD,N/A,N/A,N/A,not retrieved
+Municipal,Munis,High yield,HY munis,Non-rated/spec muni,Domestic,"HYD,HYMB",4-5%TE,3,Daily,Lower-rated issuers; default risk,HYD,4.40%,N/A,0.5%,aggregators ~May 2026
 Municipal,Munis,State-specific,Single-state,CA/NY munis,Domestic,-,3-4%TE,2,Daily,Double tax-exempt for residents,—,N/A,N/A,N/A,no liquid proxy
 Municipal,Munis,Taxable munis,BABs,Build America Bonds,Domestic,BAB,4-5%,2,Daily,Taxable; for non-taxable accounts,BAB,N/A,N/A,N/A,not retrieved
 Municipal,Munis,Pre-refunded,Escrowed,Pre-re munis,Domestic,-,3%TE,1,Daily,Treasury-collateralized; very safe,—,N/A,N/A,N/A,no liquid proxy
 Municipal,Munis,Short munis,0-5y muni,Short tax-exempt,Domestic,"SUB,SHM",2-3%TE,1,Daily,Low duration tax-exempt,SUB,N/A,N/A,N/A,not retrieved
 Municipal,Munis,Tobacco/special tax,Settlement-backed,Tobacco bonds,Domestic,-,4-5%TE,4,Daily,Settlement revenue risk,—,N/A,N/A,N/A,no liquid proxy
 Corporate Credit,Investment grade,Broad IG,Aggregate corp,US IG corp,Domestic,"LQD,VCIT",4-5%,2,Intraday,Spread + rate risk,LQD,5.23%,N/A,0.1%,aggregators ~May 2026
-Corporate Credit,Investment grade,Short IG,1-5y IG,Short corp,Domestic,"IGSB,VCSH",4-5%,2,Intraday,Low duration credit,IGSB,N/A,N/A,N/A,not retrieved
+Corporate Credit,Investment grade,Short IG,1-5y IG,Short corp,Domestic,"IGSB,VCSH",4-5%,2,Intraday,Low duration credit,IGSB,4.66%,N/A,2.4%,aggregators ~May 2026
 Corporate Credit,Investment grade,Long IG,10y+ IG,Long corp,Domestic,"IGLB,VCLT",5%,3,Intraday,Duration + spread,IGLB,N/A,N/A,N/A,not retrieved
 Corporate Credit,Investment grade,AAA/AA,Highest grade,AAA-AA corp,Domestic,QLTA,4-5%,2,Daily,Top-quality corporates,QLTA,N/A,N/A,N/A,not retrieved
 Corporate Credit,Investment grade,A-rated,Single-A,A corp,Domestic,-,4-5%,2,Daily,Upper-medium grade,—,N/A,N/A,N/A,no liquid proxy
@@ -43,13 +43,13 @@ Corporate Credit,High yield,Broad HY,BB/B/CCC,US HY,Domestic,"HYG,JNK,USHY",6-8%
 Corporate Credit,High yield,BB-rated,Upper HY,BB corp,Domestic,-,6-7%,4,Daily,Higher-quality junk,—,N/A,N/A,N/A,no liquid proxy
 Corporate Credit,High yield,B/CCC-rated,Lower HY,B/CCC corp,Domestic,-,8-10%,5,Daily,Elevated default risk,—,N/A,N/A,N/A,no liquid proxy
 Corporate Credit,High yield,Fallen angels,Ex-IG downgrades,Fallen angel HY,Domestic,FALN,6-7%,4,Daily,Higher quality HY tilt,FALN,N/A,N/A,N/A,not retrieved
-Corporate Credit,High yield,Short HY,0-5y HY,Short HY,Domestic,"SHYG,SJNK",6-7%,4,Intraday,Lower duration HY,SHYG,N/A,N/A,N/A,not retrieved
+Corporate Credit,High yield,Short HY,0-5y HY,Short HY,Domestic,"SHYG,SJNK",6-7%,4,Intraday,Lower duration HY,SHYG,6.75%,N/A,5.1%,aggregators ~May 2026
 Corporate Credit,High yield,Distressed,CCC/defaulted,Distressed debt,Domestic,-,10%+,6,Illiquid,Workout/recovery bet,—,N/A,N/A,N/A,no liquid proxy
 Corporate Credit,Convertibles,Convertible bonds,Balanced converts,US converts,Domestic,"CWB,ICVT",2-4%,4,Daily,Equity upside + bond floor,CWB,N/A,N/A,N/A,not retrieved
 Corporate Credit,Green/ESG bonds,Labeled bonds,Green/social/sustainability,Use-of-proceeds bonds,Global,-,4-5%,2,Daily,ESG-labeled credit,—,N/A,N/A,N/A,no liquid proxy
 Corporate Credit,International corp,DM corporate,IG/HY foreign,Euro/UK corp,Developed ex-US,"IBND,HYXU",3-6%,3,Daily,FX + foreign credit,IBND,N/A,N/A,N/A,not retrieved
 Corporate Credit,International corp,EM corporate,EM USD corp,EM corp bonds,EM,"CEMB,EMCB",6-8%,4,Daily,EM corporate credit,CEMB,N/A,N/A,N/A,not retrieved
-Securitized Credit,Agency MBS,Pass-throughs,30y/15y MBS,Agency RMBS,Domestic,"MBB,VMBS",4-5%,2,Intraday,Prepayment/convexity risk,MBB,N/A,N/A,N/A,not retrieved
+Securitized Credit,Agency MBS,Pass-throughs,30y/15y MBS,Agency RMBS,Domestic,"MBB,VMBS",4-5%,2,Intraday,Prepayment/convexity risk,MBB,4.18%,N/A,N/A,aggregators ~May 2026
 Securitized Credit,Agency MBS,Agency CMBS,Multifamily,GNMA/FNMA CMBS,Domestic,-,4-5%,2,Daily,Govt-backed commercial,—,N/A,N/A,N/A,no liquid proxy
 Securitized Credit,Non-agency MBS,RMBS,Prime/Alt-A/legacy,Non-agency RMBS,Domestic,-,5-7%,4,Periodic,Housing credit risk,—,N/A,N/A,N/A,no liquid proxy
 Securitized Credit,Non-agency MBS,Whole loans,Residential whole loans,Whole-loan pools,Domestic,-,6-8%,4,Illiquid,Direct mortgage credit,—,N/A,N/A,N/A,no liquid proxy
@@ -71,7 +71,7 @@ Loans,Senior loans,Middle-market loans,Direct loans,MM senior,Domestic,-,9-11%,5
 Loans,Consumer loans,Marketplace lending,P2P/fintech loans,Consumer credit,Domestic,-,6-9%,5,Periodic,Unsecured consumer default risk,—,N/A,N/A,N/A,no liquid proxy
 Loans,Trade finance,Receivables/factoring,Short-term trade,Trade finance,Global,-,6-9%,4,Periodic,Counterparty/settlement risk,—,N/A,N/A,N/A,no liquid proxy
 Preferred & Hybrid,Preferreds,Traditional preferreds,$25 par perpetual,Bank/utility pfd,Domestic,"PFF,PGX",6-7%,3,Daily,Rate + credit; below senior debt,PFF,6.28%,N/A,1.5%,aggregators ~May 2026
-Preferred & Hybrid,Preferreds,Institutional preferreds,$1000 par,Inst'l pfd,Domestic,"PFFA,PFFD",6-7%,3,Daily,Higher quality issuers,PFFA,N/A,N/A,N/A,not retrieved
+Preferred & Hybrid,Preferreds,Institutional preferreds,$1000 par,Inst'l pfd,Domestic,"PFFA,PFFD",6-7%,3,Daily,Higher quality issuers,PFFA,9.38%,N/A,N/A,aggregators ~May 2026
 Preferred & Hybrid,Preferreds,CLO-CEF preferreds,Term preferred,Senior to CEF common,Domestic,"OXLCN,OXLCI,OXLCZ,ECC-D",7-8.5%,3,Daily,Redeemed at $25 ahead of equity,OXLCN,N/A,N/A,N/A,not retrieved
 Preferred & Hybrid,Baby bonds,Exchange-traded debt,$25 baby bonds,Senior to pfd,Domestic,-,7-8%,3,Daily,"Bond claim, exchange-traded",—,N/A,N/A,N/A,no liquid proxy
 Preferred & Hybrid,Trust preferreds,TruPS,Bank trust pfd,Hybrid capital,Domestic,-,6-8%,3,Daily,Deferrable hybrid,—,N/A,N/A,N/A,no liquid proxy
@@ -89,25 +89,25 @@ Private Credit,Asset-based lending,ABL,Receivables/inventory,ABL,Domestic,-,9-12
 Equity Size/Style/Factor,Broad market,Total market,Cap-weighted,US total,Domestic,"VTI,ITOT",1-2%,4,Intraday,US equity beta,VTI,1.10%,N/A,12.7%,aggregators ~May 2026
 Equity Size/Style/Factor,Broad market,Large cap,S&P 500,Large blend,Domestic,"SPY,VOO,IVV",1-2%,4,Intraday,Mega/large cap beta,SPY,1.07%,N/A,13.8%,aggregators ~May 2026
 Equity Size/Style/Factor,Broad market,Mega cap,Top 50/100,Mega blend,Domestic,"MGC,OEF",1%,4,Intraday,Largest companies,MGC,N/A,N/A,N/A,not retrieved
-Equity Size/Style/Factor,Broad market,Mid cap,S&P 400,Mid blend,Domestic,"IJH,VO",1-2%,4,Intraday,Mid-cap premium,IJH,N/A,N/A,N/A,not retrieved
+Equity Size/Style/Factor,Broad market,Mid cap,S&P 400,Mid blend,Domestic,"IJH,VO",1-2%,4,Intraday,Mid-cap premium,IJH,1.22%,N/A,6.8%,aggregators ~May 2026
 Equity Size/Style/Factor,Broad market,Small cap,Russell 2000,Small blend,Domestic,"IWM,VB,IJR",1%,5,Intraday,Small-cap/economic beta,IWM,0.96%,N/A,3.7%,aggregators ~May 2026
 Equity Size/Style/Factor,Broad market,Micro cap,Micro-cap index,Micro,Domestic,IWC,1%,5,Daily,Illiquidity premium,IWC,N/A,N/A,N/A,not retrieved
-Equity Size/Style/Factor,Broad market,Equal weight,S&P 500 EW,Equal-weight,Domestic,RSP,1-2%,4,Intraday,De-concentrated beta,RSP,N/A,N/A,N/A,not retrieved
+Equity Size/Style/Factor,Broad market,Equal weight,S&P 500 EW,Equal-weight,Domestic,RSP,1-2%,4,Intraday,De-concentrated beta,RSP,1.59%,N/A,7.7%,aggregators ~May 2026
 Equity Size/Style/Factor,Style,Growth,Large growth,Growth tilt,Domestic,"VUG,IWF,QQQ",0-1%,4,Intraday,Duration/long-growth bet,VUG,0.41%,N/A,15.0%,aggregators ~May 2026
 Equity Size/Style/Factor,Style,Value,Large value,Value tilt,Domestic,"VTV,IWD",2-3%,4,Intraday,Cheapness factor,VTV,2.05%,N/A,11.3%,aggregators ~May 2026
-Equity Size/Style/Factor,Style,Small value,Small-cap value,SCV,Domestic,"VBR,AVUV",1-2%,5,Intraday,Classic value+size premium,VBR,N/A,N/A,N/A,not retrieved
+Equity Size/Style/Factor,Style,Small value,Small-cap value,SCV,Domestic,"VBR,AVUV",1-2%,5,Intraday,Classic value+size premium,VBR,1.90%,N/A,8.9%,aggregators ~May 2026
 Equity Size/Style/Factor,Style,Dividend growth,Quality dividends,Div growers,Domestic,"SCHD,VIG,DGRO",2-3%,3,Intraday,Quality income compounding,SCHD,3.25%,N/A,9.4%,aggregators ~May 2026
-Equity Size/Style/Factor,Style,High dividend,Yield tilt,High div,Domestic,"HDV,SPYD,VYM",3-4%,3,Intraday,Income-tilted equity,HDV,N/A,N/A,N/A,not retrieved
+Equity Size/Style/Factor,Style,High dividend,Yield tilt,High div,Domestic,"HDV,SPYD,VYM",3-4%,3,Intraday,Income-tilted equity,HDV,2.88%,N/A,10.7%,aggregators ~May 2026
 Equity Size/Style/Factor,Style,Buyback,Shareholder yield,Buyback tilt,Domestic,"PKW,SYLD",1-2%,4,Intraday,Capital-return focus,PKW,N/A,N/A,N/A,not retrieved
-Equity Size/Style/Factor,Factor,Quality,High ROE/low debt,Quality factor,Domestic,QUAL,1-2%,4,Intraday,Profitability factor,QUAL,N/A,N/A,N/A,not retrieved
-Equity Size/Style/Factor,Factor,Momentum,Trend,Momentum factor,Domestic,MTUM,1%,4,Intraday,Price persistence,MTUM,N/A,N/A,N/A,not retrieved
-Equity Size/Style/Factor,Factor,Low volatility,Min vol,Low-vol factor,Domestic,"USMV,SPLV",2%,3,Intraday,Defensive factor,USMV,N/A,N/A,N/A,not retrieved
+Equity Size/Style/Factor,Factor,Quality,High ROE/low debt,Quality factor,Domestic,QUAL,1-2%,4,Intraday,Profitability factor,QUAL,0.80%,N/A,10.6%,aggregators ~May 2026
+Equity Size/Style/Factor,Factor,Momentum,Trend,Momentum factor,Domestic,MTUM,1%,4,Intraday,Price persistence,MTUM,0.69%,N/A,10.4%,aggregators ~May 2026
+Equity Size/Style/Factor,Factor,Low volatility,Min vol,Low-vol factor,Domestic,"USMV,SPLV",2%,3,Intraday,Defensive factor,USMV,1.55%,N/A,7.4%,aggregators ~May 2026
 Equity Size/Style/Factor,Factor,Multi-factor,Combined,Multi-factor,Domestic,"LRGF,GSLC",1-2%,4,Intraday,Diversified factor exposure,LRGF,N/A,N/A,N/A,not retrieved
 Equity Size/Style/Factor,Factor,Profitability/yield,Shareholder yield,Multi-metric,Domestic,-,2-3%,4,Intraday,Combined fundamentals,—,N/A,N/A,N/A,no liquid proxy
 Global Equity Sectors (GICS),Energy,Energy Equipment & Services,Energy Equipment & Services,Oil & Gas Drilling,Global,OIH,varies,4,Intraday,GICS sub-industry; pure-play ETF,OIH,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Energy,Energy Equipment & Services,Energy Equipment & Services,Oil & Gas Equipment & Services,Global,"OIH,XES",varies,4,Intraday,GICS sub-industry; pure-play ETF,OIH,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Integrated Oil & Gas,Global,IXC,varies,4,Intraday,GICS sub-industry; pure-play ETF,IXC,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Oil & Gas Exploration & Production,Global,XOP,varies,4,Intraday,GICS sub-industry; pure-play ETF,XOP,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Oil & Gas Exploration & Production,Global,XOP,varies,4,Intraday,GICS sub-industry; pure-play ETF,XOP,1.91%,N/A,18.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Oil & Gas Refining & Marketing,Global,CRAK,varies,4,Intraday,GICS sub-industry; pure-play ETF,CRAK,N/A,N/A,N/A,not retrieved
 Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Oil & Gas Storage & Transportation,Global,"AMLP,MLPX",varies,4,Intraday,GICS sub-industry; pure-play ETF,AMLP,7.56%,N/A,18.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Energy,"Oil, Gas & Consumable Fuels","Oil, Gas & Consumable Fuels",Coal & Consumable Fuels,Global,~XLE,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLE,2.70%,N/A,21.3%,aggregators ~May 2026
@@ -120,8 +120,8 @@ Global Equity Sectors (GICS),Materials,Materials,Construction Materials,Construc
 Global Equity Sectors (GICS),Materials,Materials,Containers & Packaging,"Metal, Glass & Plastic Containers",Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Containers & Packaging,Paper & Plastic Packaging Products & Materials,Global,~XLB,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),XLB,1.60%,N/A,6.2%,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Aluminum,Global,~PICK,varies,4,Intraday,GICS sub-industry; sector/thematic proxy (no pure-play ETF),PICK,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Diversified Metals & Mining,Global,"XME,PICK",varies,4,Intraday,GICS sub-industry; pure-play ETF,XME,N/A,N/A,N/A,not retrieved
-Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Copper,Global,COPX,varies,4,Intraday,GICS sub-industry; pure-play ETF,COPX,N/A,N/A,N/A,not retrieved
+Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Diversified Metals & Mining,Global,"XME,PICK",varies,4,Intraday,GICS sub-industry; pure-play ETF,XME,0.24%,N/A,24.6%,aggregators ~May 2026
+Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Copper,Global,COPX,varies,4,Intraday,GICS sub-industry; pure-play ETF,COPX,2.47%,N/A,18.0%,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Gold,Global,"GDX,GDXJ",varies,4,Intraday,GICS sub-industry; pure-play ETF,GDX,0.74%,N/A,18.7%,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Precious Metals & Minerals,Global,GDX,varies,4,Intraday,GICS sub-industry; pure-play ETF,GDX,0.74%,N/A,18.7%,aggregators ~May 2026
 Global Equity Sectors (GICS),Materials,Materials,Metals & Mining,Silver,Global,SIL,varies,4,Intraday,GICS sub-industry; pure-play ETF,SIL,N/A,N/A,N/A,not retrieved
@@ -266,24 +266,24 @@ Country/Regional Equity,Region/aggregate,Developed ex-US,EAFE,-,Developed ex-US,
 Country/Regional Equity,Region/aggregate,Developed ex-US,DM small cap,-,Developed ex-US,"SCZ,GWX",2-4%,5,Intraday,Regional equity beta,SCZ,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Developed ex-US,DM FX-hedged,-,Developed ex-US,"HEFA,HEDJ",2-4%,4,Intraday,Regional equity beta,HEFA,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Europe,Europe broad,-,Developed ex-US,"VGK,FEZ",2-4%,4,Intraday,Regional equity beta,VGK,2.85%,N/A,N/A,aggregators ~May 2026
-Country/Regional Equity,Region/aggregate,Asia-Pacific,Asia ex-Japan,-,Global,"AAXJ,VPL",2-4%,5,Intraday,Regional equity beta,AAXJ,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Region/aggregate,Asia-Pacific,Asia ex-Japan,-,Global,"AAXJ,VPL",2-4%,5,Intraday,Regional equity beta,AAXJ,1.90%,N/A,7.8%,aggregators ~May 2026
 Country/Regional Equity,Region/aggregate,Emerging markets,EM broad,-,EM,"VWO,IEMG,EEM",2-4%,5,Intraday,Regional equity beta,VWO,2.42%,N/A,5.7%,aggregators ~May 2026
 Country/Regional Equity,Region/aggregate,Emerging markets,EM ex-China,-,EM,EMXC,2-4%,5,Intraday,Regional equity beta,EMXC,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Emerging markets,EM small cap,-,EM,"EWX,DGS",2-4%,5,Intraday,Regional equity beta,EWX,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Frontier markets,Frontier broad,-,Frontier,"FM,FRN",2-4%,6,Intraday,Regional equity beta,FM,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Region/aggregate,Global,All-world,-,Global,"ACWI,VT",2-4%,4,Intraday,Regional equity beta,ACWI,1.45%,N/A,10.9%,aggregators ~May 2026
-Country/Regional Equity,Region/aggregate,Global,Global ex-US,-,Global,"VXUS,CWI",2-4%,4,Intraday,Regional equity beta,VXUS,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Region/aggregate,Global,Global dividend,-,Global,"IDV,VIGI,VYMI",2-4%,3,Intraday,Regional equity beta,IDV,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Region/aggregate,Global,Global ex-US,-,Global,"VXUS,CWI",2-4%,4,Intraday,Regional equity beta,VXUS,2.66%,N/A,8.7%,aggregators ~May 2026
+Country/Regional Equity,Region/aggregate,Global,Global dividend,-,Global,"IDV,VIGI,VYMI",2-4%,3,Intraday,Regional equity beta,IDV,4.38%,N/A,12.7%,aggregators ~May 2026
 Country/Regional Equity,Single country,United States,Country equity,-,Domestic,"SPY,VTI",1-5%,4,Intraday,Country-specific macro/FX/political risk,SPY,1.07%,N/A,13.8%,aggregators ~May 2026
-Country/Regional Equity,Single country,Canada,Country equity,-,Developed ex-US,EWC,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWC,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,United Kingdom,Country equity,-,Developed ex-US,"EWU,FLGB",1-5%,4,Intraday,Country-specific macro/FX/political risk,EWU,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Canada,Country equity,-,Developed ex-US,EWC,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWC,1.60%,N/A,11.5%,aggregators ~May 2026
+Country/Regional Equity,Single country,United Kingdom,Country equity,-,Developed ex-US,"EWU,FLGB",1-5%,4,Intraday,Country-specific macro/FX/political risk,EWU,3.47%,N/A,N/A,aggregators ~May 2026
 Country/Regional Equity,Single country,Germany,Country equity,-,Developed ex-US,EWG,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWG,1.61%,N/A,5.3%,aggregators ~May 2026
-Country/Regional Equity,Single country,France,Country equity,-,Developed ex-US,EWQ,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWQ,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Italy,Country equity,-,Developed ex-US,EWI,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWI,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Spain,Country equity,-,Developed ex-US,EWP,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWP,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Netherlands,Country equity,-,Developed ex-US,EWN,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWN,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Switzerland,Country equity,-,Developed ex-US,EWL,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWL,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Sweden,Country equity,-,Developed ex-US,EWD,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWD,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,France,Country equity,-,Developed ex-US,EWQ,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWQ,2.68%,N/A,8.5%,aggregators ~May 2026
+Country/Regional Equity,Single country,Italy,Country equity,-,Developed ex-US,EWI,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWI,2.63%,N/A,N/A,aggregators ~May 2026
+Country/Regional Equity,Single country,Spain,Country equity,-,Developed ex-US,EWP,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWP,2.16%,N/A,N/A,aggregators ~May 2026
+Country/Regional Equity,Single country,Netherlands,Country equity,-,Developed ex-US,EWN,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWN,4.45%,N/A,9.0%,aggregators ~May 2026
+Country/Regional Equity,Single country,Switzerland,Country equity,-,Developed ex-US,EWL,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWL,1.79%,N/A,7.8%,aggregators ~May 2026
+Country/Regional Equity,Single country,Sweden,Country equity,-,Developed ex-US,EWD,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWD,3.12%,N/A,6.5%,aggregators ~May 2026
 Country/Regional Equity,Single country,Norway,Country equity,-,Developed ex-US,ENOR,1-5%,4,Intraday,Country-specific macro/FX/political risk,ENOR,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Denmark,Country equity,-,Developed ex-US,EDEN,1-5%,4,Intraday,Country-specific macro/FX/political risk,EDEN,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Finland,Country equity,-,Developed ex-US,EFNL,1-5%,4,Intraday,Country-specific macro/FX/political risk,EFNL,N/A,N/A,N/A,not retrieved
@@ -292,22 +292,22 @@ Country/Regional Equity,Single country,Austria,Country equity,-,Developed ex-US,
 Country/Regional Equity,Single country,Ireland,Country equity,-,Developed ex-US,EIRL,1-5%,4,Intraday,Country-specific macro/FX/political risk,EIRL,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Portugal,Country equity,-,Developed ex-US,PGAL,1-5%,4,Intraday,Country-specific macro/FX/political risk,PGAL,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Japan,Country equity,-,Developed ex-US,"EWJ,DXJ,BBJP",1-5%,4,Intraday,Country-specific macro/FX/political risk,EWJ,4.04%,N/A,7.5%,aggregators ~May 2026
-Country/Regional Equity,Single country,Australia,Country equity,-,Developed ex-US,EWA,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWA,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Australia,Country equity,-,Developed ex-US,EWA,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWA,2.95%,N/A,6.8%,aggregators ~May 2026
 Country/Regional Equity,Single country,New Zealand,Country equity,-,Developed ex-US,ENZL,1-5%,4,Intraday,Country-specific macro/FX/political risk,ENZL,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Hong Kong,Country equity,-,Developed ex-US,EWH,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWH,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Singapore,Country equity,-,Developed ex-US,EWS,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWS,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Hong Kong,Country equity,-,Developed ex-US,EWH,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWH,4.72%,N/A,0.5%,aggregators ~May 2026
+Country/Regional Equity,Single country,Singapore,Country equity,-,Developed ex-US,EWS,1-5%,4,Intraday,Country-specific macro/FX/political risk,EWS,3.90%,N/A,8.5%,aggregators ~May 2026
 Country/Regional Equity,Single country,Israel,Country equity,-,Developed ex-US,EIS,1-5%,4,Intraday,Country-specific macro/FX/political risk,EIS,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,China,Country equity,-,EM,"MCHI,FXI,KWEB,ASHR",1-5%,5,Intraday,Country-specific macro/FX/political risk,MCHI,2.21%,N/A,N/A,aggregators ~May 2026
 Country/Regional Equity,Single country,India,Country equity,-,EM,"INDA,EPI,SMIN",1-5%,5,Intraday,Country-specific macro/FX/political risk,INDA,0.45%,N/A,4.7%,aggregators ~May 2026
-Country/Regional Equity,Single country,Taiwan,Country equity,-,EM,EWT,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWT,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,South Korea,Country equity,-,EM,EWY,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWY,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Taiwan,Country equity,-,EM,EWT,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWT,2.97%,N/A,11.0%,aggregators ~May 2026
+Country/Regional Equity,Single country,South Korea,Country equity,-,EM,EWY,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWY,1.29%,N/A,18.1%,aggregators ~May 2026
 Country/Regional Equity,Single country,Brazil,Country equity,-,EM,"EWZ,EWZS",1-5%,5,Intraday,Country-specific macro/FX/political risk,EWZ,4.99%,N/A,12.0%,aggregators ~May 2026
-Country/Regional Equity,Single country,Mexico,Country equity,-,EM,EWW,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWW,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,Chile,Country equity,-,EM,ECH,1-5%,5,Intraday,Country-specific macro/FX/political risk,ECH,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,Mexico,Country equity,-,EM,EWW,1-5%,5,Intraday,Country-specific macro/FX/political risk,EWW,3.46%,N/A,13.6%,aggregators ~May 2026
+Country/Regional Equity,Single country,Chile,Country equity,-,EM,ECH,1-5%,5,Intraday,Country-specific macro/FX/political risk,ECH,1.96%,N/A,N/A,aggregators ~May 2026
 Country/Regional Equity,Single country,Colombia,Country equity,-,EM,GXG,1-5%,5,Intraday,Country-specific macro/FX/political risk,GXG,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Peru,Country equity,-,EM,EPU,1-5%,5,Intraday,Country-specific macro/FX/political risk,EPU,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Argentina,Country equity,-,EM,ARGT,1-5%,6,Intraday,Country-specific macro/FX/political risk,ARGT,N/A,N/A,N/A,not retrieved
-Country/Regional Equity,Single country,South Africa,Country equity,-,EM,EZA,1-5%,5,Intraday,Country-specific macro/FX/political risk,EZA,N/A,N/A,N/A,not retrieved
+Country/Regional Equity,Single country,South Africa,Country equity,-,EM,EZA,1-5%,5,Intraday,Country-specific macro/FX/political risk,EZA,6.22%,N/A,N/A,aggregators ~May 2026
 Country/Regional Equity,Single country,Saudi Arabia,Country equity,-,EM,KSA,1-5%,5,Intraday,Country-specific macro/FX/political risk,KSA,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,United Arab Emirates,Country equity,-,EM,UAE,1-5%,5,Intraday,Country-specific macro/FX/political risk,UAE,N/A,N/A,N/A,not retrieved
 Country/Regional Equity,Single country,Qatar,Country equity,-,EM,QAT,1-5%,5,Intraday,Country-specific macro/FX/political risk,QAT,N/A,N/A,N/A,not retrieved
