@@ -67,5 +67,25 @@ identical daily return stream (OOS 2019–2026), recomputing/trading holdings ev
 
 Daily is **worse even before costs** (0.84 < 0.96 — it whipsaws names around the top-20 cutoff),
 and at realistic 3–5 bps ETF cost it erodes to ~SPY parity; at 10 bps it underperforms SPY.
-Compute holdings daily for **monitoring**, but rebalance **monthly** (weekly at most). The
-`EOD+10min` fill assumption is fine — the problem is frequency, not timing. See `NOTES.md` §5.
+Naively trading the slow momentum book daily fails — but see below for a daily overlay that wins.
+
+## Daily overlay that *does* beat monthly (iteration 6)
+
+The fix: keep **selection** monthly (12-month momentum, top-20, inverse-vol) and add a single
+**daily, portfolio-level PRICE-trend risk lever** — scale total exposure down when SPY trades
+below its EMA100. It reacts daily between rebalances at almost no turnover (~10×/yr). Net of 5bps,
+OOS 2019–2026 (daily basis):
+
+| Strategy | Sharpe | CAGR | MaxDD | turnover/yr |
+|---|---|---|---|---|
+| SPY buy & hold | 0.72 | 15.8% | -33.7% | — |
+| Monthly base (bogey) | 0.94 | 20.1% | -27.2% | 8.5× |
+| **+ daily regime SPY<EMA100 → 50%** | **0.98** | 19.9% | **-21.3%** | 10× |
+| + daily regime SPY<EMA100 → 33% | **1.03** | 23.3% | -26.7% | 12× |
+
+It beats the monthly Sharpe in the full sample and **every** sub-period, and a walk-forward that
+picks the overlay monthly from past data only confirms it. **Volume signals (OBV, dollar-volume)
+did *not* help net** — their daily toggling drove 26–51× turnover that erased the gains; the
+winning daily signal is price-based. Per-name daily gating/scaling also churns too much. Run:
+`python3 daily_opt.py` (overlay sweep) and `python3 daily_validate.py` (robustness + walk-forward).
+See `NOTES.md` §5–6.

@@ -103,3 +103,47 @@ OOS 2019-07..2026-05, top-20 12m-momentum inverse-vol + trend filter:
 **Conclusion:** keep the **monthly** cadence (weekly at most). Computing holdings daily is useful
 for monitoring, but trading them daily destroys the edge once cost is realistic. `EOD+10min`
 execution is fine as a fill model; the problem is frequency, not timing.
+
+---
+
+## Iteration 6 — daily PRICE/VOLUME overlays that beat the monthly Sharpe
+
+Reframe of iter-5's failure: don't recompute *selection* daily (that churns the top-K cutoff).
+Keep 12-month-momentum **selection monthly**; add **daily-updated risk overlays** with
+hysteresis/no-trade bands. Bogey to beat = monthly base, net 5bps: **Sharpe 0.94** (OOS daily).
+
+Tested overlays (OOS 2019-07..2026-05, net 5bps):
+
+| Overlay (daily) | Sharpe | MaxDD | turn/yr | verdict |
+|---|---|---|---|---|
+| monthly base (bogey) | 0.94 | -27% | 8.5x | — |
+| **daily regime: SPY<EMA100 -> 50% exposure** | **0.98** | **-21%** | 10x | **beats, +DD** |
+| daily regime: SPY<EMA100 -> 33% exposure | **1.03** | -27% | 12x | highest Sharpe |
+| daily regime: SPY<EMA50 -> 50% | 0.93 | -19% | 12x | ~bogey, best DD |
+| portfolio vol-target 15% (1 gross lever) | 0.88 | -24% | 7x | below bogey |
+| VT15 + regime100/50% | 0.92 | -22% | 9x | below regime-only |
+| per-name fast-gate EMA20 (hysteresis) | 0.76 | -15% | 51x | **turnover kills it** |
+| per-name OBV volume confirmation | 0.82 | -16% | 26x | **turnover kills it** |
+
+### What worked, what didn't (learned)
+- **WIN = a single portfolio-level risk lever driven by a daily PRICE signal:** scale total
+  exposure down when SPY is below its EMA100 (medium-term trend). It reacts daily between monthly
+  rebalances, costs almost no turnover (one gross lever, ~10x/yr), and lifts net Sharpe to
+  0.98-1.03 while cutting drawdown.
+- **Volume signals did NOT add net value here.** OBV confirmation and per-name volume gates
+  improved gross risk but their daily toggling drove 26-51x turnover that erased the edge after
+  cost. Dollar-volume liquidity floors were neutral (the universe is already liquid).
+- **Per-name daily gating/scaling churns** (each name's signal moves independently -> reshuffles
+  weights daily). Portfolio-level scaling changes only the risk/cash split -> low turnover.
+
+### Honest validation (no cherry-pick)
+- **Robust across every sub-period** net 5bps: regime100->50% beats the monthly bogey on Sharpe
+  AND drawdown in FULL (0.84 vs 0.80), OOS (0.98 vs 0.94), 2020-21 (1.26 vs 1.17), 2022-23
+  (DD -17% vs -23%), 2024-26 (1.25 vs 1.22). regime100->33% is higher-Sharpe everywhere.
+- **Walk-forward** (each month pick the overlay by trailing-252d Sharpe, past-only): 0.83 vs
+  monthly 0.81 over 2018-2026, and it organically selects the regime overlay in 60/95 months.
+
+**Conclusion:** a daily rebalance DOES beat monthly once the daily signal is the right one —
+a low-turnover, portfolio-level **price-trend regime gate**, not faster trading of the momentum
+book and not volume confirmation. Recommended config: monthly 12m-momentum top-20 inverse-vol
+selection + daily "SPY<EMA100 -> 50% exposure" overlay (Sharpe 0.98, MaxDD -21%, ~10x turnover).

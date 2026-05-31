@@ -27,6 +27,23 @@ def load_prices(min_obs=400):
     return wide
 
 
+def load_volume(price_index, cols):
+    """Load raw close + volume into wide frames aligned to the price index/columns."""
+    vol_dir = os.path.join(HERE, "data", "volume")
+    closes, vols = {}, {}
+    for c in cols:
+        path = os.path.join(vol_dir, f"{c}.csv")
+        if not os.path.exists(path):
+            continue
+        df = pd.read_csv(path, parse_dates=["date"]).set_index("date")
+        df = df[~df.index.duplicated(keep="last")]
+        closes[c] = df["close"]
+        vols[c] = df["volume"]
+    rawclose = pd.DataFrame(closes).reindex(price_index).ffill(limit=3)
+    volume = pd.DataFrame(vols).reindex(price_index).ffill(limit=3)
+    return rawclose, volume
+
+
 def asset_class_map():
     """Map primary ticker -> Asset Class using the universe CSV."""
     import csv
