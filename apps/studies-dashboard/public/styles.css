@@ -570,7 +570,7 @@ td span {
   letter-spacing: 0.04em;
 }
 
-.intraday-flag {
+.session-flag {
   display: inline-block;
   padding: 0.1rem 0.45rem;
   border-radius: 10px;
@@ -578,6 +578,12 @@ td span {
   color: var(--muted);
   font-size: 0.7rem;
   letter-spacing: 0.04em;
+  text-transform: capitalize;
+}
+
+.session-flag.extended {
+  background: rgba(36, 84, 166, 0.12);
+  color: #2454a6;
 }
 
 .muted { color: var(--muted); font-size: 0.78rem; }

@@ -25,6 +25,28 @@ function round(value, digits = 4) {
   return Number.isFinite(value) ? Number(value.toFixed(digits)) : value;
 }
 
+function asNumber(value, fallback = null) {
+  if (value === undefined || value === true) return fallback;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function applyCostOverride(trades, costCentsPerSide) {
+  if (!Number.isFinite(costCentsPerSide)) return trades;
+  const roundTripCost = 2 * costCentsPerSide;
+  return trades.map((trade) => {
+    const grossCents = Number.isFinite(Number(trade.grossCents))
+      ? Number(trade.grossCents)
+      : Number(trade.netCents || 0);
+    return {
+      ...trade,
+      grossCents: round(grossCents, 4),
+      netCents: round(grossCents - roundTripCost, 4),
+      costCentsPerSide,
+    };
+  });
+}
+
 function groupTradesByDay(trades) {
   const byDay = new Map();
   trades.forEach((trade) => {
@@ -99,36 +121,42 @@ function summarize(days, trades) {
   };
 }
 
-function exportReport({ sourcePath, outputPath }) {
+function exportReport({ sourcePath, outputPath, costCentsPerSide = null }) {
   const source = JSON.parse(fs.readFileSync(sourcePath, 'utf8'));
   const best = source.bestWithTrades;
-  if (!best?.trades?.length) throw new Error(`missing_best_trades:${sourcePath}`);
-  const days = groupTradesByDay(best.trades);
-  const targetData = source.useRestSeconds
+  const sourceTrades = best?.trades?.length ? best.trades : source.trades;
+  if (!sourceTrades?.length) throw new Error(`missing_trades:${sourcePath}`);
+  const effectiveCostCentsPerSide = Number.isFinite(costCentsPerSide)
+    ? costCentsPerSide
+    : (Number.isFinite(Number(source.costCentsPerSide)) ? Number(source.costCentsPerSide) : 0);
+  const trades = applyCostOverride(sourceTrades, Number.isFinite(costCentsPerSide) ? costCentsPerSide : null);
+  const days = groupTradesByDay(trades);
+  const targetData = source.assumptions?.data || (source.useRestSeconds
     ? 'Massive REST 1-second TSLL aggregates expanded to OHLCV bars plus 1-minute SPY/QQQ/TSLA/TSLL market context.'
-    : 'TSLL Massive tick trades converted to 1-second OHLCV bars plus 1-minute SPY/QQQ/TSLA/TSLL market context.';
+    : 'TSLL Massive tick trades converted to 1-second OHLCV bars plus 1-minute SPY/QQQ/TSLA/TSLL market context.');
   const payload = {
     generatedAt: new Date().toISOString(),
     sourceArtifact: path.relative(path.resolve(PROJECT_ROOT, '..', '..'), sourcePath),
     project: 'tsll-scalping',
     provider: source.provider || 'Massive',
-    symbol: 'TSLL',
+    symbol: source.symbol || 'TSLL',
     startDate: source.startDate,
     endDate: source.endDate,
     strategy: {
-      id: 'tsll-seconds-passive-b3-t3-s5-h10',
-      name: 'TSLL Seconds Passive Limit Scalper',
-      description: 'Buy TSLL 3 cents below the prior completed 1-second close, target +3 cents, stop 5 cents, and exit after 10 seconds.',
-      settings: best.settings,
+      id: 'tsll-seconds-passive-hybrid-rth-extended',
+      name: 'TSLL Hybrid RTH and Extended-Hours Passive Limit Scalper',
+      description: 'Use the RTH b4/t4/s6/h15 stale-loss profile during regular hours and the stricter b5/t5/s8/h20 not-overextended profile before and after the regular session.',
+      settings: best?.settings || source.strategy?.settings || {},
     },
     assumptions: {
-      explicitCostCentsPerSide: source.costCentsPerSide || 0,
+      explicitCostCentsPerSide: effectiveCostCentsPerSide,
       data: targetData,
+      session: source.sessionName || null,
       caveat: 'Seconds bars show traded prices, not actual bid/ask queue priority; validate with quote data before live use.',
     },
-    totals: summarize(days, best.trades),
+    totals: summarize(days, trades),
     days,
-    trades: best.trades,
+    trades,
   };
   ensureDir(path.dirname(outputPath));
   fs.writeFileSync(outputPath, `${JSON.stringify(payload, null, 2)}\n`);
@@ -139,7 +167,11 @@ function main() {
   const args = parseArgs();
   const sourcePath = path.resolve(args.source || path.join(PROJECT_ROOT, 'artifacts', 'tsll-seconds-passive-mm-fixed-feb2026-cost0.json'));
   const outputPath = path.resolve(args.output || path.join(PROJECT_ROOT, 'reports', 'tsll-seconds-passive-fixed-feb2026.json'));
-  const payload = exportReport({ sourcePath, outputPath });
+  const payload = exportReport({
+    sourcePath,
+    outputPath,
+    costCentsPerSide: asNumber(args['cost-cents-per-side'], null),
+  });
   console.log(JSON.stringify({
     outputPath,
     days: payload.totals.days,

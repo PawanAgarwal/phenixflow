@@ -101,6 +101,11 @@ function buildReportFromTsllArtifact({ metadata, reportPath, initialCapital }) {
     netCents: finite(trade.netCents),
     holdBars: finite(trade.holdBars),
     reason: trade.exitReason || null,
+    sessionName: trade.sessionName || trade.profileId || artifact.assumptions?.session || null,
+    profileId: trade.profileId || null,
+    profileName: trade.profileName || null,
+    entryMode: trade.profileId || trade.sessionName || 'scalp',
+    quantity: shareBlock,
     raw: trade,
   }));
 
@@ -198,16 +203,16 @@ function createTsllSecondsPassiveScalperStrategy(options = {}) {
     execution: executionSummaryForStrategy('tsll-seconds-passive-scalper'),
     dataProvider: 'Massive historical/live bars plus Massive REST 1-second aggregates when stock-trade files are unavailable',
     strategySource: 'TSLL seconds passive limit scalping artifact',
-    description: options.description || 'Tracks the TSLL passive limit scalp candidate: buy 3 cents below the prior completed 1-second close, target +3 cents, stop 5 cents, max hold 10 seconds.',
+    description: options.description || 'Tracks the promoted TSLL hybrid scalp: RTH uses b4/t4/s6/h15 with stale-loss exits, while extended hours use b5/t5/s8/h20 with a 60-second not-overextended filter.',
     ruleSummary: [
       'Use only completed 1-second TSLL bars and causal 1-minute SPY/QQQ/TSLA context.',
-      'Place buy limit 3c below the prior completed second close when 60s range and market filters pass.',
-      'Exit at +3c target, 5c stop, or after 10 seconds; same-second target/stop assumes stop first.',
+      'During RTH, place buy limits 4c below the prior completed second close; target +4c, stop 6c, max hold 15 seconds, and exit stale losers after 8 seconds when QQQ is not helping.',
+      'During pre/post-market, place buy limits 5c below the prior completed second close; target +5c, stop 8c, max hold 20 seconds, and require 60s TSLL movement between -12c and +8c.',
       'Dashboard report is a seconds-bar proxy; quote/NBBO queue priority still needs validation.',
     ],
     sourceLinks: [],
     defaultStartDate: options.defaultStartDate || DEFAULT_REFRESH_START,
-    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'refresh_data'],
+    supports: ['chart', 'values', 'latest_portfolio', 'portfolio_change', 'trade_log', 'refresh_data'],
   };
   const state = {
     report: null,

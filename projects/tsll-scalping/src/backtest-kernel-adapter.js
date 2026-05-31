@@ -1,4 +1,6 @@
 const {
+  KERNEL_ID,
+  STRATEGY_VERSION,
   createKernel,
   evaluateBacktestExit,
   onEvent,
@@ -18,8 +20,8 @@ function barEventFromRow(row, sequence, settings, allowEntry) {
     schemaVersion: 'phenixflow.kernelEvent.v1',
     eventType: 'BAR_1S_CLOSED',
     strategyId: 'tsll-seconds-passive-scalper',
-    strategyVersion: '2026.05.13',
-    kernelVersion: 'tsll-seconds-passive-scalper.execution.v1',
+    strategyVersion: STRATEGY_VERSION,
+    kernelVersion: KERNEL_ID,
     symbol: settings.symbol || 'TSLL',
     sequence,
     eventTime: eventTimeForRow(row),
@@ -43,8 +45,8 @@ function fillEvent({ row, sequence, settings, side, fillType, fillPrice, payload
     schemaVersion: 'phenixflow.kernelEvent.v1',
     eventType: 'ORDER_FILLED',
     strategyId: 'tsll-seconds-passive-scalper',
-    strategyVersion: '2026.05.13',
-    kernelVersion: 'tsll-seconds-passive-scalper.execution.v1',
+    strategyVersion: STRATEGY_VERSION,
+    kernelVersion: KERNEL_ID,
     symbol: settings.symbol || 'TSLL',
     sequence,
     eventTime: eventTimeForRow(row),
@@ -71,8 +73,8 @@ function cancelEvent({ row, sequence, settings, pendingDecision, reason }) {
     schemaVersion: 'phenixflow.kernelEvent.v1',
     eventType: 'ORDER_CANCELLED',
     strategyId: 'tsll-seconds-passive-scalper',
-    strategyVersion: '2026.05.13',
-    kernelVersion: 'tsll-seconds-passive-scalper.execution.v1',
+    strategyVersion: STRATEGY_VERSION,
+    kernelVersion: KERNEL_ID,
     symbol: settings.symbol || 'TSLL',
     sequence,
     eventTime: eventTimeForRow(row),
@@ -104,6 +106,7 @@ function dispatch(state, event, audit) {
 
 function createOpenTradeFromPending(pendingDecision, row, sequence) {
   const payload = pendingDecision.payload;
+  const tradeSettings = payload.tradeSettings || {};
   return {
     tradeDate: payload.signalTradeDate || row.tradeDate,
     signalTsUtc: payload.signalTsUtc,
@@ -120,12 +123,20 @@ function createOpenTradeFromPending(pendingDecision, row, sequence) {
     exitReason: null,
     signalSequence: payload.signalSequence,
     entrySequence: sequence,
+    sessionName: payload.sessionName || row.sessionName || null,
+    profileId: payload.profileId || tradeSettings.profileId || null,
+    profileName: payload.profileName || tradeSettings.profileName || null,
+    tradeSettings,
   };
 }
 
 function completeTrade(openTrade, exit, settings, rowsBySequence) {
+  const tradeSettings = openTrade.tradeSettings || settings;
   const grossCents = (exit.exitPrice - openTrade.entryPriceRaw) * 100;
-  const netCents = grossCents - (settings.costCentsPerSide * 2);
+  const costCentsPerSide = Number.isFinite(Number(tradeSettings.costCentsPerSide))
+    ? Number(tradeSettings.costCentsPerSide)
+    : Number(settings.costCentsPerSide || 0);
+  const netCents = grossCents - (costCentsPerSide * 2);
   return {
     tradeDate: openTrade.tradeDate,
     signalTsUtc: openTrade.signalTsUtc,
@@ -134,20 +145,24 @@ function completeTrade(openTrade, exit, settings, rowsBySequence) {
     signalClose: openTrade.signalClose,
     entryPrice: openTrade.entryPrice,
     exitPrice: round(exit.exitPrice, 4),
-    buyBelowCloseCents: settings.buyBelowCloseCents,
-    targetCents: settings.targetCents,
-    stopCents: settings.stopCents,
+    buyBelowCloseCents: tradeSettings.buyBelowCloseCents,
+    targetCents: tradeSettings.targetCents,
+    stopCents: tradeSettings.stopCents,
+    costCentsPerSide,
     grossCents: round(grossCents, 4),
     netCents: round(netCents, 4),
     holdBars: exit.exitSequence - openTrade.signalSequence,
     exitReason: exit.exitReason,
+    sessionName: openTrade.sessionName,
+    profileId: openTrade.profileId,
+    profileName: openTrade.profileName,
   };
 }
 
-function simulateSecondPassiveScalpWithKernel(rows, settings, options = {}) {
+function simulateSecondPassiveScalpWithKernel(rows, settings, kernelConfig = {}) {
   const created = createKernel({
     settings,
-    mode: options.mode || 'backtest',
+    mode: kernelConfig.mode || 'backtest',
     clock: {
       timezone: 'America/New_York',
       sessionDate: rows[0]?.tradeDate || null,
@@ -156,7 +171,7 @@ function simulateSecondPassiveScalpWithKernel(rows, settings, options = {}) {
   let state = created.state;
   const trades = [];
   const rowsBySequence = new Map();
-  const audit = options.includeAudit ? { events: [], decisions: [], traces: [] } : null;
+  const audit = kernelConfig.includeAudit ? { events: [], decisions: [], traces: [] } : null;
   let pendingDecision = null;
   let openTrade = null;
 
@@ -166,7 +181,7 @@ function simulateSecondPassiveScalpWithKernel(rows, settings, options = {}) {
     if (pendingDecision) {
       const payload = pendingDecision.payload;
       const entryLimit = payload.limitPrice;
-      const through = (settings.throughCents || 0) / 100;
+      const through = (payload.tradeSettings?.throughCents || settings.throughCents || 0) / 100;
       if (row.tradeDate === payload.signalTradeDate && row.low <= entryLimit - through) {
         const entryEvent = fillEvent({
           row,

@@ -52,9 +52,45 @@ function getEtParts(ms) {
   };
 }
 
-function isRegularSessionMs(ms, session) {
+function normalizeSessionName(sessionName = 'regular') {
+  const normalized = String(sessionName || 'regular').trim().toLowerCase();
+  if (['regular', 'rth'].includes(normalized)) return 'regular';
+  if (['extended', 'eth', 'full'].includes(normalized)) return 'extended';
+  if (['premarket', 'pre-market', 'pre'].includes(normalized)) return 'premarket';
+  if (['afterhours', 'after-hours', 'postmarket', 'post-market', 'post'].includes(normalized)) return 'afterhours';
+  throw new Error(`unsupported_session:${sessionName}`);
+}
+
+function sessionOpenMinuteEt(session = {}, sessionName = 'regular') {
+  const name = normalizeSessionName(sessionName);
+  if (name === 'extended' || name === 'premarket') return session.extendedOpenMinuteEt ?? 240;
+  if (name === 'afterhours') return session.regularCloseMinuteEt ?? 960;
+  return session.regularOpenMinuteEt ?? 570;
+}
+
+function sessionCloseMinuteEt(session = {}, sessionName = 'regular') {
+  const name = normalizeSessionName(sessionName);
+  if (name === 'extended' || name === 'afterhours') return session.extendedCloseMinuteEt ?? 1200;
+  if (name === 'premarket') return session.regularOpenMinuteEt ?? 570;
+  return session.regularCloseMinuteEt ?? 960;
+}
+
+function sessionBounds(session = {}, sessionName = 'regular') {
+  return {
+    name: normalizeSessionName(sessionName),
+    openMinuteEt: sessionOpenMinuteEt(session, sessionName),
+    closeMinuteEt: sessionCloseMinuteEt(session, sessionName),
+  };
+}
+
+function isSessionMs(ms, session, sessionName = 'regular') {
   const minuteOfDayEt = getEtParts(ms).minuteOfDayEt;
-  return minuteOfDayEt >= session.regularOpenMinuteEt && minuteOfDayEt < session.regularCloseMinuteEt;
+  const bounds = sessionBounds(session, sessionName);
+  return minuteOfDayEt >= bounds.openMinuteEt && minuteOfDayEt < bounds.closeMinuteEt;
+}
+
+function isRegularSessionMs(ms, session) {
+  return isSessionMs(ms, session, 'regular');
 }
 
 function etMinuteToUtcMs(dateIso, minuteOfDayEt) {
@@ -84,6 +120,11 @@ module.exports = {
   floorToBucketMs,
   minuteMsToIso,
   getEtParts,
+  normalizeSessionName,
+  sessionOpenMinuteEt,
+  sessionCloseMinuteEt,
+  sessionBounds,
+  isSessionMs,
   isRegularSessionMs,
   etMinuteToUtcMs,
   listDates,

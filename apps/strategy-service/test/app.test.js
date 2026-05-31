@@ -49,11 +49,11 @@ const TSLL_SCALP_EXECUTION = {
   },
   timingClass: 'SCALP',
   timezone: 'America/New_York',
-  session: 'REGULAR',
+  session: 'EXTENDED',
   activation: {
     type: 'regular_session_window',
-    startTime: '09:35',
-    endTime: '15:50',
+    startTime: '04:05',
+    endTime: '19:50',
   },
   signalCadence: 'continuous_intraday',
   idempotencyKeyFields: ['strategyId', 'strategyVersion', 'signalTimestamp'],
@@ -242,7 +242,8 @@ describe('strategy-service API', () => {
     expect(byId['pym-v5-cap25-lgbm-blend40-stress'].ruleSummary.join(' ')).toContain('options-stress signal');
     expect(byId['pym-v5-cap25-lgbm-blend40-stress'].displayName).toContain('Options Stress');
     expect(byId['option-income-wheel-trend-ivrv'].ruleSummary.join(' ')).toContain('IV/RV >= 1.10');
-    expect(byId['tsll-seconds-passive-scalper'].ruleSummary.join(' ')).toContain('buy limit 3c');
+    expect(byId['tsll-seconds-passive-scalper'].ruleSummary.join(' ')).toContain('buy limits 4c');
+    expect(byId['tsll-seconds-passive-scalper'].supports).toContain('trade_log');
     expect(byId['pym-gated-intraday-baseline'].supports).toContain('trade_log');
     expect(byId['vvix-spike-contrarian-overnight-3x'].ruleSummary.join(' ')).toContain('VVIX');
     expect(byId['gap-down-fade-intraday-3x'].ruleSummary.join(' ')).toContain('gap');
@@ -311,6 +312,49 @@ describe('strategy-service API', () => {
     db.close();
   });
 
+  it('prunes stale persisted rows when a strategy report shrinks', () => {
+    const metadata = { id: 'shrinking-strategy', name: 'Shrinking Strategy', cadence: 'daily_eod' };
+    const dbPath = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'strategy-results-')), 'results.sqlite');
+    const db = openStrategyResultStore(dbPath);
+    const baseReport = {
+      resultContract: true,
+      generatedAt: '2026-05-08T00:00:00.000Z',
+      source: { provider: 'test' },
+      dailyResults: [
+        { date: '2026-05-06', basis: 'reported_by_strategy', netReturnPct: 1 },
+        { date: '2026-05-07', basis: 'reported_by_strategy', netReturnPct: 2 },
+      ],
+      snapshots: [
+        { date: '2026-05-06', holdings: [{ ticker: 'AAA', weight: 1 }] },
+        { date: '2026-05-07', holdings: [{ ticker: 'BBB', weight: 1 }] },
+      ],
+      normalizedTrades: [
+        { sequence: 1, date: '2026-05-06', ticker: 'AAA', side: 'LONG', entryPrice: 10, exitPrice: 11, netReturn: 0.1 },
+        { sequence: 2, date: '2026-05-07', ticker: 'BBB', side: 'LONG', entryPrice: 20, exitPrice: 21, netReturn: 0.05 },
+      ],
+    };
+    persistStrategyReport(db, { metadata, report: baseReport, importedAt: '2026-05-08T00:01:00.000Z' });
+
+    const refreshedReport = {
+      ...baseReport,
+      generatedAt: '2026-05-08T00:02:00.000Z',
+      dailyResults: [baseReport.dailyResults[1]],
+      snapshots: [baseReport.snapshots[1]],
+      normalizedTrades: [baseReport.normalizedTrades[1]],
+    };
+    persistStrategyReport(db, { metadata, report: refreshedReport, importedAt: '2026-05-08T00:03:00.000Z' });
+
+    expect(db.prepare('select count(*) as count from strategy_daily_results where strategy_id=?')
+      .get('shrinking-strategy').count).toBe(1);
+    expect(db.prepare('select count(*) as count from strategy_holdings where strategy_id=?')
+      .get('shrinking-strategy').count).toBe(1);
+    expect(db.prepare('select count(*) as count from strategy_trades where strategy_id=?')
+      .get('shrinking-strategy').count).toBe(1);
+    expect(db.prepare('select date from strategy_trades where strategy_id=?')
+      .get('shrinking-strategy').date).toBe('2026-05-07');
+    db.close();
+  });
+
   it('serves execution manifest list and details for promoted strategies', async () => {
     const app = createApp();
     const list = await request(app).get('/api/execution-manifests').expect(200);
@@ -358,33 +402,40 @@ describe('strategy-service API', () => {
     }));
     expect(tsll.body.data.activation).toEqual({
       type: 'regular_session_window',
-      startTime: '09:35',
-      endTime: '15:50',
+      startTime: '04:05',
+      endTime: '19:50',
     });
     expect(tsll.body.data.executionDefaults).toEqual(expect.objectContaining({
       orderType: 'limit',
-      buyBelowCloseCents: 3,
-      targetCents: 3,
-      stopCents: 5,
-      maxHoldSeconds: 10,
-      maxHoldBars: 10,
+      buyBelowCloseCents: 4,
+      targetCents: 4,
+      stopCents: 6,
+      maxHoldSeconds: 15,
+      maxHoldBars: 15,
       barSeconds: 1,
       maxQuoteAgeSeconds: 2,
+    }));
+    expect(tsll.body.data.executionDefaults.sessionProfiles.extended).toEqual(expect.objectContaining({
+      buyBelowCloseCents: 5,
+      targetCents: 5,
+      stopCents: 8,
+      maxHoldSeconds: 20,
+      maxRet60sCents: 8,
     }));
     expect(tsll.body.data.signalEndpoint).toBe('/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest');
     expect(tsll.body.data.kernel).toEqual(expect.objectContaining({
       schemaVersion: 'phenixflow.strategyKernel.v1',
       artifactUri: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest',
       downloadUri: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/download',
-      settingsSha256: '624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1',
-      fixtureSuiteSha256: '19403ba6fe5bb6486d08fb50d78e241ac0b4fbc6a5e48ddc91098823104d9bfd',
+      settingsSha256: '47d747afb6a1f963dd19a93b29daada8e11095653260ccd19b0a37057054a5e7',
+      fixtureSuiteSha256: 'ab1f469ff6d3193f3cde094e2075c8a845cfe62754c5c1b253c8e3d7a46f79e4',
     }));
     expect(tsll.body.data.kernel.artifactSha256).toMatch(/^[a-f0-9]{64}$/);
     expect(tsll.body.data.kernel.downloadSha256).toBe(tsll.body.data.kernel.artifactSha256);
     expect(tsll.body.data.kernel.checksumsSha256).toMatch(/^[a-f0-9]{64}$/);
     expect(tsll.body.data.provenance.baseline).toEqual(expect.objectContaining({
-      datasetId: 'tsll-1s-2025-01-02-2026-05-12-massive-rest-1s-barSeconds1-nodaily',
-      expectedSummarySha256: '3c4de269eb8d5014ae8585b93d2998f4925acb38749ad1e9e42e27f4c50669dd',
+      datasetId: 'tsll-1s-2025-01-02-2026-05-29-massive-rest-1s-extended-hybrid-barSeconds1-nodaily',
+      expectedSummarySha256: '4a0a6bb9d4aea9577768a7c3560d11227d6f21a09e5667af4c11fb6280a927df',
     }));
   });
 
@@ -392,7 +443,7 @@ describe('strategy-service API', () => {
     const app = createApp();
     const kernel = await request(app).get('/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest').expect(200);
     expect(kernel.body.data.manifest.strategy.id).toBe('tsll-seconds-passive-scalper');
-    expect(kernel.body.data.manifest.settings.sha256).toBe('624b14f4e8cfe581159a9c84953d1c44720acd779d1cabf6e1501714bef3ddc1');
+    expect(kernel.body.data.manifest.settings.sha256).toBe('47d747afb6a1f963dd19a93b29daada8e11095653260ccd19b0a37057054a5e7');
     expect(kernel.body.data.artifact.files).toContain('dist/kernel.mjs');
     expect(kernel.body.data.artifact.downloadUri).toBe('/api/kernels/tsll-seconds-passive-scalper.execution.v1/download');
     expect(kernel.body.data.artifact.artifactSha256).toMatch(/^[a-f0-9]{64}$/);

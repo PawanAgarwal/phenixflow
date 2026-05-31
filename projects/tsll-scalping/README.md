@@ -33,6 +33,18 @@ Run a stricter cost check:
 npm run tsll-scalping:canary -- --start-date 2026-01-02 --end-date 2026-01-09 --min-trades 25 --cost-cents-per-side 1
 ```
 
+Run the same TSLL tests over the configured extended-hours window, 04:00-20:00 ET:
+
+```bash
+npm run tsll-scalping:seconds-mm -- --start-date 2026-05-27 --end-date 2026-05-29 --fixed-candidate --rest-seconds --no-daily-context --session extended
+```
+
+Run the seconds-scalp candidate-improvement screen over that same extended-hours window:
+
+```bash
+node projects/tsll-scalping/scripts/analyze-scalp-improvements.js --start 2025-01-02 --end 2026-05-29 --session extended
+```
+
 Compare against older no-option baseline entries:
 
 ```bash

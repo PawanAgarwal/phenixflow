@@ -25,10 +25,23 @@ function passesFilters(row, settings) {
 }
 
 function defaultSettings(input = {}) {
-  return {
+  const merged = {
     ...PINNED_PROMOTED_SETTINGS,
     ...input,
   };
+  const strategyOverrideKeys = [
+    'buyBelowCloseCents',
+    'targetCents',
+    'stopCents',
+    'maxHoldBars',
+    'maxHoldSeconds',
+    'minRet60sCents',
+    'maxRet60sCents',
+  ];
+  const customStaticStrategy = input.sessionProfiles === undefined
+    && strategyOverrideKeys.some((key) => Object.prototype.hasOwnProperty.call(input, key));
+  if (customStaticStrategy) delete merged.sessionProfiles;
+  return merged;
 }
 
 function summarizeSecondScalps(trades, inputBars) {

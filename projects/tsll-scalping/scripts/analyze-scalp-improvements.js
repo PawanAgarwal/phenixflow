@@ -19,7 +19,13 @@ const {
   safeReturn,
 } = require('../src/data');
 const { parseOpraTicker, daysBetween } = require('../src/opra');
-const { etMinuteToUtcMs, getEtParts, isRegularSessionMs, nsToMs } = require('../src/time');
+const {
+  etMinuteToUtcMs,
+  getEtParts,
+  isRegularSessionMs,
+  nsToMs,
+  sessionBounds,
+} = require('../src/time');
 
 function parseArgs(argv = process.argv.slice(2)) {
   const out = {};
@@ -46,12 +52,13 @@ function monthKey(dayIso) {
   return dayIso.slice(0, 7);
 }
 
-function regularSecondMs(dayIso, session) {
-  const openMs = etMinuteToUtcMs(dayIso, session.regularOpenMinuteEt);
-  const closeMs = etMinuteToUtcMs(dayIso, session.regularCloseMinuteEt);
+function sessionSecondMs(dayIso, session, sessionName = 'regular') {
+  const bounds = sessionBounds(session, sessionName);
+  const openMs = etMinuteToUtcMs(dayIso, bounds.openMinuteEt);
+  const closeMs = etMinuteToUtcMs(dayIso, bounds.closeMinuteEt);
   const out = [];
   for (let ms = openMs; ms < closeMs; ms += 1000) out.push(ms);
-  return out;
+  return { bounds, rows: out };
 }
 
 function completedMinuteAtOrBefore(series, state, currentMs) {
@@ -245,20 +252,21 @@ function addOptionFeatures(row, tslaOptionByMinute) {
   row.opt_tsla_near_dte_share_5m = safeRatio(five.nearDteSize, five.size);
 }
 
-async function buildRowsForDay(config, dayIso, dailyContext, includeOptions) {
+async function buildRowsForDay(config, dayIso, dailyContext, includeOptions, sessionName = 'regular') {
   const restRows = loadRestAggs(dayIso);
   if (!restRows) return { rows: [], restRows: 0 };
-  const stockMinutes = await readStockMinutesForDay(config, dayIso, config.marketSymbols);
+  const stockMinutes = await readStockMinutesForDay(config, dayIso, config.marketSymbols, { sessionName });
   const optionByMinute = includeOptions ? await readTslaOptionTradesForDay(config, dayIso) : null;
   const bySecond = new Map(restRows.map((row) => [row.t, row]));
   const states = new Map((config.marketSymbols || []).map((symbol) => [symbol, { index: -1 }]));
+  const sessionRows = sessionSecondMs(dayIso, config.session, sessionName);
   const bars = [];
   let previousClose = null;
   let sessionOpen = null;
   let dayHighSoFar = -Infinity;
   let dayLowSoFar = Infinity;
 
-  regularSecondMs(dayIso, config.session).forEach((ms) => {
+  sessionRows.rows.forEach((ms) => {
     const tick = bySecond.get(ms);
     let open = previousClose;
     let high = previousClose;
@@ -293,8 +301,8 @@ async function buildRowsForDay(config, dayIso, dailyContext, includeOptions) {
       close,
       volume,
       trade_count: tradeCount,
-      minutes_from_open: et.minuteOfDayEt - config.session.regularOpenMinuteEt,
-      minutes_to_close: config.session.regularCloseMinuteEt - et.minuteOfDayEt - 1,
+      minutes_from_open: et.minuteOfDayEt - sessionRows.bounds.openMinuteEt,
+      minutes_to_close: sessionRows.bounds.closeMinuteEt - et.minuteOfDayEt - 1,
     };
     addDailyContextFeatures(row, config, dailyContext, sessionOpen, dayHighSoFar, dayLowSoFar);
     (config.marketSymbols || []).forEach((symbol) => {
@@ -802,6 +810,7 @@ function renderMarkdown(payload) {
     '# TSLL Scalp Improvement Analysis',
     '',
     `Window: ${payload.startDate} to ${payload.endDate}`,
+    `Session: ${payload.sessionName} (${payload.session.openMinuteEt}-${payload.session.closeMinuteEt} ET minutes)`,
     `Trading days: ${payload.days}`,
     `Option features included: ${payload.includeOptions ? 'yes, TSLA option trades only' : 'no'}`,
     '',
@@ -834,6 +843,8 @@ async function main() {
   const startDate = args.start || '2025-01-02';
   const endDate = args.end || '2026-05-08';
   const includeOptions = Boolean(args.options);
+  const sessionName = args.session || args['session-name'] || 'regular';
+  const session = sessionBounds(config.session, sessionName);
   const dates = availableDates(config, startDate, endDate, ['stockBars'])
     .filter((dayIso) => fs.existsSync(runtimePath('rest-second-aggs', `TSLL-${dayIso}-1s-unadjusted.json`)));
   const candidates = buildCandidates(includeOptions);
@@ -844,7 +855,7 @@ async function main() {
   const { dailyContextByDate } = await buildDailyContextByDate(config, dates, {
     symbols: config.marketSymbols,
   });
-  console.log(`[tsll-improve] dates=${dates.length} candidates=${candidates.length} options=${includeOptions}`);
+  console.log(`[tsll-improve] dates=${dates.length} candidates=${candidates.length} options=${includeOptions} session=${session.name}`);
   const startedAt = Date.now();
   for (let dateIndex = 0; dateIndex < dates.length; dateIndex += 1) {
     const dayIso = dates[dateIndex];
@@ -853,6 +864,7 @@ async function main() {
       dayIso,
       dailyContextByDate.get(dayIso),
       includeOptions,
+      session.name,
     );
     candidates.forEach((candidate) => {
       const trades = simulateDay(rows, candidate);
@@ -876,18 +888,20 @@ async function main() {
     endDate,
     days: dates.length,
     includeOptions,
+    sessionName: session.name,
+    session,
     assumptions: {
       data: 'Massive REST TSLL unadjusted 1-second aggregates plus local Massive stock_quotes_1m SPY/QQQ/TSLA/TSLL context.',
       optionData: includeOptions ? 'Massive option_trades_all TSLA OPRA trades, aggregated to completed 1-minute and rolling 5-minute windows.' : null,
       ranking: 'Primary ranking uses 0.5 cent/side hidden-cost sensitivity and 2026 YTD test net cents, with full-period net as tie-breaker.',
       train: '2025-01-02 through 2025-12-31',
-      test: '2026-01-01 through 2026-05-08',
+      test: `2026-01-01 through ${endDate}`,
     },
     baseline,
     topByCost0p5: topByCost0p5.slice(0, 25),
     results,
   };
-  const suffix = includeOptions ? 'with-tsla-options' : 'market-filters';
+  const suffix = `${includeOptions ? 'with-tsla-options' : 'market-filters'}${session.name === 'regular' ? '' : `-${session.name}`}`;
   const outJson = artifactPath(`tsll-scalp-improvement-analysis-${suffix}-${startDate}-${endDate}.json`);
   const outMd = artifactPath(`tsll-scalp-improvement-analysis-${suffix}-${startDate}-${endDate}.md`);
   ensureDir(path.dirname(outJson));
@@ -896,6 +910,7 @@ async function main() {
   console.log(JSON.stringify({
     outJson,
     outMd,
+    session: session.name,
     baseline: {
       trades: baseline.overall.trades,
       netCents0: baseline.overall.netCents0,

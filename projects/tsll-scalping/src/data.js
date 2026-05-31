@@ -17,8 +17,10 @@ const {
   nsToMs,
   nsToMinuteMs,
   getEtParts,
+  isSessionMs,
   isRegularSessionMs,
   etMinuteToUtcMs,
+  sessionBounds,
 } = require('./time');
 
 function safeReturn(current, previous) {
@@ -224,12 +226,13 @@ async function fetchRestSecondAggs(symbol, dayIso) {
   return results;
 }
 
-async function readRestSecondAggTradesForDay(config, dayIso, symbol = config.target) {
+async function readRestSecondAggTradesForDay(config, dayIso, symbol = config.target, settings = {}) {
   const rows = await fetchRestSecondAggs(String(symbol || '').toUpperCase(), dayIso);
+  const sessionName = settings.sessionName || 'regular';
   const trades = [];
   rows.forEach((row) => {
     const tsMs = Number(row.t);
-    if (!Number.isFinite(tsMs) || !isRegularSessionMs(tsMs, config.session)) return;
+    if (!Number.isFinite(tsMs) || !isSessionMs(tsMs, config.session, sessionName)) return;
     [
       { offset: 0, price: Number(row.o), size: 1 },
       { offset: 250, price: Number(row.h), size: 1 },
@@ -250,11 +253,12 @@ async function readRestSecondAggTradesForDay(config, dayIso, symbol = config.tar
 }
 
 async function readTargetTradesForDay(config, dayIso, symbol = config.target, settings = {}) {
-  if (settings.useRestSeconds) return readRestSecondAggTradesForDay(config, dayIso, symbol);
+  if (settings.useRestSeconds) return readRestSecondAggTradesForDay(config, dayIso, symbol, settings);
   const filePath = datasetCsvPath(config, 'stockTrades', dayIso);
   const trades = [];
-  if (!fs.existsSync(filePath)) return readRestSecondAggTradesForDay(config, dayIso, symbol);
+  if (!fs.existsSync(filePath)) return readRestSecondAggTradesForDay(config, dayIso, symbol, settings);
   const wanted = String(symbol || '').toUpperCase();
+  const sessionName = settings.sessionName || 'regular';
   let seenWanted = false;
   await readGzipCsv(filePath, (row) => {
     const ticker = String(row.ticker || '').toUpperCase();
@@ -265,7 +269,7 @@ async function readTargetTradesForDay(config, dayIso, symbol = config.target, se
     seenWanted = true;
     if (String(row.correction || '0') !== '0') return;
     const tsMs = nsToMs(row.sip_timestamp);
-    if (!Number.isFinite(tsMs) || !isRegularSessionMs(tsMs, config.session)) return;
+    if (!Number.isFinite(tsMs) || !isSessionMs(tsMs, config.session, sessionName)) return;
     const price = toNumber(row.price);
     const size = toNumber(row.size) || 0;
     if (!(price > 0) || !(size > 0)) return;
@@ -320,16 +324,17 @@ async function streamParquetRows(filePath, onRow) {
   if (code !== 0) throw new Error(`duckdb_stock_parquet_read_failed:${filePath}:${stderr.join('').trim() || code}`);
 }
 
-async function readStockMinutesForDay(config, dayIso, symbols = config.marketSymbols) {
+async function readStockMinutesForDay(config, dayIso, symbols = config.marketSymbols, settings = {}) {
   const source = resolveDatasetSource(config, 'stockBars', dayIso);
   const wanted = new Set(symbols.map((symbol) => String(symbol).toUpperCase()));
+  const sessionName = settings.sessionName || 'regular';
   const bySymbol = new Map();
   if (source.format === 'missing') return bySymbol;
   function onRow(row) {
     const symbol = String(row.ticker || '').toUpperCase();
     if (!wanted.has(symbol)) return;
     const minuteMs = nsToMinuteMs(row.window_start);
-    if (!Number.isFinite(minuteMs) || !isRegularSessionMs(minuteMs, config.session)) return;
+    if (!Number.isFinite(minuteMs) || !isSessionMs(minuteMs, config.session, sessionName)) return;
     const list = bySymbol.get(symbol) || [];
     list.push({
       symbol,
@@ -496,9 +501,10 @@ function addOptionFeatureRow(row, optionWindow, groups) {
   });
 }
 
-function rowsForRegularSession(dayIso, session, barSeconds) {
-  const openMs = etMinuteToUtcMs(dayIso, session.regularOpenMinuteEt);
-  const closeMs = etMinuteToUtcMs(dayIso, session.regularCloseMinuteEt);
+function rowsForSession(dayIso, session, barSeconds, sessionName = 'regular') {
+  const bounds = sessionBounds(session, sessionName);
+  const openMs = etMinuteToUtcMs(dayIso, bounds.openMinuteEt);
+  const closeMs = etMinuteToUtcMs(dayIso, bounds.closeMinuteEt);
   if (!Number.isFinite(openMs) || !Number.isFinite(closeMs)) return [];
   const stepMs = barSeconds * 1000;
   const out = [];
@@ -554,9 +560,10 @@ function addOpeningRangeFeatures(bars) {
   });
 }
 
-function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMinute, optionGroups, barSeconds, dailyContext }) {
+function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMinute, optionGroups, barSeconds, dailyContext, sessionName = 'regular' }) {
   if (!trades.length) return [];
   const stepMs = Math.max(1, Math.trunc(barSeconds || 5)) * 1000;
+  const bounds = sessionBounds(config.session, sessionName);
   const bucketToTicks = new Map();
   trades.forEach((trade) => {
     const bucketMs = Math.floor(trade.tsMs / stepMs) * stepMs;
@@ -577,7 +584,7 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
   let dayHighSoFar = -Infinity;
   let dayLowSoFar = Infinity;
 
-  rowsForRegularSession(dayIso, config.session, Math.max(1, Math.trunc(barSeconds || 5))).forEach((bucketMs) => {
+  rowsForSession(dayIso, config.session, Math.max(1, Math.trunc(barSeconds || 5)), sessionName).forEach((bucketMs) => {
     const ticks = bucketToTicks.get(bucketMs) || [];
     let open = previousClose;
     let high = previousClose;
@@ -606,6 +613,7 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
       tsMs: bucketMs,
       minuteOfDayEt: et.minuteOfDayEt,
       secondOfDayEt: et.secondOfDayEt,
+      sessionName,
       open,
       high,
       low,
@@ -613,8 +621,8 @@ function buildFiveSecondBars({ config, dayIso, trades, stockMinutes, optionByMin
       volume,
       trade_count: ticks.length,
       vwap: cumulativeVolume > 0 ? cumulativeDollarVolume / cumulativeVolume : close,
-      minutes_from_open: et.minuteOfDayEt - config.session.regularOpenMinuteEt,
-      minutes_to_close: config.session.regularCloseMinuteEt - et.minuteOfDayEt - 1,
+      minutes_from_open: et.minuteOfDayEt - bounds.openMinuteEt,
+      minutes_to_close: bounds.closeMinuteEt - et.minuteOfDayEt - 1,
     };
     addDailyContextFeatures(row, config, dailyContext, sessionOpen, dayHighSoFar, dayLowSoFar);
 
@@ -673,7 +681,7 @@ async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
   const includeOptions = settings.includeOptions === true;
   const [trades, stockMinutes, optionAggs] = await Promise.all([
     readTargetTradesForDay(config, dayIso, config.target, settings),
-    readStockMinutesForDay(config, dayIso, config.marketSymbols),
+    readStockMinutesForDay(config, dayIso, config.marketSymbols, settings),
     includeOptions
       ? readOptionAggsForDay(config, dayIso, settings)
       : Promise.resolve({ optionByMinute: new Map(), optionGroups: [] }),
@@ -688,6 +696,7 @@ async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
     optionGroups: optionAggs.optionGroups,
     barSeconds,
     dailyContext,
+    sessionName: settings.sessionName || 'regular',
   });
   return {
     dayIso,
@@ -698,6 +707,7 @@ async function buildScalpingBarsForDay(config, dayIso, settings = {}) {
       stockMinuteSymbols: stockMinutes.size,
       optionMinutes: optionAggs.optionByMinute.size,
       includeOptions,
+      sessionName: settings.sessionName || 'regular',
       targetTradeSource: settings.useRestSeconds ? 'massive_rest_1s_aggs' : 'massive_stock_trades_or_rest_1s_fallback',
     },
   };
@@ -715,5 +725,6 @@ module.exports = {
   buildDailyContextByDate,
   readOptionAggsForDay,
   buildFiveSecondBars,
+  rowsForSession,
   buildScalpingBarsForDay,
 };

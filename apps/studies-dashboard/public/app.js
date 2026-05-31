@@ -71,6 +71,23 @@ function formatMoney(value) {
   }).format(Number(value));
 }
 
+const tradeTimeFormatter = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/New_York',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+});
+
+function formatTradeTime(value, fallback = '-') {
+  if (!value) return fallback;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return fallback;
+  return `${tradeTimeFormatter.format(parsed)} ET`;
+}
+
 function valueClass(value) {
   if (!isFiniteNumber(value) || Math.abs(Number(value)) < 0.000001) return '';
   return Number(value) > 0 ? 'positive' : 'negative';
@@ -333,25 +350,29 @@ function renderTrades() {
     const sideClass = trade.side === 'LONG' ? 'positive' : trade.side === 'SHORT' ? 'negative' : '';
     const netClass = valueClass(trade.netReturn);
     const grossClass = valueClass(trade.grossReturn);
-    // Carry-over: entry was on a different (prior) date — flagged explicitly by the strategy.
+    // Carry-over: entry was on a different prior date, flagged explicitly by the strategy.
     const carryOver = trade.carryOver === true
       || (trade.entryDate && trade.date && trade.entryDate !== trade.date)
       || trade.entryMode === 'overnight';
-    const carryCell = carryOver
+    const session = trade.sessionName || trade.profileId || (carryOver ? 'carry' : 'intraday');
+    const sessionLabel = String(session || '-').replace(/_/g, ' ');
+    const sessionClass = sessionLabel.toLowerCase().includes('extended') ? ' extended' : '';
+    const sessionCell = carryOver
       ? `<span class="carry-flag" title="Position carried over from ${trade.entryDate || 'prior session'}">↻ carry</span>`
-      : '<span class="intraday-flag">same-day</span>';
+      : `<span class="session-flag${sessionClass}">${sessionLabel}</span>`;
     const exitDate = trade.exitDate || trade.date || '-';
     const entryDate = trade.entryDate || trade.entryDay || trade.date || '-';
     const entryToExit = (isFiniteNumber(trade.entryPrice) && isFiniteNumber(trade.exitPrice))
-      ? `$${Number(trade.entryPrice).toFixed(2)} <span class="muted">${entryDate !== exitDate ? `(${entryDate})` : ''}</span> → $${Number(trade.exitPrice).toFixed(2)}`
+      ? `$${Number(trade.entryPrice).toFixed(2)} <span class="muted">${formatTradeTime(trade.entryTsUtc, entryDate)}</span> → $${Number(trade.exitPrice).toFixed(2)}`
       : '-';
+    const detail = trade.profileName || trade.reason || (isFiniteNumber(trade.bias) ? Number(trade.bias).toFixed(2) : (isFiniteNumber(trade.strike) ? `K=${trade.strike}` : '-'));
     const cells = [
-      exitDate,
-      carryCell,
+      formatTradeTime(trade.exitTsUtc, exitDate),
+      sessionCell,
       `<span class="${sideClass}">${trade.side || '-'}</span>`,
       trade.ticker || trade.symbol || '-',
       trade.entryMode || trade.type || '-',
-      isFiniteNumber(trade.bias) ? Number(trade.bias).toFixed(2) : (isFiniteNumber(trade.strike) ? `K=${trade.strike}` : '-'),
+      detail,
       entryToExit,
       `<span class="${grossClass}">${formatPct(trade.grossReturn)}</span>`,
       `<span class="${netClass}">${formatPct(trade.netReturn)}</span>`,

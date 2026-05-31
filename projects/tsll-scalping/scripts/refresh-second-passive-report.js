@@ -107,11 +107,25 @@ function findLatestPriorReport(startDate, endDate) {
     .map((name) => {
       const match = name.match(/^tsll-seconds-passive-fixed-(\d{4}-\d{2}-\d{2})-(\d{4}-\d{2}-\d{2})\.json$/);
       if (!match || match[1] !== startDate || match[2] >= endDate) return null;
-      return { name, startDate: match[1], endDate: match[2], path: path.join(dir, name) };
+      const reportPath = path.join(dir, name);
+      if (!isHybridReport(reportPath)) return null;
+      return { name, startDate: match[1], endDate: match[2], path: reportPath };
     })
     .filter(Boolean)
     .sort((left, right) => right.endDate.localeCompare(left.endDate))
     .at(0) || null;
+}
+
+function isHybridReport(reportPath) {
+  if (!reportPath || !fs.existsSync(reportPath)) return false;
+  try {
+    const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+    return report.strategy?.id === 'tsll-seconds-passive-hybrid-rth-extended'
+      && report.strategy?.settings?.schemaVersion === 'phenixflow.tsll.secondsPassiveSettings.v2'
+      && report.assumptions?.session === 'extended';
+  } catch {
+    return false;
+  }
 }
 
 function tradeKey(trade) {
@@ -163,7 +177,7 @@ function main() {
     'projects',
     'tsll-scalping',
     'artifacts',
-    `tsll-seconds-passive-mm-fixed-${startDate}-${endDate}-cost0`,
+    `tsll-seconds-passive-mm-fixed-${startDate}-${endDate}-extended-cost0`,
   );
   const source = `${artifactBase}.json`;
   const output = path.join(
@@ -173,7 +187,8 @@ function main() {
     `tsll-seconds-passive-fixed-${startDate}-${endDate}.json`,
   );
 
-  if (args.force !== true && fs.existsSync(path.join(REPO_ROOT, output))) {
+  const outputPath = path.join(REPO_ROOT, output);
+  if (args.force !== true && isHybridReport(outputPath)) {
     console.log(JSON.stringify({
       status: 'current',
       startDate,
@@ -195,7 +210,7 @@ function main() {
         'projects',
         'tsll-scalping',
         'artifacts',
-        `tsll-seconds-passive-mm-fixed-${appendStart}-${appendEnd}-cost0`,
+        `tsll-seconds-passive-mm-fixed-${appendStart}-${appendEnd}-extended-cost0`,
       );
       const appendSource = `${appendBase}.json`;
       const appendReport = path.join(
@@ -211,6 +226,7 @@ function main() {
         '--fixed-candidate',
         '--no-daily-context',
         '--rest-seconds',
+        '--session', 'extended',
         '--cost-cents-per-side', '0',
         '--min-trades', '0',
         '--output', appendBase,
@@ -250,6 +266,7 @@ function main() {
     '--fixed-candidate',
     '--no-daily-context',
     '--rest-seconds',
+    '--session', 'extended',
     '--cost-cents-per-side', '0',
     '--min-trades', '0',
     '--output', artifactBase,

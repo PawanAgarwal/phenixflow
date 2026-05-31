@@ -35,6 +35,102 @@ function payloadValue(payload, features, names, fallback = 0) {
   return fallback;
 }
 
+function profileEntries(settings) {
+  const profiles = settings?.sessionProfiles;
+  if (!profiles) return [];
+  const entries = Array.isArray(profiles)
+    ? profiles.map((profile, index) => [`profile_${index}`, profile])
+    : Object.entries(profiles);
+  return entries
+    .filter(([, profile]) => profile && typeof profile === 'object' && profile.disabled !== true)
+    .sort((left, right) => finite(right[1].priority, 0) - finite(left[1].priority, 0));
+}
+
+function rowMinuteOfDayEt(row) {
+  const value = row?.minuteOfDayEt ?? row?.minute_of_day_et;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function rowSessionName(row) {
+  return String(row?.sessionName || row?.session_name || '').trim().toLowerCase();
+}
+
+function profileMinute(profile, primaryName, fallbackName, fallback = null) {
+  const value = profile?.[primaryName] ?? profile?.[fallbackName];
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function inMinuteWindow(minute, openMinute, closeMinute) {
+  if (!Number.isFinite(minute) || !Number.isFinite(openMinute) || !Number.isFinite(closeMinute)) return true;
+  if (closeMinute >= openMinute) return minute >= openMinute && minute < closeMinute;
+  return minute >= openMinute || minute < closeMinute;
+}
+
+function profileMatchesRow(profile, row, settings) {
+  const minute = rowMinuteOfDayEt(row);
+  const sessionName = rowSessionName(row);
+  if (minute !== null) {
+    const openMinute = profileMinute(profile, 'openMinuteEt', 'sessionOpenMinuteEt');
+    const closeMinute = profileMinute(profile, 'closeMinuteEt', 'sessionCloseMinuteEt');
+    if (!inMinuteWindow(minute, openMinute, closeMinute)) return false;
+    if (profile.excludeRegularSession === true) {
+      const regularOpen = finite(profile.regularOpenMinuteEt, finite(settings?.regularOpenMinuteEt, 570));
+      const regularClose = finite(profile.regularCloseMinuteEt, finite(settings?.regularCloseMinuteEt, 960));
+      if (inMinuteWindow(minute, regularOpen, regularClose)) return false;
+    }
+    if (profile.matchSessionName === true && profile.sessionName && sessionName !== String(profile.sessionName).toLowerCase()) return false;
+    return true;
+  }
+  if (!sessionName) return false;
+  const profileNames = [
+    profile.profileId,
+    profile.sessionName,
+    profile.name,
+  ].filter(Boolean).map((value) => String(value).toLowerCase());
+  return profileNames.includes(sessionName);
+}
+
+function resolveSettingsForRow(settings, row) {
+  const entries = profileEntries(settings);
+  if (!entries.length) return { ...settings, _profileMatched: true };
+  const matched = entries.find(([, profile]) => profileMatchesRow(profile, row, settings));
+  if (!matched) {
+    const hasMinute = rowMinuteOfDayEt(row) !== null;
+    return {
+      ...settings,
+      _profileId: null,
+      _profileName: null,
+      _profileMatched: !hasMinute,
+    };
+  }
+  const [key, profile] = matched;
+  return {
+    ...settings,
+    ...profile,
+    sessionProfiles: settings.sessionProfiles,
+    _profileKey: key,
+    _profileId: profile.profileId || profile.sessionName || key,
+    _profileName: profile.profileName || profile.name || profile.profileId || key,
+    _profileMatched: true,
+  };
+}
+
+function effectiveMinutesFromOpen(row, settings) {
+  const minute = rowMinuteOfDayEt(row);
+  const openMinute = profileMinute(settings, 'openMinuteEt', 'sessionOpenMinuteEt');
+  if (minute !== null && Number.isFinite(openMinute)) return minute - openMinute;
+  return row?.minutes_from_open;
+}
+
+function effectiveMinutesToClose(row, settings) {
+  const minute = rowMinuteOfDayEt(row);
+  const closeMinute = profileMinute(settings, 'closeMinuteEt', 'sessionCloseMinuteEt');
+  if (minute !== null && Number.isFinite(closeMinute)) return closeMinute - minute - 1;
+  return row?.minutes_to_close;
+}
+
 function deriveRollingFeatures(state, payload, settings) {
   const history = Array.isArray(state?.primaryBars) ? state.primaryBars : [];
   const barSeconds = Math.max(1, Math.trunc(finite(settings?.barSeconds, 1)));
@@ -88,6 +184,9 @@ function featureRowFromBarEvent(state, event, settings) {
     volume: finite(payload.volume, 0),
     trade_count: finite(payloadValue(payload, features, ['trade_count', 'tradeCount'], 0)),
     vwap: finite(payload.vwap, finite(payload.close, 0)),
+    minuteOfDayEt: nullableFinite(payloadValue(payload, features, ['minuteOfDayEt', 'minute_of_day_et'], undefined)),
+    secondOfDayEt: nullableFinite(payloadValue(payload, features, ['secondOfDayEt', 'second_of_day_et'], undefined)),
+    sessionName: String(payloadValue(payload, features, ['sessionName', 'session_name'], '') || ''),
     minutes_from_open: finite(payloadValue(payload, features, ['minutes_from_open', 'minutesFromOpen'], 0)),
     minutes_to_close: finite(payloadValue(payload, features, ['minutes_to_close', 'minutesToClose'], 0)),
     ret_1bar_cents: finite(payloadValue(payload, features, ['ret_1bar_cents', 'ret1barCents'], rolling.ret_1bar_cents)),
@@ -120,6 +219,9 @@ function filterResult(name, actual, threshold, passed) {
 }
 
 function evaluateFilters(row, settings) {
+  const activeSettings = resolveSettingsForRow(settings, row);
+  const minutesFromOpen = effectiveMinutesFromOpen(row, activeSettings);
+  const minutesToClose = effectiveMinutesToClose(row, activeSettings);
   const filters = [];
   const add = (name, actual, threshold, passed) => {
     const item = filterResult(name, actual, threshold, passed);
@@ -127,35 +229,42 @@ function evaluateFilters(row, settings) {
     return item.passed;
   };
   let passed = true;
-  passed = add('minutes_from_open', row?.minutes_from_open ?? null, `>=${settings.noEntryFirstMinutes}`, row && row.minutes_from_open >= settings.noEntryFirstMinutes) && passed;
-  passed = add('minutes_to_close', row?.minutes_to_close ?? null, `>=${settings.noEntryLastMinutes}`, row && row.minutes_to_close >= settings.noEntryLastMinutes) && passed;
-  passed = add('minTradeCount', row?.trade_count ?? 0, settings.minTradeCount, (row?.trade_count || 0) >= settings.minTradeCount) && passed;
-  passed = add('minRange60sCents', row?.range_60s_cents ?? 0, settings.minRange60sCents, (row?.range_60s_cents || 0) >= settings.minRange60sCents) && passed;
-  passed = add('minRet60sCents', row?.ret_60s_cents ?? 0, settings.minRet60sCents, (row?.ret_60s_cents || 0) >= settings.minRet60sCents) && passed;
-  passed = add('maxLastBarUpCents', row?.ret_1bar_cents ?? 0, settings.maxLastBarUpCents, (row?.ret_1bar_cents || 0) <= settings.maxLastBarUpCents) && passed;
-  if (settings.requireMarketOk) {
+  if (profileEntries(settings).length) {
+    passed = add('session_profile', activeSettings._profileId || 'none', 'configured_profile', activeSettings._profileMatched === true) && passed;
+  }
+  passed = add('minutes_from_open', minutesFromOpen ?? null, `>=${activeSettings.noEntryFirstMinutes}`, row && minutesFromOpen >= activeSettings.noEntryFirstMinutes) && passed;
+  passed = add('minutes_to_close', minutesToClose ?? null, `>=${activeSettings.noEntryLastMinutes}`, row && minutesToClose >= activeSettings.noEntryLastMinutes) && passed;
+  passed = add('minTradeCount', row?.trade_count ?? 0, activeSettings.minTradeCount, (row?.trade_count || 0) >= activeSettings.minTradeCount) && passed;
+  passed = add('minRange60sCents', row?.range_60s_cents ?? 0, activeSettings.minRange60sCents, (row?.range_60s_cents || 0) >= activeSettings.minRange60sCents) && passed;
+  passed = add('minRet60sCents', row?.ret_60s_cents ?? 0, activeSettings.minRet60sCents, (row?.ret_60s_cents || 0) >= activeSettings.minRet60sCents) && passed;
+  if (activeSettings.maxRet60sCents !== null && activeSettings.maxRet60sCents !== undefined) {
+    passed = add('maxRet60sCents', row?.ret_60s_cents ?? 0, activeSettings.maxRet60sCents, (row?.ret_60s_cents || 0) <= activeSettings.maxRet60sCents) && passed;
+  }
+  passed = add('maxLastBarUpCents', row?.ret_1bar_cents ?? 0, activeSettings.maxLastBarUpCents, (row?.ret_1bar_cents || 0) <= activeSettings.maxLastBarUpCents) && passed;
+  if (activeSettings.requireMarketOk) {
     passed = add('market_ok_1m', row?.market_ok_1m ?? 0, 1, row?.market_ok_1m === 1) && passed;
   }
-  passed = add('minSpyRet1m', row?.spy_ret_1m ?? 0, settings.minSpyRet1m, (row?.spy_ret_1m || 0) >= settings.minSpyRet1m) && passed;
-  passed = add('minQqqRet1m', row?.qqq_ret_1m ?? 0, settings.minQqqRet1m, (row?.qqq_ret_1m || 0) >= settings.minQqqRet1m) && passed;
-  passed = add('minTslaRet1m', row?.tsla_ret_1m ?? 0, settings.minTslaRet1m, (row?.tsla_ret_1m || 0) >= settings.minTslaRet1m) && passed;
-  if (settings.requireDailyContext) {
+  passed = add('minSpyRet1m', row?.spy_ret_1m ?? 0, activeSettings.minSpyRet1m, (row?.spy_ret_1m || 0) >= activeSettings.minSpyRet1m) && passed;
+  passed = add('minQqqRet1m', row?.qqq_ret_1m ?? 0, activeSettings.minQqqRet1m, (row?.qqq_ret_1m || 0) >= activeSettings.minQqqRet1m) && passed;
+  passed = add('minTslaRet1m', row?.tsla_ret_1m ?? 0, activeSettings.minTslaRet1m, (row?.tsla_ret_1m || 0) >= activeSettings.minTslaRet1m) && passed;
+  if (activeSettings.requireDailyContext) {
     passed = add('daily_context_ready', row?.daily_context_ready ?? 0, 1, row?.daily_context_ready === 1) && passed;
   }
-  if (settings.requireDailyMacroTrend) {
+  if (activeSettings.requireDailyMacroTrend) {
     passed = add('daily_macro_trend_up', row?.daily_macro_trend_up ?? 0, 1, row?.daily_macro_trend_up === 1) && passed;
   }
-  if (settings.maxAbsFromPrevCloseAtr !== null && settings.maxAbsFromPrevCloseAtr !== undefined) {
-    passed = add('maxAbsFromPrevCloseAtr', Math.abs(row?.daily_tsll_from_prev_close_atr || 0), settings.maxAbsFromPrevCloseAtr, Math.abs(row?.daily_tsll_from_prev_close_atr || 0) <= settings.maxAbsFromPrevCloseAtr) && passed;
+  if (activeSettings.maxAbsFromPrevCloseAtr !== null && activeSettings.maxAbsFromPrevCloseAtr !== undefined) {
+    passed = add('maxAbsFromPrevCloseAtr', Math.abs(row?.daily_tsll_from_prev_close_atr || 0), activeSettings.maxAbsFromPrevCloseAtr, Math.abs(row?.daily_tsll_from_prev_close_atr || 0) <= activeSettings.maxAbsFromPrevCloseAtr) && passed;
   }
-  if (settings.maxRangeSoFarAtr !== null && settings.maxRangeSoFarAtr !== undefined) {
-    passed = add('maxRangeSoFarAtr', row?.daily_tsll_range_so_far_atr || 0, settings.maxRangeSoFarAtr, (row?.daily_tsll_range_so_far_atr || 0) <= settings.maxRangeSoFarAtr) && passed;
+  if (activeSettings.maxRangeSoFarAtr !== null && activeSettings.maxRangeSoFarAtr !== undefined) {
+    passed = add('maxRangeSoFarAtr', row?.daily_tsll_range_so_far_atr || 0, activeSettings.maxRangeSoFarAtr, (row?.daily_tsll_range_so_far_atr || 0) <= activeSettings.maxRangeSoFarAtr) && passed;
   }
-  return { passed: Boolean(row && passed), filters };
+  return { passed: Boolean(row && passed), filters, settings: activeSettings };
 }
 
-function compactFeatureTrace(row) {
+function compactFeatureTrace(row, settings = null) {
   if (!row) return {};
+  const activeSettings = settings ? resolveSettingsForRow(settings, row) : {};
   return {
     close: round(row.close, 4),
     ret1barCents: round(row.ret_1bar_cents, 4),
@@ -166,15 +275,59 @@ function compactFeatureTrace(row) {
     spyRet1m: round(row.spy_ret_1m, 8),
     qqqRet1m: round(row.qqq_ret_1m, 8),
     tslaRet1m: round(row.tsla_ret_1m, 8),
-    minutesFromOpen: row.minutes_from_open,
-    minutesToClose: row.minutes_to_close,
+    minuteOfDayEt: row.minuteOfDayEt,
+    sessionName: row.sessionName || null,
+    profileId: activeSettings._profileId || null,
+    minutesFromOpen: settings ? effectiveMinutesFromOpen(row, activeSettings) : row.minutes_from_open,
+    minutesToClose: settings ? effectiveMinutesToClose(row, activeSettings) : row.minutes_to_close,
   };
+}
+
+function evaluateEarlyExit({ row, position, settings, sequence }) {
+  const rule = settings?.earlyExit;
+  if (!rule || !position || !row) return null;
+  const type = typeof rule === 'string' ? rule : rule.type;
+  const holdBars = sequence - finite(position.entrySequence, sequence);
+  const entryPrice = finite(position.entryFillPrice, finite(position.entryPrice, row.close));
+  if (type === 'stale_loss_exit') {
+    const minHoldBars = Math.max(0, Math.trunc(finite(rule.minHoldBars, 8)));
+    const maxQqqRet1m = finite(rule.maxQqqRet1m, 0);
+    if (holdBars >= minHoldBars && row.close < entryPrice && row.qqq_ret_1m < maxQqqRet1m) {
+      return {
+        exitReason: rule.reason || 'stale_loss_exit',
+        exitPrice: row.close,
+      };
+    }
+  }
+  if (type === 'market_weak_exit') {
+    const maxQqqRet1m = finite(rule.maxQqqRet1m, -0.0012);
+    const maxTslaRet1m = finite(rule.maxTslaRet1m, -0.0025);
+    if (row.qqq_ret_1m < maxQqqRet1m || row.tsla_ret_1m < maxTslaRet1m) {
+      return {
+        exitReason: rule.reason || 'market_weak_exit',
+        exitPrice: row.close,
+      };
+    }
+  }
+  if (type === 'profit_lock') {
+    const minHoldBars = Math.max(0, Math.trunc(finite(rule.minHoldBars, 6)));
+    const minGrossCents = finite(rule.minGrossCents, 2);
+    if (holdBars >= minHoldBars && (row.close - entryPrice) * 100 >= minGrossCents) {
+      return {
+        exitReason: rule.reason || 'profit_lock',
+        exitPrice: row.close,
+      };
+    }
+  }
+  return null;
 }
 
 function evaluateBacktestExit(state, barEvent, settings) {
   const position = state?.position;
   if (!position || !barEvent || barEvent.eventType !== 'BAR_1S_CLOSED') return null;
   const payload = barEvent.payload || {};
+  const row = featureRowFromBarEvent(state, barEvent, settings);
+  const tradeSettings = position.tradeSettings || resolveSettingsForRow(settings, row);
   const tradeDate = payload.tradeDate || payload.dayIso || String(barEvent.eventTime || '').slice(0, 10);
   if (position.tradeDate && tradeDate && tradeDate !== position.tradeDate) {
     const lastBar = state.lastPrimaryBar || {};
@@ -190,20 +343,22 @@ function evaluateBacktestExit(state, barEvent, settings) {
   const low = finite(payload.low, 0);
   const close = finite(payload.close, position.entryFillPrice);
   const sequence = finite(barEvent.sequence, position.entrySequence);
-  const targetPrice = finite(position.targetPrice, position.entryFillPrice + centsToPrice(settings.targetCents));
-  const stopPrice = finite(position.stopPrice, position.entryFillPrice - centsToPrice(settings.stopCents));
-  const throughPrice = centsToPrice(settings.throughCents);
+  const targetPrice = finite(position.targetPrice, position.entryFillPrice + centsToPrice(tradeSettings.targetCents));
+  const stopPrice = finite(position.stopPrice, position.entryFillPrice - centsToPrice(tradeSettings.stopCents));
+  const throughPrice = centsToPrice(tradeSettings.throughCents);
   const targetTouched = high >= targetPrice + throughPrice;
   const stopTouched = low <= stopPrice;
   if (targetTouched && stopTouched) {
-    if ((settings.sameBarTargetStopPriority || 'stop_first') === 'target_first') {
+    if ((tradeSettings.sameBarTargetStopPriority || 'stop_first') === 'target_first') {
       return { exitReason: 'target_same_bar', exitPrice: targetPrice, exitSequence: sequence, exitTime: barEvent.eventTime };
     }
     return { exitReason: 'stop_same_bar', exitPrice: stopPrice, exitSequence: sequence, exitTime: barEvent.eventTime };
   }
   if (stopTouched) return { exitReason: 'stop', exitPrice: stopPrice, exitSequence: sequence, exitTime: barEvent.eventTime };
   if (targetTouched) return { exitReason: 'target', exitPrice: targetPrice, exitSequence: sequence, exitTime: barEvent.eventTime };
-  const maxHoldBars = Math.max(0, Math.trunc(finite(settings.maxHoldBars, 0)));
+  const early = evaluateEarlyExit({ row, position, settings: tradeSettings, sequence });
+  if (early) return { ...early, exitSequence: sequence, exitTime: barEvent.eventTime };
+  const maxHoldBars = Math.max(0, Math.trunc(finite(tradeSettings.maxHoldBars, 0)));
   if (sequence >= position.entrySequence + maxHoldBars) {
     return { exitReason: 'timeout', exitPrice: close, exitSequence: sequence, exitTime: barEvent.eventTime };
   }
@@ -213,10 +368,14 @@ function evaluateBacktestExit(state, barEvent, settings) {
 module.exports = {
   centsToPrice,
   compactFeatureTrace,
+  effectiveMinutesFromOpen,
+  effectiveMinutesToClose,
+  evaluateEarlyExit,
   evaluateBacktestExit,
   evaluateFilters,
   featureRowFromBarEvent,
   finite,
+  resolveSettingsForRow,
   round,
   safeReturn,
 };

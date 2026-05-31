@@ -35,6 +35,15 @@ function shaFile(filePath) {
   return sha256Text(fs.readFileSync(filePath));
 }
 
+function optionalShaFile(filePath) {
+  return fs.existsSync(filePath) ? shaFile(filePath) : null;
+}
+
+function findResult(report, id) {
+  const results = Array.isArray(report?.results) ? report.results : [];
+  return results.find((item) => item.id === id || item.strategy === id) || null;
+}
+
 function listFiles(dir, prefix = '') {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const relative = path.join(prefix, entry.name);
@@ -53,7 +62,8 @@ function writeDistWrappers() {
     'export const onEventLean = kernel.onEventLean;',
     'export const replay = kernel.replay;',
     'export const evaluateBacktestExit = kernel.evaluateBacktestExit;',
-    'export default { describe, createKernel, onEvent, onEventLean, replay, evaluateBacktestExit };',
+    'export const resolveSettingsForRow = kernel.resolveSettingsForRow;',
+    'export default { describe, createKernel, onEvent, onEventLean, replay, evaluateBacktestExit, resolveSettingsForRow };',
     '',
   ].join('\n'), 'utf8');
   fs.writeFileSync(path.join(DIST, 'features.mjs'), [
@@ -61,40 +71,45 @@ function writeDistWrappers() {
     'export const featureRowFromBarEvent = features.featureRowFromBarEvent;',
     'export const evaluateFilters = features.evaluateFilters;',
     'export const evaluateBacktestExit = features.evaluateBacktestExit;',
-    'export default { featureRowFromBarEvent, evaluateFilters, evaluateBacktestExit };',
+    'export const resolveSettingsForRow = features.resolveSettingsForRow;',
+    'export default { featureRowFromBarEvent, evaluateFilters, evaluateBacktestExit, resolveSettingsForRow };',
     '',
   ].join('\n'), 'utf8');
 }
 
 function buildManifest() {
-  const reportPath = path.join(REPO_ROOT, 'projects/tsll-scalping/reports/tsll-seconds-passive-fixed-2025-01-02-2026-05-12.json');
-  const fallbackReportPath = path.join(REPO_ROOT, 'projects/tsll-scalping/reports/tsll-seconds-passive-fixed-feb2026.json');
-  const resolvedReportPath = fs.existsSync(reportPath) ? reportPath : fallbackReportPath;
-  const report = readJson(resolvedReportPath);
-  const sourceArtifactPath = path.join(REPO_ROOT, report.sourceArtifact.replace(/^projects\//, 'projects/'));
-  const sourceArtifactExists = fs.existsSync(sourceArtifactPath);
+  const rthResearchPath = path.join(REPO_ROOT, 'projects/tsll-scalping/artifacts/tsll-scalp-improvement-analysis-market-filters-2025-01-02-2026-05-29.json');
+  const extendedResearchPath = path.join(REPO_ROOT, 'projects/tsll-scalping/artifacts/tsll-scalp-improvement-analysis-market-filters-extended-2025-01-02-2026-05-29.json');
+  const rthResearch = readJson(rthResearchPath);
+  const extendedResearch = readJson(extendedResearchPath);
+  const selectedRth = findResult(rthResearch, 'dyn_b4_stale_loss_exit__base');
+  const selectedExtended = findResult(extendedResearch, 'b5_t5_s8_h20__not_overextended_60s');
   const fixtureDecisions = readJsonl('fixtures/expected-decisions.jsonl');
   const fixtureTraces = readJsonl('fixtures/expected-traces.jsonl');
   const adapterTrades = readJsonl('fixtures/backtest-adapter/expected-trades.jsonl');
-  const sourceArtifactSha256 = sourceArtifactExists ? shaFile(sourceArtifactPath) : null;
   const summaryPayload = {
-    strategy: report.strategy,
-    assumptions: report.assumptions,
-    totals: report.totals,
-    days: report.days,
+    settings,
+    selectedProfiles: {
+      regular: selectedRth,
+      extended: selectedExtended,
+    },
+    sourceReports: [
+      path.relative(REPO_ROOT, rthResearchPath),
+      path.relative(REPO_ROOT, extendedResearchPath),
+    ],
   };
   return {
     schemaVersion: 'phenixflow.strategyKernel.v1',
     strategy: {
       id: 'tsll-seconds-passive-scalper',
-      name: 'TSLL Seconds Passive Scalper',
-      version: '2026.05.13',
+      name: 'TSLL Hybrid RTH and Extended-Hours Seconds Passive Scalper',
+      version: '2026.05.31',
       timingClass: 'SCALP',
       timezone: 'America/New_York',
     },
     artifact: {
       id: 'tsll-seconds-passive-scalper.execution.v1',
-      createdAt: '2026-05-13T00:00:00.000Z',
+      createdAt: '2026-05-31T00:00:00.000Z',
     },
     runtime: {
       type: 'node',
@@ -126,7 +141,8 @@ function buildManifest() {
       barRequirements: {
         primary: '1s',
         context: '1m',
-        regularSessionOnly: true,
+        regularSessionOnly: false,
+        sessions: ['regular', 'extended'],
       },
       quoteRequirements: {
         maxQuoteAgeMs: settings.quoteMaxAgeMs,
@@ -134,8 +150,8 @@ function buildManifest() {
     },
     activation: {
       type: 'regular_session_window',
-      startTime: '09:35',
-      endTime: '15:50',
+      startTime: '04:05',
+      endTime: '19:50',
     },
     execution: {
       orderType: 'limit',
@@ -165,21 +181,53 @@ function buildManifest() {
     },
     provenance: {
       phenixFlowGitSha: 'c573cb91a87edde7d1be68e2756d79ab3033876c',
-      researchReportPath: path.relative(REPO_ROOT, resolvedReportPath),
-      researchReportSha256: shaFile(resolvedReportPath),
-      researchArtifactId: report.sourceArtifact,
-      researchDatasetId: `tsll-1s-${report.startDate}-${report.endDate}-${report.assumptions?.data?.includes('REST') ? 'massive-rest-1s' : 'massive-trades-1s'}-barSeconds1-nodaily`,
-      researchSourceArtifactSha256: sourceArtifactSha256,
+      researchReportPath: path.relative(REPO_ROOT, rthResearchPath),
+      researchReportSha256: shaFile(rthResearchPath),
+      researchReportPaths: [
+        path.relative(REPO_ROOT, rthResearchPath),
+        path.relative(REPO_ROOT, extendedResearchPath),
+      ],
+      researchReportSha256ByPath: {
+        [path.relative(REPO_ROOT, rthResearchPath)]: optionalShaFile(rthResearchPath),
+        [path.relative(REPO_ROOT, extendedResearchPath)]: optionalShaFile(extendedResearchPath),
+      },
+      researchArtifactId: path.relative(REPO_ROOT, extendedResearchPath),
+      researchArtifactIds: [
+        path.relative(REPO_ROOT, rthResearchPath),
+        path.relative(REPO_ROOT, extendedResearchPath),
+      ],
+      researchDatasetId: `tsll-1s-${rthResearch.startDate}-${rthResearch.endDate}-massive-rest-1s-extended-hybrid-barSeconds1-nodaily`,
+      researchSourceArtifactSha256: sha256Canonical({
+        rth: optionalShaFile(rthResearchPath),
+        extended: optionalShaFile(extendedResearchPath),
+      }),
       researchDateRange: {
-        startDate: report.startDate,
-        endDate: report.endDate,
+        startDate: rthResearch.startDate,
+        endDate: rthResearch.endDate,
       },
       costSetting: {
-        costCentsPerSide: report.assumptions?.explicitCostCentsPerSide ?? settings.costCentsPerSide,
+        costCentsPerSide: settings.costCentsPerSide,
+      },
+      selectedProfiles: {
+        regular: {
+          id: selectedRth?.id || null,
+          label: selectedRth?.label || null,
+          summary: selectedRth?.overall || null,
+          test2026Ytd: selectedRth?.test2026Ytd || null,
+        },
+        extended: {
+          id: selectedExtended?.id || null,
+          label: selectedExtended?.label || null,
+          summary: selectedExtended?.overall || null,
+          test2026Ytd: selectedExtended?.test2026Ytd || null,
+        },
       },
       promotedSettingsSha256: sha256Canonical(settings),
       expectedSummarySha256: sha256Canonical(summaryPayload),
-      theoreticalPerformanceSha256: sha256Canonical(report.totals),
+      theoreticalPerformanceSha256: sha256Canonical({
+        regular: selectedRth?.overall || null,
+        extended: selectedExtended?.overall || null,
+      }),
     },
   };
 }

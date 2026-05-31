@@ -5,7 +5,7 @@ const path = require('node:path');
 const { PROJECT_ROOT, artifactPath, ensureDir, loadConfig } = require('../src/config');
 const { availableDates } = require('../src/calendar');
 const { buildDailyContextByDate, buildScalpingBarsForDay } = require('../src/data');
-const { simulateSecondPassiveScalp, summarizeSecondScalps } = require('../src/second-passive');
+const { defaultSettings, simulateSecondPassiveScalp, summarizeSecondScalps } = require('../src/second-passive');
 
 function parseArgs(argv = process.argv.slice(2)) {
   const out = {};
@@ -42,7 +42,8 @@ function asBoolean(value, fallback = false) {
 
 function cachePath(dayIso, settings) {
   const dailyTag = settings.includeDailyContext ? 'daily' : 'nodaily';
-  return path.join(PROJECT_ROOT, 'runtime', `tsll-second-bars-${dayIso}-${settings.barSeconds}s-${dailyTag}.jsonl`);
+  const sessionTag = settings.sessionName && settings.sessionName !== 'regular' ? `-${settings.sessionName}` : '';
+  return path.join(PROJECT_ROOT, 'runtime', `tsll-second-bars-${dayIso}-${settings.barSeconds}s-${dailyTag}${sessionTag}.jsonl`);
 }
 
 function writeJsonl(filePath, rows) {
@@ -139,30 +140,19 @@ function buildGrid({ costCentsPerSide, noEntryFirstMinutes, noEntryLastMinutes }
 }
 
 function buildFixedCandidate({ costCentsPerSide, noEntryFirstMinutes, noEntryLastMinutes }) {
-  return [{
-    name: 'sec_passive_b3_t3_s5_h10_r3_thr0_fixed',
+  const candidate = defaultSettings({
     costCentsPerSide,
-    buyBelowCloseCents: 3,
-    targetCents: 3,
-    stopCents: 5,
-    maxHoldBars: 10,
-    cooldownBars: 2,
-    throughCents: 0,
     noEntryFirstMinutes,
     noEntryLastMinutes,
-    minTradeCount: 1,
-    minRange60sCents: 3,
-    minRet60sCents: -20,
-    maxLastBarUpCents: 12,
-    requireMarketOk: true,
-    minSpyRet1m: -0.001,
-    minQqqRet1m: -0.0012,
-    minTslaRet1m: -0.002,
-    requireDailyContext: false,
-    requireDailyMacroTrend: false,
-    maxAbsFromPrevCloseAtr: null,
-    maxRangeSoFarAtr: null,
-  }];
+  });
+  if (candidate.sessionProfiles && typeof candidate.sessionProfiles === 'object') {
+    candidate.sessionProfiles = Object.fromEntries(Object.entries(candidate.sessionProfiles).map(([key, profile]) => [key, {
+      ...profile,
+      noEntryFirstMinutes,
+      noEntryLastMinutes,
+    }]));
+  }
+  return [candidate];
 }
 
 function rankResults(results, minTrades) {
@@ -180,6 +170,7 @@ function renderMarkdown(report) {
   lines.push('');
   lines.push(`Generated: ${report.generatedAt}`);
   lines.push(`Window: ${report.startDate} to ${report.endDate}`);
+  lines.push(`Session: ${report.sessionName}`);
   lines.push(`Open dates used: ${report.selectedDates.join(', ')}`);
   lines.push(`Bars: ${report.totalBars.toLocaleString()} (${report.barSeconds}s), cost: ${report.costCentsPerSide} cents per side`);
   lines.push('');
@@ -233,6 +224,7 @@ async function main() {
   const costCentsPerSide = asNumber(args['cost-cents-per-side'], config.execution?.costCentsPerSide ?? 0.5);
   const includeDailyContext = args['daily-context'] !== false;
   const useRestSeconds = asBoolean(args['rest-seconds'], false);
+  const sessionName = String(args.session || args['session-name'] || 'regular').trim().toLowerCase();
   const requiredDatasets = useRestSeconds ? ['stockBars'] : ['stockTrades', 'stockBars'];
   const selectedDates = availableDates(config, startDate, endDate, requiredDatasets).slice(0, maxDays || undefined);
   if (!selectedDates.length) throw new Error(`no_available_dates:${startDate}:${endDate}`);
@@ -242,6 +234,7 @@ async function main() {
     includeDailyContext,
     costCentsPerSide,
     useRestSeconds,
+    sessionName,
     rebuildCache: asBoolean(args['rebuild-cache'], false),
   };
   if (includeDailyContext) {
@@ -305,6 +298,7 @@ async function main() {
     provider: config.dataPolicy.provider,
     startDate,
     endDate,
+    sessionName,
     selectedDates,
     barSeconds: 1,
     costCentsPerSide,
@@ -320,9 +314,16 @@ async function main() {
     topResults: ranked.slice(0, 50),
     bestWithTrades,
   };
+  report.assumptions = {
+    data: 'Massive REST unadjusted 1-second stock aggregates plus local Massive 1-minute context.',
+    session: sessionName === 'regular' ? 'Regular trading hours only.' : 'Extended-hours run using the configured TSLL session window.',
+    execution: 'Passive buy limit can fill only in a traded second; target/stop checks start after the entry second.',
+    caveat: '1-second aggregate OHLC does not prove NBBO queue fill quality.',
+  };
+  const outputSessionTag = sessionName !== 'regular' ? `-${sessionName}` : '';
   const outputBase = args.output
     ? path.resolve(args.output).replace(/\.json$/, '')
-    : artifactPath(`tsll-seconds-passive-mm-${startDate}-${endDate}-cost${String(costCentsPerSide).replace('.', 'p')}`);
+    : artifactPath(`tsll-seconds-passive-mm-${startDate}-${endDate}${outputSessionTag}-cost${String(costCentsPerSide).replace('.', 'p')}`);
   ensureDir(path.dirname(outputBase));
   const jsonPath = `${outputBase}.json`;
   const mdPath = `${outputBase}.md`;

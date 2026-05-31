@@ -3,6 +3,8 @@ const { simulateLongScalp } = require('../src/backtest');
 const { parseQuoteRow } = require('../src/quotes');
 const { simulatePassiveMarketMaking } = require('../src/passive-mm');
 const { simulateSecondPassiveScalp } = require('../src/second-passive');
+const { buildFiveSecondBars } = require('../src/data');
+const { isSessionMs, sessionBounds } = require('../src/time');
 
 function row(overrides = {}) {
   return {
@@ -220,5 +222,43 @@ describe('TSLL scalping utilities', () => {
       maxLastBarUpCents: 12,
     });
     expect(result.summary.trades).toBe(0);
+  });
+
+  it('can build TSLL bars across the configured extended session', () => {
+    const config = {
+      target: 'TSLL',
+      marketSymbols: ['SPY', 'QQQ', 'TSLA', 'TSLL'],
+      session: {
+        extendedOpenMinuteEt: 240,
+        extendedCloseMinuteEt: 1200,
+        regularOpenMinuteEt: 570,
+        regularCloseMinuteEt: 960,
+      },
+    };
+    const premarketMs = Date.parse('2026-01-02T14:05:00.000Z'); // 09:05 ET
+    const trades = [{ tsMs: premarketMs, price: 10, size: 100 }];
+    const common = {
+      config,
+      dayIso: '2026-01-02',
+      trades,
+      stockMinutes: new Map(),
+      optionByMinute: new Map(),
+      optionGroups: [],
+      barSeconds: 60,
+      dailyContext: {},
+    };
+    const regular = buildFiveSecondBars({ ...common, sessionName: 'regular' });
+    const extended = buildFiveSecondBars({ ...common, sessionName: 'extended' });
+
+    expect(regular.length).toBe(0);
+    expect(extended[0].minuteOfDayEt).toBe(545);
+    expect(extended[0].minutes_from_open).toBe(305);
+    expect(isSessionMs(premarketMs, config.session, 'extended')).toBe(true);
+    expect(isSessionMs(premarketMs, config.session, 'regular')).toBe(false);
+    expect(sessionBounds(config.session, 'extended')).toEqual({
+      name: 'extended',
+      openMinuteEt: 240,
+      closeMinuteEt: 1200,
+    });
   });
 });

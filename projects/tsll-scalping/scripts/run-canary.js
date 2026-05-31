@@ -44,7 +44,8 @@ function asBoolean(value, defaultValue = false) {
 function cachePath(dayIso, settings) {
   const optionTag = settings.includeOptions ? 'opt' : 'noopt';
   const dailyTag = settings.includeDailyContext ? 'daily' : 'nodaily';
-  return path.join(PROJECT_ROOT, 'runtime', `tsll-scalping-bars-${dayIso}-${settings.barSeconds}s-${dailyTag}-${optionTag}.jsonl`);
+  const sessionTag = settings.sessionName && settings.sessionName !== 'regular' ? `-${settings.sessionName}` : '';
+  return path.join(PROJECT_ROOT, 'runtime', `tsll-scalping-bars-${dayIso}-${settings.barSeconds}s-${dailyTag}-${optionTag}${sessionTag}.jsonl`);
 }
 
 function writeJsonl(filePath, rows) {
@@ -101,6 +102,7 @@ function renderMarkdown(report) {
   lines.push('');
   lines.push(`Generated: ${report.generatedAt}`);
   lines.push(`Window: ${report.startDate} to ${report.endDate}`);
+  lines.push(`Session: ${report.sessionName}`);
   lines.push(`Open dates used: ${report.selectedDates.join(', ')}`);
   lines.push(`Bars: ${report.totalBars.toLocaleString()} (${report.barSeconds}s), cost: ${report.costCentsPerSide} cents per side`);
   lines.push(`Options: ${report.includeOptions ? 'enabled' : 'disabled'}, daily context: ${report.includeDailyContext ? 'enabled' : 'disabled'}`);
@@ -153,6 +155,7 @@ async function main() {
   const includeOptions = asBoolean(args['include-options'], config.research?.useOptionFeaturesDefault === true);
   const includeDailyContext = args['daily-context'] !== false;
   const includeBaselineStrategies = asBoolean(args['include-baseline-strategies'], false);
+  const sessionName = String(args.session || args['session-name'] || 'regular').trim().toLowerCase();
   const selectedDates = availableDates(config, startDate, endDate)
     .slice(0, maxDays || undefined);
   const outputBase = args.output
@@ -160,7 +163,7 @@ async function main() {
     : path.join(
       PROJECT_ROOT,
       'artifacts',
-      `tsll-scalping-canary-${startDate}-${endDate}-${barSeconds}s-${includeDailyContext ? 'daily' : 'nodaily'}-${includeOptions ? 'opt' : 'noopt'}-${includeBaselineStrategies ? 'with-baseline' : 'daily-grid'}-cost${String(costCentsPerSide).replace('.', 'p')}`,
+      `tsll-scalping-canary-${startDate}-${endDate}-${barSeconds}s-${includeDailyContext ? 'daily' : 'nodaily'}-${includeOptions ? 'opt' : 'noopt'}-${includeBaselineStrategies ? 'with-baseline' : 'daily-grid'}${sessionName !== 'regular' ? `-${sessionName}` : ''}-cost${String(costCentsPerSide).replace('.', 'p')}`,
     );
   const settings = {
     barSeconds,
@@ -168,6 +171,7 @@ async function main() {
     includeOptions,
     includeDailyContext,
     includeBaselineStrategies,
+    sessionName,
     cooldownBars: asNumber(args['cooldown-bars'], config.execution.cooldownBars ?? 2),
     noEntryFirstMinutes: asNumber(args['no-entry-first-minutes'], config.execution.noEntryFirstMinutes ?? 5),
     noEntryLastMinutes: asNumber(args['no-entry-last-minutes'], config.execution.noEntryLastMinutes ?? 5),
@@ -177,7 +181,7 @@ async function main() {
   if (!selectedDates.length) throw new Error(`no_available_dates:${startDate}:${endDate}`);
   ensureDir(path.join(PROJECT_ROOT, 'runtime'));
   ensureDir(path.join(PROJECT_ROOT, 'artifacts'));
-  console.error(`[tsll-scalping] dates=${selectedDates.join(', ')} barSeconds=${barSeconds} costCentsPerSide=${costCentsPerSide} options=${includeOptions ? 'yes' : 'no'} daily=${includeDailyContext ? 'yes' : 'no'}`);
+  console.error(`[tsll-scalping] dates=${selectedDates.join(', ')} barSeconds=${barSeconds} session=${sessionName} costCentsPerSide=${costCentsPerSide} options=${includeOptions ? 'yes' : 'no'} daily=${includeDailyContext ? 'yes' : 'no'}`);
   if (includeDailyContext) {
     const startedAt = Date.now();
     const dailyContext = await buildDailyContextByDate(config, selectedDates, {
@@ -227,6 +231,7 @@ async function main() {
     provider: config.dataPolicy.provider,
     startDate,
     endDate,
+    sessionName,
     selectedDates,
     barSeconds,
     costCentsPerSide,

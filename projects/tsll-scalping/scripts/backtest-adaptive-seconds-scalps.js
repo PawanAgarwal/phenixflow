@@ -6,7 +6,7 @@ const path = require('node:path');
 const { availableDates } = require('../src/calendar');
 const { artifactPath, ensureDir, loadConfig, runtimePath } = require('../src/config');
 const { readStockMinutesForDay } = require('../src/data');
-const { etMinuteToUtcMs, getEtParts } = require('../src/time');
+const { etMinuteToUtcMs, getEtParts, sessionBounds } = require('../src/time');
 
 function parseArgs(argv = process.argv.slice(2)) {
   const out = {};
@@ -79,12 +79,13 @@ async function mapWithConcurrency(items, limit, mapper) {
   return results;
 }
 
-function regularSecondMs(dayIso, session) {
-  const openMs = etMinuteToUtcMs(dayIso, session.regularOpenMinuteEt);
-  const closeMs = etMinuteToUtcMs(dayIso, session.regularCloseMinuteEt);
+function sessionSecondMs(dayIso, session, sessionName = 'regular') {
+  const bounds = sessionBounds(session, sessionName);
+  const openMs = etMinuteToUtcMs(dayIso, bounds.openMinuteEt);
+  const closeMs = etMinuteToUtcMs(dayIso, bounds.closeMinuteEt);
   const out = [];
   for (let ms = openMs; ms < closeMs; ms += 1000) out.push(ms);
-  return out;
+  return { rows: out, bounds };
 }
 
 function completedMinuteAtOrBefore(series, state, currentMs) {
@@ -215,15 +216,16 @@ function addSecondFeatures(rows) {
   addRollingRange(rows, 900, 'prior_high_900s', 'prior_low_900s', 'prior_range_900s_cents');
 }
 
-async function buildRowsForDay({ config, symbol, dayIso, apiKey }) {
+async function buildRowsForDay({ config, symbol, dayIso, apiKey, sessionName }) {
   const restRows = await fetchRestAggs(symbol, dayIso, apiKey);
-  const stockMinutes = await readStockMinutesForDay(config, dayIso, ['SPY', 'QQQ']);
+  const stockMinutes = await readStockMinutesForDay(config, dayIso, ['SPY', 'QQQ'], { sessionName });
   const bySecond = new Map(restRows.map((row) => [row.t, row]));
   const spyState = { index: -1 };
   const qqqState = { index: -1 };
   const rows = [];
   let previousClose = null;
-  regularSecondMs(dayIso, config.session).forEach((ms) => {
+  const sessionRows = sessionSecondMs(dayIso, config.session, sessionName);
+  sessionRows.rows.forEach((ms) => {
     const tick = bySecond.get(ms);
     let open = previousClose;
     let high = previousClose;
@@ -251,8 +253,8 @@ async function buildRowsForDay({ config, symbol, dayIso, apiKey }) {
       tsUtc: new Date(ms).toISOString(),
       minuteOfDayEt: et.minuteOfDayEt,
       secondOfDayEt: et.secondOfDayEt,
-      secondsFromOpen: et.secondOfDayEt - (config.session.regularOpenMinuteEt * 60),
-      secondsToClose: (config.session.regularCloseMinuteEt * 60) - et.secondOfDayEt - 1,
+      secondsFromOpen: et.secondOfDayEt - (sessionRows.bounds.openMinuteEt * 60),
+      secondsToClose: (sessionRows.bounds.closeMinuteEt * 60) - et.secondOfDayEt - 1,
       open,
       high,
       low,
@@ -533,6 +535,7 @@ async function main() {
     .map((symbol) => symbol.trim().toUpperCase())
     .filter(Boolean);
   const costCentsPerSide = Number(args.costCentsPerSide ?? 0.5);
+  const sessionName = String(args.session || args.sessionName || 'regular').trim().toLowerCase();
   const concurrency = Number(args.concurrency ?? 5);
   const batchSize = Number(args.batchSize ?? Math.max(20, concurrency * 8));
   const exitStartOffsetSeconds = Number(args.exitStartOffsetSeconds ?? 2);
@@ -542,7 +545,7 @@ async function main() {
     ? new Set(String(args.strategyIds).split(',').map((item) => item.trim()).filter(Boolean))
     : null;
   const strategies = buildStrategies().filter((strategy) => !strategyIds || strategyIds.has(strategy.id));
-  console.log(`[seconds-scalp] symbols=${symbols.join(',')} dates=${dates.length} strategies=${strategies.length} concurrency=${concurrency}`);
+  console.log(`[seconds-scalp] symbols=${symbols.join(',')} dates=${dates.length} session=${sessionName} strategies=${strategies.length} concurrency=${concurrency}`);
 
   const errors = [];
   const allResults = [];
@@ -557,7 +560,7 @@ async function main() {
       }));
       const dayResults = await mapWithConcurrency(batch, concurrency, async ({ dayIso, dateIndex }) => {
         try {
-          const { rows, restRows } = await buildRowsForDay({ config, symbol, dayIso, apiKey });
+          const { rows, restRows } = await buildRowsForDay({ config, symbol, dayIso, apiKey, sessionName });
           const tradesByStrategy = strategies.map((strategy) => ({
             strategyId: strategy.id,
             trades: simulateDay(rows, strategy, { exitStartOffsetSeconds }),
@@ -591,12 +594,14 @@ async function main() {
     generatedAt: new Date().toISOString(),
     startDate,
     endDate,
+    sessionName,
     dates: dates.length,
     symbols,
     costCentsPerSide,
     exitStartOffsetSeconds,
     assumptions: {
       data: 'Massive REST unadjusted 1-second stock aggregates plus local Massive 1-minute SPY/QQQ context.',
+      session: sessionName === 'regular' ? 'Regular trading hours only.' : 'Extended-hours run using the configured session window.',
       execution: 'Passive buy limit can fill only in a traded second; target/stop checks start after the entry second.',
       caveat: '1-second aggregate OHLC does not prove NBBO queue fill quality.',
     },
@@ -606,7 +611,8 @@ async function main() {
     errors,
   };
   const tag = args.tag ? `-${String(args.tag).replace(/[^A-Za-z0-9._-]/g, '-')}` : '';
-  const slug = `${startDate}-${endDate}${tag}`;
+  const sessionTag = sessionName !== 'regular' ? `-${sessionName}` : '';
+  const slug = `${startDate}-${endDate}${sessionTag}${tag}`;
   const outJson = artifactPath(`adaptive-second-scalp-backtest-${slug}.json`);
   const outMd = artifactPath(`adaptive-second-scalp-backtest-${slug}.md`);
   ensureDir(path.dirname(outJson));

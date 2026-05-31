@@ -6,8 +6,10 @@ const {
 const MANIFEST_VERSION = 'execution-manifest.v1';
 const MARKET_TIMEZONE = 'America/New_York';
 const REGULAR_SESSION = 'REGULAR';
+const EXTENDED_SESSION = 'EXTENDED';
 const TSLL_KERNEL_MANIFEST = require('../../../../packages/strategy-kernels/tsll-seconds-passive-scalper/kernel.manifest.json');
 const TSLL_KERNEL_CHECKSUMS = require('../../../../packages/strategy-kernels/tsll-seconds-passive-scalper/checksums.sha256.json');
+const TSLL_KERNEL_SETTINGS = require('../../../../packages/strategy-kernels/tsll-seconds-passive-scalper/settings/default.json');
 const TSLL_KERNEL_ARTIFACT = getTsllKernelArtifactMetadata();
 
 const STATUSES = Object.freeze(['research_only', 'paper_enabled', 'live_enabled']);
@@ -119,8 +121,8 @@ const MANIFEST_DEFINITIONS = Object.freeze({
     promotion: PROMOTED_AUTHORIZATION,
     timingClass: 'SCALP',
     timezone: MARKET_TIMEZONE,
-    session: REGULAR_SESSION,
-    activation: Object.freeze({ type: 'regular_session_window', startTime: '09:35', endTime: '15:50' }),
+    session: EXTENDED_SESSION,
+    activation: Object.freeze({ type: 'regular_session_window', startTime: '04:05', endTime: '19:50' }),
     signalCadence: 'continuous_intraday',
     symbols: Object.freeze(['TSLL']),
     signalEndpoint: '/api/kernels/tsll-seconds-passive-scalper.execution.v1/manifest',
@@ -128,16 +130,22 @@ const MANIFEST_DEFINITIONS = Object.freeze({
     executionDefaults: Object.freeze({
       orderType: 'limit',
       entryReference: 'prior_completed_1s_close',
-      buyBelowCloseCents: 3,
-      targetCents: 3,
-      stopCents: 5,
-      maxHoldSeconds: 10,
-      maxHoldBars: 10,
-      barSeconds: 1,
-      cooldownSeconds: 2,
+      buyBelowCloseCents: TSLL_KERNEL_SETTINGS.buyBelowCloseCents,
+      targetCents: TSLL_KERNEL_SETTINGS.targetCents,
+      stopCents: TSLL_KERNEL_SETTINGS.stopCents,
+      maxHoldSeconds: TSLL_KERNEL_SETTINGS.maxHoldSeconds,
+      maxHoldBars: TSLL_KERNEL_SETTINGS.maxHoldBars,
+      barSeconds: TSLL_KERNEL_SETTINGS.barSeconds,
+      cooldownSeconds: TSLL_KERNEL_SETTINGS.cooldownSeconds,
+      entryLifetimeSeconds: TSLL_KERNEL_SETTINGS.entryLifetimeSeconds,
       maxQuoteAgeSeconds: 2,
       sameSecondTargetStopPriority: 'stop_first',
-      sameBarTargetStopPriority: 'stop_first',
+      sameBarTargetStopPriority: TSLL_KERNEL_SETTINGS.sameBarTargetStopPriority,
+      regularOpenMinuteEt: TSLL_KERNEL_SETTINGS.regularOpenMinuteEt,
+      regularCloseMinuteEt: TSLL_KERNEL_SETTINGS.regularCloseMinuteEt,
+      extendedOpenMinuteEt: TSLL_KERNEL_SETTINGS.extendedOpenMinuteEt,
+      extendedCloseMinuteEt: TSLL_KERNEL_SETTINGS.extendedCloseMinuteEt,
+      sessionProfiles: TSLL_KERNEL_SETTINGS.sessionProfiles,
       brokerLogic: 'external_runtime',
     }),
     kernel: Object.freeze({

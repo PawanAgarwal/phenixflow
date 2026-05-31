@@ -7,17 +7,19 @@ const {
 const {
   centsToPrice,
   compactFeatureTrace,
+  evaluateEarlyExit,
   evaluateBacktestExit,
   evaluateFilters,
   featureRowFromBarEvent,
   finite,
+  resolveSettingsForRow,
   round,
   safeReturn,
 } = require('./features');
 
 const SCHEMA_VERSION = 'phenixflow.strategyKernel.v1';
 const STRATEGY_ID = 'tsll-seconds-passive-scalper';
-const STRATEGY_VERSION = '2026.05.13';
+const STRATEGY_VERSION = '2026.05.31';
 const KERNEL_ID = 'tsll-seconds-passive-scalper.execution.v1';
 const KERNEL_API = 'phenixflow.kernel.module.v1';
 const TIMEZONE = 'America/New_York';
@@ -44,7 +46,7 @@ function normalizeSettings(settings) {
   const barSeconds = Math.max(1, Math.trunc(finite(settings.barSeconds, 1)));
   const maxHoldBars = Math.max(0, Math.trunc(finite(settings.maxHoldBars, finite(settings.maxHoldSeconds, 10) / barSeconds)));
   const cooldownBars = Math.max(0, Math.trunc(finite(settings.cooldownBars, finite(settings.cooldownSeconds, 2) / barSeconds)));
-  return {
+  const normalized = {
     ...settings,
     symbol: settings.symbol || DEFAULT_SYMBOL,
     barSeconds,
@@ -61,6 +63,26 @@ function normalizeSettings(settings) {
       live: 'fail_closed',
     },
   };
+  if (settings.sessionProfiles && typeof settings.sessionProfiles === 'object') {
+    const normalizeProfile = (profile) => {
+      const profileMaxHoldBars = Math.max(0, Math.trunc(finite(profile.maxHoldBars, finite(profile.maxHoldSeconds, normalized.maxHoldSeconds) / barSeconds)));
+      const profileCooldownBars = Math.max(0, Math.trunc(finite(profile.cooldownBars, finite(profile.cooldownSeconds, normalized.cooldownSeconds) / barSeconds)));
+      return {
+        ...profile,
+        barSeconds,
+        maxHoldBars: profileMaxHoldBars,
+        maxHoldSeconds: finite(profile.maxHoldSeconds, profileMaxHoldBars * barSeconds),
+        cooldownBars: profileCooldownBars,
+        cooldownSeconds: finite(profile.cooldownSeconds, profileCooldownBars * barSeconds),
+        entryLifetimeSeconds: finite(profile.entryLifetimeSeconds, normalized.entryLifetimeSeconds),
+        sameBarTargetStopPriority: profile.sameBarTargetStopPriority || normalized.sameBarTargetStopPriority,
+      };
+    };
+    normalized.sessionProfiles = Array.isArray(settings.sessionProfiles)
+      ? settings.sessionProfiles.map(normalizeProfile)
+      : Object.fromEntries(Object.entries(settings.sessionProfiles).map(([key, profile]) => [key, normalizeProfile(profile)]));
+  }
+  return normalized;
 }
 
 function addSeconds(timestamp, seconds) {
@@ -259,8 +281,26 @@ function inCooldown(state, row) {
     && row.sequence <= state.cooldownUntilSequence;
 }
 
-function buildEntryDecision(state, event, row) {
-  const settings = state.settings;
+function compactTradeSettings(settings) {
+  return {
+    profileId: settings.profileId || settings._profileId || null,
+    profileName: settings.profileName || settings._profileName || null,
+    buyBelowCloseCents: settings.buyBelowCloseCents,
+    targetCents: settings.targetCents,
+    stopCents: settings.stopCents,
+    maxHoldBars: settings.maxHoldBars,
+    maxHoldSeconds: settings.maxHoldSeconds,
+    cooldownBars: settings.cooldownBars,
+    cooldownSeconds: settings.cooldownSeconds,
+    throughCents: settings.throughCents,
+    costCentsPerSide: settings.costCentsPerSide,
+    sameBarTargetStopPriority: settings.sameBarTargetStopPriority,
+    earlyExit: settings.earlyExit || null,
+  };
+}
+
+function buildEntryDecision(state, event, row, tradeSettings) {
+  const settings = tradeSettings || state.settings;
   const limitPrice = row.close - centsToPrice(settings.buyBelowCloseCents);
   const decision = decisionEnvelope(event, 'PLACE_ENTRY_LIMIT', {
     side: 'BUY',
@@ -279,6 +319,10 @@ function buildEntryDecision(state, event, row) {
     signalTradeDate: row.tradeDate,
     signalTsUtc: row.tsUtc || event.eventTime,
     signalClose: round(row.close, 4),
+    profileId: settings._profileId || null,
+    profileName: settings._profileName || null,
+    sessionName: row.sessionName || settings.sessionName || null,
+    tradeSettings: compactTradeSettings(settings),
   });
   state.pendingEntry = {
     orderDecisionId: decision.decisionId,
@@ -290,12 +334,16 @@ function buildEntryDecision(state, event, row) {
     limitPrice,
     expiresSequence: row.sequence + 1,
     expiresAt: decision.expiresAt || addSeconds(event.eventTime, settings.entryLifetimeSeconds),
+    profileId: settings._profileId || null,
+    profileName: settings._profileName || null,
+    sessionName: row.sessionName || settings.sessionName || null,
+    tradeSettings: compactTradeSettings(settings),
   };
   return decision;
 }
 
-function positionRulesDecision(state, event, fillPrice) {
-  const settings = state.settings;
+function positionRulesDecision(state, event, fillPrice, tradeSettings = state.settings) {
+  const settings = tradeSettings || state.settings;
   return decisionEnvelope(event, 'REGISTER_POSITION_RULES', {
     entryFillPrice: fillPrice,
     targetPrice: fillPrice + centsToPrice(settings.targetCents),
@@ -305,22 +353,28 @@ function positionRulesDecision(state, event, fillPrice) {
     sameBarTargetStopPriority: settings.sameBarTargetStopPriority,
     cooldownBars: settings.cooldownBars,
     cooldownSeconds: settings.cooldownSeconds,
+    profileId: settings.profileId || settings._profileId || null,
+    profileName: settings.profileName || settings._profileName || null,
+    tradeSettings: compactTradeSettings(settings),
   });
 }
 
-function exitTimeoutDecision(state, event) {
+function exitTimeoutDecision(state, event, tradeSettings = state.settings) {
+  const settings = tradeSettings || state.settings;
   return decisionEnvelope(event, 'EXIT_TIMEOUT', {
     side: 'SELL',
     reason: 'max_hold_elapsed',
     positionEntrySequence: state.position?.entrySequence,
-    maxHoldBars: state.settings.maxHoldBars,
+    maxHoldBars: settings.maxHoldBars,
+    profileId: state.position?.profileId || settings._profileId || null,
   });
 }
 
-function flattenDecision(event, reason) {
+function flattenDecision(event, reason, extra = {}) {
   return decisionEnvelope(event, 'FLATTEN_POSITION', {
     side: 'SELL',
     reason,
+    ...extra,
   });
 }
 
@@ -329,6 +383,7 @@ function handleBarClosed(state, event) {
   let reason = 'bar_processed';
   let filters = [];
   const row = featureRowFromBarEvent(state, event, state.settings);
+  const activeSettings = resolveSettingsForRow(state.settings, row);
   const context = contextStatus(state, event, row, state.settings);
 
   if (state.pendingEntry && event.sequence > state.pendingEntry.expiresSequence) {
@@ -340,10 +395,24 @@ function handleBarClosed(state, event) {
   }
 
   if (state.position) {
+    const positionSettings = state.position.tradeSettings || activeSettings;
     reason = 'position_open';
-    const timeoutAt = state.position.entrySequence + state.settings.maxHoldBars;
-    if (event.sequence >= timeoutAt) {
-      decisions.push(exitTimeoutDecision(state, event));
+    const earlyExit = evaluateEarlyExit({
+      row,
+      position: state.position,
+      settings: positionSettings,
+      sequence: event.sequence,
+    });
+    const timeoutAt = state.position.entrySequence + positionSettings.maxHoldBars;
+    if (earlyExit) {
+      decisions.push(flattenDecision(event, earlyExit.exitReason, {
+        positionEntrySequence: state.position.entrySequence,
+        exitPrice: earlyExit.exitPrice,
+        profileId: state.position.profileId || positionSettings.profileId || null,
+      }));
+      reason = earlyExit.exitReason;
+    } else if (event.sequence >= timeoutAt) {
+      decisions.push(exitTimeoutDecision(state, event, positionSettings));
       reason = 'timeout_rule_due';
     }
   } else if (state.pendingEntry) {
@@ -364,7 +433,7 @@ function handleBarClosed(state, event) {
     const result = evaluateFilters(row, state.settings);
     filters = result.filters;
     if (result.passed) {
-      decisions.push(buildEntryDecision(state, event, row));
+      decisions.push(buildEntryDecision(state, event, row, result.settings));
       reason = 'entry_filters_passed';
     } else {
       reason = 'entry_filters_failed';
@@ -377,7 +446,7 @@ function handleBarClosed(state, event) {
     trace: {
       filters,
       features: {
-        ...compactFeatureTrace(row),
+        ...compactFeatureTrace(row, state.settings),
         contextPolicy: context.policy,
         missingContext: context.missing,
         staleContext: context.stale,
@@ -395,6 +464,7 @@ function handleOrderFilled(state, event) {
   let reason = 'order_filled';
   if (fillType === 'entry' || side === 'BUY') {
     const pending = state.pendingEntry || {};
+    const tradeSettings = pending.tradeSettings || state.settings;
     const fillPrice = finite(payload.fillPrice ?? payload.price, pending.limitPrice);
     const signalSequence = finite(payload.signalSequence, pending.signalSequence ?? event.sequence - 1);
     const tradeDate = payload.tradeDate || pending.signalTradeDate || String(event.eventTime || '').slice(0, 10);
@@ -412,16 +482,21 @@ function handleOrderFilled(state, event) {
       signalTsUtc: payload.signalTsUtc || pending.signalTsUtc || null,
       signalClose: round(finite(payload.signalClose, pending.signalClose), 4),
       tradeDate,
-      targetPrice: fillPrice + centsToPrice(state.settings.targetCents),
-      stopPrice: fillPrice - centsToPrice(state.settings.stopCents),
+      targetPrice: fillPrice + centsToPrice(tradeSettings.targetCents),
+      stopPrice: fillPrice - centsToPrice(tradeSettings.stopCents),
+      profileId: pending.profileId || tradeSettings.profileId || null,
+      profileName: pending.profileName || tradeSettings.profileName || null,
+      sessionName: pending.sessionName || tradeSettings.sessionName || null,
+      tradeSettings,
     };
-    decisions.push(positionRulesDecision(state, event, fillPrice));
+    decisions.push(positionRulesDecision(state, event, fillPrice, tradeSettings));
     reason = 'entry_filled';
   } else {
     const position = state.position;
     state.position = null;
     if (position) {
-      state.cooldownUntilSequence = finite(payload.exitSequence, event.sequence) + state.settings.cooldownBars;
+      const cooldownBars = Math.max(0, Math.trunc(finite(position.tradeSettings?.cooldownBars, state.settings.cooldownBars)));
+      state.cooldownUntilSequence = finite(payload.exitSequence, event.sequence) + cooldownBars;
       reason = payload.exitReason || 'exit_filled';
     } else {
       reason = 'exit_fill_without_open_position';
@@ -456,7 +531,10 @@ function handleSessionEnded(state, event) {
   const decisions = [];
   state.pendingEntry = null;
   if (state.position) {
-    decisions.push(flattenDecision(event, 'session_ended'));
+    decisions.push(flattenDecision(event, 'session_ended', {
+      positionEntrySequence: state.position.entrySequence,
+      profileId: state.position.profileId || null,
+    }));
   }
   state.session = {
     ...state.session,
@@ -476,8 +554,9 @@ function handleSessionEnded(state, event) {
 function handleTimer(state, event) {
   const decisions = [];
   let reason = 'timer_processed';
-  if (state.position && event.sequence >= state.position.entrySequence + state.settings.maxHoldBars) {
-    decisions.push(exitTimeoutDecision(state, event));
+  const positionSettings = state.position?.tradeSettings || state.settings;
+  if (state.position && event.sequence >= state.position.entrySequence + positionSettings.maxHoldBars) {
+    decisions.push(exitTimeoutDecision(state, event, positionSettings));
     reason = 'timeout_rule_due';
   }
   return {
@@ -626,4 +705,5 @@ module.exports = {
   onEvent,
   onEventLean,
   replay,
+  resolveSettingsForRow,
 };

@@ -4,6 +4,8 @@ const path = require('node:path');
 
 const settings = require('../settings/default.json');
 const {
+  KERNEL_ID,
+  STRATEGY_VERSION,
   createKernel,
   onEvent,
   replay,
@@ -26,8 +28,8 @@ function event(eventType, sequence, eventTime, payload = {}, extra = {}) {
     schemaVersion: 'phenixflow.kernelEvent.v1',
     eventType,
     strategyId: 'tsll-seconds-passive-scalper',
-    strategyVersion: '2026.05.13',
-    kernelVersion: 'tsll-seconds-passive-scalper.execution.v1',
+    strategyVersion: STRATEGY_VERSION,
+    kernelVersion: KERNEL_ID,
     symbol: extra.symbol || payload.symbol || 'TSLL',
     sequence,
     eventTime,
@@ -45,6 +47,7 @@ function event(eventType, sequence, eventTime, payload = {}, extra = {}) {
 
 function passBar(sequence, close, overrides = {}) {
   const ms = Date.parse('2026-05-13T13:35:00.000Z') + (sequence * 1000);
+  const minutesFromOpen = overrides.minutes_from_open ?? 5;
   return event('BAR_1S_CLOSED', sequence, new Date(ms).toISOString(), {
     tradeDate: '2026-05-13',
     tsUtc: new Date(ms).toISOString(),
@@ -54,7 +57,10 @@ function passBar(sequence, close, overrides = {}) {
     close,
     volume: 1000,
     trade_count: 3,
-    minutes_from_open: 5,
+    minuteOfDayEt: 570 + minutesFromOpen,
+    secondOfDayEt: 34200 + (minutesFromOpen * 60),
+    sessionName: 'regular',
+    minutes_from_open: minutesFromOpen,
     minutes_to_close: 350,
     range_60s_cents: 5,
     ret_60s_cents: 0,
