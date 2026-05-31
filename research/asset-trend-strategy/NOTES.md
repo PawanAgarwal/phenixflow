@@ -147,3 +147,47 @@ Tested overlays (OOS 2019-07..2026-05, net 5bps):
 a low-turnover, portfolio-level **price-trend regime gate**, not faster trading of the momentum
 book and not volume confirmation. Recommended config: monthly 12m-momentum top-20 inverse-vol
 selection + daily "SPY<EMA100 -> 50% exposure" overlay (Sharpe 0.98, MaxDD -21%, ~10x turnover).
+
+---
+
+## Iteration 7 — full-asset-class regime gates vs SPY-only (does cross-asset beat SPY as the risk proxy?)
+
+The iter-6 regime gate used SPY only. Tested two genuinely cross-asset alternatives plus a combo,
+same discipline (daily, net 5bps, walk-forward). regime_compare.py.
+
+- **breadth**: % of the whole universe above its 200d MA (true cross-asset risk gauge).
+- **ownbook**: the held portfolio's OWN equity trend vs its EMA (de-risk when YOUR assets roll over).
+- **combo**: average of the SPY-gate scale and the breadth-gate scale.
+
+OOS 2019-07..2026-05, net 5bps:
+
+| Regime gate | Sharpe | MaxDD | turn/yr | note |
+|---|---|---|---|---|
+| base (no regime) | 0.94 | -27% | 8.5x | bogey |
+| **SPY EMA100->33%** | **1.03** | -27% | 12x | highest Sharpe |
+| SPY EMA100->50% | 0.98 | -21% | 10x | best SPY Sharpe+DD |
+| breadth continuous | 0.95 | **-20%** | **7.1x** | cheapest, best DD, cross-asset |
+| breadth<50%->50% | 0.90 | -22% | 9x | below SPY |
+| ownbook EMA100->33% | 0.95 | -30% | 13x | best in 2022 bear (0.41) |
+| ownbook EMA100->50% | 0.89 | -21% | 11x | below SPY |
+| **combo SPY+breadth ->33%** | **1.00** | **-22%** | **8.3x** | best all-rounder |
+
+### Findings (honest)
+- **SPY alone is the single best risk proxy on raw Sharpe** (1.03 / 0.98). Sharp equity
+  drawdowns are the cleanest, least-noisy signal of broad risk-off; the index is less jittery
+  than breadth or the concentrated book, so it whipsaws less.
+- **Pure cross-asset gates are competitive, not better.** Breadth-continuous (0.95) and
+  ownbook->33% (0.95) beat the base but trail SPY on Sharpe. Each has a virtue: breadth-continuous
+  is the cheapest (7x turnover) with the best drawdown (-20%); ownbook protected best in the
+  2022 everything-down bear (Sharpe 0.41 vs SPY 0.30).
+- **Combining SPY + breadth is the best balance:** Sharpe 1.00 (≈ SPY-only) but with a smaller
+  drawdown (-22% vs -27%), the lowest turnover, and the best bear-market Sharpe — it genuinely
+  uses the full asset universe and is the most robust all-rounder.
+- **Walk-forward** (pick the gate monthly by trailing-252d Sharpe, past-only): 0.85 vs base 0.81;
+  it organically spreads across breadth<40%->33% (25mo), SPY->33% (21mo), base (17mo) — confirming
+  cross-asset and SPY gates are both useful, neither dominant.
+
+**Verdict:** a full-asset-class regime signal (breadth) works and, combined with SPY, gives the
+best drawdown-adjusted result; but SPY alone is hard to beat on pure Sharpe because it is the
+least-noisy proxy for the broad risk-off events that matter. Recommended: **combo SPY+breadth
+->33%** (best all-rounder, cross-asset) or **SPY EMA100->50%** (simplest, best SPY Sharpe+DD).

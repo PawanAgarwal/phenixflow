@@ -87,6 +87,11 @@ def run(prices, ov, cash, sel_universe, cfg, start, cost_bps):
                "ma_window": cfg["ma_window"], "max_weight": cfg["max_weight"],
                "target_vol": None, "name": "sel"}
     band = cfg.get("band", 0.0)
+    # Cross-asset breadth: fraction of the selectable universe above its long MA.
+    breadth = above_ma[[c for c in sel_universe if c in above_ma.columns]].mean(axis=1)
+    ob_alpha = 2.0 / (cfg.get("regime_win", 100) + 1.0)   # own-book EMA decay
+    book_nav, book_ema = 1.0, None
+
     w_base = {}          # current slow selection book (held names + base weights)
     w_active = {}        # weights earning today's return (set yesterday)
     gate_on = {}         # stateful hysteresis gate per name (True=held)
@@ -110,6 +115,15 @@ def run(prices, ov, cash, sel_universe, cfg, start, cost_bps):
                 adv = ov.dollar_adv.loc[t]
                 uni = [u for u in sel_universe if adv.get(u, 0.0) >= cfg["liq_floor"]]
             w_base = candidate_weights(t, uni, moms, above_ma, vol_sig, daily, sel_cfg)
+
+        # Track the fully-invested book's own equity trend (for the own-book regime gate).
+        if w_base:
+            g_book = sum(wv * (rt.get(k, 0.0) if pd.notna(rt.get(k, np.nan)) else 0.0)
+                         for k, wv in w_base.items())
+            cash_b = max(0.0, 1.0 - sum(w_base.values()))
+            g_book += cash_b * (cash_ret.get(t, 0.0) if pd.notna(cash_ret.get(t, np.nan)) else 0.0)
+            book_nav *= (1.0 + g_book)
+            book_ema = book_nav if book_ema is None else ob_alpha * book_nav + (1 - ob_alpha) * book_ema
 
         # 2) Apply daily overlays to the current book -> target weights.
         w_target = dict(w_base)
@@ -138,11 +152,32 @@ def run(prices, ov, cash, sel_universe, cfg, start, cost_bps):
                 v = ov.vol20.at[t, k] if k in ov.vol20.columns else np.nan
                 if pd.notna(v) and v > 0:
                     w_target[k] *= min(1.0, tv / v)
-        if cfg.get("regime"):
-            sema = ov.spy_ema(cfg.get("regime_win", 50)).at[t]
-            risk_on = ov.spy.at[t] >= sema if pd.notna(sema) else True
-            if not risk_on:
-                w_target = {k: v * cfg["regime"] for k, v in w_target.items()}
+        if cfg.get("regime") is not None:
+            rtype = cfg.get("regime_type", "spy")
+            if rtype == "spy":                       # market proxy: SPY vs its EMA
+                sema = ov.spy_ema(cfg.get("regime_win", 50)).at[t]
+                risk_on = ov.spy.at[t] >= sema if pd.notna(sema) else True
+                scale = 1.0 if risk_on else cfg["regime"]
+            elif rtype == "breadth":                 # cross-asset: % of universe in uptrend
+                b = breadth.at[t] if pd.notna(breadth.at[t]) else 1.0
+                if cfg.get("breadth_continuous"):
+                    scale = float(np.clip(b / cfg.get("breadth_ref", 0.6),
+                                          cfg["regime"], 1.0))
+                else:
+                    scale = 1.0 if b >= cfg.get("breadth_thresh", 0.5) else cfg["regime"]
+            elif rtype == "ownbook":                 # the held book's own trend
+                risk_on = (book_nav >= book_ema) if book_ema is not None else True
+                scale = 1.0 if risk_on else cfg["regime"]
+            elif rtype == "combo":                   # SPY market gate + cross-asset breadth
+                sema = ov.spy_ema(cfg.get("regime_win", 100)).at[t]
+                s_spy = 1.0 if (pd.isna(sema) or ov.spy.at[t] >= sema) else cfg["regime"]
+                b = breadth.at[t] if pd.notna(breadth.at[t]) else 1.0
+                s_b = float(np.clip(b / cfg.get("breadth_ref", 0.6), cfg["regime"], 1.0))
+                scale = min(s_spy, s_b) if cfg.get("combo_min") else 0.5 * (s_spy + s_b)
+            else:
+                scale = 1.0
+            if scale < 1.0:
+                w_target = {k: v * scale for k, v in w_target.items()}
 
         # Portfolio-level vol target: ONE gross-exposure lever (low turnover, vol-timing edge).
         if cfg.get("port_vt") and len(ret_hist) > cfg.get("port_vt_win", 30):

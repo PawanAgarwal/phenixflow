@@ -89,3 +89,23 @@ did *not* help net** — their daily toggling drove 26–51× turnover that eras
 winning daily signal is price-based. Per-name daily gating/scaling also churns too much. Run:
 `python3 daily_opt.py` (overlay sweep) and `python3 daily_validate.py` (robustness + walk-forward).
 See `NOTES.md` §5–6.
+
+### SPY vs full-asset-class regime gate (iteration 7)
+
+Is SPY the right risk signal, or should the gate use the whole universe? Tested **breadth**
+(% of the universe above its 200d MA), **own-book** (the held portfolio's own trend), and a
+**combo** of SPY+breadth (`python3 regime_compare.py`). Net 5bps, OOS 2019–2026:
+
+| Regime gate | Sharpe | MaxDD | turn/yr |
+|---|---|---|---|
+| SPY EMA100→33% | **1.03** | -27% | 12× |
+| SPY EMA100→50% | 0.98 | -21% | 10× |
+| **combo SPY+breadth →33%** | 1.00 | **-22%** | **8.3×** |
+| breadth continuous (cross-asset only) | 0.95 | -20% | 7.1× |
+| own-book EMA100→33% | 0.95 | -30% | 13× |
+
+**SPY alone has the highest raw Sharpe** — it's the least-noisy proxy for the broad risk-off
+events that matter, so it whipsaws less than breadth or the concentrated book. Pure cross-asset
+gates are *competitive, not better* (breadth is cheapest with the best drawdown; own-book
+protected best in the 2022 everything-down bear). **Combining SPY + breadth is the best
+all-rounder**: Sharpe ≈ SPY-only but smaller drawdown and lowest turnover. See `NOTES.md` §7.
