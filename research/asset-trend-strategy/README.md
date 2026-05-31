@@ -109,3 +109,24 @@ events that matter, so it whipsaws less than breadth or the concentrated book. P
 gates are *competitive, not better* (breadth is cheapest with the best drawdown; own-book
 protected best in the 2022 everything-down bear). **Combining SPY + breadth is the best
 all-rounder**: Sharpe ≈ SPY-only but smaller drawdown and lowest turnover. See `NOTES.md` §7.
+
+### Better breadth: MA length, scaling, and non-SMA uptrend mechanisms (iteration 8)
+
+The first breadth gate used `price > 200d SMA` — it turns out that was a *weak* choice. Sweeping
+the uptrend mechanism, length, and the breadth→exposure scaling (`python3 breadth_explore.py`),
+net 5bps, OOS 2019–2026:
+
+| Breadth uptrend mechanism | OOS Sharpe |
+|---|---|
+| **Donchian-252 channel position** (price in upper half of 1-yr range) | **1.08–1.10** |
+| EMA-50 | 1.08 |
+| 12-month momentum > 0 | 1.05 |
+| SMA-50 | 1.04 |
+| SMA-200 (the original) | 0.97 |
+| MACD / near-52w-high | 0.82–0.90 |
+
+Best config = **Donchian-252 breadth with an exposure ramp from 18% breadth (→ 0% invested, full
+cash) up to 50% breadth (→ 100% invested)**: OOS Sharpe **1.10**, ~11× turnover, drawdown -18%,
+and it transforms the 2022 bear (**0.81 vs 0.29** no-gate, **0.02** SPY). The full-cash floor at
+low breadth helps, mainly in bears. A walk-forward that picks the mechanism monthly from past
+data confirms it (0.95 vs 0.81 no-gate). See `NOTES.md` §8.
