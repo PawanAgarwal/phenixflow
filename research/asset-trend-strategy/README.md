@@ -46,6 +46,26 @@ python3 fetch_prices.py        # cache daily adj-close for the universe + SPY (Y
 python3 backtest.py --recompute  # build candidate-return cache + walk-forward grid
 python3 meta.py                # fast meta-layer comparison of walk-forward schemes
 python3 strategy.py            # FINAL rule: full-sample + walk-forward + yearly + holdings
+python3 daily_holdings.py 10   # target holdings for EVERY trading day (+ turnover)
+python3 daily_backtest.py      # validate daily/weekly/monthly rebalance vs cost
 ```
 
-Artifacts: `strategy_results.json`, `equity_curve.csv`, `equity_curve.png`, `data/cand_rets.csv`.
+Artifacts: `strategy_results.json`, `equity_curve.csv`, `equity_curve.png`, `data/cand_rets.csv`,
+`daily_weights.csv`.
+
+## Rebalance frequency — why monthly, not daily
+
+The signal is 12-month momentum (slow-moving), so trading it daily mostly adds turnover. On an
+identical daily return stream (OOS 2019–2026), recomputing/trading holdings every day at EOD+10min:
+
+| Rebalance | turnover/yr | Sharpe @0bps | @3bps | @5bps | @10bps |
+|---|---|---|---|---|---|
+| **Monthly (published)** | **11.3×** | **0.96** | 0.95 | 0.94 | 0.92 |
+| Weekly | 25.4× | 0.80 | 0.77 | 0.75 | 0.69 |
+| Daily | 63.4× | 0.84 | 0.76 | 0.70 | 0.56 |
+| SPY buy & hold | — | 0.72 | — | — | — |
+
+Daily is **worse even before costs** (0.84 < 0.96 — it whipsaws names around the top-20 cutoff),
+and at realistic 3–5 bps ETF cost it erodes to ~SPY parity; at 10 bps it underperforms SPY.
+Compute holdings daily for **monitoring**, but rebalance **monthly** (weekly at most). The
+`EOD+10min` fill assumption is fine — the problem is frequency, not timing. See `NOTES.md` §5.

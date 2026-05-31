@@ -68,3 +68,38 @@ assets removes idiosyncratic risk:
   -24%) at little Sharpe cost and protects in regimes this 2019–2026 window under-samples.
 - **Mistakes that cost Sharpe:** concentration (k=5), blending short lookbacks into the 12-month
   signal, and over-aggressive (<16%) vol targeting. All discarded.
+
+---
+
+## Iteration 5 — does DAILY rebalancing (EOD+10min) validate?
+
+Tested recomputing holdings every trading day and rebalancing just after the close
+(decide on close[T], earn close[T]->close[T+1]; causal, near-close fill). Compared monthly /
+weekly / daily / daily+no-trade-band on an identical DAILY return stream, with a one-way cost
+sweep. (Daily-frequency stats show SPY's true daily Sharpe 0.72 and MaxDD -33.7%, deeper than
+the month-end-sampled -23.9% — so strategy and SPY are compared on the same daily basis here.)
+
+OOS 2019-07..2026-05, top-20 12m-momentum inverse-vol + trend filter:
+
+| Rebalance | one-way turnover/yr | Sharpe @0bps | @3bps | @5bps | @10bps | MaxDD |
+|---|---|---|---|---|---|---|
+| **Monthly (published)** | **11.3x** | **0.96** | 0.95 | 0.94 | 0.92 | -27% |
+| Weekly | 25.4x | 0.80 | 0.77 | 0.75 | 0.69 | -27% |
+| Daily | 63.4x | 0.84 | 0.76 | 0.70 | 0.56 | -25% |
+| Daily + 2% no-trade band | 53.6x | 0.83 | 0.76 | 0.71 | 0.59 | -24% |
+| SPY buy & hold | — | 0.72 | — | — | — | -34% |
+
+**Verdict: daily rebalancing does NOT validate.**
+1. **Worse even gross.** Daily Sharpe 0.84 < monthly 0.96. The signal is 12-month momentum —
+   slow-moving — so daily recomputation chases noise around the top-20 cutoff and whipsaws
+   names in/out (ICLN, PICK, EPU rotating; constant inverse-vol reweighting). 100% of days
+   trade; ~49-63x annual turnover vs 11x monthly.
+2. **Costs then bury it.** At a realistic 3-5 bps one-way ETF cost, daily Sharpe falls to
+   0.70-0.76 — roughly SPY parity; at 10 bps (thematic/leveraged sleeves, EOD+10min after-hours
+   spreads) it drops to 0.56, BELOW SPY. Monthly loses almost nothing to cost (0.96->0.92).
+3. Daily does cut vol/drawdown slightly (faster de-risking) but at a large return penalty.
+4. A no-trade band helps marginally but cannot rescue it.
+
+**Conclusion:** keep the **monthly** cadence (weekly at most). Computing holdings daily is useful
+for monitoring, but trading them daily destroys the edge once cost is realistic. `EOD+10min`
+execution is fine as a fill model; the problem is frequency, not timing.
