@@ -240,3 +240,30 @@ Adaptive Sharpe **0.95** vs base 0.81, SPY 0.70 (window starts 2018). Picks spre
 cross-asset gate = **Donchian-252 channel-position breadth, exposure ramp 18%->50% (to 0% cash
 at very low breadth)**: OOS Sharpe 1.10 (vs 0.97 for the original SMA200 breadth, 0.94 no gate,
 0.72 SPY), ~11x turnover, and far better bear protection. Walk-forward confirms (0.95).
+
+---
+
+## Iteration 9 — verify Breadth EMA-50 and register it in the phenixflow UI
+
+**Verify (verify_breadth_ema50.py).**
+- RECONCILE: an independent from-scratch daily engine (explicit weights, explicit 1-day
+  execution lag, explicit turnover/cost) vs the fast analytic engine agree to ~3e-4
+  (Sharpe 1.0966 vs 1.0963; daily-return corr 0.99998). The iter-8 analytic numbers are sound.
+  (A first scratch pass had an off-by-one = 2-day lag; fixing it to a true 1-day lag matched.)
+- LOOKAHEAD audit: honest 1-day-lagged Sharpe 1.10 vs illegal same-day peek 2.11 — the lag is
+  respected and matters; EMA/rolling/momentum/selection are all backward-looking (no leakage).
+- WALK-FORWARD (anchored: pick ramp + EMA length from PRIOR years only): OOS 2020-2026
+  Sharpe 0.99 vs no-gate base 0.97, SPY 0.68; MaxDD -16% vs base -27%. Parameter-stability grid
+  (EMA50 x ramps) is tight at 1.05-1.11. Honest read: the full-OOS 1.10 carries some
+  in-sample-param optimism; the realistic edge over the ungated book is modest on Sharpe but
+  strong on drawdown and clearly beats SPY.
+
+**Register (phenixflow strategy-service + studies-dashboard).**
+- Artifact generator `export_artifact.py` -> `projects/asset-trend-breadth/artifacts/
+  breadth-ema50-report.json` (daily equity series + monthly snapshots, schema v1).
+- Adapter `apps/strategy-service/src/strategies/breadth-ema50.js`, registered in
+  `default-registry.js` as `asset-trend-breadth-ema50` (research_only, daily_eod). Doc at
+  `docs/strategies/asset-trend-breadth-ema50.md`.
+- Verified: appears in `GET /api/strategies` (28 total); chart/values/open-positions/portfolio
+  endpoints all serve; strategy-service test suite green except one PRE-EXISTING kernel/PYM
+  failure unrelated to this change (fresh checkout missing a PYM data/kernel-download artifact).

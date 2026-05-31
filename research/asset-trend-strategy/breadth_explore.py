@@ -51,13 +51,15 @@ def scale_from_breadth(b, lo, hi):
     return ((b - lo) / (hi - lo)).clip(0.0, 1.0)
 
 
-def gated_perf(gross_book, sel_turn, cash, scale, rf):
-    """Apply a daily exposure scale (decided EOD, effective next day) to the book; net of cost."""
+def gated_perf(gross_book, sel_turn, cash, scale, rf, lag=1):
+    """Apply a daily exposure scale to the book; net of cost.
+    lag=1 (honest): scale decided at EOD t-1 governs day-t return (decide EOD, trade next close).
+    lag=0 (illegal): same-day scale on same-day return — used only for the lookahead audit."""
     s = scale.reindex(gross_book.index).ffill().fillna(1.0)
-    s_prev = s.shift(1).fillna(1.0)
-    port_gross = s_prev * gross_book + (1 - s_prev) * cash.reindex(gross_book.index).fillna(0.0)
-    gate_turn = s.diff().abs().fillna(0.0)                 # turnover from moving the gross lever
-    turn = sel_turn.reindex(gross_book.index).fillna(0.0) * s_prev + gate_turn
+    s_eff = s.shift(lag).fillna(1.0) if lag else s
+    port_gross = s_eff * gross_book + (1 - s_eff) * cash.reindex(gross_book.index).fillna(0.0)
+    gate_turn = s_eff.diff().abs().fillna(0.0)             # turnover from moving the gross lever
+    turn = sel_turn.reindex(gross_book.index).fillna(0.0) * s_eff + gate_turn
     net = port_gross - turn * COST / 1e4
     return net, turn
 

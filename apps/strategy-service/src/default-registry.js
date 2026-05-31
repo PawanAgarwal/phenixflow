@@ -24,6 +24,7 @@ const { createVixTermContrarianStrategy } = require('./strategies/vix-term-contr
 const { createVvixSpikeContrarianStrategy } = require('./strategies/vvix-spike-contrarian');
 const { createGapDownFadeStrategy } = require('./strategies/gap-down-fade');
 const { createCompositePortfolioStrategy } = require('./strategies/composite-portfolio');
+const { createBreadthEma50Strategy } = require('./strategies/breadth-ema50');
 
 function createDefaultRegistry(options = {}) {
   return new StrategyRegistry([
@@ -58,6 +59,8 @@ function createDefaultRegistry(options = {}) {
     createCompositePortfolioStrategy({ variantId: 'fear-basket-vvix-occ3x-vix3xon-3x', ...(options.fearBasketVvixOcc3xVix3xOn || {}) }),
     createCompositePortfolioStrategy({ variantId: 'fear-basket-vvix-vix3xon-3x', ...(options.fearBasketVvixVix3xOn || {}) }),
     createCompositePortfolioStrategy({ variantId: 'gap-fade-vix3xon-hedge-3x', ...(options.gapFadeVix3xOnHedge || {}) }),
+    // Cross-asset 12-month momentum with a daily breadth (EMA-50) exposure gate (research).
+    createBreadthEma50Strategy(options.breadthEma50 || {}),
   ].map(withStrategyResultContract));
 }
 
