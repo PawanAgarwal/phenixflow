@@ -201,6 +201,7 @@ describe('strategy-service API', () => {
       'fear-basket-vvix-occ3x-vix3xon-3x',
       'fear-basket-vvix-vix3xon-3x',
       'gap-fade-vix3xon-hedge-3x',
+      'asset-trend-breadth-ema50',
     ]);
     const byId = Object.fromEntries(strategies.map((strategy) => [strategy.id, strategy]));
     expect(strategies.every((strategy) => strategy.execution)).toBe(true);

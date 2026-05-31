@@ -70,3 +70,9 @@ output/playwright/optiondepth/browser-profile-*/
 output/playwright/optiondepth/.playwright-cli/
 output/playwright/optiondepth/scripts/__pycache__/
 output/playwright/optiondepth/references/.vendor/
+
+# Asset-trend-strategy: bulky reproducible raw price cache (rebuild via fetch_prices.py)
+research/asset-trend-strategy/data/prices/
+research/asset-trend-strategy/__pycache__/
+research/asset-trend-strategy/daily_weights.csv
+research/asset-trend-strategy/data/volume/
